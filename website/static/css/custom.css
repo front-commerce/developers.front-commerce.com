@@ -1,4 +1,36 @@
-/* your custom css */
+body {
+  font-family: $fcDefault;
+}
+
+.button--primary {
+  background: $primaryColor;
+  color: #fff;
+  padding: 15px;
+  font-size: 16px;
+}
+.button--primary:hover {
+  background: #fff;
+  color: $primaryColor;
+}
+
+.projectLogo {
+  opacity: 0.3;
+}
+
+footer .sitemap {
+  margin-bottom: 0;
+}
+
+footer .fcLogo {
+  display: block;
+  margin: 0 auto;
+  opacity: 0.4;
+  transition: opacity 0.15s ease-in-out;
+  width: 340px;
+}
+footer .fcLogo:hover {
+  opacity: 1;
+}
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }

@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "docusaurus": "^1.0.7"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5"
   }
 }

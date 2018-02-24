@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "A website for testing",
+    "tagline": "Craft delightful e-commerce experiences using modern web technologies",
     "doc1": "Latin-ish",
     "Example Page": "Example Page",
     "doc2": "document number 2",
@@ -13,6 +13,7 @@
     "Docs": "Docs",
     "API": "API",
     "Help": "Help",
+    "License": "License",
     "Blog": "Blog",
     "Docusaurus": "Docusaurus",
     "First Category": "First Category",

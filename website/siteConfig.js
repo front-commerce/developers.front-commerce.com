@@ -1,67 +1,66 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 /* List of projects/orgs using your project for the users page */
 const users = [
   {
-    caption: 'User1',
-    image: '/test-site/img/docusaurus.svg',
-    infoLink: 'https://www.facebook.com',
-    pinned: true,
-  },
+    caption: "Occitech",
+    image: "/test-site/img/docusaurus.svg",
+    infoLink: "https://www.occitech.fr/",
+    pinned: true
+  }
 ];
 
 const siteConfig = {
-  title: 'Test Site' /* title for your website */,
-  tagline: 'A website for testing',
-  url: 'https://facebook.github.io' /* your website url */,
-  baseUrl: '/test-site/' /* base url for your project */,
-  projectName: 'test-site',
+  title: "Front-Commerce",
+  tagline:
+    "Craft delightful e-commerce experiences using modern web technologies",
+  url: "https://developers.front-commerce.com",
+  cname: "developers.front-commerce.com",
+  baseUrl: "/",
+  organizationName: "front-commerce",
+  projectName: "developers",
+  gaTrackingId: "UA-1412249-44",
   headerLinks: [
-    {doc: 'doc1', label: 'Docs'},
-    {doc: 'doc4', label: 'API'},
-    {page: 'help', label: 'Help'},
-    {blog: true, label: 'Blog'},
+    { doc: "doc1", label: "Docs" },
+    { doc: "doc4", label: "API" },
+    { page: "help", label: "Help" },
+    { page: "license", label: "License" },
+    { blog: true, label: "Blog" }
+    /*
+      { search: true },
+      { languages: true }
+    */
   ],
   users,
   /* path to images for header/footer */
-  headerIcon: 'img/docusaurus.svg',
-  footerIcon: 'img/docusaurus.svg',
-  favicon: 'img/favicon.png',
+  headerIcon: "img/fc-avatar-white.svg",
+  footerIcon: "img/fc-avatar-white.svg",
+  favicon: "img/favicon.png",
   /* colors for website */
   colors: {
-    primaryColor: '#2E8555',
-    secondaryColor: '#205C3B',
+    primaryColor: "#4A6BDD",
+    secondaryColor: "#676767"
   },
   /* custom fonts for website */
-  /*fonts: {
-    myFont: [
-      "Times New Roman",
-      "Serif"
-    ],
-    myOtherFont: [
-      "-apple-system",
-      "system-ui"
-    ]
-  },*/
+  fonts: {
+    fcDefault: ["Roboto Condensed"]
+  },
   // This copyright info is used in /core/Footer.js and blog rss/atom feeds.
-  copyright:
-    'Copyright © ' +
-    new Date().getFullYear() +
-    ' Your Name or Your Company Name',
+  copyright: "Copyright © " + new Date().getFullYear() + " Front-Commerce",
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
   // projectName: 'test-site', // or set an env variable PROJECT_NAME
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
-    theme: 'default',
+    theme: "default",
+    defaultLang: "javascript"
   },
-  scripts: ['https://buttons.github.io/buttons.js'],
+  editUrl:
+    "https://github.com/front-commerce/developers.front-commerce.com/edit/master/",
+  scripts: ["https://use.fontawesome.com/releases/v5.0.6/js/all.js"],
+  stylesheets: [
+    "http://fonts.googleapis.com/css?family=Roboto+Condensed%3A700%2C400%2C300italic%7CRoboto%3A300&ver=1517824551"
+  ],
+  twitter: true
   // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/facebook/test-site',
+  // repoUrl: "https://github.com/facebook/test-site"
 };
 
 module.exports = siteConfig;
