@@ -56,7 +56,7 @@ const siteConfig = {
     "https://github.com/front-commerce/developers.front-commerce.com/edit/master/",
   scripts: ["https://use.fontawesome.com/releases/v5.0.6/js/all.js"],
   stylesheets: [
-    "http://fonts.googleapis.com/css?family=Roboto+Condensed%3A700%2C400%2C300italic%7CRoboto%3A300&ver=1517824551"
+    "https://fonts.googleapis.com/css?family=Roboto+Condensed%3A700%2C400%2C300italic%7CRoboto%3A300&ver=1517824551"
   ],
   twitter: true
   // You may provide arbitrary config keys to be used as needed by your template.

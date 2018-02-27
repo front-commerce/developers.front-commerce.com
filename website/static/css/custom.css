@@ -17,6 +17,10 @@ body {
   opacity: 0.3;
 }
 
+#magento2 .blockContent ul {
+  text-align: left;
+}
+
 footer .sitemap {
   margin-bottom: 0;
 }
