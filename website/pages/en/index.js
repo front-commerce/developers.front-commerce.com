@@ -129,18 +129,18 @@ const Features = props => (
       },
       {
         content: `Leverage the GraphQL typing system to expose your data easily,
-          no matter the source. **Split your business logic into different
-          services or keep your existing stack**. Our GraphQL middleware includes
-          everything you’ll need to build a fast website, even with slow backends.`,
+          no matter the source. Host it on your servers and **split your business
+          logic into different services or keep your existing stack**.
+          Our GraphQL middleware includes everything you’ll need to build a fast website, even with slow backends.`,
         image: imgUrl("logos/graphql.svg"),
         imageAlign: "top",
         title: "GraphQL middleware"
       },
       {
-        content: `Started in 2015, the product is not a POC anymore: **Front-Commerce is already powering
+        content: `Started in 2015 **Front-Commerce is already powering
           shops in production**. We provide out of the box an extensive logging system (client / server errors),
           error boundaries, maintenance mode, SEO, i18n, security, caching and invalidation, payments,
-          performant image processing…`,
+          efficient image processing…`,
         image: imgUrl("battery-charged.svg"),
         imageAlign: "top",
         title: "Production ready!"
@@ -188,7 +188,7 @@ const Magento2 = props => (
 Even though we built Front-Commerce with a vision of introducing a clean
 separation between the frontend and your backend solution, we started with one of
 the most popular and complete open-source platform in the market.
-Our solution supports most of Magento2 features and custom code: if it works in Magento it will work with Front-Commerce!
+**Our solution supports most of Magento2 features and custom code: if it works in Magento it will work with Front-Commerce!**
 * search and navigation using ElasticSearch
 * multi-stores instances
 * advanced pricing: coupon codes, promotion rules, taxes…
@@ -204,12 +204,21 @@ Our solution supports most of Magento2 features and custom code: if it works in 
   </Block>
 );
 
-const TryOut = props => (
+const DesignSystem = props => (
   <Block id="try">
     {[
       {
-        content:
-          "We also provide a design system to serve as a basis for interactions between designers and developers.",
+        content: `
+Front-Commerce default theme contains a design system to serve as a basis for interactions between designers and developers.
+The web is a rich medium and the « page » metaphor for building an application is outdated. With PWAs
+there are several variants of the same application screen depending on: the content, the device,
+its connectivity and many other things.
+**Thinking in term of components helps to keep a consistent user experience, and makes prototyping / developing new
+features much more easier.** Design Systems help to achieve this!
+
+The design system is also a the place where we will help you to ensure you do not introduce regressions
+and you keep good a11y practices.
+`,
         image: imgUrl("docusaurus.svg"),
         imageAlign: "left",
         title: "Design system"
@@ -218,11 +227,22 @@ const TryOut = props => (
   </Block>
 );
 
-const Description = props => (
+const Responsibilities = props => (
   <Block background="dark">
     {[
       {
-        content: "Split responsabilities between backend and frontend teams",
+        content: `
+Complex projects requires several teams to collaborate. **Front-Commerce helps by defining
+clear boundaries in the system, so each team can work independently.**
+
+For instance, a team can work on delivering Magento2 customization and exposing it through
+the WebAPI while another can set up a PIM to manage all your products data and finally your
+in house frontend developers can work on creating an awesome experience in the browser while
+your UX designers can iterate on new prototypes.
+
+With Front-Commerce’s architecture you will be able to isolate each responsibilities in their
+own codebase if you need it.
+`,
         image: imgUrl("docusaurus.svg"),
         imageAlign: "right",
         title: "Teams collaboration"
@@ -232,13 +252,27 @@ const Description = props => (
 );
 
 const Tested = props => (
-  <Block>
+  <Block background="light">
     {[
       {
-        content: `Your frontend will evolve and we want `,
+        content: `
+When time comes to choose a solution to build your brand’s public image for your storefront,
+you must take quality into consideration. **New technologies are worthless if quality is left behind.**
+
+We are commited to deliver code with a high level of quality, and thus are including tests at
+several levels. React components including in the design system have [structural tests using
+Storyshots](https://storybook.js.org/testing/structural-testing/). Critical logic and
+reusable utilities also are unit tested using [Jest](https://facebook.github.io/jest/).
+GraphQL resolvers are using [Pact.js](https://docs.pact.io/) to enable generating
+Consumer contracts and ensuring the middleware works fine no matter the number of services
+you have.
+
+Our mission is to help you crafting good code, that’s why you could leverage our base tooling
+to develop your features with tests too!
+`,
         image: imgUrl("docusaurus.svg"),
         imageAlign: "left",
-        title: "Tests at all levels"
+        title: "Tests, tests and tests"
       }
     ]}
   </Block>
@@ -274,8 +308,9 @@ class Index extends React.Component {
           <Features />
           <FeatureCallout />
           <Magento2 />
-          <TryOut />
-          <Description />
+          <DesignSystem />
+          <Responsibilities />
+          <Tested />
           <ContactUs />
         </div>
       </div>
