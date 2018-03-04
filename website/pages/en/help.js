@@ -23,7 +23,7 @@ class Help extends React.Component {
       },
       {
         content:
-          "Read our [FAQ](/test-site/docs/en/doc1.html) to find answers to questions we get the most often.",
+          "Read our [FAQ](/docs/faq.html) to find answers to questions we get the most often.",
         title: "Read our FAQ"
       },
       {
