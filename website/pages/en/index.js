@@ -156,22 +156,22 @@ const FeatureCallout = props => (
   >
     <h2>User experience &amp; Quality</h2>
     <MarkdownBlock>
-      We believe that each store has a different set of users and each brand has
-      its own way to communicate with its customers. Existing e-commerce
+      We believe that each store has a different set of users and **each brand
+      has its own way to communicate with its customers**. Existing e-commerce
       solutions provide a default or community themes, but it quickly becomes
       difficult to adapt to what you really want without introducing technical
       debt. We try to solve that!
     </MarkdownBlock>
     <MarkdownBlock>
-      Front-Commerce follows the Atomic Design principles to provide a
-      maintainable, extendable and composable theme. By moving React components
-      around and adapting the atoms to your brand, you will be able to create
-      your own atmosphere. If you need more, combine any data exposed in GraphQL
-      into a totally custom reactive UI in weeks instead of months.
+      Front-Commerce follows the Atomic Design principles to provide **a
+      maintainable, extendable and composable theme**. By moving React
+      components around and adapting the atoms to your brand, you will be able
+      to create your own atmosphere. If you need more, combine any data exposed
+      in GraphQL into a totally custom reactive UI in weeks instead of months.
     </MarkdownBlock>
     <MarkdownBlock>
-      Web technologies evolve at a fast pace and it’s hard to stay up-to-date,
-      but your users deserves the best. Our promise is to provide you a solid,
+      Web technologies evolve at a fast pace and **it’s hard to stay up-to-date,
+      but your users deserves the best**. Our promise is to provide you a solid,
       performant and accessible theme as your foundation. We will upgrade the
       underlying libraries and base components for you so you could get the new
       best practices for free. We have only just begun! Here is what’s next:
@@ -243,7 +243,7 @@ your UX designers can iterate on new prototypes.
 With Front-Commerce’s architecture you will be able to isolate each responsibilities in their
 own codebase if you need it.
 `,
-        image: imgUrl("docusaurus.svg"),
+        image: imgUrl("laughing-friends-on-couch_925x.jpg"),
         imageAlign: "right",
         title: "Teams collaboration"
       }
@@ -252,7 +252,7 @@ own codebase if you need it.
 );
 
 const Tested = props => (
-  <Block background="light">
+  <Block background="light" id="hp-tests">
     {[
       {
         content: `
@@ -270,16 +270,17 @@ you have.
 Our mission is to help you crafting good code, that’s why you could leverage our base tooling
 to develop your features with tests too!
 `,
-        image: imgUrl("docusaurus.svg"),
-        imageAlign: "left",
         title: "Tests, tests and tests"
+      },
+      {
+        content: `<script data-rows="30" data-cols="120" src="https://asciinema.org/a/e8J14tmq9l6uKETzgZjZ7YfFk.js" id="asciicast-e8J14tmq9l6uKETzgZjZ7YfFk" async></script>`
       }
     ]}
   </Block>
 );
 
 const ContactUs = props => (
-  <div className="productShowcaseSection paddingBottom">
+  <div className="productShowcaseSection paddingTop paddingBottom">
     <h2>Still interested? Any questions?</h2>
     <p>
       If you are interested with what you’ve read or things are still not clear,
@@ -300,7 +301,6 @@ const ContactUs = props => (
 class Index extends React.Component {
   render() {
     let language = this.props.language || "";
-
     return (
       <div>
         <HomeSplash language={language} />

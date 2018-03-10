@@ -2,6 +2,10 @@ body {
   font-family: $fcDefault;
 }
 
+strong {
+  font-weight: 700;
+}
+
 .button--primary {
   background: $primaryColor;
   color: #fff;
@@ -17,8 +21,18 @@ body {
   opacity: 0.3;
 }
 
+.blockImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #magento2 .blockContent ul {
   text-align: left;
+}
+
+#hp-tests .blockElement:last-child {
+  padding: 0;
 }
 
 footer .sitemap {
