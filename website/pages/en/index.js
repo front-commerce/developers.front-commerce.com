@@ -80,16 +80,18 @@ class HomeSplash extends React.Component {
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
-            <Button href="https://demo.front-commerce.com" primary>
+            <Button href={docUrl("getting-started.html", language)} primary>
               Getting started
             </Button>
           </PromoSection>
           <PromoSection>
-            <Button href={docUrl("doc1.html", language)}>
+            <Button href={docUrl("vision.html", language)}>
               Why Front-Commerce?
             </Button>
-            <Button href={docUrl("doc2.html", language)}>Architecture</Button>
-            <Button href={docUrl("doc2.html", language)}>Recipes</Button>
+            <Button href={docUrl("architecture-overview.html", language)}>
+              Architecture
+            </Button>
+            <Button href={docUrl("recipes.html", language)}>Recipes</Button>
             <Button href="https://demo.front-commerce.com">
               Demo store
               <i
@@ -138,7 +140,7 @@ const Features = props => (
       },
       {
         content: `Started in 2015 **Front-Commerce is already powering
-          shops in production**. We provide out of the box an extensive logging system (client / server errors),
+          shops in production**. We provide out of the box: an extensive logging system (client / server errors),
           error boundaries, maintenance mode, SEO, i18n, security, caching and invalidation, payments,
           efficient image processing…`,
         image: imgUrl("battery-charged.svg"),
@@ -259,7 +261,7 @@ const Tested = props => (
 When time comes to choose a solution to build your brand’s public image for your storefront,
 you must take quality into consideration. **New technologies are worthless if quality is left behind.**
 
-We are commited to deliver code with a high level of quality, and thus are including tests at
+We are committed to deliver code with a high level of quality, and thus are including tests at
 several levels. React components including in the design system have [structural tests using
 Storyshots](https://storybook.js.org/testing/structural-testing/). Critical logic and
 reusable utilities also are unit tested using [Jest](https://facebook.github.io/jest/).

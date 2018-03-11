@@ -1,10 +1,10 @@
 {
   "docs": {
-    "Docusaurus": ["doc1"],
-    "First Category": ["doc2"],
-    "Second Category": ["doc3"]
-  },
-  "docs-other": {
-    "First Category": ["doc4", "doc5"]
+    "Front-Commerce": ["welcome", "vision", "faq"],
+    "Architecture": ["architecture-overview"],
+    "Installation": ["getting-started"],
+    "Recipes": ["recipes"],
+    "Troubleshooting": ["troubleshooting"],
+    "Appendices": ["roadmap", "migration-guides"]
   }
 }

@@ -27,12 +27,9 @@ strong {
   justify-content: center;
 }
 
-#magento2 .blockContent ul {
-  text-align: left;
-}
-
-#hp-tests .blockElement:last-child {
-  padding: 0;
+.mainContainer .wrapper ol li,
+.mainContainer .wrapper ul li {
+  margin-bottom: 5px;
 }
 
 footer .sitemap {
@@ -48,6 +45,15 @@ footer .fcLogo {
 }
 footer .fcLogo:hover {
   opacity: 1;
+}
+
+/** HP **/
+#magento2 .blockContent ul {
+  text-align: left;
+}
+
+#hp-tests .blockElement:last-child {
+  padding: 0;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {

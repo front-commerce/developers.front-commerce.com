@@ -19,12 +19,13 @@ const siteConfig = {
   projectName: "developers",
   gaTrackingId: "UA-1412249-44",
   headerLinks: [
-    { doc: "doc1", label: "Docs" },
-    { doc: "doc4", label: "API" },
+    { doc: "welcome", label: "Docs" },
+    { doc: "faq", label: "FAQ" },
     { page: "help", label: "Help" },
     { page: "license", label: "License" },
     { blog: true, label: "Blog" }
     /*
+    { doc: "doc4", label: "API" },
       { search: true },
       { languages: true }
     */
