@@ -32,7 +32,7 @@ were noticing the rise of what was called _« Component Based »_ frontend
 architectures.
 
 React was gaining traction, and this team enjoyed developing their first
-projects with it. **Its declarative and composable nature of it made them
+projects with it. **Its declarative and composable nature made them
 productive and turned complex UIs into things easier to reason about.**
 
 Then came **the announcements** of
