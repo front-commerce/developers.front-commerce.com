@@ -13,22 +13,22 @@ so we have a lot of things on our plate!
 Due to the nature of the product, our roadmap is doomed to evolve
 often according to the technologies around it.
 
-Here are examples:
+Here are a few examples:
 
-* a browser will support a new web API, making it relevant for
+* a browser now supports a new web API, making it relevant for
   production purpose
-* a library we use will release a new major version, bringing
+* a library we use releases a new major version, bringing
   awesomeness to our world
-* a solution we connect with will release a new version, with API
+* a solution we connect with releases a new version, with API
   changes (breaking, or allowing us to interact with it in a more
   convenient way)
 * what was once considered — at least by us — as a good practice
-  has now found a better alternative
+  has now been replaced by a better alternative
 
-While all of these things happens, **we have a promise to keep with you:
+While all of these things happen, **we have a promise to keep with you:
 you won’t have to suffer from this fatigue by using Front-Commerce.**
 
-Thus we will have some work to make it available in the product,
+Thus we will have to work to make it available in the product,
 without breaking your code or by making the upgrade as smooth as possible.
 
 ### We are a bootstrapped company
@@ -48,13 +48,13 @@ leverage them.
 ### We are part of an ecosystem
 
 Truly valuing our Customers and Partners means that our roadmap will integrate
-your feedbacks.
+your feedback.
 
-Here are examples:
+Here are some examples:
 
 * ouch! A critical — or not so critical — bug has been noticed… release needed!
 * developers are working on a specific OS and are being annoyed by some
-  slowness, or a bug with tho tooling
+  slowness, or a bug with the tooling
 * project·s will need a new feature, and we know it would be of benefit
   as part of the core
 * supporting a new solution is one of the most asked request we have, we
@@ -70,16 +70,16 @@ or a new tool for the documentation in our roadmap…
 ## Front-Commerce’s roadmap
 
 > **Coming soon**: the first 2 projects using Front-Commerce are deployed in
-> production and there are some new features needed (eg: Wishlist). On the
-> other hand, we are working on the 1.0 release which will means a stable API.
+> production and there are some new features needed (e.g.: Wishlist). On the
+> other hand, we are working on the 1.0 release which will mean a stable API.
 >
 > But the cool thing is that we have a lot of traction these days and our partners have
-> several Front-Commerce projects in the pipe, with decisions in the next few weeks.
+> several Front-Commerce projects in the pipe, with decisions coming in the next few weeks.
 >
 > For all these reasons the Roadmap will evolve a lot by mid-April and we will
 > keep you updated.
 
-If you want to have an imprecise vision of what comes next here is a
+If you want to have an overview of what comes next here is a
 **temporary roadmap**.
 
 ### 1.0: mid-April
