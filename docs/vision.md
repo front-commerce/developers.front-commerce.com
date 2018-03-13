@@ -46,10 +46,10 @@ to build scalable and maintainable web and mobile UIs. **While it solved the
 same problems as Magento2's complex system, it felt simpler and cleaner as a
 solution.**
 
-After all — they decided during a retrospective — eCommerce is about creating
-custom user experiences, and it is where we spend most of our time
-when building and maintaining an online store: let’s make it a pleasant experience
-and **never do a Magento2 theme using their stack**.
+After all eCommerce is about creating custom user experiences, and it is where
+we spend most of our time when building and maintaining an online store:
+let’s make it a pleasant experience and **never do a Magento2 theme using
+their stack**.
 
 **Front-Commerce was born.**
 
