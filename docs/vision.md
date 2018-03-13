@@ -39,12 +39,12 @@ Then came **the announcements** of
 [Falcor](https://www.youtube.com/watch?v=WiO1f6h15c8) by Netflix and
 [GraphQL](http://graphql.org/blog/graphql-a-query-language/) by Facebook.
 Pieces came together and Component Based UIs were now possible (and already
-in production on huge sites). Design (Brad Frost’s
-[Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/) methodology,
-Pattern libraries, new tools such as Sketch) and engineering practices could
-live together to build scalable and maintainable web and mobile UIs.
-**It was a simpler and cleaner solution to the same problems solved
-by what they disliked in Magento2.**
+in production on huge sites). Design methodologies (Brad Frost’s
+[Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)), tools
+Pattern libraries, Sketch) and engineering practices could now live together
+to build scalable and maintainable web and mobile UIs. **It was a simpler
+and cleaner solution to the same problems solved by what they disliked in
+Magento2.**
 
 After all — they decided during a retrospective — eCommerce is about creating
 custom user experiences, and it is where we spend most of our time
