@@ -42,9 +42,9 @@ Pieces came together and Component Based UIs were now possible (and already
 in production on huge sites). Design methodologies (Brad Frost’s
 [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)), tools
 Pattern libraries, Sketch) and engineering practices could now live together
-to build scalable and maintainable web and mobile UIs. **It was a simpler
-and cleaner solution to the same problems solved by what they disliked in
-Magento2.**
+to build scalable and maintainable web and mobile UIs. **While it solved the
+same problems as Magento2's complex system, it felt simpler and cleaner as a
+solution.**
 
 After all — they decided during a retrospective — eCommerce is about creating
 custom user experiences, and it is where we spend most of our time
