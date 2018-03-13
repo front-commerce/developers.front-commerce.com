@@ -33,4 +33,24 @@ you could quickly find the information you need depending on your context.
 This documentation lives in a more global website for developers, so you might be
 able to find more information in our [blog posts](/blog) or content pages.
 
-TODO add links to the relevant sections here
+Whether you want to [understand our vision](vision.md) or get an [architectural
+overview of Front-Commerce](architecture-overview.md) as a system and its internals
+you can start here.
+
+In case you have made your choice and want to start your project, you might be
+interested by information on [our licensing process](/license.html) and then
+all the documentation to [get your project started](getting-started.md).
+
+If your project is running and you are developing new features, we have
+some [practical recipes](recipes.md) to help you getting things done (and soon an API).
+
+> **Coming soon**: we will also publish an API reference from our code with
+> our main technical modules documented. We are waiting for the v1.0 to ensure
+> we are only documenting what will stay in our final codebase.
+
+Last but not least, if you are upgrading a project to the latest Front-Commerce version,
+we have documented some [Migration guides](migration-guides.md) to make the process
+as seamless as possible.
+
+As always, if you do not find what you need do not hesitate to
+[ask for help](/help.html) and tell us what is missing.
