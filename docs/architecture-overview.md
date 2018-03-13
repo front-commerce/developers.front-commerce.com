@@ -17,7 +17,7 @@ For instance, with Magento2
 * Magento extension
 * Elasticsearch
 
-> Coming soon:
+> **Coming soon:**
 >
 > * Thinking in Components
 > * Thinking in Graph

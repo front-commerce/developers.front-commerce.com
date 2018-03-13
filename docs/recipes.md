@@ -1,14 +1,14 @@
 ---
 id: recipes
-title: Recipes
+title: What are Recipes?
 ---
 
 We want Front-Commerce to be the solution that will make you the
-most productive to craft the shopping experiences your user deserves. That means that it should not get into your way
-while you are trying to prototype, test or implement a feature.
+most productive to craft the shopping experiences your user deserves. That means that **it should not get into your way
+while you are trying to prototype, test or implement a feature.**
 We built it this way and want to document it this way too!
 
-We believe in practical documentations. Instead of explaining each
+**We believe in practical documentation.** Instead of explaining each
 concept by looking at the API and all the ways to use it, we
 chose to illustrate them with task oriented recipes.
 

@@ -10,7 +10,7 @@
     "Getting started": "Getting started",
     "migration-guide-1.0": "1.0 Migration guide",
     "migration-guides": "Migration guides",
-    "recipes": "Recipes",
+    "recipes": "What are Recipes?",
     "roadmap": "Roadmap",
     "doc1": "Latin-ish",
     "Example Page": "Example Page",
@@ -28,7 +28,8 @@
     "Installation": "Installation",
     "Recipes": "Recipes",
     "Troubleshooting": "Troubleshooting",
-    "Appendices": "Appendices"
+    "Appendices": "Appendices",
+    "1.x": "1.x"
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",

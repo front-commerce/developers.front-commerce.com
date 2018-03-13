@@ -27,7 +27,7 @@ we are providing the support you’ll need with it.
 
 ## To upgrade run the following commands
 
-TODO (npm / composer)
+> **TODO** (npm / composer)
 
 ## Backward incompatible changes
 
@@ -56,4 +56,4 @@ None yet.
 
 ## New Features
 
-TODO
+> **TODO**
