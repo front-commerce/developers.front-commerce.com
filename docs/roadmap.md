@@ -89,7 +89,7 @@ If you want to have an overview of what comes next here is a
 We prevented premature optimization and introduced technical debt.
 Time has come to pay it back!
 
-* **(Started)** GraphQL architecture reworked to its final module version
+* **(Started)** GraphQL architecture reworked to its final modular version
   (inspired by, or using [GrAMPS](https://gramps.js.org/))
 * **(Started)** Document all components in our Design System, and review
   the Atomic Design architecture in place
@@ -97,11 +97,11 @@ Time has come to pay it back!
   needed for partners to get started
 * **(Started)** Improving the Developer Experience by upgrading tools (webpack 4)
   and allow faster reload times
+* **(Started)** Code splitting for reasonable bundle sizes
 * Homogenize and document configurations
 * Make the base theme great again!™ by backporting things from our first
   projects’ themes and integrating what we have learnt from them
 * PWA basics: manifest, simple Service Worker, offline page
-* _(Very likely)_ Code splitting for reasonable bundle sizes
 * _(Very likely)_ Use some of the tooling from Magento’s PWA Studio
 * _(Very likely)_ Split code into several npm / composer packages managed from monorepos
 * _(Maybe)_ Use Magento2 Elastic Suite extension instead of Wyomind ElasticSearch
