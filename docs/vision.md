@@ -48,8 +48,8 @@ solution.**
 
 After all eCommerce is about creating custom user experiences, and it is where
 we spend most of our time when building and maintaining an online store:
-let’s make it a pleasant experience and **never do a Magento2 theme using
-their stack**.
+**let’s make it a pleasant experience** and never do a Magento2 theme using
+their stack.
 
 **Front-Commerce was born.**
 
