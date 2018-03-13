@@ -12,12 +12,12 @@ right away.
 
 ## Once upon a time
 
-Back in 2015 in a french agency named [Occitech](https://www.occitech.fr), a
+Back in 2015, in a french agency named [Occitech](https://www.occitech.fr), a
 friendly team of developers saw the announcements of the new major version
 of the eCommerce solution they were experts in: **Magento2**.
 
 A few things were very cool (Service API and testing for instance), but something
-make them feel bad… **very bad**: after all these years, the frontend part had
+made them feel bad… **very bad**: after all these years, the frontend part had
 not been reworked and this major version was adding some engineering layers on top
 of it. **It was like a J2EE version of a 2008 HTML website…** with jQuery instead of
 Prototype, a dying JS framework named KnockoutJS plus a bunch of XML files!
@@ -30,7 +30,7 @@ architectures.
 
 React was gaining traction, and this team took a lot of pleasure developing
 their first projects with it. **Its declarative nature, and the composition it
-allowed make them feel productive and turned complex UIs into things much more
+allowed made them feel productive and turned complex UIs into things much more
 easy to reason about.**
 
 Then came **the announcements** of
@@ -44,31 +44,31 @@ live together to build scalable and maintainable web and mobile UIs.
 **It was a simpler and cleaner solution to the same problems solved
 by what they disliked in Magento2.**
 
-Afterall — they decided during a retrospective — eCommerce is about creating
-custom user experiences, and it is were we spend most of our time
+After all — they decided during a retrospective — eCommerce is about creating
+custom user experiences, and it is where we spend most of our time
 when building and maintaining an online store: let’s make it a pleasant experience
 and **never do a Magento2 theme using their stack**.
 
 **Front-Commerce was born.**
 
-Inspired another new trend towards simpler backend services and headless
+Inspired by another new trend towards simpler backend services and headless
 eCommerce solutions (the JAMStack, and solutions such as
 [Snipcart](https://snipcart.com/) or [Moltin](https://moltin.com/)),
 they decided to introduce a middleware to loosen their dependency on Magento2
 and embrace the upcoming changes that may happen in the eCommerce world.
 
-## What is is
+## What it is
 
 Fast forward to today, this team evolved and we are now proud of what we
 achieved since that time.
 
-After a POC and a developing the React frontend using Falcor for data fetching,
+After a POC and developing the React frontend using Falcor for data fetching,
 we demo-ed the product to several people and got a lot of very positive feedbacks.
 When we decided to « go for it » and launch the Front-Commerce product for real
 (in October 2016) we moved to GraphQL and (the yet young) Apollo client and embrace
 their rich and innovative ecosystem.
 
-Since then, we worked hard to build a product that support a wide range of
+Since then, we worked hard to build a product that supports a wide range of
 eCommerce features
 
 > **TODO** To be continued
