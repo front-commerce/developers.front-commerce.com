@@ -41,7 +41,7 @@ Then came **the announcements** of
 Pieces came together and Component Based UIs were now possible (and already
 in production on huge sites). Design methodologies (Brad Frost’s
 [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)), tools
-Pattern libraries, Sketch) and engineering practices could now live together
+(Pattern libraries, Sketch) and engineering practices could now live together
 to build scalable and maintainable web and mobile UIs. **While it solved the
 same problems as Magento2's complex system, it felt simpler and cleaner as a
 solution.**
