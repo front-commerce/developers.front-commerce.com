@@ -123,7 +123,7 @@ architecture is good enough
   * wishlist
   * guest checkout
   * renew order
-* POCs with other backends: Sylius, Shopify, Akeneo, Wordpress, Drupal (list TBD)
+* POCs with other backends: Sylius, Shopify, Moltin, Akeneo, Wordpress, Drupal (list TBD)
 * PWA: create an app shell with cache management where possible
 * PWA: experiments around offline catalog with sync, samples and documentation
 
