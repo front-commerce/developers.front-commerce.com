@@ -121,7 +121,7 @@ const Features = props => (
     {[
       {
         content: `Build the user experience you really want by extending and building upon our
-          base React theme and components.
+          base React theme and idiomatic components.
           As a frontend developer, **you can use the tools you are productive with**.
           Work with static files using our living styleguide powered by [Storybook](https://storybook.js.org),
           without the whole backend.`,
@@ -131,9 +131,10 @@ const Features = props => (
       },
       {
         content: `Leverage the GraphQL typing system to expose your data easily,
-          no matter the source. Host it on your servers and **split your business
-          logic into different services or keep your existing stack**.
-          Our GraphQL middleware includes everything you’ll need to build a fast website, even with slow backends.`,
+          no matter the source. Host it on your infrastructure and **supercharge your current
+          solutions (CMS, eCommerce Platform, PIM, ERP)** to support modern clients (eg: PWA).
+          Our GraphQL middleware includes everything you’ll need to build a fast website,
+          and **embrace a microservice architecture** even with slow backends.`,
         image: imgUrl("logos/graphql.svg"),
         imageAlign: "top",
         title: "GraphQL middleware"
