@@ -75,26 +75,29 @@ Since then, we worked hard to build a product that supports a wide range of
 eCommerce features. We kept our focus on Magento2 which is the platform we
 knew most and which allows to support a lot of eCommerce use cases.
 
-**Front-Commerce is in production as a frontend for Magento2 stores since
+**Front-Commerce is in production, serving Magento2 stores, since
 February 2018. It supports most of the Magento Opensource edition.**
 It is composed of a React application, a GraphQL middleware using Magento2
 Web APIs, Redis for caching and ElasticSearch for search — more details on
 [Front-Commerce’s architecture documentation page](architecture-overview.md).
 
-We wanted to be our first integrators (dogfooding), and to create a few stores with
-Front-Commerce before distributing the product to the world.
+We wanted to be our first integrators and to create a few stores with
+Front-Commerce before distributing the product to the world. By doing this
+we could develop empathy and know how it feels to work with Front Commerce.
+It also allows us to be confident in our claims and deliver a solid v1.0.
 
-Being in production means that we focused on features, themes, payments,
+Being in production means that we focused on what is the most important
+for an online stores: catalog, checkout, shipping, payments, theme overrides,
 deployments, caching, logging… and everything you would expect from such a
 solution. **That makes us the most mature « eCommerce PWA theme » in our field.**
 
-We are now working on technical documentation and refactoring (v1.0), along with
-business and legal things to start selling license to customers and help
-them building their stores with Front-Commerce. It also means that we are
+We are now working on technical documentation and refactoring to deliver
+Front-Commerce v1.0. On an other hand, we are finalizing business and legal
+aspects to start selling licenses to customers. It also means that we are
 building an ecosystem of partners. See [the license page](/license.html)
 for further information.
 
-**The product is alive, and ready for you to use!** We are now entering in a
+**The product is alive, and ready to use!** We are now entering in a
 release cycle to [deliver incremental improvements regularly](roadmap.md).
 
 ## What do we want it to be
@@ -104,8 +107,8 @@ focused on users and their shopping experience.
 
 In a web environment it means that we have to match high quality standards.
 Hence our vision is to **sell a product that contains all the best practices
-for building qualitative online stores by default** so that teams can then
-focus _only_ on what is relevant to their context.
+for building qualitative online stores by default** so teams can stay focused
+on what is relevant to their context.
 
 Best practices means:
 
@@ -121,16 +124,17 @@ Best practices means:
 
 Our field evolves at a fast pace and **it is difficult to remain aware of all
 the best practices**. By using Front-Commerce, you will benefit from all our
-experience and get those new fancy practices with our regular updates:
+experience and get those new practices with our regular updates:
 **your stores will perform better over time**.
 
 Relieved from this burden, we hope that **you will focus more on your
 users** and deliver the shopping experience they deserve and love.
 
-As developers, you will also learn new concepts and have everything you
-need to experiment what you never took the time to learn before.
+As developers, you will also learn new concepts since Front-Commerce lowers
+the entry cost and makes experimenting with what you wanted to learn a breeze.
 **If you are working on a team and want to increase the overall quality,
 Front-Commerce can help you introduce better practices**.
 
 We believe that together we can build a faster and more usable web,
 starting with online stores. Are you ready for this revolution?
+[Get started!](getting-started.md)
