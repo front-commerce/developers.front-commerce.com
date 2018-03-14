@@ -40,11 +40,8 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a href={this.pageUrl("users.html", this.props.language)}>
-              User Showcase
-            </a>
             <a
-              href="http://www.front-commerce.com/en/partners/"
+              href="https://www.front-commerce.com/en/partners/"
               target="_blank"
             >
               Partners
