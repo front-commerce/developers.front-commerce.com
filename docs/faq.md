@@ -9,74 +9,134 @@ title: FAQ
 
 No.
 
-## Comment mettre en place un projet Front-Commerce + Magento 2
+As a bootstrapped company with a small team, we do not think we
+could be able to achieve [our vision](vision.md) in a sustainable way
+with an open source business model yet.
 
-Installer notre module Magento 2 pour compléter son API
-S’assurer que tous vos modules spécifiques de la boutique sont bien exposés via la WebAPI
-Configurer le lien entre le module Magento 2 et le connecteur Front-Commerce
-Ajouter les éventuels nouveaux endpoints API sur le schéma GraphQL du connecteur
-Personnaliser votre thème Front-Commerce
+That being say, we are open sourcing part of our stack and
+contributing to open source projects we use as much as possible.
 
-## Quels gains attendre ?
+See more information on [our license page](/license.html).
 
-### Back-end
+## Will I have access to the source code?
 
-Toute la partie back-end client se limite à l’API. Il n’y a donc plus besoin de travailler sur les vues.
+A valid license gives you access to our whole codebase.
 
-### Front-end
+There are no private dependencies, compiled or obfuscated code.
+You could browse the code as you wish and use it as an inspiration
+to learn and build your own endpoints and custom theme.
 
-Le fait de ne plus être dépendant du moteur de template du CMS permet une liberté totale d’intégration. Grâce au Design System fourni nativement, la création et l’évolution du thème sera grandement facilitée dans l’équipe.
+## How to set up a Front-Commerce + Magento2 project?
 
-Le tout cumulé permet de gagner environ 20% du temps de développement, en fonction bien entendu de l’expérience.
+1.  Install our Magento extension to extend Magento2’s Web APIs
+2.  Ensure that your custom extensions expose their services through the
+    Web APIs
+3.  Configure the solutions so Magento2 and Front-Commerce connector
+    can communicate together
+4.  If needed, add new GraphQL types and datasources to leverage your custom
+    features
+5.  Customize your Front-Commerce theme by extending the base theme
 
-Sur la partie client, les gains sont en moyenne une réduction de 75% du temps de chargement des pages (voir démo), et donc un meilleur référencement et une amélioration des KPI des visiteurs dont évidemment les ventes.
+More information in our [getting started section](getting-started.md).
 
-## Sur quoi intervient l'équipe Front-Commerce ?
+## What benefits should I expect?
 
-Du fait de votre accès à l’intégralité du code de la solution, vous êtes totalement indépendants.
+### Backend
 
-Dans le cadre de la mise en service nous vous expliquons les différentes étapes qui vous attendent et vous montrons les différents outils et supports mis à votre disposition. Nous intervenons techniquement uniquement pour la mise en place du connecteur.
+Only expose API and you are good to go. You don't have to work with views,
+blocks or any display logic specific to your eCommerce solution. It makes
+development much more simpler and maintainable.
 
-Si vous faites appel à nous ensuite, ce sera dans le cadre du support (inclus dans la licence) ou pour des prestations optionnelles en formation, accompagnement ou co-développement.
+The GraphQL middleware in Front-Commerce allows you to leverage your existing
+APIs and to combine them in an efficient way, thus reducing the number of
+endpoints to create.
 
-## Solutions supportées
+### Frontend
 
-Front-Commerce fonctionne pour l’instant avec Magento 2.
+Not depending on your CMS templating system allows you a total freedom to
+build what you’ll need. By using the Design System we provide, your team
+collaboration will improve and it will show on your theme.
 
-Si suffisamment de demandes nous parviennent pour d’autres solutions, nous nous y pencheront.
+We estimate that it could make you reduce your development cost of ~20%
+depending — of course — of your experience.
 
-Nous envisageons d’implémenter les connecteurs suivants :
+For your users, you might expect a page load time decrease of 75% in average
+(see [our public demo](https://demo.front-commerce.com)). For you, it might
+result in better SEO performances and more sales.
 
-Akeneo
-WordPress
-Drupal
-Sylius
-Izberg
+## When will the Front-Commerce team step in my project?
 
-## A quels projets convient Front-Commerce ?
+Since you have access to the whole codebase of our solution, you are
+autonomous for your project.
 
-Front-Commerce s’adresse aux équipes qui souhaitent bénéficier des outils modernes et efficients pour faire évoluer leur(s) boutique(s) en ligne, et les optimiser pour les clients finaux (UX). C’est encore plus pertinent lorsque la boutique est suivie et évolue en continu.
+During the onboarding, our team will help you by explaining each steps
+of the set up. We will also give you an overview of the tools and media
+you could then use to access our support.
 
-De plus, lorsque le projet fait intervenir d’autres systèmes d’information (ERP, CRM, PIM, CMS, Avis Clients, …), son architecture micro-services simplifie grandement leur intégration sans surcharger le CMS e-commerce.
+Our technical interaction will be limited to the setup. If you need our
+team afterwards, it will be either:
 
-## Le code source est-il disponible ?
+* through the support (part of the license)
+* for additional professional services such as training, consulting,
+  auditing or custom development
 
-Une fois la licence obtenue, nous vous donnons accès à l’ensemble du code source. Il n’y a aucun code caché, compilé ou inaccessible. Vous pourrez toucher au connecteur pour adapter vos endpoints API et bien entendu le thème, sans aucune contrainte.
+## Supported platforms
 
-## Quels sont les inconvénients ?
+Right now, Front-Commerce is compatible with Magento2.
 
-Le gros challenge pour une équipe spécialisée sur son CMS favori est de se former à React, GraphQL et la manipulation d’API REST. Tout changement génère une résistance, c’est humain !
+Depending on feedbacks from partners and potential customers we will support
+other platforms.
 
-Du fait de son fonctionnement par API, la plupart des extensions existantes (maison ou d’éditeurs) sont incomplètes. En effet, rares sont celles intégrant de base la couche API. Cela demande donc un travail complémentaire d’adaptation.
+So far, we are considering to support the following platforms:
 
-Enfin, toutes les fonctionnalités et réglages des CMS supportés (Magento 2 pour le moment) ne sont pas forcément (encore) gérés. Les cas particuliers sont gérés soit dans le cadre de l’évolution de notre produit, soit en développements complémentaires si trop spécifiques.
+* Akeneo
+* WordPress
+* Drupal
+* Sylius
+* Moltin
+* Izberg
 
-## Magento2 + ReactJS !
+## What kind of projects is Front-Commerce particularly appropriated for?
 
-Ce sont les fondations de Front-Commerce. ReactJS est couplé à Magento2 grâce à GraphQL.
+Front-Commerce is targeted at teams wanting to leverage modern tools and
+technologies to improve their online stores. It will shine in an user-centric
+approach with continuous improvement in mind. Our goal is to empower multidisciplinary
+teams by providing the technical foundations for building things together.
 
-Consultez la génèse et l’architecture de Front-Commerce.
+Like any other PWA platforms, Front-Commerce is also particularly suited
+to stores targeting mobile users and / or emerging markets.
 
-## Je n’ai pas trouvé de réponse à mes questions
+It can also play a major part in a microservice architecture. When a project
+is composed of different systems (ERP, CRM, PIM, CMS, Shipping Platform, …),
+the GraphQL middleware will allow to cut integration costs by reducing the
+number of interactions between systems.
 
-Send us a PR! Or contact us!
+## What are the drawbacks?
+
+The biggest challenge for a team mastering an existing CMS solution is to
+learn new paradigms. Learning Component based frontend (in React), the GraphQL
+query language and microservices architecture using REST APIs can be tough
+in some teams or projects due to existing culture.
+
+Front-Commerce relies on external APIs to « get things done ». Having poor
+or no API in your existing platforms could be a huge impediment.
+
+For Magento2 stores for instance, you must be aware that most of the extension
+we encountered so far are not exposing a Web API. If — by chance — it does
+have a solid Service API you will still have to extend it to expose what you’ll
+need. It can be an overhead depending on the extension’s quality.
+
+Last but not least, there are some settings from existing CMS that might
+not be supported in Front-Commerce. For instance, layout and design features
+from Magento2’s admin area will probably never be supported in Front-Commerce.
+Due to the current state of our product, it is very likely that some other
+settings have not yet been supported in the product… but [our roadmap](roadmap.md)
+is shaped by your needs, so there’s always hope!
+
+## I have not found an answer to my question
+
+We're sorry to hear that. 😟
+
+Please, open [a public issue](https://github.com/front-commerce/developers.front-commerce.com/issues)
+with your question, or [contact us](mailto:contact@front-commerce.com)
+and we will do our best to answer you and improve this site!
