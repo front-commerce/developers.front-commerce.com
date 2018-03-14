@@ -20,14 +20,14 @@ See more information on [our license page](/license.html).
 
 ## How to set up a Front-Commerce + Magento2 project?
 
-1.  Install our Magento extension to extend Magento2’s Web API
+1.  Install our Magento extension to extend Magento2’s Web APIs
 2.  Ensure that your custom extensions expose their services through the
-    Web API
+    Web APIs
 3.  Configure the solutions so Magento2 and Front-Commerce connector
     can communicate together
 4.  If needed, add new GraphQL types and datasources to leverage your custom
     features
-5.  Customize your Front-Commerce theme by extending our base
+5.  Customize your Front-Commerce theme by extending the base theme
 
 More information in our [getting started section](getting-started.md).
 
@@ -35,8 +35,9 @@ More information in our [getting started section](getting-started.md).
 
 ### Backend
 
-Only expose API and you are good to go. There is no need to work on views,
-blocks or any display logic which is much more simpler and maintainable.
+Only expose API and you are good to go. You don't have to work with views,
+blocks or any display logic specific to your eCommerce solution. It makes
+development much more simpler and maintainable.
 
 The GraphQL middleware in Front-Commerce allows you to leverage your existing
 APIs and to combine them in an efficient way, thus reducing the number of
@@ -46,7 +47,7 @@ endpoints to create.
 
 Not depending on your CMS templating system allows you a total freedom to
 build what you’ll need. By using the Design System we provide, your team
-will work much better to create or improve your theme.
+collaboration will improve and it will show on your theme.
 
 We estimate that it could make you reduce your development cost of ~20%
 depending — of course — of your experience.
@@ -103,7 +104,7 @@ Consultez la génèse et l’architecture de Front-Commerce.
 
 ## I have not found an answer to my question
 
-Sad.
+We're sorry to hear that. 😟
 
 Please, open [a public issue](https://github.com/front-commerce/developers.front-commerce.com/issues)
 with your question, or [contact us](mailto:contact@front-commerce.com)
