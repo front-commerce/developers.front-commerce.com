@@ -78,16 +78,15 @@ knew most and which allows to support a lot of eCommerce use cases.
 **Front-Commerce is in production as a frontend for Magento2 stores since
 February 2018. It supports most of the Magento Opensource edition.**
 It is composed of a React application, a GraphQL middleware using Magento2
-webAPI, Redis for caching and ElasticSearch for search — more details on
+Web APIs, Redis for caching and ElasticSearch for search — more details on
 [Front-Commerce’s architecture documentation page](architecture-overview.md).
 
-We wanted to be our first integrators, and to create a few stores with
-Front-Commerce (dogfooding) before distributing the product to the world.
+We wanted to be our first integrators (dogfooding), and to create a few stores with
+Front-Commerce before distributing the product to the world.
 
-Being in production means that we focused on features, themes creation and
-overrides, payments, deployments, caching, logging… and everything you would
-expect from such a solution. **That makes us the most mature « eCommerce PWA theme »
-in our field.**
+Being in production means that we focused on features, themes, payments,
+deployments, caching, logging… and everything you would expect from such a
+solution. **That makes us the most mature « eCommerce PWA theme » in our field.**
 
 We are now working on technical documentation and refactoring (v1.0), along with
 business and legal things to start selling license to customers and help
@@ -120,18 +119,18 @@ Best practices means:
 * continuous deployment
 * microservices architecture and resilient websites
 
-Our field evolves at a fast pace and **it is often difficult for people to
-stay aware of all the best practices**. By using Front-Commerce, you will
-benefit from all our experience and get those new fancy practices with
-our regular updates: **your stores will perform better over time**.
+Our field evolves at a fast pace and **it is difficult to remain aware of all
+the best practices**. By using Front-Commerce, you will benefit from all our
+experience and get those new fancy practices with our regular updates:
+**your stores will perform better over time**.
 
-Relieved from this burden, we hope that **you could focus more on your
-users** and deliver the shopping experience they need and will love.
+Relieved from this burden, we hope that **you will focus more on your
+users** and deliver the shopping experience they deserve and love.
 
 As developers, you will also learn new concepts and have everything you
 need to experiment what you never took the time to learn before.
 **If you are working on a team and want to increase the overall quality,
-Front-Commerce can help you to introduce better practices**.
+Front-Commerce can help you introduce better practices**.
 
-We believe that together we could build a faster and more
-usable web, starting with online stores. Are you ready for this revolution?
+We believe that together we can build a faster and more usable web,
+starting with online stores. Are you ready for this revolution?
