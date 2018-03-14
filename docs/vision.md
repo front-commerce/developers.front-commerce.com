@@ -72,12 +72,69 @@ moved to GraphQL and (the yet young) Apollo client to embrace their rich and
 innovative ecosystem.
 
 Since then, we worked hard to build a product that supports a wide range of
-eCommerce features
+eCommerce features. We kept our focus on Magento2 which is the platform we
+knew most and which allows to support a lot of eCommerce use cases.
 
-> **TODO** To be continued
+**Front-Commerce is in production, serving Magento2 stores, since
+February 2018. It supports most of the Magento Opensource edition.**
+It is composed of a React application, a GraphQL middleware using Magento2
+Web APIs, Redis for caching and ElasticSearch for search — more details on
+[Front-Commerce’s architecture documentation page](architecture-overview.md).
+
+We wanted to be our first integrators and to create a few stores with
+Front-Commerce before distributing the product to the world. By doing this
+we could develop empathy and know how it feels to work with Front Commerce.
+It also allows us to be confident in our claims and deliver a solid v1.0.
+
+Being in production means that we focused on what is the most important
+for an online stores: catalog, checkout, shipping, payments, theme overrides,
+deployments, caching, logging… and everything you would expect from such a
+solution. **That makes us the most mature « eCommerce PWA theme » in our field.**
+
+We are now working on technical documentation and refactoring to deliver
+Front-Commerce v1.0. On an other hand, we are finalizing business and legal
+aspects to start selling licenses to customers. It also means that we are
+building an ecosystem of partners. See [the license page](/license.html)
+for further information.
+
+**The product is alive, and ready to use!** We are now entering in a
+release cycle to [deliver incremental improvements regularly](roadmap.md).
 
 ## What do we want it to be
 
-Proin eget tortor risus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Cras ultricies ligula sed magna dictum porta.
+Over the years, it became clear that Front-Commerce (and PWA in general) was
+focused on users and their shopping experience.
 
-Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Curabitur aliquet quam id dui posuere blandit.
+In a web environment it means that we have to match high quality standards.
+Hence our vision is to **sell a product that contains all the best practices
+for building qualitative online stores by default** so teams can stay focused
+on what is relevant to their context.
+
+Best practices means:
+
+* efficient collaboration between people and teams
+* web performance
+* accessibility
+* SEO
+* consistent web UIs
+* new web APIs
+* different types of tests (unit, integration, visual regression, contracts…)
+* continuous deployment
+* microservices architecture and resilient websites
+
+Our field evolves at a fast pace and **it is difficult to remain aware of all
+the best practices**. By using Front-Commerce, you will benefit from all our
+experience and get those new practices with our regular updates:
+**your stores will perform better over time**.
+
+Relieved from this burden, we hope that **you will focus more on your
+users** and deliver the shopping experience they deserve and love.
+
+As developers, you will also learn new concepts since Front-Commerce lowers
+the entry cost and makes experimenting with what you wanted to learn a breeze.
+**If you are working on a team and want to increase the overall quality,
+Front-Commerce can help you introduce better practices**.
+
+We believe that together we can build a faster and more usable web,
+starting with online stores. Are you ready for this revolution?
+[Get started!](getting-started.md)
