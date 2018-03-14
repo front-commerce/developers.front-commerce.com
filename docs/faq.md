@@ -18,6 +18,14 @@ contributing to open source projects we use as much as possible.
 
 See more information on [our license page](/license.html).
 
+## Will I have access to the source code?
+
+A valid license gives you access to our whole codebase.
+
+There are no private dependencies, compiled or obfuscated code.
+You could browse the code as you wish and use it as an inspiration
+to learn and build your own endpoints and custom theme.
+
 ## How to set up a Front-Commerce + Magento2 project?
 
 1.  Install our Magento extension to extend Magento2’s Web APIs
@@ -56,51 +64,74 @@ For your users, you might expect a page load time decrease of 75% in average
 (see [our public demo](https://demo.front-commerce.com)). For you, it might
 result in better SEO performances and more sales.
 
-## Sur quoi intervient l'équipe Front-Commerce ?
+## When will the Front-Commerce team step in my project?
 
-Du fait de votre accès à l’intégralité du code de la solution, vous êtes totalement indépendants.
+Since you have access to the whole codebase of our solution, you are
+autonomous for your project.
 
-Dans le cadre de la mise en service nous vous expliquons les différentes étapes qui vous attendent et vous montrons les différents outils et supports mis à votre disposition. Nous intervenons techniquement uniquement pour la mise en place du connecteur.
+During the onboarding, our team will help you by explaining each steps
+of the set up. We will also give you an overview of the tools and media
+you could then use to access our support.
 
-Si vous faites appel à nous ensuite, ce sera dans le cadre du support (inclus dans la licence) ou pour des prestations optionnelles en formation, accompagnement ou co-développement.
+Our technical interaction will be limited to the setup. If you need our
+team afterwards, it will be either:
 
-## Solutions supportées
+* through the support (part of the license)
+* for additional professional services such as training, consulting,
+  auditing or custom development
 
-Front-Commerce fonctionne pour l’instant avec Magento 2.
+## Supported platforms
 
-Si suffisamment de demandes nous parviennent pour d’autres solutions, nous nous y pencheront.
+Right now, Front-Commerce is compatible with Magento2.
 
-Nous envisageons d’implémenter les connecteurs suivants :
+Depending on feedbacks from partners and potential customers we will support
+other platforms.
 
-Akeneo
-WordPress
-Drupal
-Sylius
-Izberg
+So far, we are considering to support the following platforms:
 
-## A quels projets convient Front-Commerce ?
+* Akeneo
+* WordPress
+* Drupal
+* Sylius
+* Moltin
+* Izberg
 
-Front-Commerce s’adresse aux équipes qui souhaitent bénéficier des outils modernes et efficients pour faire évoluer leur(s) boutique(s) en ligne, et les optimiser pour les clients finaux (UX). C’est encore plus pertinent lorsque la boutique est suivie et évolue en continu.
+## What kind of projects is Front-Commerce particularly appropriated for?
 
-De plus, lorsque le projet fait intervenir d’autres systèmes d’information (ERP, CRM, PIM, CMS, Avis Clients, …), son architecture micro-services simplifie grandement leur intégration sans surcharger le CMS e-commerce.
+Front-Commerce is targeted at teams wanting to leverage modern tools and
+technologies to improve their online stores. It will shine in an user-centric
+approach with continuous improvement in mind. Our goal is to empower multidisciplinary
+teams by providing the technical foundations for building things together.
 
-## Le code source est-il disponible ?
+Like any other PWA platforms, Front-Commerce is also particularly suited
+to stores targeting mobile users and / or emerging markets.
 
-Une fois la licence obtenue, nous vous donnons accès à l’ensemble du code source. Il n’y a aucun code caché, compilé ou inaccessible. Vous pourrez toucher au connecteur pour adapter vos endpoints API et bien entendu le thème, sans aucune contrainte.
+It can also play a major part in a microservice architecture. When a project
+is composed of different systems (ERP, CRM, PIM, CMS, Shipping Platform, …),
+the GraphQL middleware will allow to cut integration costs by reducing the
+number of interactions between systems.
 
-## Quels sont les inconvénients ?
+## What are the drawbacks?
 
-Le gros challenge pour une équipe spécialisée sur son CMS favori est de se former à React, GraphQL et la manipulation d’API REST. Tout changement génère une résistance, c’est humain !
+The biggest challenge for a team mastering an existing CMS solution is to
+learn new paradigms. Learning Component based frontend (in React), the GraphQL
+query language and microservices architecture using REST APIs can be tough
+in some teams or projects due to existing culture.
 
-Du fait de son fonctionnement par API, la plupart des extensions existantes (maison ou d’éditeurs) sont incomplètes. En effet, rares sont celles intégrant de base la couche API. Cela demande donc un travail complémentaire d’adaptation.
+Front-Commerce relies on external APIs to « get things done ». Having poor
+or no API in your existing platforms could be a huge impediment.
 
-Enfin, toutes les fonctionnalités et réglages des CMS supportés (Magento 2 pour le moment) ne sont pas forcément (encore) gérés. Les cas particuliers sont gérés soit dans le cadre de l’évolution de notre produit, soit en développements complémentaires si trop spécifiques.
+For Magento2 stores for instance, you must be aware that most of the extension
+we encountered so far are not exposing a Web API. If — by chance — it does
+have a solid Service API you will still have to extend it to expose what you’ll
+need. It can be an overhead depending on the extension’s quality.
 
-## Magento2 + ReactJS !
-
-Ce sont les fondations de Front-Commerce. ReactJS est couplé à Magento2 grâce à GraphQL.
-
-Consultez la génèse et l’architecture de Front-Commerce.
+Last but not least, there are some settings from existing CMS that might
+not be supported in Front-Commerce. For instance, layout and design features
+from Magento2’s admin area will probably never be supported in Front-Commerce.
+Due to the current state of our product, it is very likely that some other
+settings have not yet been supported in the product… but [our roadmap](roadmap.md)
+is shaped by your needs, so there’s always hope!
 
 ## I have not found an answer to my question
 
