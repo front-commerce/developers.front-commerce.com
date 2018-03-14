@@ -18,7 +18,7 @@ class Help extends React.Component {
     const supportLinks = [
       {
         content:
-          "Learn more using the [documentation on this site.](/test-site/docs/en/doc1.html)",
+          "Learn more using the [documentation on this site.](/docs/welcome.html)",
         title: "Browse Docs"
       },
       {
@@ -27,7 +27,10 @@ class Help extends React.Component {
         title: "Read our FAQ"
       },
       {
-        content: "Ask questions about the documentation and project",
+        content: `Join the discussion in our [Slack channel](https://front-commerce.slack.com/)
+          (invite only — [request an invite](mailto:contact@front-commerce.com)).
+          We are also [reachable by email](mailto:contact@front-commerce.com) for questions about this documentation
+          and the project.`,
         title: "Join the community"
       },
       {
@@ -44,7 +47,12 @@ class Help extends React.Component {
             <header className="postHeader">
               <h2>Need help?</h2>
             </header>
-            <p>This project is maintained by a dedicated group of people.</p>
+            <p>
+              This developer area is being improved every day based on your
+              feedbacks an contributions (issues, PR). Our team is available to
+              answer you in a timely manner. For additional help you can try one
+              of the following page.
+            </p>
             <GridBlock contents={supportLinks} layout="threeColumn" />
           </div>
         </Container>

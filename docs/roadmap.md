@@ -110,7 +110,7 @@ Time has come to pay it back!
 
 ### Q2 2018
 
-**Goal:** improve web quality (a11y, performance…) and ensure our
+**Goal:** improve web quality (<abbr title="Accessibility">a11y</abbr>, performance…) and ensure our
 architecture is good enough
 
 * Lazy load images (disabled for technical reasons in `0.12`)
