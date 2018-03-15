@@ -13,7 +13,7 @@ Front-Commerce is, and why we made it this way.
 
 <!--truncate-->
 
-This is [our official documentation website](http://developers.front-commerce.test/docs/welcome.html) too!
+This is [our official documentation website](http://developers.front-commerce.com/docs/welcome.html) too!
 Even though Front-Commerce is a proprietary product, **we have decided to maintain our documentation in the open.**
 It will grow over the next few weeks, as we are working towards Front-Commerce 1.0.
 You can contribute by sending us questions, opening issues or fixing
