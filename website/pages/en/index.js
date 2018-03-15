@@ -212,7 +212,7 @@ const DesignSystem = props => (
     {[
       {
         content: `
-Front-Commerce default theme contains a design system to serve as a basis for interactions between designers and developers.
+Front-Commerce default theme contains a Design System for more efficient interactions between designers and developers.
 The web is a rich medium and the « page » metaphor for building an application is outdated. With PWAs
 there are several variants of the same application screen depending on: the content, the device,
 its connectivity and many other things.
