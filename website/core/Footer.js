@@ -40,12 +40,6 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a
-              href="https://www.front-commerce.com/en/partners/"
-              target="_blank"
-            >
-              Partners
-            </a>
             <a href="https://front-commerce.slack.com/" target="_blank">
               Slack (invite only)
             </a>

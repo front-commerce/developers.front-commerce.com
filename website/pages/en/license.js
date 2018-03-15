@@ -65,8 +65,8 @@ Interested? Please [contact us](contact@front-commerce.com).
             </MarkdownBlock>
 
             <MarkdownBlock>
-              See [our pricing page](https://www.front-commerce.com/en/pricing)
-              for further and more concrete information about our license.
+              See [our main website](https://www.front-commerce.com/) for
+              further and more concrete information about our license.
             </MarkdownBlock>
           </div>
         </Container>
