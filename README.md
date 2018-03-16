@@ -1,6 +1,6 @@
 # Front-Commerce — Developers area
 
-This is the source code for the http://developers.front-commerce.com website.
+This is the source code for the https://developers.front-commerce.com website.
 
 Please use Github issues and PR for feedbacks, suggestions and improvements.
 
