@@ -13,7 +13,7 @@ As a bootstrapped company with a small team, we do not think we
 could be able to achieve [our vision](vision.md) in a sustainable way
 with an open source business model yet.
 
-That being say, we are open sourcing part of our stack and
+That being said, we are open sourcing part of our stack and
 contributing to open source projects we use as much as possible.
 
 See more information on [our license page](/license.html).
