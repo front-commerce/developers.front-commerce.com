@@ -18,7 +18,12 @@ const siteConfig = {
   organizationName: "front-commerce",
   projectName: "developers",
   gaTrackingId: "UA-1412249-44",
+  algolia: {
+    apiKey: "b5a7bf2be3c2b1c682e5c84d562d15d2",
+    indexName: "front-commerce"
+  },
   headerLinks: [
+    { search: true },
     { doc: "welcome", label: "Docs" },
     { doc: "faq", label: "FAQ" },
     { page: "help", label: "Help" },
@@ -26,7 +31,6 @@ const siteConfig = {
     { blog: true, label: "Blog" }
     /*
     { doc: "doc4", label: "API" },
-      { search: true },
       { languages: true }
     */
   ],
