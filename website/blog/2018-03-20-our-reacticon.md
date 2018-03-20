@@ -25,7 +25,7 @@ interesting discussions.
 
 <abbr title="Progressive Web App">PWA</abbr> was the keyword of this event.
 Everyone is excited that they will soon be able to create wonderful eCommerce
-experience with Magento. But, it seems that there is still a lot a confusion
+experiences with Magento. But, it seems that there is still a lot a confusion
 around it.
 
 One feel that they need to use React and create a
@@ -37,7 +37,7 @@ your homescreen.
 Fortunately, [Shane Osbourne](https://twitter.com/shaneOsbourne) was here to
 remind everyone to improve their user and developer experience step by step.
 Focus on one feature at a time, and in the long run, you'll
-deliver awesome shopping experience to your customers.
+deliver awesome shopping experiences to your customers.
 
 ## Magento Research is promising
 
@@ -48,18 +48,18 @@ it. He introduced the
 new way for Magento to innovate and interact from the community. We could
 expect:
 
-* open source code shared early with the community to get feedbacks
-* more focused tools (reusable outside Magento)
+* open source code shared early with the community to get feedback
+* more flexible tools (reusable outside Magento)
 * shorter release cycles, since it does not follow Magento’s versioning scheme
 
 This is something new in the Magento ecosystem, and — in our opinion — one of
-the best thing that happened to Magento these past few years. Anyone who saw
+the best things that happened to Magento these past few years. Anyone who saw
 James and Andrew in the same room at the same time will understand immediately!
 
 <abbr title="Progressive Web App">PWA</abbr> Studio is the first playground for
 Magento Research and feels as promising in its approach.
-[Andrew Levine](https://twitter.com/drewml) emphasized that they will to empower
-the community rather than to provide an one-fits-all solution. Few
+[Andrew Levine](https://twitter.com/drewml) emphasized that they wish to empower
+the community rather than to provide an one-size-fits-all solution. Few
 things are yet public and they are focusing on internal experimentation. We
 will follow up with a blog post to have a deeper look on how can it play with
 the ecosystem.
@@ -78,7 +78,7 @@ attendees were asking to get rid of UI Components. **They just want to escape th
 frontend hell they face every day.** Developers understand that there is no future for
 the current Magento frontend. But there are no alternatives yet!
 
-Offline or push notification don’t matter much to them. They need a solution
+Offline or push notifications don’t matter much to them. They need a solution
 allowing them to build stores in a more productive way, **right now**. Webperfs
 are important too, but from our discussions it seems that any non-Magento solution
 will be a great improvement by default.
@@ -127,7 +127,7 @@ How could we make a good use of all the smart developers attending Reacticon?
 
 Developer experience is a core feature of Front-Commerce, so we ran user tests
 for this website (documentation is critical) and our living styleguide to help
-us prioritize our backlog. Thanks everyone for your time and honest feedbacks!
+us prioritize our backlog. Thanks everyone for your time and honest feedback!
 
 **Front-Commerce 1.0 is on its way and — trust us — you’ll like it.**
 
