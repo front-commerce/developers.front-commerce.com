@@ -13,8 +13,8 @@ key takeaways.
 
 ## A friendly community
 
-First of all, we wanted to thank every attendees, speakers and of course
-organizers for the atmosphere during the conference.
+First of all, we want to thank every attendees, speakers and of course
+organizers. It was a wonderful event thanks to you.
 
 Everyone was keen to share insights and answer questions, which led to very
 interesting discussions.
@@ -22,19 +22,20 @@ interesting discussions.
 ## <abbr title="Progressive Web App">PWA</abbr> as a buzzword
 
 <abbr title="Progressive Web App">PWA</abbr> was the keyword of this event.
-Everyone gets excited that they will soon be able to create wonderful eCommerce
-experience with Magento. However, it seems that there is still a lot a confusion
+Everyone is excited that they will soon be able to create wonderful eCommerce
+experience with Magento. But, it seems that there is still a lot a confusion
 around it.
 
 One feel that they need to use React and create a
-<abbr title="Single Page Application">SPA</abbr> to be labelled a
+<abbr title="Single Page Application">SPA</abbr> to create a
 <abbr title="Progressive Web App">PWA</abbr>. Another say that you need to offer
-a full offline experience. A last one claim that you only need a shortcut to
+a full offline experience. Some claim that you only need a shortcut to
 your homescreen.
 
-But fortunately, [Shane Osbourne](https://twitter.com/shaneOsbourne) was here to
-remind everyone that you can still improve the user and developer experience
-incrementally and focus on one feature at a time.
+Fortunately, [Shane Osbourne](https://twitter.com/shaneOsbourne) was here to
+remind everyone to improve the user and developer experience step by step.
+Focus on one feature at a time, and in the long run, you'll
+deliver awesome shopping experience to your customers.
 
 ## Magento Research is promising
 
@@ -55,41 +56,39 @@ James and Andrew in the same room at the same time will understand immediately!
 
 <abbr title="Progressive Web App">PWA</abbr> Studio is the first playground for
 Magento Research and feels as promising in its approach.
-[Andrew Levine](https://twitter.com/drewml) emphasized the fact that they were
-willing to empower the community rather than providing an all inclusive
-solution. As of today, few things are public and they are focusing on internal
-experimentation. Yet, we will follow up with a blog post to have a deeper look
-on how can it play with the ecosystem.
+[Andrew Levine](https://twitter.com/drewml) emphasized that they will to empower
+the community rather than to provide an all inclusive solution. As of today, few
+things are public and they are focusing on internal experimentation. Yet, we
+will follow up with a blog post to have a deeper look on how can it play with
+the ecosystem.
 
 Spoiler Alert: Front-Commerce will play nicely with what is planned!
-
-See tweet - TODO which one ?
 
 ## The community has concerns too
 
 Reacticon was also an interactive event where attendees could ask questions and
-share their thoughts. Here are the feedbacks we found the most important.
+share their thoughts. Here is what concerned them the most.
 
 ### Developers would like a stable implementation ASAP
 
-While speakers where discussing offline, bundle size and performance,
-**attendees were asking to get rid of UI Components and escaping the frontend
-hell they face every day.** Developers understand that there is no future for
-the current Magento frontend… but there are no alternatives yet!
+While speakers were discussing offline, bundle size and performance,
+attendees were asking to get rid of UI Components. **They just want to escape the
+frontend hell they face every day.** Developers understand that there is no future for
+the current Magento frontend. But there are no alternatives yet!
 
-Offline or push notification don’t matter much to them, compared to a solution
-allowing them to build stores in a more productive way… **right now**. Webperfs
-are important too, but from our discussions it seems that any non-Magento — and
-its killer RequireJS cascading loading — will be a great improvement by default.
+Offline or push notification don’t matter much to them. They need a solution
+allowing them to build stores in a more productive way, **right now**. Webperfs
+are important too, but from our discussions it seems that any non-Magento solution
+will be a great improvement by default.
 
 Let’s support the most important Magento features, and **work on
 <abbr title="Progressive Web App">PWA</abbr> related awesomeness as soon as
-checkout process customization is fun again!**
+checkout customization is fun again!**
 
 ### Extension Developers are worried
 
 They made an open request to us — <abbr title="Progressive Web App">PWA</abbr>
-solutions maintainers — asking for consistence across solutions. It would be
+solutions maintainers — asking for consistency across solutions. It would be
 very tedious to maintain different components and codebase for each frontend.
 
 **We started to discuss with some extension developers, and are available to
