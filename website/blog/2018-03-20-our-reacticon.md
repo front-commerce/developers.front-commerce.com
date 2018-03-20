@@ -1,5 +1,7 @@
 ---
 title: Our Reacticon
+author: Adrien, Julien and Pierre
+authorURL: https://twitter.com/Front_Commerce
 ---
 
 A few days ago we attended [Reacticon](http://reacticon.org/), the first
@@ -33,7 +35,7 @@ a full offline experience. Some claim that you only need a shortcut to
 your homescreen.
 
 Fortunately, [Shane Osbourne](https://twitter.com/shaneOsbourne) was here to
-remind everyone to improve the user and developer experience step by step.
+remind everyone to improve their user and developer experience step by step.
 Focus on one feature at a time, and in the long run, you'll
 deliver awesome shopping experience to your customers.
 
@@ -57,8 +59,8 @@ James and Andrew in the same room at the same time will understand immediately!
 <abbr title="Progressive Web App">PWA</abbr> Studio is the first playground for
 Magento Research and feels as promising in its approach.
 [Andrew Levine](https://twitter.com/drewml) emphasized that they will to empower
-the community rather than to provide an all inclusive solution. As of today, few
-things are public and they are focusing on internal experimentation. Yet, we
+the community rather than to provide an one-fits-all solution. Few
+things are yet public and they are focusing on internal experimentation. We
 will follow up with a blog post to have a deeper look on how can it play with
 the ecosystem.
 
@@ -90,7 +92,6 @@ checkout customization is fun again!**
 They made an open request to us — <abbr title="Progressive Web App">PWA</abbr>
 solutions maintainers — asking for consistency across solutions. It would be
 very tedious to maintain different components and codebase for each frontend.
-
 **We started to discuss with some extension developers, and are available to
 work more on this** by giving our input when needed. A clean, stateless WebAPI
 and some well designed React Components might be enough.
@@ -102,9 +103,10 @@ the event.
 
 As one of the first solution available, we’ve already solved in our way a lot of
 the things that were discussed. **We presented some of our implementation
-details and gave advices from our experience to attendees and speakers**. It led
-to interesting feedbacks, and motivated us even more for the remaining tasks
-before releasing 1.0.
+details and gave advices from our experience to attendees and speakers**.
+Meeting with the teams behind Vue Storefront and Deity led to constructive
+discussions about our respective visions and choices. We are now even more
+motivated for the remaining tasks before releasing 1.0.
 
 On the second day, Pierre improvised a **15 minutes live coding session about
 our GraphQL middleware**. He illustrated how to extend the base GraphQL schema
