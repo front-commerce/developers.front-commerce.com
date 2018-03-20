@@ -36,11 +36,19 @@ Big up to Shane.
 
 ## Magento Research is promising
 
-One of the best thing that happened to Magento these past few years.
-Nice surprise for us.
+[James Zetlen](https://twitter.com/jameszetlen) gave more information about
+PWA Studio, and the processes behind it. He introduced the [Magento Research
+Github organization](https://github.com/magento-research), a new way for
+Magento to innovate and interact from the community. We could expect:
 
-Anyone who saw James and Andrew in the same room at the same time will
-understand.
+* open source code shared early with the community to get feedbacks
+* more focused tools (reusable outside Magento)
+* shorter release cycles, since it does not follow Magento’s versioning scheme
+
+This is something new in the Magento ecosystem, and — in our opinion — one
+of the best thing that happened to Magento these past few years.
+Anyone who saw James and Andrew in the same room at the same time will understand
+immediately!
 
 ---
 
@@ -54,26 +62,73 @@ Spoiler Alert: Front-Commerce will play nicely with what is planned!
 
 See tweet
 
-## What concerns the community (P)
+## The community has concerns too
 
-* Extension Developers are worried. Homogeneize things across solutions. We discussed with a few of them
-* Developers would like a minimal stable implementation ASAP Worried about perfectionism related to PWA features, and seem to
-  be ok with a working SPA instead
+Reacticon was also an interactive event where attendees could ask questions
+and share their thoughts. Here are the feedbacks we found the most important.
 
-## Front-Commerce (P)
+### Extension Developers are worried
 
-We could demo some of our internal parts to people. Feedbacks.
-Live coding improvised to show GraphQL extension custom modules.
+They made an open request to us — PWA solutions maintainers — asking for consistence
+across solutions. It would be very tedious to maintain different components and
+codebase for each frontend.
 
-Contributed to the PWA Studio by trying it out and writing feedbacks
+**We started to discuss with some extension developers, and are available to
+work more on this** by giving our input when needed. A clean, stateless WebAPI
+and some well designed React Components might be enough.
 
-* PR and 2 PRs on the Deity demo app.
+### Developers would like a stable implementation ASAP
 
-A great opportunity to do some user testing for this website, and our
-styleguide. Thank you for your time and feedbacks!
+While speakers where discussing offline, bundle size and performance, **attendees
+were asking to get rid of UI Components and escaping the frontend hell they
+face every day.** Developers understand that there is no future for the current
+Magento frontend… but there are no alternatives yet!
 
-V1.0 is on its way and trust us, you’ll like it.
+Offline or push notification don’t matter much to them, compared to a
+solution allowing them to build stores in a more productive way…
+**right now**.
+Webperfs are important too, but from our discussions it seems that any
+non-Magento — and its killer RequireJS cascading loading — will be a great
+improvement by default.
 
-See you at Reacticon 2.0
+Let’s support the most important Magento features, and **work on PWA related
+awesomeness as soon as checkout process customization is fun again!**
 
-https://twitter.com/reacticon/status/975672173816840193
+## Front-Commerce is part of this ecosystem
+
+Even though we were not speakers, it was great to be mentioned many times
+during the event.
+
+As one of the first solution available, we’ve already solved in our way a lot
+of the things that were discussed. **We presented some of our implementation
+details and gave advices from our experience to attendees and speakers**.
+It led to interesting feedbacks, and motivated us even more for the remaining
+tasks before releasing 1.0.
+
+On the second day, Pierre improvised a **15 minutes live coding session about
+our GraphQL middleware**. He illustrated how to extend the base GraphQL schema
+by creating a new module. Adding new fields to existing types or integrating
+custom features from any API is straightforward!
+
+We also contributed to the PWA Studio by [experimenting the Layout loader](https://github.com/magento-research/pwa-buildpack/pull/14#issuecomment-373914226)
+and [opening a PR against an issue](https://github.com/magento-research/pwa-buildpack/pull/21).
+It’s not like if we had a 6 month old promise to keep!
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">React, Jest, Storybook, CSS Modules coming to <a href="https://twitter.com/hashtag/Magento?src=hash&amp;ref_src=twsrc%5Etfw">#Magento</a>...<br>Our promise to developers using Front Commerce: you&#39;ll be at home with PWA Studio! <a href="https://t.co/2TIrJbXNvJ">https://t.co/2TIrJbXNvJ</a></p>&mdash; Front-Commerce (@Front_Commerce) <a href="https://twitter.com/Front_Commerce/status/905644984577048577?ref_src=twsrc%5Etfw">7 septembre 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+How could we make a good use of all the smart developers attending Reacticon? **User testing!**
+
+Developer experience is a core feature of Front-Commerce, so we ran user tests
+for this website (documentation is critical) and our living styleguide
+to help us prioritize our backlog.
+Thanks everyone for your time and honest feedbacks!
+
+**Front-Commerce 1.0 is on its way and — trust us — you’ll like it.**
+
+## … Reacticon II
+
+See you there, save the date…
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Let&#39;s say September 28th, 2018? Who&#39;s in?</p>&mdash; Reacticon (@reacticon) <a href="https://twitter.com/reacticon/status/975672173816840193?ref_src=twsrc%5Etfw">19 mars 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
