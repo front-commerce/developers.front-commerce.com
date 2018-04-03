@@ -6,7 +6,7 @@ sidebar_label: Installation
 
 While Front-Commerce is a [closed source product](http://developers.front-commerce.test/en/license.html), we don't want you to trust us blindly.
 
-Because of this, we created a lighter version of Front-Commerce that will make you feel how it is to work with our product. While it isn't [fully featured](#TODO-link-what-is-missing), we believe that if you enjoy working with it, you will enjoy working with Front-Commerce since we use the same [concepts](http://developers.front-commerce.test/docs/architecture-overview.html) and the same [file structure](#TODO-link-file-structure). You could even reuse most of your code within Front-Commerce if you want to upgrade to the licensed version.
+Because of this, we created a lighter version of Front-Commerce. It should make you feel how it is like to work with our product. While it isn't [fully featured](#TODO-link-what-is-missing), we believe that if you enjoy working with it, you will enjoy working with Front-Commerce since we use the same [concepts](http://developers.front-commerce.test/docs/architecture-overview.html) and the same [file structure](#TODO-link-file-structure). You could even reuse most of your code within Front-Commerce if you want to upgrade to the licensed version.
 
 But first, let's get started!
 
