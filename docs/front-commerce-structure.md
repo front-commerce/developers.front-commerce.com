@@ -8,8 +8,8 @@ Wether you have been using Front Commerce Lite or the Licensed version of Front 
 ```
 src/
 ├── server/
-    ├── express/
-    └── modules/
+|   ├── express/
+|   └── modules/
 └── web/
     └── theme/
         ├── ui/
