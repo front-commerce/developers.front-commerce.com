@@ -10,55 +10,58 @@ available in the `modules` and `pages` folders.
 > If you feel the need to understand why we went for this organization, feel
 > free to refer to the [components history page](#TODO-lien-history) first.
 
-In this section, we will build a Business Component. If you have already gone
-through the [Create an UI component](#TODO-lien-create-ui-component), the core
-concept is the same.
+In this section, we will build a **Business Component**. If you have already
+gone through the [Create an UI component](#TODO-lien-create-ui-component), the
+core concept is the same.
 
 ## What is a Business component
 
-A **Business** component will reside in the `src/theme/modules` directory. Those
+A Business component will reside in the `src/theme/modules` directory. Those
 components are not meant to be reused a lot in your application, they are build
-with a very specific use in mind. When creating a custom theme, they will
+with a **very specific use in mind**. When creating a custom theme, they will
 naturally emerge from your Pages components.
 
 To illustrate this, Imagine that you are building the homepage for your store.
 You add a big hero image on top, some products's listings for news and sales, a
 reinsurance banner, etc.
 
-Quickly, you will want to extract some components from your page to avoid a big
-bloated file. Some of those components will be extracted as reusable **UI**
-components but some are just very specific to your page and there is no much
-sense to put them in the **ui** folder.
+Quickly, you will want to **extract** some components from your page to avoid a
+_big bloated file_. Some of those components will be extracted as **reusable UI
+components** but some are just very specific to your page and there is no much
+sense to put them in the ui folder.
+
+> They are often a mix between UI components and custom layout. They may be
+> splitted in multiples components if they are big enough.
 
 We put those components in the `src/theme/modules` directory. Generally, they
-are linked to your **Business** and often needs backend data like CMS content or
+are linked to **your business** and often needs backend data like CMS content or
 store information. We refer to them as **Business components** or even
 **modules**.
 
-> Modules are oftem a mix between **UI** components and custom layout. They may
-> be splitted in multiples components if they are big enough. Opposed to the
-> Unlike **UI** components, **Business** ones are often _smart_ and contain
-> logic. We try to extract this logic in **Enhancers**, more on that later.
+> Unlike UI components, Business ones are often _smart_ and contain logic. We
+> try to extract this logic in **Enhancers**, more on that later.
 
 ## What are we going to build
 
-To explain the concept and the emergeance of modules, we will now add a store
-locator to our home page and see how to extract it properly as a module.
+To explain the concept and the emergeance of modules, we will now add a **store
+locator** to our home page and see how to extract it properly as a module.
 
 Before diving into the code, we have to introduce a new concept: **Enhancers**.
 In this case, it will be responsible to fetch the data from our **GraphQL
 schema**, transform the data and feed it to our component.
 
-The **Enhancers** are not means to be only data fetchers, in Front-Commerce
-contain most of the **Business logic** of our application, we use the
+The **Enhancers** are not means to only be _data fetchers_, they contain most of
+the **Business logic** of our application, we use the
 [Higher-Order Components pattern (HOC)](https://reactjs.org/docs/higher-order-components.html)
 to create them.
 
-> We use a react library: [Recompose](https://github.com/acdlite/recompose) to
-> handle composition of **HOC**, it provides a lots of helpers which are really
-> usefull to **enrich** our components.
+> In Front-Commerce, we use a react library:
+> [Recompose](https://github.com/acdlite/recompose) to handle composition of
+> **HOC**, it provides a lots of helpers which are really usefull to _enrich_
+> our components.
 
-In the following steps, we are going to build our store locator.
+In the following steps, we are going to build our store locator. It will be a
+simple marker on a map indicating where to find our store.
 
 ### Installing the dependencies
 
@@ -225,6 +228,12 @@ query StoreLocator {
 }
 ```
 
+> You may think that some of those data are already fetched in our EnhanceHome
+> and thus, this is ineficient. But react-apollo will handle that for you and
+> will group the requests to make only the necessary requests.  
+> This allow to only think about what a component needs and responsibility
+> for the recovery of its data lies with him.
+
 ### Making it dynamic
 
 Now that we have an Enhancer ready, we are going to use it in our StoreLocator.
@@ -308,7 +317,8 @@ export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
 
 > A side note on **Protypes**. The Proptypes allow us to validate the props
 > passed to a child component, this will avoid breaking your app passing invalid
-> props. This will also serve as a props documentation for the other developers
+> props.  
+This will also serve as a props documentation for the other developers
 > in your team. They may be a little verbose, but it is important to maintain
 > them updated.
 
@@ -329,3 +339,7 @@ const Home = ({ store }) => (
   </div>
 );
 ```
+
+> The store locator we just created is very simple and it has a very limited
+> Business impact. It was for the sake of this guide. A component such as this
+> one might have its place in the ui directory in your application.
