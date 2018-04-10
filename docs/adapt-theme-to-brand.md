@@ -10,6 +10,8 @@ Obviously, it is not something that can be done in just a few minutes because
 your identity shines in the details. However, you can do all the heavylifting
 pretty quickly by customizing what is called **Design Tokens**.
 
+And it's a great way to familiarize yourself with Front Commerce Lite!
+
 ## Get your Design Tokens
 
 This concept is often closely related to Design Systems. Basically Design Tokens
@@ -35,7 +37,7 @@ theme.
 
 Since we use the Atomic Design principles, the tokens are within the atoms in
 `/web/theme/ui/atoms`. In this guide, we'll focus on the colors and the
-typography settings. But feel free to go farther and edit buttons, form inputs,
+typography settings. But feel free to go further and edit buttons, form inputs,
 etc.
 
 > Be it with Front Commerce or with Front Commerce Lite, it works the same way.
@@ -85,7 +87,7 @@ front-end technologies is for the best.
 Please note that all we've been talking about until now was to adapt the
 existing to your convenience. However, that is not the only benefit of having a
 Design System already in place. It is actually a perfect canvas to help you
-creating new components and styles proper to your brand.
+creating new components and styles matching to your brand.
 
 You can learn more about it in our guide talking about creating new UI
 Components. TODO link
