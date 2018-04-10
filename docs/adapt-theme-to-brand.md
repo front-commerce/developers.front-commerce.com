@@ -51,27 +51,50 @@ For instance, if we want to edit the colors of our application, we need to go to
 `src/web/theme/ui/atoms/Colors/Colors.scss` and edit the colors we want to. In
 Smashing Magazine's case it would be:
 
-```
-/* Adapt the variables that needs to change */
-$brandPrimary: #D33A2D;
-$brandSecondary: #2da2c5;
-$fontColor: #333333;
+```diff
+/* Adapt the variables that needs to change */-$brandPrimaryBackground: #0a5e66;
+-$brandHoverPrimary: #12828c;
+-$brandPrimary: #39b4bf;
+-$brandSecondary: #818199;
++$brandSecondary: #2da2c5;
++$fontColor: #333333;
++
++$brandPrimaryBackground: #bc3428;
++$brandHoverPrimary: #c7372a;
++$brandPrimary: #d33a2c;
++$brandSecondary: #2da2c5;
 ```
 
-In the same spirit, we could change the main typography to Elena which is
-Smashing Magazine's main font in
-`src/web/theme/ui/atoms/Typography/Typography.scss`.
+In the same spirit, we could change the fonts to match Smashing Magazine's. This
+change happens in `src/web/theme/ui/atoms/Typography/Typography.scss`.
 
-```
-// First define the custom font
-@font-face {
-  font-family: 'Elena';
-  font-display: optional;
-  src: url('https://d33wubrfki0l68.cloudfront.net/a978f759fa0230c1e590d1bdb5a1c03ceb538cec/fed6b/fonts/elenawebregular/elenawebregular.woff2') format('woff2');
-}
+```diff
+-$mainFontFamily: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+-  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
++@font-face {
++  font-family: 'Elena';
++  font-display: swap;
++  src: url('https://d33wubrfki0l68.cloudfront.net/a978f759fa0230c1e590d1bdb5a1c03ceb538cec/fed6b/fonts/elenawebregular/elenawebregular.woff2') format('woff2');
++}
++
++$mainFontFamily: Elena, Georgia, serif;
 
-/* And change the existing variables */
-$mainFontFamily: Elena, Georgia, serif;
++@font-face {
++  font-family: "Mija";
++  font-display: swap;
++  src: url("https://d33wubrfki0l68.cloudfront.net/b324ee03d5048d2d1831100e323b0b6336ffce68/0445e/fonts/mijaregular/mija_regular-webfont.woff2")
++    format("woff2");
++}
++
++$titleFontFamily: Mija, Arial, sans-serif;
+
+/* Rest of the file */
+
++h1,
++h2,
++h3 {
++  font-family: $titleFontFamily;
++}
 ```
 
 Front Commerce Lite would then now look like this:
