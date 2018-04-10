@@ -1,8 +1,19 @@
 {
   "docs": {
     "Front-Commerce": ["welcome", "vision", "faq"],
-    "Architecture": ["architecture-overview", "front-commerce-folder-structure"],
-    "Getting Started": ["getting-started", "extend-graphql-schema", "request-new-data", "adapt-theme-to-brand", "create-custom-page"],
+    "Architecture": [
+      "architecture-overview",
+      "front-commerce-folder-structure",
+      "react-components-structure"
+    ],
+    "Getting Started": [
+      "getting-started",
+      "extend-graphql-schema",
+      "request-new-data",
+      "adapt-theme-to-brand",
+      "create-a-ui-component",
+      "create-custom-page"
+    ],
     "Recipes": ["recipes"],
     "Troubleshooting": ["troubleshooting"],
     "Appendices": ["roadmap", "migration-guides"]
