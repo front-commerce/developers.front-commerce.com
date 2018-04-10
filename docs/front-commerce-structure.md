@@ -3,7 +3,7 @@ id: front-commerce-folder-structure
 title: Front-Commerce folder structure
 ---
 
-Wether you are using Front Commerce or its Lite version, we use the same file
+Whether you are using Front Commerce or its Lite version, we use the same file
 structure.
 
 ```

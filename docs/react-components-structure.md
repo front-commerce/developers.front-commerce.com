@@ -47,9 +47,9 @@ nice, clean and consistent. We only needed to split our components in 5 folders
 http://bradfrost.com/wp-content/uploads/2013/06/atomic-design.png
 
 And overall, it seemed like a perfect fit with React which embraced the ideas of
-components. We believed that by splitting our components in tiny little pieces
-that would assemble together to create whole pages, it would be easy to apply
-those principles. Thus, we ended with this kind of structure:
+components. We believed that splitting our components in tiny pieces would help
+us applying those principles. By assembling them together we could create whole
+pages easily. Thus, we ended with this kind of structure:
 
 ```
 src/
@@ -92,11 +92,11 @@ homogeneous theme.
 
 So we stopped and looked back for a bit. What was wrong here?
 
-The root cause was that it was really hard to find existing components. It
-leaded to many dupplicates. The theme components were actually drowned in the
-middle of the business logic components.
+The root cause was that it was really hard to find existing components. It led
+to many duplicates. The theme components were actually drowned in the middle of
+the business logic components.
 
-That's why we brought back the `pages` components back. They would be the React
+That's why we brought the `pages` components back. They would be the React
 Components containing specific business logic, fetching data from the outside
 and giving life to UI components. In order to emphasize this decision, we
 created a new folder called `components` which would contain all the UI
@@ -115,8 +115,8 @@ src/
         └── pages/
 ```
 
-And everything seemed pretty perfect here. The theme took back its consistency
-and it was easy to create new pages only by using the existing building blocks.
+And everything seemed perfect here. The theme got its consistency back and it
+was easy to create new pages only by using the existing building blocks.
 
 ## Step 4: Split pages and modules
 
@@ -131,7 +131,7 @@ That's why we decided to split the `pages` folder in two:
 * `pages` for the root components
 * `modules` for the smaller components that still contained business logic
 
-Additionnally, since everything is a component in React, we renamed the
+Additionally, since everything is a component in React, we renamed the
 `components` folder into `ui`.
 
 ```
@@ -155,7 +155,7 @@ you through the creation of brand new themes. We have already built oursleves
 two custom themes for production stores based on this structure, and it was a
 breeze.
 
-Additionally, if things were to change in the future, rest assured that we will
-provide a smooth migration path by adding deprecation warnings, codemods and
-such things. We want you to stay focused on the value you provide to your
+Additionally, if things were to change in the future, **rest assured that we
+will provide a smooth migration path** by adding deprecation warnings, codemods
+and such things. We want you to stay focused on the value you provide to your
 clients rather than on technical maintenance.
