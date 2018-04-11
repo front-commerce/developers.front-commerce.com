@@ -59,7 +59,8 @@ This is it! You can now open http://0.0.0.0:8080/ and begin hacking.
 
 ## What's next?
 
-* [Extend the GraphQL Schema](extend-graphql-schema.md)
-* [Request new data in a component](request-new-data.md)
 * [Adapt the look & feel to your brand](adapt-theme-to-brand.md)
+* [Create a UI component](create-a-ui-component.md)
+* [Create a Business component](create-a-business-component.md)
 * [Create a custom page](create-custom-page.md)
+* [Extend the GraphQL Schema](extend-graphql-schema.md)

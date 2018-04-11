@@ -8,11 +8,11 @@
     ],
     "Getting Started": [
       "getting-started",
-      "extend-graphql-schema",
-      "request-new-data",
       "adapt-theme-to-brand",
       "create-a-ui-component",
-      "create-custom-page"
+      "create-a-business-component",
+      "create-custom-page",
+      "extend-graphql-schema"
     ],
     "Recipes": ["recipes"],
     "Troubleshooting": ["troubleshooting"],
