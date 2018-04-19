@@ -10,11 +10,11 @@ we don't want you to trust us blindly.
 
 Because of this, we created a lighter version of Front-Commerce. It should make
 you feel how it is like to work with our product. While it isn't
-[fully featured](#TODO-link-what-is-missing), we believe that if you enjoy
+[fully featured](https://github.com/front-commerce/front-commerce-lite#what-it-is-not), we believe that if you enjoy
 working with it, you will enjoy working with Front-Commerce since we use the
 same
-[concepts](http://developers.front-commerce.test/docs/architecture-overview.html)
-and the same [file structure](#TODO-link-file-structure). You could even reuse
+[concepts](architecture-overview.md)
+and the same [file structure](front-commerce-structure.md). You could even reuse
 most of your code within Front-Commerce if you want to upgrade to the licensed
 version.
 
@@ -55,12 +55,12 @@ Finally, by running this command, you will launch the development environnment:
 npm start
 ```
 
-This is it! You can now open http://0.0.0.0:8080/ and begin hacking.
+This is it! You can now open [http://0.0.0.0:8080/](http://0.0.0.0:8080/) and begin hacking.
 
 ## What's next?
 
 * [Adapt the look & feel to your brand](adapt-theme-to-brand.md)
 * [Create a UI component](create-a-ui-component.md)
-* [Create a Business component](create-a-business-component.md)
 * [Create a custom page](create-custom-page.md)
 * [Extend the GraphQL Schema](extend-graphql-schema.md)
+* [Create a Business component](create-a-business-component.md)

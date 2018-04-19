@@ -8,10 +8,11 @@ components available in the `ui` folder, and the **Business** components
 available in the `modules` and `pages` folders.
 
 > If you feel the need to understand why we went for this organization, feel
-> free to refer to the [components history page](#TODO-lien-history) first.
+> free to refer to [React components structure](react-components-structure.md)
+> first.
 
 In this section, we will build a **Business Component**. If you have already
-gone through the [Create an UI component](#TODO-lien-create-ui-component), the
+gone through the [Create an UI component](create-a-ui-component.md), the
 core concept is the same.
 
 ## What is a Business component

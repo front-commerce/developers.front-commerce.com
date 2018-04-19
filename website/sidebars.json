@@ -10,9 +10,9 @@
       "getting-started",
       "adapt-theme-to-brand",
       "create-a-ui-component",
-      "create-a-business-component",
       "create-custom-page",
-      "extend-graphql-schema"
+      "extend-graphql-schema",
+      "create-a-business-component"
     ],
     "Recipes": ["recipes"],
     "Troubleshooting": ["troubleshooting"],
