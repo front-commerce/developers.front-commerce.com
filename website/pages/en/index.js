@@ -99,6 +99,13 @@ class HomeSplash extends React.Component {
                 style={{ marginLeft: "10px" }}
               />
             </Button>
+            <Button href="https://styleguide.front-commerce.com">
+              Styleguide
+              <i
+                className="fas fa-external-link-alt"
+                style={{ marginLeft: "10px" }}
+              />
+            </Button>
           </PromoSection>
         </div>
       </SplashContainer>
