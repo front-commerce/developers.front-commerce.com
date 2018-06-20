@@ -216,7 +216,7 @@ graphQL schema.
 You can find all the available `graphql` options in the
 [**React Apollo** documentation](https://www.apollographql.com/docs/react/api/react-apollo.html)
 
-In our case, it takes two arguments :
+In our case, it takes two arguments:
 
 - the first one is the **Query** we need to fetch (we will handle this part
   soon)
