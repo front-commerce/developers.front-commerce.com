@@ -22,9 +22,10 @@ There even exist tools that extract those tokens from existing websites. In this
 example, we will use [CSS Stats](https://cssstats.com/) to extract our Design
 Tokens.
 
-https://cssstats.com/stats?url=https%3A%2F%2Fwww.smashingmagazine.com&ua=Browser%20Default
-Example with Smashing Magazine's website but feel free to use your brand's
-website
+<figure>
+<img alt="CSS Stats lists all the 62 colors and 59 unique background colors of Smashing Magazine" src="/docs/assets/smashingmagazine-cssstats.png" />
+<figcaption>Here is an example with the awesome Smashing Magazine website</figcaption>
+</figure>
 
 If you want to learn more about it, you can have a look at
 [Design tokens for dummies](https://uxdesign.cc/design-tokens-for-dummies-8acebf010d71)
@@ -52,13 +53,12 @@ For instance, if we want to edit the colors of our application, we need to go to
 Smashing Magazine's case it would be:
 
 ```diff
-/* Adapt the variables that needs to change */-$brandPrimaryBackground: #0a5e66;
+/* Adapt the variables that needs to change */
+
+-$brandPrimaryBackground: #0a5e66;
 -$brandHoverPrimary: #12828c;
 -$brandPrimary: #39b4bf;
 -$brandSecondary: #818199;
-+$brandSecondary: #2da2c5;
-+$fontColor: #333333;
-+
 +$brandPrimaryBackground: #bc3428;
 +$brandHoverPrimary: #c7372a;
 +$brandPrimary: #d33a2c;
@@ -66,9 +66,11 @@ Smashing Magazine's case it would be:
 ```
 
 In the same spirit, we could change the fonts to match Smashing Magazine's. This
-change happens in `src/web/theme/ui/atoms/Typography/Typography.scss`.
+change happens in `src/web/theme/ui/atoms/Typography/Typography.scss` and
+`src/web/theme/ui/atoms/Typography/Heading/Heading.scss`.
 
 ```diff
+// src/web/theme/ui/atoms/Typography/Typography.scss
 -$mainFontFamily: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 -  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 +@font-face {
@@ -87,9 +89,10 @@ change happens in `src/web/theme/ui/atoms/Typography/Typography.scss`.
 +}
 +
 +$titleFontFamily: Mija, Arial, sans-serif;
+```
 
-/* Rest of the file */
-
+```diff
+// src/web/theme/ui/atoms/Typography/Heading/Heading.scss
 +h1,
 +h2,
 +h3 {
@@ -99,7 +102,9 @@ change happens in `src/web/theme/ui/atoms/Typography/Typography.scss`.
 
 Front Commerce Lite would then now look like this:
 
-TODO IMAGE
+<figure>
+<img alt="A comparison between the original FC Lite and FC Lite with Smashing Magazine's tokens" src="/docs/assets/smashingmagazine-product.png" />
+</figure>
 
 Sure it still needs tweaking, but as you can see, it is already far better.
 Furthermore, it is an easy first step to convince your clients that using modern
