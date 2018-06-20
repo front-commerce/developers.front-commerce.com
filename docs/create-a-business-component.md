@@ -12,8 +12,8 @@ available in the `modules` and `pages` folders.
 > first.
 
 In this section, we will build a **Business Component**. If you have already
-gone through the [Create an UI component](create-a-ui-component.md), the
-core concept is the same.
+gone through the [Create an UI component](create-a-ui-component.md), the core
+concept is the same.
 
 ## What is a Business component
 
@@ -63,7 +63,7 @@ position of our store within OpenStreetMap.
 This is one of the biggest advantages of using React to build our front-end, we
 have access to this huge ecosystem.
 
-So we just install the two required packages :
+So we just install the two required packages:
 
 ```sh
 npm install react-leaflet leaflet`
@@ -71,7 +71,7 @@ npm install react-leaflet leaflet`
 
 ### Our new Homepage
 
-We don't need to anticipate every **UI** or **Business** components in your
+We don't need to anticipate every **UI** or **Business** component in your
 application. When your component will begin to get bigger, the need to extract
 some of them will come naturally.
 
@@ -218,9 +218,9 @@ You can find all the available `graphql` options in the
 
 In our case, it takes two arguments :
 
-* the first one is the **Query** we need to fetch (we will handle this part
+- the first one is the **Query** we need to fetch (we will handle this part
   soon)
-* we use the `props` property in the second parameter to compute the **Query**
+- we use the `props` property in the second parameter to compute the **Query**
   result `data` to a `loading` and a `store` properties.
 
 As you can see, our Enhancer needs a **Query**, this a `.gql` (or `.graphql`)
@@ -244,13 +244,14 @@ query StoreLocator {
 }
 ```
 
-To build GraphQL, you can use **GraphiQL**, it is a GraphQL data explorer. In
+To better understand and test your schema, you can use **GraphiQL**, it is a
+GraphQL web interface for GraphQL, similar to what PhpMyAdmin is for MySQL. In
 Front-Commerce Lite, we can access it at
 [http://0.0.0.0:4000/graphiql](http://0.0.0.0:4000/graphiql).
 
 > You may think that some of those data are already fetched in our `EnhanceHome`
 > and thus, this is inefficient. But `react-apollo` will handle that for you and
-> will group the requests to make only the necessary requests.  
+> will group the requests to only make the necessary ones.  
 > This allows us to only think about what a component needs. The responsibility for
 > the retrieval of its data lies with it.
 
@@ -334,7 +335,7 @@ StoreLocator.propTypes = {
 export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
 ```
 
-> A side note on **PropTypes**. The Proptypes allows us to validate the props
+> A side note on **PropTypes**. The PropTypes allow us to validate the props
 > passed to a child component, this will avoid breaking your app by passing
 > invalid props.  
 > This will also serve as documentation for other developers in your team. They may
@@ -343,7 +344,7 @@ export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
 ## Using it in our App
 
 We now have extracted all the store locator logic. Now, we only have to use our
-brand and shiny module within the homepage.
+brand new and shiny module within the homepage.
 
 ```js
 // src/theme/pages/Home/Home.js;
@@ -364,7 +365,7 @@ const Home = ({ store }) => (
 > a map component could be extracted in a **UI** component. But for the sake of
 > this guide, we kept it simple.
 
-Splitting code is a difficult task, it needs practice and refinement. but it is
+Splitting code is a difficult task, it needs practice and refinement. But it is
 also a pretty personnal point of view, thus one team could split code
 differently.
 

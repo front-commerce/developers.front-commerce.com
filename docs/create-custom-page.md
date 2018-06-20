@@ -49,7 +49,7 @@ export default Greetings;
 
 Once the component is created, we must declare our new route. A route is a React
 element that specifies what to display if a specific path is matched. In our
-case, we want it to render the `Greetings` component when the user is on
+case, we want it to render the `Greetings` component when the user visits the
 `/greetings` URL. To do so, we use
 [React Router](https://reacttraining.com/react-router/web/guides/philosophy),
 the most popular routing library in the React ecosystem.
@@ -83,7 +83,7 @@ render your fantastic `Hello World` message!
 > **Front Commerce:** If we were to use the paid version, there would be no such
 > root file since routes need to be aggregated from different modules. To solve
 > this, we would use a `web/routes.js` file within our custom module. This file
-> would export the list of custom routes of the module. It would look like this:
+> would export the list of the module's custom routes. It would look like this:
 >
 > ```js
 > import React from "react";

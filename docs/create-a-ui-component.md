@@ -3,7 +3,7 @@ id: create-a-ui-component
 title: Create a UI Component
 ---
 
-In Front Commerce we have separated our components in two categories: the **UI**
+In Front Commerce we split our components in two categories: the **UI**
 components available in the `ui` folder, and the business components available
 in the `modules` and `pages` folders.
 
@@ -22,7 +22,7 @@ But first, let's define what is an ideal UI Component.
 
 In Front-Commerce we call UI component any component that is:
 
-* **Reusable in many contexts**  
+- **Reusable in many contexts**  
   If a component is used only once in the whole application, it might be the sign
   that it does not exist purely for UI purpose. The component most likely needs to
   be moved to the `modules` folder.  
@@ -30,7 +30,7 @@ In Front-Commerce we call UI component any component that is:
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
   thus be reusable by a Category.
-* **Focused on abstracting away UI concerns**  
+- **Focused on abstracting away UI concerns**  
   The goal of UI components is to hide styles or DOM concerns from their parents.
   It may be hard to achieve sometimes, but it will greatly improve the parent component's
   readability. For instance, a UI component should not give the opportunity to pass
@@ -52,11 +52,11 @@ First, let's split the mockup in several UI components.
 
 Image avec les zones
 
-* **`atoms/Heading`:** enforces consistent font sizes in our theme for any title
-* **`atoms/Icon`:** enforces icon sizes and accessibility guidelines
-* **`molecules/MediaCard`:** displays a Card described by an image and aligns
+- **`atoms/Heading`:** enforces consistent font sizes in our theme for any title
+- **`atoms/Icon`:** enforces icon sizes and accessibility guidelines
+- **`molecules/MediaCard`:** displays a Card described by an image and aligns
   images properly across the whole theme
-* **`organisms/InlineCardList`:** manages a list of cards and inlines them,
+- **`organisms/InlineCardList`:** manages a list of cards and inlines them,
   regardless of the device size.
 
 > If you have troubles splitting your mockups, you can refer to
@@ -77,7 +77,7 @@ Front-Commerce will look similar to what we are going to build here.
 Before doing the actual work let's bootstrap our dev environment. To do so, we
 will need to create three files:
 
-* `src/web/theme/ui/molecules/MediaCard/MediaCard.js`: will be your actual
+- `src/web/theme/ui/molecules/MediaCard/MediaCard.js`: will be your actual
   component
 
   ```jsx
@@ -94,7 +94,7 @@ will need to create three files:
   export default MediaCard;
   ```
 
-* `src/web/theme/ui/molecules/MediaCard/index.js`: will only proxy the
+- `src/web/theme/ui/molecules/MediaCard/index.js`: will only proxy the
   MediaCard.js file in order to be able to do imports on the folder directly.
 
   ```jsx
@@ -103,7 +103,7 @@ will need to create three files:
   export default MediaCard;
   ```
 
-* `src/web/theme/ui/molecules/MediaCard/MediaCard.story.js`: will add a story to
+- `src/web/theme/ui/molecules/MediaCard/MediaCard.story.js`: will add a story to
   the [Storybook](https://storybook.js.org/) of your application. This will
   serve as living documentation and will allow anyone to easily understand what
   is MediaCard used for and how to use it. Learn more about our Storybook usage
@@ -122,7 +122,7 @@ Once you've added your component, you must restart the styleguide. Once it is up
 and running, you can view your new story in `molecules > MediaCard`.
 
 Now that you've done that, you can edit the MediaCard component, save, and view
-the changes live in your browser.
+changes live in your browser.
 
 <figure style="margin: 1em 0; max-width: 50rem;">
 <img src="https://storybook.js.org/static/demo.f13d28a7.gif" alt="Demo of Storybook hot reloading" />
@@ -190,7 +190,7 @@ are available at `src/web/theme/globals.scss`.
 
 As a side note, we also use [BEM convention](http://getbem.com/naming/) for our
 CSS code base. It makes it easy to avoid naming conflicts by adding a tiny bit
-of code convention. However, for you custom components, feel free to code
+of code convention. However, for your custom components, feel free to code
 however you like. There is no obligation here.
 
 #### Document usage of our component
@@ -240,10 +240,10 @@ storiesOf("molecules.MediaCard", module)
 
 It has many major benefits such as:
 
-* easily document edge cases
-* provide a test suite thanks to snapshot testing
+- easily document edge cases
+- provide a test suite thanks to snapshot testing
   ([Storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots))
-* create a common discussion base for designers, product managers, marketers,
+- create a common discussion base for designers, product managers, marketers,
   etc.
 
 [Learn more about Storybook.](https://storybook.js.org/)

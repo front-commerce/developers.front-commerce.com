@@ -3,7 +3,7 @@ id: react-components-structure
 title: React components structure
 ---
 
-In Front Commerce we have seperated our components in two categories: the **UI**
+In Front Commerce we split our components in two categories: the **UI**
 components available in the `ui` folder, and the **Business** components
 available in the `modules` and `pages` folders.
 
@@ -25,10 +25,10 @@ But what does that mean? Where should we put our components?
 
 ## TL;DR
 
-* UI components should be highly reusable and only have theming concerns. They
+- UI components should be highly reusable and only have theming concerns. They
   are in `src/web/theme/ui/` and organized according the
   [Atomic Design principles](http://bradfrost.com/blog/post/atomic-web-design/)
-* Business components are components that are used once which contain complex
+- Business components are components that are used once which contain complex
   [business logic](https://en.wikipedia.org/wiki/Business_logic). They are
   splitted in two: the pages entry point and the modules which can be reused in
   multiple pages.
@@ -70,7 +70,7 @@ our first templates/pages components. Indeed, since there was no distinction
 between UI and business logic, templates were already full grown pages.
 
 So we just considered that the difference didn't stand in our case and got rid
-of `pages` folder and move the components to the `templates` folder.
+of `pages` folder and moved the components to the `templates` folder.
 
 ```
 src/
@@ -128,8 +128,8 @@ module?
 
 That's why we decided to split the `pages` folder in two:
 
-* `pages` for the root components
-* `modules` for the smaller components that still contained business logic
+- `pages` for the root components
+- `modules` for the smaller components that still contained business logic
 
 Additionally, since everything is a component in React, we renamed the
 `components` folder into `ui`.
