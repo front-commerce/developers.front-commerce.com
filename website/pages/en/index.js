@@ -222,7 +222,7 @@ features much more easier.** Design Systems help to achieve this!
 The design system is also a the place where we will help you to ensure you do not introduce regressions
 and you keep good a11y practices.
 `,
-        image: imgUrl("design-system.png"),
+        image: imgUrl("design-system.jpg"),
         imageAlign: "left",
         title: "Design system"
       }
