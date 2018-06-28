@@ -22,20 +22,18 @@ But first, let's define what is an ideal UI Component.
 
 In Front-Commerce we call UI component any component that is:
 
-- **Reusable in many contexts**  
-  If a component is used only once in the whole application, it might be the sign
-  that it does not exist purely for UI purpose. The component most likely needs to
-  be moved to the `modules` folder.  
+- **Reusable in many contexts** If a component is used only once in the whole
+  application, it might be the sign that it does not exist purely for UI
+  purpose. The component most likely needs to be moved to the `modules` folder.
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
   thus be reusable by a Category.
-- **Focused on abstracting away UI concerns**  
-  The goal of UI components is to hide styles or DOM concerns from their parents.
-  It may be hard to achieve sometimes, but it will greatly improve the parent component's
-  readability. For instance, a UI component should not give the opportunity to pass
-  a `className` in its props as it may lead to many styles inconsistencies across
-  the theme.
+- **Focused on abstracting away UI concerns** The goal of UI components is to
+  hide styles or DOM concerns from their parents. It may be hard to achieve
+  sometimes, but it will greatly improve the parent component's readability. For
+  instance, a UI component should not give the opportunity to pass a `className`
+  in its props as it may lead to many styles inconsistencies across the theme.
 
 ## How to build a UI Component?
 
@@ -43,8 +41,8 @@ Alright, that's nice in theory, but how does it translate in practice? We'll try
 to get a bit more tangible by creating a UI component needed for adding a
 Reinsurance Banner in a page.
 
-Image de ce qu'on va construire.  
-Mockup of the reinsurance banner that we will implement
+Image de ce qu'on va construire. Mockup of the reinsurance banner that we will
+implement
 
 ### Step 1: Defining the components
 
@@ -52,77 +50,79 @@ First, let's split the mockup in several UI components.
 
 Image avec les zones
 
-- **`atoms/Heading`:** enforces consistent font sizes in our theme for any title
+- **`atoms/typography/Heading`:** enforces consistent font sizes in our theme
+  for any title
 - **`atoms/Icon`:** enforces icon sizes and accessibility guidelines
-- **`molecules/MediaCard`:** displays a Card described by an image and aligns
-  images properly across the whole theme
-- **`organisms/InlineCardList`:** manages a list of cards and inlines them,
+- **`molecules/IllustratedContent`:** displays a some content illustrated by an
+  image and aligns images properly across the whole theme
+- **`organisms/InlineCards`:** manages a list of cards and inlines them,
   regardless of the device size.
 
-> If you have troubles splitting your mockups, you can refer to
+> If you have trouble splitting your mockups, you can refer to
 > [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) in the
 > official React documentation or to
-> [Brad Frost's book about Atomic Design](http://atomicdesign.bradfrost.com/).  
-> You may want to organize your code differently and that's perfectly fine. The way
-> we splitted things here is one of many possible solutions. Such choices will depend
-> on your project and your team. It may be a better idea to keep things simple. It's
-> often easier to wait and see how it can be reused later.
+> [Brad Frost's book about Atomic Design](http://atomicdesign.bradfrost.com/).
+> You may want to organize your code differently and that's perfectly fine. The
+> way we splitted things here is one of many possible solutions. Such choices
+> will depend on your project and your team. It may be a better idea to keep
+> things simple. It's often easier to wait and see how it can be reused later.
 
 We won't be able to detail each component here. We will focus on
-`molecules/MediaCard` instead. But keep in mind that any UI component in
-Front-Commerce will look similar to what we are going to build here.
+`molecules/IllustratedContent` instead. But keep in mind that any UI component
+in Front-Commerce will look similar to what we are going to build here.
 
 ### Step 2: Setup your dev environment
 
 Before doing the actual work let's bootstrap our dev environment. To do so, we
 will need to create three files:
 
-- `src/web/theme/ui/molecules/MediaCard/MediaCard.js`: will be your actual
-  component
+- `src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.js`: will be
+  your actual component
 
   ```jsx
   import React from "react";
 
-  const MediaCard () => <div>Media Card</div>;
+  const IllustratedContent = () => <div>Illustrated Content</div>;
 
-  MediaCard.propTypes = {
-      // Don't forget to setup your PropTypes
-      // here since this component will be heavily
-      // used through your application
+  IllustratedContent.propTypes = {
+    // Don't forget to setup your PropTypes
+    // here since this component will be heavily
+    // used through your application
   };
 
-  export default MediaCard;
+  export default IllustratedContent;
   ```
 
-- `src/web/theme/ui/molecules/MediaCard/index.js`: will only proxy the
-  MediaCard.js file in order to be able to do imports on the folder directly.
+- `src/web/theme/ui/molecules/IllustratedContent/index.js`: will only proxy the
+  IllustratedContent.js file in order to be able to do imports on the folder
+  directly.
 
   ```jsx
-  import MediaCard from "./MediaCard.js";
+  import IllustratedContent from "./IllustratedContent.js";
 
-  export default MediaCard;
+  export default IllustratedContent;
   ```
 
-- `src/web/theme/ui/molecules/MediaCard/MediaCard.story.js`: will add a story to
-  the [Storybook](https://storybook.js.org/) of your application. This will
-  serve as living documentation and will allow anyone to easily understand what
-  is MediaCard used for and how to use it. Learn more about our Storybook usage
-  in (#TODO-documentation).
+- `src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.story.js`:
+  will add a story to the [Storybook](https://storybook.js.org/) of your
+  application. This will serve as living documentation and will allow anyone to
+  easily understand what is IllustratedContent used for and how to use it. Learn
+  more about our Storybook usage in (#TODO-documentation).
 
   ```jsx
-  import MediaCard from "./MediaCard.js";
+  import IllustratedContent from "./IllustratedContent.js";
   import { storiesOf } from "@storybook/react";
 
-  storiesOf("ui.molecules.MediaCard", module).add("default", () => {
-    return <MediaCard />;
+  storiesOf("ui.molecules.IllustratedContent", module).add("default", () => {
+    return <IllustratedContent />;
   });
   ```
 
 Once you've added your component, you must restart the styleguide. Once it is up
-and running, you can view your new story in `molecules > MediaCard`.
+and running, you can view your new story in `molecules > IllustratedContent`.
 
-Now that you've done that, you can edit the MediaCard component, save, and view
-changes live in your browser.
+Now that you've done that, you can edit the IllustratedContent component, save,
+and view changes live in your browser.
 
 <figure style="margin: 1em 0; max-width: 50rem;">
 <img src="https://storybook.js.org/static/demo.f13d28a7.gif" alt="Demo of Storybook hot reloading" />
@@ -135,26 +135,26 @@ changes live in your browser.
 ### Step 3: Implement your component
 
 Now that everything is ready to go, you can do the actual work and implement the
-component. In the case of the MediaCard, it would look like this:
+component. In the case of the IllustratedContent, it would look like this:
 
 ```jsx
-// src/web/theme/ui/molecules/MediaCard/MediaCard.js
+// src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.js
 import React from "react";
 import PropTypes from "prop-types";
 
-const MediaCard ({media, children}) => (
-  <div className="media-card">
-    <div className="media-card__media">{media}</div>
-    <div className="media-card__content">{children}</div>
+const IllustratedContent ({ media, children }) => (
+  <div className="illustrated-content">
+    <div className="illustrated-content__media">{media}</div>
+    <div className="illustrated-content__content">{children}</div>
   </div>
 );
 
-MediaCard.propTypes = {
+IllustratedContent.propTypes = {
   media: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired
 }
 
-export default MediaCard
+export default IllustratedContent
 ```
 
 #### Styling
@@ -167,18 +167,19 @@ in your component file.
 > React Ecosystem to remain with this well-known CSS preprocessor.
 
 ```jsx
-// src/web/theme/ui/molecules/MediaCard/MediaCard.js
-import "./MediaCard.scss";
+// src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.js
+import "./IllustratedContent.scss";
 
 // ... with the rest of your code here
 ```
 
 ```scss
-// src/web/theme/ui/molecules/MediaCard/MediaCard.scss
-.media-card {
+// src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.scss
+.illustrated-content {
   display: flex;
+  flex-direction: column;
 }
-.media-card__media {
+.illustrated-content__media {
   width: 30%;
   max-width: 10em;
 }
@@ -199,41 +200,41 @@ If our component can have different usages, we should also add new stories along
 the default one.
 
 ```jsx
-// src/web/theme/ui/molecules/MediaCard/MediaCard.story.js
-import MediaCard from "./MediaCard.js";
+// src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.story.js
+import IllustratedContent from "./IllustratedContent.js";
 import { storiesOf } from "@storybook/react";
 import Icon from "theme/ui/atoms/Icon";
-import Heading from "theme/ui/atoms/Heading";
-import Description from "theme/ui/atoms/Description";
+import { H3 } from "theme/ui/atoms/Typography/Heading";
+import Paragraph from "theme/ui/atoms/Typography/Paragraph";
 
-storiesOf("molecules.MediaCard", module)
+storiesOf("molecules.IllustratedContent", module)
   .add("default", () => {
     return (
-      <MediaCard media={<Icon icon="truck" />}>
-        <Heading>Shipping within 48h</Heading>
-      </MediaCard>
+      <IllustratedContent media={<Icon icon="truck" />}>
+        <H3>Shipping within 48h</H3>
+      </IllustratedContent>
     );
   })
   .add("with a lot of content", () => {
     return (
-      <MediaCard media={<Icon icon="truck" />}>
-        <Heading>Shipping within 48h</Heading>
-        <Description>
+      <IllustratedContent media={<Icon icon="truck" />}>
+        <H3>Shipping within 48h</H3>
+        <Paragraph>
           We are using many delivery services to let you choose what is best for
           you!
-        </Description>
-      </MediaCard>
+        </Paragraph>
+      </IllustratedContent>
     );
   })
   .add("with an image", () => {
     return (
-      <MediaCard
+      <IllustratedContent
         media={
           <Image src="http://via.placeholder.com/350x150" alt="Placeholder" />
         }
       >
-        <Heading>Shipping within 48h</Heading>
-      </MediaCard>
+        <H3>Shipping within 48h</H3>
+      </IllustratedContent>
     );
   });
 ```
@@ -257,30 +258,30 @@ It has many major benefits such as:
 ### Step 4: Use the component
 
 Once we are satisfied with our component, we can use it anywhere. In this case,
-the `MediaCard` was to be used in the Reinsurance Banner. Thus, this module's
-component would look like this:
+the `IllustratedContent` was to be used in the Reinsurance Banner. Thus, this
+module's component would look like this:
 
 ```jsx
 import React from "react";
 // Imports can be absolute from `theme`
 // or relative to the current file
 import InlineCards from "theme/ui/organisms/InlineCards"
-import MediaCard from "theme/ui/molecules/MediaCard"
+import IllustratedContent from "theme/ui/molecules/IllustratedContent"
 import Icon from "theme/ui/atoms/Icon"
-import Heading from "theme/ui/atoms/Heading"
+import { H3 } from "theme/ui/atoms/Typography/Heading"
 
 // The components can then be used the usual React way
 
 export default () => (
   <InlineCards>
-    <MediaCard media={<Icon icon="truck" />}>
-      <Heading>Shipping within 48h</Heading>
-    </MediaCard>
-    <MediaCard media={<Icon icon="thumbsup" />}>
-      <Heading>Money back guarantee</Heading>
-    </MediaCard>
-    <MediaCard media={<Icon icon="creditcard" />}>
-      <Heading>Secured Payment</Heading>
-    </MediaCard>
+    <IllustratedContent media={<Icon icon="truck" />}>
+      <H3>Shipping within 48h</H3>
+    </IllustratedContent>
+    <IllustratedContent media={<Icon icon="thumbsup" />}>
+      <H3>Money back guarantee</H3>
+    </IllustratedContent>
+    <IllustratedContent media={<Icon icon="creditcard" />}>
+      <H3>Secured Payment</H3>
+    </IllustratedContent>
   </InlineCards>
 ```
