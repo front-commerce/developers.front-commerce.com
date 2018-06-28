@@ -41,14 +41,13 @@ Alright, that's nice in theory, but how does it translate in practice? We'll try
 to get a bit more tangible by creating a UI component needed for adding a
 Reinsurance Banner in a page.
 
-Image de ce qu'on va construire. Mockup of the reinsurance banner that we will
-implement
+![The reinsurance banner that we will implement](/docs/assets/reinsurance.jpg)
 
 ### Step 1: Defining the components
 
 First, let's split the mockup in several UI components.
 
-Image avec les zones
+![The various components that will make up our banner](/docs/assets/reinsurance-with-areas.jpg)
 
 - **`atoms/typography/Heading`:** enforces consistent font sizes in our theme
   for any title
