@@ -117,5 +117,5 @@ existing to your convenience. However, that is not the only benefit of having a
 Design System already in place. It is actually a perfect canvas to help you
 creating new components and styles matching to your brand.
 
-You can learn more about it in our guide talking about creating new UI
-Components. TODO link
+You can learn more about it in our guide talking about
+[creating new UI Components](create-a-ui-component.md).
