@@ -20,6 +20,12 @@ class License extends React.Component {
               a valid license has been contracted.
             </MarkdownBlock>
 
+            <MarkdownBlock>{`
+> [Our pricing](https://www.front-commerce.com/en/pricing/):
+>   * Setup: **5 000 €** (excl. taxes)
+>   * License and support: **12 000 €** (excl. taxes) / year
+`}</MarkdownBlock>
+
             <MarkdownBlock>
               Support and software updates (new features, bugfixes, new
               integrations…) are included in the license fees — of course — but
@@ -65,8 +71,9 @@ Interested? Please [contact us](contact@front-commerce.com).
             </MarkdownBlock>
 
             <MarkdownBlock>
-              See [our main website](https://www.front-commerce.com/) for
-              further and more concrete information about our license.
+              See [our main website’s pricing
+              page](https://www.front-commerce.com/en/pricing/) for further and
+              more concrete information about our license.
             </MarkdownBlock>
           </div>
         </Container>
