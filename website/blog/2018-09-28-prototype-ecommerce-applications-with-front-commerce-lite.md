@@ -15,10 +15,9 @@ Github:
 
 We are on a mission to improve web quality and shopping experience on eCommerce
 stores. Hence
-[our vision](https://developers.front-commerce.com/docs/vision.html) is to sell
-a product that contains all the best practices for building qualitative online
-stores by default, so teams can stay focused on what is relevant to their
-context.
+[our vision](https://developers.front-commerce.com/docs/vision.html) is to
+provide a product that contains all the best practices for building qualitative
+online stores, so teams can stay focused on what is relevant to their context.
 
 One of the most frequent feedback we have from developers and teams when
 introducing Front-Commerce is:
@@ -43,7 +42,7 @@ products out there (or soon-to-be)**, and the stores already in production with
 the current Front-Commerce codebase prove it!
 
 Front-Commerce Lite can help you to get a taste of what choosing Front-Commerce
-could bring for you, your team, your company and your clients. Here are some
+could bring for you, your team, your company and your customers. Here are some
 ideas about what you could do with this open source version:
 
 - start learning new technologies and concepts,
@@ -52,10 +51,9 @@ ideas about what you could do with this open source version:
 - convince your boss,
 - or win projects by building a <abbr title="Proof of Concept">PoC</abbr>.
 
-Of course, Front-Commerce has much more features and things that you maybe have
-not yet think about… that is why we think it is more mature than other
-solutions. We have made some opinionated choices, and we recommend you to read
-the
+Because of its maturity, Front-Commerce has much more features and things that
+you maybe have not yet think about. We have made some opinionated choices, and
+we recommend you to read the
 [What it is **NOT** section](https://github.com/front-commerce/front-commerce-lite#what-it-is-not)
 of its README for more details.
 
@@ -70,7 +68,7 @@ Take a 15 minutes slot and run the following commands:
 
 In case you want to understand step by step what is happening or if you
 encounter difficulties to install or launch the project, we are here to learn!
-Time has come to discover our official documentation for developers…
+Time has come to discover our official documentation for developers:
 
 [Install Front-Commerce Lite (developers.front-commerce.com)](https://developers.front-commerce.com/docs/getting-started.html)
 
