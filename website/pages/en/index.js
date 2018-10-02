@@ -51,14 +51,13 @@ const SplashContainer = props => (
 );
 
 const Logo = props => (
-  <div className="projectLogo">
-    <img src={props.img_src} />
-  </div>
+  <h1 className="projectLogo">
+    <img alt={siteConfig.title} src={props.img_src} />
+  </h1>
 );
 
 const ProjectTitle = props => (
   <h2 className="projectTitle">
-    {siteConfig.title}
     <small>{siteConfig.tagline}</small>
   </h2>
 );
@@ -76,7 +75,7 @@ class HomeSplash extends React.Component {
     let language = this.props.language || "";
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl("fc-avatar.svg")} />
+        <Logo img_src={imgUrl("fc_logo_2018--inline.svg")} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
@@ -94,6 +93,13 @@ class HomeSplash extends React.Component {
             <Button href={docUrl("recipes.html", language)}>Recipes</Button>
             <Button href="https://demo.front-commerce.com">
               Demo store
+              <i
+                className="fas fa-external-link-alt"
+                style={{ marginLeft: "10px" }}
+              />
+            </Button>
+            <Button href="https://styleguide.front-commerce.com">
+              Styleguide
               <i
                 className="fas fa-external-link-alt"
                 style={{ marginLeft: "10px" }}
@@ -222,7 +228,7 @@ features much more easier.** Design Systems help to achieve this!
 The design system is also a the place where we will help you to ensure you do not introduce regressions
 and you keep good a11y practices.
 `,
-        image: imgUrl("design-system.png"),
+        image: imgUrl("design-system.jpg"),
         imageAlign: "left",
         title: "Design system"
       }

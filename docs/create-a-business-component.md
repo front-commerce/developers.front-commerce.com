@@ -251,9 +251,9 @@ Front-Commerce Lite, we can access it at
 
 > You may think that some of those data are already fetched in our `EnhanceHome`
 > and thus, this is inefficient. But `react-apollo` will handle that for you and
-> will group the requests to only make the necessary ones.  
-> This allows us to only think about what a component needs. The responsibility for
-> the retrieval of its data lies with it.
+> will group the requests to only make the necessary ones. This allows us to
+> only think about what a component needs. The responsibility for the retrieval
+> of its data lies with it.
 
 ### Making it dynamic
 
@@ -337,9 +337,8 @@ export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
 
 > A side note on **PropTypes**. The PropTypes allow us to validate the props
 > passed to a child component, this will avoid breaking your app by passing
-> invalid props.  
-> This will also serve as documentation for other developers in your team. They may
-> be a little verbose, but it is important to maintain them.
+> invalid props. This will also serve as documentation for other developers in
+> your team. They may be a little verbose, but it is important to maintain them.
 
 ## Using it in our App
 

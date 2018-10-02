@@ -238,10 +238,10 @@ module's component would look like this:
 import React from "react";
 // Imports can be absolute from `theme`
 // or relative to the current file
-import InlineCards from "theme/ui/organisms/InlineCards"
-import IllustratedContent from "theme/ui/molecules/IllustratedContent"
-import Icon from "theme/ui/atoms/Icon"
-import { H3 } from "theme/ui/atoms/Typography/Heading"
+import InlineCards from "theme/ui/organisms/InlineCards";
+import IllustratedContent from "theme/ui/molecules/IllustratedContent";
+import Icon from "theme/ui/atoms/Icon";
+import { H3 } from "theme/ui/atoms/Typography/Heading";
 
 // The components can then be used the usual React way
 
@@ -257,4 +257,5 @@ export default () => (
       <H3>Secured Payment</H3>
     </IllustratedContent>
   </InlineCards>
+);
 ```

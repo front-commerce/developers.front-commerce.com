@@ -31,13 +31,13 @@ around it.
 One feel that they need to use React and create a
 <abbr title="Single Page Application">SPA</abbr> to create a
 <abbr title="Progressive Web App">PWA</abbr>. Another say that you need to offer
-a full offline experience. Some claim that you only need a shortcut to
-your homescreen.
+a full offline experience. Some claim that you only need a shortcut to your
+homescreen.
 
 Fortunately, [Shane Osbourne](https://twitter.com/shaneOsbourne) was here to
 remind everyone to improve their user and developer experience step by step.
-Focus on one feature at a time, and in the long run, you'll
-deliver awesome shopping experiences to your customers.
+Focus on one feature at a time, and in the long run, you'll deliver awesome
+shopping experiences to your customers.
 
 ## Magento Research is promising
 
@@ -48,9 +48,9 @@ it. He introduced the
 new way for Magento to innovate and interact from the community. We could
 expect:
 
-* open source code shared early with the community to get feedback
-* more flexible tools (reusable outside Magento)
-* shorter release cycles, since it does not follow Magento’s versioning scheme
+- open source code shared early with the community to get feedback
+- more flexible tools (reusable outside Magento)
+- shorter release cycles, since it does not follow Magento’s versioning scheme
 
 This is something new in the Magento ecosystem, and — in our opinion — one of
 the best things that happened to Magento these past few years. Anyone who saw
@@ -59,10 +59,9 @@ James and Andrew in the same room at the same time will understand immediately!
 <abbr title="Progressive Web App">PWA</abbr> Studio is the first playground for
 Magento Research and feels as promising in its approach.
 [Andrew Levine](https://twitter.com/drewml) emphasized that they wish to empower
-the community rather than to provide an one-size-fits-all solution. Few
-things are yet public and they are focusing on internal experimentation. We
-will follow up with a blog post to have a deeper look on how can it play with
-the ecosystem.
+the community rather than to provide an one-size-fits-all solution. Few things
+are yet public and they are focusing on internal experimentation. We will follow
+up with a blog post to have a deeper look on how can it play with the ecosystem.
 
 Spoiler Alert: Front-Commerce will play nicely with what is planned!
 
@@ -73,15 +72,15 @@ share their thoughts. Here is what concerned them the most.
 
 ### Developers would like a stable implementation ASAP
 
-While speakers were discussing offline, bundle size and performance,
-attendees were asking to get rid of UI Components. **They just want to escape the
-frontend hell they face every day.** Developers understand that there is no future for
+While speakers were discussing offline, bundle size and performance, attendees
+were asking to get rid of UI Components. **They just want to escape the frontend
+hell they face every day.** Developers understand that there is no future for
 the current Magento frontend. But there are no alternatives yet!
 
 Offline or push notifications don’t matter much to them. They need a solution
 allowing them to build stores in a more productive way, **right now**. Webperfs
-are important too, but from our discussions it seems that any non-Magento solution
-will be a great improvement by default.
+are important too, but from our discussions it seems that any non-Magento
+solution will be a great improvement by default.
 
 Let’s support the most important Magento features, and **work on
 <abbr title="Progressive Web App">PWA</abbr> related awesomeness as soon as
@@ -114,9 +113,10 @@ by creating a new module. Adding new fields to existing types or integrating
 custom features from any API is straightforward!
 
 We also contributed to the <abbr title="Progressive Web App">PWA</abbr> Studio
-by [experimenting the Layout loader](https://github.com/magento-research/pwa-buildpack/pull/14#issuecomment-373914226)
-and [opening a PR against an
-issue](https://github.com/magento-research/pwa-buildpack/pull/21).
+by
+[experimenting the Layout loader](https://github.com/magento-research/pwa-buildpack/pull/14#issuecomment-373914226)
+and
+[opening a PR against an issue](https://github.com/magento-research/pwa-buildpack/pull/21).
 It’s not like if we had a 6 month old promise to keep!
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">React, Jest, Storybook, CSS Modules coming to <a href="https://twitter.com/hashtag/Magento?src=hash&amp;ref_src=twsrc%5Etfw">#Magento</a>...<br>Our promise to developers using Front Commerce: you&#39;ll be at home with <abbr title="Progressive Web App">PWA</abbr> Studio! <a href="https://t.co/2TIrJbXNvJ">https://t.co/2TIrJbXNvJ</a></p>&mdash; Front-Commerce (@Front_Commerce) <a href="https://twitter.com/Front_Commerce/status/905644984577048577?ref_src=twsrc%5Etfw">7 septembre 2017</a></blockquote>
