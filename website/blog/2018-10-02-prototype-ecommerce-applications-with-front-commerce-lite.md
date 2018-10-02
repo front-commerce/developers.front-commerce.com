@@ -76,6 +76,16 @@ If you still have troubles with this task, feel free to
 [get in touch with us](https://github.com/front-commerce/front-commerce-lite#get-help)
 and ask questions. It could be a problem on our side too.
 
+## Share your prototypes
+
+We would be happy to see what you achieve with Front-Commerce Lite and the user
+experiences you created.
+
+Publish your prototypes on Github and add the
+[front-commerce-lite topic](https://github.com/topics/front-commerce-lite) to
+your repository (and [send us a tweet](https://twitter.com/Front_Commerce)).
+Browse this topic to get inspired by other prototypes and learn.
+
 ## Going in production
 
 Convinced that Front-Commerce Lite’s stack is viable enough for your project? If
