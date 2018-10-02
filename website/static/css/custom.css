@@ -163,3 +163,16 @@ footer a {
 
 @media only screen and (min-width: 1500px) {
 }
+
+figure {
+  margin: 1.5em 0;
+  max-width: 50rem;
+  text-align: center;
+}
+figure img {
+  display: block;
+  margin: 0 auto;
+}
+figcaption {
+  margin-top: 0.5em;
+}

@@ -3,14 +3,20 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline":
-      "Craft delightful e-commerce experiences using modern web technologies",
+    "tagline": "Craft delightful e-commerce experiences using modern web technologies",
+    "adapt-theme-to-brand": "Adapt the theme to your brand",
     "architecture-overview": "Overview",
+    "create-a-business-component": "Create a Business Component",
+    "create-a-ui-component": "Create a UI Component",
+    "create-custom-page": "Create a custom page",
+    "extend-graphql-schema": "Extend the GraphQL Schema",
     "faq": "FAQ",
+    "front-commerce-folder-structure": "Front-Commerce folder structure",
     "getting-started": "Getting started with Front-Commerce",
-    "Getting started": "Getting started",
+    "Installation": "Installation",
     "migration-guide-1.0": "1.0 Migration guide",
     "migration-guides": "Migration guides",
+    "react-components-structure": "React components structure",
     "recipes": "What are Recipes?",
     "roadmap": "Roadmap",
     "doc1": "Latin-ish",
@@ -26,17 +32,15 @@
     "Blog": "Blog",
     "Front-Commerce": "Front-Commerce",
     "Architecture": "Architecture",
-    "Installation": "Installation",
+    "Getting Started": "Getting Started",
     "Recipes": "Recipes",
     "Troubleshooting": "Troubleshooting",
     "Appendices": "Appendices",
     "1.x": "1.x"
   },
   "pages-strings": {
-    "Help Translate|recruit community translators for your project":
-      "Help Translate",
+    "Help Translate|recruit community translators for your project": "Help Translate",
     "Edit this Doc|recruitment message asking to edit the doc source": "Edit",
-    "Translate this Doc|recruitment message asking to translate the docs":
-      "Translate"
+    "Translate this Doc|recruitment message asking to translate the docs": "Translate"
   }
 }
