@@ -35,8 +35,11 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Community</h5>
-            <a href="https://front-commerce.slack.com/" target="_blank">
-              Slack (invite only)
+            <a
+              href="https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q"
+              target="_blank"
+            >
+              Slack
             </a>
             <a href="https://twitter.com/Front_Commerce" target="_blank">
               Twitter

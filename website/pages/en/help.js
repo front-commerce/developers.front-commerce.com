@@ -27,8 +27,7 @@ class Help extends React.Component {
         title: "Read our FAQ"
       },
       {
-        content: `Join the discussion in our [Slack channel](https://front-commerce.slack.com/)
-          (invite only — [request an invite](mailto:contact@front-commerce.com)).
+        content: `Join the discussion in our [Slack channel](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q).
           We are also [reachable by email](mailto:contact@front-commerce.com) for questions about this documentation
           and the project.`,
         title: "Join the community"
