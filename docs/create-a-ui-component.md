@@ -105,8 +105,7 @@ will need to create three files:
 - `src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.story.js`:
   will add a story to the [Storybook](https://storybook.js.org/) of your
   application. This will serve as living documentation and will allow anyone to
-  easily understand what is IllustratedContent used for and how to use it. Learn
-  more about our Storybook usage in (#TODO-documentation).
+  easily understand what is `IllustratedContent` used for and how to use it.
 
   ```jsx
   import IllustratedContent from "./IllustratedContent.js";
@@ -128,8 +127,12 @@ and view changes live in your browser.
 <figcaption style="margin: 0.5em; text-align: center">Take a look at this magical development playground!</figcaption>
 </figure>
 
-> In order to learn more about storybook, please refer to TODO Storybook
-> documentation
+> Learn more:
+>
+> - about Storybook itself, by reading the
+>   [official Storybook documentation](https://storybook.js.org/basics/introduction/)
+> - about our Storybook usage by reading the stories we wrote for of our
+>   existing components
 
 ### Step 3: Implement your component
 
