@@ -57,6 +57,24 @@ npm start
 This is it! You can now open [http://0.0.0.0:8080/](http://0.0.0.0:8080/) and
 begin hacking.
 
+## Bonus: launch Storybook, our UI Development Environment
+
+Front-Commerce is component based, and uses
+[Storybook](https://storybook.js.org/) to allow developers to focus on building
+components in isolation.
+
+Storybook is a separate application that will render all the « stories » written
+in your code base so you can browse them.
+
+To launch it run the following command:
+
+```sh
+npm run storybook
+```
+
+You can now open [http://0.0.0.0:9001/](http://0.0.0.0:9001/) and explore the
+existing components.
+
 ## What's next?
 
 - [Adapt the look & feel to your brand](adapt-theme-to-brand.md)

@@ -102,8 +102,37 @@ will need to create three files:
   export default IllustratedContent;
   ```
 
-> **COMING SOON** Create a story using Storybook (when
-> [included in Front-Commerce Lite](https://github.com/front-commerce/front-commerce-lite/issues/17))
+- `src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.story.js`:
+  will add a story to the [Storybook](https://storybook.js.org/) of your
+  application. This will serve as living documentation and will allow anyone to
+  easily understand what is `IllustratedContent` used for and how to use it.
+
+  ```jsx
+  import IllustratedContent from "./IllustratedContent.js";
+  import { storiesOf } from "@storybook/react";
+
+  storiesOf("ui.molecules.IllustratedContent", module).add("default", () => {
+    return <IllustratedContent />;
+  });
+  ```
+
+Once you've added your component, you must restart the styleguide. Once it is up
+and running, you can view your new story in `molecules > IllustratedContent`.
+
+Now that you've done that, you can edit the IllustratedContent component, save,
+and view changes live in your browser.
+
+<figure style="margin: 1em 0; max-width: 50rem;">
+<img src="https://storybook.js.org/static/demo.f13d28a7.gif" alt="Demo of Storybook hot reloading" />
+<figcaption style="margin: 0.5em; text-align: center">Take a look at this magical development playground!</figcaption>
+</figure>
+
+> Learn more:
+>
+> - about Storybook itself, by reading the
+>   [official Storybook documentation](https://storybook.js.org/basics/introduction/)
+> - about our Storybook usage by reading the stories we wrote for of our
+>   existing components
 
 ### Step 3: Implement your component
 
