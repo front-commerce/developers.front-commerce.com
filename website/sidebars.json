@@ -16,7 +16,7 @@
     ],
     "Recipes": ["recipes"],
     "Troubleshooting": ["troubleshooting"],
-    "Appendices": ["roadmap", "migration-guides"]
+    "Appendices": ["roadmap", "migration-guides", "changelog"]
   },
   "migration-guides": {
     "1.x": ["migration-guide-1.0"]
