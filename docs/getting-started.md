@@ -5,7 +5,7 @@ sidebar_label: Installation
 ---
 
 While Front-Commerce is a
-[closed source product](http://developers.front-commerce.test/en/license.html),
+[closed source product](https://developers.front-commerce.com/en/license.html),
 we don't want you to trust us blindly.
 
 Because of this, we created a lighter version of Front-Commerce. It should make
