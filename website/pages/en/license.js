@@ -22,8 +22,9 @@ class License extends React.Component {
 
             <MarkdownBlock>{`
 > [Our pricing](https://www.front-commerce.com/en/pricing/):
->   * Setup: **5 000 €** (excl. taxes)
->   * License and support: **12 000 €** (excl. taxes) / year
+>   * License (includes updates for 1 year): **15 000 €** (excl. taxes)
+>   * (optional) Updates after first year: **6 000 €** (excl. taxes) / year
+>   * (optional) Support packages: Silver (**4 000€/year**), Gold (**8 000€/year**)
 `}</MarkdownBlock>
 
             <MarkdownBlock>
