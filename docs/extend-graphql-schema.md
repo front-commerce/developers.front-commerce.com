@@ -310,7 +310,7 @@ The promise will resolve to a list of results matching the following format
     "lat": "48.858682",
     "lon": "2.347138",
     "display_name":
-      "Foot locker, Rue de Rivoli, Quartier des Halles, Quartier Les Halles, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France",
+      "Foot locker, Rue de Rivoli, 1st Arrondissement, Paris, 75001, France",
     "class": "shop",
     "type": "shoes",
     "importance": 0.20025,
