@@ -13,7 +13,7 @@ css_bundle: front-commerce
 nav_class: "sunset"
 apollo_nav: false
 
-favicon: images/favicon-apollo.png
+favicon: images/favicon.png
 
 logo:
   nav_mobile: images/front-commerce-light.png
