@@ -37,5 +37,6 @@ nav_links:
 
 url: https://developers.front-commerce.com/
 root: /
+permalink: blog/:year/:month/:day/:title/
 
 public_dir: public/

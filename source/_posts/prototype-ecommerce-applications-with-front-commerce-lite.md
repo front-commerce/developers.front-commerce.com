@@ -2,6 +2,7 @@
 title: Prototype your next eCommerce application with Front-Commerce Lite
 author: Front-Commerce’s team
 authorURL: https://twitter.com/Front_Commerce
+date: 2018-10-02 12:00:00
 ---
 
 Our team is happy to announce Front-Commerce Lite, an open source boilerplate to

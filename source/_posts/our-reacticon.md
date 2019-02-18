@@ -2,6 +2,7 @@
 title: Our Reacticon
 author: Adrien, Julien and Pierre
 authorURL: https://twitter.com/Front_Commerce
+date: 2018-03-20 12:00:00
 ---
 
 A few days ago we attended [Reacticon](http://reacticon.org/), the first

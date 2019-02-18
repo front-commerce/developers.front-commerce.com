@@ -2,6 +2,7 @@
 title: Hello world!
 author: Pierre
 authorURL: https://twitter.com/pierremartin
+date: 2018-03-15 12:00:00
 ---
 
 Today we are excited to unveil our new website:
