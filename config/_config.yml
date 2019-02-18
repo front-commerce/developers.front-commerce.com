@@ -1,15 +1,12 @@
-github_repo: "front-commerce"
 description:
 author:
 language:
 timezone:
 # API keys
-#apis:
-#  segment: wgrIo8Bul0Ujl8USETG3DB6hONdy4kTg
-#  gtm: GTM-PNFDVBB
-#  docsearch:
-#    apiKey: 768e823959d35bbd51e4b2439be13fb7
-#    indexName: apollodata
+apis:
+  docsearch:
+    apiKey: b5a7bf2be3c2b1c682e5c84d562d15d2
+    indexName: front-commerce
 content_root: "source"
 
 css_bundle: front-commerce
