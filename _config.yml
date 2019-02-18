@@ -5,25 +5,27 @@ versions:
 sidebar_categories:
   null:
     - docs/index
-  Front Commerce:
-    - docs/front-commerce/welcome
-    - docs/front-commerce/why
-    - docs/front-commerce/faq
-  Architecture:
-    - docs/architecture/overview
-    - docs/architecture/folder
-    - docs/architecture/react
-  Getting Started:
-    - docs/getting-started/installation
-    - docs/getting-started/theme-to-your-brand
-    - docs/getting-started/create-ui
-    - docs/getting-started/create-page
-    - docs/getting-started/extend-schema
-    - docs/getting-started/create-business
-  Recipes:
-    - docs/recipes/what
-  Troubleshooting:
-    - docs/troubleshooting/troubleshooting
+  Essentials:
+    - docs/essentials/extend-the-theme
+  Advanced:
+    - GraphQL:
+        - docs/advanced/graphql/overview
+    - Theme:
+        - docs/advanced/theme/overview
+    - Checkout:
+        - docs/advanced/checkout/overview
+    - Performance:
+        - docs/advanced/performance/overview
+    - Server:
+        - docs/advanced/server/overview
+    - Production ready:
+        - docs/advanced/production-ready/overview
+  Concepts:
+    - docs/concepts/create-business
+  Magento2:
+    - docs/magento2/what
+  Reference:
+    - docs/reference/api
   Appendices:
     - docs/appendices/roadmap
     - docs/appendices/migration-guides
@@ -48,7 +50,6 @@ community_links:
     url: "https://twitter.com/Front_Commerce"
   "Contact":
     url: "mailto:contact@front-commerce.com"
-
 
 url: https://developers.front-commerce.com/
 root: /

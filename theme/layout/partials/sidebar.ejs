@@ -106,16 +106,37 @@
 
           <ul class="list-toc">
             <% pages.forEach(function(path) { %>
-              <% const details = pathDetails(path) %>
-              <% if (details) { %>
-              <li class="item-toc <%- details.extraClasses %>">
-                <a
-                  href="<%- details.href %>"
-                  class="sidebar-link <%- details.extraClasses %>"
-                >
-                  <span><%- details.title %></span>
-                </a>
-              </li>
+              <% if (typeof path === "string") { %>
+                <% const details = pathDetails(path) %>
+                <% if (details) { %>
+                <li class="item-toc <%- details.extraClasses %>">
+                  <a
+                    href="<%- details.href %>"
+                    class="sidebar-link <%- details.extraClasses %>"
+                  >
+                    <span><%- details.title %></span>
+                  </a>
+                </li>
+                <% } %>
+              <% } else { %>
+                <% _.each(path, function(pages, subcategory) { %>
+                <li class="item-toc">
+                  <a class=" sidebar-link"><%- subcategory %></a>
+                  <ul class="list-toc">
+                    <% pages.forEach(function(path) { %>
+                      <% const details = pathDetails(path) %>
+                      <% if (details) { %>
+                      <li class="item-toc <%- details.extraClasses %>">
+                        <a href="<%- details.href %>" class="sidebar-link <%- details.extraClasses %>">
+                          <span>
+                            <%- details.title %></span>
+                        </a>
+                      </li>
+                      <% } %>
+                    <% }) %>
+                  </ul>
+                </li>
+                <% }) %>
               <% } %>
             <% }); %>
           </ul>
