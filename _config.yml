@@ -1,0 +1,41 @@
+title: Front Commerce
+subtitle: Using Front Commerce
+versions:
+  - "1"
+sidebar_categories:
+  null:
+    - docs/index
+  Front Commerce:
+    - docs/front-commerce/welcome
+    - docs/front-commerce/why
+    - docs/front-commerce/faq
+  Architecture:
+    - docs/architecture/overview
+    - docs/architecture/folder
+    - docs/architecture/react
+  Getting Started:
+    - docs/getting-started/installation
+    - docs/getting-started/theme-to-your-brand
+    - docs/getting-started/create-ui
+    - docs/getting-started/create-page
+    - docs/getting-started/extend-schema
+    - docs/getting-started/create-business
+  Recipes:
+    - docs/recipes/what
+  Troubleshooting:
+    - docs/troubleshooting/troubleshooting
+  Appendices:
+    - docs/appendices/roadmap
+    - docs/appendices/migration-guides
+    - docs/appendices/changelog
+
+github_repo: front-commerce/developers.front-commerce.com
+
+nav_links:
+  "Docs":
+    url: https://developers.front-commerce.com/docs/
+
+url: https://developers.front-commerce.com/
+root: /
+
+public_dir: public/

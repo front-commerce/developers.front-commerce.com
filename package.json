@@ -1,0 +1,23 @@
+{
+  "name": "hexo-site",
+  "version": "0.0.0",
+  "private": true,
+  "hexo": {
+    "version": "3.8.0"
+  },
+  "devDependencies": {
+    "hexo": "3.8.0",
+    "hexo-browsersync": "0.3.0",
+    "hexo-prism-plus": "1.0.0",
+    "hexo-renderer-ejs": "0.3.1",
+    "hexo-renderer-less": "0.2.0",
+    "hexo-renderer-marked": "0.3.2",
+    "hexo-server": "0.3.3"
+  },
+  "scripts": {
+    "start": "npm run build && hexo --config _multiconfig.yml server",
+    "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate",
+    "clean": "hexo clean",
+    "test": "npm run clean; npm run build"
+  }
+}
