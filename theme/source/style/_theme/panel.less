@@ -1,4 +1,8 @@
 .panel {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
 	@media screen and (min-width: @breakpoint) { display: none; }
 
 	.panel-item {
@@ -8,6 +12,8 @@
 		display: block;
 		padding-top: .5rem;
 		padding-bottom: .5rem;
+		padding-left: .75rem;
+		padding-right: .75rem;
 		position: relative;
 
 		&.active,

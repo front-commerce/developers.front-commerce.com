@@ -33,7 +33,22 @@ github_repo: front-commerce/developers.front-commerce.com
 
 nav_links:
   "Docs":
-    url: https://developers.front-commerce.com/docs/
+    url: /docs/
+  "Help":
+    url: /help/
+  "License":
+    url: /license/
+
+community_links:
+  "Blog":
+    url: /blog/
+  "Slack":
+    url: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q"
+  "Twitter":
+    url: "https://twitter.com/Front_Commerce"
+  "Contact":
+    url: "mailto:contact@front-commerce.com"
+
 
 url: https://developers.front-commerce.com/
 root: /

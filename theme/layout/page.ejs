@@ -45,6 +45,20 @@
             </a>
           </div>
         <% }) %>
+        <div class="nav-item show-desktop">
+          <div class="dropdown">
+            <button class="dropdown__button">Community</button>
+            <div class="dropdown__children">
+              <% _.each(config.community_links || theme.community_links, function (link, title) { %>
+                <div class="">
+                  <a class="link" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
+                    <span><%- title %></span>
+                  </a>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
     <% } %>
     </div>
   </div>

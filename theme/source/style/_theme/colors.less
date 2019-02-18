@@ -187,6 +187,11 @@
     color: @color-lightest;
     a {
       .link(@color-lightest);
+
+      &.link:hover, &.link:focus {
+        color: @color-lightest;
+        text-decoration: underline;
+      }
     }
     svg {
       fill: @color-lightest;

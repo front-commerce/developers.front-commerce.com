@@ -50,17 +50,20 @@
       <div id="sidebar-panel-nav"></div>
       <script>ApolloNav.initNav({ theme: 'light', id: 'mobile-nav' }, 'sidebar-panel-nav')</script></a>
     <% } else { %>
-      <div class="panel-item">
-        <a class="" href="<%- relative_url(page.path, theme.logo.url) %>" title="<%- theme.logo.title %>" <%- theme.logo.target && 'target=' + theme.logo.target %> >
-          <span><%- theme.logo.title %> <%- theme.logo.subtitle %></span>
-        </a>
-      </div>
       <% _.each(config.nav_links || theme.nav_links, function (link, title) { %>
         <div class="panel-item <%- link.active && 'active' %>">
           <a class="" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
             <span><%- title %></span>
           </a>
         </div>
+      <% }) %>
+
+      <% _.each(config.community_links || theme.community_links, function (link, title) { %>
+        <div class="panel-item <%- link.active && 'active' %>">
+            <a class="" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
+              <span><%- title %></span>
+            </a>
+          </div>
       <% }) %>
     <% } %>
   </div>
