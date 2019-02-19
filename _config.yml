@@ -6,6 +6,7 @@ sidebar_categories:
   null:
     - docs/index
   Essentials:
+    - docs/essentials/installation
     - docs/essentials/extend-the-theme
   Advanced:
     - GraphQL:

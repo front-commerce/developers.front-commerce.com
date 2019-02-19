@@ -15,7 +15,7 @@
     "hexo-server": "0.3.3"
   },
   "scripts": {
-    "start": "npm run build && hexo --config _multiconfig.yml server",
+    "start": "npm run build && hexo --config _multiconfig.yml -p 4444 server",
     "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate",
     "clean": "hexo clean",
     "test": "npm run clean; npm run build"
