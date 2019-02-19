@@ -3,11 +3,10 @@
 a,
 .link {
 	.transition( all 250ms ease-out );
-	.type-bold;
   cursor: pointer;
-  text-decoration: none;
+	color: inherit;
 
-	&:visited { color: @color-darkest; }
+	&:hover, &:focus { color: @color-primary; }
 }
 
 a code {

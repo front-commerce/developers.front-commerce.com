@@ -6,6 +6,7 @@ sidebar_categories:
   null:
     - docs/index
   Essentials:
+    - docs/essentials/installation
     - docs/essentials/extend-the-theme
     - docs/essentials/adapt-theme-to-your-brand
   Advanced:
@@ -38,9 +39,9 @@ nav_links:
   "Docs":
     url: /docs/
   "Help":
-    url: /help/
+    url: /help.html
   "License":
-    url: /license/
+    url: /license.html
 
 community_links:
   "Blog":
