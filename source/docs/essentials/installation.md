@@ -82,7 +82,7 @@ Copy the `.env.dist` sample file to a local `.env` and adapt configurations.
 #### Configure stores
 
 Configure the project by creating a `src/config/stores.js` file. It should be an
-object with stores codes as keys and configurations as values.
+object with store codes as keys and configurations as values.
 
 Here is an example:
 
