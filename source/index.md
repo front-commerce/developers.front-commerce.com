@@ -64,13 +64,13 @@ layout: index
 
   <p>Even though we built Front-Commerce by integrating it with Magento 2, we had a clear vision of introducing a clean separation between the frontend and your backend solution. You will be able to use the backend that best fits your needs without rebuilding your frontend from scratch.</p>
 
-  <p>However, for now, we are focused on supporting Magento 2, and plan to add new e-commerce backends integrations later this year.</p>
+  <p>However, we now are focused on supporting Magento 2 and 1, and plan to add new e-commerce backends integrations later this year.</p>
 
   <div class="card-grid">
     <div class="card card--large">
       <img src="/images/magento-logo.svg">
       <h3>Magento 2</h3>
-      <p>Regarding Magento 2, we currently support the main features of this e-commerce solution. You can consider that if it works in Magento, it will work with Front-Commerce!</p>
+      <p>We currently support the main features of this open-source e-commerce solution. You can consider that if it works in Magento, it will work with Front-Commerce!</p>
 
       <ul>
         <li>search and navigation using ElasticSearch</li>
@@ -95,7 +95,6 @@ layout: index
       <p>However, for now we're especially looking into solutions such as:</p>
 
       <ul>
-        <!-- TODO add links -->
         <li><a href="https://www.akeneo.com/">Akeneo</a></li>
         <li><a href="https://wordpress.org/">Wordpress</a></li>
         <li><a href="https://www.drupal.org/">Drupal</a></li>
@@ -126,7 +125,7 @@ layout: index
 
       <p>The web is a rich medium and the « page » metaphor for building an application is outdated. You have many channels to stay in touch with your users (newsletters, blogs, shops, etc.). Everything changes: the content, the device, its connectivity and many other things. But one thing stays: your brand and your users. By thinking in term of a Design System, you will keep your user's experience consistent. You will also be able to reuse your components accross your different channels of communication.</p>
 
-      <p>The design system is also a the place where we will help you ensure not to introduce regressions and keep good a11y practices.</p>
+      <p>The design system is also a the place where we will help you ensure not to introduce regressions and keep good <abbr title="Accessibility">a11y</abbr> practices.</p>
     </div>
   </div>
 </section>
