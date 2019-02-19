@@ -26,6 +26,8 @@ body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 
   @media screen and (min-width: @breakpoint) {
     top: @panel-width-tablet;
@@ -92,7 +94,7 @@ body {
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
 
   .topcap {
     flex: none;

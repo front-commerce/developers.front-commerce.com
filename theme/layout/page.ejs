@@ -10,58 +10,7 @@
       '/' +
       page.path.replace(/\.html$/, '.md');
   %>
-
-  <div class="nav <%- config.nav_class %>">
-    <div class="nav-group left">
-      <div class="nav-item mobile-button js-sidebar-toggle show-mobile">
-        <span class="icon-menu"></span>
-      </div>
-      <div class="nav-item">
-        <% logo = config.logo || theme.logo %>
-        <a class="logo-wrapper" href="<%- logo.url %>" title="<%- logo.title %> <%- logo.subtitle %>" <%- logo.target && 'target=' + logo.target %> >
-          <img src="<%- relative_url(page.path, logo.nav_mobile) %>" alt="<%- logo.title %>" class="logo"/>
-          <% if (logo && logo.subbrand) { %>
-            <img src="<%- relative_url(page.path, logo.subbrand) %>" class="logo-subbrand" alt="<%- logo.subtitle %>"/>
-          <% } else { %>
-            <span><%- logo && logo.subtitle %></span>
-          <% } %>
-        </a>
-      </div>
-    </div>
-
-
-    <% if (config.apollo_nav) { %>
-      <div class="nav-group right">
-        <div id="nav-container" class="show-desktop"></div>
-        <script src="https://apollographql-nav.netlify.com/index.js"></script>
-        <script>ApolloNav.initNav({ theme: 'light' }, 'nav-container')</script>
-      </div>
-    <% } else { %>
-      <div class="nav-group right">
-        <% _.each(config.nav_links || theme.nav_links, function (link, title) { %>
-          <div class="nav-item show-desktop <%- link.active && 'active' %> <%- link.separator && 'separator' %>">
-            <a class="link" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
-              <span><%- title %></span>
-            </a>
-          </div>
-        <% }) %>
-        <div class="nav-item show-desktop">
-          <div class="dropdown">
-            <button class="dropdown__button">Community</button>
-            <div class="dropdown__children">
-              <% _.each(config.community_links || theme.community_links, function (link, title) { %>
-                <div class="">
-                  <a class="link" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
-                    <span><%- title %></span>
-                  </a>
-                </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
-    <% } %>
-    </div>
-  </div>
+  <%- partial('partials/header') %>
 
   <%- partial('partials/sidebar') %>
     <div class="content">
@@ -148,3 +97,64 @@
         </script>
         <% } %>
     </div>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/smooth-scroll@12.1.5/dist/js/smooth-scroll.min.js"></script>
+
+    <script>
+      // Used by the main.js script below.
+      docsConfigRoot = '<%- config.root %>';
+    </script>
+    <script src="<%= url_for('script/main.js', { relative: true }) %>"></script>
+
+    <% if (config.apis && config.apis.docsearch) { %>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <% } %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+    <!-- search box -->
+    <% if (config.apis && config.apis.swiftype) { %>
+      <script>
+        ;(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+        _st('install','<%- config.apis.swiftype %>','2.0.0');
+      </script>
+    <% } else if (config.apis && config.apis.docsearch) { %>
+      <script>
+        ['desktop'].forEach(function(type) {
+          var search = docsearch({
+            apiKey: '<%- config.apis.docsearch.apiKey %>',
+            <%#
+              A custom deployment, directly through Algolia, requires the 'appId'.  This is useful
+              for testing, but is not necessary when using their free Docsearch service.
+            %>
+            <% if (config.apis.docsearch.appId) { %>
+              appId: '<%- config.apis.docsearch.appId %>',
+            <% } %>
+            indexName: '<%- config.apis.docsearch.indexName %>',
+            inputSelector: '#' + type + '-search-input',
+            autocompleteOptions: {
+              dropdownMenuContainer: '.wrapper-' + type + '-search-results',
+              debug: true
+            },
+            algoliaOptions: {
+              hitsPerPage: 20
+            }
+          }).autocomplete;
+
+          var sidebar = document.querySelector('.sidebar-content');
+          search.on('autocomplete:opened', function() {
+            sidebar.classList.add('searching');
+          });
+          search.on('autocomplete:closed', function() {
+            sidebar.classList.remove('searching');
+          });
+          search.on('autocomplete:updated', function() {
+            if (search.val() === '') {
+              search.autocomplete.close();
+            }
+          });
+        });
+      </script>
+    <% } %>
