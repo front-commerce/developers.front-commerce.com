@@ -7,6 +7,7 @@ sidebar_categories:
     - docs/index
   Essentials:
     - docs/essentials/extend-the-theme
+    - docs/essentials/adapt-theme-to-your-brand
   Advanced:
     - GraphQL:
         - docs/advanced/graphql/overview
