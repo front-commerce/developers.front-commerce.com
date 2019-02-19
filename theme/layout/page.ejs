@@ -10,58 +10,7 @@
       '/' +
       page.path.replace(/\.html$/, '.md');
   %>
-
-  <div class="nav <%- config.nav_class %>">
-    <div class="nav-group left">
-      <div class="nav-item mobile-button js-sidebar-toggle show-mobile">
-        <span class="icon-menu"></span>
-      </div>
-      <div class="nav-item">
-        <% logo = config.logo || theme.logo %>
-        <a class="logo-wrapper" href="<%- logo.url %>" title="<%- logo.title %> <%- logo.subtitle %>" <%- logo.target && 'target=' + logo.target %> >
-          <img src="<%- relative_url(page.path, logo.nav_mobile) %>" alt="<%- logo.title %>" class="logo"/>
-          <% if (logo && logo.subbrand) { %>
-            <img src="<%- relative_url(page.path, logo.subbrand) %>" class="logo-subbrand" alt="<%- logo.subtitle %>"/>
-          <% } else { %>
-            <span><%- logo && logo.subtitle %></span>
-          <% } %>
-        </a>
-      </div>
-    </div>
-
-
-    <% if (config.apollo_nav) { %>
-      <div class="nav-group right">
-        <div id="nav-container" class="show-desktop"></div>
-        <script src="https://apollographql-nav.netlify.com/index.js"></script>
-        <script>ApolloNav.initNav({ theme: 'light' }, 'nav-container')</script>
-      </div>
-    <% } else { %>
-      <div class="nav-group right">
-        <% _.each(config.nav_links || theme.nav_links, function (link, title) { %>
-          <div class="nav-item show-desktop <%- link.active && 'active' %> <%- link.separator && 'separator' %>">
-            <a class="link" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
-              <span><%- title %></span>
-            </a>
-          </div>
-        <% }) %>
-        <div class="nav-item show-desktop">
-          <div class="dropdown">
-            <button class="dropdown__button">Community</button>
-            <div class="dropdown__children">
-              <% _.each(config.community_links || theme.community_links, function (link, title) { %>
-                <div class="">
-                  <a class="link" href="<%- link.url || link %>" <%- link.target && 'target=' + link.target %> >
-                    <span><%- title %></span>
-                  </a>
-                </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
-    <% } %>
-    </div>
-  </div>
+  <%- partial('partials/header') %>
 
   <%- partial('partials/sidebar') %>
     <div class="content">
