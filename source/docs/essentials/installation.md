@@ -109,8 +109,8 @@ must match [Magento store view code](https://docs.magento.com/m2/ee/user_guide/s
 #### Configure remote services
 
 Front-Commerce can interact with remote headless services. But for security
-reasons, most services uses some tokens to ensure that you are the only with
-access to their data. It also is a way to allow remote services to do invalidate
+reasons, most services use some tokens to ensure that you are the only one to
+access to their data. It also is a way to allow remote services to invalidate
 Front-Commerce’s cache securely. These kind of tokens are configurable within
 the `src/config/serviceKeys/` folder.
 
@@ -127,8 +127,8 @@ See [our documentation](#TODO) for further information.
 
 #### Optionally configure the caching strategy
 
-To use caching locally, you can configure it in `src/config/caching.js`. For now
-only redis is supported, which requires to have an redis instance to connect to.
+To enable caching locally, you can configure it in `src/config/caching.js`. For now
+only redis is supported, which requires to have a redis instance to connect to.
 
 See [our caching section](#TODO) to know more about caching in the GraphQL
 middleware.
