@@ -40,7 +40,7 @@
 	.heading-toc {
 		.subheading-caps;
 		color: @color-darker;
-		padding: 1.5em 1.6em .25em;
+		padding: 1.5em 1.4em .25em;
 	}
 
 	.toc > li:first-child > .heading-toc {
@@ -98,6 +98,11 @@
 			position: relative;
 			font-weight: 600;
 			padding-left: 1.5rem;
+			text-decoration: none;
+
+			&:hover, &:focus {
+				text-decoration: underline;
+			}
 
 			&.current {
 				&:extend(.link.primary all);

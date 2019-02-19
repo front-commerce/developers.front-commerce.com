@@ -16,7 +16,7 @@ apollo_nav: false
 favicon: images/favicon.png
 
 logo:
-  nav_mobile: images/front-commerce-light.png
+  nav_mobile: images/fc_logo_2018--inline-white.svg
   title: Front Commerce
   url: https://developers.front-commerce.com
 

@@ -151,7 +151,7 @@
     }
     var id = hash.slice(1);
     var currentActive = document.querySelector('.sub-menu a[href="#' + id + '"]')
-    if (currentActive !== previousActive) {
+    if (currentActive && currentActive !== previousActive) {
       if (previousActive) previousActive.classList.remove('active')
       currentActive.classList.add('active')
     }

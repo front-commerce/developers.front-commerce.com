@@ -38,9 +38,9 @@ nav_links:
   "Docs":
     url: /docs/
   "Help":
-    url: /help/
+    url: /help.html
   "License":
-    url: /license/
+    url: /license.html
 
 community_links:
   "Blog":
