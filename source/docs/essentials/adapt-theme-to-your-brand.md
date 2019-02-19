@@ -54,7 +54,7 @@ To do so:
 1. override the `components/atoms/Colors/_colors.scss` theme file in your theme:
 ```bash
 mkdir -p src/web/theme/components/atoms/Colors/
-cp node_modules/front-commerce/src/web/themes/base/theme/components/atoms/Colors/_colors.scss \
+cp node_modules/front-commerce/src/web/theme/components/atoms/Colors/_colors.scss \
   src/web/theme/components/atoms/Colors/_colors.scss
 ```
 2. restart the application so the override is detected
@@ -82,9 +82,9 @@ Follow the same steps than for colors:
 1. override the `components/atoms/Typography/_typography.scss` and `components/atoms/Typography/Heading/_Heading.scss` theme files in your theme:
 ```bash
 mkdir -p src/web/theme/components/atoms/Typography/Heading
-cp node_modules/front-commerce/src/web/themes/base/theme/components/atoms/Typography/_typography.scss \
+cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/_typography.scss \
   src/web/theme/components/atoms/Typography/_typography.scss
-cp node_modules/front-commerce/src/web/themes/base/theme/components/atoms/Typography/Heading/_Heading.scss \
+cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading/_Heading.scss \
   src/web/theme/components/atoms/Typography/Heading/_Heading.scss
 ```
 2. restart the application so the override is detected
