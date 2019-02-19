@@ -65,7 +65,7 @@ cd front-commerce-skeleton
 npm install
 ```
 
-It may take a while…
+Depending on your internet connexion, feel free to grab some tea and a cookie…
 
 ### Configure the project
 
