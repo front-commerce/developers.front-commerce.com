@@ -99,15 +99,20 @@ module.exports = {
 };
 ```
 
+<!-- TODO Add a link to the store config documentation -->
+
 <blockquote class="info">
 **Magento:** when using Front-Commerce with Magento, store codes
-must match Magento ones.
+must match [Magento store view code](https://docs.magento.com/m2/ee/user_guide/stores/stores-all-create-view.html).
 </blockquote>
 
 #### Configure remote services
 
-In order for Front-Commerce to interact with remote headless services, you must
-ensure it is configured properly.
+Front-Commerce can interact with remote headless services. But for security
+reasons, most services uses some tokens to ensure that you are the only with
+access to their data. It also is a way to allow remote services to do invalidate
+Front-Commerce’s cache securely. These kind of tokens are configurable within
+the `src/config/serviceKeys/` folder.
 
 For instance, to interact with Magento2 you will need to configure a few things:
 
@@ -130,7 +135,7 @@ middleware.
 
 ### Launch the application
 
-Runs your Front-Commerce project in development mode by running:
+Launch your Front-Commerce project in development mode by running:
 
 ```sh
 npm run start
@@ -142,7 +147,7 @@ You can also open
 the GraphQL schema and interact with its data.
 
 <blockquote class="info">
-The project will reload automatically in most cases. However, when you are
+The project will reload automatically in most cases upon a source code change. However, when you are
 trying to override a file that already exists in one of your modules, remember
 to restart this script.
 </blockquote>
@@ -153,8 +158,9 @@ Front-Commerce is component based, and uses
 [Storybook](https://storybook.js.org/) to allow developers to focus on building
 components in isolation.
 
-Storybook is a separate application that will render all the _stories_ written
-in your codebase so you can browse them. To launch it run the following command:
+Storybook is a separate application that will render all
+[the _stories_ written in your codebase](https://storybook.js.org/basics/writing-stories/)
+so you can browse them. To launch it run the following command:
 
 ```bash
 npm run styleguide
@@ -165,6 +171,5 @@ the existing components.
 
 <blockquote class="tip">
 You can configure which stories to display in your styleguide by setting the
-[`styleguidePaths` key in your `.front-commerce.js`](#TODO) file. Its value should be an
-array of regex that will be matched against your stories paths.
+[`styleguidePaths` key in your `.front-commerce.js`](#TODO) file. Its value should be a list of regex (e.g: `[/.*.story.js$/];`) that will be matched against your stories paths.
 </blockquote>
