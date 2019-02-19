@@ -19,8 +19,8 @@ are the _core styles_ of your design: colors, font families, font sizes,
 borders, shadows, etc. Together they are what make your brand unique.
 
 There even exist tools that extract those tokens from existing websites. In this
-example, we will use [CSS Stats](https://cssstats.com/) to extract our Design
-Tokens.
+example, we will use [CSS Stats](https://cssstats.com/) to extract Design Tokens
+from [Smashing Magazine](https://www.smashingmagazine.com/) and use them later.
 
 <figure>
 <img alt="CSS Stats lists all the 62 colors and 59 unique background colors of Smashing Magazine" src="/docs/assets/smashingmagazine-cssstats.png" />
@@ -35,23 +35,27 @@ which is a very nice introduction.
 
 ## Apply these tokens to your theme
 
-Now that we've got our Design Tokens, let's apply them to Front-Commerce's
+Now that we've got our Design Tokens, let's apply them to Front-Commerce's base
 theme.
 
-Since we use the Atomic Design principles, the tokens are within the atoms in
-`/web/theme/components/atoms`. In this guide, we'll focus on the colors and the
-typography settings. But feel free to go further and edit buttons, form inputs,
-etc.
+Since we use the Atomic Design principles, the tokens are within atoms of
+our base theme. From your application, you will find the base theme in the
+`node_modules/front-commerce/src/web/` directory and atoms under its `theme/components/atoms` subdirectory.
+
+In this guide,
+we'll focus on the colors and the typography settings. But feel free to go
+further and edit buttons, form inputs, etc.
+
+### Colors
 
 In order to style our HTML, we use Sass, the well-known CSS preprocessor. Thus,
 the design tokens often translate to Sass variables.
 
+For instance, if we want to edit the colors of our application, we need to
+override the one defined in the core. To do so:
 
-### Colors
-
-For instance, if we want to edit the colors of our application, we need to override the one defined in the core.
-To do so:
-1. override the `components/atoms/Colors/_colors.scss` theme file in your theme:
+1.  override the `theme/components/atoms/Colors/_colors.scss` theme file in your
+    theme:
 ```bash
 mkdir -p src/web/theme/components/atoms/Colors/
 cp node_modules/front-commerce/src/web/theme/components/atoms/Colors/_colors.scss \
@@ -73,13 +77,19 @@ In Smashing Magazine's case it would be:
 +$fontColor: #333;
 ```
 
-### Fonts
+### Typography
 
-We could change the fonts to match Smashing Magazine's in a similar way. Fonts are defined in `components/atoms/Typography/_typography.scss`.
-The difference here is that we will also introduce a different font for headings and that we will have to allow the remote font domain in the <abbr title="Content Security Policy">CSP</abbr> headers.
+We could change the fonts to match Smashing Magazine's in a similar way. Fonts
+are defined in `theme/components/atoms/Typography/_typography.scss`. The difference
+here is that we will also introduce a different font for headings and that we
+will have to allow the remote font domain in the
+<abbr title="Content Security Policy">CSP</abbr> headers.
 
 Follow the same steps than for colors:
-1. override the `components/atoms/Typography/_typography.scss` and `components/atoms/Typography/Heading/_Heading.scss` theme files in your theme:
+
+1. override the `theme/components/atoms/Typography/_typography.scss` and
+   `theme/components/atoms/Typography/Heading/_Heading.scss` theme files in your
+   theme:
 ```bash
 mkdir -p src/web/theme/components/atoms/Typography/Heading
 cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/_typography.scss \
@@ -116,8 +126,9 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading
    font-weight: bold;
  }
 ```
-4. allow `d33wubrfki0l68.cloudfront.net` in your <abbr title="Content Security Policy">CSP</abbr> `font-src` header value configured in `src/config/website.js`
-
+4. allow `d33wubrfki0l68.cloudfront.net` (the domain we have included fonts from) in your
+   <abbr title="Content Security Policy">CSP</abbr> `font-src` header value
+   configured in `src/config/website.js`
 ```diff
 // src/config/website.js
        imgSrc: [],
@@ -135,8 +146,8 @@ Front-Commerce would then now look like this:
 </figure>
 
 Sure it still needs tweaking, but as you can see, it is already far better.
-Furthermore, it is an easy first step to start convincing your team and clients that using modern
-front-end technologies is for the best.
+Furthermore, it is an easy first step to start convincing your team and clients
+that using modern front-end technologies is for the best.
 
 <blockquote class="more">
   You can experiment further by changing other tokens such as spacing, form inputs, buttons…
