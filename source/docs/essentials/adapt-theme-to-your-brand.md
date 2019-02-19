@@ -23,7 +23,7 @@ example, we will use [CSS Stats](https://cssstats.com/) to extract Design Tokens
 from [Smashing Magazine](https://www.smashingmagazine.com/) and use them later.
 
 <figure>
-<img alt="CSS Stats lists all the 62 colors and 59 unique background colors of Smashing Magazine" src="/docs/assets/smashingmagazine-cssstats.png" />
+<img alt="CSS Stats lists all the 62 colors and 59 unique background colors of Smashing Magazine" src="assets/smashingmagazine-cssstats.png" />
 <figcaption>Here is an example with the awesome Smashing Magazine website</figcaption>
 </figure>
 
@@ -142,7 +142,7 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading
 Front-Commerce would then now look like this:
 
 <figure>
-<img alt="A comparison between the original Front-Commerce base theme and with Smashing Magazine's tokens" src="/docs/assets/TODO" />
+<img alt="A comparison between the original Front-Commerce base theme and with Smashing Magazine's tokens" src="assets/design-tokens-page.png" />
 </figure>
 
 Sure it still needs tweaking, but as you can see, it is already far better.
