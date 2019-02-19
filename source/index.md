@@ -10,6 +10,8 @@ layout: index
   <div class="center getting-started"><a class="link primary button" href="/docs/">Getting Started</a></div>
   <ul class="button-list">
     <li><a class="link button"  href="/docs/">Documentation</a></li>
+    <li class="show-mobile"><a class="link button"  href="/help.html">Help</a></li>
+    <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
     <li><a class="link button"  href="">Demo store</a></li>
     <li><a class="link button"  href="">Styleguide</a></li>
   </ul>

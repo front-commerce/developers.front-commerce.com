@@ -1,9 +1,12 @@
 
 <div class="nav <%- config.nav_class %>">
     <div class="nav-group left">
+        <% if (page.path !== "index.html") { %>
         <div class="nav-item mobile-button js-sidebar-toggle show-mobile">
             <span class="icon-menu"></span>
+            <span>Menu</span>
         </div>
+        <% } %>
         <div class="nav-item">
             <% logo = config.logo || theme.logo %>
             <a class="logo-wrapper" href="<%- logo.url %>" title="<%- logo.title %> <%- logo.subtitle %>" <%- logo.target && 'target=' + logo.target %> >
