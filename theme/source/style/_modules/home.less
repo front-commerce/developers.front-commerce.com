@@ -1,6 +1,20 @@
 .hero {
-  padding: 10rem 0 5rem;
+  padding: 10rem 1.5rem 5rem;
   border-bottom: 1px solid @color-mediumlight;
+
+  h1 {
+    font-size: 28px;
+    line-height: 36px;
+    @media screen and (min-width: 30rem) {
+      font-size: 32px;
+      line-height: 42px;
+    }
+    @media screen and (min-width: 40rem) {
+      font-size: 54px;
+      line-height: 70px;
+      text-align: center;
+    }
+  }
 
   img {
     display: block;
@@ -25,6 +39,37 @@
     @media screen and (min-width: 30em) {
       font-size: 28px;
       line-height: 32px;
+    }
+  }
+
+  &--title {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+    @media screen and (min-width: 40rem) {
+      padding: 10rem 1.5rem 5rem;
+      text-align: center;
+    }
+
+    h1 {
+      max-width: 30ch;
+      margin: 0 auto;
+    }
+
+    p {
+      text-align: left;
+      margin-left: 0;
+      margin-right: 0;
+      @media screen and (min-width: 40rem) {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    time {
+      display: block;
+      margin-top: 1.5rem;
+      color: @color-dark;
     }
   }
 }
@@ -113,22 +158,7 @@
   margin: 3rem 1rem 2.5rem;
 }
 
-.fc-section {
-  padding: 5rem 0;
-  border-bottom: 1px solid @color-mediumlight;
-
-  &--dark {
-    // background: @color-mediumlight;
-  }
-
-  h2 {
-    margin-bottom: 2.25rem;
-    font-size: 28px;
-    color: @color-primary;
-    text-align: center;
-    font-weight: bold;
-  }
-
+section {
   > p {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
@@ -138,6 +168,23 @@
       margin-right: auto;
       max-width: 70ch;
     }
+  }
+}
+
+.fc-section {
+  padding: 3rem 0;
+  @media screen and (min-width: 40rem) {
+    padding: 5rem 0;
+  }
+
+  border-bottom: 1px solid @color-mediumlight;
+
+  h2 {
+    margin-bottom: 2.25rem;
+    font-size: 28px;
+    color: @color-primary;
+    text-align: center;
+    font-weight: bold;
   }
 
   .card-grid {
@@ -159,11 +206,6 @@
     min-width: 30ch;
     box-shadow: 0 5px 15px 0 @color-mediumlight;
 
-    &--large {
-      margin-top: 3rem;
-      max-width: 50ch;
-    }
-
     h3 {
       color: @color-primary;
       text-align: center;
@@ -180,6 +222,36 @@
 
     > :last-child {
       margin-bottom: 0;
+    }
+
+    &--large {
+      margin-top: 3rem;
+      max-width: 50ch;
+    }
+
+    &--full-width {
+      max-width: 70ch;
+      margin-left: auto;
+      margin-right: auto;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-top: 0;
+      }
+      h2,
+      h3 {
+        text-align: left;
+      }
+
+      h2 {
+        margin-bottom: 0;
+      }
+
+      time {
+        color: @color-dark;
+      }
     }
   }
 
@@ -249,6 +321,16 @@
         margin-right: auto;
       }
     }
+  }
+}
+
+.blog-section {
+  padding: 3rem 1.5rem;
+
+  .document-formatting {
+    max-width: 75ch;
+    max-width: ~"calc(70ch + 3rem)";
+    margin: 0 auto;
   }
 }
 

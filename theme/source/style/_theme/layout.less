@@ -48,9 +48,17 @@ body {
   padding-top: @panel-width-tablet;
   z-index: 2;
 
+  &--full {
+    padding: 0;
+  }
+
   @media screen and (min-width: @breakpoint) {
     padding-top: @panel-width-tablet;
     margin-left: @sidebar-width;
+
+    &--full {
+      margin-left: 0;
+    }
   }
 }
 

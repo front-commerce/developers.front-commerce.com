@@ -24,8 +24,8 @@ nav {
 .nav-group.left {
 	.nav-item {
 		display: inline-block;
-		line-height: 3rem;
-	}
+    line-height: 3rem;
+  }
 }
 
 .nav {
@@ -116,6 +116,21 @@ nav {
       align-items: center;
       width: 100%;
       justify-content: space-between;
+
+      > :last-child {
+        flex: 1;
+        text-align: right;
+        margin-left: 1.5rem;
+        @media screen and (min-width: @breakpoint) {
+          margin-left: 0;
+          text-align: left;
+        }
+
+        &:first-child {
+          margin-left: 0;
+          text-align: left;
+        }
+      }
     }
 
     &.right {
