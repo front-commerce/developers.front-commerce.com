@@ -18,13 +18,13 @@ iterate from there.
 
 People having an understanding of [layout overrides in Magento](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/layout-override.html), [child themes in Wordpress](https://developer.wordpress.org/themes/advanced-topics/child-themes/) / [Prestashop](https://devdocs.prestashop.com/1.7/themes/reference/template-inheritance/parent-child-feature/), [templates override in Drupal](https://www.drupal.org/docs/8/theming/twig/working-with-twig-templates), [themes in CakePHP](https://book.cakephp.org/3.0/en/views/themes.html) or other similar implementations should easily understand this mechanism in Front-Commerce.
 
-Your own theme will be located in its own folder and will use by default components from
+Your own theme will be located in its own folder and will use default components from
 parent theme(s) — at least from Front-Commerce base theme.
 You would then copy the files you want to override in your theme folder by maintaining
 an identical file structure.
-Your component will be used instead of the base one anywhere across the application.
+Your component will then be used instead of the one in your parent theme(s).
 
-Themes are part of a module’s web area. Hence you must follow theses steps:
+This translates in those three steps:
 
 1. define the module in the base configuration file
 2. copy the file (`js`, `scss` or `gql`) you want to override in the `theme` folder of your module
@@ -32,7 +32,7 @@ Themes are part of a module’s web area. Hence you must follow theses steps:
 
 ## Define the module in the base configuration file
 
-First, we need to create a minimalist module with the following file structure:
+First, we need to create a minimalist module that will contain your own theme by creating the following file structure:
 
 ```
 my-module
@@ -66,7 +66,7 @@ The original file is: `node_modules/front-commerce/src/web/theme/modules/Product
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItem.js`
 2. add the description somewhere in your `ProductItem` with `{this.props.description}`.
 
-**However you will not see the description yet!**
+**But you are not done yet!**
 This information is not included in the GraphQL fields fetched by the application in the base theme.
 You will thus need to update the fragment related to `ProductItem`.
 
