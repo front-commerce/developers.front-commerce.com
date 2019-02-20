@@ -2,9 +2,14 @@
   .content-wrapper {
     .std-ypadding;
     overflow: visible;
-    width: 80%;
+    width: 90%;
+    width: ~"calc(100% - 3rem)";
     max-width: 800px;
     margin: 0 auto;
+
+    @media screen and (min-width: 30rem) {
+      width: 80%;
+    }
   }
 
   .anchor-offset {
