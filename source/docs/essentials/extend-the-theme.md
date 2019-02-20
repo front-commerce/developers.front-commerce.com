@@ -5,18 +5,20 @@ title: Extend the theme
 
 ## Understanding theme overrides
 
-Front-Commerce web application is a fully featured e-commerce universal React application
-aimed at providing a sane base for your own theme.
+Front-Commerce web application is a fully featured e-commerce [universal](https://cdb.reacttraining.com/universal-javascript-4761051b7ae9)
+React application aimed at providing a sane base for your own theme.
 Even though you could reuse pages and components individually in a totally different theme,
 most of the time you might find easier and faster to start with the base theme and
 iterate from there.
 
 **Theme override is the mechanism allowing to extend, adapt, rewrite almost everything contained in the base theme.** It is what allows you to:
-- upgrade Front-Commerce and benefit from the latest component improvements,
+- customize the base theme,
 - customize how an extension is displayed,
+- upgrade Front-Commerce and benefit from the latest component improvements,
 - or create a slightly different theme for the Black Friday in confidence!
 
-People having an understanding of [layout overrides in Magento](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/layout-override.html), [child themes in Wordpress](https://developer.wordpress.org/themes/advanced-topics/child-themes/) / [Prestashop](https://devdocs.prestashop.com/1.7/themes/reference/template-inheritance/parent-child-feature/), [templates override in Drupal](https://www.drupal.org/docs/8/theming/twig/working-with-twig-templates), [themes in CakePHP](https://book.cakephp.org/3.0/en/views/themes.html) or other similar implementations should easily understand this mechanism in Front-Commerce.
+Having an understanding of [themes in Magento](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/templates/template-overview.html), [child themes in Wordpress](https://developer.wordpress.org/themes/advanced-topics/child-themes/) / [Prestashop](https://devdocs.prestashop.com/1.7/themes/reference/template-inheritance/parent-child-feature/), [templates override in Drupal](https://www.drupal.org/docs/8/theming/twig/working-with-twig-templates), [themes in CakePHP](https://book.cakephp.org/3.0/en/views/themes.html) will help you understand Front-Commerce’s theme overrides because they all share the same philosophy.
+If you have no previous experience with these other implementations, let’s see how it works!
 
 Your own theme will be located in its own folder and will use default components from
 parent theme(s) — at least from Front-Commerce base theme.
@@ -26,13 +28,13 @@ Your component will then be used instead of the one in your parent theme(s).
 
 This translates in those three steps:
 
-1. define the module in the base configuration file
+1. configure your custom theme and use it in your application
 2. copy the file (`js`, `scss` or `gql`) you want to override in the `theme` folder of your module
 3. customize its content in your module directory
 
-## Define the module in the base configuration file
+## Configure your custom theme and use it in your application
 
-First, we need to create a minimalist module that will contain your own theme by creating the following file structure:
+First, we need to create a minimalist module that will contain your own theme by creating the following file structure (for instance at the root of your project):
 
 ```
 my-module
@@ -63,16 +65,21 @@ Let's add the description of a `Product` to a `ProductItem` as an example of ove
 
 The original file is: `node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js`
 
+<blockquote class="info">
+Please refer to the [Folder structure documentation page](#TODO) to get a better
+understanding of how components are organized in the base theme.
+</blockquote>
+
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItem.js`
 2. add the description somewhere in your `ProductItem` with `{this.props.description}`.
 
 **But you are not done yet!**
-This information is not included in the GraphQL fields fetched by the application in the base theme.
+The `description` information is not included in the GraphQL fields fetched by the application in the base theme.
 You will thus need to update the fragment related to `ProductItem`.
 
 The original fragment file is collocated with the original component at: `node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
 
-1. copy it to: `my-module/theme/molecules/Product/View/ProductItem/ProductItemFragment.gql`
+1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
 2. add the field `description` to the fragment.
 ```diff
 // my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql
