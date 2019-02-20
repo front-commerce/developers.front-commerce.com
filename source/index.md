@@ -12,6 +12,7 @@ layout: index
     <li><a class="link button"  href="/docs/">Documentation</a></li>
     <li class="show-mobile"><a class="link button"  href="/help.html">Help</a></li>
     <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
+    <li><a class="link button"  href="/blog">Blog</a></li>
     <li><a class="link button"  href="">Demo store</a></li>
     <li><a class="link button"  href="">Styleguide</a></li>
   </ul>
@@ -169,7 +170,3 @@ layout: index
     <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’m interested!">Contact the team</a>
   </div>
 </section>
-
-<div class="center">
-  <a class="link button discreet" href="#">Back to top</a>
-</div>

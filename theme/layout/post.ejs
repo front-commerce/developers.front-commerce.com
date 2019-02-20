@@ -1,0 +1,42 @@
+<%- partial('partials/header', {withMobileMenu: `
+    <a href="/" class="nav-item mobile-button show-mobile">
+        <span>Home</span>
+    </a>
+    <a href="/blog/" class="nav-item mobile-button show-mobile">
+        <span>Blog</span>
+    </a>
+`}) %>
+
+<section class="hero hero--title">
+<h1><%- page.title %></h1>
+<a href="<%- url_for(page.path) %>"><time datetime="<%= date_xml(page.date) %>" itemprop="datePublished"><%= date(page.date, config.date_format) %></time></a>
+</section>
+
+<div class="content content--full">
+  <section class="content-wrapper blog-section">
+    <div class="document-formatting">
+      <%- page.content %>
+    </div>
+  </section>
+
+  <div class="pagination">
+    <div class="content-wrapper">
+      <% if (page.prev) { %>
+          <a class="link primary prev" href="<%- relative_url(page.path, page.prev.path) %>">
+            <span class="icon-arrow-left-alt"></span>
+            <span class="subtitle-pagination">Next</span>
+            <span class="title-pagination"><%- page.prev.title %></span>
+          </a>
+      <% } %>
+      <% if (page.next) { %>
+          <a class="link primary next" href="<%- relative_url(page.path, page.next.path) %>">
+            <span class="icon-arrow-right-alt"></span>
+            <span class="subtitle-pagination">Previous</span>
+            <span class="title-pagination"><%- page.next.title %></span>
+          </a>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- partial('partials/back-to-top') %>

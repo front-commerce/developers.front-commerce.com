@@ -36,16 +36,18 @@ sidebar_categories:
 github_repo: front-commerce/developers.front-commerce.com
 
 nav_links:
+  "Home":
+    url: /
   "Docs":
     url: /docs/
   "Help":
     url: /help.html
   "License":
     url: /license.html
-
-community_links:
   "Blog":
     url: /blog/
+
+community_links:
   "Slack":
     url: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q"
   "Twitter":

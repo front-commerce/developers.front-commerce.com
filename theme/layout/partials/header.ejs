@@ -1,11 +1,15 @@
 
 <div class="nav <%- config.nav_class %>">
     <div class="nav-group left">
-        <% if (page.path !== "index.html") { %>
-        <button class="nav-item mobile-button js-sidebar-toggle show-mobile">
-            <span class="icon-menu"></span>
-            <span>Menu</span>
-        </button>
+        <% if (withMobileMenu !== false) { %>
+            <% if (withMobileMenu !== true) { %>
+                <%- withMobileMenu %>
+            <% } else { %>
+                <button class="nav-item mobile-button js-sidebar-toggle show-mobile">
+                    <span class="icon-menu"></span>
+                    <span>Menu</span>
+                </button>
+            <% } %>
         <% } %>
         <div class="nav-item">
             <% logo = config.logo || theme.logo %>

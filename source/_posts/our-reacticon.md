@@ -12,7 +12,7 @@ ecosystem.
 It was composed of one day of conferences and another one of code! Here are our
 key takeaways.
 
-<!--truncate-->
+<!-- more -->
 
 ## A friendly community
 

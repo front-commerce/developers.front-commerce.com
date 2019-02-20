@@ -13,7 +13,7 @@ the traction we have seen over the past few weeks**. This website is for
 developers wanting a better understanding of what Front-Commerce is, and why we
 made it this way.
 
-<!--truncate-->
+<!-- more -->
 
 This is
 [our official documentation website](http://developers.front-commerce.com/docs/welcome.html)

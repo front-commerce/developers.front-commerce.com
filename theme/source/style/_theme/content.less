@@ -2,9 +2,14 @@
   .content-wrapper {
     .std-ypadding;
     overflow: visible;
-    width: 80%;
+    width: 90%;
+    width: ~"calc(100% - 3rem)";
     max-width: 800px;
     margin: 0 auto;
+
+    @media screen and (min-width: 30rem) {
+      width: 80%;
+    }
   }
 
   .anchor-offset {
@@ -137,13 +142,15 @@
   .pagination {
     border-top: 1px solid @color-mediumlight;
     border-bottom: 1px solid @color-mediumlight;
-    margin-bottom: 1.5rem;
     display: flex;
 
     .link {
+      text-decoration: none;
+      max-width: 100%;
       .font-s2;
       @media screen and (min-width: @breakpoint) {
         .font-s3;
+        max-width: 48%;
       }
 
       float: left;
@@ -226,6 +233,13 @@
       line-height: 1;
     }
 
+    .title-pagination {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     [class^="icon-"] {
       .position(absolute, 25%);
       display: none;
@@ -238,6 +252,10 @@
   .github {
     padding-bottom: 1.5rem;
     text-align: center;
+  }
+
+  .pagination + .github {
+    margin-top: 1.5rem;
   }
 
   .objdesc > dt {

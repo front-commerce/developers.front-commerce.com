@@ -10,7 +10,7 @@ prototype, experiment and learn the stack behind Front-Commerce. Find it on
 Github:
 [front-commerce/front-commerce-lite](https://github.com/front-commerce/front-commerce-lite)
 
-<!--truncate-->
+<!-- more -->
 
 ## Why Front-Commerce Lite?
 

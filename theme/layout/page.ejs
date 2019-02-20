@@ -10,7 +10,7 @@
       '/' +
       page.path.replace(/\.html$/, '.md');
   %>
-  <%- partial('partials/header') %>
+  <%- partial('partials/header', {withMobileMenu: true}) %>
 
   <%- partial('partials/sidebar') %>
     <div class="content">

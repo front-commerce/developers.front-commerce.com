@@ -1,4 +1,4 @@
-@sidebar-width: 260px;
+@sidebar-width: 280px;
 @panel-width: 80px;
 @panel-width-tablet: 64px;
 @panel-width-mobile: 48px;
@@ -48,9 +48,17 @@ body {
   padding-top: @panel-width-tablet;
   z-index: 2;
 
+  &--full {
+    padding: 0;
+  }
+
   @media screen and (min-width: @breakpoint) {
     padding-top: @panel-width-tablet;
     margin-left: @sidebar-width;
+
+    &--full {
+      margin-left: 0;
+    }
   }
 }
 
@@ -112,7 +120,10 @@ body {
   }
 
   .toc {
-    flex: 1;
+    height: ~"calc(100vh - 114px - 125px)";
+    @media screen and (min-width: @breakpoint) {
+      height: ~"calc(100vh - 125px)";
+    }
     .scrollbars(6px, rgba(0,0,0,0.07), rgba(0,0,0,0.05));
     overflow-y: auto;
     .transition(all 300ms @easing);
