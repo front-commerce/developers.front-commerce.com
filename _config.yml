@@ -9,6 +9,7 @@ sidebar_categories:
     - docs/essentials/installation
     - docs/essentials/extend-the-theme
     - docs/essentials/adapt-theme-to-your-brand
+    - docs/essentials/extend-the-graphql-schema
   Advanced:
     - GraphQL:
         - docs/advanced/graphql/overview
