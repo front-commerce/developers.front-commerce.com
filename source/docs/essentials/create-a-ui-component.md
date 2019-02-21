@@ -14,7 +14,11 @@ first.
 </blockquote>
 
 In this documentation, you will learn how to build a UI Component. We will do so by
-creating our own. Front-Commerce’s core UI components follow the same principles
+creating our own. We will use [Storybook](#TODO) in the process because it is our
+usual workflow when creating a UI Component. But if you don't need it or prefer to
+add your stories later, feel free to leave the parts mentioning Storybook for later.
+
+Front-Commerce’s core UI components follow the same principles
 and you could dive into the `node_modules/front-commerce/src/web/theme/components`
 folder to find examples into our source code.
 
@@ -25,7 +29,7 @@ But first, let's define what is an ideal UI Component.
 In Front-Commerce we call UI component any component that is:
 
 - **Reusable in many contexts** If a component is used only once in the whole
-  application, it might be the sign that it does not exist purely for UI
+  application, it might be a smell that it does not exist purely for UI
   purpose. The component most likely needs to be moved to the `theme/modules` folder.
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
@@ -45,7 +49,7 @@ Reinsurance Banner in a page.
 
 ![The reinsurance banner that we will implement](assets/reinsurance.jpg)
 
-### Step 1: Defining the components
+### Defining the components
 
 First, let's split the mockup in several UI components.
 
@@ -75,7 +79,7 @@ We won't be able to detail each component here. We will focus on
 any UI component in Front-Commerce will look similar to what we are going to
 build here.
 
-### Step 2: Setup your dev environment
+### Setup your dev environment
 
 Before doing the actual work let's bootstrap our dev environment. To do so,
 once you've [registered your module](extend-the-theme.html#Configure-your-custom-theme-and-use-it-in-your-application) you will need to create three files:
@@ -99,7 +103,7 @@ once you've [registered your module](extend-the-theme.html#Configure-your-custom
 
 - `my-module/web/theme/components/molecules/IllustratedContent/index.js`: will proxy the
   IllustratedContent.js file in order to be able to do imports on the folder
-  directly.
+  directly. See [this blog post](http://bradfrost.com/blog/post/this-or-that-component-names-index-js-or-component-js/) for more context about this pattern.
 
   ```jsx
   import IllustratedContent from "./IllustratedContent.js";
@@ -140,7 +144,7 @@ and view changes live in your browser.
 >   [official Storybook documentation](https://storybook.js.org/basics/introduction/)
 > - about [our Storybook usage](#TODO) by reading our documentation
 
-### Step 3: Implement your component
+### Implement your component
 
 Now that everything is ready to go, you can do the actual work and implement the
 component. In the case of the `IllustratedContent`, it would look like this:
@@ -213,8 +217,9 @@ If it didn't reload properly, it is because you need to restart the application
 every time you override a component in order to let the application know that the
 file location it should load has changed. But note that there is an upcoming
 improvement [#63](https://gitlab.com/front-commerce/front-commerce/issues/63) that
-should make things for you in the future.
+should remove the need for a restart in the future.
 
+<!-- TODO: add a link to our Advanced/Theme/BEM article when it's done. -->
 As a side note, we also use [BEM convention](http://getbem.com/naming/) for our
 CSS code base. It makes it easier to avoid naming conflicts by adding a tiny bit
 of code convention. However, for your custom components, feel free to code
@@ -275,7 +280,7 @@ It has many major benefits such as:
 
 [Learn more about Storybook.](#TODO)
 
-### Step 4: Use the component
+### Use the component
 
 Once you are satisfied with your component, you can use it anywhere. In this case,
 the `IllustratedContent` was to be used in the Reinsurance Banner. Thus, this
