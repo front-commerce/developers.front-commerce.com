@@ -22,10 +22,27 @@ Please do not hesitate to share your thoughts with us there.
 </blockquote>
 
 In order to extend the schema, you will have to:
-1. register the GraphQL module in the Front-Commerce application
-2. implement the GraphQL module itself using the API provided
+1. create a new GraphQL module
+2. register the GraphQL module in the Front-Commerce application
+3. implement the GraphQL module itself using the API provided
 
-## Register a GraphQL module
+## Create a new GraphQL module
+
+Let’s say that we would like to expose a list of physical stores in our GraphQL
+schema. We first have to create a `PhysicalStores` module.
+
+To do so, create its definition as follow in the
+`src/server/modules/physical-stores/index.js` file:
+
+```js
+export default {
+  namespace: "PhysicalStores"
+};
+```
+
+The module does nothing yet, but you can now register it in the application
+
+## Register the module in the application
 
 Front-Commerce allows you to manage your modules in the `serverModules` key of the [`.frontcommerce.js`](#TODO) file located in your project’s root.
 
@@ -55,227 +72,361 @@ The `path` must be a path to your module definition file (see below).
 **In depth:** under the hood, Front-Commerce is generating a `.front-commerce/modules.js` file from this configuration which is loaded very early in the server bootstrapping process. The name is used to import the correct module and export it in an homogeneous list, used by the `withGraphQLApi` express middleware.
 </blockquote>
 
-## Implement a GraphQL module
+
+Congratulations! You now have a new custom module ready to enhance the data
+exposed in the GraphQL middleware.
+
+## Implement module’s features
 
 A Front-Commerce GraphQL module has to export an object containing the different services it provides.
 
 In the previous GraphQL module registration example, the module definition file would be located at
 `src/server/modules/hello-world/index.js` with other module files in the same directory.
 
-Below are documented the available keys to define a Front-Commerce GraphQL module.
+All the wiring is now done and it is time to develop the features of this
+module. In GraphQL, a good practice is to start thinking about the schema first
+from a business domain standpoint.
 
-### `namespace`
+It is important to name things with a language shared by the team and prevent
+exposing implementation details (ids, different names…) as much as possible. We
+recommend the reading of the Graphql documentation page
+[Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/).
 
-The simplest (but useless) GraphQL module only requires an unique `namespace` key:
+Let’s add the code to expose physical stores in our graph.
 
-```js
-// A minimal Front-Commerce GraphQL module that basically does nothing
-module.exports = {
-  namespace: "Acme/HelloWorld"
-};
-```
+### Define the schema
 
-This `namespace` can be used by other modules as a dependency, to ensure another module has been registered in the application.
+Front-Commerce contains all the tooling to allow you to describe your schema
+using the expressive
+[GraphQL Schema Definition Language (SDL)](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51/).
 
-### `dependencies` (optional)
+Create a `src/server/modules/physical-stores/schema.gql` file to contain the
+schema matching our use case. It could look like so:
 
-A list of module namespaces which must have been registered in the application. Dependencies will be initialized before this module.
-
-Example:
-
-```js
-module.exports = {
-  namespace: "Acme/HelloWorld",
-  dependencies: ["Acme/Core"],
-  // …
-};
-```
-
-<blockquote class="warning">
-**Note:** we recommend to try to avoid dependencies between your modules. Usually this is a smell that the schema may be implemented differently and modules are too coupled together. A good use case is for instance to depend on a Front-Commerce core module.
-</blockquote>
-
-<blockquote class="info">
-**In depth:** modules are sorted using the [toposort](https://www.npmjs.com/package/toposort) library. See `flattenAndReorderModulesUsingDependencies` code and tests to understand the implementation
-</blockquote>
-
-### `typeDefs` (optional)
-
-GraphQL type definitions provided by this module. As a developer, this is a contract with the rest of your codebase.
-
-Type definitions must [GraphQL schema language strings](https://graphql.org/learn/schema/), and can be declared inline or loaded from a `gql` file. One can create new types, add top level queries (by extending the `Query` type), mutations or extend types from other modules.
-
-```js
-// or import typeDefs from './schema.gql';
-const typeDefs = `
-extend type Query {
-  "Be polite!"
-  sayHello (name: String!): Message
+```gql
+type Query {
+  "Our physical stores"
+  physicalStores: [PhysicalStore]
 }
 
-type Message {
-  response: String
-  audio: String
+"General information about a physical store"
+type PhysicalStore {
+  address: PostalAddress
+  openingHours: [OpeningHours]
 }
-`
 
-module.exports = {
-  namespace: "Acme/HelloWorld",
-  typeDefs: typeDefs
+"Postal address of a physical location"
+type PostalAddress {
+  street: String
+  city: String
+  postcode: String
+  country: String
+}
+
+"Opening hours for a given day"
+type OpeningHours {
+  day: DayOfWeek
+  openingTimes: [TimePeriod]
+}
+
+"Period of time within a day"
+type TimePeriod {
+  from: Time!
+  to: Time!
+}
+
+"24h time definition"
+type Time {
+  h: Int!
+  m: Int!
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+```
+
+Then expose the schema using the `typeDefs` key of the module definition. Update
+the `src/server/modules/physical-stores/index.js` entrypoint:
+
+```diff
++import typeDefs from "./schema.gql";
++
+export default {
+-  namespace: "PhysicalStores"
++  namespace: "PhysicalStores",
++  typeDefs: typeDefs
 };
 ```
 
-<blockquote class="info">
-**In depth:** under the hood, all module’s `typeDefs` are merged in a single array passed to graphql-tools' [`makeExecutableSchema`](https://www.apollographql.com/docs/graphql-tools/generate-schema.html#makeExecutableSchema) function
-</blockquote>
+> Webpack is in fact taking care of converting SDL into a Javascript object
+> using an appropriate loader.
 
-### `resolvers` (optional)
+**Congratulations again!** You should now be able to see these new types and
+query them in GraphQL.
 
-This is an object containing all the resolvers for resolving fields defined in the schema (usually from your `typeDefs`). This is where the implementation resides.
+Try to execute the query below in Graph*i*QL:
 
-Resolver map must follow [the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
-
-```js
-// or import resolvers from './resolvers.js';
-const resolvers = {
-  Query: {
-    sayHello: (_, { name }) => {
-      const message = `Hello ${name}`;
-      return {
-        message: message,
-        audio: `https://tts.service.com/q=${message}`
-      };
+```
+{
+  physicalStores {
+    address {
+      street
+      city
+      country
+      postcode
     }
-  }
-};
-
-module.exports = {
-  namespace: "Acme/HelloWorld",
-  // …
-  resolvers: resolvers
-};
-```
-
-<blockquote class="info">
-**In depth:** under the hood, all module’s `resolvers` are merged in a single object (using [lodash.merge](https://lodash.com/docs/#merge) passed to graphql-tools' [`makeExecutableSchema`](https://www.apollographql.com/docs/graphql-tools/generate-schema.html#makeExecutableSchema) function. It is possible to override resolvers declared in another module by declaring it as a dependency and registering a local resolver.
-</blockquote>
-
-### `contextEnhancer` (optional)
-
-The `contextEnhancer` module definition key should be a function that initializes code that will be made available in GraphQL’s context, under the `loaders` key. **It is specific to Front-Commerce.**
-
-This is where you could construct models or [dataloaders](#TODO) that should be used in your GraphQL resolvers.
-
-The `contextEnhancer` function must return an object whose keys will be merged with previous modules’. It will be passed a single argument with the following keys:
-
-* `req`: the current server request
-* `loaders`: current loaders (from module initialized beforehand)
-* `makeDataLoader`: a factory to build a dataloader (see [dataloaders](#TODO))
-* `config`: the global configuration
-
-Here is an example:
-
-```
-const MessageLoader = require("./loader");
-
-module.exports = {
-  namespace: "Acme/HelloWorld",
-  resolvers: {
-    Query: {
-      sayHello: (_, { name }, { loaders }) => {
-        return loaders.Message.load(`Hello ${name}`);
+    coordinates {
+      latitude
+      longitude
+    }
+    openingHours {
+      day
+      openingTimes {
+        from {
+          h
+          m
+        }
+        to {
+          h
+          m
+        }
       }
     }
   }
-  contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
-    return {
-      Message: MessageLoader(makeDataLoader)(config.apiBaseUrl)
-    }
+}
+```
+
+Our GraphQL module does not yet have any code for sending content, so you must
+see the following response:
+
+```json
+{
+  "data": {
+    "physicalStores": null
   }
 }
 ```
 
-## Grouping small modules in a « meta-module »
+Let’s now add some executable logic to our module.
 
-We recommend to keep your GraphQL modules small and focused on a single feature.
-If several teams are working on the project, small modules are a way to [federate the graph implementation](https://principledgraphql.com/integrity#2-federated-implementation).
-It also makes it easier to change implementations and service providers later in the project.
-For instance you could replace a `Magento2/Cms` module with a `Wordpress/Cms` one without impacting
-the web application (as soon as both schema shares a common API).
+### Implement resolvers
 
-But having a lot of different modules could make distribution more tedious.
-That is why Front-Commerce supports the concept of « meta-modules », which are a way to group
-smaller modules together.
+The GraphQL middleware relies on resolver functions to determine the data to
+return for a given field. This is where most of the « real work » is done, for
+instance by fetching remote datasources or transforming data.
 
-For instance, [Front-Commerce’s Magento2 integration](#TODO) can be registered in your project
-using only one line if you want all the features:
+Resolvers are exposed using the `resolvers` key of the module definition. It
+should be a « resolver map »: an object where each key is a GraphQL type name,
+and values are mapping between field names and resolver function. Resolver
+functions may return a
+[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+for asynchronous operations.
+
+> To know more about resolvers and their internals, we recommend the reading of
+> [GraphQL Tools documentation](https://www.apollographql.com/docs/graphql-tools/resolvers).
+
+First, update the `src/server/modules/physical-stores/index.js` module
+definition as follow:
 
 ```diff
-// .front-commerce.js
-module.exports = {
-  name: "Front-Commerce",
-  url: "https://www.front-commerce.test",
-  modules: [],
-  serverModules: [
--    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" }
-+    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
-+    { name: "Magento2", path: "server/modules/magento2" }
-  ]
+import typeDefs from "./schema.gql";
++import resolvers from "./resolvers";
+
+export default {
+  namespace: "PhysicalStores",
+-  typeDefs: typeDefs
++  typeDefs: typeDefs,
++  resolvers: resolvers
 };
 ```
 
-Under the hood, it imports several modules at once (`Magento2/Cms`, `Magento2/Catalog`, `Magento2/Checkout`, `Magento2/Search`…).
-
-For a module to be considered as a meta-module, you only need to expose a list of
-sub-modules in the `modules` key of the module definition (along with the namespace).
-
-Here is an example from Magento2 meta-module:
+And then create the `src/server/modules/physical-stores/resolvers.js` file with
+a resolver map as below (we are going to analyze it in details in a few
+seconds):
 
 ```js
-// node_modules/front-commerce/src/server/modules/magento2/index.js
-import Cart from "./cart";
-// […]
+import axios from "axios";
 
-module.exports = {
-  namespace: "Magento2",
-  modules: [
-    Cart,
-    // […]
-  ]
+export default {
+  Query: {
+    physicalStores: () => findAllStores()
+  },
+
+  PhysicalStore: {
+    coordinates: store => ({
+      latitude: store.lat,
+      longitude: store.lon
+    }),
+    openingHours: () => generalOpeningHours
+  },
+
+  Time: {
+    h: time => time.split(":")[0],
+    m: time => time.split(":")[1]
+  },
+
+  PostalAddress: {
+    street: address => address.road
+  }
+};
+
+const findAllStores = () =>
+  axios
+    .get("https://nominatim.openstreetmap.org/", {
+      params: {
+        format: "json",
+        countrycodes: "fr",
+        addressdetails: 1,
+        q: "foot locker", // for instance…
+        limit: 10
+      }
+    })
+    .then(response => response.data);
+
+const generalOpeningHours = [
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY"
+].map(dayOfWeek => ({
+  day: dayOfWeek,
+  openingTimes: [{ from: "9:00", to: "12:30" }, { from: "14:00", to: "20:00" }]
+}));
+```
+
+Let’s analyze this code part by part to understand what is possible to achieve
+in a module.
+
+First of all, the exported resolver map contains a top-level query named
+`physicalStores`. This is not necessary (a module might as well extend existing
+types) and we recommend to try limiting as much as possible the number of
+top-level queries in your projects.
+
+```js
+export default {
+  Query: {
+    physicalStores: () => findAllStores()
+  }
+  // …
 };
 ```
 
-## Example module definition
+The resolver function is pretty straightforward and needs no parameters: it will
+fetch all stores from a remote service (do not worry about the implementation
+yet) and return the data asynchronously using a Promise.
 
-Front-Commerce itself is written as GraphQL modules. You can browse Front-Commerce’s source code to
-find more examples and understand how it works.
+The promise will resolve to a list of results matching the following format
+([view in your browser](https://nominatim.openstreetmap.org/?format=json&countrycodes=fr&addressdetails=1&q=foot%20locker&limit=10)):
 
-Here is for instance how Magento2 CMS module’s entrypoint looks like:
+```json
+[
+  {
+    "place_id": "17302207",
+    "licence":
+      "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": "1528672001",
+    "boundingbox": ["48.858632", "48.858732", "2.347088", "2.347188"],
+    "lat": "48.858682",
+    "lon": "2.347138",
+    "display_name":
+      "Foot locker, Rue de Rivoli, 1st Arrondissement, Paris, 75001, France",
+    "class": "shop",
+    "type": "shoes",
+    "importance": 0.20025,
+    "address": {
+      "shoes": "Foot locker",
+      "road": "Rue de Rivoli",
+      "neighbourhood": "Quartier des Halles",
+      "suburb": "Quartier Les Halles",
+      "city_district": "1st Arrondissement",
+      "city": "Paris",
+      "county": "Paris",
+      "state": "Ile-de-France",
+      "country": "France",
+      "postcode": "75001",
+      "country_code": "fr"
+    }
+  }
+  // …
+]
+```
+
+The schema defined earlier specified that `physicalStores` will return a list of
+`PhysicalStore` objects, which do not match the format returned by the remote
+service so far.
+
+```
+type Query {
+  "Our physical stores"
+  physicalStores: [PhysicalStore]
+}
+```
+
+In this implementation, we chose to use resolvers for converting data from the
+remote service into an object matching the `PhysicalStore` type definition. This
+time, by adding a resolver for each of its two fields:
 
 ```js
-const { makeUserClientFromRequest } = require("../magento2Connector/factories");
+export default {
+  // …
+  PhysicalStore: {
+    coordinates: store => ({
+      latitude: store.lat,
+      longitude: store.lon
+    }),
+    openingHours: () => generalOpeningHours
+  }
+  // …
+};
+```
 
-const typeDefs = require("./schema.gql");
-const resolvers = require("./resolvers");
-const { CmsBlockLoader, CmsPageLoader } = require("./loaders");
+The `coordinates` field is resolved by using the initial `store` information
+(first argument) and converting them into a structure matching our Schema. With
+simplification in mind, we implemented `openingHours` field resolution in a
+naive way: by supposing that all stores shared the same established opening
+hours (defined in the `generalOpeningHours` constant).
 
-module.exports = {
-  namespace: "Magento2/Cms",
-  dependencies: [
-    "Magento2/Store" // loaders need the store loader to get the store id
-  ],
-  typeDefs,
-  resolvers,
-  contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
-    const axiosInstance = makeUserClientFromRequest(
-      config.magentoEndpoint,
-      req
-    );
+> One may combine these two approaches to fetch openingHours from another
+> service, using for instance the `place_id` to access a REST detail endpoint.
+> It could be a good thing to try if you want to experiment and start grasping
+> the power behind a GraphQL middleware in your architecture!
 
-    return {
-      CmsPages: CmsPageLoader(makeDataLoader)(axiosInstance, loaders.Store),
-      CmsBlocks: CmsBlockLoader(makeDataLoader)(axiosInstance, loaders.Store)
-    };
+You might now be able to understand the rest of this resolver map, which consist
+of data transformation for the `PostalAddress.street` field (data returned by
+the remote service match the `PostalAddress` type definition for the other
+fields) and `Time` representations.
+
+```js
+export default {
+  // …
+  Time: {
+    h: time => time.split(":")[0],
+    m: time => time.split(":")[1]
+  },
+
+  PostalAddress: {
+    street: address => address.road
   }
 };
 ```
+
+> ProTip™: you can debug the data passed in a resolver using `console.log` to
+> view its shape in your server console shell output. To do so, a convenient
+> thing to know is that `console.log` returns a falsy value. Hence, in the
+> resolver above you could debug the `time` param by updating the resolver as
+> below:
+>
+> `h: time => console.log(time) || time.split(":")[0],`
+
+### Make it scale!
+
+See ………
