@@ -30,7 +30,7 @@ In Front-Commerce we call UI component any component that is:
 
 - **Reusable in many contexts** If a component is used only once in the whole
   application, it might be a smell that it does not exist purely for UI
-  purpose. The component most likely needs to be moved to the `theme/modules` folder.
+  purpose. The component most likely needs to be moved to the `web/theme/modules` folder. <!-- TODO link to the business component page -->
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
@@ -51,17 +51,20 @@ Reinsurance Banner in a page.
 
 ### Defining the components
 
-First, let's split the mockup in several UI components.
+First, let's split the mockup in several UI components following the [Atomic Design Principles](http://atomicdesign.bradfrost.com/).
 
 ![The various components that will make up our banner](assets/reinsurance-with-areas.jpg)
 
-- **`theme/components/atoms/typography/Heading`:** enforces consistent font sizes in our theme
+- **`web/theme/components/atoms/typography/Heading`:** enforces consistent font sizes in our theme
   for any title
-- **`theme/components/atoms/Icon`:** enforces icon sizes and accessibility guidelines
-- **`theme/components/molecules/IllustratedContent`:** displays some content illustrated by an
+- **`web/theme/components/atoms/Icon`:** enforces icon sizes and accessibility guidelines
+- **`web/theme/components/molecules/IllustratedContent`:** displays some content illustrated by an
   image and aligns images consistently across the whole theme
-- **`theme/components/organisms/InlineCards`:** manages a list of cards and inlines them,
+- **`web/theme/components/organisms/InlineCards`:** manages a list of cards and inlines them,
   regardless of the device size.
+
+As you can see, each UI component will take place in the `web/theme/components` folder.
+To better understand why, please refer to our [React component structure](#TODO) documentation.
 
 <blockquote class="note">
 If you have trouble splitting your mockups, you can refer to
@@ -295,7 +298,7 @@ import { H3 } from "theme/components/atoms/Typography/Heading";
 
 // The components can then be used the usual React way
 
-export default () => (
+const ReinsuranceBanner = () => (
   <InlineCards>
     <IllustratedContent media={<Icon icon="truck" />}>
       <H3>Shipping within 48h</H3>
@@ -308,5 +311,17 @@ export default () => (
     </IllustratedContent>
   </InlineCards>
 );
+
+export default ReinsuranceBanner
 ```
 
+As you can see, we did not use a relative import. This is because in Front-Commerce
+we have a few aliases that will let you import files without worrying about your
+current position in the folder structure.
+
+In our case, if the `ReinsuranceBanner` was in
+`my-module/web/theme/modules/ReinsuranceBanner`, we don't have to import the
+`IllustratedContent` by using relative paths
+`../../components/molecules/IllustratedContent` but we can remain with
+`theme/components/molecules/IllustratedContent` which is more explicit. This is
+possible for any file located in the folder `web/theme` of a module.
