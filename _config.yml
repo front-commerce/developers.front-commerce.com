@@ -15,6 +15,7 @@ sidebar_categories:
         - docs/advanced/graphql/overview
     - Theme:
         - docs/advanced/theme/overview
+        - docs/advanced/theme/route-dispatcher
     - Checkout:
         - docs/advanced/checkout/overview
     - Performance:
