@@ -10,25 +10,26 @@ sidebar_categories:
     - docs/essentials/extend-the-theme
     - docs/essentials/adapt-theme-to-your-brand
     - docs/essentials/extend-the-graphql-schema
-  Advanced:
-    - GraphQL:
-        - docs/advanced/graphql/overview
-    - Theme:
-        - docs/advanced/theme/overview
-    - Checkout:
-        - docs/advanced/checkout/overview
-    - Performance:
-        - docs/advanced/performance/overview
-    - Server:
-        - docs/advanced/server/overview
-    - Production ready:
-        - docs/advanced/production-ready/overview
-  Concepts:
-    - docs/concepts/create-business
+  Theme:
+    - docs/advanced/theme/overview
+  GraphQL:
+    - docs/advanced/graphql/meta-modules
+    - docs/advanced/graphql/slim-down-resolvers-with-loaders
+    - docs/advanced/graphql/overview
+  Checkout:
+    - docs/advanced/checkout/overview
+  Performance:
+    - docs/advanced/performance/overview
+  Server:
+    - docs/advanced/server/overview
+  Production ready:
+    - docs/advanced/production-ready/overview
   Magento2:
     - docs/magento2/what
+  Concepts:
+    - docs/concepts/create-business
   Reference:
-    - docs/reference/api
+    - docs/reference/graphql-module-definition
   Appendices:
     - docs/appendices/roadmap
     - docs/appendices/migration-guides
