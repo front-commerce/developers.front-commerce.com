@@ -3,13 +3,15 @@ id: route-dispatcher
 title: Handle dynamic URLs with the Dispatcher
 ---
 
-In some cases, you will need a deeper customization of URLs than what you can do in the [Add a new page guide](../../essentials/add-a-page-client-side). For instance, for some SEO reasons, you may prefer to have `/my-product` instead of `/product/my-product-slug`.
+In some cases, you will need more control over URLs formats than what we introduced in the [Add a new page guide](../../essentials/add-a-page-client-side). For instance, you may prefer to have `/my-product` instead of `/product/my-product-slug` for SEO reasons.
 
-That is what the Dispatcher is for in Front-Commerce, and what we will cover in this documentation.
+That is what Front-Commerce’s Dispatcher is responsible for, and what we will cover in this documentation.
 
 ## What is the goal of the Dispatcher?
 
 The dispatcher is actually a component within Front-Commerce that will be displayed in case no other route was found. Its goal will be to ask the server (by using the `matchUrls` query in your GraphQL Schema) what kind of page is associated with the current URL and will display the page's component accordingly.
+
+Below is a flowchart illustrating the URL resolution logic:
 
 <figure>
 ![Diagram explaining how an URL is displayed](./assets/dispatcher.svg)
@@ -17,7 +19,7 @@ The dispatcher is actually a component within Front-Commerce that will be displa
 
 If you come from a Magento background, this is the concept behind [URL Rewrites](https://docs.magento.com/m2/ce/user_guide/marketing/url-rewrite.html).
 
-In the core of Front-Commerce, the association between an URL and a page is already done for things like Products, Categories, CMS pages… But depending on your own site, you might need to add new ones.
+In Front-Commerce’s core integrations (such as Magento2), the association between a URL and a page is already implemented for entities like Products, Categories, CMS pages… But depending on your own site, you might need to add new ones.
 
 To do so, you will need to proceed in two steps:
 * Support the new URLs in the `matchUrls` query in your GraphQL Schema
@@ -43,7 +45,7 @@ const MyModuleUrlLoader = makeDataLoader => () => {
           url: "my-dynamic-custom-url",
           // The type of entity you are willing to
           // display for this URL
-          type: "pageType",
+          type: "myPageType",
           // The id that will let you load the
           // correct entity within your page component
           identifier: "identifier",
@@ -108,7 +110,7 @@ Once your server is correctly configured, you need to map the `type` that is ret
 
 To do so, you need to create the `my-module/web/moduleRoutes.js` file in your module that will contain the mapping. You might have already created if you followed the [Add a new page](/docs/essentials/add-a-page-client-side.html#Map-the-URL-to-the-page-component) guide. But instead of using the default export, you will need to export a named object `dispatchedRoutes`.
 
-This object has page types as keys (in our case `pageType`), and a render function as values that will tell the application what to render for a specific key (in our case, it renders `MyCustomPage`). This will give you something like this:
+This object has page types as keys (in our case `myPageType`), and a render function as values that will tell the application what to render for a specific key (in our case, it renders `MyCustomPage`). This will give you something like this:
 
 ```js
 //` my-module/web/moduleRoutes.js`
@@ -116,7 +118,7 @@ import React from "react";
 import MyCustomPage from "theme/pages/MyCustomPage";
 
 export const dispatchedRoutes = {
-  pageType: props => <MyCustomPage id={props.matched.identifier} />
+  myPageType: props => <MyCustomPage id={props.matched.identifier} />
 };
 
 // you can still export your static routes here
@@ -131,4 +133,4 @@ Once you've created your file, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/my-dynamic-custom-url` URL. It will display `MyCustomPage` component.
 
-And this is it! From now on, any URL that is matched to a particular `type` in your `matchUrls` query, will now be displayed with the render function you defined in your `dispatchedRoutes` export.
+And this is it! From now on, any URL that is matched to a particular `type` in your `matchUrls` query, will now be displayed with the render function defined in your `dispatchedRoutes` export under the matching key. Otherwise, a 404 page will still be displayed to the user.

@@ -7,7 +7,7 @@ Front-Commerce comes with a classic set of pages for an e-commerce application.
 It has URLs for Catalog routes (Categories, Product, Search…), Checkout routes,
 Account routes, Cms pages…
 
-But when you are building your own e-commerce experience you will most likely need
+But when building your own e-commerce experience you will most likely need
 to add your own pages/routes. And that's what we will focus on in this guide.
 
 We will take the example of a shop that is selling ingredients. It might make
@@ -71,7 +71,7 @@ storiesOf("pages.Recipes", module).add("default", () => {
 
 ### Map the URL to the page component
 
-Once you have created your component, you need to actually tell the application how to use it. To do so, we provide an extension point that will let you add your custom routes.
+Once you have created your component, you need to actually tell the application how to use it. To do so, Front-Commerce provides an extension point that will let you declare custom routes.
 
 To active it in your module, you need to create the file `my-module/web/moduleRoutes.js` that will export the list of routes of your module.
 
@@ -109,7 +109,7 @@ same steps as for the `/recipes` page:
 `theme/pages/Recipes/RecipeDetails` folder
 * Map the `/recipes/:recipe-id-or-slug` to the new component
 
-But how can you make the URL have a parameter (`:recipe-id-or-slug`)?
+**But how can you make the URL have a parameter (`:recipe-id-or-slug`)?**
 
 In fact, if you take a look at the line #2 of the `moduleRoutes.js` file we have just created, you will notice that we are using the [React Router](https://github.com/ReactTraining/react-router) routing library. For this reason, you can use any feature that it provides. In the `RecipesDetails` case, you can use the params syntax of React Router as shown below.
 
@@ -140,6 +140,6 @@ You will then be able to use the `slug` as a property of your `RecipeDetails` pa
 ## What about dynamic URLs?
 
 If your URL can't be mapped to a pattern that React Router can recognize, do not worry,
-we have got yourself covered! There is a second extension point in Front-Commerce that let you do this: the `Dispatcher`.
+we have got you covered! There is a second extension point in Front-Commerce that allows you to achieve this: the `Dispatcher`.
 
 [You can learn more about it in our advanced documentation.](../advanced/theme/route-dispatcher.html)
