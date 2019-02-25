@@ -140,24 +140,58 @@
   }
 
   .pagination {
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
     border-top: 1px solid @color-mediumlight;
     border-bottom: 1px solid @color-mediumlight;
     display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: @breakpoint) {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      &.pagination--next-only {
+        justify-content: flex-end;
+      }
+    }
 
     .link {
+      display: block;
       text-decoration: none;
       max-width: 100%;
       .font-s2;
       @media screen and (min-width: @breakpoint) {
         .font-s3;
-        max-width: 48%;
       }
 
-      float: left;
       position: relative;
 
       &:hover {
         text-decoration: none;
+      }
+
+      &.prev {
+        margin-right: 1rem;
+        @media screen and (min-width: @breakpoint) {
+          align-self: flex-start;
+        }
+      }
+
+      &.next {
+        margin-right: 0;
+        margin-left: 1rem;
+        margin-top: .75rem;
+        @media screen and (min-width: @breakpoint) {
+          align-self: flex-end;
+          margin-top: 0;
+        }
+      }
+
+      &::only-child {
+        margin-right: 0;
       }
     }
 
