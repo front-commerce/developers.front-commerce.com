@@ -27,7 +27,9 @@ sidebar_categories:
     - Production ready:
         - docs/advanced/production-ready/overview
   Concepts:
-    - docs/concepts/create-business
+    - docs/concepts/architecture-overview
+    - docs/concepts/front-commerce-folder-structure
+    - docs/concepts/react-components-structure
   Magento2:
     - docs/magento2/what
   Reference:
