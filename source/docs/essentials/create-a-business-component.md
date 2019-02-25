@@ -3,7 +3,7 @@ id: create-a-business-component
 title: Create a Business Component
 ---
 
-In Front Commerce we have separated our components in two categories: the **UI**
+In Front-Commerce components are classified under two categories: the **UI**
 components available in the `web/theme/components` folder, and the **Business**
 components available in the `web/theme/modules` and `web/theme/pages` folders.
 
@@ -25,17 +25,17 @@ with a **very specific use in mind**. When creating a custom theme, they should
 emerge from [your Pages components](add-a-page-client-side.html).
 
 To illustrate this, imagine that you are building the homepage for your store.
-You add a big hero image on top, some product listings for news and sales, a
+The page is composed of a big hero image on top, some product listings for news and sales, a
 reinsurance banner, etc.
 
-Quickly, you will want to **extract** some components from your page to avoid a
+Soon, you will want to **extract** some components from your page to avoid a
 _big bloated file_. Some of these components will be extracted as **reusable UI
 components** but some are very specific to your page and there is no reason to
 put them in the [`components` folder](create-a-ui-component.html).
 
 <blockquote class="note">
-They are often a mix between UI components and custom layout. They may be
-split in multiples components if they are big enough.
+Such components are often a mix between UI components and custom layouts. They may be
+splitted into multiple components if they are big enough.
 </blockquote>
 
 Generally, they are related to **your business** and often need backend data
@@ -72,7 +72,7 @@ have access to this huge ecosystem.
 Let's install the two required packages:
 
 ```sh
-npm install react-leaflet leaflet`
+npm install react-leaflet leaflet
 ```
 
 ### Our new Homepage
@@ -145,7 +145,7 @@ With that, you should see the map appear in your homepage.
 
 ### Extracting our new component
 
-Having the map in the Home component could be fine for a time, but if there are many
+Having the map in the `Home` component could be fine for a time, but if there are many
 other features in the `Home`, it becomes hard to maintain. So when the Home becomes
 big enough, we extract the Store Locator into its own module component.
 
@@ -300,14 +300,14 @@ query StoreLocator {
 
 To better understand and test your schema, you can use **GraphQL Playground**.
 It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL. In
-Front-Commerce Lite, we can access it at
+Front-Commerce, we can access it at
 [http://0.0.0.0:4000/playground](http://0.0.0.0:4000/playground).
 
 <blockquote class="note">
 <p>You may think that some queries are already launched in our `EnhanceHome`
-and that splitting the StoreLocatorQuery from them is inefficient. But
+and that separating the `StoreLocatorQuery` from them is inefficient. But
 `react-apollo` will handle that for you. It will batch the requests to avoid too
-many network rountrips. This allows us to only think about what a component needs.
+many network roundtrips. This allows us to only think about what data a component needs.
 The responsibility for the retrieval of its data lies with it and it allows us
 to use it anywhere.</p>
 
@@ -437,7 +437,7 @@ worrying about your current position in the folder structure.
 In our case, the `Home` component being in
 `my-module/web/theme/pages/Home/Home.js`, we do not have to import the
 `StoreLocator` by using relative paths `../../modules/StoreLocator` but we
-can remain with `theme/modules/StoreLocator` which is more explicit. This
+can do so with `theme/modules/StoreLocator` which is more explicit. This
 is possible for any file located in the folder `web/theme` of a module.
 
 And it works! You now have a clean `Home` page component that uses a Business
@@ -452,10 +452,12 @@ to know the implementation of the map itself (like the fact of using
 But for the sake of this guide, we kept it simple.
 </blockquote>
 
+## A word about breaking up components
+
 As a final note, please keep in mind that splitting code is a difficult task.
-It needs practice and refinement. But it is also a pretty personnal point of
+It needs practice and refinement. But it is also a pretty personal point of
 view. Thus one team could split code differently. In this guide we have made a
 choice but feel free to make yours.
 
-In any case, we advice you to not overcomplicate things and find a method
+In any case, we advise you to not overcomplicate things and find a method
 that match your needs.
