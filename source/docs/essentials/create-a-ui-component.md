@@ -14,7 +14,7 @@ first.
 </blockquote>
 
 In this documentation, you will learn how to build a UI Component. We will do so by
-creating our own. We will use [Storybook](#TODO) in the process because it is our
+creating our own. We will use [Storybook](add-component-to-storybook.html) in the process because it is our
 usual workflow when creating a UI Component. But if you don't need it or prefer to
 add your stories later, feel free to leave the parts mentioning Storybook for later.
 
@@ -30,7 +30,7 @@ In Front-Commerce we call UI component any component that is:
 
 - **Reusable in many contexts**: if a component is used only once in the whole
   application, it might be a smell that it does not exist purely for UI
-  purpose. The component most likely needs to be moved to the `web/theme/modules` folder. <!-- TODO link to the business component page -->
+  purpose. The component most likely needs to be moved to the `web/theme/modules` folder (see [Create a Business Component](./create-a-business-component.html)).
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
@@ -128,7 +128,7 @@ once you've [registered your module](extend-the-theme.html#Configure-your-custom
   });
   ```
   <blockquote class="note">
-    For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to [Add a component to Storybook](#TODO).
+    For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to [Add a component to Storybook](./add-component-to-storybook.html).
   </blockquote>
 
 Once you've added your component, you must restart the styleguide (`npm run styleguide`). And once it is up and running, you can view your new story in `components > molecules > IllustratedContent`.
@@ -145,7 +145,7 @@ and view changes live in your browser.
 >
 > - about Storybook itself by reading the
 >   [official Storybook documentation](https://storybook.js.org/basics/introduction/)
-> - about [our Storybook usage](#TODO) by reading our documentation
+> - about [our Storybook usage](./add-component-to-storybook.html) by reading our documentation
 
 ### Implement your component
 
@@ -157,7 +157,7 @@ component. In the case of the `IllustratedContent`, it would look like this:
 import React from "react";
 import PropTypes from "prop-types";
 
-const IllustratedContent ({ media, children }) => (
+const IllustratedContent = ({ media, children }) => (
   <div className="illustrated-content">
     <div className="illustrated-content__media">{media}</div>
     <div className="illustrated-content__content">{children}</div>
@@ -167,9 +167,9 @@ const IllustratedContent ({ media, children }) => (
 IllustratedContent.propTypes = {
   media: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired
-}
+};
 
-export default IllustratedContent
+export default IllustratedContent;
 ```
 
 #### Styling
@@ -209,10 +209,12 @@ import "./molecules/IllustratedContent/IllustratedContent";
 .illustrated-content {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .illustrated-content__media {
   width: 30%;
   max-width: 10em;
+  text-align: center;
 }
 ```
 
@@ -283,7 +285,7 @@ It has many major benefits such as:
 - create a common discussion base for designers, product managers, marketers,
   etc.
 
-[Learn more about Storybook.](#TODO)
+[Learn more about Storybook.](./add-component-to-storybook.html)
 
 ### Use the component
 
@@ -314,7 +316,7 @@ const ReinsuranceBanner = () => (
   </InlineCards>
 );
 
-export default ReinsuranceBanner
+export default ReinsuranceBanner;
 ```
 
 As you can see, we did not use a relative import. This is because in Front-Commerce
