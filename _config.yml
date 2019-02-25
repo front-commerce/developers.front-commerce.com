@@ -9,6 +9,7 @@ sidebar_categories:
     - docs/essentials/installation
     - docs/essentials/extend-the-theme
     - docs/essentials/adapt-theme-to-your-brand
+    - docs/essentials/create-a-ui-component
     - docs/essentials/add-a-page-client-side
   Advanced:
     - GraphQL:
