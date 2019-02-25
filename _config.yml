@@ -12,20 +12,19 @@ sidebar_categories:
     - docs/essentials/create-a-ui-component
     - docs/essentials/create-a-business-component
     - docs/essentials/add-a-page-client-side
-  Advanced:
-    - GraphQL:
-        - docs/advanced/graphql/overview
-    - Theme:
-        - docs/advanced/theme/overview
-        - docs/advanced/theme/route-dispatcher
-    - Checkout:
-        - docs/advanced/checkout/overview
-    - Performance:
-        - docs/advanced/performance/overview
-    - Server:
-        - docs/advanced/server/overview
-    - Production ready:
-        - docs/advanced/production-ready/overview
+  Theme:
+    - docs/advanced/theme/overview
+    - docs/advanced/theme/route-dispatcher
+  GraphQL:
+    - docs/advanced/graphql/overview
+  Checkout:
+    - docs/advanced/checkout/overview
+  Server:
+    - docs/advanced/server/overview
+  Performance:
+    - docs/advanced/performance/overview
+  Production ready:
+    - docs/advanced/production-ready/overview
   Concepts:
     - docs/concepts/create-business
   Magento2:
