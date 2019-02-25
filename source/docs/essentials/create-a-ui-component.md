@@ -3,7 +3,7 @@ id: create-a-ui-component
 title: Create a UI Component
 ---
 
-In Front Commerce we split our components in two categories: the **UI**
+In Front-Commerce components are classified under two categories: the **UI**
 components available in the `theme/components` folder, and the business
 components available in the `theme/modules` and `theme/pages` folders.
 
@@ -19,7 +19,7 @@ usual workflow when creating a UI Component. But if you don't need it or prefer 
 add your stories later, feel free to leave the parts mentioning Storybook for later.
 
 Front-Commerce’s core UI components follow the same principles
-and you could dive into the `node_modules/front-commerce/src/web/theme/components`
+and you could dive into the [`node_modules/front-commerce/src/web/theme/components`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/components)
 folder to find examples into our source code.
 
 But first, let's define what is an ideal UI Component.
@@ -28,14 +28,14 @@ But first, let's define what is an ideal UI Component.
 
 In Front-Commerce we call UI component any component that is:
 
-- **Reusable in many contexts** If a component is used only once in the whole
+- **Reusable in many contexts**: if a component is used only once in the whole
   application, it might be a smell that it does not exist purely for UI
   purpose. The component most likely needs to be moved to the `web/theme/modules` folder. <!-- TODO link to the business component page -->
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
   thus be reusable by a Category.
-- **Focused on abstracting away UI concerns** The goal of UI components is to
+- **Focused on abstracting away UI concerns**: the goal of UI components is to
   hide styles or DOM concerns from their parents. It may be hard to achieve
   sometimes, but it will greatly improve the parent component's readability. For
   instance, a UI component should not give the opportunity to pass a `className`
@@ -45,7 +45,7 @@ In Front-Commerce we call UI component any component that is:
 
 Alright, that's nice in theory, but how does it translate in practice? We'll try
 to get a bit more tangible by creating a UI component needed for adding a
-Reinsurance Banner in a page.
+Reinsurance Banner in a page similar to the following mockup.
 
 ![The reinsurance banner that we will implement](assets/reinsurance.jpg)
 
@@ -55,12 +55,12 @@ First, let's split the mockup in several UI components following the [Atomic Des
 
 ![The various components that will make up our banner](assets/reinsurance-with-areas.jpg)
 
-- **`web/theme/components/atoms/typography/Heading`:** enforces consistent font sizes in our theme
+- **`web/theme/components/atoms/typography/Heading` (green):** enforces consistent font sizes in our theme
   for any title
-- **`web/theme/components/atoms/Icon`:** enforces icon sizes and accessibility guidelines
-- **`web/theme/components/molecules/IllustratedContent`:** displays some content illustrated by an
+- **`web/theme/components/atoms/Icon` (purple):** enforces icon sizes and accessibility guidelines
+- **`web/theme/components/molecules/IllustratedContent` (red):** displays some content illustrated by an
   image and aligns images consistently across the whole theme
-- **`web/theme/components/organisms/InlineCards`:** manages a list of cards and inlines them,
+- **`web/theme/components/organisms/InlineCards` (orange):** manages a list of cards and inlines them,
   regardless of the device size.
 
 As you can see, each UI component will take place in the `web/theme/components` folder.
@@ -223,10 +223,12 @@ improvement [#63](https://gitlab.com/front-commerce/front-commerce/issues/63) th
 should remove the need for a restart in the future.
 
 <!-- TODO: add a link to our Advanced/Theme/BEM article when it's done. -->
+<blockquote class="note">
 As a side note, we also use [BEM convention](http://getbem.com/naming/) for our
 CSS code base. It makes it easier to avoid naming conflicts by adding a tiny bit
 of code convention. However, for your custom components, feel free to code
 however you like. There is no obligation here.
+</blockquote>
 
 #### Document usage of our component
 
@@ -324,4 +326,4 @@ In our case, if the `ReinsuranceBanner` was in
 `IllustratedContent` by using relative paths
 `../../components/molecules/IllustratedContent` but we can remain with
 `theme/components/molecules/IllustratedContent` which is more explicit. This is
-possible for any file located in the folder `web/theme` of a module.
+possible for any file located in the folder `web/theme` of a module. <!-- TODO Add a link to the aliases documentation page -->
