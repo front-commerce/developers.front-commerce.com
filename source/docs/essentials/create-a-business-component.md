@@ -82,7 +82,7 @@ npm install react-leaflet leaflet`
 Before starting to edit the Home page, you first need to extend the theme.
 If you don't have any module yet, please refer to
 [Extend the theme](./extend-the-theme.html#Configure-your-custom-theme-and-use-it-in-your-application).
-Once you have one, the goal will be to override the Home component from `node_modules/front-commerce/src/web/theme/pages/Home/Home.js`
+Once you have one, the goal will be to override the Home component from [`node_modules/front-commerce/src/web/theme/pages/Home/Home.js`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/theme/pages/Home/Home.js)
 to `my-module/web/theme/pages/Home/Home.js`.
 
 <blockquote class="warning">
