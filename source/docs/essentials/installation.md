@@ -77,7 +77,36 @@ the configurations you will most likely have to change/create.
 Front-Commerce uses environment variables for runtime configurations depending
 on the instance that runs (local, staging, production).
 
-Copy the `.env.dist` sample file to a local `.env` and adapt configurations.
+Copy the `.env.dist` sample file to a local `.env` and adapt uncommented configurations.
+See the next paragraph to uncomment other configurations depending on your context.
+
+#### Configure remote services
+
+Front-Commerce can interact with remote headless services. But for security
+reasons, most services use some tokens to ensure that you are the only one to
+access to their data. It also is a way to allow remote services to invalidate
+Front-Commerce’s cache securely.
+
+These kind of tokens are configured as environment variables
+(according to [one of the 12-factor app principles](https://12factor.net/config)).
+
+You will find an exhaustive list of available variables commented in the `.env` file,
+with links to relevant documentation pages.
+
+For instance, to interact with Magento2 you will need to configure a few things:
+
+- Magento2 keys (available in the `System > Extensions > Integrations` page of
+  Magento admin area) should be defined in:
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+- `FRONT_COMMERCE_CACHE_API_TOKEN`: you will need to ensure that the key
+  configured here is identical to Magento’s `fc_cache_api_token` custom variable
+  to enable cache invalidation from Magento2
+
+We invite you to dig into the other configurations and tweak them if you wish.
+See [our documentation](#TODO) for further information.
 
 #### Configure stores
 
@@ -105,25 +134,6 @@ module.exports = {
 **Magento:** when using Front-Commerce with Magento, store codes
 must match [Magento store view code](https://docs.magento.com/m2/ee/user_guide/stores/stores-all-create-view.html).
 </blockquote>
-
-#### Configure remote services
-
-Front-Commerce can interact with remote headless services. But for security
-reasons, most services use some tokens to ensure that you are the only one to
-access to their data. It also is a way to allow remote services to invalidate
-Front-Commerce’s cache securely. These kind of tokens are configurable within
-the `src/config/serviceKeys/` folder.
-
-For instance, to interact with Magento2 you will need to configure a few things:
-
-- `src/config/serviceKeys/magento2.js`: Magento2 keys (available in the
-  `System > Extensions > Integrations` page of Magento admin area)
-- `src/config/serviceKeys/cache.js`: you will need to ensure that the key
-  configured here is identical to Magento’s `fc_cache_api_token` custom variable
-  to enable cache invalidation from Magento2
-
-We invite you to dig into the other configurations and tweak them if you wish.
-See [our documentation](#TODO) for further information.
 
 #### Optionally configure the caching strategy
 
