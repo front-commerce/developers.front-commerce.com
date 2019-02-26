@@ -26,6 +26,7 @@ sidebar_categories:
     - docs/advanced/performance/overview
   Production ready:
     - docs/advanced/production-ready/overview
+    - docs/advanced/production-ready/multistore
   Concepts:
     - docs/concepts/create-business
   Magento2:

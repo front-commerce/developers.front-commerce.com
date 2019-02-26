@@ -25,7 +25,15 @@
               <div class="subtitle-page">
                 <%- page.description %>
               </div>
-              <% } %>
+            <% } %>
+            <% if (page.wip) { %>
+              <blockquote class="wip">
+                <strong>Work in progress:</strong> This documentation is still a work in progress.
+                We apologies for the inconvenience. If you want to learn more this subject, please
+                feel free to <a href="mailto:contact@front-commerce.com">contact us</a> or to upvote
+                the issue within the <a href="<%- page.wip %>">related gitlab issue</a>.
+              </blockquote>
+            <% } %>
           </div>
         </div>
       </div>
