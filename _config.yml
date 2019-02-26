@@ -21,6 +21,7 @@ sidebar_categories:
     - docs/advanced/checkout/overview
   Server:
     - docs/advanced/server/overview
+    - docs/advanced/server/add-http-endpoint
   Performance:
     - docs/advanced/performance/overview
   Production ready:
