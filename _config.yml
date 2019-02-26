@@ -19,6 +19,7 @@ sidebar_categories:
     - docs/advanced/graphql/overview
   Checkout:
     - docs/advanced/checkout/overview
+    - docs/advanced/checkout/add-custom-checkout-step
   Server:
     - docs/advanced/server/overview
   Performance:
