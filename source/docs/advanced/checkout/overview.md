@@ -7,11 +7,12 @@ In this section, you will learn advanced information about Checkout customisatio
 
 * Setup a custom checkout step
 * Setup a custom payment method
-* Understanding the payment flow
+* Understanding the supported payment flows
 * Setup a custom shipping method
-* Use an existing payment method:
+* Use existing payment methods:
     * Paypal
     * Ogone
     * Payzen
+    * Magento2 supported payment methods
 
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
