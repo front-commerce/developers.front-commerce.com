@@ -3,202 +3,183 @@ id: extend-the-graphql-schema
 title: Extend the GraphQL schema
 ---
 
-When developing an e-commerce store, you might at some point need to expose new data in
-your [unified GraphQL schema](https://principledgraphql.com/integrity#1-one-graph) to support new features and allow frontend developers to use them.
+When developing an e-commerce store, you might at some point need to expose new
+data in your
+[unified GraphQL schema](https://principledgraphql.com/integrity#1-one-graph) to
+support new features and allow frontend developers to use them.
 
+**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
+override any part of the schema defined by other modules. It leverages features
+from the GraphQL Schema Definition Language
+(<abbr title="Schema Definition Language">SDL</abbr>).
 
-**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and override any part of the
-schema defined by other modules. It leverages features from the GraphQL Schema Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
-
-Front-Commerce’s core and platforms integrations (such as Magento2) are implemented as GraphQL modules too.
+Front-Commerce’s core and platforms integrations (such as Magento2) are
+implemented as GraphQL modules too.
 
 <blockquote class="info">
-The concepts documented below have been adopted by many actors in the GraphQL ecosystem
-since our initial implementation years ago.
-On our road to 1.0.0, we have opened a <abbr title="Request For Comments">RFC</abbr> in [#44](https://gitlab.com/front-commerce/front-commerce/issues/44)
-to discuss using an external library sharing the same principles instead of maintaining our
-own implementation. **The migration path would be seamless if we chose to migrate to this library.**
-Please do not hesitate to share your thoughts with us there.
+  The concepts documented below have been adopted by many actors in the GraphQL
+  ecosystem since our initial implementation years ago. On our road to 1.0.0, we
+  have opened a <abbr title="Request For Comments">RFC</abbr> in
+  [#44](https://gitlab.com/front-commerce/front-commerce/issues/44) to discuss
+  using an external library sharing the same principles instead of maintaining
+  our own implementation. **The migration path would be seamless if we chose to
+  migrate to this library.** Please do not hesitate to share your thoughts with
+  us there.
 </blockquote>
 
-In order to extend the schema, you will have to:
+This page will guide you through the process of exposing a new feature in your
+GraphQL schema. We will create a GraphQL module that allows to maintain a
+counter of clicks for a product.
+
+You will learn to:
+
 1. create a new GraphQL module
 2. register the GraphQL module in the Front-Commerce application
-3. implement the GraphQL module itself using the API provided
+3. implement the GraphQL module itself: add a field to the `Product` type and
+   add a new Mutation to the schema
 
 ## Create a new GraphQL module
 
-Let’s say that we would like to expose a list of physical stores in our GraphQL
-schema. We first have to create a `PhysicalStores` module.
+Let’s say that we would like to expose a counter of clicks for each product in
+our store. We first have to create a `ClicksCounters` GraphQL module.
 
-To do so, create its definition as follow in the
-`src/server/modules/physical-stores/index.js` file:
+The GraphQL module itself will be part of a Front-Commerce module, which could
+also contain
+[theme extensions or components](/docs/essentials/extend-the-theme.html) as seen
+in the previous pages.
+
+To do so, create a GraphQL module definition as follow in the
+`my-module/server/modules/clicks-counters/index.js` file:
 
 ```js
+// my-module/server/modules/clicks-counters/index.js
 export default {
-  namespace: "PhysicalStores"
+  namespace: "ClicksCounters"
 };
 ```
 
-The module does nothing yet, but you can now register it in the application
+A Front-Commerce GraphQL module has to export an object containing the different
+services it provides.
+
+This module does nothing yet (we will add code later), but first let's register
+it in the application.
 
 ## Register the module in the application
 
-Front-Commerce allows you to manage your modules in the `serverModules` key of the [`.frontcommerce.js`](#TODO) file located in your project’s root.
+Front-Commerce allows you to manage your modules in the `serverModules` key of
+the [`.frontcommerce.js`](#TODO) file located in your project’s root.
 
-Let’s add a `HelloWorld` module!
-
-To add a new GraphQL module, add it to the existing list:
+Let’s add a `ClicksCounters` GraphQL module by adding it to the existing list:
 
 ```diff
+// .front-commerce.js
 module.exports = {
   name: "Front-Commerce",
   url: "https://www.front-commerce.test",
-  modules: ["./src"],
+  modules: [],
   serverModules: [
     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
 -    { name: "Magento2", path: "server/modules/magento2" }
 +    { name: "Magento2", path: "server/modules/magento2" },
-+    { name: "HelloWorld", path: "./src/server/modules/hello-world" }
++    { name: "ClicksCounters", path: "./my-module/server/modules/clicks-counters" }
   ]
 };
 ```
 
-The `name` key must be unique across your server modules. It is a temporary name that is used during a code generation step and has no other usage in the application.
+The `name` key must be unique across your server modules. It is a temporary name
+that is used during a code generation step and has no other usage in the
+application.
 
-The `path` must be a path to your module definition file (see below).
+The `path` must be a path to your module definition file (created above).
 
 <blockquote class="info">
-**In depth:** under the hood, Front-Commerce is generating a `.front-commerce/modules.js` file from this configuration which is loaded very early in the server bootstrapping process. The name is used to import the correct module and export it in an homogeneous list, used by the `withGraphQLApi` express middleware.
+  **In depth:** under the hood, Front-Commerce is generating a
+  `.front-commerce/modules.js` file from this configuration which is loaded very
+  early in the server bootstrapping process. The name is used to import the
+  correct module and export it in an homogeneous list, used by the
+  `withGraphQLApi` express middleware.
 </blockquote>
 
-
-Congratulations! You now have a new custom module ready to enhance the data
+**Congratulations!** You now have a new custom module ready to enhance the data
 exposed in the GraphQL middleware.
 
 ## Implement module’s features
 
-A Front-Commerce GraphQL module has to export an object containing the different services it provides.
-
-In the previous GraphQL module registration example, the module definition file would be located at
-`src/server/modules/hello-world/index.js` with other module files in the same directory.
-
 All the wiring is now done and it is time to develop the features of this
-module. In GraphQL, a good practice is to start thinking about the schema first
-from a business domain standpoint.
+module. In GraphQL a good practice is to start thinking about the schema, from a
+business domain standpoint.
 
 It is important to name things with a language shared by the team and prevent
 exposing implementation details (ids, different names…) as much as possible. We
-recommend the reading of the Graphql documentation page
+recommend the reading of the GraphQL documentation page
 [Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/).
 
-Let’s add the code to expose physical stores in our graph.
+Let’s add the code to expose a counter field and a mutation in our graph.
 
 ### Define the schema
 
 Front-Commerce contains all the tooling to allow you to describe your schema
 using the expressive
-[GraphQL Schema Definition Language (SDL)](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51/).
+[GraphQL Schema Definition Language (SDL)](https://graphql.org/learn/schema/#type-language).
 
-Create a `src/server/modules/physical-stores/schema.gql` file to contain the
-schema matching our use case. It could look like so:
+Create a `my-module/server/modules/clicks-counters/schema.gql` file to contain
+the schema matching our use case.
 
-```gql
-type Query {
-  "Our physical stores"
-  physicalStores: [PhysicalStore]
+We would like to:
+
+1. add a `clicksCounter` field to the existing `Product` type
+2. add an `incrementProductCounter` mutation
+
+It could look like so:
+
+```graphql
+# my-module/server/modules/clicks-counters/schema.gql
+extend type Product {
+  clicksCounter: Int
 }
 
-"General information about a physical store"
-type PhysicalStore {
-  address: PostalAddress
-  openingHours: [OpeningHours]
-}
-
-"Postal address of a physical location"
-type PostalAddress {
-  street: String
-  city: String
-  postcode: String
-  country: String
-}
-
-"Opening hours for a given day"
-type OpeningHours {
-  day: DayOfWeek
-  openingTimes: [TimePeriod]
-}
-
-"Period of time within a day"
-type TimePeriod {
-  from: Time!
-  to: Time!
-}
-
-"24h time definition"
-type Time {
-  h: Int!
-  m: Int!
-}
-
-enum DayOfWeek {
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
-  SUNDAY
+extend type Mutation {
+  incrementProductCounter(sku: String!, incrementValue: Int): MutationSuccess
 }
 ```
 
+<blockquote class="info">
+  The `Product` type is part of Front-Commerce’s `Magento2` module. The
+  `MutationSuccess` type used as the mutation response type is part of
+  Front-Commerce’s core.
+</blockquote>
+
 Then expose the schema using the `typeDefs` key of the module definition. Update
-the `src/server/modules/physical-stores/index.js` entrypoint:
+the `my-module/server/modules/clicks-counters/index.js` entrypoint:
 
 ```diff
+// my-module/server/modules/clicks-counters/index.js
 +import typeDefs from "./schema.gql";
 +
 export default {
--  namespace: "PhysicalStores"
-+  namespace: "PhysicalStores",
+-  namespace: "ClicksCounters"
++  namespace: "ClicksCounters",
 +  typeDefs: typeDefs
 };
 ```
 
-> Webpack is in fact taking care of converting SDL into a Javascript object
-> using an appropriate loader.
+<blockquote class="info">
+  Webpack is in fact taking care of converting SDL into a Javascript object
+  using an appropriate loader.
+</blockquote>
 
-**Congratulations again!** You should now be able to see these new types and
-query them in GraphQL.
+**Congratulations again!** You should now be able to see these new fields and
+sue them in GraphQL.
 
-Try to execute the query below in Graph*i*QL:
+Try to execute the query below in your GraphQL playground (by default at
+[http://localhost:4000/playground](http://localhost:4000/playground)):
 
-```
+```graphql
+# http://localhost:4000/playground
 {
-  physicalStores {
-    address {
-      street
-      city
-      country
-      postcode
-    }
-    coordinates {
-      latitude
-      longitude
-    }
-    openingHours {
-      day
-      openingTimes {
-        from {
-          h
-          m
-        }
-        to {
-          h
-          m
-        }
-      }
-    }
+  product(sku: "WH09") {
+    sku
+    clicksCounter
   }
 }
 ```
@@ -209,7 +190,10 @@ see the following response:
 ```json
 {
   "data": {
-    "physicalStores": null
+    "product": {
+      "sku": "WH09",
+      "clicksCounter": null
+    }
   }
 }
 ```
@@ -223,210 +207,237 @@ return for a given field. This is where most of the « real work » is done, for
 instance by fetching remote datasources or transforming data.
 
 Resolvers are exposed using the `resolvers` key of the module definition. It
-should be a « resolver map »: an object where each key is a GraphQL type name,
+should be a **Resolver map**: an object where each key is a GraphQL type name,
 and values are mapping between field names and resolver function. Resolver
 functions may return a
 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 for asynchronous operations.
 
-> To know more about resolvers and their internals, we recommend the reading of
-> [GraphQL Tools documentation](https://www.apollographql.com/docs/graphql-tools/resolvers).
+<blockquote class="more">
+  To know more about resolvers and their internals, we recommend the reading of
+  [GraphQL Tools resolvers
+  documentation](https://www.apollographql.com/docs/graphql-tools/resolvers).
+</blockquote>
 
-First, update the `src/server/modules/physical-stores/index.js` module
-definition as follow:
+First, update the module definition as follow:
 
 ```diff
+// my-module/server/modules/clicks-counters/index.js
 import typeDefs from "./schema.gql";
 +import resolvers from "./resolvers";
 
 export default {
-  namespace: "PhysicalStores",
+  namespace: "ClicksCounters",
 -  typeDefs: typeDefs
 +  typeDefs: typeDefs,
 +  resolvers: resolvers
 };
 ```
 
-And then create the `src/server/modules/physical-stores/resolvers.js` file with
-a resolver map as below (we are going to analyze it in details in a few
+And then create the `my-module/server/modules/clicks-counters/resolvers.js` file
+with a resolver map as below (we are going to analyze it in details in a few
 seconds):
 
 ```js
-import axios from "axios";
+// my-module/server/modules/clicks-counters/resolvers.js
+const counters = new Map();
 
-export default {
-  Query: {
-    physicalStores: () => findAllStores()
+const currentValueOf = sku => counters.get(sku) || 0;
+
+module.exports = {
+  Product: {
+    clicksCounter: ({ sku }) => currentValueOf(sku)
   },
 
-  PhysicalStore: {
-    coordinates: store => ({
-      latitude: store.lat,
-      longitude: store.lon
-    }),
-    openingHours: () => generalOpeningHours
-  },
-
-  Time: {
-    h: time => time.split(":")[0],
-    m: time => time.split(":")[1]
-  },
-
-  PostalAddress: {
-    street: address => address.road
+  Mutation: {
+    incrementProductCounter(_, { sku, incrementValue = 1 }) {
+      counters.set(sku, currentValueOf(sku) + incrementValue);
+      return {
+        success: true
+      };
+    }
   }
 };
-
-const findAllStores = () =>
-  axios
-    .get("https://nominatim.openstreetmap.org/", {
-      params: {
-        format: "json",
-        countrycodes: "fr",
-        addressdetails: 1,
-        q: "foot locker", // for instance…
-        limit: 10
-      }
-    })
-    .then(response => response.data);
-
-const generalOpeningHours = [
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY"
-].map(dayOfWeek => ({
-  day: dayOfWeek,
-  openingTimes: [{ from: "9:00", to: "12:30" }, { from: "14:00", to: "20:00" }]
-}));
 ```
 
 Let’s analyze this code part by part to understand what is possible to achieve
 in a module.
 
-First of all, the exported resolver map contains a top-level query named
-`physicalStores`. This is not necessary (a module might as well extend existing
-types) and we recommend to try limiting as much as possible the number of
-top-level queries in your projects.
+First of all, the exported resolver map defines a resolver for the
+`clicksCounter` field of any `Product` field.
 
 ```js
-export default {
-  Query: {
-    physicalStores: () => findAllStores()
+// …
+module.exports = {
+  Product: {
+    clicksCounter: ({ sku }) => currentValueOf(sku)
   }
   // …
 };
 ```
 
-The resolver function is pretty straightforward and needs no parameters: it will
-fetch all stores from a remote service (do not worry about the implementation
-yet) and return the data asynchronously using a Promise.
+The resolver function will use the `sku` key from its parent data and will
+return the the current counter value from its local state (defaulting to `0` if
+no clicks occured).
 
-The promise will resolve to a list of results matching the following format
-([view in your browser](https://nominatim.openstreetmap.org/?format=json&countrycodes=fr&addressdetails=1&q=foot%20locker&limit=10)):
+It is important to understand that the `sku` is not a parameter provided by
+frontend developers in the Query. It comes from data returned by earlier
+resolvers that fetched a `Product`, no matter where in the graph (category,
+upsells, cart…).
 
-```json
-[
-  {
-    "place_id": "17302207",
-    "licence":
-      "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    "osm_type": "node",
-    "osm_id": "1528672001",
-    "boundingbox": ["48.858632", "48.858732", "2.347088", "2.347188"],
-    "lat": "48.858682",
-    "lon": "2.347138",
-    "display_name":
-      "Foot locker, Rue de Rivoli, 1st Arrondissement, Paris, 75001, France",
-    "class": "shop",
-    "type": "shoes",
-    "importance": 0.20025,
-    "address": {
-      "shoes": "Foot locker",
-      "road": "Rue de Rivoli",
-      "neighbourhood": "Quartier des Halles",
-      "suburb": "Quartier Les Halles",
-      "city_district": "1st Arrondissement",
-      "city": "Paris",
-      "county": "Paris",
-      "state": "Ile-de-France",
-      "country": "France",
-      "postcode": "75001",
-      "country_code": "fr"
+<blockquote class="info">
+Please note that it could have been implemented as a top level Query as well:
+```graphql
+extend type Query {
+  clicksCounterByProductSKU(sku: String!): Int
+}
+```
+However we feel it would have been less intuitive for frontend developers. It
+may seem more natural for people used to design relational databases or REST
+APIs, but we recommend to try limiting as much as possible the number of
+top-level queries in your projects to learn _thinking in GraphQL_.
+
+</blockquote>
+
+The second part of this resolver map is a `incrementProductCounter` mutation.
+Mutations in GraphQL are a way to modify server-side data (whereas queries allow
+to read data). GraphQL modules must declare mutations by extending the top-level
+GraphQL `Mutation` type. You can read more about Mutations in the
+[GraphQL’s Mutations documentation](https://graphql.org/learn/queries/#mutations).
+
+```js
+// …
+module.exports = {
+  // …
+  Mutation: {
+    incrementProductCounter(_, { sku, incrementValue = 1 }) {
+      counters.set(sku, currentValueOf(sku) + incrementValue);
+      return {
+        success: true
+      };
     }
   }
-  // …
-]
+};
 ```
 
-The schema defined earlier specified that `physicalStores` will return a list of
-`PhysicalStore` objects, which do not match the format returned by the remote
-service so far.
+In this resolver, the first parameter is unused (because in a top level resolver
+no earlier resolvers have been run so there are no _parent data_). The second
+parameter contains arguments passed to the mutation. These parameters are the
+`(sku: String!, incrementValue: Int)` part of the schema definition declared
+earlier:
 
-```
-type Query {
-  "Our physical stores"
-  physicalStores: [PhysicalStore]
+```graphql
+extend type Mutation {
+  incrementProductCounter(sku: String!, incrementValue: Int): MutationSuccess
 }
 ```
 
-In this implementation, we chose to use resolvers for converting data from the
-remote service into an object matching the `PhysicalStore` type definition. This
-time, by adding a resolver for each of its two fields:
+The resolver uses the mandatory `sku` argument to fetch the current counter
+value from its local state and defines a new value incremented of the
+`incrementValue` optional argument. If the `incrementValue` has not been
+provided in the GraphQL request, it defaults to `1`.
 
-```js
-export default {
-  // …
-  PhysicalStore: {
-    coordinates: store => ({
-      latitude: store.lat,
-      longitude: store.lon
-    }),
-    openingHours: () => generalOpeningHours
-  }
-  // …
-};
+Finally, the resolver returns a value matching the `MutationSuccess`
+Front-Commerce type which in this example is always successful.
+
+<blockquote class="info">
+  ProTip™: you can debug the data passed in a resolver using `console.log` to
+  view its shape in your server console shell output. To do so, a convenient
+  thing to know is that `console.log` returns a falsy value. Hence, in the
+  resolver above you could debug the `sku` value by updating the resolver as
+  below:
+
+```diff
+-clicksCounter: ({sku}) => currentValueOf(sku),
++clicksCounter: ({sku}) => console.log(sku) || currentValueOf(sku),
 ```
 
-The `coordinates` field is resolved by using the initial `store` information
-(first argument) and converting them into a structure matching our Schema. With
-simplification in mind, we implemented `openingHours` field resolution in a
-naive way: by supposing that all stores shared the same established opening
-hours (defined in the `generalOpeningHours` constant).
+</blockquote>
 
-> One may combine these two approaches to fetch openingHours from another
-> service, using for instance the `place_id` to access a REST detail endpoint.
-> It could be a good thing to try if you want to experiment and start grasping
-> the power behind a GraphQL middleware in your architecture!
+**Awesome!** Your GraphQL server now has a new feature, let’s use it!
 
-You might now be able to understand the rest of this resolver map, which consist
-of data transformation for the `PostalAddress.street` field (data returned by
-the remote service match the `PostalAddress` type definition for the other
-fields) and `Time` representations.
+### Query your new graph
+
+Try to execute the previous query again in your GraphQL playground:
+
+```graphql
+# http://localhost:4000/playground
+{
+  product(sku: "WH09") {
+    sku
+    clicksCounter
+  }
+}
+```
+
+You must now have a real value returned!
+
+```json
+{
+  "data": {
+    "product": {
+      "sku": "WH09",
+      "clicksCounter": 0
+    }
+  }
+}
+```
+
+Let’s increment it by sending a Mutation to our server:
+
+```graphql
+# http://localhost:4000/playground
+mutation {
+  incrementProductCounter(sku: "WH09", incrementValue: 2) {
+    success
+  }
+}
+```
+
+If it was successful, the above query must now return `2` as the `clicksCounter`
+value.
+
+### Asynchronous resolvers
+
+In the previous example resolvers were synchronous, meaning that they returned a
+value that was immediately available. Most of the time, your resolvers will
+fetch data from a remote service and return them asynchronously using a
+`Promise`.
+
+Returning `Promise` from resolvers is supported out of the box. We encourage you
+to experiment with it. Here is an example of turning the previous resolvers to
+asynchronous ones:
 
 ```js
-export default {
-  // …
-  Time: {
-    h: time => time.split(":")[0],
-    m: time => time.split(":")[1]
+// my-module/server/modules/clicks-counters/resolvers.js
+const counters = new Map();
+
+const currentValueOf = sku => counters.get(sku) || 0;
+
+const randomAsynchronousResponse = value =>
+  new Promise(resolve =>
+    setTimeout(() => resolve(value), Math.random() * 3000)
+  );
+
+module.exports = {
+  Product: {
+    clicksCounter: ({ sku }) => randomAsynchronousResponse(currentValueOf(sku))
   },
 
-  PostalAddress: {
-    street: address => address.road
+  Mutation: {
+    incrementProductCounter(_, { sku, incrementValue = 1 }) {
+      counters.set(sku, currentValueOf(sku) + incrementValue);
+      return randomAsynchronousResponse({
+        success: true
+      });
+    }
   }
 };
 ```
 
-> ProTip™: you can debug the data passed in a resolver using `console.log` to
-> view its shape in your server console shell output. To do so, a convenient
-> thing to know is that `console.log` returns a falsy value. Hence, in the
-> resolver above you could debug the `time` param by updating the resolver as
-> below:
->
-> `h: time => console.log(time) || time.split(":")[0],`
+## Make it scale!
 
-### Make it scale!
-
-See ………
+Over time your resolvers may grow and contain more business logic. See
+[Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html)
+to learn how you could extract logic from your resolvers and keep them easy to
+understand.
