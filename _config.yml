@@ -29,6 +29,8 @@ sidebar_categories:
   Concepts:
     - docs/concepts/create-business
   Reference:
+    - docs/reference/configurations
+    - docs/reference/environment-variables
     - docs/reference/graphql-module-definition
   Appendices:
     - docs/appendices/roadmap
