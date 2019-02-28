@@ -72,7 +72,7 @@ have access to this huge ecosystem.
 Let's install the two required packages:
 
 ```sh
-npm install react-leaflet leaflet`
+npm install react-leaflet leaflet
 ```
 
 ### Our new Homepage
