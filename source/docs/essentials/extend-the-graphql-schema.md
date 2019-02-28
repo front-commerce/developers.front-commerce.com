@@ -8,14 +8,6 @@ data in your
 [unified GraphQL schema](https://principledgraphql.com/integrity#1-one-graph) to
 support new features and allow frontend developers to use them.
 
-**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
-override any part of the schema defined by other modules. It leverages features
-from the GraphQL Schema Definition Language
-(<abbr title="Schema Definition Language">SDL</abbr>).
-
-Front-Commerce’s core and platforms integrations (such as Magento2) are
-implemented as GraphQL modules too.
-
 <blockquote class="info">
   The concepts documented below have been adopted by many actors in the GraphQL
   ecosystem since our initial implementation years ago. On our road to 1.0.0, we
@@ -26,6 +18,14 @@ implemented as GraphQL modules too.
   migrate to this library.** Please do not hesitate to share your thoughts with
   us there.
 </blockquote>
+
+**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
+override any part of the schema defined by other modules. It leverages features
+from the GraphQL Schema Definition Language
+(<abbr title="Schema Definition Language">SDL</abbr>).
+
+Front-Commerce’s core and platforms integrations (such as Magento2) are
+implemented as GraphQL modules too.
 
 This page will guide you through the process of exposing a new feature in your
 GraphQL schema. We will create a GraphQL module that allows to maintain a
@@ -40,16 +40,18 @@ You will learn to:
 
 ## Create a new GraphQL module
 
-Let’s say that we want to expose a counter of clicks for each product in
-our store. We first have to create a `ClicksCounters` GraphQL module.
+Let’s say that we want to expose a counter of clicks for each product in our
+store. We first have to create a `ClicksCounters` GraphQL module.
 
-The GraphQL module itself will be part of a Front-Commerce module, which could
-also contain
-[theme extensions or components](/docs/essentials/extend-the-theme.html) as seen
-in the previous pages.
+This GraphQL module should appear in the folder of a Front-Commerce module. For
+instance, if the Front-Commerce module is in `my-module`, the GraphQL module
+should be in `my-module/server/modules/clicks-counter`. Learn more about
+Front-Commerce modules within
+[Extend the theme](/docs/essentials/extend-the-theme.html).
 
-To do so, create a GraphQL module definition as follow in the
-`my-module/server/modules/clicks-counters/index.js` file:
+In the GraphQL module folder, there should be a definition file
+`my-module/server/modules/clicks-counters/index.js` which will set how the
+module should behave within your Schema:
 
 ```js
 // my-module/server/modules/clicks-counters/index.js
@@ -58,11 +60,11 @@ export default {
 };
 ```
 
-A Front-Commerce GraphQL module has to export an object containing the different
-services it provides.
+A GraphQL module has to export an object containing the different services it
+provides.
 
-This module does nothing yet (we will add code later), but first let's register
-it in the application.
+This module is valid even though it does nothing. However, it is not used in
+your application yet. You need to register it.
 
 ## Register the module in the application
 
@@ -88,7 +90,9 @@ module.exports = {
 
 The `name` key must be unique across your server modules. It is a temporary name
 that is used during a code generation step and has no other usage in the
-application.
+application. _Do not worry about it, it will be deprecated in a near future: see
+[#179](https://gitlab.com/front-commerce/front-commerce/issues/179) for further
+information._
 
 The `path` must be a path to your module definition file (created above).
 
@@ -99,6 +103,8 @@ The `path` must be a path to your module definition file (created above).
   correct module and export it in an homogeneous list, used by the
   `withGraphQLApi` express middleware.
 </blockquote>
+
+Restart your application.
 
 **Congratulations!** You now have a new custom module ready to enhance the data
 exposed in the GraphQL middleware.
@@ -112,14 +118,14 @@ business domain perspective.
 It is important to name things with a language shared by the team and prevent
 exposing implementation details (ids, different names…) as much as possible. We
 recommend the reading of the GraphQL documentation page
-[Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/).
+[Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/). <--
+TODO Add a link to detailed explanations about ids and Apollo Client cache -->
 
 Let’s add the code to expose a counter field and a mutation in our graph.
 
 ### Define the schema
 
-Front-Commerce lets you describe your schema
-using the expressive
+Front-Commerce lets you describe your schema using the expressive
 [GraphQL Schema Definition Language (SDL)](https://graphql.org/learn/schema/#type-language).
 
 Create a `my-module/server/modules/clicks-counters/schema.gql` file to contain
@@ -149,8 +155,24 @@ extend type Mutation {
   Front-Commerce’s core.
 </blockquote>
 
-Then expose the schema using the `typeDefs` key of the module definition. Update
-the `my-module/server/modules/clicks-counters/index.js` entrypoint:
+<blockquote class="info">
+Please note that it could have been implemented as a top level Query as well:
+```graphql
+extend type Query {
+  clicksCounterByProductSKU(sku: String!): Int
+}
+```
+However we feel it would have been less intuitive for frontend developers. It
+may seem more natural for people used to design relational databases or REST
+APIs, but we recommend to try limiting as much as possible the number of
+top-level queries in your projects to learn _thinking in GraphQL_.
+
+</blockquote>
+
+Then expose the schema using the `typeDefs` key of the module definition. We
+recommend to make the dependency to Magento’s Product module explicit by adding
+a `dependencies` key. Update the
+`my-module/server/modules/clicks-counters/index.js` entrypoint:
 
 ```diff
 // my-module/server/modules/clicks-counters/index.js
@@ -159,6 +181,9 @@ the `my-module/server/modules/clicks-counters/index.js` entrypoint:
 export default {
 -  namespace: "ClicksCounters"
 +  namespace: "ClicksCounters",
++  dependencies: [
++    "Magento2/Catalog/Products"
++  ],
 +  typeDefs: typeDefs
 };
 ```
@@ -169,7 +194,7 @@ export default {
 </blockquote>
 
 **Congratulations again!** You should now be able to see these new fields and
-use them in GraphQL.
+use them in GraphQL, **without even having to restart the application!**
 
 Try to execute the query below in your GraphQL playground (by default at
 [http://localhost:4000/playground](http://localhost:4000/playground)):
@@ -184,8 +209,9 @@ Try to execute the query below in your GraphQL playground (by default at
 }
 ```
 
-Our GraphQL module does not yet have any code for sending content, so you must
-see the following response:
+Our GraphQL module does not yet have any code for sending content. This means
+that even if you can request the `clicksCounter` field, it won't actually return
+any data. So you should see the following response:
 
 ```json
 {
@@ -207,9 +233,10 @@ return for a given field. This is where most of the « real work » is done, for
 instance by fetching remote datasources or transforming data.
 
 Resolvers are exposed using the `resolvers` key of the module definition. It
-should be a **Resolver map**: an object where each key is a GraphQL type name,
-and values are mapping between field names and resolver function. Resolver
-functions may return a
+should be a
+[**Resolver map**](https://www.apollographql.com/docs/graphql-tools/resolvers):
+an object where each key is a GraphQL type name, and values are mapping between
+field names and resolver function. Resolver functions may return a
 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 for asynchronous operations.
 
@@ -228,6 +255,9 @@ import typeDefs from "./schema.gql";
 
 export default {
   namespace: "ClicksCounters",
+  dependencies: [
+    "Magento2/Catalog/Products"
+  ],
 -  typeDefs: typeDefs
 +  typeDefs: typeDefs,
 +  resolvers: resolvers
@@ -260,8 +290,9 @@ module.exports = {
 };
 ```
 
-Let’s analyze this code part by part to understand what is possible to achieve
-in a module.
+Let’s analyze this code in detail.
+
+#### Returning the counter value for every `Product`
 
 First of all, the exported resolver map defines a resolver for the
 `clicksCounter` field of any `Product` field.
@@ -276,6 +307,15 @@ module.exports = {
 };
 ```
 
+It implements data retrieval for the following part of the schema declared
+earlier:
+
+```graphql
+extend type Product {
+  clicksCounter: Int
+}
+```
+
 The resolver function will use the `sku` key from its parent data and will
 return the the current counter value from its local state (defaulting to `0` if
 no clicks occured).
@@ -285,24 +325,14 @@ frontend developers in the Query. It comes from data returned by earlier
 resolvers that fetched a `Product`, no matter where in the graph (category,
 upsells, cart…).
 
-<blockquote class="info">
-Please note that it could have been implemented as a top level Query as well:
-```graphql
-extend type Query {
-  clicksCounterByProductSKU(sku: String!): Int
-}
-```
-However we feel it would have been less intuitive for frontend developers. It
-may seem more natural for people used to design relational databases or REST
-APIs, but we recommend to try limiting as much as possible the number of
-top-level queries in your projects to learn _thinking in GraphQL_.
-
-</blockquote>
+#### Incrementing the counter for a SKU
 
 The second part of this resolver map is a `incrementProductCounter` mutation.
-Mutations in GraphQL are a way to modify server-side data (whereas queries allow
-to read data). GraphQL modules must declare mutations by extending the top-level
-GraphQL `Mutation` type. You can read more about Mutations in the
+Mutations in GraphQL are a way to modify server-side data, like `POST` requests
+in REST (whereas queries allow to read data, like `GET` requests in REST).
+
+GraphQL modules must declare mutations by extending the top-level GraphQL
+`Mutation` type. You can read more about Mutations in the
 [GraphQL’s Mutations documentation](https://graphql.org/learn/queries/#mutations).
 
 ```js
@@ -320,11 +350,10 @@ module.exports = {
 };
 ```
 
-In this resolver, the first parameter is unused (because in a top level resolver
-In this resolver, the first parameter is unused because in a top level resolver there is no _parent data_.
-parameter contains arguments passed to the mutation. These arguments are the
-`(sku: String!, incrementValue: Int)` part of the schema definition declared
-earlier:
+In this resolver, the first parameter is unused because in a top level resolver
+there is no _parent data_. The second parameter contains arguments passed to the
+mutation. These arguments are the `(sku: String!, incrementValue: Int)` part of
+the schema definition declared earlier:
 
 ```graphql
 extend type Mutation {
@@ -332,13 +361,17 @@ extend type Mutation {
 }
 ```
 
-The resolver uses the mandatory `sku` argument to fetch the current counter
-value from its local state and defines a new value incremented of the
-`incrementValue` optional argument. If the `incrementValue` has not been
-provided in the GraphQL request, it defaults to `1`.
+The resolver will:
 
-Finally, the resolver returns a value matching the `MutationSuccess`
-Front-Commerce type which in this example is always successful.
+1. use the mandatory `sku` argument to fetch the current counter value from its
+   local state
+2. increment the counter value of the `incrementValue` optional argument. If the
+   `incrementValue` argument has not been defined explicitely in the GraphQL
+   request, it defaults to `1`.
+3. set this new incremented value for the counter
+4. finally, return a value matching the `MutationSuccess` Front-Commerce type
+   which in this example is always successful (`{success: true}`). <-- TODO Add
+   a reference page (and link it from here) for the MutationSuccess type -->
 
 <blockquote class="info">
   ProTip™: you can debug the data passed in a resolver using `console.log` to
@@ -394,8 +427,8 @@ mutation {
 }
 ```
 
-If it was successful, the above query must now return `2` as the `clicksCounter`
-value.
+If it was successful, the above query must now return `2` in the `clicksCounter`
+field.
 
 ### Asynchronous resolvers
 
@@ -404,9 +437,8 @@ value that was immediately available. Most of the time, your resolvers will
 fetch data from a remote service and return them asynchronously using a
 `Promise`.
 
-Returning `Promise` from resolvers is supported out of the box. We encourage you
-to experiment with it. Here is an example of turning the previous resolvers to
-asynchronous ones:
+Returning `Promise` from resolvers is supported out of the box. Here is an
+example of turning the previous resolvers to asynchronous ones:
 
 ```js
 // my-module/server/modules/clicks-counters/resolvers.js
