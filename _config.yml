@@ -9,25 +9,29 @@ sidebar_categories:
     - docs/essentials/installation
     - docs/essentials/extend-the-theme
     - docs/essentials/adapt-theme-to-your-brand
+    - docs/essentials/create-a-ui-component
+    - docs/essentials/create-a-business-component
+    - docs/essentials/add-a-page-client-side
     - docs/essentials/extend-the-graphql-schema
   Theme:
     - docs/advanced/theme/overview
+    - docs/advanced/theme/route-dispatcher
   GraphQL:
     - docs/advanced/graphql/meta-modules
     - docs/advanced/graphql/slim-down-resolvers-with-loaders
-    - docs/advanced/graphql/overview
   Checkout:
     - docs/advanced/checkout/overview
-  Performance:
-    - docs/advanced/performance/overview
+    - docs/advanced/checkout/add-custom-checkout-step
   Server:
     - docs/advanced/server/overview
+  Performance:
+    - docs/advanced/performance/overview
   Production ready:
     - docs/advanced/production-ready/overview
-  Magento2:
-    - docs/magento2/what
   Concepts:
     - docs/concepts/create-business
+  Magento2:
+    - docs/magento2/what
   Reference:
     - docs/reference/graphql-module-definition
   Appendices:

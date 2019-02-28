@@ -36,8 +36,9 @@
         </div>
       </div>
 
-      <div class="pagination">
-        <div class="content-wrapper">
+      <div class="content-wrapper">
+        <% var prev = findAdjacent(-1); var next = findAdjacent(1); %>
+        <div class="pagination <% if (!prev) { %>pagination--next-only<% } %> <% if (!next) { %>pagination--prev-only<% } %>">
           <%
             function findAdjacent (direction) {
               var pagePaths = _.flatten(_.map(config.sidebar_categories, function(vals) { return vals; }));
@@ -53,7 +54,7 @@
                 : pages[i - 1]
             }
           %>
-          <% var prev = findAdjacent(-1); if (prev) { %>
+          <% if (prev) { %>
          
               <a class="link primary prev" href="<%- relative_url(page.path, prev.path) %>">
                 <span class="icon-arrow-left-alt"></span>
@@ -62,7 +63,7 @@
               </a>
          
           <% } %>
-          <% var next = findAdjacent(1); if (next) { %>
+          <% if (next) { %>
            
               <a class="link primary next" href="<%- relative_url(page.path, next.path) %>">
                 <span class="subtitle-pagination">Next</span>

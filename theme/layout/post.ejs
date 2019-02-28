@@ -19,8 +19,8 @@
     </div>
   </section>
 
-  <div class="pagination">
-    <div class="content-wrapper">
+  <div class="content-wrapper">
+    <div class="pagination <% if (!page.prev) { %>pagination--next-only<% } %> <% if (!page.next) { %>pagination--prev-only<% } %>">
       <% if (page.prev) { %>
           <a class="link primary prev" href="<%- relative_url(page.path, page.prev.path) %>">
             <span class="icon-arrow-left-alt"></span>
