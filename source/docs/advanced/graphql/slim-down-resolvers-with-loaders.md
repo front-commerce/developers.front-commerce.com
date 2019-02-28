@@ -12,8 +12,8 @@ testability.**
 In Front-Commerce’s core and platforms integrations (such as Magento2) we have
 introduced the concept of _« loaders »_ to achieve this.
 
-This page explains what loaders are, how you can create them and should allow
-you to have a better understanding of our code when browsing it.
+This page explains what loaders are and how you can create them. This will also
+help you better understand the Front-Commerce's core code.
 
 <blockquote class="info">
   If you have used Apollo Server recently, you might already be familiar with a
@@ -26,14 +26,14 @@ you to have a better understanding of our code when browsing it.
 ## Why loaders?
 
 When resolvers grow, you will likely extract functions or modules to share code
-between resolvers. It could be constructing an `axios` instance with the correct
-url and headers, modifying responses to return objects matching the GraphQL
+between resolvers. It can be: constructing an `axios` instance with the correct
+URL and headers, modifying responses to return objects matching the GraphQL
 schema or error management for instance.
 
-Loaders are aimed at being node modules encapsulating all your business specific
-code. We recommend to design them as pure JS modules without any dependency on
-Front-Commerce or GraphQL features. Designing loaders with this approach has
-several advantages:
+Loaders are aimed at being node modules encapsulating all your domain/API
+specific code. We recommend to design them as pure JS modules without any
+dependency on Front-Commerce or GraphQL features. Designing loaders with this
+approach has several advantages:
 
 - you can reuse existing code or libraries from another project
 - if you migrate away from Front-Commerce, this code could be reused easily in
@@ -43,8 +43,8 @@ several advantages:
   test loaders without the complexity of a GraphQL context since they are pure
   JS modules.
 - code sharing: under some circumstances you may also find convenient to share
-  business specific code between your server and react application (for data
-  validation or conversion)
+  code between your server and react application (for data validation or
+  transformation)
 
 ## What are loaders?
 
@@ -198,9 +198,9 @@ module.exports = {
 
 ### Using GraphQL context for Dependency Injection
 
-In its current state, resolvers are tightly coupled to the current
+However, in the above example, resolvers are tightly coupled to the current
 implementation. We recommend to leverage GraphQL’s context to inject a loader to
-resolvers.
+resolvers to solve this issue and improve the design.
 
 The GraphQL context is (according to
 [GraphQL.org](https://graphql.org/learn/execution/#root-fields-resolvers)):
@@ -271,7 +271,7 @@ export default {
   typeDefs: typeDefs,
 -  resolvers: resolvers
 +  resolvers: resolvers,
-+  contextEnhancer: () => {
++  contextEnhancer: (params) => {
 +    return {
 +      Counter: CounterLoader
 +    };
@@ -295,14 +295,19 @@ see how you could combine them to achieve your goals.
   The content below is currently being written. If you need more detailed
   information, please [contact us](mailto:contact@front-commerce.com). We will
   make sure to answer you in a timely manner.
-</blockquote>
 
-- optimize remote data fetching with dataloaders
-- interacting with Magento2 REST API
-- accessing the user session
-- using
-  [GraphQL modules dependencies](/docs/reference/graphql-module-definition.html#dependencies-optional)
-  to extend an existing loader
+<ul>
+  <li>optimize remote data fetching with dataloaders</li>
+  <li>interacting with Magento2 REST API</li>
+  <li>accessing the user session</li>
+  <li>
+    using [GraphQL modules
+    dependencies](/docs/reference/graphql-module-definition.html#dependencies-optional)
+    to extend an existing loader
+  </li>
+</ul>
+
+  </blockquote>
 
 Let’s now take a look at a _real-world_ module definition as an example.
 
