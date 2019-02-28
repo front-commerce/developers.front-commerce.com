@@ -36,11 +36,11 @@ You will learn to:
 1. create a new GraphQL module
 2. register the GraphQL module in the Front-Commerce application
 3. implement the GraphQL module itself: add a field to the `Product` type and
-   add a new Mutation to the schema
+   add a new `Mutation` to the schema
 
 ## Create a new GraphQL module
 
-Let’s say that we would like to expose a counter of clicks for each product in
+Let’s say that we want to expose a counter of clicks for each product in
 our store. We first have to create a `ClicksCounters` GraphQL module.
 
 The GraphQL module itself will be part of a Front-Commerce module, which could
@@ -107,7 +107,7 @@ exposed in the GraphQL middleware.
 
 All the wiring is now done and it is time to develop the features of this
 module. In GraphQL a good practice is to start thinking about the schema, from a
-business domain standpoint.
+business domain perspective.
 
 It is important to name things with a language shared by the team and prevent
 exposing implementation details (ids, different names…) as much as possible. We
@@ -118,7 +118,7 @@ Let’s add the code to expose a counter field and a mutation in our graph.
 
 ### Define the schema
 
-Front-Commerce contains all the tooling to allow you to describe your schema
+Front-Commerce lets you describe your schema
 using the expressive
 [GraphQL Schema Definition Language (SDL)](https://graphql.org/learn/schema/#type-language).
 
@@ -169,7 +169,7 @@ export default {
 </blockquote>
 
 **Congratulations again!** You should now be able to see these new fields and
-sue them in GraphQL.
+use them in GraphQL.
 
 Try to execute the query below in your GraphQL playground (by default at
 [http://localhost:4000/playground](http://localhost:4000/playground)):
@@ -321,8 +321,8 @@ module.exports = {
 ```
 
 In this resolver, the first parameter is unused (because in a top level resolver
-no earlier resolvers have been run so there are no _parent data_). The second
-parameter contains arguments passed to the mutation. These parameters are the
+In this resolver, the first parameter is unused because in a top level resolver there is no _parent data_.
+parameter contains arguments passed to the mutation. These arguments are the
 `(sku: String!, incrementValue: Int)` part of the schema definition declared
 earlier:
 
@@ -383,7 +383,7 @@ You must now have a real value returned!
 }
 ```
 
-Let’s increment it by sending a Mutation to our server:
+You can even increment the counter by sending a Mutation to your server:
 
 ```graphql
 # http://localhost:4000/playground

@@ -85,7 +85,7 @@ module.exports = {
 
 GraphQL type definitions provided by this module. As a developer, this is a contract with the rest of your codebase.
 
-Type definitions must be [GraphQL schema language](https://graphql.org/learn/schema/) strings, and can be declared inline or loaded from a `.gql` file.
+Type definitions must be [GraphQL Schema Definition Language](https://graphql.org/learn/schema/) strings, and can be declared inline or loaded from a `.gql` file.
 
 You can create new types, add top level queries (by extending the `Query` type), mutations or extend types from other modules.
 
