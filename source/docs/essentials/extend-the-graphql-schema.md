@@ -412,24 +412,27 @@ asynchronous ones:
 // my-module/server/modules/clicks-counters/resolvers.js
 const counters = new Map();
 
-const currentValueOf = sku => counters.get(sku) || 0;
-
-const randomAsynchronousResponse = value =>
-  new Promise(resolve =>
-    setTimeout(() => resolve(value), Math.random() * 3000)
-  );
+const currentValueOf = sku => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const currentValue = counters.get(sku) || 0;
+      resolve(currentValue);
+    }, Math.random() * 3000);
+  });
+};
 
 module.exports = {
   Product: {
-    clicksCounter: ({ sku }) => randomAsynchronousResponse(currentValueOf(sku))
+    clicksCounter: ({ sku }) => currentValueOf(sku)
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
-      counters.set(sku, currentValueOf(sku) + incrementValue);
-      return randomAsynchronousResponse({
-        success: true
-      });
+      return currentValueOf(sku)
+        .then(currentValue => counters.set(sku, currentValue + incrementValue))
+        .then(() => ({
+          success: true
+        }));
     }
   }
 };
