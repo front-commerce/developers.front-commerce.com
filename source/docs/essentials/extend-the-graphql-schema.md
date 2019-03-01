@@ -118,8 +118,8 @@ business domain perspective.
 It is important to name things with a language shared by the team and prevent
 exposing implementation details (ids, different names…) as much as possible. We
 recommend the reading of the GraphQL documentation page
-[Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/). <--
-TODO Add a link to detailed explanations about ids and Apollo Client cache -->
+[Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/).
+<!-- TODO Add a link to detailed explanations about ids and Apollo Client cache -->
 
 Let’s add the code to expose a counter field and a mutation in our graph.
 
@@ -370,8 +370,8 @@ The resolver will:
    request, it defaults to `1`.
 3. set this new incremented value for the counter
 4. finally, return a value matching the `MutationSuccess` Front-Commerce type
-   which in this example is always successful (`{success: true}`). <-- TODO Add
-   a reference page (and link it from here) for the MutationSuccess type -->
+   which in this example is always successful (`{success: true}`).
+   <!-- TODO Add a reference page (and link it from here) for the MutationSuccess type -->
 
 <blockquote class="info">
   ProTip™: you can debug the data passed in a resolver using `console.log` to
