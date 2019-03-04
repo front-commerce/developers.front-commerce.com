@@ -6,25 +6,29 @@ title: Configurations
 <blockquote class="note">
 This documentation is the current state of the configurations available in Front-Commerce. However, our goal is to clean it up to make sure that it is still easily customizable, but also easier to check if your configurations are correct. We will provide a clear migration path and will integrate this change within our 1.0.0 release.
 
-Please refer to the [related gitlab issue](https://gitlab.com/front-commerce/front-commerce/issues/106) to follow its advancement.
+Please refer to the [related gitlab issue (#106)](https://gitlab.com/front-commerce/front-commerce/issues/106) to follow its advancement.
 </blockquote>
 
 ## How to set your configurations
 
-Each file described below exist in [`node_modules/front-commerce/src/config`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/config) in Front-Commerce. If you want to override some, dupplicate those in `my-module/config`.
+Each file described below exist in [`node_modules/front-commerce/src/config`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/config) in Front-Commerce. If you want to override some, duplicate those in `my-module/config`.
+
+<blockquote class="warning">
+**Security Notice:** Please keep in mind that most of these configurations are imported and bundled into your client application. Thus it is important to not include private configurations in them, and to use [environment variables](/docs/reference/environment-variables.html#Add-your-own-environment-variables) instead.
+</blockquote>
 
 ## `config/website.js`
 
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
 * `root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu. It will then be the children of this category that will be displayed.
-* `default_image_url` (ex: an absolute URL of an image): which image to use when no image path has been given to `<ResizedImage>`
+* `default_image_url` (ex: an absolute URL of an image): which image to use when no image path has been given to `<ResizedImage>` <!-- TODO link to reference -->
 * `defaultTitle`: the default meta title of your application
 * `defaultDescription`: the default meta description of your application
 * `available_page_sizes`: which page sizes to display in a product list page (or any page with a pagination)
 * `website_id`: which website is used within magento (needed for customer related mutations)
-* `tax` (ex: `1.2` for 20% VAT): Used to correctly filter products within layer queries (this configuration should soon be deprecated with search updates in Front-Commerce)
-* `contentSecurityPolicy`: For security reasons only URLs from the store's domain are authorized through CSPs. However, for tracking and external dependencies, we may authorize more domains. Use the following config and add your custom domain in each :
+* `tax` (ex: `1.2` for 20% VAT): Used to correctly filter products within layer queries (this configuration should soon be deprecated with search updates in Front-Commerce — see [#102](https://gitlab.com/front-commerce/front-commerce/issues/102))
+* `contentSecurityPolicy`: For security reasons only URLs from the store's domain are authorized through CSPs. However, for tracking and external dependencies, we may authorize more domains. Use the following config and add your custom domain in each:<!-- TODO Add a CSP dedicated page -->
 ```
 {
   directives: {
