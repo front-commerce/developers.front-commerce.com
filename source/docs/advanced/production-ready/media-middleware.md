@@ -52,7 +52,7 @@ Once you have configured your media middleware, you will be able to actually req
 To do so, you need to build your URL as follow:
 
 ```
-http://localhost:4000/media/<pathToMyImage>?format=<presetName>&bgColor=<colorValue>&cover=<coverBoolean>
+http://localhost:4000/media/<pathToMyImage>?format=<presetName>&bgColor=<colorValue>&cover=<coverBoolean>&dpi=x2
 ```
 
 With actual values, it would look like this:
@@ -87,3 +87,19 @@ The path of the image here is the path of the image on the proxy.
 This component will automatically fetch the image through the proxy with the correct settings. Moreover, it will display a spinner while the image is loading and a fallback image if it breaks.
 
 It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. Thus, to disable lazyloading, you should use the option `dangerouslyDisableLazyLoad`.
+
+## Image caching
+
+While this feature is super handy, it comes with a cost: images are resized on the fly. To minimize this issue, we've added some guards.
+
+The first one as you might have noticed in the previous section is limiting the available formats by using presets. But that is not enough.
+
+This is why we have added caching: if an image is proxied once, the resized image will be put directly in your server's file system to avoid a resize upon each request of the image. This folder is in `.front-commerce/cache/images/`.
+
+<blockquote class="wip">
+But this is still not ideal because it means that on the first launch of your server, many images will need to be resized during your users' requests.
+
+To answer this, we have created a script that fetches all the image URLs used in your catalog and put them in cache. It launchs a warmup of your image caches that you could use before a deployment or with a cron every night.
+
+Documentation about this script is still a Work In Progress. However in the meantime you can refer to the code itself [`scripts/imageWarmUp.js`](https://gitlab.com/front-commerce/front-commerce/blob/develop/scripts/imageWarmUp.js) or [contact us](mailto:contact@front-commerce.com) directly if you have any question.
+</blockquote>
