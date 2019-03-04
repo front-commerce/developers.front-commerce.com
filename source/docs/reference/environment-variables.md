@@ -5,14 +5,18 @@ title: Environment variables
 
 The environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging and local.
 
-These environment variables can be defined in two diferrent ways:
+These environment variables can be defined in two different ways:
 * on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
 * in the `.env` file in your root folder
 
-You can then access them by using the `process.env` object in your javascript files. This variable is available in both your server side code and client side code. However,
-not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*`. See [Add your own environment variables](http://localhost:4444/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
+You can then access them by using the `process.env` object in your javascript files no matter if it is a server-side or client-side file.
+However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*`. See [Add your own environment variables](http://localhost:4444/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
 
 ## How to update environment variables
+
+<blockquote class="wip">
+    **Work In Progress:** we plan to add a more exhaustive flowchart to cover all edge cases. By then, if you have any issues to understand why/when a build or restart is necessary, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+</blockquote>
 
 However, in some cases you can't update these variables only by updating your server's variable.
 
