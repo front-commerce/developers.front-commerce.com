@@ -40,7 +40,7 @@ sidebar_categories:
     - docs/concepts/front-commerce-folder-structure
     - docs/concepts/react-components-structure
   Magento2:
-    - docs/magento2/what
+    - docs/magento2/overview
   Reference:
     - docs/reference/configurations
     - docs/reference/environment-variables
