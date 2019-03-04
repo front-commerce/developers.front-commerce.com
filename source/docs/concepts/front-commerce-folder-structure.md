@@ -12,6 +12,7 @@ may help you better understand our choices.
 
 ```
 src/
+├── config/
 ├── server/
 |   ├── express/
 |   └── modules/
@@ -26,16 +27,22 @@ src/
         └── pages/
 ```
 
+## src/config/
+
+It contains all the files that allow you to configure the behavior of Front-Commerce.
+
+See more details within the [Reference documentation](/docs/reference/configurations.html).
+
 ## src/server/
 
 The server contains… the server code! There are two parts:
 
 - `express/`: the node server definition that serves the responses to client
   requests. This includes Server Side Rendering, GraphQL endpoint, image proxy,
-  session handlers, etc. (Documentation in Progress) <!-- TODO -->
+  session handlers, etc. (see [Add custom endpoints to your server](/docs/advanced/server/add-http-endpoint.html))
 - `modules/`: the modules that compose your GraphQL schema. This includes type
   definitions, resolvers, etc. (see
-  [Extend the GraphQL Schema](TODO))
+  [Extend the GraphQL Schema](/docs/essentials/extend-the-graphql-schema.html))
 
 ## src/web/
 

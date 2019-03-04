@@ -3,7 +3,7 @@ id: react-components-structure
 title: React components structure
 ---
 
-In Front Commerce we split our components in two categories: the **UI**
+In Front-Commerce we split our components in two categories: the **UI**
 components available in the `components` folder, and the **Business** components
 available in the `modules` and `pages` folders.
 
@@ -154,7 +154,7 @@ Learn more about:
 ## What's next?
 
 We are now pretty confident that this structure is stable enough and will help
-you through the creation of brand new themes. We have already built oursleves
+you through the creation of brand new themes. We have already built ourselves
 two custom themes for production stores based on this structure, and it was a
 breeze.
 
