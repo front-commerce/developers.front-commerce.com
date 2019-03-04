@@ -1,0 +1,16 @@
+<%- partial('partials/header', {withMobileMenu: `
+    <a href="/" class="nav-item mobile-button show-mobile">
+        <span>Home</span>
+    </a>
+    <a href="/blog/" class="nav-item mobile-button show-mobile">
+        <span>Blog</span>
+    </a>
+`}) %>
+
+<section class="hero hero--title">
+  <h1><%- page.title %></h1>
+  <%- page.content %>
+</section>
+
+<%- partial('partials/blog/list') %>
+<%- partial('partials/back-to-top') %>

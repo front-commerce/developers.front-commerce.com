@@ -1,0 +1,169 @@
+  <%
+    var githubUrl =
+      'https://github.com/' +
+      config.github_repo +
+      '/tree/' +
+      // If on a version, use the `version-X` branch, not `master`.
+      (config.version ? 'version-' + config.version : 'master') +
+      '/' +
+      (config.content_root || 'content') +
+      '/' +
+      page.path.replace(/\.html$/, '.md');
+  %>
+  <%- partial('partials/header', {withMobileMenu: true}) %>
+
+  <%- partial('partials/sidebar') %>
+    <div class="content">
+
+      <div class="header-content">
+        <div class="header-wrapper">
+          <div class="title-wrapper">
+            <h1 class="title-page">
+              <%- page.title %>
+            </h1>
+            <% if (page.description) { %>
+              <div class="subtitle-page">
+                <%- page.description %>
+              </div>
+            <% } %>
+            <% if (page.wip) { %>
+              <blockquote class="wip">
+                <strong>Work In Progress:</strong> This documentation is still a work in progress.
+                We apologies for the inconvenience. If you want to learn more this subject, please
+                feel free to <a href="mailto:contact@front-commerce.com">contact us</a> or to upvote
+                the issue within the <a href="<%- page.wip %>">related issue</a>.
+              </blockquote>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="document-formatting">
+          <%- page.content %>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <% var prev = findAdjacent(-1); var next = findAdjacent(1); %>
+        <div class="pagination <% if (!prev) { %>pagination--next-only<% } %> <% if (!next) { %>pagination--prev-only<% } %>">
+          <%
+            function findAdjacent (direction) {
+              var pagePaths = _.flatten(_.map(config.sidebar_categories, function(vals) { return vals; }));
+              var pages = _.map(pagePaths, function (val) { return site.pages.findOne({path: val + '.html'}); });
+              var i = pages.length
+              while (i--) {
+                if (pages[i] && pages[i].title === page.title) {
+                  break
+                }
+              }
+              return direction > 0
+                ? pages[i + 1]
+                : pages[i - 1]
+            }
+          %>
+          <% if (prev) { %>
+         
+              <a class="link primary prev" href="<%- relative_url(page.path, prev.path) %>">
+                <span class="icon-arrow-left-alt"></span>
+                <span class="subtitle-pagination">Previous</span>
+                <%- prev.title %>
+              </a>
+         
+          <% } %>
+          <% if (next) { %>
+           
+              <a class="link primary next" href="<%- relative_url(page.path, next.path) %>">
+                <span class="subtitle-pagination">Next</span>
+                <%- next.title %>
+                  <span class="icon-arrow-right-alt"></span>
+              </a>
+           
+          <% } %>
+        </div>
+      </div>
+
+      <div class="github">
+        <a class="link tertiary " href="<%- githubUrl %>" target="_blank">
+          <span class="icon-github"></span>Edit on GitHub</a>
+      </div>
+
+      <% if (page.discourseTopicId) { %>
+        <div class="discourse-comments-wrapper content-wrapper">
+          <div id='discourse-comments'></div>
+        </div>
+
+        <script type="text/javascript">
+          DiscourseEmbed = {
+            discourseUrl: 'http://forums.meteor.com/',
+            topicId: <%- page.discourseTopicId %> };
+
+          (function () {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+          })();
+        </script>
+        <% } %>
+    </div>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/smooth-scroll@12.1.5/dist/js/smooth-scroll.min.js"></script>
+
+    <script>
+      // Used by the main.js script below.
+      docsConfigRoot = '<%- config.root %>';
+    </script>
+    <script src="<%= url_for('script/main.js', { relative: true }) %>"></script>
+
+    <% if (config.apis && config.apis.docsearch) { %>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <% } %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+    <!-- search box -->
+    <% if (config.apis && config.apis.swiftype) { %>
+      <script>
+        ;(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+        _st('install','<%- config.apis.swiftype %>','2.0.0');
+      </script>
+    <% } else if (config.apis && config.apis.docsearch) { %>
+      <script>
+        ['desktop'].forEach(function(type) {
+          var search = docsearch({
+            apiKey: '<%- config.apis.docsearch.apiKey %>',
+            <%#
+              A custom deployment, directly through Algolia, requires the 'appId'.  This is useful
+              for testing, but is not necessary when using their free Docsearch service.
+            %>
+            <% if (config.apis.docsearch.appId) { %>
+              appId: '<%- config.apis.docsearch.appId %>',
+            <% } %>
+            indexName: '<%- config.apis.docsearch.indexName %>',
+            inputSelector: '#' + type + '-search-input',
+            autocompleteOptions: {
+              dropdownMenuContainer: '.wrapper-' + type + '-search-results',
+              debug: true
+            },
+            algoliaOptions: {
+              hitsPerPage: 20
+            }
+          }).autocomplete;
+
+          var sidebar = document.querySelector('.sidebar-content');
+          search.on('autocomplete:opened', function() {
+            sidebar.classList.add('searching');
+          });
+          search.on('autocomplete:closed', function() {
+            sidebar.classList.remove('searching');
+          });
+          search.on('autocomplete:updated', function() {
+            if (search.val() === '') {
+              search.autocomplete.close();
+            }
+          });
+        });
+      </script>
+    <% } %>

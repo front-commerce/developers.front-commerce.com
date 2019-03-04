@@ -1,0 +1,81 @@
+title: Front Commerce
+subtitle: Using Front Commerce
+versions:
+  - "1"
+sidebar_categories:
+  null:
+    - docs/index
+  Essentials:
+    - docs/essentials/installation
+    - docs/essentials/extend-the-theme
+    - docs/essentials/adapt-theme-to-your-brand
+    - docs/essentials/create-a-ui-component
+    - docs/essentials/add-component-to-storybook
+    - docs/essentials/create-a-business-component
+    - docs/essentials/add-a-page-client-side
+    - docs/essentials/extend-the-graphql-schema
+  Theme:
+    - docs/advanced/theme/overview
+    - docs/advanced/theme/route-dispatcher
+    - docs/advanced/theme/analytics
+    - docs/advanced/theme/translations
+  GraphQL:
+    - docs/advanced/graphql/overview
+    - docs/advanced/graphql/meta-modules
+    - docs/advanced/graphql/slim-down-resolvers-with-loaders
+  Checkout:
+    - docs/advanced/checkout/overview
+    - docs/advanced/checkout/add-custom-checkout-step
+  Server:
+    - docs/advanced/server/overview
+    - docs/advanced/server/add-http-endpoint
+  Performance:
+    - docs/advanced/performance/overview
+  Production ready:
+    - docs/advanced/production-ready/overview
+    - docs/advanced/production-ready/media-middleware
+    - docs/advanced/production-ready/multistore
+  Concepts:
+    - docs/concepts/architecture-overview
+    - docs/concepts/front-commerce-folder-structure
+    - docs/concepts/react-components-structure
+  Magento2:
+    - docs/magento2/overview
+  Reference:
+    - docs/reference/configurations
+    - docs/reference/environment-variables
+    - docs/reference/graphql-module-definition
+    - docs/reference/api
+    - docs/reference/analytics-components
+  Appendices:
+    - docs/appendices/roadmap
+    - docs/appendices/migration-guides
+    - docs/appendices/changelog
+
+github_repo: front-commerce/developers.front-commerce.com
+
+nav_links:
+  "Home":
+    url: /
+  "Docs":
+    url: /docs/
+  "Help":
+    url: /help.html
+  "License":
+    url: /license.html
+  "Blog":
+    url: /blog/
+
+community_links:
+  "Slack":
+    url: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q"
+  "Twitter":
+    url: "https://twitter.com/Front_Commerce"
+  "Contact":
+    url: "mailto:contact@front-commerce.com"
+
+url: https://developers.front-commerce.com/
+root: /
+permalink: blog/:year/:month/:day/:title/
+
+public_dir: public/

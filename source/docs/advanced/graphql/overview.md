@@ -1,0 +1,17 @@
+---
+id: overview
+title: Overview
+---
+
+In this section, you will learn advanced information about Front-Commerce's GraphQL schema and best practices to keep your code maintainable and performant.
+
+You can already find documentation for:
+
+* [Meta modules](./meta-modules.html)
+* [Slim down resolvers with loaders](./slim-down-resolvers-with-loaders.html)
+
+And we are currently writing documentation about:
+
+* Dataloaders and cache invalidation <!-- TODO link to github issue -->
+
+If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
