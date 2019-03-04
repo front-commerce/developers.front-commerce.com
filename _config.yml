@@ -33,6 +33,7 @@ sidebar_categories:
     - docs/magento2/what
   Reference:
     - docs/reference/api
+    - docs/reference/analytics-components
   Appendices:
     - docs/appendices/roadmap
     - docs/appendices/migration-guides

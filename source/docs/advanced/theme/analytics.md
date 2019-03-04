@@ -77,70 +77,58 @@ Additionally, you may wonder what name and properties you should give to your ev
 
 If you don't have an actual callback where to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle]((http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)).
 
+For instance, in Front-Commerce's core, we are using `withTrackOnMount` like this to track when a user sees their cart.
+
 ```jsx
 import withTrackOnMount from "theme/modules/Analytics/withTrackOnMount";
 
-withTrackOnMount({
-  // event name
-  event,
-  // compute events props
-  mapPropsToProperties: props => ({ ...properties })
-  // is the component ready to be tracked?
-  isResolvedFromProps: props => true || false,
-  // should we listen the mount during the lifecycle?
-  shouldMountEvent: props => true || false,
-  // should we listen the update during the lifecycle?
-  shouldUpdateEvent: (prevProps, nextProps) => true || false,
-})(BaseComponent);
+export default withTrackOnMount({
+  event: "Cart Viewed",
+  isResolvedFromProps: props => !props.loading && props.cart,
+  shouldUpdateEvent: (prevProps, nextProps) =>
+    prevProps.cart.id !== nextProps.cart.id,
+  mapPropsToProperties: props => {
+    return {
+      cart_id: props.cart.id,
+      products: props.cart.items.map((item, index) => ({
+        sku: item.sku,
+        name: item.name,
+        quantity: item.qty,
+        price: item.priceInfo.price.priceInclTax.value.amount,
+        position: index + 1
+      }))
+    };
+  }
+})(Cart)
 ```
 
-If you prefer, you can even use the `TrackOnMount` component that works with render props.
+<blockquote class="note">
+Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackOnMount) to have a detailed explanation of the API of `withTrackOnMount`.
 
-```jsx
-import React, { Fragment } from "react";
-import { TrackOnMount } from "theme/modules/Analytics/withTrackOnMount";
-
-const Component = (props) => {
-  return <Fragment>
-    <TrackOnMount
-        shouldMountEvent={props => true || false}
-        shouldUpdateEvent={(prevProps, nextProps) => true || false}
-        event={event}
-        properties={eventProperties}
-        isResolvedFromProps={true || false}
-    />
-    {/* ... your actual component code here */}
-  </Fragment>;
-}
-```
+Note that if you prefer to use render props you can refer to [`TrackOnMount`](docs/reference/analytics-components.html#TrackOnMount).
+</blockquote>
 
 ### Track page
 
 In trackings scripts, there is often a distinction between the `page` and the `event` even though a `page` event is only a subset of the `event`s.
 
-To make this distinction clear, we provide APIs in the same spirit of `withTrackOnMount` and `TrackOnMount` but for page events.
+To make this distinction clear, we provide an enhancer in the same spirit of `withTrackOnMount` but for page events: `withTrackPage`.
 
-* `withTrackPage` is an enhancer that lets you track a page each time a component is rendered and when the location has changed
+`withTrackPage` is an enhancer that lets you track a page each time a component is rendered and when the location has changed.
+
+For instance, in Front-Commerce's core
 ```jsx
 import withTrackPage from "theme/modules/Analytics/withTrackPage";
 
-withTrackPage("My Page")(BaseComponent);
-```
-* `TrackPage` is a component using the Render Props paradigm
-```jsx
-import React, { Fragment } from "react";
-import { TrackPage } from "theme/modules/Analytics/withTrackPage";
-
-const Component = (props) => {
-  return <Fragment>
-    <TrackPage title="My Page" />
-    {/* ... your actual component code here */}
-  </Fragment>;
-}
+withTrackPage("Home")(Cart)
 ```
 
 <blockquote class="note">
-Note that we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
+Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackPage) to have a detailed explanation of the API of `withTrackPage`.
+
+Note that if you prefer to use render props you can refer to [`TrackPage`](docs/reference/analytics-components.html#TrackPage).
+
+Moreover, we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
 </blockquote>
 
 ## Add an integration
@@ -230,8 +218,10 @@ export default [
 
 <blockquote class="wip">
 Currently, the integrations creation is not documented by Segment.io. We plan to add information here to help you to:
-* define an integration that will add a specific pixel on a specific page
-* understand which tracking scripts will make your life easier and which one will not in the context of an <abbr title="Single Page Application">SPA</abbr>
-* find which callback will be called within your integration depending on the event 
+<ul>
+  <li>define an integration that will add a specific pixel on a specific page</li>
+  <li>understand which tracking scripts will make your life easier and which one will not in the context of an <abbr title="Single Page Application">SPA</abbr></li>
+  <li>find which callback will be called within your integration depending on the event</li>
+</ul>
 If you need these informations right away, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
 </blockquote>
