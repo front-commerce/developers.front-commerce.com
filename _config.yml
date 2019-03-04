@@ -17,6 +17,7 @@ sidebar_categories:
   Theme:
     - docs/advanced/theme/overview
     - docs/advanced/theme/route-dispatcher
+    - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
   GraphQL:
     - docs/advanced/graphql/meta-modules
@@ -43,6 +44,8 @@ sidebar_categories:
     - docs/reference/configurations
     - docs/reference/environment-variables
     - docs/reference/graphql-module-definition
+    - docs/reference/api
+    - docs/reference/analytics-components
   Appendices:
     - docs/appendices/roadmap
     - docs/appendices/migration-guides
