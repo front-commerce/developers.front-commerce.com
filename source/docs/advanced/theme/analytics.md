@@ -3,7 +3,7 @@ id: analytics
 title: Analytics
 ---
 
-Most e-commerce website need full blown analytics to better understand their users and adapt their shops to their customers needs. But it can often be tedious to manage when you have many trackings to manage.
+Most e-commerce website need advanced analytics to better understand their users and adapt their shops to their customers needs. But it can often be tedious to maintain when you have many trackings to manage.
 
 In Front-Commerce, we use [`analytics.js`](https://segment.com/docs/sources/website/analytics.js/). It is a library created by [Segment.io](https://segment.com/) that aims at decoupling the tracking settings from the event.
 
@@ -13,9 +13,9 @@ If we represent how it works, it would look like this:
 ![Schema explaining the concepts behind analytics.js](./assets/analytics.svg)
 </figure>
 
-Through your React application, you track events thanks to methods like `trackEvent` or `trackPage`. Then, the event is dispatched to all the integrations registered in your application.
+Across your React application, you can track events using functions such as `trackEvent` or `trackPage`. Then, the event is dispatched to all the relevant integrations registered in your application.
 
-This means that once you have correctly configurer your events in your React Components, adding new trackings can be really fast.
+This means that once you have correctly configured events in your React Components, adding new trackings can be really straightforward.
 
 ## Track an event
 
@@ -25,7 +25,7 @@ Most of the e-commerce related events are already implemented within Front-Comme
 
 To do so, you will need to call the method `trackEvent` from `web/utils/analytics`.
 
-For instance, let's say that you are building a grocery store and that you have created Recipe pages that display displays at the end the list of ingredients needed for the current recipe. Below this list, you have a created a button that adds all the ingredients to the cart of the user, and you want to know if this button is useful and if the users click on it.
+For instance, let's say that you are building a grocery store and that you have created Recipe pages that display a list of ingredients needed for the current recipe. Below this list, you have a created a button that adds all the ingredients to the cart of the user, and you want to know if this button is useful and if users click on it.
 
 The button would likely be a component that would look like this:
 
@@ -69,7 +69,7 @@ const AddIngredientsToCart = ({addToCart, ingredients}) => {
 export default AddIngredientsToCart;
 ```
 
-This `trackEvent` method is actually a short cut that lets you call the `analytics.track` method of `analytics.js`. It uses the exact same API. See [the document] for more detailed information.
+This `trackEvent` method is actually a shortcut that lets you call the `analytics.track` method of `analytics.js`. It uses the exact same API. See [the official documentation](https://segment.com/docs/spec/track/) for more detailed information.
 
 Additionally, you may wonder what name and properties you should give to your events. It depends on the integrations you are using and if you want to create a new event or use Semantic ones (supported events within Segment.io). To learn more about this, please refere to the [Semantic Events documentation](https://segment.com/docs/spec/semantic/).
 
@@ -140,7 +140,7 @@ const Component = (props) => {
 ```
 
 <blockquote class="note">
-Note that we didn't talk about a `trackPage` method here. This is because a `Page` is tighlty coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
+Note that we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
 </blockquote>
 
 ## Add an integration
