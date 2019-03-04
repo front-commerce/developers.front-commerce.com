@@ -13,7 +13,7 @@ Technically, Front-Commerce’s server is based on [Express](http://expressjs.co
 
 ## What is a module?
 
-A module is declared using the `module` entry from the [`.front-commerce.js`](#TODO) file. Each module can contain client code (See [Extend the theme](/docs/essentials/extend-the-theme.html)), and server code (current guide).
+A module is declared using the [`modules` entry from the `.front-commerce.js` file](/docs/reference/front-commerce-js.html#modules). Each module can contain client code (See [Extend the theme](/docs/essentials/extend-the-theme.html)), and server code (current guide).
 
 Once the module is declared, Front-Commerce will automatically add your custom server entrypoints following your module configuration in `my-module/server/module.config.js`.
 

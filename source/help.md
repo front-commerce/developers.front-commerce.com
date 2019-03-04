@@ -24,7 +24,7 @@ questions about this documentation and the project
 No.
 
 As a bootstrapped company with a small team, we do not think we could be able to
-achieve [our vision](TODO) in a sustainable way with an open source
+achieve our vision <!-- TODO Link to « our vision » page -->in a sustainable way with an open source
 business model yet.
 
 That being said, we are open sourcing part of our stack and contributing to open
@@ -51,7 +51,7 @@ endpoints and custom theme.
     features
 5.  Customize your Front-Commerce theme by extending the base theme
 
-More information in our [getting started section](TODO).
+More information in our [getting started section](/docs/essentials/installation.html).
 
 ### What benefits should I expect?
 

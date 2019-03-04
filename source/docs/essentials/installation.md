@@ -106,7 +106,7 @@ For instance, to interact with Magento2 you will need to configure a few things:
   to enable cache invalidation from Magento2
 
 We invite you to dig into the other configurations and tweak them if you wish.
-See [our documentation](#TODO) for further information.
+See [our documentation](/docs/reference/environment-variables.html#Remote-services-configuration) for further information.
 
 #### Configure stores
 
@@ -128,7 +128,7 @@ module.exports = {
 };
 ```
 
-<!-- TODO Add a link to the store config documentation -->
+See [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for further information.
 
 <blockquote class="info">
 **Magento:** when using Front-Commerce with Magento, store codes
@@ -140,8 +140,7 @@ must match [Magento store view code](https://docs.magento.com/m2/ee/user_guide/s
 To enable caching locally, you can configure it in `src/config/caching.js`. For now
 only redis is supported, which requires to have a redis instance to connect to.
 
-See [our caching section](#TODO) to know more about caching in the GraphQL
-middleware.
+<!-- TODO See [our caching section](#TODO) to know more about caching in the GraphQL middleware. -->
 
 ### Launch the application
 
@@ -181,5 +180,5 @@ the existing components.
 
 <blockquote class="tip">
 You can configure which stories to display in your styleguide by setting the
-[`styleguidePaths` key in your `.front-commerce.js`](#TODO) file. Its value should be a list of regex (e.g: `[/.*.story.js$/];`) that will be matched against your stories paths.
+[`styleguidePaths` key in your `.front-commerce.js` file](/docs/reference/front-commerce-js.html#styleguidePaths). Its value should be a list of regexes (e.g: `[/.*.story.js$/];`) that will be matched against your stories paths.
 </blockquote>
