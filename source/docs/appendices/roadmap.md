@@ -11,9 +11,20 @@ So let's have a look at what is coming in Front-Commerce.
 But keep in mind that our main strength is our flexibility. We do take into account our clients needs and adapt our Roadmap to match theirs. If you have any particular needs, feel free to [contact us](mailto:contact@front-commerce.com) and we will see what we can do to help you :)
 </blockquote>
 
-## 1.0: Partners Ready
+## Release process
 
-Even though our solution works, is in production and already has its early-adopters, the goal of this release is to support a broader range of development environments and avoid future breaking changes. This mean that we will focus on:
+We aim at releasing often and follow [Semantic Versioning](https://semver.org) to clearly communicate our advancements to developers. We plan to document each migration process (changelog, release notes and documentation updates) and add deprecation warnings while keeping backwards compatibility to keep upgrades as seamless as possible.
+
+Each minor release will contain at least one <abbr title="release candidate">`rc`</abbr> version, so early adopters could give it a try and provide us feedbacks as soon as possible.
+
+It is up to each team / project to decide wether they prefer to follow our incremental releases or update in bigger chunks.
+
+With close partners, we found agreements to **migrate some projects as soon as a new Front-Commerce `rc` version is released** so we could ensure in real-world scenarii that we are providing a seamless migration path and detect potential issues.
+
+## 1.0: Partners Ready (in progress)
+
+Even though our solution works, is in production and already has its early-adopters, the goal of this release is to support a broader range of development environments and avoid future breaking changes.
+Through several `alpha` and `rc` releases we will focus on:
 
 * Documentation
 * Update the libraries and tools to their latest versions (React 16.8, Magento2.3, etc.)
@@ -23,7 +34,7 @@ Even though our solution works, is in production and already has its early-adopt
 
 ## 1.1: Backport features from our dogfooding
 
-We've been hard at work integrating Front-Commerce for our own customers. We've identified improvements from those shops that could make their way back into the main Front-Commerce codebase.
+We've been hard at work integrating Front-Commerce for our own customers while incubating the product within [Occitech](https://www.occitech.fr). We've identified improvements from those shops that could make their way back into the main Front-Commerce codebase.
 
 * Improve webperf (improve images loading, find a lightweight alternative to analytics.js, ...)
 * Improve a11y
@@ -33,7 +44,7 @@ We've been hard at work integrating Front-Commerce for our own customers. We've 
 
 ## 1.2: Add missing features requested by Front-Commerce integrators
 
-Front-Commerce should now be stable enough to use. But new integrators and new shops need their own set of features. So let's make it as seamless as possible and add those features.
+Front-Commerce already covers a wide range of features for the most common e-commerce use cases. But new integrators and new shops need their own set of features. So let's make it as seamless as possible and add those features.
 
 * Guest checkout
 * Bundle products
@@ -42,6 +53,7 @@ Front-Commerce should now be stable enough to use. But new integrators and new s
 
 <blockquote class="note">
 **Important:** this list is to be updated depending on popular requests and priorities.
+See and discuss [Feature requests on our issue tracker](https://gitlab.com/front-commerce/front-commerce/issues?label_name%5B%5D=Feature+request). We are eager to receive your feedback!
 </blockquote>
 
 ## 1.3: Demonstrate that Front-Commerce is an API Gateway
@@ -58,7 +70,7 @@ Definitely not a final list, be we're eager to try some integrations with:
 * [Akeneo](https://www.akeneo.com/)
 * [Marello](https://www.marello.com/)
 
-This iteration should also be a starting point to make our schema more [Demand oriented](https://principledgraphql.com/agility#4-abstract-demand-oriented-schema).
+This iteration should also be a starting point to make our schema more [Demand oriented](https://principledgraphql.com/agility#4-abstract-demand-oriented-schema) and pave the way towards **2.0**.
 
 ## To infinity, and beyond!
 
