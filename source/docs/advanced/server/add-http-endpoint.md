@@ -3,7 +3,7 @@ id: add-http-endpoint
 title: Add custom endpoints to your server
 ---
 
-The main entrypoints of a Front-Commerce application are frontend URLs displaying your actual website and the GraphQL schema. But in some specific cases, you may want to extend your Node.js server (BFF) with additional endpoints.
+The main entrypoints of a Front-Commerce application are frontend URLs displaying your actual website and the GraphQL schema. But in some specific cases, you may want to extend your Node.js server (<abbr title="Backend For Frontend">BFF</abbr>) with additional endpoints.
 
 For instance, this can be the case when you send a link within an email to one of your customers. If an action should be triggered when the user clicks on it, you don't want to add failure opportunities by displaying a webpage which will then trigger a GraphQL mutation. You want to trigger the action directly, and then redirect the user to an actual page.
 
@@ -104,4 +104,4 @@ module.exports = {
 
 Indeed, if you don't set this key to `true`, Front-Commerce will check that you don't setup an invalid path.
 
-For instance, you don't want Front-Commerce to check this if your application is a migration from an older website. Indeed, in this case, you will want to dome some SEO by keeping your old URLs, at least by setting redirections for the ones that don't make sense in your new website. The middleware will let you add this redirection before rendering any page of your website.
+For instance, if your application is a migration from an older website, you might want to intercept all your requests to redirect old URLs to new ones. In `express`, you can do this by creating a middleware. But this means that all the URLs need to pass by this middleware. This is what `__dangerouslyOverrideBasePathChecks` stands for: it lets you define the path you want (`/` in this case) even if it seems dangerous. Once it is set, the middleware can add the redirections for the relevant URLs.
