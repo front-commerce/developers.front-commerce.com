@@ -66,7 +66,7 @@ storiesOf("pages.Recipes", module).add("default", () => {
 });
 ```
   <blockquote class="note">
-  For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to <a href="#TODO">Add a component to Storybook</a>.
+  For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to <a href="add-component-to-storybook.html">Add a component to your Design System</a>.
   </blockquote>
 
 ### Map the URL to the page component
