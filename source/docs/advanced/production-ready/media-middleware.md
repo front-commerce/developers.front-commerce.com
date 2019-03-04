@@ -9,8 +9,10 @@ To solve this issue, Front-Commerce has what we call a media middleware. It is a
 
 <blockquote class="note">
 This method has two advantages:
-* you no longer need to expose your backend since it will be the Front-Commerce server that will fetch the image on your backend server
-* you have better performance with correctly cached and sized images
+<ul>
+<li>you no longer need to expose your backend since it will be the Front-Commerce server that will fetch the image on your backend server</li>
+<li>you have better performance with correctly cached and sized images</li>
+</ul>
 </blockquote>
 
 ## How to configure it?
