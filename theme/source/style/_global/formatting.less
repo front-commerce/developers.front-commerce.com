@@ -105,15 +105,6 @@
     }
   }
 
-  blockquote {
-    border-left: 2px solid @color-primary;
-    color: @color-dark;
-		margin: @spacing 0;
-    padding: .75em 20px .75em 30px;
-
-    p:only-of-type { margin: 0; }
-  }
-
   ol,
 	ul {
 		.type-secondary;
@@ -207,4 +198,26 @@
 			margin: 0;
 		}
   }
+}
+
+.document-formatting blockquote, .content blockquote {
+	@spacing: 1.5em;
+
+	border-left: 3px solid @color-primary;
+	border-right: 3px solid @color-primary;
+	color: @color-dark;
+	margin: @spacing 0;
+	padding: .75em 20px .75em 30px;
+
+	&.wip {
+		border-color: @color-warning;
+	}
+
+	p:only-of-type {
+		margin: 0;
+	}
+
+	a {
+		color: @color-primary;
+	}
 }
