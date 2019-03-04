@@ -22,7 +22,7 @@ way to group smaller modules together.
 module!**
 
 Let’s illustrate meta module by analyzing how
-[Front-Commerce’s Magento2 integration](#TODO) can be registered in your
+[Front-Commerce’s Magento2 integration](/docs/magento2/overview.html) can be registered in your
 project.
 
 If your Front-Commerce application is aimed at being a PWA frontend for a
