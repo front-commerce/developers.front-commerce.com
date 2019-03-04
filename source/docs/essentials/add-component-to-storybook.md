@@ -29,74 +29,17 @@ more about Storybook, please refer to
 
 <!-- TODO For more detailed information about Front-Commerce specific configurations of Storybook, please refer to TODO -->
 
-## Display only the relevant stories to your Design System
-
-As you can see in the previous screenshot or by running `npm run styleguide`
-in your project, Front-Commerce comes with a lot of stories. This is what
-serves as documentation Front-Commerce base theme's core components.
-
-However, you might not use each one of them in your final theme, and some
-stories might become irrelevant in your design system. To chose which one to
-display, you need to update the `.frontcommerce.js` configuration file, and
-add the key `styleguidePaths`.
-
-```diff
-module.exports = {
-  name: "Front Commerce Demo",
-  url: "https://demo.front-commerce.com",
-  modules: ["./my-module"],
-  serverModules: [
-    { name: "FrontCommerceCore", path: "./modules/front-commerce-core" },
-    { name: "Magento2", path: "./modules/magento2" },
-    { name: "SampleBlog", path: "./model/blog" }
--  ]
-+  ],
-+  styleguidePaths: [
-+    /.?\/components\/atoms\/.*.story.js$/,
-+    /.?\/components\/molecules\/.*.story.js$/,
-+  ]
-};
-```
-
-The value is an array containing the regex that matches the stories you want
-to use in your styleguide. In this example, we only want to display atoms and
-molecules from our UI Components. But please remember that this will fetch
-the stories within all the `web/theme` folder within the `modules` defined in
-`.front-commerce.js`.
-
-Hence, if you don't want to have an atom that is defined within
-Front-Commerce core, but still want the other atoms, you will need to be more
-specific within your `styleguidePaths` array. For instance, if you only want
-the `Typography` related stories, and the `Button` related stories, you will
-need to write like this:
-
-```diff
-  styleguidePaths: [
--    /.?\/components\/atoms\/.*.story.js$/,
-+    /.?\/components\/atoms\/Button\/.*.story.js$/,
-+    /.?\/components\/atoms\/Typography\/.*.story.js$/,
-    /.?\/components\/molecules\/.*.story.js$/,
-  ]
-```
-
-Finally, if you don't define the `styleguidePaths` key in your
-`.front-commerce.js` file, each story found in the `web/theme` folder will be
-used (the value used for `styleguidePaths` is `[ /.*.story.js$/ ]`).
-
 ## Add your own story
 
-Once you've correctly configured your `styleguidePaths`, you can add your new
-stories.
-
-The goal here is to create a new file, that will document how to use a
-component and will reference each edge cases for this component. Each case will
-be what we call a `story`.
+In order to add your own story, you need to create a new file, that will
+document how to use a component and will reference each edge cases for this
+component. Each case will be what we call a `story`.
 
 As explained in
 [Storybook's documentation](https://storybook.js.org/basics/writing-stories/):
 
 <blockquote class="cite">
-Technically, a story is a function that returns a React element".
+Technically, a story is a function that returns a React element.
 </blockquote>
 
 To do this, you will create a `.story.js` file next to your component. In this
@@ -138,8 +81,7 @@ of the `IllustratedContent` component.
 <blockquote class="note">
 As you might have noticed, once you have added the above `IllustratedContent`
 story, if you edit the story or the component itself, it will update
-automatically in Storybook (this feature is called hot reloading). This is
-awesome when you need to develop your UI components.
+automatically in Storybook (this feature is called hot reloading). It greatly improves the experience of authoring UI components.
 </blockquote>
 
 For now, we've registered only one story for the `IllustratedContent`. But you can
@@ -217,7 +159,7 @@ routing and data fetching in some of your components.
 
 But it is your lucky day! With Front-Commerce's components, we have had the same
 issues and have created helpers that should make your life easier when
-documenting thos complex components.
+documenting those complex components.
 
 These helpers are located in
 [`node_modules/front-commerce/src/web/storybook/addons`](https://gitlab.com/front-commerce/front-commerce/tree/master/src/web/storybook/addons) and you can import them by
@@ -233,3 +175,57 @@ languages of your shop
 your application
 
 <!-- TODO document usage of each of these helpers -->
+
+## Display only the relevant stories to your Design System
+
+If you run the styleguide for your own project, you may notice that
+Front-Commerce comes with a lot of stories. This is what serves as
+documentation Front-Commerce base theme's core components.
+
+However, you might not use each one of them in your final theme, and some
+stories might become irrelevant in your design system. To chose which one to
+display, you need to update the `.frontcommerce.js` configuration file, and
+add the key `styleguidePaths`.
+
+```diff
+module.exports = {
+  name: "Front Commerce Demo",
+  url: "https://demo.front-commerce.com",
+  modules: ["./my-module"],
+  serverModules: [
+    { name: "FrontCommerceCore", path: "./modules/front-commerce-core" },
+    { name: "Magento2", path: "./modules/magento2" },
+    { name: "SampleBlog", path: "./model/blog" }
+-  ]
++  ],
++  styleguidePaths: [
++    /.?\/components\/atoms\/.*.story.js$/,
++    /.?\/components\/molecules\/.*.story.js$/,
++  ]
+};
+```
+
+The value is an array containing the regex that matches the stories you want
+to use in your styleguide. In this example, we only want to display atoms and
+molecules from our UI Components. But please remember that this will fetch
+the stories within all the `web/theme` folder within the `modules` defined in
+`.front-commerce.js`.
+
+Hence, if you don't want to have an atom that is defined within
+Front-Commerce core, but still want the other atoms, you will need to be more
+specific within your `styleguidePaths` array. For instance, if you only want
+the `Typography` related stories, and the `Button` related stories, you will
+need to write like this:
+
+```diff
+  styleguidePaths: [
+-    /.?\/components\/atoms\/.*.story.js$/,
++    /.?\/components\/atoms\/Button\/.*.story.js$/,
++    /.?\/components\/atoms\/Typography\/.*.story.js$/,
+    /.?\/components\/molecules\/.*.story.js$/,
+  ]
+```
+
+Finally, if you don't define the `styleguidePaths` key in your
+`.front-commerce.js` file, each story found in the `web/theme` folder will be
+used (the value used for `styleguidePaths` is `[ /.*.story.js$/ ]`).
