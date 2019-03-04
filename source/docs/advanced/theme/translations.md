@@ -3,7 +3,7 @@ id: translations
 title: Translate your application
 ---
 
-Big e-commerce websites often need to translate their content in several languages to make sure that they reach a broader range of customers.
+International e-commerce websites often need to translate their UI in several languages to make sure that they reach a broader range of customers.
 
 In this documentation, we will see how this works for static content in your application.
 
@@ -11,7 +11,7 @@ In this documentation, we will see how this works for static content in your app
 If you want to configure your application to support multiple languages, please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html).
 </blockquote>
 
-Front-Commerce manages your translations by using [`react-intl`](https://github.com/yahoo/react-intl), a standard in the React ecosystem. This library works by transforming your static values in React Components. These components will then fetch your translations and display them in your application.
+Front-Commerce manages your translations by using [`react-intl`](https://github.com/yahoo/react-intl), a standard library in the React ecosystem. This library works by transforming your static values in React Components. These components will then fetch your translations and display them in your application.
 
 ## Declare translations in your application
 
@@ -48,7 +48,7 @@ For instance, let's see how to transform your values in react-intl Components.
 + />
 ```
     <blockquote class="note">
-    However in this particular we have abstracted this in Front-Commerce with the [`theme/components/atoms/Price`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/components/atoms/Typography/Price) component.
+    However, for this particular use case we have abstracted this in Front-Commerce with the [`theme/components/atoms/Price`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/components/atoms/Typography/Price) component (and its variants: `ProductPrice`, `PriceOrFree`). We recommend you to use it instead, so you could benefit from better integration with its related GraphQL Type.
     </blockquote>
 * [and many more](https://github.com/yahoo/react-intl/wiki/Components)
 
@@ -62,15 +62,15 @@ For instance, this is the case when you want to add some label attributes to you
 <span class="icon" aria-label="Icon title displayed for screen readers" />
 ```
 
-Fortunatly, this is correctly handled by react-intl if you use [`defineMessages`](https://github.com/yahoo/react-intl/wiki/API#definemessages) combined with [`injectIntl`](https://github.com/yahoo/react-intl/wiki/API#injection-api).
+Fortunately, this is correctly handled by react-intl if you use [`defineMessages`](https://github.com/yahoo/react-intl/wiki/API#definemessages) combined with [`injectIntl`](https://github.com/yahoo/react-intl/wiki/API#injection-api).
 
 <blockquote class="wip">
 Please refer to [react-intl documentation](https://github.com/yahoo/react-intl/wiki/API#injection-api) for more information about these two methods. We plan to add an example here in the future but didn't have time to document it yet.
 </blockquote>
 
-## Setup your translations what's in your components
+## Translate what's in your components
 
-Now that you have defined what should be translated in your application, you actually need to translate your application. This is doable in two steps:
+Now that you have defined what should be translated in your application, you actually need to translate your application. This is a two-step process:
 
 1. Run the following script that will fetch all your translatable strings in your application and gather them in JSON files located in `my-module/translations/locales/[lang].json`
 ```sh
@@ -90,4 +90,4 @@ This task can be daunting at first, but it will make your life easier in the fut
 
 This is done on the GraphQL side. The principle is that when a user is connected to Front-Commerce, they will be assigned a `storeViewCode` in their session (see [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details).
 
-This code will then be used by your GraphQL loaders to retreive the correct content from your backend. Learn more about [GraphQL loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html).
+This code will then be used by your GraphQL loaders to retrieve the correct content from your backend. Learn more about [GraphQL loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html).
