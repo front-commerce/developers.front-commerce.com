@@ -38,6 +38,8 @@ sidebar_categories:
   Magento2:
     - docs/magento2/what
   Reference:
+    - docs/reference/configurations
+    - docs/reference/environment-variables
     - docs/reference/graphql-module-definition
   Appendices:
     - docs/appendices/roadmap
