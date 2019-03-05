@@ -6,6 +6,7 @@
     "version": "3.8.0"
   },
   "devDependencies": {
+    "broken-link-checker": "^0.7.8",
     "hexo": "3.8.0",
     "hexo-browsersync": "0.3.0",
     "hexo-prism-plus": "1.0.0",
@@ -18,6 +19,8 @@
     "start": "npm run build && hexo --config _multiconfig.yml -p 4444 server",
     "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate",
     "clean": "hexo clean",
-    "test": "npm run clean; npm run build"
+    "test": "npm run clean; npm run build",
+    "blc:prod": "blc --exclude 4000 --exclude 9001 --filter-level 2 https://developers.front-commerce.com -ro",
+    "blc:local": "blc --exclude 4000 --exclude 9001 --filter-level 2 http://localhost:4444 -ro"
   }
 }
