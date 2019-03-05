@@ -35,6 +35,7 @@ sidebar_categories:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
     - docs/advanced/production-ready/multistore
+    - docs/advanced/production-ready/logging
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
