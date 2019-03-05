@@ -208,8 +208,8 @@ module.exports = {
 The value is an array containing the regex that matches the stories you want
 to use in your styleguide. In this example, we only want to display atoms and
 molecules from our UI Components. But please remember that this will fetch
-the stories within all the `web/theme` folder within the [`modules`](/docs/reference/front-commerce-js.html#modules) defined in
-`.front-commerce.js`.
+the stories within all the `web/theme` folder from [`modules` defined in
+`.front-commerce.js`](/docs/reference/front-commerce-js.html#modules).
 
 Hence, if you don't want to have an atom that is defined within
 Front-Commerce core, but still want the other atoms, you will need to be more
@@ -226,6 +226,4 @@ need to write like this:
   ]
 ```
 
-Finally, if you don't define the [`styleguidePaths`](/docs/reference/front-commerce-js.html#styleguidePaths) key in your
-`.front-commerce.js` file, each story found in the `web/theme` folder will be
-used.
+Finally, if you don't define the [`styleguidePaths` key in your `.front-commerce.js` file](/docs/reference/front-commerce-js.html#styleguidePaths), each story found in the `web/theme` folder will be used.
