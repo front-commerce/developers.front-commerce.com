@@ -52,7 +52,7 @@ to get started with it.
 
 **This is the recommended way to start a new Front-Commerce project.**
 
-Front-Commerce skeleton repository provides a quick way to get started with
+[Front-Commerce’s skeleton repository](https://gitlab.com/front-commerce/front-commerce-skeleton) provides a quick way to get started with
 Front-Commerce with sane default configurations.
 
 ### Get the code
