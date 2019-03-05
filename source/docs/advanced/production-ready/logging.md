@@ -30,7 +30,7 @@ logHandler.getLogger().error(e);
 
 # Configure the loggers
 
-But a logger alone does nothing. You need to configure what to do with message reported by the different loggers. This is done thanks to the `my-module/config/logging.js` file.
+Without configuration, a logger does nothing. You need to configure what to do with the message reported by the different loggers. This is done in to the `my-module/config/logging.js` file.
 
 ```js
 // my-module/config/logging.js
@@ -56,7 +56,7 @@ module.exports = {
 };
 ```
 
-In this example, we've told the logging system to output every message in three files `server.log`, `server.log`, `access.log` that will be accessible in the `logs` folder of your application.
+In this example, we've told the logging system to output every message in three files `server.log`, `client.log`, `access.log` that will be accessible in the `logs/` folder of your application.
 
 But how does this work?
 
@@ -68,7 +68,7 @@ This means that for each logger, each message will be sent using these transport
 * `type: "sentry"`: it will send the message to a sentry instance. Sentry is a tool that will make it easier to triage errors and assign some of your team members to their resolution.  
   The only option available is `options` which is the object given to the transport lib [winston-sentry-log](https://github.com/franciscofsales/winston-sentry-log#readme)
 
-There will be most likely more transport configurations in the future, but more likely [we will add a feature to add your own custom transport](https://gitlab.com/front-commerce/front-commerce/issues/104).
+There will be most likely more transport configurations in the future, but more likely [we will add a feature to add your own custom transport (#104)](https://gitlab.com/front-commerce/front-commerce/issues/104).
 
 # Add a new logger
 
@@ -98,7 +98,7 @@ By doing this, you've configured your logger. But you still need to use it by im
 ```js
 import loggingService from "server/express/loggingService";
 
-const logger = loggingService.createLogger("loggerName");
+const logger = loggingService.createLogger("myLoggerName");
 ```
 
 This will then be used just like the [`winston` API](https://github.com/winstonjs/winston#using-logging-levels): `logger.log(type, message, data)`.
