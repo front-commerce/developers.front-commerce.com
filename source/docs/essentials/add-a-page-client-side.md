@@ -47,7 +47,7 @@ const Recipes = () => <div>
 export default Recipes;
 ```
   <blockquote class="note">
-  Note that there is a `RecipesList` component here. It is in fact a business component that you can create by refering to <a href="#TODO">Add a business component</a>.
+  Note that there is a `RecipesList` component here. It is in fact a business component that you can create by refering to [Create a business component](/docs/essentials/create-a-business-component.html).
   </blockquote>
 * `my-module/web/theme/pages/Recipes/index.js`: will proxy the `Recipes.js` file in order to be able to do imports on the folder directly. See [this blog post](http://bradfrost.com/blog/post/this-or-that-component-names-index-js-or-component-js/) for more context about this pattern.
 <!-- TODO add comment about code splitting and link to our documentation -->

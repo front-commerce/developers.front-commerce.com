@@ -68,8 +68,8 @@ your application yet. You need to register it.
 
 ## Register the module in the application
 
-Front-Commerce allows you to manage your modules in the `serverModules` key of
-the [`.frontcommerce.js`](#TODO) file located in your project’s root.
+Front-Commerce allows you to manage your modules in the [`serverModules` key of
+the `.frontcommerce.js` file](/docs/reference/front-commerce-js.html#serverModules) located in your project’s root.
 
 Let’s add a `ClicksCounters` GraphQL module by adding it to the existing list:
 

@@ -185,7 +185,7 @@ documentation Front-Commerce base theme's core components.
 However, you might not use each one of them in your final theme, and some
 stories might become irrelevant in your design system. To chose which one to
 display, you need to update the `.frontcommerce.js` configuration file, and
-add the key `styleguidePaths`.
+add the key [`styleguidePaths`](/docs/reference/front-commerce-js.html#styleguidePaths).
 
 ```diff
 module.exports = {
@@ -208,12 +208,12 @@ module.exports = {
 The value is an array containing the regex that matches the stories you want
 to use in your styleguide. In this example, we only want to display atoms and
 molecules from our UI Components. But please remember that this will fetch
-the stories within all the `web/theme` folder within the `modules` defined in
-`.front-commerce.js`.
+the stories within all the `web/theme` folder from [`modules` defined in
+`.front-commerce.js`](/docs/reference/front-commerce-js.html#modules).
 
 Hence, if you don't want to have an atom that is defined within
 Front-Commerce core, but still want the other atoms, you will need to be more
-specific within your `styleguidePaths` array. For instance, if you only want
+specific within your [`styleguidePaths`](/docs/reference/front-commerce-js.html#styleguidePaths) array. For instance, if you only want
 the `Typography` related stories, and the `Button` related stories, you will
 need to write like this:
 
@@ -226,6 +226,4 @@ need to write like this:
   ]
 ```
 
-Finally, if you don't define the `styleguidePaths` key in your
-`.front-commerce.js` file, each story found in the `web/theme` folder will be
-used (the value used for `styleguidePaths` is `[ /.*.story.js$/ ]`).
+Finally, if you don't define the [`styleguidePaths` key in your `.front-commerce.js` file](/docs/reference/front-commerce-js.html#styleguidePaths), each story found in the `web/theme` folder will be used.

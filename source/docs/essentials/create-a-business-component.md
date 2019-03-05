@@ -9,7 +9,7 @@ components available in the `web/theme/modules` and `web/theme/pages` folders.
 
 <blockquote class="note">
 If you feel the need to understand why we went for this organization, feel
-free to refer to [React components structure](#TODO)
+free to refer to [React components structure](/docs/concepts/react-components-structure.html)
 first.
 </blockquote>
 
@@ -217,7 +217,7 @@ storiesOf("modules.StoreLocator", module).add("default", () => {
 ```
     <blockquote class="note">
     We won't focus on the story in this guide. But you can refer to the
-    [Storybook guide](#TODO) to learn how to add any kind of stories
+    [Storybook guide](/docs/essentials/add-component-to-storybook.html) to learn how to add any kind of stories
     to your Storybook.
     </blockquote>
 

@@ -42,7 +42,7 @@ my-module
     └── theme
 ```
 
-Then, we need to tell Front-Commerce that this module exists in your [`.frontcommerce.js`](#TODO) file. If the module has been created at the root of your project, it would look like this:
+Then, we need to tell Front-Commerce that this module exists in your [`.frontcommerce.js`](/docs/reference/front-commerce-js.html) file. If the module has been created at the root of your project, it would look like this:
 
 ```diff
 module.exports = {
@@ -66,7 +66,7 @@ Let's add the description of a `Product` to a `ProductItem` as an example of ove
 The original file is: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/theme/modules/ProductView/ProductItem/ProductItem.js)
 
 <blockquote class="info">
-Please refer to the [Folder structure documentation page](#TODO) to get a better
+Please refer to the [Front-Commerce’s folder structure documentation page](/docs/concepts/front-commerce-folder-structure.html) to get a better
 understanding of how components are organized in the base theme.
 </blockquote>
 

@@ -9,7 +9,7 @@ components available in the `theme/modules` and `theme/pages` folders.
 
 <blockquote class="info">
 If you feel the need to understand why we went for this organization, feel
-free to refer to [React components structure](#TODO)
+free to refer to [React components structure](/docs/concepts/react-components-structure.html)
 first.
 </blockquote>
 
@@ -64,7 +64,7 @@ First, let's split the mockup in several UI components following the [Atomic Des
   regardless of the device size.
 
 As you can see, each UI component will take place in the `web/theme/components` folder.
-To better understand why, please refer to our [React component structure](#TODO) documentation.
+To better understand why, please refer to our [React components structure](/docs/concepts/react-components-structure.html) documentation.
 
 <blockquote class="note">
 If you have trouble splitting your mockups, you can refer to

@@ -84,7 +84,7 @@ layout: index
         <li>SEO: clean urls, redirections, sitemaps, meta information and rich data</li>
       </ul>
 
-      <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=I’m interested!">
+      <a class="link learn-more button" href="/docs/magento2/overview.html">
         About our Magento 2 integration <span class="icon-arrow-right-alt"></span>
       </a>
     </div>
@@ -109,7 +109,7 @@ layout: index
         <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
       </ul>
 
-      <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=I’m interested!">
+      <a class="link learn-more button" href="/docs/appendices/roadmap.html">
         Take a look at our Roadmap <span class="icon-arrow-right-alt"></span>
       </a>
     </div>
@@ -165,7 +165,7 @@ layout: index
   <h2>Still interested? Any questions?</h2>
 
   <p>If you are interested with what you’ve read or things are still not clear, do not hesitate to reach us! We could schedule a call or a demo so you could evaluate the product in a more concrete way.</p>
-  
+
   <div class="center">
     <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’m interested!">Contact the team</a>
   </div>
