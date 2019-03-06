@@ -62,6 +62,9 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 
 - `FRONT_COMMERCE_MAGENTO_MODULE_VERSION`: the version of the Front-Commerce module installed on your Magento
 - `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the URL of the magento (ex: http://magento2.local)
+<blockquote class="warning">
+**WARNING:** due to the way [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158), using an URL containing basic authentication credentials (such as http://user:password@magento2.local) is not possible yet. It would prevent users to login.
+</blockquote>
 - Integration tokens configured in Magento’s « System > Extensions > Integrations » admin page:
     - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
     - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
