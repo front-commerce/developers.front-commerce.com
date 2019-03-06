@@ -209,7 +209,7 @@ module.exports = {
         return loaders.Message.load(`Hello ${name}`);
       }
     }
-  }
+  },
   contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
     return {
       Message: MessageLoader(makeDataLoader)(config.apiBaseUrl)
