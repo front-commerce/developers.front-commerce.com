@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Atoms refactoring ([#178](https://gitlab.com/front-commerce/front-commerce/issues/178))
 
-We are in the process of rewriting our CSS classes to make it easier for new external contributors to dive into Front-Commerce. However this is a lot of work because of the many features already implemented in Front-Commerce. Thus, we've splitted this in 5 smaller iterations (see ([#97](https://gitlab.com/front-commerce/front-commerce/issues/97)) for more details).
+One of the goals of `1.0.0` is to rewrite our CSS classes to make it easier for new external contributors to dive into Front-Commerce. However, this is a lot of work because of the many features already implemented in Front-Commerce. Thus, we've splitted this in 5 smaller iterations (see ([#97](https://gitlab.com/front-commerce/front-commerce/issues/97)) for more details). This release is the first step toward this goal.
 
 This means that:
 
@@ -27,7 +27,7 @@ On your part, the changes that will affect you the most are about the following 
     Moreover, you can now update only the components that handle the markup of a ResizedImage without overriding the core component. Please refer to `Image`, `ImageLoading` and `ImageNotFound` in `theme/components/atoms/ResizedImage` folder.
 * `<Input>`: changed input classes
 
-You should also check that if you override some of the other components
+You should also check that if you have overriden some of the other components.
 
 ### Variant properties
 
