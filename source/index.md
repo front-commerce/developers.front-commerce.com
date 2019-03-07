@@ -13,8 +13,8 @@ layout: index
     <li class="show-mobile"><a class="link button"  href="/help.html">Help</a></li>
     <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
     <li><a class="link button"  href="/blog">Blog</a></li>
-    <li><a class="link button"  href="">Demo store</a></li>
-    <li><a class="link button"  href="">Styleguide</a></li>
+    <li><a class="link button"  href="https://demo.front-commerce.com/">Demo store</a></li>
+    <li><a class="link button"  href="https://styleguide.front-commerce.com/">Styleguide</a></li>
   </ul>
 </section>
 
