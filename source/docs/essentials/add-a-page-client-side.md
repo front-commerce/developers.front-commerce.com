@@ -97,7 +97,7 @@ to the `/recipes` URL.
 🎉
 
 <blockquote class="warning">
-    **Warning:** If several modules are registered in your application and several of them define the same route, the page of the first module in `.frontcommerce.js` will be displayed. This can be useful if you want to override a default feature of Front-Commerce.
+    **Warning:** If several modules are registered in your application and several of them define the same route, the page of the first module in `.front-commerce.js` will be displayed. This can be useful if you want to override a default feature of Front-Commerce.
 </blockquote>
 
 ## Add a page using an URL with parameters

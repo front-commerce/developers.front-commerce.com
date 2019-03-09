@@ -42,7 +42,7 @@ my-module
     └── theme
 ```
 
-Then, we need to tell Front-Commerce that this module exists in your [`.frontcommerce.js`](/docs/reference/front-commerce-js.html) file. If the module has been created at the root of your project, it would look like this:
+Then, we need to tell Front-Commerce that this module exists in your [`.front-commerce.js`](/docs/reference/front-commerce-js.html) file. If the module has been created at the root of your project, it would look like this:
 
 ```diff
 module.exports = {

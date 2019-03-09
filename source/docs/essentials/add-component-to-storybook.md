@@ -184,7 +184,7 @@ documentation Front-Commerce base theme's core components.
 
 However, you might not use each one of them in your final theme, and some
 stories might become irrelevant in your design system. To chose which one to
-display, you need to update the `.frontcommerce.js` configuration file, and
+display, you need to update the `.front-commerce.js` configuration file, and
 add the key [`styleguidePaths`](/docs/reference/front-commerce-js.html#styleguidePaths).
 
 ```diff
