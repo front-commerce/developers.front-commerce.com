@@ -4,7 +4,7 @@ title: Scripts
 ---
 
 When in production or during a deployment, there are some tasks that are better automated.
-Front-Commerce contains scripts aimed at being used using on your server when your application is running.
+Front-Commerce contains scripts aimed at being used on your server when your application is running.
 
 <blockquote class="warning">
 We plan to improve the way scripts are created and used in the future, and allow developers to register custom scripts from their applications.
