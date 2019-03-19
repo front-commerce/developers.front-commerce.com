@@ -51,8 +51,6 @@ The `sitemap.js` script allows to generate sitemaps with pages available in your
 
 It uses pages exposed in the `Query.sitemap` root query of the application GraphQL server to generate one sitemap per [store configured](/docs/essentials/installation.html#Configure-stores) along with a sitemap index.
 
-If your base url is https://example.com/, the generated sitemap index would be available at https://example.com/sitemaps/sitemap.xml.
-
 To run this script, you can add the following line in your application’s `package.json` `scripts` section:
 
 ```json
@@ -64,6 +62,16 @@ To run this script, you can add the following line in your application’s `pack
 ```
 
 From the root of your application you could then run `npm run sitemap` to generate/update sitemaps.
+
+If your base url is https://example.com/, the generated sitemap index would be available at https://example.com/sitemaps/sitemap.xml.
+We recommend to reference it in your `robots.txt` file, by creating for instance the following file in your public directory (e.g: `my-module/public/robots.txt`):
+
+```txt
+// my-module/public/robots.txt
+User-agent: *
+Disallow:
+Sitemap: https://example.com/sitemaps/sitemap.xml
+```
 
 Usage example:
 
