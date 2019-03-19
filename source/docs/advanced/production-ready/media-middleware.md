@@ -98,10 +98,8 @@ The first one as you might have noticed in the previous section is limiting the 
 
 This is why we have added caching: if an image is proxied once, the resized image will be put directly in your server's file system to avoid a resize upon each request of the image. This folder is in `.front-commerce/cache/images/`.
 
-<blockquote class="wip">
 But this is still not ideal because it means that on the first launch of your server, many images will need to be resized during your users' requests.
 
 To answer this, we have created a script that fetches all the image URLs used in your catalog and put them in cache. It launchs a warmup of your image caches that you could use before a deployment or with a cron every night.
 
-Documentation about this script is still a Work In Progress. However in the meantime you can refer to the code itself [`scripts/imageWarmUp.js`](https://gitlab.com/front-commerce/front-commerce/blob/develop/scripts/imageWarmUp.js) or [contact us](mailto:contact@front-commerce.com) directly if you have any question.
-</blockquote>
+Documentation about this script is available in the [`scripts/imageWarmUp.js` reference page](/docs/reference/scripts.html#imageWarmUp-js).
