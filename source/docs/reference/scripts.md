@@ -1,0 +1,80 @@
+---
+id: scripts
+title: Scripts
+---
+
+When in production or during a deployment, there are some tasks that are better automated.
+Front-Commerce contains scripts aimed at being used on your server when your application is running.
+
+<blockquote class="warning">
+We plan to improve the way scripts are created and used in the future, and allow developers to register custom scripts from their applications.
+If interested for more context, please see [#169](https://gitlab.com/front-commerce/front-commerce/issues/169) for further details and do note hesitate to send us feedback about this feature.
+You can also [contact us](mailto:contact@front-commerce.com) directly if you have any question.
+</blockquote>
+
+## `imageWarmUp.js`
+
+The `imageWarmUp.js` script allows to generate images in your application cache, to prevent manipulating media (fetching, resizing…) on the fly as much as possible.
+
+It reuses the configurations presented in the [optimize your media](/docs/advanced/production-ready/media-middleware.html) page to generate a combination of images and formats used in your application.
+
+To run it, you can add the following line in your application’s `package.json` `scripts` section:
+
+```json
+"scripts": {
+  // […]
+  "imageswarmup": "node node_modules/front-commerce/scripts/imageWarmUp.js",
+  // […]
+}
+```
+
+From the root of your application you could then run `npm run imageswarmup` to populate your images cache with all images available in your shop.
+
+By default, it will ensure all images are available by creating images not already present in the cache.
+The script supports additional options:
+
+- `--purge`: remove cached images matching the current preset before generating new ones
+- `--clear`: remove all cached images before generating new ones
+- `--verbose`: displays details about the actions done by the script, to help with troubleshooting
+- an arbitrary number of image sizes (preset name) to warmup.
+  In this case, the script will only generate and optionally purge images in this preset.
+
+Usage example:
+
+```bash
+npm run imageswarmup -- --purge thumbnail small
+```
+
+## `sitemap.js`
+
+The `sitemap.js` script allows to generate sitemaps with pages available in your application.
+
+It uses pages exposed in the `Query.sitemap` root query of the application GraphQL server to generate one sitemap per [store configured](/docs/essentials/installation.html#Configure-stores) along with a sitemap index.
+
+To run this script, you can add the following line in your application’s `package.json` `scripts` section:
+
+```json
+"scripts": {
+  // […]
+  "sitemap": "node node_modules/front-commerce/scripts/sitemap.js",
+  // […]
+}
+```
+
+From the root of your application you could then run `npm run sitemap` to generate/update sitemaps.
+
+If your base url is https://example.com/, the generated sitemap index would be available at https://example.com/sitemaps/sitemap.xml.
+We recommend to reference it in your `robots.txt` file, by creating for instance the following file in your public directory (e.g: `my-module/public/robots.txt`):
+
+```txt
+// my-module/public/robots.txt
+User-agent: *
+Disallow:
+Sitemap: https://example.com/sitemaps/sitemap.xml
+```
+
+Usage example:
+
+```bash
+npm run sitemap
+```

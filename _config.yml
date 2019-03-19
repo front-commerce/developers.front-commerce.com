@@ -49,6 +49,7 @@ sidebar_categories:
     - docs/reference/graphql-module-definition
     - docs/reference/api
     - docs/reference/analytics-components
+    - docs/reference/scripts
   Appendices:
     - docs/appendices/roadmap
     - docs/appendices/migration-guides
