@@ -121,3 +121,67 @@ If you have overriden the `theme/components/_components.scss` file and didn't im
 +@import "~theme/components/atoms/Form/Input/NumberInput/NumberInput";
 +@import "~theme/components/molecules/Form/FormTitle/FormTitle";
 ```
+
+### Checkout refactoring
+
+The checkout was already pretty clean. Since it is a crucial part of any e-commerce application, we invested in it to make it a good default.
+
+However, the Address components were a bit confusing in the Checkout because these were used in the Account too. To make it clearer for integrators, we've moved the generic Address components to `theme/modules/User/Address`. This means that in this folder you will now find:
+
+* Address components (previously in `theme/components/molecules/Address`) to display an address in different formats
+* Forms components (previously in `theme/modules/Checkout/Address`) to create, edit or remove an address
+* EditableAddress  (previously in `theme/modules/Checkout/Address`) that lets you display an Address and lets the User edit and Address if they need to
+
+<details>
+<summary>List of the changed translations regarding the Address components</summary>
+<ul>
+  <li>modules.Checkout.Address.ExistingAddress.addNewAddress</li>
+  <li>modules.Checkout.Address.ExistingAddress.editSuccess</li>
+  <li>modules.Checkout.Address.NewAddress.shippingAddress</li>
+  <li>modules.Checkout.AddressRecap.AddressRecapLine.cancelEditing</li>
+  <li>modules.Checkout.AddressRecap.AddressRecapLine.editAddress</li>
+  <li>modules.User.Address.AddressForm.CreateAddressForm.addressCreated</li>
+  <li>modules.User.Address.AddressForm.CreateAddressForm.addressCreationFailed</li>
+  <li>modules.User.Address.AddressForm.CreateAddressForm.cancel</li>
+  <li>modules.User.Address.AddressForm.CreateAddressForm.saveAddress</li>
+  <li>modules.User.Address.AddressForm.EditAddressForm.addressEdited</li>
+  <li>modules.User.Address.AddressForm.EditAddressForm.addressEditionFailed</li>
+  <li>modules.User.Address.AddressForm.EditAddressForm.cancel</li>
+  <li>modules.User.Address.AddressForm.EditAddressForm.saveAddress</li>
+  <li>modules.User.Address.AddressForm.RemoveAddressForm.addressRemoverTitle</li>
+  <li>modules.User.Address.AddressForm.RemoveAddressForm.cancel</li>
+  <li>modules.User.Address.AddressForm.RemoveAddressForm.confirm</li>
+  <li>modules.User.Address.AddressForm.RemoveAddressForm.deleteButton</li>
+  <li>modules.User.Address.AddressForm.RemoveAddressForm.modalTitle</li>
+  <li>modules.User.Address.AddressForm.address.label</li>
+  <li>modules.User.Address.AddressForm.address.length</li>
+  <li>modules.User.Address.AddressForm.address.placeholder</li>
+  <li>modules.User.Address.AddressForm.city.label</li>
+  <li>modules.User.Address.AddressForm.city.placeholder</li>
+  <li>modules.User.Address.AddressForm.company.label</li>
+  <li>modules.User.Address.AddressForm.company.placeholder</li>
+  <li>modules.User.Address.AddressForm.country.label</li>
+  <li>modules.User.Address.AddressForm.firstname.label</li>
+  <li>modules.User.Address.AddressForm.firstname.placeholder</li>
+  <li>modules.User.Address.AddressForm.lastname.label</li>
+  <li>modules.User.Address.AddressForm.lastname.placeholder</li>
+  <li>modules.User.Address.AddressForm.phone.placeholder</li>
+  <li>modules.User.Address.AddressForm.postcode.label</li>
+  <li>modules.User.Address.AddressForm.postcode.placeholder</li>
+  <li>modules.User.Address.AddressForm.telephone.label</li>
+  <li>modules.User.Address.AddressForm.title.label</li>
+  <li>modules.User.Address.AddressForm.useAsDefaultBilling.label</li>
+  <li>modules.User.Address.AddressForm.useAsDefaultShipping.label</li>
+  <li>modules.User.Address.EditableAddress.edit</li>
+</ul>
+</details>
+
+#### Styles
+
+If you have overriden the `theme/modules/_modules.scss` file and didn't import the `front-commerce/src/web/theme/modules/_modules.scss` file, you will need to add the new styles for the Cart:
+
+```diff
+-@import "~theme/modules/Checkout/Address/Address";
+-@import "~theme/modules/User/Address/AddressRemover/AddressRemover";
++@import "~theme/modules/User/Address/AddressForm/RemoveAddressForm/RemoveAddressForm";
+```
