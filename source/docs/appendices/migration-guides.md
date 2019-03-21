@@ -84,6 +84,7 @@ Since few integrators had the opportunity to customize the existing Cart, the ma
   <li>modules.Cart.CartItem.remove</li>
   <li>modules.Cart.MiniCart.MiniCartContent.checkout</li>
   <li>modules.Cart.MiniCart.MiniCartContent.seeCart</li>
+  <li>modules.Cart.MiniCart.MiniCartContent.discount</li>
   <li>modules.Cart.CartTitle.continueShopping</li>
   <li>modules.Cart.CartTitle.title</li>
   <li>modules.Cart.CartAlerts.contactUs</li>
