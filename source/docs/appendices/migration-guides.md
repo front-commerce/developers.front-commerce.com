@@ -9,6 +9,17 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `1.0.0-alpha.1` -> `1.0.0-alpha.2`
 
+### GraphQL
+
+[`graphql-js`](https://github.com/graphql/graphql-js) has been updated to a new major version (0.13.2 -> 14.1.1) that includes several breaking changes.
+There is only one breaking change that may impact your current application: scalar types are now checked more rigorously (see [the PR](https://github.com/graphql/graphql-js/pull/1382)), meaning you may have to convert strings to numbers (etc.) in your application.
+
+The symptoms are errors of this type in your application:
+
+> Expected type Int; Int cannot represent non-integer value: "1"
+
+See [v14.0.0’s releases notes](https://github.com/graphql/graphql-js/releases/tag/v14.0.0) for an exhaustive list of breaking changes and other minor releases for new features.
+
 ### Atoms refactoring ([#178](https://gitlab.com/front-commerce/front-commerce/issues/178))
 
 One of the goals of `1.0.0` is to rewrite our CSS classes to make it easier for new external contributors to dive into Front-Commerce. However, this is a lot of work because of the many features already implemented in Front-Commerce. Thus, we've splitted this in 5 smaller iterations (see ([#97](https://gitlab.com/front-commerce/front-commerce/issues/97)) for more details). This release is the first step towards this goal.
