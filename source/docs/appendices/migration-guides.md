@@ -43,6 +43,19 @@ The goal is to avoid variants collision and to make it explicit when a variant o
 
 These changes are backward compatible. Deprecation warnings will appear if you keep using the old properties.
 
+### Files loading in a Scss file
+
+Until now, files used in a `.scss` file were to be loaded from the public directory or by using long and tidious file paths. This is no longer the case. You can now use relative imports.
+
+For instance, if you have a `theme/components/atoms/Icon/_Icon.scss` file, you will be able to import the font file directly:
+
+```diff
+-src: url('../theme/components/atoms/Icon/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'),
++src: url('./font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'),
+```
+
+This is usually done for background-images and fonts. Please look for any `url` keyword in your scss files to make sure that you update your paths accordingly.
+
 ### Cart refactoring
 
 The Cart was one of the most outdated part of our code. This is no longer the case! Components and styles have been refactored to better match the style of the checkout and account pages. This is a great step forward because it is rarely heavily customized by online shops and it will now be a nice default.
