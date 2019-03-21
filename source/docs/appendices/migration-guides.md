@@ -40,3 +40,38 @@ To improve consistency, we've decided to change this by always using an `appeara
 The goal is to avoid variants collision and to make it explicit when a variant only affects the style of a component.
 
 These changes are backward compatible. Deprecation warnings will appear if you keep using the old properties.
+
+### Cart refactoring
+
+The Cart was one of the most outdated part of our code. This is no longer the case! Components and styles have been refactored to better match the style of the checkout and account pages. This is a great step forward because it is rarely heavily customized by online shops and it will now be a nice default.
+
+Since few integrators had the opportunity to customize the existing Cart, the main changes you will need to take care of are the translations.
+
+<details>
+<summary>List of the changed translations regarding the Cart</summary>
+<ul>
+  <li>modules.Cart.CartContent.CartHeader.products</li>
+  <li>modules.Cart.CartItem.CartItemInfos.quantity</li>
+  <li>modules.Cart.CartItem.CartItemInfos.subtotal</li>
+  <li>modules.Cart.CartItem.CartItemInfos.unitPrice</li>
+  <li>modules.Cart.CartItem.CartItemOptionsUpdater.button</li>
+  <li>modules.Cart.CartItem.CartItemOptionsUpdater.error</li>
+  <li>modules.Cart.CartItem.CartItemOptionsUpdater.submit</li>
+  <li>modules.Cart.CartItem.CartItemOptionsUpdater.success</li>
+  <li>modules.Cart.CartItem.CartItemOptionsUpdater.title</li>
+  <li>modules.Cart.CartItem.CartItemQuantityForm.error</li>
+  <li>modules.Cart.CartItem.CartItemQuantityForm.refresh</li>
+  <li>modules.Cart.CartItem.CartItemQuantityForm.success</li>
+  <li>modules.Cart.CartItem.remove</li>
+  <li>modules.Cart.MiniCart.MiniCartContent.checkout</li>
+  <li>modules.Cart.MiniCart.MiniCartContent.seeCart</li>
+  <li>modules.Cart.CartTitle.continueShopping</li>
+  <li>modules.Cart.CartTitle.title</li>
+  <li>modules.Cart.CartAlerts.contactUs</li>
+  <li>modules.Cart.CartAlerts.fromRenew</li>
+  <li>modules.Cart.CartAlerts.paymentError</li>
+  <li>modules.Cart.CartAlerts.renewError</li>
+</ul>
+</details>
+
+Please refer to the translations files in the core of front-commerce to get the new translations within your application. This process should be easier in the future by using [translations fallbacks that is under development](https://gitlab.com/front-commerce/front-commerce/issues/54#note_152801124).
