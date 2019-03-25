@@ -217,3 +217,52 @@ module.exports = {
   }
 }
 ```
+
+## `remoteSchema` (optional)
+
+The `remoteSchema` key allows you to achieve [remote schema stitching in Front-Commerce](/docs/advanced/graphql/remote-schemas.html).
+
+It should be an object with the following keys.
+
+### `uri`
+
+The `uri` key is **mandatory** and must contain the remote GraphQL endpoint.
+
+Example:
+
+```js
+module.exports = {
+  namespace: "Acme/RemoteFeature",
+  remoteSchema: {
+    uri: "https://remote-feature.acme.org/graphql"
+  }
+};
+```
+
+By default all queries and mutations are merged with the current schema.
+A set of default transformations are applied: read [the dedicated documentation section](/docs/advanced/graphql/remote-schemas.html#Default-transforms) for further information.
+
+### `transforms` (optional)
+
+The `transforms` key allows you to optionally manipulate the remote schema before it is stitched with the existing Front-Commerce schema.
+
+It must be an array of valid [`graphql-tools` Schema Transforms](https://www.apollographql.com/docs/graphql-tools/schema-transforms), and will be applied **before** Front-Commerce’s [default transforms](/docs/advanced/graphql/remote-schemas.html#Default-transforms).
+
+Example:
+
+```js
+const { FilterRootFields } = require("graphql-tools");
+
+module.exports = {
+  namespace: "Acme/RemoteFeature",
+  remoteSchema: {
+    uri: "https://remote-feature.acme.org/graphql"
+    transforms: [
+      new FilterRootFields(
+        (operation, rootField) =>
+          operation === "Query" && rootField === "aRootFieldToExpose"
+      )
+    ]
+  }
+};
+```
