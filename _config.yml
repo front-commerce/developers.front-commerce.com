@@ -23,6 +23,7 @@ sidebar_categories:
     - docs/advanced/graphql/overview
     - docs/advanced/graphql/meta-modules
     - docs/advanced/graphql/slim-down-resolvers-with-loaders
+    - docs/advanced/graphql/remote-schemas
   Checkout:
     - docs/advanced/checkout/overview
     - docs/advanced/checkout/add-custom-checkout-step
@@ -42,6 +43,7 @@ sidebar_categories:
     - docs/concepts/react-components-structure
   Magento2:
     - docs/magento2/overview
+    - docs/magento2/graphql
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
