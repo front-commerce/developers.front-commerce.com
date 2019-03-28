@@ -182,8 +182,28 @@ module.exports = {
 
 ## Caveats
 
+### Server restart needed
+
 Please note that **remote schema changes will only appear in your schema after a server restart**.
 The remote schema definition is fetched during the server bootstrap process.
+
+### Query root type must be provided
+
+The remote schema (after transforms applied) **MUST** contain at least a `Query` root type.
+This limitation is identified in the library we use to merge schemas together.
+See [apollographql/graphql-tools#764](https://github.com/apollographql/graphql-tools/issues/764) and [apollographql/graphql-tools#659 _(comment)_](https://github.com/apollographql/graphql-tools/issues/659#issuecomment-410042027) for details.
+
+A _« solution »_ is to add a dummy Query field to your remote schema:
+
+```graphql
+type Query {
+  _dummy: String
+}
+```
+
+See [#196](https://gitlab.com/front-commerce/front-commerce/issues/196) for more information.
+
+---
 
 <blockquote class="wip">
   This remote schema stitching feature is still being explored, and we are actively looking for feedback to make it better.
