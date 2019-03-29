@@ -183,35 +183,37 @@ However, please note that some integrations are not up to date. Even if you find
 If your integrations need consent of the user before running, you need to setup the `config/cookieServices.js` file. This file will let you define which cookies and trackings services are used within your application and will let the user chose which tracking service to allow.
 
 ```js
-export default [
-  {
-    // Category of cookies to allow the user to accept all the integrations at once in a specific category
-    title: "Analytics",
-    description:
-      "These cookies allows us to measure the traffic on our contents and hence to improve them.",
-    services: [
-      {
-        // The name should be the same as mentionned in the `config/analytics.js` file
-        name: "google-analytics",
-        title: "Google Analytics",
-        // display all the cookies managed by Google Analytics
-        cookies: [
-          "_ga",
-          "_gat",
-          "_gid",
-          "__utma",
-          "__utmb",
-          "__utmc",
-          "__utmt",
-          "__utmz"
-        ],
-        description:
-          "Google Analytics cookies, from Google, are meant to gather statistics about visits.",
-        link: "https://support.google.com/analytics/answer/6004245"
-      }
-    ]
-  }
-];
+export default {
+  default_en: [
+    {
+      // Category of cookies to allow the user to accept all the integrations at once in a specific category
+      title: "Analytics",
+      description:
+        "These cookies allows us to measure the traffic on our contents and hence to improve them.",
+      services: [
+        {
+          // The name should be the same as mentionned in the `config/analytics.js` file
+          name: "google-analytics",
+          title: "Google Analytics",
+          // display all the cookies managed by Google Analytics
+          cookies: [
+            "_ga",
+            "_gat",
+            "_gid",
+            "__utma",
+            "__utmb",
+            "__utmc",
+            "__utmt",
+            "__utmz"
+          ],
+          description:
+            "Google Analytics cookies, from Google, are meant to gather statistics about visits.",
+          link: "https://support.google.com/analytics/answer/6004245"
+        }
+      ]
+    }
+  ]
+};
 ```
 
 ### How to create a custom integration?
