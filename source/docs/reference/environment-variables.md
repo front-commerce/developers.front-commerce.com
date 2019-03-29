@@ -42,6 +42,11 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_COOKIE_DOMAIN`: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name)
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
 
+<blockquote class="note" id="note-https-cookies">
+   In production, Front-Commerce will use the [`secure` mode for setting cookies](https://www.npmjs.com/package/express-session#cookiesecure) to force running the application in HTTPS.
+   If your production instance is not in HTTPS, you will encounter issues when logging in.
+</blockquote>
+
 ### Cache
 
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications invalidate parts of Front-Commerce cache. <!-- TODO link to dataloaders and cache invalidation documentation -->
@@ -118,7 +123,7 @@ More documentation about this module will be available soon. Please [contact us]
 
 ## Build related variables
 
-- `NODE_ENV`: `"developpment"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
+- `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
 - `SERVER`: `true` if your code is executed server side, `false` if it is client side
 - `PUBLIC_URL`: the current URL of your Front-Commerce application
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
