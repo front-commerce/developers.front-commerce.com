@@ -145,6 +145,7 @@ module.exports = {
 
 <blockquote class="info">
   Please note that these transforms are applied **before** Front-Commerce default ones.
+  In this example, the `pokemons` root field will be renamed by default transforms as `Pokemon_pokemons`.
 </blockquote>
 
 ## Mix local and remote schemas
@@ -185,7 +186,7 @@ module.exports = {
 ### Server restart needed
 
 Please note that **remote schema changes will only appear in your schema after a server restart**.
-The remote schema definition is fetched during the server bootstrap process.
+The remote schema definition is fetched during the server bootstrap process for performance reasons.
 
 ### Query root type must be provided
 

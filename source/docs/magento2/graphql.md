@@ -39,7 +39,7 @@ module.exports = {
 };
 ```
 
-**Restart your server**, and you must now see the additional endpoints.
+**Restart your server**, and you should now see the additional endpoints.
 
 ## Store configurations
 
@@ -55,7 +55,7 @@ Example:
 }
 ```
 
-See [the related Magento DevDocs page](https://devdocs.magento.com/guides/v2.3/graphql/reference/store-config.html) for more information.
+See [the related Magento DevDocs page](https://devdocs.magento.com/guides/v2.3/graphql/reference/store-config.html) to learn which configurations are exposed by default in Magento's schema.
 
 ## Is something missing?
 
