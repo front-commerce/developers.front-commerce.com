@@ -23,7 +23,7 @@ This page explain how you could expose remote GraphQL schemas as part as your Fr
 
 ## Exposing an entire remote schema
 
-The simplest use case is to entire the whole remote schema in your existing application.
+The simplest use case is to expose the whole remote schema in your existing application.
 
 In this example, we are going to illustrate this feature by exposing the [Pokemon GraphQL API](https://graphql-pokemon.now.sh/) in our eCommerce application… you may find it useful if you are selling Pokemon related goodies! :-)
 
