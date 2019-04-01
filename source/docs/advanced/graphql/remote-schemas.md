@@ -191,6 +191,8 @@ The remote schema definition is fetched during the server bootstrap process for 
 ### Query root type must be provided
 
 The remote schema (after transforms applied) **MUST** contain at least a `Query` root type.
+This can happen when you only expose Mutations from your remote schema.
+
 This limitation is identified in the library we use to merge schemas together.
 See [apollographql/graphql-tools#764](https://github.com/apollographql/graphql-tools/issues/764) and [apollographql/graphql-tools#659 _(comment)_](https://github.com/apollographql/graphql-tools/issues/659#issuecomment-410042027) for details.
 
