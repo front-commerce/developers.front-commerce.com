@@ -53,7 +53,7 @@ API).
 > are only documenting what will stay in our final codebase.
 
 Last but not least, if you are upgrading a project to the latest Front-Commerce
-version, we have documented some [Migration guides](migration-guides.md) to make
+version, we have documented some [Migration guides](/docs/appendices/migration-guides.html) to make
 the process as seamless as possible.
 
 As always, if you do not find what you need do not hesitate to
