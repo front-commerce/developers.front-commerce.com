@@ -87,3 +87,7 @@ There are two modes available:
 This command checks your translations and adds the missing one to `translations/[lang].json` in the root of your application. See [Translate what's in your components](/docs/advanced/theme/translations.html#Translate-what’s-in-your-components) for more information.
 
 If some translations are missing, the script will throw an error. This lets you ensure that everything is correctly translated in your CI.
+
+### Options:
+
+* `--ignore-build`: By default, this command will build your application to make sure that no translation is forgotten. However, if you've just run `front-commerce build`, this step is not necessary. `--ignore-build` option is what makes it possible not to build the application during the translation.
