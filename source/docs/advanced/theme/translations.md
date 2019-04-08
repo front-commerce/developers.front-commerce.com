@@ -89,7 +89,7 @@ This task can be daunting at first, but it will make your life easier in the fut
 
 With `react-intl` translations are usually grouped into a single file. In our case, we would expect them to be in `translations/whitelist_[lang].json`. But in Front-Commerce's case, we don't want you to be troubled by translations that are handled by the core.
 
-That's why Front-Commerce uses a mechanism called **translations fallbacks**. Instead of relying on a single file for translations, Front-Commerce will look out for translations in the following places and will pick the ones that exist:
+That's why Front-Commerce uses a mechanism called **translations fallbacks**. Instead of relying on a single file for translations, Front-Commerce will look out for translations in the following locations and pick the ones that exist:
 
 * Front-Commerce core: `node_modules/front-commerce/translations/[lang].json`
 * from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[lang].json`
@@ -99,7 +99,7 @@ If a translation key is defined in multiple files, the last one (according to th
 
 > You can see exactly which translation files are used by opening the files located in `.front-commerce/translations/`.
 
-Please keep in mind that when you run `npm run translate`, the new keys will be added to `translations/[lang].json`. However, if you are developping a module it can make sense to create manually the files in `<my-module>/translations/[lang].json` and move the translations there.
+Please keep in mind that when you run `npm run translate`, new keys will be added to `translations/[lang].json`. However, if you are developing a module it can make sense to manually create the files in `<my-module>/translations/[lang].json` and relocate the translations there.
 
 ## About dynamic content
 
