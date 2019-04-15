@@ -45,10 +45,8 @@ This configuration file should contain any thing that impacts the content of you
   When a CSP is missing, your browser will let you know in its console.
 * `search`: an object that defines how the Elasticsearch queries should be made.
   * `dynamicFacetSize`: number of filters to fetch from Elasticsearch
-  * `fixedFacets` (available values: `["max_price", "min_price"]`): filters that are not returned by default by Elasticsearch
-  * `blacklistKeys`: filters that are returned by Elasticsearch but we don't need to display
-  * `categoriesField` (default: `categories`): the field name that contains the category related to a product
-  * `authorizedCategoriesFacet`: array of ids of the categories that should be displayed in the filters
+  * `ignoredAttributeKeys`: filters that are returned by Elasticsearch but we don't need to display
+  * `authorizedCategoriesFacet`: array of ids of the categories that should be displayed in the filters. The string `"*"` can be used to allow all categories. Default value: `[]`.
 * `phoneNumber`: support/contact number of the website
 * `email`: support/contact email of the website
 * `maxAddressLength`: max length for one line of address ([default is 35](https://webarchive.nationalarchives.gov.uk/+/http://www.cabinetoffice.gov.uk/media/254290/GDS%20Catalogue%20Vol%202.pdf))
