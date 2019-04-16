@@ -16,6 +16,7 @@ Requirements:
 - NodeJS: 10.15+
 - Redis: 3.2
 - ElasticSearch: 2.4
+- Magento: 2.2.1
 
 ## 1.0.0-alpha.2
 
@@ -30,6 +31,7 @@ Requirements:
 - NodeJS: 10.15+
 - Redis: 3.2
 - ElasticSearch: 2.4
+- Magento: 2.2.1
 
 ## 1.0.0-alpha.1
 
@@ -42,6 +44,7 @@ Requirements:
 - NodeJS: 10.15+
 - Redis: 3.2
 - ElasticSearch: 2.4
+- Magento: 2.2.1
 
 ## 0.15.0
 
@@ -52,6 +55,7 @@ Requirements:
 - NodeJS: 8.4+
 - Redis: 3.2
 - ElasticSearch: 2.4
+- Magento: 2.2.1
 
 ## 0.13.0
 
@@ -62,3 +66,4 @@ Requirements:
 - NodeJS: 8.4+
 - Redis: 3.2
 - ElasticSearch: 2.4
+- Magento: 2.2.1
