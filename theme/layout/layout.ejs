@@ -18,7 +18,7 @@
     <meta name="description" content="<%- page.description %>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% if (config.favicon) {  %>
-      <link rel="shortcut icon" type="image/png" href="<%= url_for(config.favicon, { relative: true }) %>" sizes="16x16 32x32 64x64">
+      <link rel="shortcut icon" type="image/png" href="<%= url_for(config.favicon, { relative: false }) %>" sizes="16x16 32x32 64x64">
     <% } %>
 
     <!-- Social -->
@@ -60,9 +60,9 @@
 
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,200,300italic,400italic' rel='stylesheet' type='text/css'>
     <% if (config.css_bundle) {  %>
-      <link rel="stylesheet" href="<%= url_for('style/bundle-' + config.css_bundle + '.css', { relative: true }) %>">
+      <link rel="stylesheet" href="<%= url_for('style/bundle-' + config.css_bundle + '.css', { relative: false }) %>">
     <% } else { %>
-      <link rel="stylesheet" href="<%= url_for('style/style.css', { relative: true }) %>">
+      <link rel="stylesheet" href="<%= url_for('style/style.css', { relative: false }) %>">
     <% } %>
     <link
       rel="stylesheet"
