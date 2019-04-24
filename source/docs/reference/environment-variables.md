@@ -10,7 +10,7 @@ These environment variables can be defined in two different ways:
 * in the `.env` file in your root folder
 
 You can then access them by using the `process.env` object in your javascript files no matter if it is a server-side or client-side file.
-However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*`. See [Add your own environment variables](http://localhost:4444/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
+However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*` which were defined during `front-commerce build`. See [Add your own environment variables](http://localhost:4444/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
 
 ## How to update environment variables
 
@@ -18,14 +18,13 @@ However, not all variables are exposed in your client code. Client code only hav
     **Work In Progress:** we plan to add a more exhaustive flowchart to cover all edge cases. By then, if you have any issues to understand why/when a build or restart is necessary, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
 </blockquote>
 
-However, in some cases you can't update these variables only by updating your server's variable.
+You can't update these variables only by updating your server's variable. This comes from how node works. But there are also some specificities due to Front-Commerce.
 
-* 🚫 You can't update the variable if:
-    * the variable is used on the client side (`FRONT_COMMERCE_WEB_*`)
-    * the variable was defined in the `.env` file
-* ✅ You can update the variable if:
-    * the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`)
-    * the variable didn't exist or was defined in on your server and not in the `.env` file
+* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
+    * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to make a new `front-commerce build`
+    * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server 
+* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
+    * 🚫 You need to make a new `front-commerce build` and restart your server
 
 The reason behind these rules is because some variables are defined and bundled within your code during the `build` of your application. For this reason, if you are are in a case where you can't update the variable, you will need to trigger a new build with the new environment variables defined and restart your server.
 
