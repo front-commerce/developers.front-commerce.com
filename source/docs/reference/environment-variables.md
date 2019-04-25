@@ -130,6 +130,10 @@ More documentation about this module will be available soon. Please [contact us]
 
 ## Debugging
 
+<blockquote class="feature--new">
+_Since version 1.0.0-beta.0_
+</blockquote>
+
 Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.
 The `DEBUG` environment variable can be used to enable logging for different part of Front-Commerce, and some of the used libraries.
 
