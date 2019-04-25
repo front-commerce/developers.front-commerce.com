@@ -82,7 +82,6 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance (ex: `es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix for your Elasticsearch indexes (ex: `magento2_default`)
 - `FRONT_COMMERCE_ES_VERSION`: Elasticsearch server version (ex: `6.7`)
-- `FRONT_COMMERCE_ES_DEBUG` (optional): enable debug mode in the Elasticsearch client, allowing you to see queries and other informations in the stdout (ex: `true`)
 
 ### Paypal
 
@@ -128,6 +127,29 @@ More documentation about this module will be available soon. Please [contact us]
 - `SERVER`: `true` if your code is executed server side, `false` if it is client side
 - `PUBLIC_URL`: the current URL of your Front-Commerce application
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
+
+## Debugging
+
+<blockquote class="feature--new">
+_Since version 1.0.0-beta.0_
+</blockquote>
+
+Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.
+The `DEBUG` environment variable can be used to enable logging for different part of Front-Commerce, and some of the used libraries.
+
+Front-Commerce debugs are in the `front-commerce` namespace.
+One can enable all of them using the following definition: `DEBUG="front-commerce:*"`
+
+The core also allows you to debug API calls to remote services made in the server.
+To do so, define `DEBUG=axios`.
+
+Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.
+Learn more in [the `debug` package documentation](https://www.npmjs.com/package/debug).
+
+Here is a list of available debug namespaces:
+
+- `axios`: debugs axios requests and responses (using [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
+- `front-commerce:elasticsearch`: debugs all elasticsearch queries
 
 ## Add your own environment variables
 
