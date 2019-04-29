@@ -7,7 +7,7 @@ With Front-Commerce comes a CLI tool (`front-commerce`) that helps you launch th
 
 These commands should be launched from your project's root directory. This can be done by:
 * Using npm scripts (just like [front-commerce-skeleton/package.json](https://gitlab.com/front-commerce/front-commerce-skeleton/blob/master/package.json#L7))
-* Prefexing the commands with `npx` which will call the `front-commerce` bin in your project
+* Prefixing the commands with `npx` which will call the `front-commerce` bin in your project
 
 ## `front-commerce help`
 
@@ -19,7 +19,7 @@ This command ensures that your project is correctly linted. This means that it w
 * format your code with prettier
 * prevent errors by using eslint rules
 
-In order to configure the rules, please refer to the `eslintConfig` key in your package.json.
+In order to configure the rules, please refer to the `eslintConfig` key in your `package.json`.
 
 A basic config could be :
 
@@ -54,7 +54,7 @@ The files linted are the files within the modules you have defined in [`.front-c
 
 ## `front-commerce prepare`
 
-This command will generate all the files needed to launch a Front-Commerce application. It will use the [`.front-commerce.js`](/docs/reference/front-commerce-js.html) to know what to generate. 
+This command will generate all the files needed to launch a Front-Commerce application. It will use the [`.front-commerce.js`](/docs/reference/front-commerce-js.html) configuration file to know what to generate. 
 
 The generated files will be located in the `.front-commerce` folder in the root of your project.
 
