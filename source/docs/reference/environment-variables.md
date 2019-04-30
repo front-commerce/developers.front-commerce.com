@@ -150,6 +150,7 @@ Here is a list of available debug namespaces:
 
 - `axios`: debugs axios requests and responses (using [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
+- `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 
 ## Add your own environment variables
 
