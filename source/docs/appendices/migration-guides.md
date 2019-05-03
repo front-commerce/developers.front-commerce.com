@@ -7,7 +7,7 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backword compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## `1.0.0-beta.0` -> 1.0.0-beta.1
+## `1.0.0-beta.0` -> `1.0.0-beta.1`
 
 ### Wishlist
 
