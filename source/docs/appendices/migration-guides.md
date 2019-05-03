@@ -7,6 +7,23 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backword compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `1.0.0-beta.0` -> 1.0.0-beta.1
+
+### Wishlist
+
+A basic wishlist is now available in Front-Commerce by default with the Magento2 module.
+However, for existing shops, you need to check a few things in order to make sure that the wishlist is available for your customers. Indeed, the impacted components are likely to have been overridden.
+
+1. Upgrade your `front-commerce/magento2-module` to version `1.0.0-beta.1` or higher.
+    * make sure to update `FRONT_COMMERCE_MAGENTO_MODULE_VERSION` accordingly
+2. Check that the wishlist is available in the customer's account
+    * the route must exist (`node_modules/front-commerce/src/web/theme/pages/Account/Account.js`)
+    * a link must in the account navigation (`node_modules/front-commerce/src/web/theme/modules/User/AccountNavigation/AccountNavigation.js`)
+3. Check that the user can actually add the product to their wishlist
+    * either on the product page itself (`node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/Synthesis.js`)
+    * or on the product item used for product listings (`src/web/theme/modules/ProductView/ProductItem/ProductItemActions/ProductItemActions.js`)
+
+
 ## `1.0.0-alpha.1` -> `1.0.0-alpha.2`
 
 ### GraphQL
