@@ -5,6 +5,41 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+## 1.0.0-beta.1
+
+> * Bug fixes
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-beta.1)
+
+Requirements:
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 with the plugins:
+    - analysis-phonetic
+    - analysis-icu
+- Magento: 2.3.1
+
+## 1.0.0-beta.0
+
+> * Revamp elasticsearch for Magento 2.3 compatibilty
+> * Translation fallbacks
+> * Wishlist
+> * Performance
+
+- [Announcement](/blog/2019/05/07/release-1.0.0-beta.0/)
+- [Migration guide](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-beta.0)
+
+Requirements:
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 with the plugins:
+    - analysis-phonetic
+    - analysis-icu
+- Magento: 2.3.1
+
 ## 1.0.0-alpha.3
 
 > Add Stripe payment
