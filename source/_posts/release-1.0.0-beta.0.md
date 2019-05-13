@@ -20,7 +20,7 @@ While working on our compatibility with Magento 2.3, we decided to use [ElasticS
 Moreover, this is the first step of greater plans we are really excited about:
 
 * an improved layered navigation on the client side with more room for customization
-* a catalog entirely fetched from Elasticsearch for greater performances
+* a catalog entirely fetched from Elasticsearch for greater performances (as an optional extension)
 
 Stay tuned!
 
@@ -38,7 +38,7 @@ Keeping translations synchonized between the core and your own theme could prove
 
 This is no longer the case because in your `translations/[locale].json` file, you will be able to only put your custom translation keys and the ones you want to override from the core.
 
-See [Translations fallback](https://developers.front-commerce.com/docs/advanced/theme/translations.html#Translations-fallback).
+Read more in our documentation: [Translations fallback](https://developers.front-commerce.com/docs/advanced/theme/translations.html#Translations-fallback).
 
 ### Storybook 5
 
@@ -46,7 +46,7 @@ Your styleguide is now powered by Storybook 5. The interface has been completly 
 
 This was also an opportunity to upgrade a few stories and to make sure that languages were loaded dynamically.
 
-A nice tool that we have added by default with this upgrade is the [a11y addon](https://github.com/storybooks/storybook/tree/master/addons/a11y) which let's you run [`axe-core`](https://www.npmjs.com/package/axe-core) checks runs on your components.
+A nice tool that we have added by default with this upgrade is the [a11y addon](https://github.com/storybooks/storybook/tree/master/addons/a11y) which let's you run [`axe-core`](https://www.npmjs.com/package/axe-core) checks runs on your components. It is part of our vision to help promoting quality in your projects, be sure to have a look at this new panel!
 
 ### Stripe integration
 
@@ -62,7 +62,8 @@ We are still working on a complete documentation of Payments in Front-Commerce, 
 
 ## Major performance improvements
 
-Some calls to Magento 2 were made 70% faster! Prices, product options, parent products,… many improvements that will improve the raw performance of a page before relying on the redis cache.
+Our Magento 2 extension has also been updated with Wishlist related features and performance improvements.
+Some API responses were made 70% faster! Prices, product options, parent products,… many improvements that will improve the raw performance of a page before relying on the redis cache.
 
 This is the kind of free performance wins that you gain by using Front-Commerce. :)
 
@@ -72,7 +73,7 @@ This is the kind of free performance wins that you gain by using Front-Commerce.
 
 Until now, debugging required some internals knowledge to log and learn how the core worked. To address this, we have started to use [`debug`](https://www.npmjs.com/package/debug), an node package widely used by the community. It lets you display logs of your application by adding an environment variable `DEBUG`.
 
-See [Debugging](https://developers.front-commerce.com/docs/reference/environment-variables.html#Debugging).
+Read more about it in our documentation: [Debugging](https://developers.front-commerce.com/docs/reference/environment-variables.html#Debugging).
 
 ### Unstable Magento detected
 
@@ -87,7 +88,7 @@ We also made a few bugfixes such as:
 
 ## See it live!
 
-The online demo has been updated and will let you see how things have evolved since then. This is quite an update since we didn't have the opporunity to deploy the demo since 0.14!
+The online demo has been updated and will let you see how things have evolved since then. This is quite an update since we didn't have the opporunity to deploy the demo since 0.14 (june 2018)!
 
 <figure>
 ![./images/demo-diff.png](/images/blog/demo-diff.png)
