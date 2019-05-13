@@ -1,6 +1,6 @@
 ---
 title: "Release: 1.0.0-beta.0"
-date: 2019-05-07
+date: 2019-05-13
 ---
 
 Front-Commerce `1.0.0-beta.0` has been released with several improvements: revamped elasticsearch queries, translation fallbacks, wishlist, performance…
@@ -48,6 +48,18 @@ This was also an opportunity to upgrade a few stories and to make sure that lang
 
 A nice tool that we have added by default with this upgrade is the [a11y addon](https://github.com/storybooks/storybook/tree/master/addons/a11y) which let's you run [`axe-core`](https://www.npmjs.com/package/axe-core) checks runs on your components.
 
+### Stripe integration
+
+In this release, we also added support for Stripe as a Front-Commerce payment gateway.
+It means that one can use Stripe, no matter the eCommerce platform behind Front-Commerce.
+
+Our integration is based on the new Stripe foundational API: [Payment Intents](https://stripe.com/docs/payments/payment-intents).
+This way, you won’t have to worry about the upcoming Strong Customer Authentication (SCA) requirement: your store will be compliant months before the SCA becomes mandatory (14th of September 2019).
+
+This is also one of the thing that we want to take care for you! All you have to do is keeping your Front-Commerce up-to-date ;-)
+
+We are still working on a complete documentation of Payments in Front-Commerce, but you can already read [this comment explaining how to enable Stripe](https://github.com/front-commerce/developers.front-commerce.com/issues/47#issuecomment-476633486) if you want to use it in your application.
+
 ## Major performance improvements
 
 Some calls to Magento 2 were made 70% faster! Prices, product options, parent products,… many improvements that will improve the raw performance of a page before relying on the redis cache.
@@ -83,3 +95,11 @@ The online demo has been updated and will let you see how things have evolved si
 </figure>
 
 <a class="link primary button" href="https://demo.front-commerce.com">Discover the new demo</a>
+
+## And more
+
+To know more about this release, we recommend you to check the following pages:
+- [Migration guide from 1.0.0-alpha.2 to 1.0.0-beta.0](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
+- [Full changelog from release notes](https://gitlab.com/front-commerce/front-commerce/releases) (Partners and Customers only)
+
+As always, feel free to send us [an email](mailto:contact@front-commerce.com) or a [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q) message if you have any question.

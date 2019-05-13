@@ -65,6 +65,11 @@ If you relied on them, you will now need to add them manually. We are still in t
 * While upgrading the search behavior, we have also changed deprecated the `search.blacklistKeys` configuration in `config/website.js`. This now should be `search.ignoredAttributeKeys` which is less offensive and more explicit. Moreover, `search.fixedFacets` and `search.categoriesField` are no longer used.
 * While upgrading the search behavior, we have splitted the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This  means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
 
+## Branching model
+
+Please note that from now on, all developments will happen on the main `master` branch.
+If you want to be on the edge you must now use the `master` branch instead of the `develop` (now removed).
+
 ## `1.0.0-alpha.1` -> `1.0.0-alpha.2`
 
 ### GraphQL
