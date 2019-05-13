@@ -101,6 +101,6 @@ The online demo has been updated and will let you see how things have evolved si
 
 To know more about this release, we recommend you to check the following pages:
 - [Migration guide from 1.0.0-alpha.2 to 1.0.0-beta.0](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
-- [Full changelog from release notes](https://gitlab.com/front-commerce/front-commerce/releases) (Partners and Customers only)
+- [Full changelog from Front-Commerce release notes](https://gitlab.com/front-commerce/front-commerce/releases) and [its Magento 2 extension](https://gitlab.com/front-commerce/magento2-module-front-commerce/releases) (Partners and Customers only)
 
 As always, feel free to send us [an email](mailto:contact@front-commerce.com) or a [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q) message if you have any question.

@@ -9,6 +9,23 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `1.0.0-alpha.2` -> `1.0.0-beta.0`
 
+### Versions
+
+We are now entering a `beta` phase.
+Be sure to update your dependency as follow:
+
+```
+npm install --save git+ssh://git@gitlab.com/front-commerce/front-commerce.git#semver:^1.0.0-beta
+```
+
+Same goes for the Magento 2 module.
+Please update your PHP dependencies by using the latest beta in your Magento project.
+
+<blockquote class="important">
+  **IMPORTANT:** please ensure to keep your [`FRONT_COMMERCE_MAGENTO_MODULE_VERSION`](/docs/reference/environment-variables.html#Magento-2) up-to-date in the `.env` file of your Front-commerce application.
+  It should now be `1.0.0-beta`.
+</blockquote>
+
 ### Translations
 
 We have introduced the mechanism of [Translation Fallback](https://developers.front-commerce.com/docs/advanced/theme/translations.html#Translations-fallback). This is means that you will have fewer conflicts during next upgrades.
