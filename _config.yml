@@ -45,6 +45,7 @@ sidebar_categories:
   Magento2:
     - docs/magento2/overview
     - docs/magento2/graphql
+    - docs/magento2/i18n
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
