@@ -6,9 +6,9 @@ WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It 
 
 This is why we've built a `theme/modules/Wysiwyg` component in Front-Commerce. By default it takes a `content` property which contains the HTML that needs to be parsed, and transforms it in React components.
 
-## The `Wysiwyg` component
+## The `<Wysiwyg />` component
 
-The `Wysiwyg` component applies two types of transformations to your HTML :
+The `<Wysiwyg />` component applies two types of transformations to your HTML :
 * shortcodes
 * transforms
 
@@ -35,7 +35,7 @@ See [EnhanceWysiwyg's reference](/docs/reference/wysiwyg.html) for more details.
 
 Transforms are functions that take an HTML node and transform it in a React Element.
 
-For instance, we want to make sure that it transforms `<a>` tags to `Link` elements to preserve React's navigation. For instance, `<a href="/about-us">About us</a>` will be transformed to `<Link to="/about-us"></Link>`. It looks like this:
+For instance, we want to make sure that it transforms `<a>` tags to `Link` elements to preserve React's navigation. For instance, `<a href="/about-us">About us</a>` will be transformed to `<Link to="/about-us">About us</Link>`. It looks like this:
 
 ```jsx
 export default (node, convertNodeToElement) => {
@@ -75,7 +75,7 @@ Any other shortcode will be removed from your final content.
 * `<a>` tags are transformed to the `theme/components/atoms/Typography/Link` component when the `href` attribute does not contain a domain.
 * `<widget>` tags are transformed `theme/modules/Wysiwyg/MagentoWysiwyg/Widget` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
 
-##### Add a custom Widget
+#### Add a custom Magento Widget
 
 Custom widgets will be automatically parsed. However, you will still need to map the widget's `type` to custom React Components. If you don't, they will be ignored.
 
@@ -87,7 +87,7 @@ cp node_modules/front-commerce/src/web/theme/modules/Wysiwyg/MagentoWysiwyg/Widg
   src/web/theme/modules/Wysiwyg/MagentoWysiwyg/Widget.js
 ```
 
-Now, within your newly created `Widget.js` file, you will be able to add your own behavior. For instance, if you've created a widget in Magento with the type `corp/product-preview`, you will need to update the `Widget.js` file likewise:
+Now, within your newly created `Widget.js` file, you will be able to add your own behavior. For instance, if you've created a widget in Magento with the type `acme/product-preview`, you will need to update the `Widget.js` file likewise:
 
 ```diff
 +import React from "react";
@@ -97,7 +97,7 @@ import PropTypes from "prop-types";
 
 const Widget = ({ type, attributes }) => {
 +  // And match the type with your component
-+  if (type === "corp/product-preview") {
++  if (type === "acme/product-preview") {
 +    return <ProductPreview sku={attributes.sku} />
 +  }
 +
