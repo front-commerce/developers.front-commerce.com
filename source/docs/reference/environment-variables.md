@@ -40,10 +40,12 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_ENV`: `dev` or `production` in order to remove debugging options on the server side (ex: we disable GraphQL playground in production mode)
 - `FRONT_COMMERCE_COOKIE_DOMAIN`: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name)
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
+- `FRONT_COMMERCE_UNSAFE_INSECURE_MODE`: you can use this environment variable to disable Front-Commerce behaviors restricting HTTP usage in production, even though we strongly recommend you to expose your application through HTTPS.
 
 <blockquote class="note" id="note-https-cookies">
    In production, Front-Commerce will use the [`secure` mode for setting cookies](https://www.npmjs.com/package/express-session#cookiesecure) to force running the application in HTTPS.
-   If your production instance is not in HTTPS, you will encounter issues when logging in.
+   If your production instance is not in HTTPS, you will encounter issues when logging in. That is why Front-Commerce redirects user to the HTTPS version of a page in this case.
+   Use the `FRONT_COMMERCE_UNSAFE_INSECURE_MODE` documented above sparingly.
 </blockquote>
 
 ### Cache
