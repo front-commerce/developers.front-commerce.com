@@ -150,6 +150,8 @@ module.exports = {
 
 ## Customize remote HTTP requests
 
+By default, the user IP address is the only information forwarded to the remote service (using the `X-Forwarded-For` HTTP header).
+
 There might be situations where the remote service requires HTTP calls to match some criteria.
 For instance, you may have to provide an API key in all calls or an `Authorization` header to act as the currently logged in Customer.
 
