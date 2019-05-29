@@ -148,6 +148,13 @@ module.exports = {
   In this example, the `pokemons` root field will be renamed by default transforms as `Pokemon_pokemons`.
 </blockquote>
 
+## Customize remote HTTP requests
+
+There might be situations where the remote service requires HTTP calls to match some criteria.
+For instance, you may have to provide an API key in all calls or an `Authorization` header to act as the currently logged in Customer.
+
+Front-Commerce allows you to configure the underlying implementation (Apollo HTTP Link) using the [`remoteSchema.linkContextBuilders` GraphQL module definition key](/docs/reference/graphql-module-definition.html#linkContextBuilders-optional).
+
 ## Mix local and remote schemas
 
 A GraphQL module can expose both a remote schema and a local one with resolvers.

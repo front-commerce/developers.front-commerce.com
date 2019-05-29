@@ -273,10 +273,11 @@ module.exports = {
   _This feature has been added in version `1.0.0-beta.3`_
 </blockquote>
 
-The `linkContextBuilders` key allows you to optionally modify the [HTTP Link context](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#context) for each request.
+The `linkContextBuilders` key allows you to optionally modify the underlying [Apollo’s HTTP Link context](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#context) for each request. Please note that the HTTP Link context is different from the [GraphQL Context](/docs/reference/graphql-context.html) (even if they share the same term!).
+
 It should be a list of functions that will enrich the context with the value they return.
 
-One of the most common usage for instance would be to authenticate remote requests by adding a `Authorization` header to requests. Context builders functions will receive the Front-Commerce GraphQL context so they could implement a wide range of logic based on the current HTTP Request or loaders.
+One of the most common usage for instance would be to authenticate remote requests by adding a `Authorization` header to requests. Context builders functions will receive the [Front-Commerce GraphQL context](/docs/reference/graphql-context.html) so they could implement a wide range of logic based on the current HTTP Request or loaders.
 
 Example:
 
