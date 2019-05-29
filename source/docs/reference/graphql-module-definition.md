@@ -284,7 +284,7 @@ Example:
 ```js
 // […]
 const authenticateRequest = context => {
-  const authService = makeAuthServiceFromRequest(context.httpRequest || {});
+  const authService = makeAuthServiceFromRequest(context.req || {});
   if (authService.isAuthenticated()) {
     return {
       headers: {

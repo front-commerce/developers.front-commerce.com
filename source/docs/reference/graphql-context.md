@@ -34,9 +34,9 @@ module.exports = {
 See [Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html) to understand how to leverage this value.
 
 
-## `httpRequest`
+## `req`
 
-The `httpRequest` key contains the current HTTP request (from [Express server](https://expressjs.com/en/api.html#req)) having triggered the GraphQL query.
+The `req` key contains the current HTTP request (from [Express server](https://expressjs.com/en/api.html#req)) having triggered the GraphQL query.
 
 It could be useful in some specific cases, but we generally recommend **NOT TO** use it directly. Resolvers should to use [`loaders`](#loaders) instead.
 
