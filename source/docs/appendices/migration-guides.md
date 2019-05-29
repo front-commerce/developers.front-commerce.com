@@ -7,6 +7,23 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backword compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `1.0.0-beta.0` -> `1.0.0-beta.3`
+
+`1.0.0-beta.1` and `1.0.0-beta.2` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
+
+If you are migrating from a `1.0.0-beta` version to the `1.0.0-beta.3`, here is the guide.
+
+### HTTPS
+
+We wanted to explicitely prevent usage of Front-Commerce in production mode in a non secured environment. From now on, accessing an application in production mode using the `http` protocol will automatically redirect to `https`.
+
+If you experience issues after the upgrade, here are the things to ensure:
+
+- start the application with the [`FRONT_COMMERCE_UNSAFE_INSECURE_MODE`](/docs/reference/environment-variables.html#Front-Commerce-related-variables) set to `true` to see if that solves your issue
+- if the above manipulation worked, ensure that your proxy (if any) forwards the protocol using the `X-Forwarded-Proto` HTTP header
+
+If you still experience issues, please [contact us](mailto:support@front-commerce.com).
+
 ## `1.0.0-alpha.2` -> `1.0.0-beta.0`
 
 ### Versions
