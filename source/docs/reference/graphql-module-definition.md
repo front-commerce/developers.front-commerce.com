@@ -266,3 +266,41 @@ module.exports = {
   }
 };
 ```
+
+### `linkContextBuilders` (optional)
+
+<blockquote class="feature--new">
+  _This feature has been added in version `1.0.0-beta.3`_
+</blockquote>
+
+The `linkContextBuilders` key allows you to optionally modify the [HTTP Link context](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#context) for each request.
+It should be a list of functions that will enrich the context with the value they return.
+
+One of the most common usage for instance would be to authenticate remote requests by adding a `Authorization` header to requests. Context builders functions will receive the Front-Commerce GraphQL context so they could implement a wide range of logic based on the current HTTP Request or loaders.
+
+Example:
+
+```js
+// […]
+const authenticateRequest = context => {
+  const authService = makeAuthServiceFromRequest(context.httpRequest || {});
+  if (authService.isAuthenticated()) {
+    return {
+      headers: {
+        Authorization: `Bearer ${authService.getAuthToken()}`
+      }
+    };
+  }
+  return {};
+};
+
+// […]
+module.exports = {
+  namespace: "Acme/RemoteFeature",
+  remoteSchema: {
+    uri: "https://remote-feature.acme.org/graphql",
+    // […]
+    linkContextBuilders: [authenticateRequest]
+  }
+};
+```
