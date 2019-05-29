@@ -22,7 +22,7 @@ You can't update these variables only by updating your server's variable. This c
 
 * If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
     * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to make a new `front-commerce build`
-    * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server 
+    * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
 * If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
     * 🚫 You need to make a new `front-commerce build` and restart your server
 
