@@ -11,6 +11,7 @@ This page lists the public releases will let you know what's important if you ne
 > * WYSIWYG improvement with widgets support
 > * Stripe payment improvements
 > * Remote schema improvements (authentication…)
+> * Config files fallback mechanisms between modules
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-beta.3)
 
