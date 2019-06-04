@@ -88,7 +88,7 @@ We also made a few bugfixes such as:
 
 ## See it live!
 
-The online demo has been updated and will let you see how things have evolved since then. This is quite an update since we didn't have the opporunity to deploy the demo since 0.14 (june 2018)!
+The online demo has been updated and will let you see how things have evolved since then. This is quite an update since we didn't have the opportunity to deploy the demo since 0.14 (june 2018)!
 
 <figure>
 ![./images/demo-diff.png](/images/blog/demo-diff.png)
