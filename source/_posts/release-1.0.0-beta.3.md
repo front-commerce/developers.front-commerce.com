@@ -59,6 +59,12 @@ christmas
         ├── ………
 ```
 
+### Improved embedded payments
+
+In previous versions, embedded payments such as Stripe or Payzen needed two steps to place an order : one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly.
+
+We also upgraded Stripe and Payzen to their latest versions to make sure that your customers have the best payment experience.
+
 ## Bugfixes
 
 We also made a few bugfixes such as:
@@ -72,7 +78,7 @@ The first projects have been started and we plan to merge the feature branch in 
 
 An online demo will also be deployed so you could have a look at a real instance!
 
-<a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to keep my Magento 1 and give it superpowers!">Contact us now to discuss about a PWA with Magento 1!</a>
+<a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to keep my Magento1 and give it superpowers!">Contact us now to discuss about a PWA with Magento 1!</a>
 
 ## And more
 
