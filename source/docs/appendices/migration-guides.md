@@ -24,6 +24,16 @@ If you experience issues after the upgrade, here are the things to ensure:
 
 If you still experience issues, please [contact us](mailto:support@front-commerce.com).
 
+### Embedded Payments
+
+Previously, when a payment needed to set custom information, there were two steps: one for validating the payment information, and one for placing the order.
+
+This is no longer the case, but this means that AddtionalPaymentInformation components need to use the new behavior, which is to use `theme/modules/Checkout/Payment/SubmitPayment` when validating the additional payment information.
+
+You will need to do so if you are using Stripe or Payzen and have customized how these forms are displayed in an existing project. If you need help, please feel free to [contact us](mailto:support@front-commerce.com).
+
+Please note that if you made some changes to some payments only because you wanted to change the submit button, this will no longer be needed. You will be able to remove your override, and only override `theme/modules/Checkout/Payment/SubmitPayment`. The additional benefit is that it will let you have the exact same submit button across all your payment methods.
+
 ## `1.0.0-alpha.2` -> `1.0.0-beta.0`
 
 ### Versions

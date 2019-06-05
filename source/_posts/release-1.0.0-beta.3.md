@@ -59,6 +59,12 @@ christmas
         ├── ………
 ```
 
+### Improved embedded payments
+
+In previous versions, embedded payments such as Stripe or Payzen needed two steps to place an order : one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly.
+
+We also upgraded Stripe and Payzen to their latest versions to make sure that your customers have the best payment experience.
+
 ## Bugfixes
 
 We also made a few bugfixes such as:
