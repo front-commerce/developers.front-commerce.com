@@ -5,7 +5,7 @@ title: Migration Guides
 
 This area will contain the Migration steps to follow for upgrading your store to new Front-Commerce versions.
 
-Our goal is to make migrations as smooth as possible. This is why we try to make many changes backword compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
+Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
@@ -15,7 +15,7 @@ If you are migrating from a `1.0.0-beta` version to the `1.0.0-beta.3`, here is 
 
 ### HTTPS
 
-We wanted to explicitely prevent usage of Front-Commerce in production mode in a non secured environment. From now on, accessing an application in production mode using the `http` protocol will automatically redirect to `https`.
+We wanted to explicitly prevent usage of Front-Commerce in production mode in a non secured environment. From now on, accessing an application in production mode using the `http` protocol will automatically redirect to `https`.
 
 If you experience issues after the upgrade, here are the things to ensure:
 
@@ -97,7 +97,7 @@ If you relied on them, you will now need to add them manually. We are still in t
 
 * Environment variables from your `.env` will in the future be loaded dynamically. You won't need to rebuild your server to update your server's environment variables. To ensure that you have the newest behavior, please set `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true`. To keep the deprecated one, please use `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false`. See [How to update environment variables](/docs/reference/environment-variables.html#How-to-update-environment-variables).
 * While upgrading the search behavior, we have also changed deprecated the `search.blacklistKeys` configuration in `config/website.js`. This now should be `search.ignoredAttributeKeys` which is less offensive and more explicit. Moreover, `search.fixedFacets` and `search.categoriesField` are no longer used.
-* While upgrading the search behavior, we have splitted the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This  means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
+* While upgrading the search behavior, we have split the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This  means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
 
 ## Branching model
 
@@ -136,7 +136,7 @@ On your part, the changes that will affect you the most are about the following 
 - `<Input>`: changed input classes
 - `<NumberInput>`: changed the style to add +/- buttons next to the input button.
 
-You should also check that if you have overriden some of the other components.
+You should also check that if you have overridden some of the other components.
 
 ### Variant properties
 
@@ -153,7 +153,7 @@ These changes are backward compatible. Deprecation warnings will appear if you k
 
 ### Files loading in a Scss file
 
-Until now, files used in a `.scss` file were to be loaded from the public directory or by using long and tidious file paths. This is no longer the case. You can now use relative imports.
+Until now, files used in a `.scss` file were to be loaded from the public directory or by using long and tedious file paths. This is no longer the case. You can now use relative imports.
 
 For instance, if you have a `theme/components/atoms/Icon/_Icon.scss` file, you will be able to import the font file directly:
 
@@ -206,7 +206,7 @@ Please refer to the translations files in the core of front-commerce to get the 
 
 #### Styles
 
-If you have overriden the `theme/modules/_modules.scss` file and didn't import the `front-commerce/src/web/theme/modules/_modules.scss` file, you will need to add the new styles for the Cart:
+If you have overridden the `theme/modules/_modules.scss` file and didn't import the `front-commerce/src/web/theme/modules/_modules.scss` file, you will need to add the new styles for the Cart:
 
 ```diff
 +@import "~theme/modules/Cart/EmptyCart/EmptyCart";
@@ -222,7 +222,7 @@ If you have overriden the `theme/modules/_modules.scss` file and didn't import t
 -@import "~theme/modules/Cart/ProductItemCart/ProductItemCart";
 ```
 
-If you have overriden the `theme/components/_components.scss` file and didn't import the `front-commerce/src/web/theme/components/_components.scss` file, you will need to add the new styles for the new components that have been added for the Cart's modules:
+If you have overridden the `theme/components/_components.scss` file and didn't import the `front-commerce/src/web/theme/components/_components.scss` file, you will need to add the new styles for the new components that have been added for the Cart's modules:
 
 ```diff
 +@import "~theme/components/atoms/Typography/Sku/Sku";

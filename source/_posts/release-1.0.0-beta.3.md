@@ -72,7 +72,7 @@ The first projects have been started and we plan to merge the feature branch in 
 
 An online demo will also be deployed so you could have a look at a real instance!
 
-<a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to keep my Magento 1 and give it superpowers!">Contact us now to discuss about a PWA with Magento 1!</a>
+<a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to keep my Magento1 and give it superpowers!">Contact us now to discuss about a PWA with Magento 1!</a>
 
 ## And more
 
