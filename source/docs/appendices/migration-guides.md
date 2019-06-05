@@ -28,7 +28,7 @@ If you still experience issues, please [contact us](mailto:support@front-commerc
 
 Previously, when a payment needed to set custom information, there were two steps: one for validating the payment information, and one for placing the order.
 
-This is no longer the case, but this means that AddtionalPaymentInformation components need to use the new behavior, which is to use `theme/modules/Checkout/Payment/SubmitPayment` when validating the additional payment information.
+This is no longer the case, which improves the Customer experience. But this means that AddtionalPaymentInformation components need to use the new behavior, which is to use `theme/modules/Checkout/Payment/SubmitPayment` when validating the additional payment information.
 
 You will need to do so if you are using Stripe or Payzen and have customized how these forms are displayed in an existing project. If you need help, please feel free to [contact us](mailto:support@front-commerce.com).
 
