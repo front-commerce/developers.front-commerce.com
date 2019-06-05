@@ -3,7 +3,7 @@ title: "Release: 1.0.0-beta.3"
 date: 2019-06-05
 ---
 
-Front-Commerce `1.0.0-beta.3` has been released with several improvements: bla bla bla…
+Front-Commerce `1.0.0-beta.3` has been released with several improvements: better embedded payment experience, customizable WYSIWYG components, configurations override…
 
 Two smaller bugfixes releases have been tagged since `1.0.0-beta.0` so that some projects could move forward faster, but they did not contain any significant changes.
 
@@ -12,6 +12,20 @@ Two smaller bugfixes releases have been tagged since `1.0.0-beta.0` so that some
 ## New features
 
 Even though we are still in our `beta` releases, we don't want to slow down our customers and keep on adding the features they need.
+
+### Improved embedded payments
+
+In previous versions, embedded payments such as Stripe or Payzen needed two steps to place an order : one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly.
+
+We also upgraded Stripe and Payzen to their latest versions to make sure that your customers have the best payment experience.
+
+### Highly customizable Wysiwyg components
+
+Nowadays, merchants need to contribute their content in an attractive way. They can't just add walls of text. This is why in Front-Commerce we have a `Wysiwyg` component that lets you parse the content of your backoffice and transforms it in a React component. This gives you all the freedom you need to contribute interactive content.
+
+However, this component was a bit tough to customize in its previous versions. So we have revamped its API to make sure that you can customize it as much as you want. See [WYSIWYG documentation](/docs/advanced/theme/wysiwyg.html) for more details.
+
+This was also an opportunity to support a wider range of Magento's features. For instance, we now support [Widgets](https://www.toptal.com/magento/custom-widgets-in-magento-2) in Magento. Any contributed widget will be parsed and then render a React component that you can customize depending on your needs. See [Magento's WYSIWYG supported features](/docs/advanced/theme/wysiwyg.html#Magento-theme-modules-Wysiwyg-MagentoWysiwyg) for more details. 
 
 ### Load configuration files from parent modules
 
@@ -59,17 +73,21 @@ christmas
         ├── ………
 ```
 
-### Improved embedded payments
+### And more minor features
 
-In previous versions, embedded payments such as Stripe or Payzen needed two steps to place an order : one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly.
+And a few more features such as:
 
-We also upgraded Stripe and Payzen to their latest versions to make sure that your customers have the best payment experience.
+* Auto redirect HTTP requests to HTTPS in production mode ([see more details](/docs/appendices/migration-guides.html#HTTPS))
+* Improved schema stitching by custom headers and authenticated requests ([see more details](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests))
+* Expose a product's short description in the GraphQL schema thanks to one of our partners contribution! 🎉
 
 ## Bugfixes
 
 We also made a few bugfixes such as:
 
-* TODO
+* Fix display of order statuses in a user's account
+* Fix coupon deletion from cart
+* Fix stories detection when using multiple modules
 
 ## Magento1 support in progress
 
