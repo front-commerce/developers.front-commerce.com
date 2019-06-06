@@ -155,6 +155,7 @@ Here is a list of available debug namespaces:
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
+- `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 
 ## Add your own environment variables
 
