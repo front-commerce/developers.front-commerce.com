@@ -1,6 +1,6 @@
 ---
 title: "Release: 1.0.0-beta.3"
-date: 2019-06-05
+date: 2019-06-06
 ---
 
 Front-Commerce `1.0.0-beta.3` has been released with several improvements: better embedded payment experience, customizable WYSIWYG components, configurations override…
