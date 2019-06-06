@@ -5,6 +5,8 @@ date: 2019-06-05
 
 Front-Commerce `1.0.0-beta.3` has been released with several improvements: better embedded payment experience, customizable WYSIWYG components, configurations override…
 
+We also want to thank our partner [PH2M](https://www.ph2m.com) for their first PRs, and [Webqam](https://www.webqam.fr) and [Occitech](https://www.occitech.fr) for their contributions. This release is the first one with PR merged from partners!
+
 Two smaller bugfixes releases have been tagged since `1.0.0-beta.0` so that some projects could move forward faster, but they did not contain any significant changes.
 
 <!-- more -->
@@ -15,9 +17,11 @@ Even though we are still in our `beta` releases, we don't want to slow down our 
 
 ### Improved embedded payments
 
-In previous versions, embedded payments such as Stripe or Payzen needed two steps to place an order : one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly.
+In previous versions, embedded payments such as Stripe or Payzen needed two clicks for placing an order: one to validate the payment's information, and another to place the order. We have improved this behavior and the user now only needs to submit its payment, and this will place the order directly in one click.
 
 We also upgraded Stripe and Payzen to their latest versions to make sure that your customers have the best payment experience.
+
+Finally, Stripe integration has been improved to create Stripe Customers entities upon payments so merchants could identify them more easily. We also introduced ways to customize the data sent to Stripe so developers could add any additional metadata to Stripe Customers and PaymentIntents entities (each project may have its own requirements).
 
 ### Highly customizable Wysiwyg components
 
@@ -78,8 +82,8 @@ christmas
 And a few more features such as:
 
 * Auto redirect HTTP requests to HTTPS in production mode ([see more details](/docs/appendices/migration-guides.html#HTTPS))
-* Improved schema stitching by custom headers and authenticated requests ([see more details](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests))
-* Expose a product's short description in the GraphQL schema thanks to one of our partners contribution! 🎉
+* Improved schema stitching from developers feedbacks to allow custom headers and authenticated requests ([see more details](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests))
+* Expose a product's short description in the GraphQL schema
 
 ## Bugfixes
 
