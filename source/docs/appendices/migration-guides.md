@@ -34,6 +34,38 @@ You will need to do so if you are using Stripe or Payzen and have customized how
 
 Please note that if you made some changes to some payments only because you wanted to change the submit button, this will no longer be needed. You will be able to remove your override, and only override `theme/modules/Checkout/Payment/SubmitPayment`. The additional benefit is that it will let you have the exact same submit button across all your payment methods.
 
+### Magento 2 Authenticated Remote schema stitching
+
+If you had a custom remote schema stitching module with Magento 2, you could reuse the authentication middleware from Front-Commerce to access resources under the currently logged in user by leveraging the [new HTTP headers customization feature](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests).
+
+Here is how it might look:
+
+```diff
+const { FilterRootFields } = require("graphql-tools");
++const authenticateRequest = require("server/modules/magento2-graphql/authenticateRequest");
+
+const m2GraphQLEndpoint =
+  process.env.FRONT_COMMERCE_MAGENTO_ENDPOINT + "/graphql";
+
+module.exports = {
+  namespace: "Acme/Magento2GraphQL",
+  dependencies: ["Magento2GraphQL"],
+  remoteSchema: {
+    uri: m2GraphQLEndpoint,
+    transforms: [
+      new FilterRootFields(
+        (operation, rootField) =>
+-          operation === "Query" && rootField === "myField"
++          operation === "Query" && rootField === "myField" ||
++          operation === "Query" && rootField === "customer"
+      )
+-    ]
++    ],
++    linkContextBuilders: [authenticateRequest()]
+  }
+};
+```
+
 ## `1.0.0-alpha.2` -> `1.0.0-beta.0`
 
 ### Versions
