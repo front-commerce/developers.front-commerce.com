@@ -87,6 +87,16 @@ module.exports = {
 
 To configure which login/password to use with the Basic Authentication, setup the file `.htpasswd` at the root of your project.
 
+#### `headers`
+
+The `headers` configuration in `config/httpAuth.js` exists to let the server know how to retrieve the client's IP (for logging and debugging purpose). This is because most node servers are behind proxies that pass the client's IP as a HTTP request header.
+
+Thus, if you are indeed behind a proxy, you must make sure that:
+1. The client's IP is passed within a header
+2. the `headers` array contains the header's key
+
+By default most proxies are setting either `x-real-ip` or `x-forwarded-for`. So that's a sane default. But if you have some issues retrieving the client's IP, please check that those headers are correctly configured within your proxy.
+
 ### `config/hardcodedSitemap.js`
 
 Allows to define static routes within your application that aren't already fetched dynamically from your backend. Each object should match the Sitemapable interface of `src/server/model/store/schema.gql`
