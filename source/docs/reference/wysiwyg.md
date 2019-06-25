@@ -11,7 +11,7 @@ For a tangible example and explanation, please refer to [Display WYSIWYG content
 
 * `option`: the first parameter is an object with the following properties
     * `richTextPropName` string (default: `"content"`): the name of the new property which contains the `html` when using the enhanced component.
-    * `shortcodes` function: a function that returns the list of shortcodes used in the WYSIWYG. Each shortcode is an object which contains the keys:
+    * `shortcodes` function: a function that takes the props of your component and that returns the list of shortcodes used in the WYSIWYG. Each shortcode is an object which contains the keys:
         * `regex` RegExp: the regex that allows to match the shortcode within the HTML
         * `replacement` (second argument of [String.prototype.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)): how should the matched string be replaced
     * `transforms` array: the list of transforms that should be applied to your HTML. Each transform is a function with the following signature `(node, convertNodeToElement) => null|ReactElement` where:
@@ -28,7 +28,7 @@ For a tangible example and explanation, please refer to [Display WYSIWYG content
 import EnhanceWysiwyg from "theme/modules/Wysiwyg/EnhanceWysiwyg"
 
 EnhanceWysiwyg({
-  shortcodes: () => [
+  shortcodes: (props) => [
     {
       regex: /{{custom-shortcode}}/gi,
       replacement: "<custom-element></custom-element>"
