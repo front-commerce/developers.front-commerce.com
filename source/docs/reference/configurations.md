@@ -21,7 +21,7 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 **Security Notice:** Please keep in mind that most of these configurations are imported and bundled into your client application. Thus it is important to not include private configurations in them, and to use [environment variables](/docs/reference/environment-variables.html#Add-your-own-environment-variables) instead.
 </blockquote>
 
-## `config/website.js`
+### `config/website.js`
 
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
@@ -120,4 +120,28 @@ Available values are : "products", "categories" and "pages".
 
 ```js
 module.exports = ["products", "categories", "pages"];
+```
+
+### `config/caching.js`
+
+Allows to define configurations related to dataloader caching and implementation
+
+<blockquote class="wip">
+**Work In Progress:** more details about specific configurations will be detailed as part of https://github.com/front-commerce/developers.front-commerce.com/issues/49. If you need it right away, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+</blockquote>
+
+* `DEFAULT_MAX_BATCH_SIZE`: default batch size used for dataloaders (unless specified during instanciation). Default: 100
+* `redis`: redis strategy configuration for the [redis-dataloader](https://github.com/DubFriend/redis-dataloader) instance
+
+```js
+module.exports = {
+  DEFAULT_MAX_BATCH_SIZE: 100,
+  redis: {
+    caches: "*", // or ["LoaderKeyA", "LoaderKeyB"]
+    disabled: ["CatalogPrice"],
+    config: {
+      host: "127.0.0.1"
+    }
+  }
+};
 ```
