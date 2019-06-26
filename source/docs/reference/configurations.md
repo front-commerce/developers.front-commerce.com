@@ -131,7 +131,7 @@ Allows to define configurations related to dataloader caching and implementation
 </blockquote>
 
 * `DEFAULT_MAX_BATCH_SIZE`: default batch size used for dataloaders (unless specified during instanciation). Default: 100
-* `redis`: redis strategy configuration
+* `redis`: redis strategy configuration for the [redis-dataloader](https://github.com/DubFriend/redis-dataloader) instance
 
 ```js
 module.exports = {
@@ -140,7 +140,6 @@ module.exports = {
     caches: "*", // or ["LoaderKeyA", "LoaderKeyB"]
     disabled: ["CatalogPrice"],
     config: {
-      // host: "redis"
       host: "127.0.0.1"
     }
   }
