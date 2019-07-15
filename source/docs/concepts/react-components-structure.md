@@ -30,7 +30,7 @@ But what does that mean? Where should we put our components?
   [Atomic Design principles](http://bradfrost.com/blog/post/atomic-web-design/)
 - Business components are components that are used once which contain complex
   [business logic](https://en.wikipedia.org/wiki/Business_logic). They are
-  splitted in two: the pages entry point and the modules which can be reused in
+  split in two: the pages entry point and the modules which can be reused in
   multiple pages.
 
 In order to understand why, let's go through the history of Front-Commerce.
@@ -86,7 +86,7 @@ src/
 ## Step 3: Split business and UI logic
 
 The core product continued to grow, we had more and more components and the sun
-was shiny. But after a while we felt that the theme was inconsistent. Even
+was shining. But after a while we felt that the theme was inconsistent. Even
 though it was the whole point of Atomic Design, we failed at building a
 homogeneous theme.
 
@@ -147,9 +147,9 @@ src/
 
 Learn more about:
 
-* [/src/web/theme/components](/docs/essentials/create-a-ui-component.html): the UI Components
-* [/src/web/theme/modules](/docs/essentials/create-a-business-component.html): the Business Components
-* [/src/web/theme/pages](/docs/essentials/add-a-page-client-side.html): the Pages Components
+- [/src/web/theme/components](/docs/essentials/create-a-ui-component.html): the UI Components
+- [/src/web/theme/modules](/docs/essentials/create-a-business-component.html): the Business Components
+- [/src/web/theme/pages](/docs/essentials/add-a-page-client-side.html): the Pages Components
 
 ## What's next?
 

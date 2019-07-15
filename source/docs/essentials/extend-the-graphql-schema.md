@@ -119,6 +119,7 @@ It is important to name things with a language shared by the team and prevent
 exposing implementation details (ids, different names…) as much as possible. We
 recommend the reading of the GraphQL documentation page
 [Thinking in Graphs](https://graphql.github.io/learn/thinking-in-graphs/).
+
 <!-- TODO Add a link to detailed explanations about ids and Apollo Client cache -->
 
 Let’s add the code to expose a counter field and a mutation in our graph.
