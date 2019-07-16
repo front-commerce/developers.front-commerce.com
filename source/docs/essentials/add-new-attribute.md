@@ -9,13 +9,13 @@ Let's say we want to add a new element to display on a product's page (for insta
 2. Create a new module.
 3. Define the schema, implement the resolver and display it on screen.
 
-## Add a value to your database.
+## Add a value to your database
 
 The process to do so may vary with the backend software you are using. For Magento 2 (used in this example), you can refer to [this](https://www.fastcomet.com/tutorials/magento2/product-attributes).
 
 ## Create a new GraphQL module
 
-We want to add a **User rate** feature to a product page. This feature will be stored in a new module called `mymodule` ; you could directly edit the files at `node_modules/front-commerce/path/to/something`, but this is deprecated.
+We want to display the `rate` of a product on the product page. To keep it simple, it will only consist in displaying a number, the value can be manually edited by the merchant. This feature will be stored in a new module called `mymodule` ; you could directly edit the files at `node_modules/front-commerce/path/to/something`, but this is not recommended since running `npm install` might erase any modification.
 Learn more about Front-Commerce's folder structure [here](/docs/concepts/front-commerce-folder-structure.md).
 
 ```bash
@@ -23,7 +23,7 @@ mkdir mymodule
 cd mymodule
 ```
 
-In this example, the files we are going to override are located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`, so will create in our `mymodule` folder the following directories:
+In this example, the files we are going to override are located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`, so will create in our `mymodule` folder the following directories. More details [here](/docs/essentials/extend-the-graphql-schema.html).
 
 ```bash
 mkdir -p server/modules/acme
@@ -33,18 +33,18 @@ mkdir -p server/modules/acme
 
 ### Expand the Product definition
 
-Create a file named `schema.gql` and type in the following code. It means that we are expanding the definition of a product : it can now be rated.
+Create a file named `schema.gql` and type in the following code. It means that we are expanding the definition of a product: it can now be rated.
 
 ```js
 // mymodule/server/modules/acme/schema.gql
 extend type Product {
-  rate: String
+  rate: Float
 }
 ```
 
 ### Implement the resolver
 
-We must now define what Front-Commerce should fetch when `rate` is requested in a GraphQL query ; in other words we must write the code that will **resolve** the queries for the rates.
+We must now define what Front-Commerce should fetch when `rate` is requested in a GraphQL query; in other words we must write the code that will **resolve** the queries for the rates.
 
 Create a file named `resolvers.js` and type in the following code. It implements the resolver.
 
@@ -53,7 +53,7 @@ Create a file named `resolvers.js` and type in the following code. It implements
 export default {
   Product: {
     rate: parent => {
-      return parent.rate;
+      return parseFloat(parent.rate);
     }
   }
 };
@@ -61,11 +61,9 @@ export default {
 
 ### Index our changes
 
-aaaaa
-
 If we want our code to be taken into account when the module is loaded, we must index it.
 
-Create a file named `index.js` and type in the following code. It indexes the schema and the resolver from earlier.
+In the file named `index.js`, type in the following code. It indexes the schema and the resolver from earlier.
 
 ```js
 // mymodule/server/modules/acme/index.js
@@ -79,13 +77,39 @@ export default {
 };
 ```
 
+## Discover the playground
+
+By typing `yourhostname/playground` or `yourhostname/graphiql` (in our case `localhost:4000/playground`) in your browser address bar, you can access a GraphQL playground with a nice GUI to test your queries. For instance, type the following code in the left pane and press `Ctrl` + `Enter` (or click the arrow button)
+
+```graphql
+{
+  product(sku: "yourSKUhere") {
+    name
+    rate
+  }
+}
+```
+
+From this GraphQL query, you should get a JSON content that looks like this:
+
+```json
+{
+  "data": {
+    "product": {
+      "name": "Your product name",
+      "rate": // the value stored in your backoffice (Magento 2 in this case)
+    }
+  }
+}
+```
+
 ### Overriding the files
 
-In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into your folder.
+In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.
 
 ### Making the query
 
-In `ProductSynthesisFragment;gql`, add the following query line. It means that the application will request the `rate` field as well when sending the query. (Depending on the version of Front-Commerce you are using, the content might differ slightly.)
+In `ProductSynthesisFragment.gql`, add the following query line. It means that the application will request the `rate` field as well when sending the query. (Depending on the version of Front-Commerce you are using, the content might differ slightly.)
 
 ```diff
 #import "theme/components/organisms/Configurator/ProductConfiguratorFragment.gql"
@@ -113,9 +137,9 @@ fragment ProductSynthesisFragment on Product {
 
 ### Displaying the result on screen
 
-We're almost there! In the file `Synthesis.js` (which generates the product page), you can add some code to display the `rate`. Knowing React.js or at least HTML syntax is necessary to perform this step without screwing the other items on the page.
+We're almost there! In the file `Synthesis.js` (which generates the product page), you can add some code to display the `rate`. Knowing React.js or at least HTML syntax is necessary to perform this step without impacting other items on the page.
 
-```js
+```diff
 // Many more things here
 const ProductSynthesis = props => {
   const {
@@ -125,7 +149,7 @@ const ProductSynthesis = props => {
   return (
     <div className="product__synthesis">
       {/* Many more things here */}
-      <p>Rate: {product.rate} / 5</p>
++     <div>Rate: {product.rate} / 5</div>
       {/* Many more things here */}
     </div>
   );
@@ -134,9 +158,9 @@ const ProductSynthesis = props => {
 export default ProductSynthesis;
 ```
 
-## Add the module
+## Add the module to Front-Commerce
 
-Last step: adding the module we just made to Front-Commerce. Edit the `.front-commerce.js` file (root folder) as shown below to do so:
+Last step: adding the module we just made to Front-Commerce. Edit the `.front-commerce.js` file (root folder) as shown below to do so.
 
 ```diff
 module.exports = {
@@ -146,13 +170,9 @@ module.exports = {
 + modules: ["./mymodule", "./src"],
   serverModules: [
     { name: "FrontCommerce", path: "server/modules/front-commerce" },
-    { name: "Magento2", path: "server/modules/magento2" },
+-   { name: "Magento2", path: "server/modules/magento2" }
++   { name: "Magento2", path: "server/modules/magento2" },
 +   { name: "Acme", path: "./mymodule/server/modules/acme" }
   ]
 };
-
 ```
-
-## Additional note
-
-This page has been redacted by an intern, who is also a rookie in React, GraphQL, Front-Commerce, and Web development in general. Please, don't be mad at me, I did my best! :)

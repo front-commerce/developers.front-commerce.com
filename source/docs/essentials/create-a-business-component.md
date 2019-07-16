@@ -31,7 +31,7 @@ reinsurance banner, etc.
 Quickly, you will want to **extract** some components from your page to avoid a
 _big bloated file_. Some of these components will be extracted as **reusable UI
 components** but some are very specific to your page and there is no reason to
-put them in the [`components` folder](create-a-ui-component.html).
+put them in the [`components`](create-a-ui-component.html) folder.
 
 <blockquote class="note">
 They are often a mix between UI components and custom layout. They may be
@@ -106,7 +106,6 @@ coordinates. Then we will extract the store locator feature in its own module
 component. And finally, we will fetch the actual coordinates from the
 **GraphQL schema**.
 
-
 The first working version will look like:
 
 ```jsx
@@ -127,7 +126,7 @@ const Home = ({ store }) => (
       style={{ height: "600px", width: "800px" }}
     >
       <TileLayer
-        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[43.584296, 1.44182]}>
@@ -170,7 +169,7 @@ const StoreLocator = props => {
       style={{ height: "600px", width: "800px" }}
     >
       <TileLayer
-        attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[43.584296, 1.44182]}>
@@ -190,9 +189,10 @@ export default StoreLocator;
 In order to make it consistent with other components in the application, we
 will add two more files:
 
-* `my-module/web/theme/modules/StoreLocator/index.js`: will proxy the `StoreLocator.js`
-file in order to be able to do imports on the folder directly. See [this blog post](http://bradfrost.com/blog/post/this-or-that-component-names-index-js-or-component-js/)
-for more context about this pattern.
+- `my-module/web/theme/modules/StoreLocator/index.js`: will proxy the `StoreLocator.js`
+  file in order to be able to do imports on the folder directly. See [this blog post](http://bradfrost.com/blog/post/this-or-that-component-names-index-js-or-component-js/)
+  for more context about this pattern.
+
 ```js
 // my-module/web/theme/modules/StoreLocator/index.js
 
@@ -201,10 +201,11 @@ import StoreLocator from "./StoreLocator";
 export default StoreLocator;
 ```
 
-* `my-module/web/theme/modules/StoreLocator/StoreLocator.story.js`:
-will add a story to the Storybook of your application. This will serve as living
-documentation and will allow anyone to understand what is StoreLocator used for and how
-to use it.
+- `my-module/web/theme/modules/StoreLocator/StoreLocator.story.js`:
+  will add a story to the Storybook of your application. This will serve as living
+  documentation and will allow anyone to understand what is StoreLocator used for and how
+  to use it.
+
 ```jsx
 // my-module/web/theme/modules/StoreLocator/StoreLocator.story.js
 
@@ -215,6 +216,7 @@ storiesOf("modules.StoreLocator", module).add("default", () => {
   return <StoreLocator />;
 });
 ```
+
     <blockquote class="note">
     We won't focus on the story in this guide. But you can refer to the
     [Storybook guide](/docs/essentials/add-component-to-storybook.html) to learn how to add any kind of stories
@@ -369,7 +371,7 @@ const StoreLocator = props => {
         style={{ height: "600px", width: "800px" }}
       >
         <TileLayer
-          attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={coordinates}>
