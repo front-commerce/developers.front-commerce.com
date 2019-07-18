@@ -47,6 +47,7 @@ sidebar_categories:
     - docs/magento2/overview
     - docs/magento2/graphql
     - docs/magento2/i18n
+    - docs/magento2/add-question-on-registration
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
