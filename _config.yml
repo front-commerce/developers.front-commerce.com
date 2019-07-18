@@ -14,7 +14,6 @@ sidebar_categories:
     - docs/essentials/create-a-business-component
     - docs/essentials/add-a-page-client-side
     - docs/essentials/extend-the-graphql-schema
-    - docs/essentials/add-new-attribute
   Theme:
     - docs/advanced/theme/overview
     - docs/advanced/theme/route-dispatcher
@@ -48,6 +47,7 @@ sidebar_categories:
     - docs/magento2/overview
     - docs/magento2/graphql
     - docs/magento2/i18n
+    - docs/magento2/add-new-attribute
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations

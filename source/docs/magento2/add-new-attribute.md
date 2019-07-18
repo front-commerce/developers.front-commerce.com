@@ -16,7 +16,7 @@ The process to do so may vary with the backend software you are using. For Magen
 ## Create a new GraphQL module
 
 We want to display the `rate` of a product on the product page. To keep it simple, it will only consist in displaying a number, the value can be manually edited by the merchant. This feature will be stored in a new module called `mymodule` ; you could directly edit the files at `node_modules/front-commerce/path/to/something`, but this is not recommended since running `npm install` might erase any modification.
-Learn more about Front-Commerce's folder structure [here](/docs/concepts/front-commerce-folder-structure.md).
+Learn more about Front-Commerce's folder structure [here](/docs/essentials/extend-the-theme.html).
 
 ```bash
 mkdir mymodule
@@ -30,6 +30,25 @@ mkdir -p server/modules/acme
 ```
 
 (Note that the `acme` name has been chosen arbitrarily.)
+
+## Add the module to Front-Commerce
+
+Now we will add the module we just made to Front-Commerce. Edit the `.front-commerce.js` file (root folder) as shown below to do so.
+
+```diff
+module.exports = {
+  name: "Front Commerce Skeleton",
+  url: "http://localhost:4000",
+- modules: ["./src"],
++ modules: ["./mymodule", "./src"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+-   { name: "Magento2", path: "server/modules/magento2" }
++   { name: "Magento2", path: "server/modules/magento2" },
++   { name: "Acme", path: "./mymodule/server/modules/acme" }
+  ]
+};
+```
 
 ### Expand the Product definition
 
@@ -59,11 +78,11 @@ export default {
 };
 ```
 
-### Index our changes
+### Declare the module
 
-If we want our code to be taken into account when the module is loaded, we must index it.
+If we want our code to be taken into account when the module is loaded, we must reference it.
 
-In the file named `index.js`, type in the following code. It indexes the schema and the resolver from earlier.
+In the file named `index.js`, type in the following code. It references the schema and the resolver from earlier.
 
 ```js
 // mymodule/server/modules/acme/index.js
@@ -107,7 +126,16 @@ From this GraphQL query, you should get a JSON content that looks like this:
 
 In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.
 
-### Making the query
+#### How to find which files to edit
+
+On your web page, right click on the element you wish to modify, then click on **Inspect Element**. In the inspector, you can look for the `className` that holds the elements you want to edit. Then you can search for that keyword in your `node_modules/front-commerce/src` folder and you will find the right files.
+
+We've included images to illustrate our example.
+![Inspector screenshot here](./assets/inspector-screenshot.png)
+
+![Synthesis screenshot here](./assets/synthesis-screenshot.png)
+
+### Updating the query
 
 In `ProductSynthesisFragment.gql`, add the following query line. It means that the application will request the `rate` field as well when sending the query. (Depending on the version of Front-Commerce you are using, the content might differ slightly.)
 
@@ -156,23 +184,4 @@ const ProductSynthesis = props => {
 };
 
 export default ProductSynthesis;
-```
-
-## Add the module to Front-Commerce
-
-Last step: adding the module we just made to Front-Commerce. Edit the `.front-commerce.js` file (root folder) as shown below to do so.
-
-```diff
-module.exports = {
-  name: "Front Commerce Skeleton",
-  url: "http://localhost:4000",
-- modules: ["./src"],
-+ modules: ["./mymodule", "./src"],
-  serverModules: [
-    { name: "FrontCommerce", path: "server/modules/front-commerce" },
--   { name: "Magento2", path: "server/modules/magento2" }
-+   { name: "Magento2", path: "server/modules/magento2" },
-+   { name: "Acme", path: "./mymodule/server/modules/acme" }
-  ]
-};
 ```
