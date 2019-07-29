@@ -91,7 +91,7 @@ We have introduced the mechanism of [Translation Fallback](https://developers.fr
 
 ### Improved search experience
 
-While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](http://localhost:4444/blog/2019/05/07/release-1.0.0-beta.0/#Improved-search-experience).
+While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](/blog/2019/05/07/release-1.0.0-beta.0/#Improved-search-experience).
 
 During this change, we needed to update some parts of the GraphQL schema. If you don't use our implementation, this won't impact you. However, if you do, here is what changed in the schema:
 
