@@ -402,7 +402,7 @@ StoreLocator.propTypes = {
 };
 
 // Let's not forget to use the Enhancer
-export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
+export default EnhanceStoreLocator({ StoreLocatoreQuery })(StoreLocator);
 ```
 
 <blockquote class="note">
