@@ -145,3 +145,11 @@ module.exports = {
   }
 };
 ```
+
+### `config/rateLimit.js`
+
+Allows to define configurations related to GraphQL rate limiting feature.
+
+* `store`: factory function to use a custom data store to support rate limiting memory
+
+See [Use a persistent store](/docs/advanced/graphql/rate-limiting.html#Use-a-persistent-store) for further information.
