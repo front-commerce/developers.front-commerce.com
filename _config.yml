@@ -25,6 +25,7 @@ sidebar_categories:
     - docs/advanced/graphql/meta-modules
     - docs/advanced/graphql/slim-down-resolvers-with-loaders
     - docs/advanced/graphql/remote-schemas
+    - docs/advanced/graphql/rate-limiting
   Checkout:
     - docs/advanced/checkout/overview
     - docs/advanced/checkout/add-custom-checkout-step
