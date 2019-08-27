@@ -19,20 +19,16 @@ We want to display the `rate` of a product on the product page. To keep it simpl
 
 <blockquote class="info">
 You could directly edit the files at `node_modules/front-commerce/path/to/something`, but this is not recommended since running `npm install` might erase any modification.
-Learn [how to extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html).
+You can learn [how to extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html).
 </blockquote>
 
-```bash
-mkdir mymodule
-```
-
-In this example, the files we are going to override are located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`, so will create in our `mymodule` folder the following directories. More details [here](/docs/essentials/extend-the-graphql-schema.html).
+Let's create a new module along with its folder structure. At the root of your repository, type the following command.
 
 ```bash
 mkdir -p mymodule/server/modules/ratings
 ```
 
-## Add the module to Front-Commerce
+### Add the module to Front-Commerce
 
 Now we will add the module we just made to Front-Commerce. Edit the `.front-commerce.js` file (root folder) as shown below to do so.
 
@@ -53,37 +49,35 @@ module.exports = {
 
 ### Expand the Product definition
 
-First, we need to tell the server how to customize the GraphQL schema. To do so, we will create a file named `schema.gql` and type in the following code. It means that we are expanding the definition of a product: it can now be rated.
+First, we need to tell the server how to customise the GraphQL schema. To do so, we will create a file named `schema.gql` and type the following code. It means that we are expanding the definition of a product: it can now be rated.
 
-```js
-// mymodule/server/modules/ratings/schema.gql
-extend type Product {
-  rate: Float
-}
+```diff
+# mymodule/server/modules/ratings/schema.gql
++extend type Product {
++  rate: Float
++}
 ```
 
 ### Implement the resolver
 
 We must now define what Front-Commerce should fetch when `rate` is requested in a GraphQL query; in other words we must write the code that will **resolve** the queries for the rates.
 
-Create a file named `resolvers.js` and type in the following code. It implements the resolver.
+Create a file named `resolvers.js` and type the following code. It implements the resolver.
 
 ```js
 // mymodule/server/modules/ratings/resolvers.js
 export default {
   Product: {
-    rate: {rate} => parseFloat(rate);
+    rate: ({ rate }) => parseFloat(rate)
   }
 };
 ```
-
-By default all the attributes are available in a product. It's just that they are not exposed on the GraphQL schema yet.
 
 ### Declare the module
 
 If we want our code to be taken into account when the module is loaded, we must reference it.
 
-In the file named `index.js`, type in the following code. It references the schema and the resolver from earlier.
+In the file named `index.js`, type the following code. It references the schema and the resolver from earlier.
 
 ```js
 // mymodule/server/modules/ratings/index.js
@@ -99,7 +93,12 @@ export default {
 
 ### Discover the playground
 
-By typing `yourhostname/playground` or `yourhostname/graphiql` (in our case `localhost:4000/playground`) in your browser address bar, you can access a GraphQL playground with a nice GUI to test your queries. For instance, type the following code in the left pane and press `Ctrl` + `Enter` (or click the **play** button). You will need to restart the application to access the updated schema in the playground.
+By typing `yourhostname/playground` or `yourhostname/graphiql` (in our case `localhost:4000/playground`) in your browser address bar, you can access a GraphQL playground with a nice GUI to test your queries. For instance, type the following code in the left pane and press `Ctrl` + `Enter` (or click the **play** button).
+
+**You will need to restart the application to access the updated schema in the playground.**
+
+And here is a screenshot of the GraphQL query.
+![GraphQL query screenshot to show how to request the rate of a product](./assets/graphiql-rate-screenshot.png)
 
 ```graphql
 {
@@ -123,19 +122,24 @@ From this GraphQL query, you should get a JSON content that looks like this:
 }
 ```
 
+## Display the attribute in a product page
+
+Now that you have access to your attribute, you can display it however you want in your React application. In this example, we will add it on the product's page, in the right section.
+
 ### How to find which files to edit
 
-On your web page, right click on the element you wish to modify, then click on **Inspect Element**. In the inspector, you can look for the `class` that holds the elements you want to edit. Here, the `class` is `product__synthesis`.
+On your web page, right click on the element you wish to edit, then click on **Inspect Element**. In the inspector, you can look for the `class` that holds the elements you want to edit. Here, the `class` is `product__synthesis`.
 
-![Alt: Inspector screenshot demonstrating that when you inspect a product page description, you find the product__sythesis class in the DOM](./assets/inspector-screenshot.png)
+![Inspector screenshot demonstrating that when you inspect a product page description, you find the product__sythesis class in the DOM](./assets/inspector-screenshot.png)
 
 Then you can search for that keyword in your `node_modules/front-commerce/src` folder and you will find the right files.
 
-![Alt: Synthesis screenshot that shows where to find the files given a `class` value](./assets/synthesis-screenshot.png)
+![Synthesis screenshot that shows where to find the files given a `class` value](./assets/synthesis-screenshot.png)
 
 ### Overriding the files
 
-In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.
+In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.  
+See [Extend the theme](/docs/essentials/extend-the-theme.html) for more details.
 
 ### Updating the query
 
@@ -166,7 +170,7 @@ fragment ProductSynthesisFragment on Product {
 ```
 
 <blockquote class="info">
-GraphQL queries can be split in Fragments and that each fragment is supposed to live next to a component in order to easily request all the data needed for your component. Thus, since we need to display some new data on the `ProductSynthesis` component, we update the `ProductSynthesisFragment`.
+GraphQL queries can be split in Fragments and each fragment is supposed to live next to a component in order to easily request all the data needed for your component. Thus, since we need to display some new data on the `ProductSynthesis` component, we update the `ProductSynthesisFragment`.
 </blockquote>
 
 ## Displaying the result on screen
@@ -196,9 +200,6 @@ export default ProductSynthesis;
 
 Here is a screenshot of the final result on the product page.
 
-![Alt: Product details screenshot with the rate of the product](./assets/product-details-screenshot.png)
-
-And here is a screenshot of the GraphQL query.
-![Alt: GraphQL query screenshot to show how to request the rate of a product](./assets/graphiql-rate-screenshot.png)
+![Product details screenshot with the rate of the product](./assets/product-details-screenshot.png)
 
 We suggest you try to add your own custom attribute, just to make sure you understood the concepts and you master the process.

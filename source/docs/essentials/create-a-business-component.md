@@ -460,4 +460,4 @@ view. Thus one team could split code differently. In this guide we have made a
 choice but feel free to make yours.
 
 In any case, we advice you to not overcomplicate things and find a method
-that match your needs.
+that matches your needs.
