@@ -12,6 +12,7 @@ most of the time you might find easier and faster to start with the base theme a
 iterate from there.
 
 **Theme override is the mechanism allowing to extend, adapt, rewrite almost everything contained in the base theme.** It is what allows you to:
+
 - customize the base theme,
 - customize how an extension is displayed,
 - upgrade Front-Commerce and benefit from the latest component improvements,
@@ -48,8 +49,8 @@ Then, we need to tell Front-Commerce that this module exists in your [`.front-co
 module.exports = {
   name: "Front Commerce",
   url: "http://www.front-commerce.test",
--  modules: [],
-+  modules: ["./my-module"],
+-  modules: ["./src"],
++  modules: ["./my-module", "./src"],
   serverModules: [
     // ...
   ]
@@ -81,6 +82,7 @@ The original fragment file is collocated with the original component at: [`node_
 
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
 2. add the field `description` to the fragment.
+
 ```diff
 // my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql
  fragment ProductItemFragment on Product {
@@ -91,6 +93,7 @@ The original fragment file is collocated with the original component at: [`node_
    imageUrl
    sku
 ```
+
 3. restart the application
 
 The data will now be fetched from GraphQL every time the `ProductItem` is used (product listings, upsells…) and will be available for you to render it as wanted.
@@ -125,12 +128,12 @@ In the file that we've created in the previous section, instead of copying the o
 import React from "react";
 import BaseProductItem from "front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js";
 
-const ProductItem = (props) => (
+const ProductItem = props => (
   <div>
     {/* Add your feature here */}
     <BaseProductItem {...props} />
   </div>
-)
+);
 
 export default ProductItem;
 ```
