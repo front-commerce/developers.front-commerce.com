@@ -10,7 +10,7 @@ These environment variables can be defined in two different ways:
 * in the `.env` file in your root folder
 
 You can then access them by using the `process.env` object in your javascript files no matter if it is a server-side or client-side file.
-However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*` which were defined during `front-commerce build`. See [Add your own environment variables](http://localhost:4444/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
+However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*` which were defined during `front-commerce build`. See [Add your own environment variables](/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
 
 ## How to update environment variables
 

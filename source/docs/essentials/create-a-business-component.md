@@ -327,7 +327,7 @@ is passed down to your component by `props`.
 
 But when dealing with asynchronous resources like fetching data from the backend,
 you have to handle the loading state and error state. Here we we will show
-a simple message such as "Loading..." or "Oops, an error occured." to the
+a simple message such as "Loading..." or "Oops, an error occurred." to the
 user. But in a real life application, you would want to show better messages
 depending on your context.
 
@@ -346,7 +346,7 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
-import StoreLocatoreQuery from "./StoreLocatorQuery.gql";
+import StoreLocatorQuery from "./StoreLocatorQuery.gql";
 import EnhanceStoreLocator from "./EnhanceStoreLocator";
 
 const StoreLocator = props => {
@@ -354,7 +354,7 @@ const StoreLocator = props => {
     return <div>Loading...</div>;
   }
   if (props.error) {
-    return <div>Oops, an error occured.</div>;
+    return <div>Oops, an error occurred.</div>;
   }
 
   const coordinates = [
@@ -404,7 +404,7 @@ StoreLocator.propTypes = {
 };
 
 // Let's not forget to use the Enhancer
-export default EnhanceStoreLocator(StoreLocatoreQuery)(StoreLocator);
+export default EnhanceStoreLocator({ StoreLocatorQuery })(StoreLocator);
 ```
 
 <blockquote class="note">
@@ -455,7 +455,7 @@ But for the sake of this guide, we kept it simple.
 </blockquote>
 
 As a final note, please keep in mind that splitting code is a difficult task.
-It needs practice and refinement. But it is also a pretty personnal point of
+It needs practice and refinement. But it is also a pretty personal point of
 view. Thus one team could split code differently. In this guide we have made a
 choice but feel free to make yours.
 
