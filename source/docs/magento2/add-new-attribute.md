@@ -141,6 +141,8 @@ Then you can search for that keyword in your `node_modules/front-commerce/src` f
 In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.  
 See [Extend the theme](/docs/essentials/extend-the-theme.html) for more details.
 
+Once you have created the new files, **restart your application** to ensure that these are used instead of the core ones.
+
 ### Updating the query
 
 In `mymodule/web/theme/modules/ProductView/Synthesis/ProductSynthesisFragment.gql`, add the following query line. It means that the application will request the `rate` field as well when sending the query. (Depending on the version of Front-Commerce you are using, the content might differ slightly.)
