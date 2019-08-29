@@ -16,7 +16,7 @@ The steps available in the checkout are defined in the file `theme/pages/Checkou
   // what should be displayed when showing the user the list of steps in a checkout
   renderProgressItem: (stepStatus, checkoutState) => ReactElement,
   // what should be displayed inside a step (mostly some forms relevant to your step)
-  renderStep: props => ReactElement, 
+  renderStep: props => ReactElement,
   // is the step finished (has the user defined all the data mandatory in your step ?)
   isValid: checkoutState => Boolean
   // is the step useful for this checkout state (should we display this step ?)
@@ -45,9 +45,10 @@ In some cases, you may not need to use the default steps available in Front-Comm
 To do so, you will need to reuse the `theme/modules/Checkout/withMultiStep` enhancer file defined in [`node_modules/front-commerce/src/web/theme/modules/Checkout/withMultiStep/`](https://gitlab.com/front-commerce/front-commerce/tree/85f1a8ef55a351f0feb9309c666992bbbb153993/src/web/theme/modules/Checkout/withMultiStep).
 
 This enhance takes 4 arguments:
-* `steps`: the steps definition as explained in the first part
-* `handlers`: the methods that should update the checkoutState. The goal is to have predictable methods to update the checkoutState
-* `initCheckoutState={}`: the initial checkoutState when the user opens the Checkout
-* `hasPersistantState=false`: defines if the state should be stored in the url state of the browser. This allows the user to refresh the page without losing the whole page, but depending on the data you store inside your checkoutState, that might not be possible
+
+- `steps`: the steps definition as explained in the first part
+- `handlers`: the methods that should update the checkoutState. The goal is to have predictable methods to update the checkoutState
+- `initCheckoutState={}`: the initial checkoutState when the user opens the Checkout
+- `hasPersistantState=false`: defines if the state should be stored in the url state of the browser. This allows the user to refresh the page without losing the whole page, but depending on the data you store inside your checkoutState, that might not be possible
 
 We also advise you to look at [`theme/components/templates/MultiStep`](https://gitlab.com/front-commerce/front-commerce/tree/85f1a8ef55a351f0feb9309c666992bbbb153993/src/web/theme/components/templates/MultiStep) template that will let you reuse the props created by `withMultiStep` and display them in a React Component with a progress bar and the current step.
