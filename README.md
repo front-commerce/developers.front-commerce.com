@@ -10,3 +10,9 @@ This contents in this repository is licensed under the Creative Commons Attribut
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 The code though is under [MIT License](https://github.com/front-commerce/developers.front-commerce.com/blob/master/LICENSE.md).
+
+## Setup
+
+Run `npm install` to install the app.
+You can add a new page by created a `.md` file in `source/docs/yourfolder/`. Do not forget to index your newly created page to the `_config.yml` file at the root of the repository.
+Run `npm run start` to start your Front-Commerce local version of the documentation (default port should be `4444` on `localhost`).

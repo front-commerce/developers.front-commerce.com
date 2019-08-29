@@ -6,8 +6,9 @@ title: CLI
 With Front-Commerce comes a CLI tool (`front-commerce`) that helps you launch the tasks needed to develop, build and launch your application.
 
 These commands should be launched from your project's root directory. This can be done by:
-* Using npm scripts (just like [front-commerce-skeleton/package.json](https://gitlab.com/front-commerce/front-commerce-skeleton/blob/master/package.json#L7))
-* Prefixing the commands with `npx` which will call the `front-commerce` bin in your project
+
+- Using npm scripts (just like [front-commerce-skeleton/package.json](https://gitlab.com/front-commerce/front-commerce-skeleton/blob/master/package.json#L7))
+- Prefixing the commands with `npx` which will call the `front-commerce` bin in your project
 
 ## `front-commerce help`
 
@@ -16,8 +17,9 @@ Displays a message referencing the different commands available.
 ## `front-commerce lint`
 
 This command ensures that your project is correctly linted. This means that it will:
-* format your code with prettier
-* prevent errors by using eslint rules
+
+- format your code with prettier
+- prevent errors by using eslint rules
 
 In order to configure the rules, please refer to the `eslintConfig` key in your `package.json`.
 
@@ -50,11 +52,11 @@ A basic config could be :
 
 The files linted are the files within the modules you have defined in [`.front-commerce.js`](/docs/reference/front-commerce-js.html). However, the modules that are in `node_modules` won't be linted.
 
-> Please note that the errors and warning that this tool will log are also displayed when using `front-commerce start` in development mode. The `front-commerce lint` command is mainly useful when you want to ensure that your code is correctly linted before commiting it to your repository.
+> Please note that the errors and warnings that this tool will log are also displayed when using `front-commerce start` in development mode. The `front-commerce lint` command is mainly useful when you want to ensure that your code is correctly linted before commiting it to your repository.
 
 ## `front-commerce prepare`
 
-This command will generate all the files needed to launch a Front-Commerce application. It will use the [`.front-commerce.js`](/docs/reference/front-commerce-js.html) configuration file to know what to generate. 
+This command will generate all the files needed to launch a Front-Commerce application. It will use the [`.front-commerce.js`](/docs/reference/front-commerce-js.html) configuration file to know what to generate.
 
 The generated files will be located in the `.front-commerce` folder in the root of your project.
 
@@ -69,9 +71,10 @@ Once it is generated, you can launch the application by using `NODE_ENV=producti
 ## `front-commerce start`
 
 This command will launch the Front-Commerce application. There are two modes available:
-* `NODE_ENV=development front-commerce start`: launches Front-Commerce application in development mode (hot reloading, linting, etc.).  
+
+- `NODE_ENV=development front-commerce start`: launches Front-Commerce application in development mode (hot reloading, linting, etc.).  
   Please make sure to have launched `front-commerce prepare` beforehand.
-* `NODE_ENV=production front-commerce start`: launches Front-Commerce application in production mode (using precompiled code).  
+- `NODE_ENV=production front-commerce start`: launches Front-Commerce application in production mode (using precompiled code).  
   Please make sure to have launched `front-commerce build` beforehand.
 
 ## `front-commerce styleguide`
@@ -79,8 +82,9 @@ This command will launch the Front-Commerce application. There are two modes ava
 This command lets you view your Front-Commerce's components in [Storybook](https://storybook.js.org/).
 
 There are two modes available:
-* `NODE_ENV=development front-commerce styleguide`: launches Storybook in development mode (hot reloading, linting, etc.).
-* `NODE_ENV=production front-commerce styleguide`: builds the assets of Storybook in `build/styleguide`. The generated files could then be served on any hosting solution supporting static websites.
+
+- `NODE_ENV=development front-commerce styleguide`: launches Storybook in development mode (hot reloading, linting, etc.).
+- `NODE_ENV=production front-commerce styleguide`: builds the assets of Storybook in `build/styleguide`. The generated files could then be served on any hosting solution supporting static websites.
 
 ## `front-commerce translate`
 
@@ -90,4 +94,4 @@ If some translations are missing, the script will throw an error. This lets you 
 
 ### Options:
 
-* `--ignore-build`: By default, this command will build your application to make sure that no translation is forgotten. However, if you've just run `front-commerce build`, this step is not necessary. `--ignore-build` option is what makes it possible not to build the application during the translation.
+- `--ignore-build`: By default, this command will build your application to make sure that no translation is forgotten. However, if you've just run `front-commerce build`, this step is not necessary. `--ignore-build` option is what makes it possible not to build the application during the translation.

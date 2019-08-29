@@ -28,6 +28,83 @@ mkdir -p mymodule/server/modules/acme
 ```
 
 Edit (or create) `mymodule/server/modules/acme/schema.gql` as shown below. The redefines the mutation we're going to use when the user registers by including the question.
+![Synthesis screenshot here](./assets/question-screenshot.png)
+
+(We will assume you already have done the [first](/docs/magento2/add-new-attribute.html) part.)
+
+## Add the form to the page
+
+The source code for the `Account creation` page is located at `node_modules/front-commerce/src/web/theme/modules/User/RegisterForm/`. Copy it into your module. (If you don't know how to locate the source code for a page, click [here](/docs/magento2/add-new-attribute.html#How-to-find-which-files-to-edit).)
+
+```bash
+mkdir -p mymodule/web/theme/modules/User/
+cp -r node_modules/front-commerce/src/web/theme/modules/User/RegisterForm/ \
+mymodule/web/theme/modules/User/
+```
+
+Edit `RegisterForm.js` as shown below. This adds the actual form field seen on the page.
+
+```diff
+// More code here
+import FormActions from "theme/components/molecules/Form/FormActions";
+-import { Text, Email, Password } from "theme/components/atoms/Form/Input";
++import {
++  Text,
++  Email,
++  Password,
++  Textarea
++} from "theme/components/atoms/Form/Input";
+import TitleSelect from "theme/components/atoms/Form/Input/TitleSelect";
+// More code here
+
+const messages = defineMessages({
+  // More code here
+  titleLabel: {
+    id: "modules.User.RegisterForm.title",
+    defaultMessage: "Title"
++ },
++ questionLabel: {
++   id: "modules.User.RegisterForm.question",
++   defaultMessage: "Question"
+  }
+});
+
+// More code here
+      <FormItem
+        label={props.intl.formatMessage(messages.passwordConfirmationLabel)}
+      >
+        <Password
+            // More code here
+        />
+      </FormItem>
++     <FormItem label={props.intl.formatMessage(messages.questionLabel)}>
++       <Textarea name="question" id="question" />
++     </FormItem>
+      <FormItem
+        label={props.intl.formatMessage(messages.newsletterLabel)}
+        inline
+      >
+        <Checkbox name="newsletter" id="newsletter" />
+      </FormItem>
+      // More code here
+```
+
+Edit `mymodule/web/theme/modules/User/RegisterForm/EnhanceRegisterForm.js` as shown below. This adds the user input from the field to what is passed to the mutation.
+
+```diff
+              password: user.password,
+              dob: user.dob,
+-             is_subscribed_to_newsletter: user.newsletter || false
++             is_subscribed_to_newsletter: user.newsletter || false,
++             question: user.question
+            }
+          },
+          callback: ({ status, data }) => {
+```
+
+## Update the GraphQL mutation
+
+Edit `mymodule/server/modules/acme/schema.gql` as shown below. The redefines the mutation we're going to use when the user registers by including the question.
 
 ```diff
 # Probably more code here
