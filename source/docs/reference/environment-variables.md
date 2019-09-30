@@ -60,6 +60,10 @@ Configure the execution environment of the Front-Commerce's application:
 
 - `FRONT_COMMERCE_DISABLE_OFFLINE_MODE`: in case you don't want to load the offline page when the user is offline
 
+### DX
+
+- `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables the SSR warning page before loading 
+
 ## Remote services configuration
 
 Your Front-Commerce application is an empty shell if it's not connected to remote services. These following sections document which variables are needed for each one of these.

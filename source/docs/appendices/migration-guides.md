@@ -7,6 +7,106 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `1.0.0-beta.3` -> `1.0.0-rc.0`
+
+`1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
+
+If you are migrating from a `1.0.0-beta.3` version to the `1.0.0-rc.0`, here is the guide.
+
+### Linting
+
+The previous linting was usually linting your code AND Front-Commerce's code which was a waste of time. This is no longer the case and you can lint your code however you want.
+
+But if you don't want to have complicated eslint configurations, you can use Front-Commerce's by creating a `.eslintrc.js` file at the root of your project with the following code:
+
+```
+module.exports = require("front-commerce/.eslintrc.js");
+```
+
+You can now launch the linting by using `npx front-commerce lint`.
+
+Please note that we no longer use prettier by default in the eslint configuration. It is instead executed when running `npx front-commerce lint`.
+
+> You can still use `npx front-commerce lint --fix` if you want to fix prettier or eslint errors automatically.
+
+This also means that you can now upgrade prettier to its latest version without breaking Front-Commerce's tooling.
+
+### Avoid commonjs syntax
+
+The linting will now prevent you from using commonjs syntax in your project. You should instead use the ES modules syntax (`import`/`export`).
+
+This will allow better tree shaking and a better validation of your builds in the future. This is also what allows us to upgrade to the latest dependencies for the libraries used in Front-COmmerce.
+
+### Dependencies upgrade
+
+We've been accumulating technical debt about upgrading the libraries Front-Commerce depends on for a bit of time because our server code mixed syntaxes between commonjs and ES modules. This means that we now have upgraded everything to their latest version and you will need to update your code accordingly.
+
+Here the list of the main updates you need to be concerned about:
+* react and react-dom: `16.8.6` -> `16.8.9`
+  New deprecations have been put in place by React itself. We've fixed them in Front-Commerce, but you will most likely have them in your own codebase. Please update your code accordingly. [Details](https://reactjs.org/blog/2019/08/08/react-v16.9.0.html#new-deprecations)
+* [autoprefixer](https://github.com/postcss/autoprefixer): `6.7.6` -> `9.6.1`
+  Please define your [browserslist](https://github.com/browserslist/browserslist) in package.json. For instance it could look like this:
+  ```
+  "browserslist": [
+    "last 2 version",
+    "> 0.25%",
+    "not ie <= 9",
+    "Firefox ESR"
+  ]
+  ```
+* [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5`
+  It should be compatible. However you will have warnings if you use `formsy-react-2`. Simply rename it to `formsy-react`.
+* [react-helmet](https://github.com/nfl/react-helmet) -> [react-helmet-async](https://github.com/staylor/react-helmet-async)
+  It should be compatible. However you will have warnings if you use `react-helmet`. Simply rename it to `react-helmet-async`. The goal is to have a better SSR support.
+* [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
+  It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
+* [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
+  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
+* [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
+  Should be compatible since we are using a facade in FC `theme/components/helpers/MediaQuery`. If you are using something else, please make sure your code still works.
+* [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`
+  See [CHANGELOG](https://github.com/ReactTraining/react-router/releases/tag/v5.0.0) for more details.
+  * Make sure that you always import your components from the `react-router` or `react-router-dom` and no longer use `react-router/XXX` or `react-router-dom/XXX`.
+  * You no longer have access to the old context. Please use `withRouter` or `<Route />` instead.
+* [recompose](https://github.com/acdlite/recompose): `0.26.0` -> `0.30.0`
+  `mapPropsStream` works but triggers warnings because of `react@16.9.0`.
+  Please use `web/core/utils/mapPropsStream.js` instead.
+* migration of [loadable-components](https://github.com/smooth-code/loadable-components)@1.1.1 -> [@loadable/component](https://github.com/smooth-code/loadable-components)@5.10.2
+  * Rename your imports to `@loadable/component`
+  * Rename `LoadingComponent` to `fallback`
+  * Use an ErrorBoundary rather than the `ErrorComponent`
+  * Add `%%__HEAD__%%` and `%%__SPLIT__%%` to your `template/index.html` if you have one.
+
+### Display error pages
+
+Error pages now have their own template: `template/error.html`. Please override it in your module if you need to customize it.
+
+This template is used for the following pages:
+
+* Offline
+* Maintenance (503)
+* ServerError (500)
+
+### Better SSR fallback
+
+Previously, when the SSR failed, we displayed a "Loading..." string before trying to render the page client side. This is no longer the case. We instead display the `theme/pages/SsrFallback` component which is overridable. You could for instance replace it with a custom loader.
+
+Please note that in dev mode, this page won't show and you will get an error message instead. The goal here is to catch the errors early and make sure that things keep running smoothly. If you happen to stumble upon these errors, please fix them by checking your server's console.
+
+If you still want to display the `theme/pages/SsrFallback` in dev mode, add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables.
+
+### Responsive images
+
+Your previous images will still work. However we have added a new component in `theme/components/atoms/Image` that will always give the proper image size to your browser.
+* Supports srcset and webp
+* Improved lazy loading
+* Same API as `<ResizedImage />`
+* Improved DX by explicitly failing in dev mode and failing silently in production mode
+
+We will migrate progressively the components in Front-Commerce's core, but feel free to start migrating your own code for improved performance and UX.
+
+Only breaking change: if you had some images in one of your `public/images/resized` folder, they will no longer work because these images will be resized on the fly just like your images at the `/media` endpoint.
+
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
 `1.0.0-beta.1` and `1.0.0-beta.2` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.

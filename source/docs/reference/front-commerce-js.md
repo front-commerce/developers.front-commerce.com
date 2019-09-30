@@ -132,3 +132,29 @@ module.exports = {
 <blockquote class="info">
 Stories matching this pattern will be fetched across the `web/theme` folder of every [Front-Commerce `modules` defined](#modules) in the `.front-commerce.js` file.
 </blockquote>
+
+## `build`
+
+An object containing configurations for your build pipeline.
+
+### `build.include`
+
+Allows you to define which files should be parsed by webpack. This is especially useful when you have some library which uses javascript features not yet supported by the browsers you support.
+
+You can either set it to:
+* an array of paths
+* a function which will allow you to transform the default include list by adding/removing the paths you need. It should return an array of paths.
+
+Each path must be absolute. One way to do so is to use the following method:
+
+```js
+const path = require("path");
+
+module.exports = {
+  build: {
+    include: [
+      path.dirname(require.resolve("react-intl/package.json")),
+    ]
+  }
+}
+```
