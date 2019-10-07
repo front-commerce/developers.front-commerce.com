@@ -62,7 +62,8 @@ Configure the execution environment of the Front-Commerce's application:
 
 ### DX
 
-- `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables the SSR warning page before loading 
+- `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables the SSR warning page before loading. This allows you to see what happens in production.
+- `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE`: disables the image resizing errors in case you've passed malformed requests to the server. This allows you to see what happens in production.
 
 ## Remote services configuration
 

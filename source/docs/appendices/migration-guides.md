@@ -105,7 +105,7 @@ Your previous images will still work. However we have added a new component in `
 
 We will migrate progressively the components in Front-Commerce's core, but feel free to start migrating your own code for improved performance and UX.
 
-Only breaking change: if you had some images in one of your `public/images/resized` folder, they will no longer work because these images will be resized on the fly just like your images at the `/media` endpoint.
+Only thing to consider: if you had some images in one of your `public/images/resized` folder, they will no longer work in dev mode because these images will be resized on the fly just like your images at the `/media` endpoint. However, in your production environment you will still see the image.
 
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
