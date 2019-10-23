@@ -17,6 +17,7 @@ sidebar_categories:
   Theme:
     - docs/advanced/theme/overview
     - docs/advanced/theme/route-dispatcher
+    - docs/advanced/theme/layouts
     - docs/advanced/theme/wysiwyg
     - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
@@ -57,6 +58,7 @@ sidebar_categories:
     - docs/reference/graphql-module-definition
     - docs/reference/graphql-context
     - docs/reference/api
+    - docs/reference/routing
     - docs/reference/wysiwyg
     - docs/reference/analytics-components
     - docs/reference/scripts

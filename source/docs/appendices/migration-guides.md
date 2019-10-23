@@ -35,7 +35,7 @@ This also means that you can now upgrade prettier to its latest version without 
 
 The linting will now prevent you from using commonjs syntax in your project. You should instead use the ES modules syntax (`import`/`export`).
 
-This will allow better tree shaking and a better validation of your builds in the future. This is also what allows us to upgrade to the latest dependencies for the libraries used in Front-COmmerce.
+This will allow better tree shaking and a better validation of your builds in the future. This is also what allows us to upgrade to the latest dependencies for the libraries used in Front-Commerce.
 
 ### Dependencies upgrade
 
@@ -60,6 +60,7 @@ Here the list of the main updates you need to be concerned about:
   It should be compatible. However you will have warnings if you use `react-helmet`. Simply rename it to `react-helmet-async`. The goal is to have a better SSR support.
 * [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
   It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
+  FormattedMessage no longer insert spans around your messages. This might lead to some styling issues. Add manually a `span` around your message if this is the case.
 * [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
   It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
 * [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
@@ -106,6 +107,91 @@ Your previous images will still work. However we have added a new component in `
 We will migrate progressively the components in Front-Commerce's core, but feel free to start migrating your own code for improved performance and UX.
 
 Only thing to consider: if you had some images in one of your `public/images/resized` folder, they will no longer work in dev mode because these images will be resized on the fly just like your images at the `/media` endpoint. However, in your production environment you will still see the image.
+
+TODO: Document how to add your own proxy endpoint.
+
+## Abstract Formsy
+
+The goal here is to allow an easier migration out of Formsy.
+
+If you don't plan to move out of it, you don't need to change anything. However, if you want to keep your codebase up to date with Front-Commerce, please consider using `withFormHandlers` instead of `withFormsy`.
+
+Please note that some improvements comes with `withFormHandlers`. The most notable change is that inputs won't display errors on first user's change, but on the first blur. This should make form completion less frustrating for the users. The second change is that you can decide to opt-out of `Formsy` any time by passing an `onChange` property directly.
+
+For more information, please have a look at the `withFormHandlers` reference.
+
+TODO: Document withFormHandlers
+
+## Move to a file first routing declaration
+
+Previously, if you needed to use new routes or sub-routes, you needed to do one of the following:
+
+* override the `web/Routes.js` file
+* add the route using the `web/moduleRoutes.js` file
+* or declare sub-routes in existing pages
+
+This led to several issues:
+
+* developers needed to handle code splitting themselves, which could led to bigger initial javascript load
+* it was hard to have a global vision of the existing routes in a Front-Commerce application
+* Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+
+This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
+
+The TL;DR of the new routing system is that you now have a `web/theme/routes` folder available in your modules which can contain 5 kind of files:
+* normal routes files like `about.js` which will map the exported component to the `/about` url
+* `index.js`: maps the exported component to the `/` url
+* `_layout.js`: wraps the routes in the same folder with the exported component
+* `_inner-layout.js`: wraps the routes in the same folder with the exported component but won't discard the parent's layout
+* `_error.js`: exports the component that will displayed in case there's a 404 error or if one of the component does not manage to render
+
+For more information, please have a look at the Routes reference.
+
+TODO
+
+<details>
+<summary>What should you do to implement this new routing system in your existing project? Click to expand.</summary>
+
+1. If you already have a `web/index.js` file in your module, rename it to `web/client.js`
+2. Add Front-Commerce's web module to your project in `.front-commerce.js`
+    ```diff
+    module.exports = {
+      name: "Front Commerce DEV",
+      url: "http://www.front-commerce.test",
+      modules: ["./src"],
+      serverModules: [
+        { name: "FrontCommerce", path: "server/modules/front-commerce" },
+        { name: "Magento2", path: "server/modules/magento2" }
+    -  ]
+    +  ],
+    +  webModules: [{ name: "FrontCommerce", path: "front-commerce/src/web" }]
+    };
+    ```
+3. If you have some custom routes, declare your own routes by:
+    * Creating an empty `web/index.js` file
+    * Add your own web module to `.front-commerce.js`
+        ```diff
+        module.exports = {
+          name: "Front Commerce DEV",
+          url: "http://www.front-commerce.test",
+          modules: ["./src"],
+          serverModules: [
+            { name: "FrontCommerce", path: "server/modules/front-commerce" },
+            { name: "Magento2", path: "server/modules/magento2" }
+          ],
+        -  webModules: [{ name: "FrontCommerce", path: "./src/web" }]
+        +  webModules: [
+        +    { name: "FrontCommerce", path: "front-commerce/src/web" },
+        +    { name: "MyModule", path: "./src/web" },
+        +  ]
+        };
+        ```
+4. Find any page that uses the `Route` component from `react-router`. Here are a few pointer about how to migrate those files. However, if you're not sure or if you have trouble making it work, feel free to reach our team. We will make sure to make this as painless as possible.
+    * If it's `web/moduleRoutes.js`, it will continue to work, but is deprecated. Please create a route file per `<Route>` as described in [Add a page client side](/docs/essentials/add-a-page-client-side.html)
+    * If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder.
+    * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
+
+</details>
 
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 

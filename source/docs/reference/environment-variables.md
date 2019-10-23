@@ -162,6 +162,7 @@ Here is a list of available debug namespaces:
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
+- `front-commerce:scripts:routing`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 
