@@ -104,6 +104,7 @@ layout: index
         <li><a href="https://sylius.com/">Sylius</a></li>
         <li><a href="https://oroinc.com/b2b-ecommerce/">OroCommerce</a></li>
         <li><a href="https://www.marello.com/">Marello</a></li>
+        <li><a href="https://www.axelor.com/">Axelor</a></li>
         <li><a href="https://www.bigcommerce.com/">BigCommerce</a></li>
         <li><a href="https://moltin.com/">Moltin</a></li>
         <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
