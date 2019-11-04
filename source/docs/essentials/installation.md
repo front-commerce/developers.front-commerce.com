@@ -121,7 +121,7 @@ module.exports = {
     locale: "en-GB",
     currency: "EUR",
     default_country_id: "GB",
-    localeData: require("react-intl/locale-data/en"),
+    url: process.env.FRONT_COMMERCE_URL,
     countries: IsoCountries =>
       IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
   }

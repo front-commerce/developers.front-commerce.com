@@ -134,7 +134,7 @@ Allows to define configurations related to dataloader caching and implementation
 * `redis`: redis strategy configuration for the [redis-dataloader](https://github.com/DubFriend/redis-dataloader) instance
 
 ```js
-module.exports = {
+export default {
   DEFAULT_MAX_BATCH_SIZE: 100,
   redis: {
     caches: "*", // or ["LoaderKeyA", "LoaderKeyB"]

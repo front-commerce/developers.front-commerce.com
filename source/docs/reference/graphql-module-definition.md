@@ -23,7 +23,7 @@ The simplest (but useless) GraphQL module definition only requires an unique
 
 ```js
 // A minimal Front-Commerce GraphQL module that basically does nothing
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld"
 };
 ```
@@ -48,7 +48,7 @@ import Core from "./core";
 import FeatureA from "./feature-a";
 import FeatureB from "./feature-b";
 
-module.exports = {
+export default {
   namespace: "Acme/All",
   modules: [Core, FeatureA, FeatureB]
 };
@@ -81,7 +81,7 @@ initialized before this module.
 Example:
 
 ```js
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   dependencies: ["Acme/Core"]
   // …
@@ -121,7 +121,7 @@ type Message {
 }
 `;
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   typeDefs: typeDefs
 };
@@ -157,7 +157,7 @@ const resolvers = {
   }
 };
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   // …
   resolvers: resolvers
@@ -198,10 +198,10 @@ keys:
 
 Example:
 
-```
-const MessageLoader = require("./loader");
+```js
+import MessageLoader from "./loader";
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   resolvers: {
     Query: {
@@ -231,7 +231,7 @@ The `uri` key is **mandatory** and must contain the remote GraphQL endpoint.
 Example:
 
 ```js
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql"
@@ -251,9 +251,9 @@ It must be an array of valid [`graphql-tools` Schema Transforms](https://www.apo
 Example:
 
 ```js
-const { FilterRootFields } = require("graphql-tools");
+import { FilterRootFields } from "graphql-tools";
 
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql"
@@ -296,7 +296,7 @@ const authenticateRequest = context => {
 };
 
 // […]
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql",
@@ -321,7 +321,7 @@ Example:
 
 ```js
 // […]
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql",
