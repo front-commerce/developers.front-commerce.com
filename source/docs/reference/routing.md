@@ -9,7 +9,7 @@ In this reference, you will find an exhaustive list about how to customize the r
 
 ## Which routes are loaded?
 
-Routes are loaded depending on the web modules declared in `.front-commerce.js`. See [`.front-commerce.js::webModules`](http://localhost:4444/docs/reference/front-commerce-js.html#webModules).
+Routes are loaded depending on the web modules declared in `.front-commerce.js`. See [`.front-commerce.js::webModules`](/docs/reference/front-commerce-js.html#webModules).
 
 ## How routes are loaded?
 
@@ -32,8 +32,8 @@ Within the `web/theme/routes` folder, the following file structures will be tran
 
 The following rules define which route wins in case the same URL matches several files:
 
-- If the same file is defined in two web modules, the last web modules from `.front-commerce.js` wins.
-- If there is `web/theme/routes/path/index.js` and `/web/theme/routes/path.js`, `/webtheme//routes/path/index.js` wins even across multiple web modules.
+- If the same file is defined in two web modules, the latest web module from `.front-commerce.js` wins.
+- If there is `web/theme/routes/path/index.js` and `/web/theme/routes/path.js`, `/web/theme/routes/path/index.js` wins even across multiple web modules.
 
 These rules also applies to special files listed below.
 
@@ -51,3 +51,5 @@ Special files are always prefixed with `_`.
 When the routes are loaded in Front-Commerce, they are transformed into a file located at `.front-commerce/routes.js`. This can give you a better vision about which URL loads which route.
 
 However, do **not** edit this file as it will be recreated on each application start/build.
+
+You can also see debugging information by enabling `DEBUG=front-commerce:scripts:routing`.

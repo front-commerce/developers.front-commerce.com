@@ -145,12 +145,10 @@ The TL;DR of the new routing system is that you now have a `web/theme/routes` fo
 * `_inner-layout.js`: wraps the routes in the same folder with the exported component but won't discard the parent's layout
 * `_error.js`: exports the component that will displayed in case there's a 404 error or if one of the component does not manage to render
 
-For more information, please have a look at the Routes reference.
-
-TODO
+For more information, please have a look at the [Routes reference](/docs/reference/routing.html).
 
 <details>
-<summary>What should you do to implement this new routing system in your existing project? Click to expand.</summary>
+<summary>What should you do to implement this new routing system in your existing project? <strong>Click to expand.</strong></summary>
 
 1. If you already have a `web/index.js` file in your module, rename it to `web/client.js`
 2. Add Front-Commerce's web module to your project in `.front-commerce.js`
@@ -190,7 +188,6 @@ TODO
     * If it's `web/moduleRoutes.js`, it will continue to work, but is deprecated. Please create a route file per `<Route>` as described in [Add a page client side](/docs/essentials/add-a-page-client-side.html)
     * If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder.
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
-
 </details>
 
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`

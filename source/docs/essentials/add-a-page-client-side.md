@@ -25,6 +25,11 @@ need to:
 * Create the route file that will be mapped to an URL
 * Declare your module as a web module
 
+<blockquote class="info">
+This system is inspired by JavaScript frameworks like [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.org/), [Sapper](https://sapper.svelte.dev/), [Nuxt](https://nuxtjs.org/), etc. If you understand how these work, implementing routing within Front-Commerce will be easier. 
+See [Routing reference](/docs/reference/routing.html#How-routes-are-loaded) for more advanced information.
+</blockquote>
+
 ### Create the route file that will be mapped to an URL
 
 Create a route file in the folder `web/theme/routes/` of your module. If you don't have any module yet, please refer to [Extend the theme](extend-the-theme.html).

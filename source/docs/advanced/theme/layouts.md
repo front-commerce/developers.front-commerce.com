@@ -7,7 +7,7 @@ When you are on a website, you expect to see the same kind of information on any
 
 By creating `_layout.js` and `_inner-layout.js` files in your `web/theme/routes` folder. This is what we will explain in this guide.
 
-If you don't know what is the purpose of the `web/theme/routes` or how to use it, please first refer to the guide [Add a new page](docs/essentials/add-a-page-client-side.html). Moreover, to complete this guide about layouts, you will need to have a module correctly setup in your project with a [web module preconfigured](http://localhost:4444/docs/essentials/add-a-page-client-side.html#Declare-your-module-as-a-web-module).
+If you don't know what is the purpose of the `web/theme/routes` or how to use it, please first refer to the guide [Add a new page](/docs/essentials/add-a-page-client-side.html). Moreover, to complete this guide about layouts, you will need to have a module correctly setup in your project with a [web module preconfigured](/docs/essentials/add-a-page-client-side.html#Declare-your-module-as-a-web-module).
 
 ## What is a layout?
 
@@ -29,7 +29,7 @@ However, for more advanced use case, you can have some content that are not spec
 ![An account dashboard displays the main layout, but also a navigation common to all the account pages.](./assets/account.png)
 </figure>
 
-In this case, the navigation is by definition a layout since it remains across the multiple pages available in the account. However, it is contained in a larger layout: the one displaying the header.
+In this case, the sidebar navigation is by definition a layout since it remains across the multiple pages available in the account. However, it is contained in a larger layout: the one displaying the header.
 
 We call this an **Inner layout** because it does not get rid of the layout above it.
 
@@ -60,7 +60,7 @@ For instance, let's say that you are willing to add a Blog to your Front-Commerc
 
 As is, the urls `/blog` and `/blog/[slug]` you have created will be displayed with the same layout as your cart, contact, or any other page of the application.
 
-However you don't the users to feel like they are still in the shop. You want to have a lighter design for these pages to allow the users to focus on the content. This is why you can create a new `_layout.js` at `/blog/_layout.js`.
+However you don't want users to feel like they are still in the shop. You want to have a lighter design for these pages to allow the users to focus on the content. This is why you can create a new `_layout.js` at `/blog/_layout.js`.
 
 ```jsx
 // web/theme/routes/blog/_layout.js
@@ -85,7 +85,7 @@ Other pages will keep the root `_layout.js` and won't be affected by the blog's 
 To see this live, remember to restart your application before seeing the changes (`npm run start`).
 
 <blockquote class="note">
-    **Important:** If you need to to override an existing `_layout.js` you can by recreating theme in your own module. You can also create layouts for a set of routes even if the routes you want to change are in an other module and don't have a layout yet. It will behave just like if you added them in the other module.
+    **Important:** If you need to override an existing `_layout.js` you can by coping it in your own web module. Moreover, you can create new layouts wherever you want. For instance, if a module defined some routes in `/blog` but didn't create a `/blog/_layout.js`, you can create it in your own module and all the routes in `/blog` will use this new layout.
 </bloquote>
 
 <blockquote class="note">
@@ -126,5 +126,9 @@ You can see that it works just like the Blog's layout. However, keep in mind tha
 To see this live, remember to restart your application before seeing the changes (`npm run start`).
 
 <blockquote class="warning">
-    **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules.
+    **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules. However you can use [`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare.js#onCreateRoute) to filter the file you don't need in your project.
+</bloquote>
+
+<blockquote class="info">
+    **Note:** `_inner-layout.js` can be nested as many times as you need. For instance, you could imagine an inner layout for pages in `/account` and another one in `/account/orders`. By doing this, for a route at `/account/orders/details` you will have the order details wrapped in `/account/orders/_inner-layout.js` which itself is wrapped in `/account/_inner-layout.js`.
 </bloquote>
