@@ -170,7 +170,8 @@
 }
 
 section {
-  > p, > ul {
+  > p,
+  > ul {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
 
@@ -330,6 +331,28 @@ section {
       .media-card__content {
         margin-left: 0;
         margin-right: auto;
+      }
+    }
+  }
+
+  .document-formatting & {
+    padding: 1.5rem 0;
+    border: none;
+
+    .card-grid {
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+    }
+    .card {
+      margin-top: 1.5rem;
+
+      img {
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+      }
+
+      h3 {
+        margin-top: 0;
       }
     }
   }
