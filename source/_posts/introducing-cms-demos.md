@@ -15,7 +15,7 @@ A <abbr title="Content Management System">CMS</abbr> is a tool that focuses on m
 
 This is because an e-commerce solution focuses on what brings you value: managing orders. Some don't even have tools to edit contents like. And the ones that have some are either not that great or expensive (ex: Magento's Page Builder is only available on the Commerce version).
 
-Using a dedicated <abbr title="Content Management System">CMS</abbr> seems to be the solution. But previously it usually meant that you had to have two websites:
+Using a dedicated <abbr title="Content Management System">CMS</abbr> seems to be an interesting alternative. But previously it usually meant that you had to have two websites:
 
 - the users could feel lost and not really know where to find the correct information
 - the developers will have to maintain two separate front-ends and recreate the same features on both websites
