@@ -93,3 +93,7 @@ root: /
 permalink: blog/:year/:month/:day/:title/
 
 public_dir: public/
+
+sitemap:
+    path: sitemap.xml
+    rel: true
