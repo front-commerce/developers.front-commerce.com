@@ -49,6 +49,9 @@ sidebar_categories:
     - docs/magento2/graphql
     - docs/magento2/i18n
     - docs/magento2/add-new-attribute
+  Magento1:
+    - docs/magento1/overview
+    - docs/magento1/add-custom-endpoint
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
@@ -95,5 +98,5 @@ permalink: blog/:year/:month/:day/:title/
 public_dir: public/
 
 sitemap:
-    path: sitemap.xml
-    rel: true
+  path: sitemap.xml
+  rel: true
