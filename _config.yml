@@ -51,7 +51,9 @@ sidebar_categories:
     - docs/magento2/add-new-attribute
   Magento1:
     - docs/magento1/overview
+    - docs/magento1/installation
     - docs/magento1/add-custom-endpoint
+    - docs/magento1/event-list
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
