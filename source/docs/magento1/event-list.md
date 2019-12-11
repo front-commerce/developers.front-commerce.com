@@ -3,10 +3,6 @@ id: event-list
 title: Dispatch event list
 ---
 
-<blockquote class="note">
-Last update : 2019-12-10 (module version 1.1.0)
-</blockquote>
-
 ## Catalog 
 - `frontcommerce_api_prepare_category_product_collection_after`: event after retrieve products from category
     - `collection` : products resource collection

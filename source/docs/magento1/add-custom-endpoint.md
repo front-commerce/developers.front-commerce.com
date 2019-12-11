@@ -3,15 +3,16 @@ id: add-custom-endpoint
 title: Add your custom endpoint
 ---
 
-You can add your custom endpoint easily and fasted.
-Follow this main step :
+When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from an REST endpoint on Magento that will the be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation you will learn how to create a new REST endpoint in your Magento 1.
+
+This can be done by completing the following steps:
 
 1. Add and complete `api2.xml` file
 2. Implement API method(s)
 
-## Add and complete api2.xml
+## Add and complete `api2.xml`
 
-`api2.xml` is your main api config file, you can add this file on your own module in `etc` directory.
+`api2.xml` is your main API config file, you can add this file on your own module in `etc` directory.
 
 This is a basic structure of this config file :
 
@@ -76,11 +77,12 @@ This is a basic structure of this config file :
 
 - Node description :
 
-  - [Optional]`resource_groups` use for declare new resource group. You can retrieve this resource when you update API resource Role. Every resource need to be affected to a resource group
-  - `resources` it's here who you need to add your custom endpoint. Every resource need to have group (see `resource_groups`), model and title.
-  - `resources privileges` choose the HTTP Method allow for `customer`, `guest` and `admin`. `create` = POST / `retrieve` = GET / `update` = UPDATE / `delete` = DELETE ([Rest roles configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/roles_configuration.html))
-  - `resources attributes` attribute list authorized to be retrieve or send ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
-  - `resources routes` configure your URL endpoint
+![Resources](./assets/resources.png)
+  - `resource_groups` declares new resource groups.
+  - `resources` declares custom endpoint. Every resource need to have a group (see `resource_groups`), a model and a title.
+  - `privileges` HTTP Method allowed for `customer`, `guest` and `admin`. `create` = POST / `retrieve` = GET / `update` = UPDATE / `delete` = DELETE ([Rest roles configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/roles_configuration.html))
+  - `attributes` lists the attributes that can be retrieved or sent ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
+  - `routes` configure your URL endpoint
 
 - Example :
   This following example is for a basic social network API, who can retrieve list of social networks posts and specific post thanks to 2 endpoints `/social-network-post/:id` and `/social-network-posts`
@@ -140,7 +142,7 @@ This is a basic structure of this config file :
 ## Implement API methods
 
 ### Directory
-First think to know , your directory is alway like that :
+First, your file structure should look like this:
 `[MODULE]/[MODEL]/Rest/[Guest / Customer / Admin]/V1.php`
 
 For the example with the social network, the directory is :
@@ -148,12 +150,11 @@ For the example with the social network, the directory is :
 - `[MODULE]/Model/Api2/Post/Rest/Guest/V1.php` (for guest mode)
 - `[MODULE]/Model/Api2/Post/Rest/Customer/V1.php` (for customer mode)
 
-this file is your API entrypoint.
+This file is your API entrypoint.
 
-Warning !
-Never forget to add Customer entrypoint, if do nothing special under guest mode,
-you can simply extend `Guest/V1.php` on your `Customer/V1.php`
-If you don't do that, when user is loggin your endpoint cannot work.
+<blockquote class="warning">
+  **Warning:** Never forget to add Customer endpoint. If it is the same as the Guest endpoint, you can extend `Guest/V1.php` in `Customer/V1.php`. But if you don't do it, the logged in users won't be able to fetch data from your endpoint, breaking your feature once logged in.
+</blockquote>
 
 ### Methods to implement
 
@@ -208,7 +209,7 @@ class Module_Network_Model_Api2_Post_Rest_Guest_V1 extends FrontCommerce_Integra
      */
     protected function _retrieve()
     {
-        $entityId = this->getRequest()->getParam('entity_id');
+        $entityId = this->getRequest()->getParam('id'); // param name is defined on your route node, for this example is :id
         /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
         $post = Mage::getModel('module_network/post')->load($entityId);
         if (!$post || !$post->getId() || $post->getId() != $entityId) {
@@ -222,7 +223,7 @@ class Module_Network_Model_Api2_Post_Rest_Guest_V1 extends FrontCommerce_Integra
 
 ### Testing
 
-Best way for testing your new endpoint is to use Postman (or anything else like that).
+In case you need to test your endpoints, you can either use cURL or [Postman](https://www.getpostman.com/). But advanced clients like Postman will allow you to have credentials and will make it easier to test customers vs guest endpoints.
 
 - Guest testing : If your endpoint can be access in guest mode, you can simply send GET / POST / DELETE / UPDATE request
   to your endpoint for see the response
@@ -232,11 +233,15 @@ Best way for testing your new endpoint is to use Postman (or anything else like 
   - Consumer Secret = `secret` in table `oauth_consumer`
   - Access Token = `token` of user in table `oauth_token`
   - Token secret = `secret` of same user in table `oauth_token`
-    ![Customer test](./assets/testing.png)
+    ![The Authorization tab of a Postman request with OAuth 1.0 selected.](./assets/testing.png)
 
 ## Good to know
 
-- If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class add useful functions.
+- If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class add useful functions like:
+    - `public function getCustomer()` : Retrieve current customer and save it in customer session.
+    - `protected function _initStore()` : Set current store with default store view or store set in request params.
+    - `protected function _getStore()` : Rewrite Magento get store base method for no repeat function if store was already set. Retrieve current store according to request and API user type.
+    - `protected function _getCurrency()` : Retrieve current currency.
+    - ...
 - If you apply `_applyCollectionModifiers($collection)` to your own `$collection` you can use dynamic API collection filter (see [Magento documention](https://devdocs.magento.com/guides/m1x/api/rest/get_filters.html))
-- For implement any API error, use `$this->_critical(ERR_CODE);`
-- If you have complexe API, you can override `dispatch()` method for add more action and operation.
+- If you need to send back an API error, use `$this->_critical(ERR_CODE);`
