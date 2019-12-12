@@ -3,16 +3,16 @@ id: add-custom-endpoint
 title: Add your custom endpoint
 ---
 
-When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from an REST endpoint on Magento that will the be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation you will learn how to create a new REST endpoint in your Magento 1.
+When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from an REST endpoint on Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1.
 
 This can be done by completing the following steps:
 
 1. Add and complete `api2.xml` file
-2. Implement API method(s)
+2. Implement the API method(s)
 
 ## Add and complete `api2.xml`
 
-`api2.xml` is your main API config file, you can add this file on your own module in `etc` directory.
+`api2.xml` is your main API config file, you can add this file on your local module in `etc` directory.
 
 This is a basic structure of this config file :
 
@@ -78,11 +78,15 @@ This is a basic structure of this config file :
 - Node description :
 
 ![Resources](./assets/resources.png)
-  - `resource_groups` declares new resource groups.
-  - `resources` declares custom endpoint. Every resource need to have a group (see `resource_groups`), a model and a title.
-  - `privileges` HTTP Method allowed for `customer`, `guest` and `admin`. `create` = POST / `retrieve` = GET / `update` = UPDATE / `delete` = DELETE ([Rest roles configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/roles_configuration.html))
-  - `attributes` lists the attributes that can be retrieved or sent ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
-  - `routes` configure your URL endpoint
+- `resource_groups` declares new resource groups.
+- `resources` declares a new custom endpoint. Every resource need to have a group (see `resource_groups`), a model and a title.
+- `privileges` defines the HTTP Method allowed for `customer`, `guest` and `admin`. ([Rest roles configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/roles_configuration.html))
+    - `create` = POST
+    - `retrieve` = GET
+    - `update` = UPDATE
+    - `delete` = DELETE
+- `attributes` lists the attributes that can be retrieved or sent ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
+- `routes` configure your URL endpoint
 
 - Example :
   This following example is for a basic social network API, who can retrieve list of social networks posts and specific post thanks to 2 endpoints `/social-network-post/:id` and `/social-network-posts`

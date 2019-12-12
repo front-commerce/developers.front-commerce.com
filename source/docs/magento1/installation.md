@@ -30,22 +30,22 @@ You can use 2 ways for installation, we recommend to use composer.
 
 2. Configuration and required
 
-    ```
-    composer config minimum-stability dev
-    composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
-    composer config repositories.front-commerce-restful git https://github.com/PH2M/Magento-Extra-RESTful
-    composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
-    composer require front-commerce/magento1-module:"dev-master"
-    ```
+```
+composer config minimum-stability dev
+composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+composer config repositories.front-commerce-restful git https://github.com/PH2M/Magento-Extra-RESTful
+composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
+composer require front-commerce/magento1-module:"dev-master"
+```
 
-### Install directly in your magento app folder
+### Install directly in your Magento app folder
 
 1. Clone or download https://gitlab.com/front-commerce/magento1-module-front-commerce.git
 2. Copy `app` directory and past it on your Magento root directory
 
 ## Configuration
 <blockquote class="note">
-If installation is successful, in Magento's administration panel, you will have a new entry "Front-Commerce" in the top menu and a new tab "Front-Commerce" in System > Configuration.
+If the installation is successful, in Magento's administration panel, you will have a new entry "Front-Commerce" in the top menu and a new tab "Front-Commerce" in System > Configuration.
 </blockquote>
 
 1. **Check install:**
@@ -55,26 +55,26 @@ If installation is successful, in Magento's administration panel, you will have 
 2. **Rest roles:**
 
   - Go to admin menu entry System > Web services > REST Roles
-  - You need to have 3 roles, `Guest`, `Customer` and `Admin`. If you don't, create them.
+  - You need to have 3 roles, `Guest`, `Customer`, and `Admin`. If you don't, create them.
   - Set all roles access to all resources (Role API Resources tab > Resource Access "All").
 
-3. **Rest Attribtes:**
+3. **Rest Attributes:**
 
   - Go to admin menu entry System > Web services > Rest Attributes
-  - You can see 3 user type `Guest`, `Customer` and `Admin`. 
+  - You can see 3 user types `Guest`, `Customer`, and `Admin`. 
   - Set all ACL attributes rules to all resource access (ACL Attribute Rules tab > Resource Access "All").
 
 4. **Rest OAuth Consumer:**
 
   - Go to admin menu entry System > Web services > Rest OAuth Consumers
   - Add New OAuth Consumer:
-    - Name : `Front-Commerce`
-    - Callback URL : `http://local.host` <- is useless but can't be empty
+    - Name: `Front-Commerce`
+    - Callback URL: `http://local.host` <- is useless but can't be empty
 
 5. **Admin user:**
 
   - Go to admin menu entry System > Persmissions > User
-  - Create new user (Only use for Front-Commerce, you never need to login with this account)
+  - Create a new user (only use for Front-Commerce, you never need to log in with this account)
     - User Name: `Front-Commerce`
     - First Name: `Front-Commerce`
     - Last Name `Front-Commerce`
@@ -90,14 +90,14 @@ If installation is successful, in Magento's administration panel, you will have 
 7. **Magento core patch:**
 
   If the OAuth Zend Patch is valid in the installer checker, please follow these steps:
-  - Copy `fix-sort-params-core.patch` in root directory from module gitlab repo https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+  - Copy `fix-sort-params-core.patch` in root directory from module Gitlab repo https://gitlab.com/front-commerce/magento1-module-front-commerce.git
   - Past it on your root Magento directory
   - Apply them `git apply fix-sort-params-core.patch`
   
 8. **URLs Settings:**
 
   - Go to System > Configuration > Front-Commerce General > URLs Settings
-  - Add your Front-Commerce Front URL. In development environment, it should be `http://localhost:4000`. In production environment, it is the URL of your main store.
+  - Add your Front-Commerce Front URL. In development environment, it should be `http://localhost:4000/`. In production environment, it is the URL of your main store.
 
 9. **Cache Settings:**
 
@@ -106,7 +106,7 @@ If installation is successful, in Magento's administration panel, you will have 
 
 10. **Front-Commerce secret key:**
 
-  For more security add random key on `frontcommerce_secret_key` in your `app/etc/local.xml`
+  For more security add a random key on `frontcommerce_secret_key` in your `app/etc/local.xml`
 
   ```
   <config>
@@ -124,7 +124,7 @@ Once this is done, all the checks should be green in your installer checker and 
 ## Frequent errors
 - URL Rewrite: the entry point of the API is the file `api.php`. In order to work, you need to have the following rules :
     - for Apache in an `.htaccess`: `RewriteRule ^api/rest api.php?type=rest [QSA,L]`
-    - for Nginx in config server:
+    - for Nginx in server config:
     ```
     location /api {
         rewrite ^/api/rest /api.php?type=rest last;
