@@ -7,6 +7,8 @@ apis:
   docsearch:
     apiKey: b5a7bf2be3c2b1c682e5c84d562d15d2
     indexName: front-commerce
+  ga: UA-154725716-1
+
 content_root: "source"
 
 css_bundle: front-commerce
