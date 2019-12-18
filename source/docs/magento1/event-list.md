@@ -27,6 +27,7 @@ title: Dispatch event list
     - `customer` : customer model
     - `quote` : quote model
     - `store` : Current store
+    
 ## Sales
 - `frontcommerce_api_retrieve_cart_data_before_render`: event before retrieve cart data
     - `cart_api` : Cart API class
@@ -55,6 +56,7 @@ title: Dispatch event list
     - `update_data` : Order data updated
     - `request` : API request
     - `store` : Current store
+    
 ## URL 
 - `frontcommerce_api_prepare_url_find_collection`: event before retrieve URL from URL Rewrite URL FIND
     - `collection` : products resource collection

@@ -3,8 +3,7 @@ id: add-custom-endpoint
 title: Add your custom endpoint
 ---
 
-When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from an REST endpoint on Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1.
-
+When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from a REST endpoint of Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1.
 This can be done by completing the following steps:
 
 1. Add and complete `api2.xml` file
@@ -149,7 +148,7 @@ This is a basic structure of this config file :
 First, your file structure should look like this:
 `[MODULE]/[MODEL]/Rest/[Guest / Customer / Admin]/V1.php`
 
-For the example with the social network, the directory is :
+In the social network example above, the directory would be:
 
 - `[MODULE]/Model/Api2/Post/Rest/Guest/V1.php` (for guest mode)
 - `[MODULE]/Model/Api2/Post/Rest/Customer/V1.php` (for customer mode)
@@ -157,7 +156,7 @@ For the example with the social network, the directory is :
 This file is your API entrypoint.
 
 <blockquote class="warning">
-  **Warning:** Never forget to add Customer endpoint. If it is the same as the Guest endpoint, you can extend `Guest/V1.php` in `Customer/V1.php`. But if you don't do it, the logged in users won't be able to fetch data from your endpoint, breaking your feature once logged in.
+  **Warning:** never forget to add Customer endpoint. If it is the same as the Guest endpoint, you can extend `Guest/V1.php` in `Customer/V1.php`. But if you don't do so, logged in users won't be able to fetch data from Magento, breaking your feature once logged in.
 </blockquote>
 
 ### Methods to implement
@@ -214,7 +213,6 @@ class Module_Network_Model_Api2_Post_Rest_Guest_V1 extends FrontCommerce_Integra
     protected function _retrieve()
     {
         $entityId = this->getRequest()->getParam('id'); // param name is defined on your route node, for this example is :id
-        /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
         $post = Mage::getModel('module_network/post')->load($entityId);
         if (!$post || !$post->getId() || $post->getId() != $entityId) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
@@ -225,13 +223,13 @@ class Module_Network_Model_Api2_Post_Rest_Guest_V1 extends FrontCommerce_Integra
 
 ```
 
-### Testing
+### Sending requests to your API
 
-In case you need to test your endpoints, you can either use cURL or [Postman](https://www.getpostman.com/). But advanced clients like Postman will allow you to have credentials and will make it easier to test customers vs guest endpoints.
+In case you need to ensure your endpoints works as expected, you can either use cURL or [Postman](https://www.getpostman.com/). But advanced clients like Postman will allow you to have credentials and will make it easier to run requests as logged in customers.
 
-- Guest testing : If your endpoint can be access in guest mode, you can simply send GET / POST / DELETE / UPDATE request
+- Guest testing: If your endpoint can be access in guest mode, you can simply send GET / POST / DELETE / UPDATE request
   to your endpoint for see the response
-- Customer testing : You need to add credential and token for your request. You can retrieve all this informations in your database
+- Customer testing: You need to add credential and token for your request. You can retrieve all this informations in your database
 
   - Consumer Key = `key` in table `oauth_consumer`
   - Consumer Secret = `secret` in table `oauth_consumer`
@@ -241,11 +239,11 @@ In case you need to test your endpoints, you can either use cURL or [Postman](ht
 
 ## Good to know
 
-- If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class add useful functions like:
+- If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class adds useful helper functions such as:
     - `public function getCustomer()` : Retrieve current customer and save it in customer session.
     - `protected function _initStore()` : Set current store with default store view or store set in request params.
-    - `protected function _getStore()` : Rewrite Magento get store base method for no repeat function if store was already set. Retrieve current store according to request and API user type.
+    - `protected function _getStore()` : Rewrite Magento's base method to memoize store value. Retrieve current store according to request and API user type.
     - `protected function _getCurrency()` : Retrieve current currency.
     - ...
-- If you apply `_applyCollectionModifiers($collection)` to your own `$collection` you can use dynamic API collection filter (see [Magento documention](https://devdocs.magento.com/guides/m1x/api/rest/get_filters.html))
+- If you apply `_applyCollectionModifiers($collection)` to your own `$collection` you can use dynamic API collection filter (see [Magento documentation](https://devdocs.magento.com/guides/m1x/api/rest/get_filters.html))
 - If you need to send back an API error, use `$this->_critical(ERR_CODE);`
