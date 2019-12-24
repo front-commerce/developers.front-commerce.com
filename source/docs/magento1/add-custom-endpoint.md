@@ -3,7 +3,8 @@ id: add-custom-endpoint
 title: Add your custom endpoint
 ---
 
-When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from a REST endpoint of Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1.
+When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from a REST endpoint of Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1, this is not specific to Front-Commerce module and you can follow the Magento tutorial [How to Extend the Magento REST API to Use Coupon Auto Generation](https://devdocs.magento.com/guides/m1x/other/ht_extend_magento_rest_api.html) if you need to understand more about the Magento 1 REST Api.
+
 This can be done by completing the following steps:
 
 1. Add and complete `api2.xml` file
@@ -13,7 +14,7 @@ This can be done by completing the following steps:
 
 `api2.xml` is your main API config file, you can add this file on your local module in `etc` directory.
 
-This is a basic structure of this config file :
+This is a basic structure of this config file:
 
 ```
 <?xml version="1.0"?>
@@ -74,7 +75,7 @@ This is a basic structure of this config file :
 </config>
 ```
 
-- Node description :
+- Below is an example of how such a configuration could appear in the admin area when configuring API Resources authorizations:
 
 ![Resources](./assets/resources.png)
 - `resource_groups` declares new resource groups.
@@ -87,7 +88,7 @@ This is a basic structure of this config file :
 - `attributes` lists the attributes that can be retrieved or sent ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
 - `routes` configure your URL endpoint
 
-- Example :
+- Example:
   This following example is for a basic social network API, who can retrieve list of social networks posts and specific post thanks to 2 endpoints `/social-network-post/:id` and `/social-network-posts`
 
 ```
@@ -240,10 +241,10 @@ In case you need to ensure your endpoints works as expected, you can either use 
 ## Good to know
 
 - If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class adds useful helper functions such as:
-    - `public function getCustomer()` : Retrieve current customer and save it in customer session.
-    - `protected function _initStore()` : Set current store with default store view or store set in request params.
-    - `protected function _getStore()` : Rewrite Magento's base method to memoize store value. Retrieve current store according to request and API user type.
-    - `protected function _getCurrency()` : Retrieve current currency.
+    - `public function getCustomer()`: Retrieve current customer and save it in customer session.
+    - `protected function _initStore()`: Set current store with default store view or store set in request params.
+    - `protected function _getStore()`: Rewrite Magento's base method to memoize store value. Retrieve current store according to request and API user type.
+    - `protected function _getCurrency()`: Retrieve current currency.
     - ...
 - If you apply `_applyCollectionModifiers($collection)` to your own `$collection` you can use dynamic API collection filter (see [Magento documentation](https://devdocs.magento.com/guides/m1x/api/rest/get_filters.html))
 - If you need to send back an API error, use `$this->_critical(ERR_CODE);`

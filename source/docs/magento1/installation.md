@@ -37,8 +37,8 @@ composer config repositories.front-commerce-restful git https://github.com/PH2M/
 composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
 composer require front-commerce/magento1-module:"dev-master"
 ```
-For the main module `front-commerce/magento1-module` require, is strongly recommend to using a fixed version ((see available release)[https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases])
 
+For the main module `front-commerce/magento1-module` require, is strongly recommend to using a fixed version ([see available release](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases))
 
 ### Install directly in your Magento app folder
 
@@ -60,11 +60,12 @@ If the installation is successful, in Magento's administration panel, you will h
 
 ### **Rest roles**
 
+[official documentation](https://docs.magento.com/m1/ce/user_guide/system-operations/web-services-activate.html)
   - Go to admin menu entry System > Web services > REST Roles
   - You need to have 3 roles, `Guest`, `Customer`, and `Admin`. If you don't, create them.
   - Set all roles access to all resources (Role API Resources tab > Resource Access "All").
 
-### **Rest Attributes**
+### **Rest attributes**
 
   - Go to admin menu entry System > Web services > Rest Attributes
   - You can see 3 user types `Guest`, `Customer`, and `Admin`. 
@@ -100,12 +101,12 @@ If the installation is successful, in Magento's administration panel, you will h
   - Past it on your root Magento directory
   - Apply them `git apply fix-sort-params-core.patch`
   
-### **URLs Settings**
+### **URLs settings**
 
   - Go to System > Configuration > Front-Commerce General > URLs Settings
   - Add your Front-Commerce Front URL. In development environment, it should be `http://localhost:4000/`. In production environment, it is the URL of your main store.
 
-### **Cache Settings**
+### **Cache settings**
 
   - Go to System > Configuration > Front-Commerce General > Cache Settings
   - Add random Key (This should be the same key as `FRONT_COMMERCE_CACHE_API_TOKEN` in your Front-Commerce `.env`)
@@ -128,7 +129,7 @@ Once this is done, all the checks should be green in your installer checker and 
 `{MAGENTO_BASE_URL}/api/rest/frontcommerce/urls/match?urls[0]=/about-magento-demo-store`
 
 ## Frequent errors
-- URL Rewrite: the entry point of the API is the file `api.php`. In order to work, you need to have the following rules :
+- URL Rewrite: the entry point of the API is the file `api.php`. In order to work, you need to have the following rules:
     - for Apache in an `.htaccess`: `RewriteRule ^api/rest api.php?type=rest [QSA,L]`
     - for Nginx in server config:
     ```
