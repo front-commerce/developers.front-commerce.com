@@ -29,7 +29,7 @@ Nowadays, merchants need to contribute their content in an attractive way. They 
 
 However, this component was a bit tough to customize in its previous versions. So we have revamped its API to make sure that you can customize it as much as you want. See [WYSIWYG documentation](/docs/advanced/theme/wysiwyg.html) for more details.
 
-This was also an opportunity to support a wider range of Magento's features. For instance, we now support [Widgets](https://www.toptal.com/magento/custom-widgets-in-magento-2) in Magento. Any contributed widget will be parsed and then render a React component that you can customize depending on your needs. See [Magento's WYSIWYG supported features](/docs/advanced/theme/wysiwyg.html#Magento-theme-modules-Wysiwyg-MagentoWysiwyg) for more details. 
+This was also an opportunity to support a wider range of Magento's features. For instance, we now support [Widgets](https://www.toptal.com/magento/custom-widgets-in-magento-2) in Magento. Any contributed widget will be parsed and then render a React component that you can customize depending on your needs. See [Magento's WYSIWYG supported features](/docs/advanced/theme/wysiwyg.html#Magento-theme-modules-Wysiwyg-MagentoWysiwyg) for more details.
 
 ### Load configuration files from parent modules
 
@@ -110,4 +110,4 @@ To know more about this release, we recommend you to check the following pages:
 - [Migration guide from 1.0.0-beta.0 to 1.0.0-beta.3](/docs/appendices/migration-guides.html#1-0-0-beta-0-gt-1-0-0-beta-3)
 - [Full changelog from Front-Commerce release notes](https://gitlab.com/front-commerce/front-commerce/releases) and [its Magento 2 extension](https://gitlab.com/front-commerce/magento2-module-front-commerce/releases) (Partners and Customers only)
 
-As always, feel free to send us [an email](mailto:contact@front-commerce.com) or a [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q) message if you have any question.
+As always, feel free to send us [an email](mailto:contact@front-commerce.com) or a [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU) message if you have any question.
