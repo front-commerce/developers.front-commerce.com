@@ -3,9 +3,13 @@ id: preloading-routes
 title: Preloading Routes' data
 ---
 
+<blockquote class="feature--new">
+  _This feature has been added in version `1.0.0-rc.0`_
+</blockquote>
+
 When a website is slow, the first thing that comes to mind is to improve raw metrics like the Speed Index. And while this is definitly useful, we shouldn't overlook the [_perceived_ performances](https://blog.teamtreehouse.com/perceived-performance). The goal is not to improve the response time, but to better manage the time to make the user _think_ that the website is fast.
 
-One way to do this is to anticipate the user's need and start the long running tasks before they actually need it. For instance, when a user is navigating on a catalog, on desktop, they will hover the product before clicking on it. Thus, we can trigger the product's load as soon as they hover the product, instead of waiting for the click. This can seem like small gains, but this definitly improves how fast the user _thinks_ your site is.
+One way to do this is to anticipate the user's need and start the long running tasks before they actually need it. For instance, when a user is navigating on a catalog, on desktop, they will hover the product before clicking on it. Thus, we can start loading the product page as soon as the user hover the product element, instead of waiting for the click. This can seem like a micro-optimization, but it definitely improves how fast the user _thinks_ your site is.
 
 ## How to preload data?
 
@@ -14,7 +18,7 @@ The main idea is to launch Apollo requests twice:
 - when you think that the user will need the data
 - when you are displaying the data
 
-By doing this, you will first warm up Apollo's cache and this cache will be reused when you will display your data. But this can be tedious. This is why in Front-Commerce, we have added a <abbr title="Higher Order Component">HOC</abbr> that will do this: `web/core/apollo/graphqlWithPreload` (added in version 1.0.0-rc.0).
+By doing this, you will first warm up Apollo's cache and this cache will be reused when you will display your data. But this can be tedious. This is why in Front-Commerce, we have added a <abbr title="Higher Order Component">HOC</abbr> that will do this: `web/core/apollo/graphqlWithPreload`.
 
 Let's see how it works by upgrading adding preload to a product component:
 
@@ -95,9 +99,9 @@ const EnhancedComponent = compose(
 
 ## How to preload routes?
 
-However, in some cases you don't really know which component you should preload. This is the case for the url: `/venia-dresses` for instance. If you are familiar with Venia's sample data, you will recognize that it is a category. But you may not know which component is actually used to display it.
+However, in some cases you don't really know which component you should preload. This is the case for the url: `/venia-dresses` for instance. If you are familiar with Magento Venia's sample data, you will recognize that it is a category. But you may not know which component is actually used to display it.
 
-This is why we have implemented preloads on links too. This is possible with the React hook `theme/modules/Router/usePreload` (added in version 1.0.0-rc.0) that will give you a preload function to load the components and data for a given link.
+This is why we have implemented preloads on links too. This is possible with the React hook `theme/modules/Router/usePreload` that will give you a preload function to load the components and data for a given link.
 
 <blockquote class="note">
 This hook is useful if you want to have custom events to preload data. However, the default links in Front-Commerce already use the `usePreload` hook and will preload pages before the user need them. This documentation is here to explain how this works under the hood.
@@ -180,4 +184,4 @@ To conclude, if you want your application to feel even faster to your users, you
 * add a `preload` static property to your routes thanks to `graphqlWithPreload`
 * use `usePreload` hook through the default Link component in Front-Commerce or manually in your own events.
 
-This also enables a wider range of optimizations such as Front-Commerce Fast Mode. Please refer to [FRONT_COMMERCE_FAST] for more information.
+This also enables a wider range of optimizations such as Front-Commerce Fast Mode. Please refer to [FRONT_COMMERCE_FAST](/docs/advanced/performance/faster-server-side-rendering.html) for more information.
