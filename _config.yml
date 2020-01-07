@@ -54,6 +54,7 @@ sidebar_categories:
     - docs/magento1/installation
     - docs/magento1/add-custom-endpoint
     - docs/magento1/event-list
+    - docs/magento1/generate-api-doc
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
