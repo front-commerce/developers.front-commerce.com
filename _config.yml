@@ -35,6 +35,8 @@ sidebar_categories:
     - docs/advanced/server/add-http-endpoint
   Performance:
     - docs/advanced/performance/overview
+    - docs/advanced/performance/preloading-routes
+    - docs/advanced/performance/faster-server-side-rendering
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
