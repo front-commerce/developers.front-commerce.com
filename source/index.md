@@ -39,6 +39,7 @@ layout: index
       <h3>It is production ready!</h3>
       <p>Started in 2015, Front-Commerce is already powering shops in production. We provide all the tools needed for maintaining a deployed website: an extensive logging system (client / server errors), error boundaries, maintenance mode, SEO, internationalization, security, caching and invalidation, payments, image processing, etc.</p>
     </div>
+
   </div>
 </section>
 
@@ -59,6 +60,7 @@ layout: index
         Learn more about our vision <span class="icon-arrow-right-alt"></span>
       </a>
     </div>
+
   </div>
 </section>
 
@@ -72,49 +74,47 @@ layout: index
   <div class="card-grid">
     <div class="card card--large">
       <img src="/images/magento-logo.svg">
-      <h3>Magento 2</h3>
-      <p>We currently support the main features of this open-source e-commerce solution. You can consider that if it works in Magento, it will work with Front-Commerce!</p>
-
-      <ul>
-        <li>search and navigation using ElasticSearch</li>
-        <li>multi-stores instances</li>
-        <li>advanced pricing: coupon codes, promotion rules, taxes…</li>
-        <li>highly customizable checkout, supporting Magento custom shipping and payment extensions</li>
-        <li>account management (forgotten passwords, emails…)</li>
-        <li>SEO: clean urls, redirections, sitemaps, meta information and rich data</li>
-      </ul>
-
-      <a class="link learn-more button" href="/docs/magento2/overview.html">
-        About our Magento 2 integration <span class="icon-arrow-right-alt"></span>
-      </a>
+      <h3><a href="https://magento1.demo.front-commerce.com">Magento 1</a> & <a href="https://magento2.demo.front-commerce.com">Magento 2</a></h3>
     </div>
-
     <div class="card card--large">
-      <img src="/images/integrations-logo.svg">
-      <h3>Future integrations</h3>
-
-      <p>We're driving our next integrations depending on our future clients needs. So feel free to contact us if you have any specific needs. We're willing to take advantage of our flexibility to adapt to our client's roadmaps.</p>
-
-      <p>However, for now we're especially looking into solutions such as:</p>
-
-      <ul>
-        <li><a href="https://www.akeneo.com/">Akeneo</a></li>
-        <li><a href="https://wordpress.org/">Wordpress</a></li>
-        <li><a href="https://www.drupal.org/">Drupal</a></li>
-        <li><a href="https://sylius.com/">Sylius</a></li>
-        <li><a href="https://oroinc.com/b2b-ecommerce/">OroCommerce</a></li>
-        <li><a href="https://www.marello.com/">Marello</a></li>
-        <li><a href="https://www.bigcommerce.com/">BigCommerce</a></li>
-        <li><a href="https://moltin.com/">Moltin</a></li>
-        <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
-      </ul>
-
-      <a class="link learn-more button" href="/docs/appendices/roadmap.html">
-        Take a look at our Roadmap <span class="icon-arrow-right-alt"></span>
-      </a>
+      <img src="/images/wordpress-logo.svg">
+      <h3><a href="https://wordpress.demo.front-commerce.com">WordPress</a></h3>
+    </div>
+    <div class="card card--large">
+      <img src="/images/prismic-logo.svg">
+      <h3><a href="https://prismic.demo.front-commerce.com">Prismic</a></h3>
     </div>
   </div>
 
+  <p class="center">
+    <a class="link primary button" href="https://demo.front-commerce.com">Browse all demos</a>
+  </p>
+</section>
+
+<section class="fc-section fc-section--dark">
+  <h2>Future integrations</h2>
+
+  <p>We're driving our next integrations depending on our future clients needs. So feel free to contact us if you have any specific needs. We're willing to take advantage of our flexibility to adapt to our client's roadmaps.</p>
+
+  <p>However, for now we're especially looking into solutions such as:</p>
+
+  <ul>
+    <li><a href="https://www.akeneo.com/">Akeneo</a></li>
+    <li><a href="https://www.drupal.org/">Drupal</a></li>
+    <li><a href="https://sylius.com/">Sylius</a></li>
+    <li><a href="https://oroinc.com/b2b-ecommerce/">OroCommerce</a></li>
+    <li><a href="https://www.marello.com/">Marello</a></li>
+    <li><a href="https://www.axelor.com/">Axelor</a></li>
+    <li><a href="https://www.bigcommerce.com/">BigCommerce</a></li>
+    <li><a href="https://moltin.com/">Moltin</a></li>
+    <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
+  </ul>
+
+  <p>
+    <a class="link learn-more button" href="/docs/appendices/roadmap.html">
+      Take a look at our Roadmap <span class="icon-arrow-right-alt"></span>
+    </a>
+  </p>
 </section>
 
 <section class="fc-section fc-section--card">
@@ -132,6 +132,7 @@ layout: index
 
       <p>The design system is also a the place where we will help you ensure not to introduce regressions and keep good <abbr title="Accessibility">a11y</abbr> practices.</p>
     </div>
+
   </div>
 </section>
 
@@ -148,6 +149,7 @@ layout: index
 
       <p>For instance, a team can work on delivering Magento2 customization and exposing it through the WebAPI while another can set up a PIM to manage all your products data and finally your in house frontend developers can work on creating an awesome experience in the browser while your UX designers can iterate on new prototypes</p>
     </div>
+
   </div>
 </section>
 

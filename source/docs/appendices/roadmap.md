@@ -78,7 +78,7 @@ This is broad overview to let you know about our priorities on the short-mid ter
 
 If you have one that you'd like to share with us, we would love to hear from you!
 
-* [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q)
+* [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU)
 * [Twitter](https://twitter.com/Front_Commerce)
 * [Contact](mailto:contact@front-commerce.com)
 
