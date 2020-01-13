@@ -64,9 +64,9 @@ The goal here is not to change the whole backend at once, but to enable partners
 
 Definitely not a final list, be we're eager to try some integrations with:
 
-* [Moltin](https://moltin.com/)
+* [OroCommerce](https://oroinc.com/b2b-ecommerce/)
 * [Sylius](https://sylius.com/)
-* [Shopify](https://www.shopify.com/)
+* [Elasticpash](https://www.elasticpath.com/)
 * [Akeneo](https://www.akeneo.com/)
 * [Marello](https://www.marello.com/)
 

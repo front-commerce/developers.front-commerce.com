@@ -103,11 +103,12 @@ other platforms.
 
 So far, we are considering to support the following platforms:
 
+- OroCommerce
 - Akeneo
 - WordPress
 - Drupal
 - Sylius
-- Moltin
+- Elasticpath
 - Izberg
 
 ### What kind of projects is Front-Commerce particularly appropriated for?
