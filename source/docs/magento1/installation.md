@@ -56,31 +56,46 @@ If the installation is successful, in Magento's administration panel, you will h
 
 ### **Check install**
 
-     Go to admin menu entry Front-Commerce > Configuration. You should see an "Installer checker" that will ensure that everything is configured correctly in your shop. If it is the first time installing the module, most of the checks should be invalid. Please refer to the next steps to validate them.
+Go to the `Front-Commerce > Configuration` admin menu entry. You should see an "Installer checker" that will ensure that everything is configured correctly in your shop.
 
-### **Rest roles**
+Right after your first installation, most of the checks should be invalid. Please refer to the next steps to validate them.
 
-[official documentation](https://docs.magento.com/m1/ce/user_guide/system-operations/web-services-activate.html)
-  - Go to admin menu entry System > Web services > REST Roles
+### **REST roles**
+
+Front-Commerce requires you to define 3 roles.
+
+Here are the main steps:
+
+  - Go to admin menu entry `System > Web services > REST Roles`
   - You need to have 3 roles, `Guest`, `Customer`, and `Admin`. If you don't, create them.
   - Set all roles access to all resources (Role API Resources tab > Resource Access "All").
 
-### **Rest attributes**
+See the [official documentation](https://docs.magento.com/m1/ce/user_guide/system-operations/web-services-activate.html) for detailed information about how to achieve this with Magento.
 
-  - Go to admin menu entry System > Web services > Rest Attributes
-  - You can see 3 user types `Guest`, `Customer`, and `Admin`. 
+### **REST attributes**
+
+Front-Commerce roles must have access to several data on each entities, so it can expose them in GraphQL. You must allow each role to read these information.
+
+  - Go to admin menu entry `System > Web services > REST Attributes`
+  - You can see 3 user types `Guest`, `Customer`, and `Admin`.
   - Set all ACL attributes rules to all resource access (ACL Attribute Rules tab > Resource Access "All").
 
-### **Rest OAuth Consumer**
+### **REST OAuth Consumer**
 
-  - Go to admin menu entry System > Web services > Rest OAuth Consumers
+Front-Commerce must be able to create tokens for users when they log-in. You should ensure there is a `Front-Commerce` consumer configured in your install.
+
+  - Go to admin menu entry `System > Web services > REST OAuth Consumers`
   - Add New OAuth Consumer:
     - Name: `Front-Commerce`
     - Callback URL: `http://local.host` <- is useless but can't be empty
 
+The Key/Secret values should be used to configure your Front-Commerce, with the `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY` and `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET` environment variables in your `.env` file.
+
 ### **Admin user**
 
-  - Go to admin menu entry System > Permissions > User
+Advanced features such as Embedded Payments have to use an admin user with REST access. You must ensure it exists, by doing the following steps.
+
+  - Go to admin menu entry `System > Permissions > User`
   - Create a new user (only used for Front-Commerce's embedded payments feature, users will never interact with your shop using this account)
     - User Name: `Front-Commerce`
     - First Name: `Front-Commerce`
@@ -89,7 +104,9 @@ If the installation is successful, in Magento's administration panel, you will h
     - Password: enter a password
     - REST Role: Admin
 
-### **Rest admin token**
+### **REST admin token**
+
+You must generate admin tokens to configure Front-Commerce.
 
   - Go to admin menu entry Front-Commerce > Configuration
   - Click on "Generate Token" link in installer checker section (This should be the same key as `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN` and `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET` in your Front-Commerce `.env`)
