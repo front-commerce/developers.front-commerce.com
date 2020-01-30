@@ -113,15 +113,19 @@ You must generate admin tokens to configure Front-Commerce.
 
 ### **Magento core patch**
 
-  If the OAuth Zend Patch is valid in the installer checker, please follow these steps:
+  If the OAuth Zend Patch is not valid in the installer checker, please follow these steps:
   - Copy the [`fix-sort-params-core.patch`](https://gitlab.com/front-commerce/magento1-module-front-commerce/blob/master/fix-sort-params-core.patch) file in your root directory
   - Past it on your root Magento directory
-  - Apply them `git apply fix-sort-params-core.patch`
-
+  - Apply them
+    - Whit GIT: `git apply fix-sort-params-core.patch`
+    - Without GIT: `patch -p1 < fix-sort-params-core.patch`
+  
 ### **URLs settings**
 
   - Go to System > Configuration > Front-Commerce General > URLs Settings
   - Add your Front-Commerce Front URL. In development environment, it should be `http://localhost:4000/`. In production environment, it is the URL of your main store.
+  - Go to System > Configuration > General > Web
+  - Set your base URL (secure + unsecure) with your Front-Commerce front URL (`http://localhost:4000/` in development environment) for each store view value. You can keep your admin URL for the default value.
 
 ### **Cache settings**
 
