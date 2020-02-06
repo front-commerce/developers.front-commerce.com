@@ -29,3 +29,7 @@ Troubleshooting
     * `DEBUG=axios npm start` will show you where your data is coming from
     * Ensure your cache is up to date
     * Check for the resulting data in your `resolvers` by adding console.logs
+    
+ ## Another issue?
+ 
+ Please contact our support or open an issue descripting the encountered problem along with your environment using ` npx envinfo --system --binaries`
