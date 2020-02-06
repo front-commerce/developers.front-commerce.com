@@ -38,7 +38,7 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_HOST` (default: `0.0.0.0`): The host of the launched server. It might be useful to set it to `127.0.0.1` if you want to only listen local requests.
 - `FRONT_COMMERCE_URL`: The URL available to access to your Front-Commerce application (http://localhost:4000 in your local environment, and your website URL on the production environment)
 - `FRONT_COMMERCE_ENV`: `dev` or `production` in order to remove debugging options on the server side (ex: we disable GraphQL playground in production mode)
-- `FRONT_COMMERCE_COOKIE_DOMAIN`: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name)
+- `FRONT_COMMERCE_COOKIE_DOMAIN` *(deprecated)*: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
 - `FRONT_COMMERCE_UNSAFE_INSECURE_MODE`: you set this environment variable to `true` to disable Front-Commerce behaviors restricting HTTP usage in production, even though we strongly recommend you to expose your application through HTTPS.
 
@@ -168,7 +168,7 @@ Here is a list of available debug namespaces:
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
-- `front-commerce:scripts:routing`: debugs routing generation during the `prepare` command
+- `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
