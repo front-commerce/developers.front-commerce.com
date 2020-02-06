@@ -11,10 +11,10 @@ Troubleshooting
     * check the stdout/stderr of your server
         * Shop not found and falling back to the default one?
             * Is the list of validUrls correct? Is FRONT_COMMERCE_URL in the `validUrls` logged?
-            * Is the `url` logged is the one you used in your browser? If it has the port in it, it's likely because your server proxy/load balancer is not well configured. Please add `X-Forwarded-Proto`, `X-Forwarded-Port` & `X-Forwarded-For` ([classic headers for proxies and load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/x-forwarded-headers.html))
+            * Is the `url` logged is the one you used in your browser? If it has the port in it, it's likely because your server proxy/load balancer is not well configured. Please add `X-Forwarded-Proto`, `X-Forwarded-Port` & `X-Forwarded-For` ([classic headers for proxies and load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/x-forwarded-headers.html)). [Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/).
         * Redirecting to HTTPS although I don't have HTTPS on my server
             * If it's for production, please fix this. This is a severe security issue for your website and your users. It can also negatively impact your SEO and the trust of your users.
-            * If you know what you are doing, please make sure that your proxy sets `X-Forwarded-Proto` with `https`
+            * If you know what you are doing, please make sure that your proxy sets `X-Forwarded-Proto` with `https` ([Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/))
 * JavaScript is not loading on my site
     * Which browser? Check your `package.json::browserslist`
 * SSR is broken
