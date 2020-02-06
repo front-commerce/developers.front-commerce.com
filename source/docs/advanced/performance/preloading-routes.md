@@ -184,4 +184,6 @@ To conclude, if you want your application to feel even faster to your users, you
 * add a `preload` static property to your routes thanks to `graphqlWithPreload`
 * use `usePreload` hook through the default Link component in Front-Commerce or manually in your own events.
 
+You can tweak how the `usePreload` works in links by adding a [`preload` property in your `config/website.js`](https://developers.front-commerce.com/docs/reference/configurations.html#config-website-js).
+
 This also enables a wider range of optimizations such as Front-Commerce Fast Mode. Please refer to [FRONT_COMMERCE_FAST](/docs/advanced/performance/faster-server-side-rendering.html) for more information.

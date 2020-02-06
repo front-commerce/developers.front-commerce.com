@@ -55,6 +55,12 @@ This configuration file should contain any thing that impacts the content of you
 * `email`: support/contact email of the website
 * `maxAddressLength`: max length for one line of address ([default is 35](https://webarchive.nationalarchives.gov.uk/+/http://www.cabinetoffice.gov.uk/media/254290/GDS%20Catalogue%20Vol%202.pdf))
 * `rewrittenToRoot`: array of the URLs that should be redirected to `/`
+* `preload`: an object that defines how the preload features work in Front-Commerce
+  * `maxConcurrentPreload`: the number of parallel requests that can be launched for preloading purpose (default: `3`)
+  * `maxPreloadQueueLength`: the number of preload requests to store before aborting old ones (default: `30`)
+  * `intersectionObserverOptions`: `IntersectionObserver` options to know when to trigger a preload based on a link's position on screen (default: `{ rootMargin: "0px" }`)
+  * `timeoutBeforePreload`: the duration in milliseconds to wait before triggering a link's preload once it has entered the screen (default: `500`)
+  * `intersectionObserverDevices`: the type of devices where intersection observers should be used for preload. We usually don't want it on desktop to avoid triggering too many requests. (default: `["phone", "tablet"]`)
 
 You could find many other configurations in such a file because some configurations could come from optional modules. Some of these are:
 * `color_attribute_id`: allows to display the colors swatches for the color attribute (swatches should be detected automatically in the future)
