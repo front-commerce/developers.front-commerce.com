@@ -66,7 +66,7 @@ Definitely not a final list, be we're eager to try some integrations with:
 
 * [OroCommerce](https://oroinc.com/b2b-ecommerce/)
 * [Sylius](https://sylius.com/)
-* [Elasticpash](https://www.elasticpath.com/)
+* [Elasticpath](https://www.elasticpath.com/)
 * [Akeneo](https://www.akeneo.com/)
 * [Marello](https://www.marello.com/)
 
