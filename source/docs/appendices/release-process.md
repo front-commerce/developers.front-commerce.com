@@ -3,9 +3,9 @@ id: release-process
 title: Release process
 ---
 
-Front-Commerce is built around the motto "Make it work, then make it better". This means that it is possible **today** to develop and deploy your website to production. But we still have a lot of things to work on to accomplish our mission: make your life easier, and your customers happier.
+Front-Commerce is built around the motto "Make it work, then make it better". This means that it is possible **today** to develop and deploy your website to production.
 
-Front-Commerce will thus regularly evolve. Our main strength is our flexibility. We do take into account our clients needs and adapt our Roadmap to match theirs. If you have any particular needs, feel free to [contact us](mailto:contact@front-commerce.com) and we will see what we can do to help you :)
+Our mission of making your life easier, and your customers happier is an ongoing process. Front-Commerce will thus regularly evolve. Our main strength is our flexibility. We do take into account our clients needs and adapt our Roadmap to match theirs. If you have any particular needs, feel free to [contact us](mailto:contact@front-commerce.com) and we will see what we can do to help you :)
 
 This page explains our release philosophy.
 
