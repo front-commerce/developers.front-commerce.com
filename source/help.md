@@ -146,7 +146,7 @@ Last but not least, there are some settings from existing CMS that might not be
 supported in Front-Commerce. For instance, layout and design features from
 Magento2’s admin area will probably never be supported in Front-Commerce. Due to
 the current state of our product, it is very likely that some other settings
-have not yet been supported in the product… but [our roadmap](/docs/appendices/roadmap.html) is
+have not yet been supported in the product… but our roadmap is
 shaped by your needs, so there’s always hope!
 
 ### I have not found an answer to my question
