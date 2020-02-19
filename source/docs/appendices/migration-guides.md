@@ -7,11 +7,11 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## `1.0.0-beta.3` -> `1.0.0-rc.0`
+## `1.0.0-beta.3` -> `2.0.0-rc.0`
 
 `1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
 
-If you are migrating from a `1.0.0-beta.3` version to the `1.0.0-rc.0`, here is the guide.
+If you are migrating from a `1.0.0-beta.3` version to the `2.0.0-rc.0`, here is the guide.
 
 ### Linting
 

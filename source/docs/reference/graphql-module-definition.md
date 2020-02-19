@@ -309,7 +309,7 @@ export default {
 ### `apolloLinkHttpOptions` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-rc.0`_
+  _This feature has been added in version `2.0.0-rc.0`_
 </blockquote>
 
 The `apolloLinkHttpOptions` key allows you to customize options passed to the [apollo-link-http](https://www.apollographql.com/docs/link/links/http/#options) that fetches the schema.

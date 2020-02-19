@@ -4,7 +4,7 @@ title: Preloading Routes' data
 ---
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-rc.0`_
+  _This feature has been added in version `2.0.0-rc.0`_
 </blockquote>
 
 When a website is slow, the first thing that comes to mind is to improve raw metrics like the Speed Index. And while this is definitly useful, we shouldn't overlook the [_perceived_ performances](https://blog.teamtreehouse.com/perceived-performance). The goal is not to improve the response time, but to better manage the time to make the user _think_ that the website is fast.
