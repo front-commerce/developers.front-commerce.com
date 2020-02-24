@@ -172,6 +172,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
+- `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
 
 ## Add your own environment variables
 
