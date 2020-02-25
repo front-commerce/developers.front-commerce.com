@@ -48,7 +48,7 @@ further and edit buttons, form inputs, etc.
 
 ### Colors
 
-In order to style our HTML, we use Sass, the well-known CSS preprocessor. Thus,
+In order to style our HTML, we use [Sass](https://sass-lang.com/), the well-known CSS preprocessor. Thus,
 the design tokens often translate to Sass variables.
 
 For instance, if we want to edit the colors of our application, we need to
