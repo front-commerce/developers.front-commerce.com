@@ -190,6 +190,12 @@ For more information, please have a look at the [Routes reference](/docs/referen
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
 
+## Better sitemap delcarations
+
+First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
+
+Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/theme/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
+
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
 `1.0.0-beta.1` and `1.0.0-beta.2` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
