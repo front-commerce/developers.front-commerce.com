@@ -64,7 +64,7 @@ minimal and size-efficient JSON response.
 Front-Commerce’s GraphQL middleware is a key component of this architecture. It
 is **responsible for the communication across your different services to expose
 unified data to clients**. GraphQL powerful typing system allows to describe
-your domain in a clear an expressive way, no matter where data comes from.
+your application domain in a clear and expressive way [that people can understand](https://www.martinfowler.com/bliki/UbiquitousLanguage.html), no matter where data comes from.
 
 Data retrieval in the GraphQL middleware has been designed to allow developers
 to easily cache specific data. Hence **every API could benefit of application
