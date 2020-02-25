@@ -72,7 +72,7 @@ sidebar_categories:
     - docs/reference/scripts
     - docs/reference/front-commerce-prepare
   Appendices:
-    - docs/appendices/roadmap
+    - docs/appendices/release-process
     - docs/appendices/migration-guides
     - docs/appendices/release-notes
     - docs/appendices/changelog
