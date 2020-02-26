@@ -44,6 +44,7 @@ sidebar_categories:
     - docs/advanced/production-ready/multistore
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
+    - docs/advanced/production-ready/sitemap
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
