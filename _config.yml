@@ -34,6 +34,7 @@ sidebar_categories:
   Server:
     - docs/advanced/server/overview
     - docs/advanced/server/add-http-endpoint
+    - docs/advanced/server/configurations
   Performance:
     - docs/advanced/performance/overview
     - docs/advanced/performance/preloading-routes
