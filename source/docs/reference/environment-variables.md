@@ -166,6 +166,7 @@ Here is a list of available debug namespaces:
 - `axios`: debugs axios requests and responses (using [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
 - `express-http-proxy`: debugs media requests proxied by the media middleware (see [express-http-proxy](https://www.npmjs.com/package/express-http-proxy#trace-debugging))
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
+- `front-commerce:cache`: debugs cache invalidation calls and strategies information
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
