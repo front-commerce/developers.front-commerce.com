@@ -48,7 +48,7 @@ further and edit buttons, form inputs, etc.
 
 ### Colors
 
-In order to style our HTML, we use Sass, the well-known CSS preprocessor. Thus,
+In order to style our HTML, we use [Sass](https://sass-lang.com/), the well-known CSS preprocessor. Thus,
 the design tokens often translate to Sass variables.
 
 For instance, if we want to edit the colors of our application, we need to
@@ -57,9 +57,9 @@ override the one defined in the core. To do so:
 1.  override the `theme/components/atoms/Colors/_colors.scss` theme file in your
     theme:
 ```bash
-mkdir -p src/web/theme/components/atoms/Colors/
+mkdir -p my-module/web/theme/components/atoms/Colors/
 cp node_modules/front-commerce/src/web/theme/components/atoms/Colors/_colors.scss \
-  src/web/theme/components/atoms/Colors/_colors.scss
+  my-module/web/theme/components/atoms/Colors/_colors.scss
 ```
 2. restart the application so the override is detected
 3. edit the colors as needed
@@ -67,7 +67,7 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Colors/_colors.scs
 In Smashing Magazine's case it would be:
 
 ```diff
-// src/web/theme/components/atoms/Colors/_colors.scss
+// my-module/web/theme/components/atoms/Colors/_colors.scss
 -$brandPrimary: #666699;
 -$brandSecondary: #818199;
 +$brandPrimary: #d33a2c;
@@ -91,16 +91,16 @@ Follow the same steps than for colors:
    `theme/components/atoms/Typography/Heading/_Heading.scss` theme files in your
    theme:
 ```bash
-mkdir -p src/web/theme/components/atoms/Typography/Heading
+mkdir -p my-module/web/theme/components/atoms/Typography/Heading
 cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/_typography.scss \
-  src/web/theme/components/atoms/Typography/_typography.scss
+  my-module/web/theme/components/atoms/Typography/_typography.scss
 cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading/_Heading.scss \
-  src/web/theme/components/atoms/Typography/Heading/_Heading.scss
+  my-module/web/theme/components/atoms/Typography/Heading/_Heading.scss
 ```
 2. restart the application so the override is detected
 3. edit the fonts as needed
 ```diff
-// src/web/theme/components/atoms/Typography/_typography.scss
+// my-module/web/theme/components/atoms/Typography/_typography.scss
 -$fontFamily: "Roboto", "Arial Helvetica", "Arial", sans-serif;
 +@font-face {
 +  font-family: "Elena";
@@ -119,7 +119,7 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading
 +$fontFamily: Elena, Georgia, serif;
 +$titleFontFamily: Mija, Arial, sans-serif;
 
-// src/web/theme/components/atoms/Typography/Heading/_Heading.scss
+// my-module/web/theme/components/atoms/Typography/Heading/_Heading.scss
  @mixin heading($f-size) {
 +  font-family: $titleFontFamily;
    font-size: $f-size;
@@ -130,7 +130,7 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading
    <abbr title="Content Security Policy">CSP</abbr> `font-src` header value
    configured in `src/config/website.js`
 ```diff
-// src/config/website.js
+// my-module/config/website.js
        imgSrc: [],
 -      fontSrc: [],
 +      fontSrc: ["d33wubrfki0l68.cloudfront.net"],

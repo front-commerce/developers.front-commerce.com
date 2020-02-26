@@ -36,7 +36,7 @@ In Front-Commerce we call UI component any component that is:
   `ProductDescription`. It would be better to go for a `Description` that would
   thus be reusable by a Category.
 - **Focused on abstracting away UI concerns**: the goal of UI components is to
-  hide styles or DOM concerns from their parents. It may be hard to achieve
+  hide styles or [<abbr title="Document Object Model">DOM</abbr>](https://fr.wikipedia.org/wiki/Document_Object_Model) concerns from their parents. It may be hard to achieve
   sometimes, but it will greatly improve the parent component's readability. For
   instance, a UI component should not give the opportunity to pass a `className`
   in its props as it may lead to many styles inconsistencies across the theme.
