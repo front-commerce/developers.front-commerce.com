@@ -136,12 +136,9 @@ export default {
 
 ## `resolvers` (optional)
 
-This is an object containing all the resolvers for resolving fields defined in
-the schema (usually from your `typeDefs`). This is where the implementation
-resides.
+This is an object containing all the resolvers providing data for the fields defined in the schema (usually from your `typeDefs`). This is where the implementation resides.
 
-Resolver map must follow
-[the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
+Resolver map must follow [the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
 
 ```js
 // or import resolvers from './resolvers.js';
@@ -309,7 +306,7 @@ export default {
 ### `apolloLinkHttpOptions` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-rc.0`_
+  _This feature has been added in version `2.0.0-rc.0`_
 </blockquote>
 
 The `apolloLinkHttpOptions` key allows you to customize options passed to the [apollo-link-http](https://www.apollographql.com/docs/link/links/http/#options) that fetches the schema.

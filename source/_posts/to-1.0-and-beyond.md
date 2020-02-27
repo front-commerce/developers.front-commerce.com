@@ -18,7 +18,7 @@ We have had several business proposals that were available to us and after much 
 As of today, we now have 3 people working full-time on Front-Commerce. This dedicated team is still in close relationship with Occitech’s team, who keeps maintaining and iterating on the biggest Front-Commerce projects in production to-date.
 
 Our goal is to maintain this close collaboration, by migrating Occitech’s projects to the latest version of Front-Commerce before every official release.
-**We believe this is a key feature of our [release process](/docs/appendices/roadmap.html#Release-process), to ensure that we are providing a seamless migration path and detect potential issues as early as possible in the development process.**
+**We believe this is a key feature of our [release process](/docs/appendices/release-process.html), to ensure that we are providing a seamless migration path and detect potential issues as early as possible in the development process.**
 
 ## Meet Karim, a new kind of Developer in the team!
 
@@ -46,7 +46,7 @@ Armed with experience from these real-world use-cases, we have refactored and re
 These « big bang » backward incompatible changes have been our first priority to ensure that the projects which were being started would not need tedious rewrites when upgrading.
 This is also the occasion to work with our partners to ensure that their upgrades are painless.
 
-Since our first `alpha` release we have been working with our partners on incremental improvements based on their feedback. We have also reduced technical debt and will continue on our path until we are confident that we could follow [our roadmap](/docs/appendices/roadmap.html) with semantic versioning in mind.
+Since our first `alpha` release we have been working with our partners on incremental improvements based on their feedback. We have also reduced technical debt and will continue on our path until we are confident that we could follow our roadmap with semantic versioning in mind.
 
 We invite you to read our [releases page](https://gitlab.com/front-commerce/front-commerce/releases) (if you have access to our private Gitlab instance), or our [Migration Guides](https://developers.front-commerce.com/docs/appendices/migration-guides.html).
 We will announce new releases on this blog too from now on.

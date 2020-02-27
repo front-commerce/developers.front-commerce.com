@@ -7,11 +7,11 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## `1.0.0-beta.3` -> `1.0.0-rc.0`
+## `1.0.0-beta.3` -> `2.0.0-rc.0`
 
 `1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
 
-If you are migrating from a `1.0.0-beta.3` version to the `1.0.0-rc.0`, here is the guide.
+If you are migrating from a `1.0.0-beta.3` version to the `2.0.0-rc.0`, here is the guide.
 
 ### Linting
 
@@ -55,7 +55,7 @@ Here the list of the main updates you need to be concerned about:
   ]
   ```
 * [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5`
-  It should be compatible. However you will have warnings if you use `formsy-react-2`. Simply rename it to `formsy-react`.
+  It should be compatible. However you will have warnings if you use `formsy-react-2`. Simply rename it to `formsy-react`. Please have a look at the [Abstract Formsy section](#Abstract-Formsy) below to learn about broader changes regarding the form inputs.
 * [react-helmet](https://github.com/nfl/react-helmet) -> [react-helmet-async](https://github.com/staylor/react-helmet-async)
   It should be compatible. However you will have warnings if you use `react-helmet`. Simply rename it to `react-helmet-async`. The goal is to have a better SSR support.
 * [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
@@ -110,7 +110,7 @@ Only thing to consider: if you had some images in one of your `public/images/res
 
 TODO: Document how to add your own proxy endpoint.
 
-## Abstract Formsy
+### Abstract Formsy
 
 The goal here is to allow an easier migration out of Formsy.
 
@@ -118,11 +118,11 @@ If you don't plan to move out of it, you don't need to change anything. However,
 
 Please note that some improvements comes with `withFormHandlers`. The most notable change is that inputs won't display errors on first user's change, but on the first blur. This should make form completion less frustrating for the users. The second change is that you can decide to opt-out of `Formsy` any time by passing an `onChange` property directly.
 
-For more information, please have a look at the `withFormHandlers` reference.
+For more information, please have a look at [how to create new input types](/docs/advanced/theme/form.html#New-input-types).
 
-TODO: Document withFormHandlers
+For existing projects, the goal would be to replace `formsy-react`'s HOC by `withFormHandlers`. The best way to migrate components you have overriden in your project is to look at the core's implementation of form inputs like [`Input`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Input.js), [`Textarea`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Textarea/Textarea.js), [`Checkbox`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) or [`Select`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Select/Select.js).
 
-## Move to a file first routing declaration
+### Move to a file first routing declaration
 
 Previously, if you needed to use new routes or sub-routes, you needed to do one of the following:
 
@@ -189,6 +189,12 @@ For more information, please have a look at the [Routes reference](/docs/referen
     * If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder.
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
+
+### Better sitemap declarations
+
+First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
+
+Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/theme/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
 
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 

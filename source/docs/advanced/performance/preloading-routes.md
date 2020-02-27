@@ -4,7 +4,7 @@ title: Preloading Routes' data
 ---
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-rc.0`_
+  _This feature has been added in version `2.0.0-rc.0`_
 </blockquote>
 
 When a website is slow, the first thing that comes to mind is to improve raw metrics like the Speed Index. And while this is definitly useful, we shouldn't overlook the [_perceived_ performances](https://blog.teamtreehouse.com/perceived-performance). The goal is not to improve the response time, but to better manage the time to make the user _think_ that the website is fast.
@@ -183,5 +183,7 @@ If you need search parameters in the URL (e.g. `?param=value`), it will be avail
 To conclude, if you want your application to feel even faster to your users, you need to:
 * add a `preload` static property to your routes thanks to `graphqlWithPreload`
 * use `usePreload` hook through the default Link component in Front-Commerce or manually in your own events.
+
+You can tweak how the `usePreload` works in links by adding a [`preload` property in your `config/website.js`](https://developers.front-commerce.com/docs/reference/configurations.html#config-website-js).
 
 This also enables a wider range of optimizations such as Front-Commerce Fast Mode. Please refer to [FRONT_COMMERCE_FAST](/docs/advanced/performance/faster-server-side-rendering.html) for more information.

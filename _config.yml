@@ -19,6 +19,7 @@ sidebar_categories:
     - docs/advanced/theme/route-dispatcher
     - docs/advanced/theme/layouts
     - docs/advanced/theme/wysiwyg
+    - docs/advanced/theme/form
     - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
   GraphQL:
@@ -37,12 +38,14 @@ sidebar_categories:
     - docs/advanced/performance/overview
     - docs/advanced/performance/preloading-routes
     - docs/advanced/performance/faster-server-side-rendering
+    - docs/advanced/performance/server-timings
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
     - docs/advanced/production-ready/multistore
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
+    - docs/advanced/production-ready/sitemap
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -72,7 +75,7 @@ sidebar_categories:
     - docs/reference/scripts
     - docs/reference/front-commerce-prepare
   Appendices:
-    - docs/appendices/roadmap
+    - docs/appendices/release-process
     - docs/appendices/migration-guides
     - docs/appendices/release-notes
     - docs/appendices/changelog

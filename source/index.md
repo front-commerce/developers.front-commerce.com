@@ -106,13 +106,13 @@ layout: index
     <li><a href="https://www.marello.com/">Marello</a></li>
     <li><a href="https://www.axelor.com/">Axelor</a></li>
     <li><a href="https://www.bigcommerce.com/">BigCommerce</a></li>
-    <li><a href="https://moltin.com/">Moltin</a></li>
+    <li><a href="https://www.elasticpath.com/">Elasticpath</a></li>
     <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
   </ul>
 
   <p>
-    <a class="link learn-more button" href="/docs/appendices/roadmap.html">
-      Take a look at our Roadmap <span class="icon-arrow-right-alt"></span>
+    <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20roadmap&body=Hi%2C%0D%0A%0D%0AI%20am%20interested%20in%20your%20product%2C%20and%20would%20love%20to%20know%20if%20you%20considered%20...">
+      Ask us about our roadmap <span class="icon-arrow-right-alt"></span>
     </a>
   </p>
 </section>

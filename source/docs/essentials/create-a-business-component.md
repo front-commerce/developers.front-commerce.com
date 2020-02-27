@@ -142,6 +142,10 @@ const Home = ({ store }) => (
 
 With that, you should see the map appear in your homepage.
 
+<blockquote class="important">
+  **Important:** if you detect issues with remote assets (images, CSS…) not being loaded, you may have to update your <abbr title="Content Security Policy">CSP</abbr> headers to allow new domains. You could achieve this by modifying your [`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/configurations.html#config-website-js).
+</blockquote>
+
 ### Extracting our new component
 
 Having the map in the Home component could be fine for a time, but if there are many
@@ -217,11 +221,11 @@ storiesOf("modules.StoreLocator", module).add("default", () => {
 });
 ```
 
-    <blockquote class="note">
-    We won't focus on the story in this guide. But you can refer to the
-    [Storybook guide](/docs/essentials/add-component-to-storybook.html) to learn how to add any kind of stories
-    to your Storybook.
-    </blockquote>
+<blockquote class="note">
+  We won't focus on the story in this guide. But you can refer to the
+  [Storybook guide](/docs/essentials/add-component-to-storybook.html) to learn how to add any kind of stories
+  to your Storybook.
+</blockquote>
 
 ### Fetching our data
 
@@ -301,9 +305,7 @@ query StoreLocator {
 ```
 
 To better understand and test your schema, you can use **GraphQL Playground**.
-It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL. In
-Front-Commerce Lite, we can access it at
-[http://0.0.0.0:4000/playground](http://0.0.0.0:4000/playground).
+It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL.
 
 <blockquote class="note">
 <p>You may think that some queries are already launched in our `EnhanceHome`
