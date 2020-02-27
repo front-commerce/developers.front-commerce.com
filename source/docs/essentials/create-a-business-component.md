@@ -301,9 +301,7 @@ query StoreLocator {
 ```
 
 To better understand and test your schema, you can use **GraphQL Playground**.
-It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL. In
-Front-Commerce Lite, we can access it at
-[http://0.0.0.0:4000/playground](http://0.0.0.0:4000/playground).
+It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL.
 
 <blockquote class="note">
 <p>You may think that some queries are already launched in our `EnhanceHome`

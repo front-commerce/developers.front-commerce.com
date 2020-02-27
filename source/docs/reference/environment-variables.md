@@ -38,7 +38,7 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_HOST` (default: `0.0.0.0`): The host of the launched server. It might be useful to set it to `127.0.0.1` if you want to only listen local requests.
 - `FRONT_COMMERCE_URL`: The URL available to access to your Front-Commerce application (http://localhost:4000 in your local environment, and your website URL on the production environment)
 - `FRONT_COMMERCE_ENV`: `dev` or `production` in order to remove debugging options on the server side (ex: we disable GraphQL playground in production mode)
-- `FRONT_COMMERCE_COOKIE_DOMAIN`: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name)
+- `FRONT_COMMERCE_COOKIE_DOMAIN` *(deprecated)*: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
 - `FRONT_COMMERCE_UNSAFE_INSECURE_MODE`: you set this environment variable to `true` to disable Front-Commerce behaviors restricting HTTP usage in production, even though we strongly recommend you to expose your application through HTTPS.
 
@@ -52,6 +52,12 @@ Configure the execution environment of the Front-Commerce's application:
 
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications invalidate parts of Front-Commerce cache. <!-- TODO link to dataloaders and cache invalidation documentation -->
 
+### Performance
+
+- `FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.
+- `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
+
+
 ### Sitemap
 
 - `FRONT_COMMERCE_SITEMAP_TOKEN`: a token that secures the sitemap query in your GraphQL Schema
@@ -59,6 +65,11 @@ Configure the execution environment of the Front-Commerce's application:
 ### PWA
 
 - `FRONT_COMMERCE_DISABLE_OFFLINE_MODE`: in case you don't want to load the offline page when the user is offline
+
+### DX
+
+- `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables the SSR warning page before loading. This allows you to see what happens in production.
+- `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE`: disables the image resizing errors in case you've passed malformed requests to the server. This allows you to see what happens in production.
 
 ## Remote services configuration
 
@@ -129,6 +140,8 @@ More documentation about this module will be available soon. Please [contact us]
 - `SERVER`: `true` if your code is executed server side, `false` if it is client side
 - `PUBLIC_URL`: the current URL of your Front-Commerce application
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
+- `FRONT_COMMERCE_ENABLE_SOURCE_MAP`: `true` if your code needs to expose source maps in production. By default it's `false` unless you've set `FRONT_COMMERCE_ENV=dev`.
+
 
 ## Debugging
 
@@ -155,8 +168,11 @@ Here is a list of available debug namespaces:
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
+- `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
+- `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
+- `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
 
 ## Add your own environment variables
 

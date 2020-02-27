@@ -17,7 +17,9 @@ sidebar_categories:
   Theme:
     - docs/advanced/theme/overview
     - docs/advanced/theme/route-dispatcher
+    - docs/advanced/theme/layouts
     - docs/advanced/theme/wysiwyg
+    - docs/advanced/theme/form
     - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
   GraphQL:
@@ -34,12 +36,16 @@ sidebar_categories:
     - docs/advanced/server/add-http-endpoint
   Performance:
     - docs/advanced/performance/overview
+    - docs/advanced/performance/preloading-routes
+    - docs/advanced/performance/faster-server-side-rendering
+    - docs/advanced/performance/server-timings
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
     - docs/advanced/production-ready/multistore
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
+    - docs/advanced/production-ready/sitemap
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -50,6 +56,12 @@ sidebar_categories:
     - docs/magento2/i18n
     - docs/magento2/add-question-on-registration
     - docs/magento2/add-new-attribute
+  Magento1:
+    - docs/magento1/overview
+    - docs/magento1/installation
+    - docs/magento1/add-custom-endpoint
+    - docs/magento1/event-list
+    - docs/magento1/generate-api-doc
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
@@ -58,11 +70,13 @@ sidebar_categories:
     - docs/reference/graphql-module-definition
     - docs/reference/graphql-context
     - docs/reference/api
+    - docs/reference/routing
     - docs/reference/wysiwyg
     - docs/reference/analytics-components
     - docs/reference/scripts
+    - docs/reference/front-commerce-prepare
   Appendices:
-    - docs/appendices/roadmap
+    - docs/appendices/release-process
     - docs/appendices/migration-guides
     - docs/appendices/release-notes
     - docs/appendices/changelog
@@ -83,7 +97,7 @@ nav_links:
 
 community_links:
   "Slack":
-    url: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q"
+    url: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU"
   "Twitter":
     url: "https://twitter.com/Front_Commerce"
   "Contact":
@@ -94,3 +108,7 @@ root: /
 permalink: blog/:year/:month/:day/:title/
 
 public_dir: public/
+
+sitemap:
+  path: sitemap.xml
+  rel: true

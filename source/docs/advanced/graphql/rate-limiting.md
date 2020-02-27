@@ -22,7 +22,7 @@ Let’s say that you have implemented an `incrementProductCounter` Mutation that
 
 ```js
 // my-module/server/modules/clicks-counters/resolvers.js
-module.exports = {
+export default {
   Mutation: {
     incrementProductCounter: (_, { sku, incrementValue = 1 }, { loaders }) => {
       return loaders.Counter.incrementBySku(sku, incrementValue)
@@ -40,9 +40,9 @@ You can use the `limitRateByClientIp` decorator from the `"server/core/graphql/r
 
 ```diff
 // my-module/server/modules/clicks-counters/resolvers.js
-+ const { limitRateByClientIp } = require("server/core/graphql/rateLimit");
++ import { limitRateByClientIp } from "server/core/graphql/rateLimit";
 +
-module.exports = {
+export default {
   Mutation: {
 -    incrementProductCounter: (_, { sku, incrementValue = 1 }, { loaders }) => {
 -      return loaders.Counter.incrementBySku(sku, incrementValue)
@@ -82,10 +82,10 @@ Here is how you would replace the default in-memory store with a redis one:
 
 ```js
 // my-module/config/rateLimit.js
-const { RedisStore } = require("graphql-rate-limit");
-const redis = require("redis");
+import { RedisStore } from "graphql-rate-limit";
+import redis from "redis";
 
-module.exports = {
+export default {
   store: () => {
     // Return your GraphQLRateLimit compatible store implementation here
     // see https://www.npmjs.com/package/graphql-rate-limit#redis-store-usage

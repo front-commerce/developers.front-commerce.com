@@ -8,17 +8,6 @@ data in your
 [unified GraphQL schema](https://principledgraphql.com/integrity#1-one-graph) to
 support new features and allow frontend developers to use them.
 
-<blockquote class="info">
-  The concepts documented below have been adopted by many actors in the GraphQL
-  ecosystem since our initial implementation years ago. On our road to 1.0.0, we
-  have opened a <abbr title="Request For Comments">RFC</abbr> in
-  [#44](https://gitlab.com/front-commerce/front-commerce/issues/44) to discuss
-  using an external library sharing the same principles instead of maintaining
-  our own implementation. **The migration path would be seamless if we chose to
-  migrate to this library.** Please do not hesitate to share your thoughts with
-  us there.
-</blockquote>
-
 **Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
 override any part of the schema defined by other modules. It leverages features
 from the GraphQL Schema Definition Language
@@ -275,7 +264,7 @@ const counters = new Map();
 
 const currentValueOf = sku => counters.get(sku) || 0;
 
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   },
@@ -300,7 +289,7 @@ First of all, the exported resolver map defines a resolver for the
 
 ```js
 // …
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   }
@@ -338,7 +327,7 @@ GraphQL modules must declare mutations by extending the top-level GraphQL
 
 ```js
 // …
-module.exports = {
+export default {
   // …
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
@@ -454,7 +443,7 @@ const currentValueOf = sku => {
   });
 };
 
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   },

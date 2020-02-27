@@ -7,6 +7,195 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `1.0.0-beta.3` -> `2.0.0-rc.0`
+
+`1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
+
+If you are migrating from a `1.0.0-beta.3` version to the `2.0.0-rc.0`, here is the guide.
+
+### Linting
+
+The previous linting was usually linting your code AND Front-Commerce's code which was a waste of time. This is no longer the case and you can lint your code however you want.
+
+But if you don't want to have complicated eslint configurations, you can use Front-Commerce's by creating a `.eslintrc.js` file at the root of your project with the following code:
+
+```
+module.exports = require("front-commerce/.eslintrc.js");
+```
+
+You can now launch the linting by using `npx front-commerce lint`.
+
+Please note that we no longer use prettier by default in the eslint configuration. It is instead executed when running `npx front-commerce lint`.
+
+> You can still use `npx front-commerce lint --fix` if you want to fix prettier or eslint errors automatically.
+
+This also means that you can now upgrade prettier to its latest version without breaking Front-Commerce's tooling.
+
+### Avoid commonjs syntax
+
+The linting will now prevent you from using commonjs syntax in your project. You should instead use the ES modules syntax (`import`/`export`).
+
+This will allow better tree shaking and a better validation of your builds in the future. This is also what allows us to upgrade to the latest dependencies for the libraries used in Front-Commerce.
+
+### Dependencies upgrade
+
+We've been accumulating technical debt about upgrading the libraries Front-Commerce depends on for a bit of time because our server code mixed syntaxes between commonjs and ES modules. This means that we now have upgraded everything to their latest version and you will need to update your code accordingly.
+
+Here the list of the main updates you need to be concerned about:
+* react and react-dom: `16.8.6` -> `16.8.9`
+  New deprecations have been put in place by React itself. We've fixed them in Front-Commerce, but you will most likely have them in your own codebase. Please update your code accordingly. [Details](https://reactjs.org/blog/2019/08/08/react-v16.9.0.html#new-deprecations)
+* [autoprefixer](https://github.com/postcss/autoprefixer): `6.7.6` -> `9.6.1`
+  Please define your [browserslist](https://github.com/browserslist/browserslist) in package.json. For instance it could look like this:
+  ```
+  "browserslist": [
+    "last 2 version",
+    "> 0.25%",
+    "not ie <= 9",
+    "Firefox ESR"
+  ]
+  ```
+* [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5`
+  It should be compatible. However you will have warnings if you use `formsy-react-2`. Simply rename it to `formsy-react`. Please have a look at the [Abstract Formsy section](#Abstract-Formsy) below to learn about broader changes regarding the form inputs.
+* [react-helmet](https://github.com/nfl/react-helmet) -> [react-helmet-async](https://github.com/staylor/react-helmet-async)
+  It should be compatible. However you will have warnings if you use `react-helmet`. Simply rename it to `react-helmet-async`. The goal is to have a better SSR support.
+* [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
+  It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
+  FormattedMessage no longer insert spans around your messages. This might lead to some styling issues. Add manually a `span` around your message if this is the case.
+* [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
+  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
+* [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
+  Should be compatible since we are using a facade in FC `theme/components/helpers/MediaQuery`. If you are using something else, please make sure your code still works.
+* [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`
+  See [CHANGELOG](https://github.com/ReactTraining/react-router/releases/tag/v5.0.0) for more details.
+  * Make sure that you always import your components from the `react-router` or `react-router-dom` and no longer use `react-router/XXX` or `react-router-dom/XXX`.
+  * You no longer have access to the old context. Please use `withRouter` or `<Route />` instead.
+* [recompose](https://github.com/acdlite/recompose): `0.26.0` -> `0.30.0`
+  `mapPropsStream` works but triggers warnings because of `react@16.9.0`.
+  Please use `web/core/utils/mapPropsStream.js` instead.
+* migration of [loadable-components](https://github.com/smooth-code/loadable-components)@1.1.1 -> [@loadable/component](https://github.com/smooth-code/loadable-components)@5.10.2
+  * Rename your imports to `@loadable/component`
+  * Rename `LoadingComponent` to `fallback`
+  * Use an ErrorBoundary rather than the `ErrorComponent`
+  * Add `%%__HEAD__%%` and `%%__SPLIT__%%` to your `template/index.html` if you have one.
+
+### Display error pages
+
+Error pages now have their own template: `template/error.html`. Please override it in your module if you need to customize it.
+
+This template is used for the following pages:
+
+* Offline
+* Maintenance (503)
+* ServerError (500)
+
+### Better SSR fallback
+
+Previously, when the SSR failed, we displayed a "Loading..." string before trying to render the page client side. This is no longer the case. We instead display the `theme/pages/SsrFallback` component which is overridable. You could for instance replace it with a custom loader.
+
+Please note that in dev mode, this page won't show and you will get an error message instead. The goal here is to catch the errors early and make sure that things keep running smoothly. If you happen to stumble upon these errors, please fix them by checking your server's console.
+
+If you still want to display the `theme/pages/SsrFallback` in dev mode, add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables.
+
+### Responsive images
+
+Your previous images will still work. However we have added a new component in `theme/components/atoms/Image` that will always give the proper image size to your browser.
+* Supports srcset and webp
+* Improved lazy loading
+* Same API as `<ResizedImage />`
+* Improved DX by explicitly failing in dev mode and failing silently in production mode
+
+We will migrate progressively the components in Front-Commerce's core, but feel free to start migrating your own code for improved performance and UX.
+
+Only thing to consider: if you had some images in one of your `public/images/resized` folder, they will no longer work in dev mode because these images will be resized on the fly just like your images at the `/media` endpoint. However, in your production environment you will still see the image.
+
+TODO: Document how to add your own proxy endpoint.
+
+### Abstract Formsy
+
+The goal here is to allow an easier migration out of Formsy.
+
+If you don't plan to move out of it, you don't need to change anything. However, if you want to keep your codebase up to date with Front-Commerce, please consider using `withFormHandlers` instead of `withFormsy`.
+
+Please note that some improvements comes with `withFormHandlers`. The most notable change is that inputs won't display errors on first user's change, but on the first blur. This should make form completion less frustrating for the users. The second change is that you can decide to opt-out of `Formsy` any time by passing an `onChange` property directly.
+
+For more information, please have a look at [how to create new input types](/docs/advanced/theme/form.html#New-input-types).
+
+For existing projects, the goal would be to replace `formsy-react`'s HOC by `withFormHandlers`. The best way to migrate components you have overriden in your project is to look at the core's implementation of form inputs like [`Input`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Input.js), [`Textarea`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Textarea/Textarea.js), [`Checkbox`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) or [`Select`](https://gitlab.com/front-commerce/front-commerce/-/blob/720ac5e4c5dc28850b0fbdf1c02705b48d7610a1/src/web/theme/components/atoms/Form/Input/Select/Select.js).
+
+### Move to a file first routing declaration
+
+Previously, if you needed to use new routes or sub-routes, you needed to do one of the following:
+
+* override the `web/Routes.js` file
+* add the route using the `web/moduleRoutes.js` file
+* or declare sub-routes in existing pages
+
+This led to several issues:
+
+* developers needed to handle code splitting themselves, which could led to bigger initial javascript load
+* it was hard to have a global vision of the existing routes in a Front-Commerce application
+* Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+
+This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
+
+The TL;DR of the new routing system is that you now have a `web/theme/routes` folder available in your modules which can contain 5 kind of files:
+* normal routes files like `about.js` which will map the exported component to the `/about` url
+* `index.js`: maps the exported component to the `/` url
+* `_layout.js`: wraps the routes in the same folder with the exported component
+* `_inner-layout.js`: wraps the routes in the same folder with the exported component but won't discard the parent's layout
+* `_error.js`: exports the component that will displayed in case there's a 404 error or if one of the component does not manage to render
+
+For more information, please have a look at the [Routes reference](/docs/reference/routing.html).
+
+<details>
+<summary>What should you do to implement this new routing system in your existing project? <strong>Click to expand.</strong></summary>
+
+1. If you already have a `web/index.js` file in your module, rename it to `web/client.js`
+2. Add Front-Commerce's web module to your project in `.front-commerce.js`
+    ```diff
+    module.exports = {
+      name: "Front Commerce DEV",
+      url: "http://www.front-commerce.test",
+      modules: ["./src"],
+      serverModules: [
+        { name: "FrontCommerce", path: "server/modules/front-commerce" },
+        { name: "Magento2", path: "server/modules/magento2" }
+    -  ]
+    +  ],
+    +  webModules: [{ name: "FrontCommerce", path: "front-commerce/src/web" }]
+    };
+    ```
+3. If you have some custom routes, declare your own routes by:
+    * Creating an empty `web/index.js` file
+    * Add your own web module to `.front-commerce.js`
+        ```diff
+        module.exports = {
+          name: "Front Commerce DEV",
+          url: "http://www.front-commerce.test",
+          modules: ["./src"],
+          serverModules: [
+            { name: "FrontCommerce", path: "server/modules/front-commerce" },
+            { name: "Magento2", path: "server/modules/magento2" }
+          ],
+        -  webModules: [{ name: "FrontCommerce", path: "./src/web" }]
+        +  webModules: [
+        +    { name: "FrontCommerce", path: "front-commerce/src/web" },
+        +    { name: "MyModule", path: "./src/web" },
+        +  ]
+        };
+        ```
+4. Find any page that uses the `Route` component from `react-router`. Here are a few pointer about how to migrate those files. However, if you're not sure or if you have trouble making it work, feel free to reach our team. We will make sure to make this as painless as possible.
+    * If it's `web/moduleRoutes.js`, it will continue to work, but is deprecated. Please create a route file per `<Route>` as described in [Add a page client side](/docs/essentials/add-a-page-client-side.html)
+    * If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder.
+    * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
+</details>
+
+### Better sitemap declarations
+
+First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
+
+Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/theme/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
+
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
 `1.0.0-beta.1` and `1.0.0-beta.2` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.

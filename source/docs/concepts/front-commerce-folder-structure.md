@@ -4,11 +4,6 @@ title: Front-Commerce folder structure
 ---
 
 This documentation is a quick overview of Front-Commerce's folder structure.
-If you don't have [access to the code](license.html) yet, you will notice
-that
-[Front-Commerce Lite](https://github.com/front-commerce/front-commerce-lite)
-structure is the same. Installing it and browsing through some actual code
-may help you better understand our choices.
 
 ```
 src/

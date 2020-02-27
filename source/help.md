@@ -10,7 +10,7 @@ contributions (issues, PR). Our team is available to answer you in a timely
 manner. Here are a few ways to contact us:
 
 * Join the discussion in our
-[Slack channel](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWY0Y2JjYmRmNGQ2MWM1NzQyMjQwNzlmYzJmYzgzNTIwYzQ3MDVkMWZiYmYwNWFhODhmYWM5OTI4YjdiZDJkY2Q)
+[Slack channel](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU)
 * [Reach us by email](mailto:contact@front-commerce.com) for
 questions about this documentation and the project
 * Find out what's new by following
@@ -103,11 +103,12 @@ other platforms.
 
 So far, we are considering to support the following platforms:
 
+- OroCommerce
 - Akeneo
 - WordPress
 - Drupal
 - Sylius
-- Moltin
+- Elasticpath
 - Izberg
 
 ### What kind of projects is Front-Commerce particularly appropriated for?
@@ -145,7 +146,7 @@ Last but not least, there are some settings from existing CMS that might not be
 supported in Front-Commerce. For instance, layout and design features from
 Magento2’s admin area will probably never be supported in Front-Commerce. Due to
 the current state of our product, it is very likely that some other settings
-have not yet been supported in the product… but [our roadmap](/docs/appendices/roadmap.html) is
+have not yet been supported in the product… but our roadmap is
 shaped by your needs, so there’s always hope!
 
 ### I have not found an answer to my question

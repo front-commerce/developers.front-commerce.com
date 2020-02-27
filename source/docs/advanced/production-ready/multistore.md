@@ -26,8 +26,9 @@ module.exports = {
     currency: "EUR",
     // country code ISO 3166-1 (used for preselecting the country in an address input for instance
     default_country_id: "FR",
+    // The url used for this store
+    url: process.env.FRONT_COMMERCE_EN_URL,
     // data to load for this language
-    localeData: require("react-intl/locale-data/en"),
     countries: IsoCountries =>
       IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
   },
@@ -35,7 +36,7 @@ module.exports = {
     locale: "fr-FR",
     currency: "EUR",
     default_country_id: "FR",
-    localeData: require("react-intl/locale-data/fr"),
+    url: process.env.FRONT_COMMERCE_FR_URL,
     countries: IsoCountries =>
       IsoCountries.registerLocale(require("i18n-iso-countries/langs/fr.json"))
   }

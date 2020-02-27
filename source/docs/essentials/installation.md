@@ -11,8 +11,7 @@ supposes that you have access to our private repositories.
 Access is granted to teams that have signed the relevant legal contracts, either
 as a **Partner** or a **Customer**. Please
 [contact us](mailto:contact@front-commerce.com) if you need help or further
-information. An alternative would be to use
-[Front-Commerce Lite](https://github.com/front-commerce/front-commerce-lite).
+information.
 
 Front-Commerce is a Node.js server that will serve a GraphQL endpoint and a
 React application to your customers. In order to run it, you need to make sure
@@ -27,26 +26,6 @@ node -v
 
 If you don't have the minimum requirements,
 [please follow the instructions on Node.js website](https://nodejs.org/).
-
-<blockquote class="info">
-[**Front-Commerce Lite**](https://github.com/front-commerce/front-commerce-lite)
-is an alternate open-source project we created to let you start without any
-further requirements.
-
-**We don't want you to trust us blindly!** Because of this, we created a lighter
-version of Front-Commerce. It should make you feel how it is like to work with
-our product.
-
-While it isn't
-[fully featured](https://github.com/front-commerce/front-commerce-lite#what-it-is-not),
-we believe that if you enjoy working with it, you will enjoy working with
-Front-Commerce since we use the same concepts and the same file structure. You
-could even reuse most of your code within Front-Commerce if you want to upgrade
-to the licensed version. Please visit
-[Front-Commerce Lite project page on Github](https://github.com/front-commerce/front-commerce-lite)
-to get started with it.
-
-</blockquote>
 
 ## Installation using the skeleton
 
@@ -121,7 +100,7 @@ module.exports = {
     locale: "en-GB",
     currency: "EUR",
     default_country_id: "GB",
-    localeData: require("react-intl/locale-data/en"),
+    url: process.env.FRONT_COMMERCE_URL,
     countries: IsoCountries =>
       IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
   }

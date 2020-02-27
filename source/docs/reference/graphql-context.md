@@ -22,7 +22,7 @@ Example :
 
 ```js
 // my-module/server/modules/clicks-counters/resolvers.js
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }, _, context) => {
       return context.loaders.Counter.loadBySku(sku);

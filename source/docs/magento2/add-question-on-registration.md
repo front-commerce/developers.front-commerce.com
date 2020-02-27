@@ -63,9 +63,9 @@ Edit `mymodule/server/modules/acme/resolvers.js` as shown below. This tells the 
 
 ```diff
 // Code here
-+const {
++import {
 +  promiseToMutationSuccess
-+} = require("server/core/graphql/mutationResponseBuilders");
++} from "server/core/graphql/mutationResponseBuilders";
 
 export default {
   Product: {

@@ -20,20 +20,22 @@ customers. Thus, we will add the needed routes to display:
 ## Add a page using a static URL
 
 First, let's add the page containing the list of all recipes. To do so you will
-need to proceed in two steps:
+need to:
 
-1. Create the page component that will be displayed all your recipes
-2. Map the `/recipes` URL to your page component
+* Create the route file that will be mapped to an URL
+* Declare your module as a web module
 
-### Add a page component
+<blockquote class="info">
+This system is inspired by JavaScript frameworks like [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.org/), [Sapper](https://sapper.svelte.dev/), [Nuxt](https://nuxtjs.org/), etc. If you understand how these work, implementing routing within Front-Commerce will be easier. 
+See [Routing reference](/docs/reference/routing.html#How-routes-are-loaded) for more advanced information.
+</blockquote>
 
-A page component must live in the `web/theme/pages/` folder of your module. If you don't have any module yet, please refer to [Extend the theme](extend-the-theme.html).
+### Create the route file that will be mapped to an URL
 
-The goal of adding your page in the `web/theme/pages/` folder of your module is to make it easier for you to find a specific page component in your source code, but also in Front-Commerce's source code.
+Create a route file in the folder `web/theme/routes/` of your module. If you don't have any module yet, please refer to [Extend the theme](extend-the-theme.html).
 
-Thus, in the case of our Recipes, we will create our component within the `my-module/web/theme/pages/Recipes` folder:
+The url of your route will then depend on the name of the file you've created in the `web/theme/routes/` folder. Thus, if we want to display a page at the URL `/recipes`, we will create a file in `web/theme/routes/recipes.js` which will export the component you want to display on this page.
 
-* `my-module/web/theme/pages/Recipes/Recipes.js`: will be your actual page component
 ```jsx
 import React from "react";
 import { H1 } from "theme/components/atoms/Typography/Heading"
@@ -46,100 +48,83 @@ const Recipes = () => <div>
 
 export default Recipes;
 ```
-  <blockquote class="note">
-  Note that there is a `RecipesList` component here. It is in fact a business component that you can create by refering to [Create a business component](/docs/essentials/create-a-business-component.html).
-  </blockquote>
-* `my-module/web/theme/pages/Recipes/index.js`: will proxy the `Recipes.js` file in order to be able to do imports on the folder directly. See [this blog post](http://bradfrost.com/blog/post/this-or-that-component-names-index-js-or-component-js/) for more context about this pattern.
-<!-- TODO add comment about code splitting and link to our documentation -->
-```jsx
-import Recipes from './Recipes.js'
 
-export default Recipes;
-```
-* `my-module/web/theme/pages/Recipes/Recipes.story.js`: will add your page to the Storybook of your application. In the case of a page it might be troublesome to setup, but it is worth it because it will improve your code quality by being in a sandboxed environment and it will help you reference the edge cases.
-```jsx
-import Recipes from "./Recipes.js";
-import { storiesOf } from "@storybook/react";
+<blockquote class="note">
+Note that there is a `RecipesList` component here. It is in fact a business component that you can create by refering to [Create a business component](/docs/essentials/create-a-business-component.html).
+</blockquote>
 
-storiesOf("pages.Recipes", module).add("default", () => {
-  return <Recipes />;
-});
-```
-  <blockquote class="note">
-  For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to <a href="add-component-to-storybook.html">Add a component to your Design System</a>.
-  </blockquote>
+We have decided here to put the file under `web/theme/routes/recipes.js`, but it would have still worked if we've put it under `web/theme/routes/recipes/index.js`. The page would still be displayed at the URL `/recipes`.
 
-### Map the URL to the page component
+### Declare your module as a web module
 
-Once you have created your component, you need to actually tell the application how to use it. To do so, Front-Commerce provides an extension point that will let you declare custom routes.
+You have now declared that if your module's routes are loaded, it will display the `Recipes` component at the URL `/recipes`. However, your module routes are not loaded yet. You need to declare it in your `.front-commerce.js` file.
 
-To active it in your module, you need to create the file `my-module/web/moduleRoutes.js` that will export the list of routes of your module.
+To do so, create an empty file in `web/index.js`. This is useful for module resolution at the build level. Then add it as a webModule in your `.front-commerce.js` file.
 
-```jsx
-import React from "react";
-import Route from "react-router/Route";
-import Recipes from "theme/pages/Recipes";
-
-export default () => [
-  <Route
-    path="/recipes"
-    exact
-    render={() => <Recipes />}
-    key="recipes"
-  />
-];
+```diff
+module.exports = {
+  name: "Front Commerce DEV",
+  url: "http://www.front-commerce.test",
+  modules: ["./my-module"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    { name: "Magento2", path: "server/modules/magento2" }
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web/index.js" },
++   { name: "MyWebModule", path: "./my-module/web/index.js" },
+  ]
+};
 ```
 
-Once you've created your file, you can refresh your application
+Once you're done, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/recipes` URL.
 
 🎉
 
 <blockquote class="warning">
-    **Warning:** If several modules are registered in your application and several of them define the same route, the page of the first module in `.front-commerce.js` will be displayed. This can be useful if you want to override a default feature of Front-Commerce.
+    **Warning:** If several web modules are registered in your application and several of them define the same route, the route of the last web module in `.front-commerce.js` will be displayed. This can be useful if you want to override a default feature of Front-Commerce.
 </blockquote>
 
 ## Add a page using an URL with parameters
 
-Now, let's add a `RecipeDetails` page that should be mapped to the
-`/recipes/:recipe-id-or-slug`. You will need to follow the exact
-same steps as for the `/recipes` page:
-* Create a `RecipeDetails` component in the
-`theme/pages/Recipes/RecipeDetails` folder
-* Map the `/recipes/:recipe-id-or-slug` to the new component
+Now, let's add a `RecipeDetails` page that should be mapped to the `/recipes/my-recipe-slug`. You will need to create the route file that will match the URL. Since you have a parameter in the URL, you will need to put brackets around it.
 
-**But how can you make the URL have a parameter (`:recipe-id-or-slug`)?**
+Thus, create a `RecipeDetails` component in `web/theme/routes/recipes/[slug].js`. This will allow you to display the `RecipeDetails` component in any url looking like `/recipes/.*`.
 
-In fact, if you take a look at the line #2 of the `moduleRoutes.js` file we have just created, you will notice that we are using the [React Router](https://github.com/ReactTraining/react-router) routing library. For this reason, you can use any feature that it provides. In the `RecipesDetails` case, you can use the params syntax of React Router as shown below.
-
-```diff
+```jsx
 import React from "react";
-import Route from "react-router/Route";
-import Recipes from "theme/pages/Recipes";
-+import RecipeDetails from "theme/pages/Recipes/RecipeDetails";
+import { H1 } from "theme/components/atoms/Typography/Heading"
+import Recipe from "theme/modules/Recipes/Details"
 
-export default () => [
-  <Route
-    path="/recipes"
-    exact
-    render={() => <Recipes />}
-    key="recipes"
--  />
-+  />,
-+  <Route
-+    path="/recipes/:slug"
-+    render={({ match }) => <RecipeDetails slug={match.params.slug} />}
-+    key="recipe-details"
-+  />
-];
+const RecipeDetails = (props) => <div>
+  <H1>You are looking at the recipe matching the slug {props.match.params.slug}</H1>
+  <Recipe slug={props.match.params.slug} />
+</div>;
+
+export default RecipeDetails;
 ```
 
-You will then be able to use the `slug` as a property of your `RecipeDetails` page like any other property.
+What's interesting to note here is that:
+* anything that is between brackets in your file path will be transformed into a parameter available in `props.match.params.slug`
+* you can create sub folders in your `web/theme/routes` folder if you want to have deeper URLs
+
+You can now restart your application (`npm run start`) and you should see your route `RecipeDetails` displayed at `/recipe/baguette`. 🎉
+
+<blockquote class="warning">
+  **Note:** Internally, this works by transforming any `/recipes/[slug]` kind of routes to `/recipes/:slug` that is then used by [React-Router](https://github.com/ReactTraining/react-router), a major routing library in React's ecosystem.
+</blockquote>
 
 ## What about dynamic URLs?
 
-If your URL can't be mapped to a pattern that React Router can recognize, do not worry,
+If your URL can't be mapped to a pattern that can be transformed into filenames, do not worry,
 we have got you covered! There is a second extension point in Front-Commerce that allows you to achieve this: the `Dispatcher`.
 
 [You can learn more about it in our advanced documentation.](../advanced/theme/route-dispatcher.html)
+
+## How can I share layouts between routes?
+
+You can also wonder how can a route be displayed but use the same layout as the other routes. This is also handled by Front-Commerce by using files like `_layout.js` or `_inner-layout.js` in your routes.
+
+[You can learn more about it in our advanced documentation.](../advanced/theme/layouts.html)
