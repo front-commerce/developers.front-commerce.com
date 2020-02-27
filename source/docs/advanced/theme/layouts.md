@@ -86,11 +86,11 @@ To see this live, remember to restart your application before seeing the changes
 
 <blockquote class="note">
     **Important:** If you need to override an existing `_layout.js` you can by coping it in your own web module. Moreover, you can create new layouts wherever you want. For instance, if a module defined some routes in `/blog` but didn't create a `/blog/_layout.js`, you can create it in your own module and all the routes in `/blog` will use this new layout.
-</bloquote>
+</blockquote>
 
 <blockquote class="note">
     **Note:** In Front-Commerce's core, this is already the case for the `/checkout` that uses a leaner layout than the rest of the shop.
-</bloquote>
+</blockquote>
 
 ### Define an Inner Layout for a list of route
 
@@ -127,8 +127,8 @@ To see this live, remember to restart your application before seeing the changes
 
 <blockquote class="warning">
     **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules. However you can use [`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare.js#onCreateRoute) to filter the file you don't need in your project.
-</bloquote>
+</blockquote>
 
 <blockquote class="info">
     **Note:** `_inner-layout.js` can be nested as many times as you need. For instance, you could imagine an inner layout for pages in `/account` and another one in `/account/orders`. By doing this, for a route at `/account/orders/details` you will have the order details wrapped in `/account/orders/_inner-layout.js` which itself is wrapped in `/account/_inner-layout.js`.
-</bloquote>
+</blockquote>
