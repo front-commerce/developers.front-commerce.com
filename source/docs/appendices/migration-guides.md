@@ -190,6 +190,39 @@ For more information, please have a look at the [Routes reference](/docs/referen
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
 
+## Caching update
+
+The caching layer has been improved to enable a wide-range of possibilities.
+
+You will have to update your [`caching.js` configuration file](/docs/reference/configurations.html#config-caching-js) to the new configuration format. Front-Commerce will display a warning if you use the previous format but is backward-compatible.
+
+This refactoring allowed us to leverage strategies decorators to implement something that Magento store owners will appreciate: a [`PerMagentoCustomerGroup` caching implementation](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#PerMagentoCustomerGroup). We now recommend Magento 1 and Magento 2 users to cache all dataLoaders in a persistent cache (such as [Redis](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Redis)), with the `PerMagentoCustomerGroup` strategy for the `CatalogPrice` dataLoader.
+
+Here is how it would look:
+
+```js
+export default {
+  strategies: [
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "127.0.0.1"
+      }
+    },
+    {
+      implementation: "PerMagentoCustomerGroup",
+      supports: ["CatalogPrice"],
+      config: {
+        defaultGroupId: 0
+      }
+    }
+  ]
+};
+```
+
+With this configuration, your Front-Commerce will **not do any Magento API calls for guest users**… and they will notice the difference!
+
 ## `1.0.0-beta.0` -> `1.0.0-beta.3`
 
 `1.0.0-beta.1` and `1.0.0-beta.2` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
