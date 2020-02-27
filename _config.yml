@@ -22,6 +22,7 @@ sidebar_categories:
     - docs/advanced/theme/form
     - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
+    - docs/advanced/theme/server-side-rendering
   GraphQL:
     - docs/advanced/graphql/overview
     - docs/advanced/graphql/meta-modules

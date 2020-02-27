@@ -25,6 +25,8 @@ The different timings available for an HTML page are:
 
 We plan to add finer server timings in the future. If you believe that there should be another, please [contact us](mailto:contact@front-commerce.com) and we will look into it.
 
+For further information about SSR, you can read [the Server Side Rendering documentation page](/docs/advanced/theme/server-side-rendering.html),
+
 ## Adding your own Server Timings
 
 You can setup your own Server Timings by using `req.startTime`, `req.endTime` or `req.setMetric`.

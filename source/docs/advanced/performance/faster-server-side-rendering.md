@@ -3,7 +3,7 @@ id: faster-server-side-rendering
 title: Faster Server Side Rendering
 ---
 
-By default Front-Commerce uses [`renderToStringWithData`](https://www.apollographql.com/docs/react/performance/server-side-rendering/#using-rendertostringwithdata) from Apollo Client. This allows to make sure that every data is fetched before rendering the server. But this can become slow depending on how you have implemented your queries client side. We will see in this documentation what are the best practices about this.
+By default Front-Commerce uses [`renderToStringWithData`](https://www.apollographql.com/docs/react/performance/server-side-rendering/#using-rendertostringwithdata) from Apollo Client. This allows to make sure that every data is fetched [before rendering on the server](/docs/advanced/theme/server-side-rendering.html). But this can become slow depending on how you have implemented your queries client side. We will see in this documentation what are the best practices about this.
 
 ## Avoid Query Cascade
 
