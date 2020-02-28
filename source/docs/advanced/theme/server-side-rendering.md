@@ -61,6 +61,10 @@ export default branchServerClient(
 )(MyClientSideComponent);
 ```
 
+<blockquote class="tip">
+  **Tip:** the function name (branch**Server**_Client_) is a good way to remember that the first parameter is what is rendered on the **server**, and the second on the _client_.
+</blockquote>
+
 If you only need to know the rendering context, you can use Front-Commerce's `withIsServer` HOC to have an `isServer` prop injected in your component.
 
 Example:
@@ -109,7 +113,7 @@ If you want to tweak this behavior, we invite you to browse the [`deviceConfigPr
   _This feature has been added in version `2.0.0-rc.0`_
 </blockquote>
 
-During development you might face some SSR errors due to syntax errors or [browser API usage](/docs/advanced/theme/server-side-rendering.html#There-is-no-window-on-the-server). By default in dev mode, Front-Commerce provides an error page that makes the mistake obvious to allow you to fix it as early as possible.
+During SSR you might face some errors (syntax errors, [browser API usage](/docs/advanced/theme/server-side-rendering.html#There-is-no-window-on-the-server), render errors, etc.). By default in dev mode, Front-Commerce provides an error page that makes the mistake obvious to allow you to fix it as early as possible.
 
 Hopefully the previous screen will prevent such errors to occur in production, but development is not an exact science and things can go wrong! In such situations, the `theme/pages/SsrFallback` component will be rendered instead of the page. **It displays a clean loading area, but you can override it to provide another visual waiting page to users while the application is being rendered client side.**
 
