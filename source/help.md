@@ -16,6 +16,8 @@ questions about this documentation and the project
 * Find out what's new by following
 [@Front_Commerce](https://twitter.com/Front_Commerce) on Twitter
 
+We also invite you to read our [Troubleshooting documentation page](/docs/appendices/troubleshooting.html) to see if it does not contain relevant information for your current problem.
+
 ## Frequently Asked Questions
 
 
