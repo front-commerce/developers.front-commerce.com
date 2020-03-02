@@ -1,11 +1,11 @@
 ---
 id: setup-configurations
-title: Setup configurations
+title: Configurations
 ---
 
-Configurations is a part of software development that can quickly become messy. Validation, detection, performance... There is a lot to take care of. In Front-Commerce we solved this by defining what we call **Configuration Providers**.
+Configuration is a part of software development that can quickly become messy. Validation, detection, performance... There is a lot to take care of. In Front-Commerce we solved this by defining what we call **Configuration Providers**.
 
-In this guide we will see how it works and how to create your own to override existing configurations or create new ones.
+In this guide we will see how they work and how to create your own create new configurations or override existing ones.
 
 ## What is a configuration provider?
 
@@ -13,7 +13,7 @@ The goal is to give access to a configuration object that contains all the confi
 
 However, not all applications will need every single configuration. For instance, a shop that chose to use [Algolia](https://www.algolia.com/) won't have the same configurations than a shop that chose [Elasticsearch](https://www.elastic.co/) for product search. The goal of the configuration providers is to define the configurations needed for the specific modules you use in your application.
 
-On server start, the configuration providers will then be fused to create the global configuration object. This configuration object will then available on each server request.
+On server start, the configuration providers will then be combined to create the global configuration object. This configuration object will then available on each server request.
 
 This can be illustrated by starting your Front-Commerce server with the environment variable `DEBUG=front-commerce:config`. If your server is running on `http://localhost:4000` and you open the URL [`/__front-commerce/debug`](http://localhost:4000/__front-commerce/debug), you will have a dump of the configuration for this specific request under the section `req.config`.
 
@@ -56,7 +56,7 @@ This can be illustrated by starting your Front-Commerce server with the environm
 
 ## Configuration provider definition
 
-In practice, a configuration provider is an object that have four parts: a name, a schema, static values and values depending on the request.
+In practice, a configuration provider is an object that have four parts: a name, a schema, static values (available independently from the request) and values depending on the request.
 
 ```js
 const serviceConfigurationProvider = {
@@ -130,7 +130,7 @@ Please note that if another configuration provider's schema also defined a `serv
 
 Most of the time `default` values in the schema is sufficient. However, in some cases you may need to fetch some values from an API, a dynamic file, etc. This is what `values` is for.
 
-It is an optional promise that should return the missing values in your schema. It will override default values and env values from the schema with the new values. However if in your `values` result there is some keys that are missing the default values and env values will be kept. For instance, if we implemented the following `values` promise, the `secret` would still be `process.env.FRONT_COMMERCE_SERVICE_SECRET` from the above schema.
+It is an optional promise that should return the missing values in your schema. It will override default values and env values from the schema with the new values. However only keys from the `values` result will take precedence, the default values and env values will be kept for other keys. For instance, if we implemented the following `values` promise, the `secret` would still be `process.env.FRONT_COMMERCE_SERVICE_SECRET` from the above schema.
 
 ```js
 const values = fetch("https://api.example.com/my-service-key")
@@ -148,9 +148,9 @@ If it needs to change over time, please use `slowValuesOnEachRequest` instead.
 
 ### Values depending on the request (key `slowValuesOnEachRequest`, optional)
 
-> **Note:** `slowValuesOnEachRequest` is a low level API in Front-Commerce. You shouldn't need it in most cases
+> **Note:** `slowValuesOnEachRequest` is a low level API in Front-Commerce. You shouldn't need it in most cases.
 
-`slowValuesOnEachRequest` is a function that extracts configuration values from the current request. For instance, depending on the URL, the configuration `currentShopId` will get a different id and thus display different informations.
+`slowValuesOnEachRequest` is a function that extracts configuration values from the current request. For instance, depending on the URL, the configuration `currentShopId` will get a different id and thus display different information.
 
 ```js
 const slowValuesOnEachRequest = req => {
