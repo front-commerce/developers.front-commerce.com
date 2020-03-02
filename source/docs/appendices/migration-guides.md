@@ -190,11 +190,11 @@ For more information, please have a look at the [Routes reference](/docs/referen
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
 
-## ID types in GraphQL definitions
+### ID types in GraphQL definitions
 
 In order to improve consistency of the GraphQL schema accross platforms, we have also made some changes to the GraphQL schema.
 
-All ids now leverage the `ID` type instead of being `Int` or `String`. This will allow better compatibility across platforms since depending on the platform it can either be an `Int` or a `String` but shouldn't affect the final behavior of your components. If you had some in your own schemas, we suggest to also convert them to `ID`.
+All ids now leverage the `ID` type instead of being `Int` or `String`. This will allow better compatibility across platforms since `ID` allow for `Int` or `String` values as identifiers. It shouldn't affect the final behavior of your components. If you had some in your own schemas, we suggest to also convert them to `ID`.
 
 The only thing that you need to make sure of is to run `npm run lint` on your project. This should allow you to see errors on overridden GraphQL files.
 
