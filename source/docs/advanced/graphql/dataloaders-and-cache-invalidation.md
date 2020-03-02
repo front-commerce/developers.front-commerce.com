@@ -7,17 +7,18 @@ One of the main responsibility of GraphQL modules in Front-Commerce is fetching 
 
 This section introduce the DataLoader pattern and how to use it in a Front-Commerce application. It then details how to configure the caching layer to keep remote API response in cache to boost performance. Finally, it explains how to invalidate the cache from remote systems.
 
-By the end of this reading, you will have a good understanding of the mechanisms at your disposal to compensate for the slowness of a remote API.
+By the end of this guide, you will have a good understanding of the mechanisms at your disposal to compensate for the slowness of a remote API.
 
 ## Why?
 
-Imagine a resolver on a `Product.qty` field that fetches the current quantity in stock for a product from the https://inventory.example.com/stock/PRODUCT_SKU remote API.
+Imagine a resolver on a `Product.qty` field that fetches the current quantity in stock for a product from the `https://inventory.example.com/stock/PRODUCT_SKU` remote API.
 
 Let's see what happens when we run a query like this on our GraphQL endpoint:
 
 ```gql
 {
   category("pants") {
+    name
     products({ limit: 10 }) {
       sku
       name
@@ -29,9 +30,10 @@ Let's see what happens when we run a query like this on our GraphQL endpoint:
 
 ### The problem
 
-This query would lead to 11 HTTP requests from the server to the remote datasource:
+This query would lead to 12 HTTP requests from the server to the remote datasource:
 
-- 1 request to fetch category and its products, with sku and name (in the best case)
+- 1 request to fetch category information
+- 1 request to fetch products in the category, with sku and name (in the best case)
 - 10 additional requests to fetch products `qty` field
 
 Furthermore, the `qty` requests will be started only after the previous category response has been received, leading to network waterfalls which will delay the GraphQL response.
@@ -40,7 +42,7 @@ This problem is also known as [the N+1 problem](https://engineering.shopify.com/
 
 ### Batching
 
-Batching, in this context is the process of grouping every data that is required so that they could be retrieved in an efficient manner. In the example above, let's suppose that our category contained 10 products "PANT-01", "PANT-02", …, "PANT-10".
+In this context, batching is the process of grouping every data that is required so that they could be retrieved in an efficient manner. In the example above, let's suppose that our category contained 10 products `PANT-01`, `PANT-02`, …, `PANT-10`.
 
 If the remote API had a way to do it, we could leverage batching to fetch all product inventories with a single remote API call to an endpoint like https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10.
 
@@ -53,13 +55,14 @@ Caching mechanisms are useful for GraphQL resolvers in two ways:
 1. to prevent re-fetching the same data across different queries (or for different users)
 2. to prevent re-fetching the same data twice during the same query resolution
 
-The first use case is something one may already know from other systems. In the previous example, caching would allow to do the remote API calls when the first visits the page, and retrieve this information from the cache for further visitors. The following GraphQL responses will then be faster and the remote system will experience a dramatically reduced load.
+The first use case is something one may already know from other systems. In the previous example, caching would allow to do the remote API calls when the first user visits the page, and retrieve this information from the cache for further visitors. The following GraphQL responses will then be faster and the remote system's load will decrease dramatically.
 
 The second one is more specific to GraphQL. To understand its gain, we should consider the following query:
 
 ```gql
 {
   category("pants") {
+    name
     products({ limit: 10 }) {
       sku
       name
@@ -74,23 +77,24 @@ The second one is more specific to GraphQL. To understand its gain, we should co
 }
 ```
 
-If the product "PANT-01" was an upsell of all other products, the inventory API would be requested again when resolving the `upsells.qty` field. Query-level caching prevents such extra-calls, by reusing the response from `products.qty` that has already been fetched previously to resolve data.
+If the product `PANT-01` was an upsell of all other products in the `pants` category, the inventory API would be requested again when resolving the `upsells.qty` field. Query-level caching prevents those extra-calls, by reusing the response from `products.qty` that has already been fetched previously to resolve data.
 
 ## What are DataLoaders?
 
-DataLoader is a pattern promoted by Facebook, from their internal implementations, to solve problems with data fetching. We use this name because it is the name of the [reference implementation in Javascript: graphql/dataloader](https://github.com/graphql/dataloader).
+DataLoader is a pattern promoted by Facebook, from their internal implementations, to solve problems with data fetching. We use this name because it is the name of the reference implementation in Javascript: [graphql/dataloader](https://github.com/graphql/dataloader).
 
 A dataLoader is instantiated with a **batching function**, that will allow to fetch data in a grouped way (see [Batching](#Batching) above). It also has a caching strategy that prevents fetching the same data twice in the same request or across requests (see [Caching](#Caching) above).
 
-By default every dataLoader provides request-level caching. Caching configuration allow developers to use a persistent/in-memory caching strategy such as Redis to share the cache between users and requests.
+By default every dataLoader provides request-level caching. But this can be configured to switch to a persistent caching strategy instead. For instance, Front-Commerce provides a Redis strategy to share the cache between users and requests.
 
 In our previous example, if the `Product.qty` resolver was implemented using a dataLoader the query could have been resolved using only 2 remote API requests:
-- 1 request to fetch category and its products
-- 1 batch request to fetch quantities of the products if an API was available: https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10
+- 1 request to fetch category information
+- 1 request to fetch products in the category
+- 1 batch request to fetch quantities of the products if an API was available: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`
 
-We encourage you to read the [dataLoader readme](https://github.com/graphql/dataloader) documentation to know more about how it works.
+We encourage you to read the [dataLoader readme](https://github.com/graphql/dataloader) documentation to learn more about how it works.
 
-Front-Commerce provides a factory function to create DataLoaders from your GraphQL modules while keeping caching strategies configurable. Under the hood it is a pure dataLoader instance that is made available to you, so you could use it in a standard manner.
+Front-Commerce provides a factory function to create DataLoaders from your GraphQL modules while keeping caching strategies configurable. Under the hood it is a pure dataLoader instance, so you could use it in a standard manner.
 
 ## Using DataLoaders in Front-Commerce
 
@@ -162,11 +166,11 @@ module.exports = {
 };
 ```
 
-The 2nd parameter to `makeDataLoader` are the options to pass to the dataLoader instance. You usually don't have to use it but if you do, please refer to [dataloader's documentation](https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options) for further information.
+The 2nd parameter to `makeDataLoader` are the options to pass to the dataLoader instance. You usually don't have to use it. Please refer to [dataloader's documentation](https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options) for further information.
 
 ### Useful patterns
 
-#### Prevent caching not found data
+#### Prevent caching errors (data not found)
 
 Batching functions will sometimes return `null` or _falsy_ data for nonexistent items. By default, these values will be cached so further data retrieval could return this `null` value instead of doing a remote API call.
 
@@ -198,13 +202,13 @@ Here is how you could use it:
 ```js
 const fooLoader = makeDataLoader("AcmeFoo")(
   ids => loadFooBatch(ids),
-  { expire: EXPIRE_TIME_IN_S } // see https://github.com/DubFriend/redis-dataloader
+  { expire: EXPIRE_TIME_IN_SECONDS } // see https://github.com/DubFriend/redis-dataloader
 );
 ```
 
 #### Caching scalar values
 
-DataLoaders are mostly used to manipulate objects. Hence, it is safer to design your application to return objects from batching functions (to ensure a wide range of caching strategies' compatibility).
+DataLoaders mostly manipulate objects. Hence, it is safer to design your application to return objects from batching functions. This will ensure a wider range of caching strategies' compatibility (ex: Redis strategy does not support caching of scalar values).
 
 ```js
 const fooLoader = makeDataLoader("AcmeFoo")(
@@ -231,7 +235,7 @@ Batch functions must satisfy two constraints to be used in a dataLoader (from th
 > * The Array of values must be the same length as the Array of keys.
 > * Each index in the Array of values must correspond to the same index in the Array of keys.
 
-This is what the `reorderForIds` is aimed at helping with.
+`reorderForIds` will ensure that these constraints are satisfied.
 
 Signature: `const reorderForIds = (ids, idKey = "id") => data => sortedData;`
 
@@ -261,7 +265,7 @@ return axiosInstance
 
 ### `makeBatchLoaderFromSingleFetch`
 
-Until now, we created batching functions using a remote API that allowed to request several results at once (https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10).
+Until now, we created batching functions using a remote API that allowed to request several results at once (`https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`).
 
 When using 3rd party APIs or legacy systems, such APIs might not always be available. Using dataLoaders in this case will not allow you to reduce the number of requests in the absolute, however it could still allow you to prevent most of these requests (or reduce its number in practice) thanks to [caching](#Caching). It is thus very convenient when dealing with a slow service.
 
