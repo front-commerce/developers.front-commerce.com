@@ -92,6 +92,26 @@ This command checks your translations and adds the missing one to `translations/
 
 If some translations are missing, the script will throw an error. This lets you ensure that everything is correctly translated in your CI.
 
-### Options:
+### Options
 
 - `--ignore-build`: By default, this command will build your application to make sure that no translation is forgotten. However, if you've just run `front-commerce build`, this step is not necessary. `--ignore-build` option is what makes it possible not to build the application during the translation.
+
+## `front-commerce test`
+
+This command allows to launch tests using [Jest](https://jestjs.io/) already configured to work properly with a Front-Commerce codebase.
+
+By default this command will launch all the tests available. These tests can be categorized in three scopes (which are jest projects internally):
+
+* `server`: it runs all the unit tests in `server/**/__tests__` folders.
+* `pact`: it runs all the [Pact](https://docs.pact.io/) tests in `server/**/__pacts__` folders. Its specificity is that it boots a pact server that will allow you to mock interactions with external APIs. Its main usage is for testing loaders in GraphQL modules.
+* `client`: it runs all the tests in `web/**/__tests__` folders. Its specificity is that it boots under a jsdom environment allowing you to use a mocked DOM environment. It is necessary to use when testing React components.
+
+You can only parts of the tests by setting the scope when executing the command: `front-commerce test <scope>`. If no scope is defined all the scopes will be executed.
+
+After the scope, you can use any Jest option. For instance if you want to run the tests in watch mode, you should add `--watch` at the end of your command.
+
+<blockquote class="note">
+
+**Tip:** If you are abstracting the `front-commerce` CLI with [npm scripts](https://docs.npmjs.com/misc/scripts), please note that you can pass any option(s) to your npm script by using this syntax: `npm run test -- <option1> <option2>`.
+
+</blockquote>
