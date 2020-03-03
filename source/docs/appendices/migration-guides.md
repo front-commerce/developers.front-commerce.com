@@ -198,6 +198,8 @@ All ids now leverage the `ID` type instead of being `Int` or `String`. This will
 
 The only thing that you need to make sure of is to run `npm run lint` on your project. This should allow you to see errors on overridden GraphQL files.
 
+Please note that if in your code, you relied on some int types, there might be cases where identifiers comparison won't work. All code within the core's module has been updated to avoid as much compatibility issues as possible. However keep in mind that if you rely on some strict equality (`===`) and static identifiers, this could lead to issues.
+
 <details>
 <summary>Exhaustive list of changes <code>ID</code> changes</summary>
 
