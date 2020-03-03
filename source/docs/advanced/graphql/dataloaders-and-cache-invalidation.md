@@ -83,18 +83,18 @@ If the product `PANT-01` was an upsell of all other products in the `pants` cate
 
 DataLoader is a pattern promoted by Facebook, from their internal implementations, to solve problems with data fetching. We use this name because it is the name of the reference implementation in Javascript: [graphql/dataloader](https://github.com/graphql/dataloader).
 
-A dataLoader is instantiated with a **batching function**, that will allow to fetch data in a grouped way (see [Batching](#Batching) above). It also has a caching strategy that prevents fetching the same data twice in the same request or across requests (see [Caching](#Caching) above).
+A DataLoader is instantiated with a **batching function**, that will allow to fetch data in a grouped way (see [Batching](#Batching) above). It also has a caching strategy that prevents fetching the same data twice in the same request or across requests (see [Caching](#Caching) above).
 
-By default every dataLoader provides request-level caching. But this can be configured to switch to a persistent caching strategy instead. For instance, Front-Commerce provides a Redis strategy to share the cache between users and requests.
+By default every DataLoader provides request-level caching. But this can be configured to switch to a persistent caching strategy instead. For instance, Front-Commerce provides a Redis strategy to share the cache between users and requests.
 
-In our previous example, if the `Product.qty` resolver was implemented using a dataLoader the query could have been resolved using only 2 remote API requests:
+In our previous example, if the `Product.qty` resolver was implemented using a DataLoader the query could have been resolved using only 2 remote API requests:
 - 1 request to fetch category information
 - 1 request to fetch products in the category
 - 1 batch request to fetch quantities of the products if an API was available: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`
 
-We encourage you to read the [dataLoader readme](https://github.com/graphql/dataloader) documentation to learn more about how it works.
+We encourage you to read the [DataLoader readme](https://github.com/graphql/dataloader) documentation to learn more about how it works.
 
-Front-Commerce provides a factory function to create DataLoaders from your GraphQL modules while keeping caching strategies configurable. Under the hood it is a pure dataLoader instance, so you could use it in a standard manner.
+Front-Commerce provides a factory function to create DataLoaders from your GraphQL modules while keeping caching strategies configurable. Under the hood it is a pure DataLoader instance, so you could use it in a standard manner.
 
 ## Using DataLoaders in Front-Commerce
 
@@ -102,7 +102,7 @@ When building a GraphQL module, Front-Commerce will inject a `makeDataLoader` fa
 
 ### `makeDataLoader` usage
 
-The `makeDataLoader` factory allows developers to build a dataLoader without worrying about the current store scope (in a multi-store environment) or caching concern).
+The `makeDataLoader` factory allows developers to build a DataLoader without worrying about the current store scope (in a multi-store environment) or caching concern).
 
 Here is an example based on the use case above:
 
@@ -154,7 +154,7 @@ export default {
 import { reorderForIds } from "server/core/graphql/dataloaderHelpers";
 
 const StockLoader = (makeDataLoader, axiosInstance) => {
-  // our batching function that will be injected in the dataLoader factory
+  // our batching function that will be injected in the DataLoader factory
   // it is important to return results in the same order than the passed `skus`
   // hence the use of `reorderForIds` (documented later in this page)
   const loadStocksBatch = skus => {
@@ -171,7 +171,7 @@ const StockLoader = (makeDataLoader, axiosInstance) => {
   );
 
   return {
-    // `loader` is a standard dataLoader instance, so you can use any available methods on it
+    // `loader` is a standard DataLoader instance, so you can use any available methods on it
     loadBySku: sku => loader.load(sku)
   }
 };
@@ -179,7 +179,7 @@ const StockLoader = (makeDataLoader, axiosInstance) => {
 export default StockLoader;
 ```
 
-The 2nd parameter to `makeDataLoader` are the options to pass to the dataLoader instance. You usually don't have to use it. Please refer to [dataloader's documentation](https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options) for further information.
+The 2nd parameter to `makeDataLoader` are the options to pass to the DataLoader instance. You usually don't have to use it. Please refer to [dataloader's documentation](https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options) for further information.
 
 ### Useful patterns
 
@@ -243,7 +243,7 @@ One can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitla
 
 ### `reorderForIds`
 
-Batch functions must satisfy two constraints to be used in a dataLoader (from the [graphql/dataloader documentation](https://github.com/graphql/dataloader#batch-function)):
+Batch functions must satisfy two constraints to be used in a DataLoader (from the [graphql/dataloader documentation](https://github.com/graphql/dataloader#batch-function)):
 
 > * The Array of values must be the same length as the Array of keys.
 > * Each index in the Array of values must correspond to the same index in the Array of keys.
@@ -335,7 +335,7 @@ By default, all dataLoaders are using a **per-request in-memory caching strategy
 
 Front-Commerce is also shipped with a persistent cache implementation, using a Redis strategy (see [Caching strategies](#Caching-strategies)). One can implement new strategies to support more services (we also can help and support more strategies, please [contact us](mailto:contact@front-commerce.com)).
 
-The dataLoader cache must be configured in the [`config/caching.js` configuration file](/docs/reference/configurations.html#config-caching-js). Please refer to the reference documentation for further details or read the following section to choose the most relevant strategies for your context.
+The DataLoader cache must be configured in the [`config/caching.js` configuration file](/docs/reference/configurations.html#config-caching-js). Please refer to the reference documentation for further details or read the following section to choose the most relevant strategies for your context.
 
 ## Caching strategies
 
@@ -373,7 +373,7 @@ export default {
 _Since version 2.0.0-rc.0_
 </blockquote>
 
-The `PerMagentoCustomerGroup` implementation is a decorator that is specific to Magento 1 and Magento 2 modules. It will decorate the existing caching strategies so that dataLoader keys are specific to the current customer group. We highly recommend to use it on Magento stores that have price per group, so they can leverage other caching mechanisms (such as `Redis`).
+The `PerMagentoCustomerGroup` implementation is a decorator that is specific to Magento 1 and Magento 2 modules. It will decorate the existing caching strategies so that DataLoader keys are specific to the current customer group. We highly recommend to use it on Magento stores that have price per group, so they can leverage other caching mechanisms (such as `Redis`).
 
 It is possible to provide a default group to use as scope for guest users.
 
@@ -394,7 +394,7 @@ export default {
     },
     {
       implementation: "PerMagentoCustomerGroup",
-      // Will scope all data from the CatalogPrice dataLoader with the customer group
+      // Will scope all data from the CatalogPrice DataLoader with the customer group
       // before they are transmitted to the previous strategy (Redis).
       // Other dataLoaders will use Redis storage in a standard fashion.
       supports: ["CatalogPrice"],
