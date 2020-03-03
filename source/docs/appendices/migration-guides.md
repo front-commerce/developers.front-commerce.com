@@ -190,6 +190,35 @@ For more information, please have a look at the [Routes reference](/docs/referen
     * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
 
+### ID types in GraphQL definitions
+
+In order to improve consistency of the GraphQL schema accross platforms, we have also made some changes to the GraphQL schema.
+
+All ids now leverage the `ID` type instead of being `Int` or `String`. This will allow better compatibility across platforms since `ID` allow for `Int` or `String` values as identifiers. It shouldn't affect the final behavior of your components. If you had some in your own schemas, we suggest to also convert them to `ID`.
+
+The only thing that you need to make sure of is to run `npm run lint` on your project. This should allow you to see errors on overridden GraphQL files.
+
+Please note that if in your code, you relied on some int types, there might be cases where identifiers comparison won't work. All code within the core's module has been updated to avoid as much compatibility issues as possible. However keep in mind that if you rely on some strict equality (`===`) and static identifiers, this could lead to issues.
+
+<details>
+<summary>Exhaustive list of changes <code>ID</code> changes</summary>
+
+* `src/web/theme/modules/Cart/CartItem/CartItemOptionsUpdater/UpdateCartItemMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Cart/CartItem/CartItemQuantityForm/UpdateCartItemQtyMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Cart/CartItem/CartItemRemoveForm/RemoveCartItemMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Checkout/AddressRecap/CurrentColissimoPickupAddress.gql`: `$cartId: ID!`
+* `src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/ColissimoForm/ColissimoQuery.gql`: `$addressId: ID!`
+* `src/web/theme/modules/Checkout/ShippingMethod/SetShippingInformationMutation.gql`: `$cartId: ID!`
+* `src/web/theme/modules/Checkout/withCheckoutTracking/CheckoutSuccessTrackingQuery.gql`: `$orderId: ID!`
+* `src/web/theme/modules/ProductList/Featured/FeaturedProductsQuery.gql`: `$id: ID!`
+* `src/web/theme/modules/User/Address/AddressForm/RemoveAddressForm/RemoveAddressMutation.gql`: `$addressId: ID!`
+* `src/web/theme/modules/User/Order/OrderRenewButton/RenewOrderMutation.gql`: `$order_id: ID!`
+* `src/web/theme/modules/Wishlist/AddProductToWishlist/RemoveProductFromWishlistMutation.gql`: `$itemId: ID!`
+* `src/web/theme/pages/Account/Orders/Details/OrderDetailsQuery.gql`: `$orderId: ID!`
+* `src/web/theme/pages/Category/CategoryQuery.gql`: `$id: ID!`
+
+</details>
+
 ### Better sitemap declarations
 
 First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
