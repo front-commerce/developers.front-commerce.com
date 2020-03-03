@@ -107,9 +107,50 @@ The `makeDataLoader` factory allows developers to build a dataLoader without wor
 Here is an example based on the use case above:
 
 ```js
-// GraphQL module definition file
-// For this example the code is in the same file, but it is recommended to extract
-// code in different ones
+// index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+import StockLoader from "./loader";
+
+export default {
+  namespace: "Acme/Inventory",
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ makeDataLoader, req }) => {
+    const axiosInstance = axios.create({
+      baseURL: req.config.inventoryApiEndpointUrl
+    });
+
+    return {
+      // create an instance of the loader, to be made available in resolvers
+      Stock: StockLoader(makeDataLoader, axiosInstance)
+    };
+  }
+};
+```
+
+```graphql
+# schema.gql
+extend type Product {
+  qty: Int
+}
+```
+
+```js
+// resolvers.js
+export default {
+  Product: {
+    qty: ({ sku }, _, { loaders }) => {
+      // use the loader instance to fetch data
+      // batching and caching is transparent in the resolver
+      return loaders.Stock.loadBySku(sku);
+    }
+  }
+}
+```
+
+```js
+// loader.js
 import { reorderForIds } from "server/core/graphql/dataloaderHelpers";
 
 const StockLoader = (makeDataLoader, axiosInstance) => {
@@ -118,7 +159,7 @@ const StockLoader = (makeDataLoader, axiosInstance) => {
   // hence the use of `reorderForIds` (documented later in this page)
   const loadStocksBatch = skus => {
      return axiosInstance
-        .get("/stocks", { params: { skus })
+        .get("/stocks", { params: { skus } })
         .then(response => response.data.items)
         .then(reorderForIds(skus, "sku"));
   }
@@ -135,35 +176,7 @@ const StockLoader = (makeDataLoader, axiosInstance) => {
   }
 };
 
-const typeDefs = `extend type Product {
-  qty: Int
-}`;
-
-const resolvers = {
-  Product: {
-    qty: ({ sku }, _, { loaders }) => {
-      // use the loader instance to fetch data
-      // batching and caching is transparent in the resolver
-      return loaders.Stock.loadBySku(sku);
-    }
-  }
-}
-
-module.exports = {
-  namespace: "Acme/Inventory",
-  typeDefs,
-  resolvers,
-  contextEnhancer: ({ makeDataLoader, req }) => {
-    const axiosInstance = axios.create({
-      baseURL: req.config.inventoryApiEndpointUrl
-    });
-
-    return {
-      // create an instance of the loader, to be made available in resolvers
-      Stock: StockLoader(makeDataLoader, axiosInstance)
-    };
-  }
-};
+export default StockLoader;
 ```
 
 The 2nd parameter to `makeDataLoader` are the options to pass to the dataLoader instance. You usually don't have to use it. Please refer to [dataloader's documentation](https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options) for further information.
@@ -244,9 +257,25 @@ It will sort `data` by `idKey` to match the order from the `ids` array passed in
 Example:
 
 ```js
+// skus will very likely be a param of your batch loader
+const skus = ["P01", "P02", "P03"];
+
 return axiosInstance
-  .get("/frontcommerce/price", { params })
-  .then(response => response.data)
+  .get("/frontcommerce/price", {
+    params: {
+      skus: skus.join(',')
+    }
+  })
+  .then(response => {
+    const prices = response.data
+    /* [
+      {sku: "P02", price: 12},
+      {sku: "P03", price: 13},
+      {sku: "P01", price: 11},
+    ] */
+    return prices;
+  })
+  // results will be sorted according to the initial skus passed (P01, P02, P03)
   .then(reorderForIds(skus, "sku"));
 ```
 
