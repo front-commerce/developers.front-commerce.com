@@ -42,11 +42,11 @@ This problem is also known as [the N+1 problem](https://engineering.shopify.com/
 
 ### Batching
 
-In this context, batching is the process of grouping every data that is required so that they could be retrieved in an efficient manner. In the example above, let's suppose that our category contained 10 products `PANT-01`, `PANT-02`, …, `PANT-10`.
+Batching, in this context is the process of grouping every data that is required so that they could be retrieved in an efficient manner.
 
-If the remote API had a way to do it, we could leverage batching to fetch all product inventories with a single remote API call to an endpoint like https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10.
+Let's suppose that our category contained 10 products `PANT-01`, `PANT-02`, …, `PANT-10`. Then, instead of making 10 HTTP requests for each product stock, we could leverage batching to fetch all product inventories with a single remote API call (ex: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`).
 
-As you can see, we can avoid many remote API calls with this pattern.
+These kind of batch endpoints are not always available on remote services. But if they exist, they can avoid many remote API calls and lead to better performance.
 
 ### Caching
 
