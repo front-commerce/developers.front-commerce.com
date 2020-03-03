@@ -15,7 +15,7 @@ Imagine a resolver on a `Product.qty` field that fetches the current quantity in
 
 Let's see what happens when we run a query like this on our GraphQL endpoint:
 
-```gql
+```graphql
 {
   category("pants") {
     name
@@ -59,7 +59,7 @@ The first use case is something one may already know from other systems. In the 
 
 The second one is more specific to GraphQL. To understand its gain, we should consider the following query:
 
-```gql
+```graphql
 {
   category("pants") {
     name
