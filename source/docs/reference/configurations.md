@@ -138,7 +138,7 @@ Allows to define configurations related to dataloader caching and implementation
 Each strategy can be configured with the keys below:
 
 * `implementation`: name of the [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Caching-strategies) (**mandatory**)
-* `supports`: list of loaders impacted by this strategy. Either an array of values or `"*"` for all. (default: `[]`)
+* `supports`: list of loaders impacted by this strategy. Either an array of values or `"*"` for all. (**mandatory**)
 * `disabledFor`: list of loaders not impacted by this strategy (default: `[]`)
 * `config`: an object containing implementation specific configuration (default: `{}`)
 
