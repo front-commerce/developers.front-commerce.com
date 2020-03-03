@@ -130,25 +130,44 @@ module.exports = ["products", "categories", "pages"];
 
 ### `config/caching.js`
 
-Allows to define configurations related to dataloader caching and implementation
+Allows to define configurations related to dataloader caching and implementations. It can export a configuration with the following keys:
 
-<blockquote class="wip">
-**Work In Progress:** more details about specific configurations will be detailed as part of https://github.com/front-commerce/developers.front-commerce.com/issues/49. If you need it right away, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+* `defaultMaxBatchSize`: default batch size used for dataloaders (unless specified during instantiation) (default: `100`)
+* `strategies`: list of caching strategies to use in the application (default: `[]`)
+
+Each strategy can be configured with the keys below:
+
+* `implementation`: name of the [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Caching-strategies) (**mandatory**)
+* `supports`: list of loaders impacted by this strategy. Either an array of values or `"*"` for all. (**mandatory**)
+* `disabledFor`: list of loaders not impacted by this strategy (default: `[]`)
+* `config`: an object containing implementation specific configuration (default: `{}`)
+
+<blockquote class="note">
+  Loaders are identified with a key. The key is the first argument passed to the `makeDataLoader` factory.
 </blockquote>
 
-* `DEFAULT_MAX_BATCH_SIZE`: default batch size used for dataloaders (unless specified during instanciation). Default: 100
-* `redis`: redis strategy configuration for the [redis-dataloader](https://github.com/DubFriend/redis-dataloader) instance
+Example of a recommended configuration for Magento stores:
 
 ```js
 export default {
-  DEFAULT_MAX_BATCH_SIZE: 100,
-  redis: {
-    caches: "*", // or ["LoaderKeyA", "LoaderKeyB"]
-    disabled: ["CatalogPrice"],
-    config: {
-      host: "127.0.0.1"
+  defaultMaxBatchSize: 100,
+  strategies: [
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "redis"
+        // host: "127.0.0.1"
+      }
+    },
+    {
+      implementation: "PerMagentoCustomerGroup",
+      supports: ["CatalogPrice"],
+      config: {
+        defaultGroupId: 0
+      }
     }
-  }
+  ]
 };
 ```
 
