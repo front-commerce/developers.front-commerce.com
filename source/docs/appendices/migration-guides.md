@@ -13,6 +13,14 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 The 2.0.0-rc.1 supports Magento 2.3.4. If you upgrade to Magento 2.3.4 there shouldn't be any impact. However if you install a new 2.3.4, please make sure that in `config/website.js` the key `search.ignoredAttributeKeys` has `url_key`. Indeed the `url_key` is now searchable by default in Magento but shouldn't be displayed in the facets of a layered navigation.
 
+### Dynamic URLs
+
+Some URLs are too dynamic to easily predict what kind of pages we are to display. This is solved in Front-Commerce by using the `route` query in GraphQL and the `Dispatcher` component.
+
+We have improved those in this release to avoid any duplicate content by forcing a redirection to the canonical page. However, to do so, we needed to change the `url` field in the `Routable` GraphQL interface.
+
+Thus, if you've overridden the `theme/modules/Router/DispatcherQuery.gql`, please make sure to replace `url` by `path`. If you've changed the `Dispatcher.js` itself, please contact us.
+
 ## `1.0.0-beta.3` -> `2.0.0-rc.0`
 
 `1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
