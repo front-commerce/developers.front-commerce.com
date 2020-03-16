@@ -34,7 +34,7 @@ Without configuration, a logger does nothing. You need to configure what to do w
 
 ```js
 // my-module/config/logging.js
-module.exports = {
+export default {
   server: [
     {
       type: "file",
@@ -82,7 +82,7 @@ To do so, you can create new custom loggers that will be configured through the 
 
 ```diff
 // my-module/config/logging.js
-module.exports = {
+export default {
   // ... the rest of your logger configuration
 +  myLoggerName: [
 +    {

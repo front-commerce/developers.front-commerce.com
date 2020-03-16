@@ -136,7 +136,7 @@ Moreover, we didn't talk about a `trackPage` method here. This is because a `Pag
 An integration will listen each `event` and `page` tracking in your application and will send it to your tracking service. To configure which tracking service your application will use, you need to edit the `config/analytics.js` file:
 
 ```js
-module.exports = {
+export default {
   analytics: {
     // Make sure that your analytics is enabled
     enable: true,
