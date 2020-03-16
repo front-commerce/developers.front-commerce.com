@@ -17,6 +17,10 @@ This method has two advantages:
 
 ## How to configure it?
 
+<blockquote class="note">
+  This section explains how to use Magento's default proxy. To create your own one, refer to the [Add your own media proxy endpoint](#Add-your-own-media-proxy-endpoint) section below.
+</blockquote>
+
 First you need to decide where the proxy can fetch the original images. There are two env variables to set:
 * `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the url of your magento endpoint (`http://magento2.local/`)
   This will be updated in the future to support media that are uploaded on a different server. Please [contact us](mailto:contact@front-commerce.com) if you need this feature.
@@ -89,6 +93,82 @@ The path of the image here is the path of the image on the proxy.
 This component will automatically fetch the image through the proxy with the correct settings. Moreover, it will display a spinner while the image is loading and a fallback image if it breaks.
 
 It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. Thus, to disable lazyloading, you should use the option `dangerouslyDisableLazyLoad`.
+
+## Add your own media proxy endpoint
+
+The example above leveraged the built-in Magento media proxy. However, one could add a new media proxy for virtually any remote source thanks to Front-Commerce core libraries.
+
+Implementing the media proxy is possible by combining the following mechanisms:
+- [adding custom endpoints to the Node.js server](/docs/advanced/server/add-http-endpoint.html) (with express Router)
+- [the `express-http-proxy` middleware](https://www.npmjs.com/package/express-http-proxy)
+- Front-Commerce's `makeImageProxyRouter` library
+
+We will explain how the latest work, so you could use it.
+
+The `makeImageProxyRouter` can be imported from `server/core/image/makeImageProxyRouter` in your Front-Commerce application. It is an express middleware that takes a function in parameter. This function should be a **proxy middleware factory** (`express-http-proxy`): it must return an instance of a proxy middleware that will handle image resizing.
+
+The factory will receive a callback that will handle image processing, so the proxified image could be resized and transformed in the format requested by the user. In the example below, it is the `transformImageBuffer` function that does all the heavy lifting.
+
+Here is an example of how an [additional route to register in your application](/docs/advanced/server/add-http-endpoint.html#Register-additional-routes) could be implemented:
+
+```js
+import { Router } from "express";
+import proxy from "express-http-proxy";
+import makeImageProxyRouter from "server/core/image/makeImageProxyRouter";
+import d from "debug";
+
+// we recommend to add some debug information in case of
+// errors, to help troubleshooting images that are not displaying
+const debug = d("front-commerce:image");
+
+// this middleware will be mounted at the path provided in
+// the `endpoint.path` of your `module.config.js` file
+export const mediaProxyRouter = () => {
+  const router = Router();
+
+  router.use(
+    "/",
+    // Here is where the core library has to be used
+    makeImageProxyRouter(transformImageBuffer => {
+      // please refer to the available options in the `express-http-proxy`
+      // module documentation: https://www.npmjs.com/package/express-http-proxy#options
+      return proxy(req => req.config.myRemoteApp.endpoint, {
+        timeout: 5000,
+        proxyReqPathResolver: req => {
+          // transform the url to target the correct remote image url
+          return `${req.config.myRemoteApp.imagesEndpoint.replace(
+            req.config.myRemoteApp.endpoint,
+            ""
+          )}${req.url}`;
+        },
+        userResDecorator: (proxyRes, resBuffer, req, res) => {
+          if (debug.enabled && proxyRes.statusCode !== 200) {
+            debug(
+              "No image found at ",
+              req.config.myRemoteApp.imagesEndpoint + req.url
+            );
+          }
+
+          // transforms the remote image to the requested format:
+          // the image will be resized and converted to the correct format (webp, jpeg…)
+          //
+          // The returned image binary will be cached on the filesystem
+          // to prevent further heavy image processing.
+          // Pass `true` as the last parameter to skip filesystem caching
+          // and directly sends the response.
+          return transformImageBuffer(resBuffer, req, res, false);
+        }
+      });
+    })
+  );
+
+  return router;
+};
+```
+
+We recommend that you experiment with the `front-commerce:image` debug flag enabled to understand how it works and get familiar with it.
+
+You can also read [Magento's proxy code from our codebase](https://gitlab.com/front-commerce/front-commerce/-/blob/ed655f75bb868b59511ba5e679d9683412175845/src/server/express/withMagentoProxy.js#L15) to learn more.
 
 ## Image caching
 

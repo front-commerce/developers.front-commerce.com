@@ -108,7 +108,10 @@ We will migrate progressively the components in Front-Commerce's core, but feel 
 
 Only thing to consider: if you had some images in one of your `public/images/resized` folder, they will no longer work in dev mode because these images will be resized on the fly just like your images at the `/media` endpoint. However, in your production environment you will still see the image.
 
-TODO: Document how to add your own proxy endpoint.
+
+<blockquote class="note">
+  This release also contain a utility library that makes [adding your own media proxy](/docs/advanced/production-ready/media-middleware.html#Add-your-own-media-proxy-endpoint) a breeze. Please read the related documentation to know more.
+</blockquote>
 
 ### Abstract Formsy
 
