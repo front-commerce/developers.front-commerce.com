@@ -115,11 +115,6 @@ Here is an example of how an [additional route to register in your application](
 import { Router } from "express";
 import proxy from "express-http-proxy";
 import makeImageProxyRouter from "server/core/image/makeImageProxyRouter";
-import d from "debug";
-
-// we recommend to add some debug information in case of
-// errors, to help troubleshooting images that are not displaying
-const debug = d("front-commerce:image");
 
 // this middleware will be mounted at the path provided in
 // the `endpoint.path` of your `module.config.js` file
@@ -132,18 +127,23 @@ export const mediaProxyRouter = () => {
     makeImageProxyRouter(transformImageBuffer => {
       // please refer to the available options in the `express-http-proxy`
       // module documentation: https://www.npmjs.com/package/express-http-proxy#options
+      //
+      // `req.config` contains the app configurations
+      // this example supposes that `myRemoteApp` configurations were defined
+      // see https://developers.front-commerce.com/docs/advanced/server/configurations.html for further details
       return proxy(req => req.config.myRemoteApp.endpoint, {
         timeout: 5000,
         proxyReqPathResolver: req => {
-          // transform the url to target the correct remote image url
-          return `${req.config.myRemoteApp.imagesEndpoint.replace(
+          // transform the url to target the correct image url on the remote system
+          const remoteImagesBasePath = req.config.myRemoteApp.imagesEndpoint.replace(
             req.config.myRemoteApp.endpoint,
             ""
-          )}${req.url}`;
+          );
+          return `${remoteImagesBasePath}${req.url}`;
         },
         userResDecorator: (proxyRes, resBuffer, req, res) => {
-          if (debug.enabled && proxyRes.statusCode !== 200) {
-            debug(
+          if (proxyRes.statusCode !== 200) {
+            console.warn(
               "No image found at ",
               req.config.myRemoteApp.imagesEndpoint + req.url
             );
