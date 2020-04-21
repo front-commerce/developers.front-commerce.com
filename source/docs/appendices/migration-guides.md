@@ -21,6 +21,24 @@ We have improved those in this release to avoid any duplicate content by forcing
 
 Thus, if you've overridden the `theme/modules/Router/DispatcherQuery.gql`, please make sure to replace `url` by `path`. If you've changed the `Dispatcher.js` itself, please contact us.
 
+### Removing LinearIcons in favor of SVG icons
+
+LinearIcons was based on a font containing all the icons. It can behave weirdly when the users have a slow connection or specific font settings. We've removed it in favor of SVG based icons.
+
+If you are using a font icon in your project, please make sure that everything still works as expected. If not, you can copy the content of the file `"~theme/components/atoms/Icon/UNSAFE_LinearIcons"` in your own CSS to get the old behavior back.
+
+### All `<ResizedImage />` components removed in favor of `<Image />`
+
+The `<Image />` component that is an improved version of the deprecated `<ResizedImage />` is now in place in all the components that need to display an image in Front-Commerce.
+
+This also means that if you didn't override a component using `<ResizedImage />` but still relied on the class `.image` in your CSS, this could change how it is displayed. Please check for reference of `.image` in your CSS to make sure that everything still works as expected.
+
+### Search now only returns relevant results
+
+In previous versions, we displayed search results by sorting by relevance. However this means that if you typed "skirt" you could have some bags popping at the end of the search. To avoid any weird results, we are now only displaying relevant results. This also means that there are more scenarios where you can have no result.
+
+If you need to get the old behavior back on your project, please contact us.
+
 ## `1.0.0-beta.3` -> `2.0.0-rc.0`
 
 `1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.
@@ -122,7 +140,7 @@ We will migrate progressively the components in Front-Commerce's core, but feel 
 
 Only thing to consider: if you had some images in one of your `public/images/resized` folder, they will no longer work in dev mode because these images will be resized on the fly just like your images at the `/media` endpoint. However, in your production environment you will still see the image.
 
-TODO: Document how to add your own proxy endpoint.
+If you are using images from another endpoint that Magento, please note that you can now [configure your own proxy endpoint by following this guide](/docs/advanced/production-ready/media-middleware.html#Add-your-own-media-proxy-endpoint).
 
 ### Abstract Formsy
 

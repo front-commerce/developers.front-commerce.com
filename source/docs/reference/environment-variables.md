@@ -50,7 +50,7 @@ Configure the execution environment of the Front-Commerce's application:
 
 ### Cache
 
-- `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications invalidate parts of Front-Commerce cache. <!-- TODO link to dataloaders and cache invalidation documentation -->
+- `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications invalidate parts of Front-Commerce cache. See [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Invalidating-the-cache) for more details.
 
 ### Performance
 
