@@ -9,6 +9,9 @@ You can already find documentation for:
 
 * [Meta modules](./meta-modules.html)
 * [Slim down resolvers with loaders](./slim-down-resolvers-with-loaders.html)
+* [DataLoaders and cache invalidation](./dataloaders-and-cache-invalidation.html)
+* [Remote schemas](./remote-schemas.html)
+* [Rate Limiting](./rate-limiting.html)
 
 And we are currently writing documentation about:
 
