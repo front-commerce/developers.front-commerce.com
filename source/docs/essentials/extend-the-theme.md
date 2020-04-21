@@ -50,7 +50,7 @@ module.exports = {
   name: "Front Commerce",
   url: "http://www.front-commerce.test",
 -  modules: ["./src"],
-+  modules: ["./my-module", "./src"],
++  modules: ["./src", "./my-module"],
   serverModules: [
     // ...
   ]
