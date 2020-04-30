@@ -7,6 +7,38 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.0.0-rc.0` -> `2.0.0-rc.1`
+
+### Magento 2.3.4
+
+The 2.0.0-rc.1 supports Magento 2.3.4. If you upgrade to Magento 2.3.4 there shouldn't be any impact. However if you install a new 2.3.4, please make sure that in `config/website.js` the key `search.ignoredAttributeKeys` has `url_key`. Indeed the `url_key` is now searchable by default in Magento but shouldn't be displayed in the facets of a layered navigation.
+
+### Dynamic URLs
+
+Some URLs are too dynamic to easily predict what kind of pages we are to display. This is solved in Front-Commerce by using the `route` query in GraphQL and the `Dispatcher` component.
+
+We have improved those in this release to avoid any duplicate content by forcing a redirection to the canonical page. However, to do so, we needed to change the `url` field in the `Routable` GraphQL interface.
+
+Thus, if you've overridden the `theme/modules/Router/DispatcherQuery.gql`, please make sure to replace `url` by `path`. If you've changed the `Dispatcher.js` itself, please contact us.
+
+### Removing LinearIcons in favor of SVG icons
+
+LinearIcons was based on a font containing all the icons. It can behave weirdly when the users have a slow connection or specific font settings. We've removed it in favor of SVG based icons.
+
+If you are using a font icon in your project, please make sure that everything still works as expected. If not, you can copy the content of the file `"~theme/components/atoms/Icon/UNSAFE_LinearIcons"` in your own CSS to get the old behavior back.
+
+### All `<ResizedImage />` components removed in favor of `<Image />`
+
+The `<Image />` component that is an improved version of the deprecated `<ResizedImage />` is now in place in all the components that need to display an image in Front-Commerce.
+
+This also means that if you didn't override a component using `<ResizedImage />` but still relied on the class `.image` in your CSS, this could change how it is displayed. Please check for reference of `.image` in your CSS to make sure that everything still works as expected.
+
+### Search now only returns relevant results
+
+In previous versions, we displayed search results by sorting by relevance. However this means that if you typed "skirt" you could have some bags popping at the end of the search. To avoid any weird results, we are now only displaying relevant results. This also means that there are more scenarios where you can have no result.
+
+If you need to get the old behavior back on your project, please contact us.
+
 ## `1.0.0-beta.3` -> `2.0.0-rc.0`
 
 `1.0.0-beta.4` and `1.0.0-beta.5` versions were bugfixes releases which required to be done so that some projects could move forward. It was safe and seamless to update to these versions.

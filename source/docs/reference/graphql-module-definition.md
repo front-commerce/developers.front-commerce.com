@@ -189,8 +189,7 @@ keys:
 
 - `req`: the current server request
 - `loaders`: current loaders (from module initialized beforehand)
-- `makeDataLoader`: a factory to build a dataloader
-  <!-- TODO (see [dataloaders](#TODO)) -->
+- `makeDataLoader`: a factory to build a dataloader (see [`makeDataLoader` usage](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#makeDataLoader-usage))
 - `config`: the global configuration
 
 Example:

@@ -16,6 +16,7 @@ In this section, you will learn information about Magento 2 integration with Fro
 
 - [Magento’s GraphQL support in Front-Commerce](/docs/magento2/graphql.html)
 - [Internationalization / Localization](/docs/magento2/i18n.html)
+- [Add a new attribute](/docs/magento2/add-new-attribute.html)
 
 We are still in the process of writing the documentation. But we will cover the following topics:
 

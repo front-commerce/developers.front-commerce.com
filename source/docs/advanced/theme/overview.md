@@ -7,10 +7,13 @@ In this section, you will learn advanced information about theming in Front-Comm
 
 You can already find documentation for:
 
-* [Handle dynamic URLs](/docs/advanced/theme/route-dispatcher.html)
-* [Translate your application](/docs/advanced/theme/translations.html)
-* [Analytics](/docs/advanced/theme/analytics.html)
-* [Display WYSIWYG content](/docs/advanced/theme/wysiwyg.html)
+* [Handle dynamic URLs with the Dispatcher](./route-dispatcher.html)
+* [Layouts](./layouts.html)
+* [Display WYSIWYG content](./wysiwyg.html)
+* [Managing forms](./form.html)
+* [Analytics](./analytics.html)
+* [Translate your application](./translations.html)
+* [Server Side Rendering (SSR)](./server-side-rendering.html)
 
 And we are currently writing documentation about:
 

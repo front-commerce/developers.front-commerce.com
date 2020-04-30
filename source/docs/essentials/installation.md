@@ -119,7 +119,7 @@ must match [Magento store view code](https://docs.magento.com/m2/ee/user_guide/s
 To enable caching locally, you can configure it in `src/config/caching.js`. For now
 only redis is supported, which requires to have a redis instance to connect to.
 
-<!-- TODO See [our caching section](#TODO) to know more about caching in the GraphQL middleware. -->
+See [our caching section](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html) to know more about caching in the GraphQL middleware.
 
 ### Launch the application
 
