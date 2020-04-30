@@ -115,7 +115,7 @@ const currentValueOf = sku => {
   });
 };
 
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   },
@@ -177,7 +177,7 @@ You can then update the resolvers to use this loader:
 -  });
 -};
 -
-module.exports = {
+export default {
   Product: {
 -    clicksCounter: ({ sku }) => currentValueOf(sku)
 +    clicksCounter: ({ sku }) => CounterLoader.loadBySku(sku)
@@ -218,7 +218,7 @@ it:
 // my-module/server/modules/clicks-counters/resolvers.js
 -import CounterLoader from "./loader";
 -
-module.exports = {
+export default {
   Product: {
 -    clicksCounter: ({ sku }) => CounterLoader.loadBySku(sku)
 +    clicksCounter: ({ sku }, _, { loaders }) => {
@@ -321,15 +321,15 @@ see several patterns mentioned previously and get ideas about applying them in
 your application:
 
 ```js
-const {
+import {
   makeUserClientFromRequest
-} = require("server/modules/magento2/core/factories");
+} from "server/modules/magento2/core/factories";
 
-const typeDefs = require("./schema.gql");
-const resolvers = require("./resolvers");
-const { CmsBlockLoader, CmsPageLoader } = require("./loaders");
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+import { CmsBlockLoader, CmsPageLoader } from "./loaders";
 
-module.exports = {
+export default {
   namespace: "Magento2/Cms",
   dependencies: [
     "Magento2/Store" // loaders need the store loader to get the store id

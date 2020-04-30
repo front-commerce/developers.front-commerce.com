@@ -28,12 +28,14 @@ In the case of the WYSIWYG preview, let's say that when a user visits the `wysiw
 To do so, we need to declare create our server config file `my-module/server/module.config.js`, and configure its `entrypoint` key.
 
 ```js
-module.exports = {
+import router from "./express";
+
+export default {
   endpoint: {
     // The path added to your Front-Commerce server
     path: "/wysiwyg-preview",
     // The router used for this path
-    router: require("./express")
+    router: router
   }
 };
 ```
@@ -41,11 +43,13 @@ module.exports = {
 If we translated this in a standard express application, it would look like this:
 
 ```js
-app.use("/wysiwyg-preview", require("./express")())
+import router from "./express";
+
+app.use("/wysiwyg-preview", router());
 ```
 
 <blockquote class="note">
-See our express middleware to understand how the magic works: [`withCustomRouters`](https://gitlab.com/front-commerce/front-commerce/blob/85f1a8ef55a351f0feb9309c666992bbbb153993/src/server/express/withCustomRouters.js#L23).
+See our express middleware to understand how the magic works: [`withCustomRouters`](https://gitlab.com/front-commerce/front-commerce/blob/daade2b43df41d4a387a04fe87f432afc1f7208b/src/server/express/withCustomRouters.js#L23).
 </blockquote>
 
 Thus, the `my-module/server/express.js` file within your module should be a function returning either a standard express route (`(req, res, next) => { /* ... */ }`) or [an express router](https://expressjs.com/en/api.html#router).
@@ -53,15 +57,14 @@ Thus, the `my-module/server/express.js` file within your module should be a func
 Now, if we want to display our WYSIWYG preview iframe, it could look like this:
 
 ```js
-const path = require("path");
-const cors = require("cors");
-const express = require("express");
-const Router = express.Router;
-const config = require("config/website");
+import path from "path";
+import cors from "cors";
+import { Router } from "express";
+import config from "config/website";
 
 const ONE_HOUR = 60 * 60;
 
-module.exports = () => {
+export default () => {
   const router = new Router();
 
   // We make sure that the resources are only available for
@@ -93,11 +96,13 @@ We've added our middleware that is now available under the `/wysiwyg-preview` pa
 To do so, you will need to add the option `__dangerouslyOverrideBasePathChecks` to your endpoint configuration.
 
 ```js
-module.exports = {
+import router from './express'
+
+export default {
   endpoint: {
     __dangerouslyOverrideBasePathChecks: true,
     path: "/",
-    router: require("./express")
+    router: router
   }
 };
 ```

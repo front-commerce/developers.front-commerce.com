@@ -264,7 +264,7 @@ const counters = new Map();
 
 const currentValueOf = sku => counters.get(sku) || 0;
 
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   },
@@ -289,7 +289,7 @@ First of all, the exported resolver map defines a resolver for the
 
 ```js
 // …
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   }
@@ -327,7 +327,7 @@ GraphQL modules must declare mutations by extending the top-level GraphQL
 
 ```js
 // …
-module.exports = {
+export default {
   // …
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
@@ -443,7 +443,7 @@ const currentValueOf = sku => {
   });
 };
 
-module.exports = {
+export default {
   Product: {
     clicksCounter: ({ sku }) => currentValueOf(sku)
   },

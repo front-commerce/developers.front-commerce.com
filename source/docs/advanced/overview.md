@@ -64,10 +64,7 @@ is **responsible for the communication across your different services to expose
 unified data to clients**. GraphQL powerful typing system allows to describe
 your domain in a clear an expressive way, no matter where data comes from.
 
-Data retrieval in the GraphQL middleware has been designed to allow developers
-to easily cache specific data. Hence **every API could benefit of application
-layer caching, to reduce the load and improve performance**. For now,
-Front-Commerce only supports Redis as a cache mechanism.
+Data retrieval in the GraphQL middleware has been designed to allow developers to easily cache specific data. Hence **every API could benefit of application layer caching, to reduce the load and improve performance**. For now, Front-Commerce only supports Redis as a cache mechanism.
 
 ## Front-Commerce in depth
 

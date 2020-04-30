@@ -31,7 +31,7 @@ First, let’s start by creating a new GraphQL module and register it in our app
 
 ```js
 // my-module/server/modules/pokemon/index.js
-module.exports = {
+export default {
   namespace: "Pokemon"
 };
 ```
@@ -61,7 +61,7 @@ Let’s update it to expose the remote GraphQL schema, by adding a [`remoteSchem
 
 ```diff
 // my-module/server/modules/pokemon/index.js
-module.exports = {
+export default {
 -  namespace: "Pokemon"
 +  namespace: "Pokemon",
 +  remoteSchema: {
@@ -126,9 +126,9 @@ For instance, you may want to only expose the `pokemons` query from the remote s
 Here is how you could achieve it thanks to Front-Commerce’s [`remoteSchema.transforms` GraphQL module definition key](/docs/reference/graphql-module-definition.html#transforms-optional):
 
 ```diff
-+ const { FilterRootFields } = require("graphql-tools");
++ import { FilterRootFields } from "graphql-tools";
 +
-module.exports = {
+export default {
   namespace: "Pokemon",
   remoteSchema: {
 -    uri: "https://graphql-pokemon.now.sh/"
@@ -173,7 +173,7 @@ extend type Pokemon_Pokemon {
 }
 `;
 
-module.exports = {
+export default {
   namespace: "Pokemon",
   dependencies: ["Another/CatalogModule"],
   typeDefs,

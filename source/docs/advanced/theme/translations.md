@@ -57,7 +57,7 @@ For instance, let's see how to transform your values in react-intl Components.
 
 These components will be enough in most cases. However, the issue with these is that it wraps your string within a React Element, which may be troublesome when you actually need to handle the string itself.
 
-For instance, this is the case when you want to add some label attributes to your DOM elements.
+For instance, this is the case when you want to add some label attributes to your <abbr title="Document Object Model">DOM</abbr> elements.
 
 ```jsx
 <span class="icon" aria-label="Icon title displayed for screen readers" />

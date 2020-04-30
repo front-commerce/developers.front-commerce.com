@@ -110,6 +110,38 @@ As of the latest release, Front-Commerce’s provides the following GraphQL modu
 
 <!-- TODO Add links to each embedded payment documentation page when available -->
 
+## `webModules`
+
+A list of objects describing the web modules to register in your application.
+Web modules allow you to register new routes in your application by using the filesystem. In the long run, it will be the main entrypoint to inject code through extension points in Front-Commerce.
+
+```js
+module.exports = {
+  // […]
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web" },
+    { name: "Magento2", path: "./src/web" }
+  ]
+  // […]
+};
+```
+
+Each object must be composed of the properties below:
+
+- `name`: unique key that must be unique across the `webModules` list.
+  It is a temporary name that is used during a code generation step and has no other usage than debugging.
+
+- `path`: must be a path to the web module definition file, which is for now **an empty js file**. In the long run, it will allow you to define the extensions you are willing to support. In practice, we're using `require.resolve(webModule.path)` which will check for a file using node's resolver. This is why in most case, we are writing `src/web` but leaving aside `index.js`.
+
+<blockquote class="info">
+  Web modules priority is defined by the order you are setting in the `webModules` array. The later, the more important.
+</blockquote>
+
+The only functionality relying on `webModules` currently is the Routing. You can refer to the following pages for more information:
+* Guide: [Add a new page](/docs/essentials/add-a-page-client-side.html)
+* Guide: [Layouts](/docs/advanced/theme/layouts.html)
+* Reference: [Routing](/docs/reference/routing.html)
+
 ## `styleguidePaths`
 
 _Default value: `[ /.*.story.js$/ ]`_
@@ -132,3 +164,29 @@ module.exports = {
 <blockquote class="info">
 Stories matching this pattern will be fetched across the `web/theme` folder of every [Front-Commerce `modules` defined](#modules) in the `.front-commerce.js` file.
 </blockquote>
+
+## `build`
+
+An object containing configurations for your build pipeline.
+
+### `build.include`
+
+Allows you to define which files should be parsed by webpack. This is especially useful when you have some library which uses javascript features not yet supported by the browsers you support.
+
+You can either set it to:
+* an array of paths
+* a function which will allow you to transform the default include list by adding/removing the paths you need. It should return an array of paths.
+
+Each path must be absolute. One way to do so is to use the following method:
+
+```js
+const path = require("path");
+
+module.exports = {
+  build: {
+    include: [
+      path.dirname(require.resolve("react-intl/package.json")),
+    ]
+  }
+}
+```

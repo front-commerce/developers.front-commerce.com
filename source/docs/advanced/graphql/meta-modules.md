@@ -60,7 +60,7 @@ Here is an example from Magento2 meta module definition:
 import Cart from "./cart";
 // […]
 
-module.exports = {
+export default {
   namespace: "Magento2",
   modules: [
     Cart

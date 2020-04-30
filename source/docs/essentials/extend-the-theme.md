@@ -50,7 +50,7 @@ module.exports = {
   name: "Front Commerce",
   url: "http://www.front-commerce.test",
 -  modules: ["./src"],
-+  modules: ["./my-module", "./src"],
++  modules: ["./src", "./my-module"],
   serverModules: [
     // ...
   ]
@@ -72,7 +72,7 @@ understanding of how components are organized in the base theme.
 </blockquote>
 
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItem.js`
-2. add the description somewhere in your `ProductItem` with `{this.props.description}`.
+2. add the description after the `<ProductOverview />` component in your `ProductItem` with `{this.props.description}`.
 
 **But you are not done yet!**
 The `description` information is not included in the GraphQL fields fetched by the application in the base theme.

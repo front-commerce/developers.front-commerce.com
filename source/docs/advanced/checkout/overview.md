@@ -3,9 +3,12 @@ id: overview
 title: Overview
 ---
 
-In this section, you will learn advanced information about Checkout customisation in Front-Commerce. We are currently writing documentation about:
+In this section, you will learn advanced information about Checkout customisation in Front-Commerce.
 
-* Setup a custom checkout step
+* [Setup a custom checkout step](./add-custom-checkout-step.html)
+
+We are currently writing documentation about:
+
 * Setup a custom payment method
 * Understanding the supported payment flows
 * Setup a custom shipping method

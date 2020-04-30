@@ -23,7 +23,7 @@ The simplest (but useless) GraphQL module definition only requires an unique
 
 ```js
 // A minimal Front-Commerce GraphQL module that basically does nothing
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld"
 };
 ```
@@ -48,7 +48,7 @@ import Core from "./core";
 import FeatureA from "./feature-a";
 import FeatureB from "./feature-b";
 
-module.exports = {
+export default {
   namespace: "Acme/All",
   modules: [Core, FeatureA, FeatureB]
 };
@@ -81,7 +81,7 @@ initialized before this module.
 Example:
 
 ```js
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   dependencies: ["Acme/Core"]
   // …
@@ -121,7 +121,7 @@ type Message {
 }
 `;
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   typeDefs: typeDefs
 };
@@ -136,12 +136,9 @@ module.exports = {
 
 ## `resolvers` (optional)
 
-This is an object containing all the resolvers for resolving fields defined in
-the schema (usually from your `typeDefs`). This is where the implementation
-resides.
+This is an object containing all the resolvers providing data for the fields defined in the schema (usually from your `typeDefs`). This is where the implementation resides.
 
-Resolver map must follow
-[the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
+Resolver map must follow [the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
 
 ```js
 // or import resolvers from './resolvers.js';
@@ -157,7 +154,7 @@ const resolvers = {
   }
 };
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   // …
   resolvers: resolvers
@@ -192,16 +189,15 @@ keys:
 
 - `req`: the current server request
 - `loaders`: current loaders (from module initialized beforehand)
-- `makeDataLoader`: a factory to build a dataloader
-  <!-- TODO (see [dataloaders](#TODO)) -->
+- `makeDataLoader`: a factory to build a dataloader (see [`makeDataLoader` usage](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#makeDataLoader-usage))
 - `config`: the global configuration
 
 Example:
 
-```
-const MessageLoader = require("./loader");
+```js
+import MessageLoader from "./loader";
 
-module.exports = {
+export default {
   namespace: "Acme/HelloWorld",
   resolvers: {
     Query: {
@@ -231,7 +227,7 @@ The `uri` key is **mandatory** and must contain the remote GraphQL endpoint.
 Example:
 
 ```js
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql"
@@ -251,9 +247,9 @@ It must be an array of valid [`graphql-tools` Schema Transforms](https://www.apo
 Example:
 
 ```js
-const { FilterRootFields } = require("graphql-tools");
+import { FilterRootFields } from "graphql-tools";
 
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql"
@@ -296,12 +292,39 @@ const authenticateRequest = context => {
 };
 
 // […]
-module.exports = {
+export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql",
     // […]
     linkContextBuilders: [authenticateRequest]
+  }
+};
+```
+
+### `apolloLinkHttpOptions` (optional)
+
+<blockquote class="feature--new">
+  _This feature has been added in version `2.0.0-rc.0`_
+</blockquote>
+
+The `apolloLinkHttpOptions` key allows you to customize options passed to the [apollo-link-http](https://www.apollographql.com/docs/link/links/http/#options) that fetches the schema.
+
+This is especially useful if the remote GraphQL schema is using the GET method for GraphQL queries.
+
+
+Example:
+
+```js
+// […]
+export default {
+  namespace: "Acme/RemoteFeature",
+  remoteSchema: {
+    uri: "https://remote-feature.acme.org/graphql",
+    // […]
+    apolloLinkHttpOptions: {
+      useGETForQueries: true
+    }
   }
 };
 ```

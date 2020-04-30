@@ -55,6 +55,12 @@ This configuration file should contain any thing that impacts the content of you
 * `email`: support/contact email of the website
 * `maxAddressLength`: max length for one line of address ([default is 35](https://webarchive.nationalarchives.gov.uk/+/http://www.cabinetoffice.gov.uk/media/254290/GDS%20Catalogue%20Vol%202.pdf))
 * `rewrittenToRoot`: array of the URLs that should be redirected to `/`
+* `preload`: an object that defines how the preload features work in Front-Commerce
+  * `maxConcurrentPreload`: the number of parallel requests that can be launched for preloading purpose (default: `3`)
+  * `maxPreloadQueueLength`: the number of preload requests to store before aborting old ones (default: `30`)
+  * `intersectionObserverOptions`: `IntersectionObserver` options to know when to trigger a preload based on a link's position on screen (default: `{ rootMargin: "0px" }`)
+  * `timeoutBeforePreload`: the duration in milliseconds to wait before triggering a link's preload once it has entered the screen (default: `500`)
+  * `intersectionObserverDevices`: the type of devices where intersection observers should be used for preload. We usually don't want it on desktop to avoid triggering too many requests. (default: `["phone", "tablet"]`)
 
 You could find many other configurations in such a file because some configurations could come from optional modules. Some of these are:
 * `color_attribute_id`: allows to display the colors swatches for the color attribute (swatches should be detected automatically in the future)
@@ -124,25 +130,44 @@ module.exports = ["products", "categories", "pages"];
 
 ### `config/caching.js`
 
-Allows to define configurations related to dataloader caching and implementation
+Allows to define configurations related to dataloader caching and implementations. It can export a configuration with the following keys:
 
-<blockquote class="wip">
-**Work In Progress:** more details about specific configurations will be detailed as part of https://github.com/front-commerce/developers.front-commerce.com/issues/49. If you need it right away, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+* `defaultMaxBatchSize`: default batch size used for dataloaders (unless specified during instantiation) (default: `100`)
+* `strategies`: list of caching strategies to use in the application (default: `[]`)
+
+Each strategy can be configured with the keys below:
+
+* `implementation`: name of the [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Caching-strategies) (**mandatory**)
+* `supports`: list of loaders impacted by this strategy. Either an array of values or `"*"` for all. (**mandatory**)
+* `disabledFor`: list of loaders not impacted by this strategy (default: `[]`)
+* `config`: an object containing implementation specific configuration (default: `{}`)
+
+<blockquote class="note">
+  Loaders are identified with a key. The key is the first argument passed to the `makeDataLoader` factory.
 </blockquote>
 
-* `DEFAULT_MAX_BATCH_SIZE`: default batch size used for dataloaders (unless specified during instanciation). Default: 100
-* `redis`: redis strategy configuration for the [redis-dataloader](https://github.com/DubFriend/redis-dataloader) instance
+Example of a recommended configuration for Magento stores:
 
 ```js
-module.exports = {
-  DEFAULT_MAX_BATCH_SIZE: 100,
-  redis: {
-    caches: "*", // or ["LoaderKeyA", "LoaderKeyB"]
-    disabled: ["CatalogPrice"],
-    config: {
-      host: "127.0.0.1"
+export default {
+  defaultMaxBatchSize: 100,
+  strategies: [
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "redis"
+        // host: "127.0.0.1"
+      }
+    },
+    {
+      implementation: "PerMagentoCustomerGroup",
+      supports: ["CatalogPrice"],
+      config: {
+        defaultGroupId: 0
+      }
     }
-  }
+  ]
 };
 ```
 
