@@ -1,6 +1,6 @@
 ---
 title: "Front-Commerce 2.0 RC1: eCommerce web performance for humans"
-date: 2020-04-28
+date: 2020-04-30
 ---
 
 Front-Commerce `2.0.0-rc.1` has been released today. More performant and with better defaults, this version is what will make your website faster. This is why we bumped the major version.
