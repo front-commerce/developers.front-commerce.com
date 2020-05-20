@@ -30,7 +30,10 @@ module.exports = {
     url: process.env.FRONT_COMMERCE_EN_URL,
     // data to load for this language
     countries: IsoCountries =>
-      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
+      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json")),
+    // the magento store code associated with this store
+    // this field is optional and it will use the store code key directly if it is not specified
+    magentoStoreCode: "en"
   },
   default_fr: {
     locale: "fr-FR",
