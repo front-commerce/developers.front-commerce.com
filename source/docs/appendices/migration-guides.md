@@ -7,6 +7,26 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.0.0-rc.1` -> `2.0.0-rc.2`
+
+### More flexible store URLs
+
+It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
+
+Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details.
+
+With this change we now have an official alternative to `web/core/UNSAFE_createFullUrlFromPath`. If you were using it, please switch to `web/core/shop/useFullUrl`. We also removed `process.env.PUBLIC_URL` in favor of this `useFullUrl` hook. Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) to learn about its usage.
+
+### Improved manifest.json generation
+
+The `manifest.json` used to declare your website as a PWA will now be configurable by store. This means that you can have both the french version and the english version of your website installed on your phone. This is still early stages but this is a first step that ensures that URLs are always correct. In the future you can expect further customizations based on the store in use.
+
+## IntlDecorator in Storybook is now a ShopContext
+
+In storybook you could change the language by using the `IntlDecorator`. This is no longer needed and will now be handled by using a `ShopContext` that is available in all your stories without any specific code on your side. This ensures that if there are additional configurations based on the selected store/shop, they are still handled properly.
+
+Since `IntlDecorator` is no longer needed, it is now deprecated and you can remove it from your stories.
+
 ## `2.0.0-rc.0` -> `2.0.0-rc.1`
 
 ### Magento 2.3.4

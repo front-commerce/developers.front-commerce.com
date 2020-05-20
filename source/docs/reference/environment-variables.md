@@ -138,7 +138,6 @@ More documentation about this module will be available soon. Please [contact us]
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
 - `SERVER`: `true` if your code is executed server side, `false` if it is client side
-- `PUBLIC_URL`: the current URL of your Front-Commerce application
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
 - `FRONT_COMMERCE_ENABLE_SOURCE_MAP`: `true` if your code needs to expose source maps in production. By default it's `false` unless you've set `FRONT_COMMERCE_ENV=dev`.
 

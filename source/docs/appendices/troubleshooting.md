@@ -36,7 +36,7 @@ This page contains the most common errors you may encounter, along with informat
 2. what is the output of a `curl -I http://example.com` (replace with the url causing issues)
 3. it could be a redirection from the shop detection mechanism that redirects to the default one because it cannot find one matching the current url
     1. turn on the configuration debug mode using `DEBUG="experimental:front-commerce:config"`
-    2. is the list of `validUrls` correct? Are urls from `config/stores.js` valid? **Note:** urls such as "https://example.com/fr" or "https://example.com/en" are not supported, please use "https://fr.example.com/" or "https://en.example.com/" instead.
+    2. is the list of `validUrls` correct? Are urls from `config/stores.js` valid?
     3. is the `url` logged the one you used in your browser? If it has the port in it, it's likely because your server proxy/load balancer is not well configured. Please configure it so it adds `X-Forwarded-Proto`, `X-Forwarded-Port` and `X-Forwarded-For` headers ([classic headers for proxies and load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/x-forwarded-headers.html)). [Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/).
 4. it is redirecting to HTTPS although I don't have HTTPS on my server
     1. if it is your production server, please fix this! This is a severe security issue for your website and your users. It can also negatively impact your SEO and the trust of your users.
