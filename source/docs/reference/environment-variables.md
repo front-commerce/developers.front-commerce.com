@@ -92,8 +92,8 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 
 When your products are indexed in an Elasticsearch, you should put these variables:
 
-- `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance (ex: `es.front-commerce.local:9200`)
-- `FRONT_COMMERCE_ES_ALIAS`: the alias prefix for your Elasticsearch indexes (ex: `magento2_default`)
+- `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
+- `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
 - `FRONT_COMMERCE_ES_VERSION`: Elasticsearch server version (ex: `6.7`)
 
 ### Paypal
