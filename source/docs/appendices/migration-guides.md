@@ -23,19 +23,19 @@ With this change we now have an official alternative to `web/core/UNSAFE_createF
 
 The `manifest.json` used to declare your website as a PWA will now be configurable by store. This means that you can have both the french version and the english version of your website installed on your phone. This is still early stages but this is a first step that ensures that URLs are always correct. In the future you can expect further customizations based on the store in use.
 
-## IntlDecorator in Storybook is now a ShopContext
+### IntlDecorator in Storybook is now a ShopContext
 
 In storybook you could change the language by using the `IntlDecorator`. This is no longer needed and will now be handled by using a `ShopContext` that is available in all your stories without any specific code on your side. This ensures that if there are additional configurations based on the selected store/shop, they are still handled properly.
 
 Since `IntlDecorator` is no longer needed, it is now deprecated and you can remove it from your stories.
 
-## New parameter for Magento2's `CustomerLoader`
+### New parameter for Magento2's `CustomerLoader`
 
 If you were manually building a Magento2 `CustomerLoader` instance, be aware that it should now receive a `StoreLoader` instance [as its third parameter](https://gitlab.com/front-commerce/front-commerce/commit/806d823b22581b0b30b15d11b5cc71e4468b88d7#3a33198cb5af2c4610c273715db7e7760721223a_21_21).
 
-## Elasticsearch related changes
+### Elasticsearch related changes
 
-### Improved configuration
+#### Improved configuration
 
 Elasticsearch configuration is now more robust and support multi-store configuration. You may have to update your environment variables to match the stricter constraints:
 
@@ -43,7 +43,7 @@ Elasticsearch configuration is now more robust and support multi-store configura
 * `FRONT_COMMERCE_ES_HOST` MUST otherwise be set and **not end with a trailing slash**
 * `FRONT_COMMERCE_ES_ALIAS` SHOULD now be the index common prefix shared across stores. The store code is now appended by Front-Commerce. You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
 
-### Deprecated APIs
+#### Deprecated APIs
 
 Some internal signatures have been updated for Elasticsearch-related factories. Front-Commerce is backward-compatible but will show you deprecation warnings so you could easily update your code accordingly.
 
