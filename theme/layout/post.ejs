@@ -8,8 +8,12 @@
 `}) %>
 
 <section class="hero hero--title">
-<h1><%- page.title %></h1>
-<a href="<%- url_for(page.path) %>"><time datetime="<%= date_xml(page.date) %>" itemprop="datePublished"><%= date(page.date, config.date_format) %></time></a>
+  <h1><%- page.title %></h1>
+  <a href="<%- url_for(page.path) %>"><time datetime="<%= date_xml(page.date) %>" itemprop="datePublished"><%= date(page.date, config.date_format) %></time></a>
+
+  <p>
+    <%- partial('partials/follow-twitter') %>
+  </p>
 </section>
 
 <div class="content content--full">

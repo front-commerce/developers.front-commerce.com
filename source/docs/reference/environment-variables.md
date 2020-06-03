@@ -174,6 +174,19 @@ Here is a list of available debug namespaces:
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 - `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
 
+## Deprecation warnings
+
+Front-Commerce leverages the [depd](https://www.npmjs.com/package/depd) package to show deprecation warnings so you can upgrade your codebase for compatibility with the next major version.
+
+A meaningful module name is used to scope `depd` messages, and appears at the beginning of every output line.
+
+One can leverage [`depd`'s `TRACE_DEPRECATION` environment variable](https://www.npmjs.com/package/depd#processenvtrace_deprecation) to display a stack trace for each deprecation. It will help you to find the line of code in your codebase that calls deprecated code.
+
+Example:
+```shell
+TRACE_DEPRECATION=*
+```
+
 ## Add your own environment variables
 
 Depending on the amount of customization you add to your Front-Commerce application, you may need to add new environment variables. This is possible and don't need any particular steps. However, please keep in mind that the ones that are safely available in your bundles are:
