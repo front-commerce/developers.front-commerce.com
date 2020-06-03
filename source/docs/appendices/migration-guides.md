@@ -11,6 +11,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 **IMPORTANT: this release should be the last one before `2.0.0`. It means that you MUST ensure that your application does not trigger any deprecation warnings so you could upgrade to future Front-Commerce releases.**
 
+### Cache must be emptied upon first deployment
+
+If your store was running on `2.0.0-rc.1`, you should empty the application cache (usually Redis) upon deployment. It is required to solve an issue with incorrect category urls being cached in Redis (see [#204](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/204)).
+
 ### More flexible store URLs
 
 It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
