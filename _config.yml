@@ -73,7 +73,6 @@ sidebar_categories:
     - docs/reference/graphql-context
     - docs/reference/api
     - docs/reference/routing
-    - docs/reference/wysiwyg
     - docs/reference/analytics-components
     - docs/reference/scripts
     - docs/reference/front-commerce-prepare
