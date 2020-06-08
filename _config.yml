@@ -19,6 +19,7 @@ sidebar_categories:
     - docs/advanced/theme/route-dispatcher
     - docs/advanced/theme/layouts
     - docs/advanced/theme/wysiwyg
+    - docs/advanced/theme/wysiwyg-platform
     - docs/advanced/theme/form
     - docs/advanced/theme/analytics
     - docs/advanced/theme/translations
