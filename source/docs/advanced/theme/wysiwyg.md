@@ -22,7 +22,9 @@ You can use this component by using the following code:
 import React from "react";
 import WysiwygV2 from "theme/modules/WysiwygV2";
 
-<WysiwygV2 content={props.contentWysiwyg} />
+export default props => (
+  <WysiwygV2 content={props.contentWysiwyg} />
+);
 ```
 
 The `contentWysiwyg` property must come from a GraphQL field of type `Wysiwyg`. This means that if you had the following GraphQL query, you should add the `WysiwygFragment` available at `theme/modules/WysiwygV2/WysiwygFragment.gql`.
@@ -44,7 +46,7 @@ query CmsPageQuery(identifiers: [String]!) {
 
 ### What if the `Wysiwyg` field does not exist in your schema?
 
-In some cases, you won't have an already parsed Wysiwyg field in your GraphQL schema. You will need to add it your self. First things first, you will need to create your own GraphQL module in which you will add a new GraphQL field and the associated resolver. Please refer to [Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html) for detailed instruction.
+In some cases, you won't have an already parsed Wysiwyg field in your GraphQL schema. You will need to add it yourself. First, you will need to create your own GraphQL module in which you will **add a new GraphQL field and the associated resolver**. Please refer to [Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html) for detailed instruction.
 
 How does this translate to our Wysiwyg case? Let's imagine that we are adding a `contentWysiwyg` to a `CmsPage` GraphQL type. Then this means that we will have to do the three following steps:
 
@@ -157,14 +159,14 @@ const defaultComponentsMap = {
 The props available represent the HTML attributes coming from your Wysiwyg content. The only difference compared to traditional HTML is that `class` is renamed to `className` to better support React patterns and the `props.children` is an already constructed React element.
 
 <blockquote class="important">
-<b>Note:</b> If the component is complex, please think about code splitting them to avoid too large bundle on pages that don't need them.
+<b>Note:</b> If the component is complex, please think about code splitting them to avoid too large bundles on pages that don't need them.
 </blockquote>
 
 #### Fetching data to render Wysiwyg components
 
 You can now transform HTML tags into React components. However, in some cases the data provided in the raw HTML you've received from your remote service won't be enough to display your component. For instance, you may have a `<product-name sku="VSK12" />` that is supposed to display the product's name. But all you have in the attributes is the SKU. This can be done by associating a `WysiwygNodeData` with your HTML node.
 
-Indeed, when you've created your `CustomWysiwyg` type, you have declared: `childNodes` (`JSON`) and `data` (`[WysiwygNodeData]`). By default, `data` will always be empty. But you can tell the Wysiwyg loader to fetch data for some specific `childNodes` (that each represent an HTML tag). This means that for `product-name`, you will associate a new `data` element that will contain the whole product data needed to display the component. To do so, you need to follow these steps:
+Indeed, when you've created your GraphQL `CustomWysiwyg` type, you have declared: `childNodes` (`JSON`) and `data` (`[WysiwygNodeData]`). By default, `data` will always be empty. But you can tell the Wysiwyg loader to fetch data for some specific `childNodes` (that each represent an HTML tag). This means that for `product-name`, you will associate a new `data` element that will contain the whole product data needed to display the component. To do so, you need to follow these steps:
 
 1. (Server side) Add the product data to your GraphQL schema
     1. Make sure that your dependencies are up to date in your GraphQL module
@@ -241,7 +243,7 @@ const defaultComponentsMap = {
 }
 ```
     <blockquote className="important">
-    <b>Note:</b> Please keep in mind that for simplicity sake, the product name component is not code split, but if it grows in complexity, please make sure to code split it using <code>@loadable/component</code> to avoid too large bundles.
+    <b>Note:</b> Please keep in mind that for simplicity's sake, the product name component is not code split, but if it grows in complexity, please make sure to code split it using <code>@loadable/component</code> to avoid too large bundles.
     </blockquote>
 
 **Nested Wysiwyg components**
@@ -254,7 +256,7 @@ If you need more information about implementing this, please contact us.
 
 **That's it!**
 
-Everything explained previously is the core behavior of the Wysiwyg implemented in Front-Commerce. It is *very* flexible as it was implements over a lot of iterations and feedbacks from our integrators. However, with this flexibility comes a bit of a complexity. Please keep in mind that you don't need to fully understand all of it to get started. However, if you've understood most of it, you will be able to dive into our code and understand how we have implemented platform specific Wysiwyg components. You could even use those components as an inspiration to develop your own specific behaviors.
+Everything explained previously is the core behavior of the Wysiwyg implemented in Front-Commerce. It is *very* flexible as it was implemented over a lot of iterations and feedbacks from our integrators. However, with this flexibility comes a bit of a complexity. Please keep in mind that you don't need to fully understand all of it to get started. However, if you've understood most of it, you will be able to dive into our code and understand how we have implemented platform specific Wysiwyg components. You could even use those components as an inspiration to develop your own specific behaviors.
 
 ### Existing platform specific `Wysiwyg` components
 
