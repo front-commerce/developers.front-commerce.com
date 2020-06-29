@@ -7,6 +7,18 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.0.0` -> `2.1.0`
+
+### Magento 2.3.5 and <abbr title="Multiple Source Inventory">MSI</abbr> Support
+
+Front-Commerce is now fully compatible with MSI. In order to do so, please make sure that the Front-Commerce module installed on your Magento 2 (`front-commerce/magento2-module`) is >= 2.0.0.
+
+### Magento configuration loader
+
+While it was possible to fetch configurations from Magento2 by using the GraphQL module, it is now possible to fetch these options through a REST endpoint. This will improve performance and allow you to reuse these configurations directly in your resolvers.
+
+Please refer to [Using Magento Configuration](/docs/magento2/using-magento-configuration.html) for further information.
+
 ## `2.0.0-rc.0` -> `2.0.0-rc.1`
 
 ### Magento 2.3.4
