@@ -19,6 +19,56 @@ While it was possible to fetch configurations from Magento2 by using the GraphQL
 
 Please refer to [Using Magento Configuration](/docs/magento2/using-magento-configuration.html) for further information.
 
+## `2.0.0-rc.1` -> `2.0.0-rc.2`
+
+**IMPORTANT: this release should be the last one before `2.0.0`. It means that you MUST ensure that your application does not trigger any deprecation warnings so you could upgrade to future Front-Commerce releases.**
+
+### Cache must be emptied upon first deployment
+
+If your store was running on `2.0.0-rc.1`, you should empty the application cache (usually Redis) upon deployment. It is required to solve an issue with incorrect category urls being cached in Redis (see [#204](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/204)).
+
+### More flexible store URLs
+
+It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
+
+Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details.
+
+With this change we now have an official alternative to `web/core/UNSAFE_createFullUrlFromPath`. If you were using it, please switch to `web/core/shop/useFullUrl`. We also removed `process.env.PUBLIC_URL` in favor of this `useFullUrl` hook. Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) to learn about its usage.
+
+### Improved manifest.json generation
+
+The `manifest.json` used to declare your website as a PWA will now be configurable by store. This means that you can have both the french version and the english version of your website installed on your phone. This is still early stages but this is a first step that ensures that URLs are always correct. In the future you can expect further customizations based on the store in use.
+
+### IntlDecorator in Storybook is now a ShopContext
+
+In storybook you could change the language by using the `IntlDecorator`. This is no longer needed and will now be handled by using a `ShopContext` that is available in all your stories without any specific code on your side. This ensures that if there are additional configurations based on the selected store/shop, they are still handled properly.
+
+Since `IntlDecorator` is no longer needed, it is now deprecated and you can remove it from your stories.
+
+### New parameter for Magento2's `CustomerLoader`
+
+If you were manually building a Magento2 `CustomerLoader` instance, be aware that it should now receive a `StoreLoader` instance [as its third parameter](https://gitlab.com/front-commerce/front-commerce/commit/806d823b22581b0b30b15d11b5cc71e4468b88d7#3a33198cb5af2c4610c273715db7e7760721223a_21_21).
+
+### Elasticsearch related changes
+
+#### Improved configuration
+
+Elasticsearch configuration is now more robust and support multi-store configuration. You may have to update your environment variables to match the stricter constraints:
+
+* `FRONT_COMMERCE_ES_DISABLE` MUST now be set to `true` if your application does not leverage Elasticsearch
+* `FRONT_COMMERCE_ES_HOST` MUST otherwise be set and **not end with a trailing slash**
+* `FRONT_COMMERCE_ES_ALIAS` SHOULD now be the index common prefix shared across stores. The store code is now appended by Front-Commerce. You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
+
+#### Deprecated APIs
+
+Some internal signatures have been updated for Elasticsearch-related factories. Front-Commerce is backward-compatible but will show you deprecation warnings so you could easily update your code accordingly.
+
+If you've created custom Elasticsearch related features (sort orders, facets, pagination, loaders etc…) you may see them pop _a lot_!
+
+We encourage you to read every deprecation warnings and [enable traces with the `TRACE_DEPRECATION=*` environment variable](/docs/reference/environment-variables.html#Deprecation-warnings) to find where your code has to be updated. It usually will be a matter of removing or adding parameters to a few function calls. Here are commits with similar changes [for Magento2](https://gitlab.com/front-commerce/front-commerce/-/commit/be41695d641b737b7cc2f5264e86f75bb8be06ac#d0457c5131ec744f37d2b22a05e5a2c74373fc27_24_24) and [Magento 1](https://gitlab.com/front-commerce/front-commerce/-/commit/b8334bbc0472e955f371566f42195fe4cd8f3bb1#b2e36e5bd4c8d1090c6a594713752185d0a2544b_38_38) modules in Front-Commerce's core.
+
+_Please contact us if do not understand what change needs to be done._
+
 ## `2.0.0-rc.0` -> `2.0.0-rc.1`
 
 ### Magento 2.3.4

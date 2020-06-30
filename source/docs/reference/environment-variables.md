@@ -92,8 +92,8 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 
 When your products are indexed in an Elasticsearch, you should put these variables:
 
-- `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance (ex: `es.front-commerce.local:9200`)
-- `FRONT_COMMERCE_ES_ALIAS`: the alias prefix for your Elasticsearch indexes (ex: `magento2_default`)
+- `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
+- `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
 - `FRONT_COMMERCE_ES_VERSION`: Elasticsearch server version (ex: `6.7`)
 
 ### Paypal
@@ -138,7 +138,6 @@ More documentation about this module will be available soon. Please [contact us]
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
 - `SERVER`: `true` if your code is executed server side, `false` if it is client side
-- `PUBLIC_URL`: the current URL of your Front-Commerce application
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
 - `FRONT_COMMERCE_ENABLE_SOURCE_MAP`: `true` if your code needs to expose source maps in production. By default it's `false` unless you've set `FRONT_COMMERCE_ENV=dev`.
 
@@ -174,6 +173,19 @@ Here is a list of available debug namespaces:
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 - `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
+
+## Deprecation warnings
+
+Front-Commerce leverages the [depd](https://www.npmjs.com/package/depd) package to show deprecation warnings so you can upgrade your codebase for compatibility with the next major version.
+
+A meaningful module name is used to scope `depd` messages, and appears at the beginning of every output line.
+
+One can leverage [`depd`'s `TRACE_DEPRECATION` environment variable](https://www.npmjs.com/package/depd#processenvtrace_deprecation) to display a stack trace for each deprecation. It will help you to find the line of code in your codebase that calls deprecated code.
+
+Example:
+```shell
+TRACE_DEPRECATION=*
+```
 
 ## Add your own environment variables
 
