@@ -20,9 +20,9 @@ We've done our best to document every changes so you could upgrade your applicat
 We highly recommend you to plan the `2.0.0` in two steps: first migrate to `2.0.0-rc.2` and ensure that no deprecation warnings are triggered, then migrate from `2.0.0-rc.2` to `2.0.0` and do a full round of testing to ensure your app works as expected.
 </blockquote>
 
-### Compatibility with Magento modules 1.x+
+### Compatibility with Magento modules 1.x+ only
 
-Feature flags were implemented in the core to support 3-years old Magento modules. We've dropped this support and recommend that you ensure to have a Magento module version greater than 1.0.0!
+Feature flags were implemented in the core to support 3-years old Magento modules. We've dropped this support and recommend that you **ensure to have a Magento module version greater than 1.0.0!**
 
 ### Sharp and libvips minor update
 
@@ -65,7 +65,7 @@ It introduced trailing commas, parents for single param arrow functions and othe
 
 #### ESLint and rules updated to 7.x
 
-ESLint (and related rules) have been updated to their latest version. Please ensure your code match the latest rules if your app uses Front-Commerce's default rules. `lint-staged` has also been updated from 9.x to 10.x and requires node 10.13+.
+ESLint (and related rules) have been updated to their latest version. Please ensure your code match the latest rules if your app uses Front-Commerce's default rules.
 
 See [Migrating to v7.0.0](https://eslint.org/docs/user-guide/migrating-to-7.0.0) for further details.
 
@@ -81,8 +81,9 @@ You must install it in your application, with the version matching your server v
 npm install --save @elastic/elasticsearch@6
 ```
 
-**This library had several breaking changes.** The most important one is that `client.search` now returns an object instead of the body.
-You must update your code as below:
+**This library had several breaking changes** that only applications with custom queries should care about. If your application is using the standard ElasticSearch integration (with configurations and no custom layers etc…) then **you won't be impacted.**
+
+For applications with custom querying, the most important change to be aware of is that `client.search` now returns an object instead of the body. You will have to update your code as below:
 
 ```diff
 - const body = await queryBuilder.products(request);
@@ -117,7 +118,7 @@ const ids = [1, 2, 3];
 
 `graphql-tools` has been migrated to its latest version (v6). This is a huge improvement for the library: after years of slow developments, the project has been taken over from Apollo by the Guild team. Front-Commerce now uses modules from the `@graphql-tools` monorepo, a new and fresh version of this library. See https://the-guild.dev/blog/graphql-tools-v6 for more context.
 
-**You shouldn't worry if using Front-Commerce's GraphQL modules.** However, if using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](https://developers.front-commerce.com/docs/advanced/graphql/remote-schemas.html) for an updated guide.
+**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](https://developers.front-commerce.com/docs/advanced/graphql/remote-schemas.html) for an updated guide.
 
 **<abbr title="Too Long; Didn't Read">TL;DR</abbr>:**
 
@@ -157,7 +158,7 @@ import log from "../../../../scripts/log";
 
 ### `axios`: double-check custom interceptors
 
-`axios` has been updated from 0.15.3 to 0.19.2.
+`axios` has been updated from 0.15.3 to 0.19.2. This change won't affect you if you are using the default Front-Commerce factories when using axios. If you did, here is what will impact you:
 
 The most notable breaking change is related to how duplicate headers are handled (see https://github.com/axios/axios/pull/874 and [the whole changelog](https://github.com/axios/axios/blob/master/CHANGELOG.md) if interested). It should not impact your application though.
 
@@ -168,12 +169,20 @@ You can use the `finalUrlFromConfig` helper function from a helper module added 
 
 `react-intl` was updated from 3.x to 4.x. The main breaking change is that missing tags will now throw errors if your i18n messages contain HTML tags. Please [pass additional rendering parameters for these tags](https://formatjs.io/docs/react-intl/upgrade-guide-4x#migrating-off-embedded-html-in-messages) in your `intl.formatMessage` calls.
 
+Here is what to do:
+
+1. search for HTML tags into your translation files
+2. use the translation id to find its usages in your components
+3. for each one, update your code as below
+
 ```diff
 - intl.formatMessage("Hello <strong>Bob</strong>");
 + intl.formatMessage("Hello <strong>Bob</strong>", {
 +   strong: (text) => <strong>{text}</strong>,
 + });
 ```
+
+> Front-Commerce's core only had 1 usage (id: `modules.Checkout.CartRecap.titleCount`) that you may have to fix yourselves if you overrode the `theme/modules/Checkout/CartRecap/CartRecap.js` component.
 
 You must also ensure that your app doesn't use `<FormattedHTMLMessage>` or `intl.formatHTMLMessage` that have been removed. See [the list of breaking changes](https://formatjs.io/docs/react-intl/upgrade-guide-4x/#breaking-api-changes).
 
@@ -204,7 +213,7 @@ We rewrote default components to use new Stripe components:
 
 Some minor changes were introduced in dependencies or while removing deprecated code. They are unlikely impacting a standard application, but worth mentioning in case you relied on some low-level APIs.
 
-- The `<ExistingAddress />` and `<NewAddress />` components used in the checkout were updated to use the `<Checkbox />` component as they were using a deprecated one. Make sure it doesn't have an impact on your styles.
+- The `<ExistingAddress />` and `<NewAddress />` components used in the checkout were updated to use the `<Checkbox />` component as they were using a deprecated one. **Make sure it doesn't have an impact on your styles, or update your imports if you overrode them.**
 - `i18n-iso-countries` has been updated to 6.x, if your application was using its `getNames()` helper function, please ensure it works with [the new API](https://github.com/michaelwittig/node-i18n-iso-countries/releases/tag/v6.0.0)
 - webpack's `url-loader` updated from 3.x to 4.x. It may cause different mimetypes for rare types (see
  [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
@@ -212,7 +221,7 @@ Some minor changes were introduced in dependencies or while removing deprecated 
 - `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](https://developers.front-commerce.com/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
 - The `ProductStockLoader` no longer takes the `FeatureFlag` loader as parameter. Please remove this parameter if you were instantiating it manually.
 - `loaders.Url.matchBy` has been removed from Magento2's module. It was only used for the deprecated `Query.matchUrls` field and might not impact your codebase, but **it's worth mentioning in case your relied on it since it wasn't issuing deprecation warnings itself.**
-- Convict has been upgraded to 6.0.0. You may have to install additional packages if your application uses custom configurations with one of the following format: `"email"`, `"ipaddress"`, `"url"`, `"duration"` or `"timestamp"`. See [their migration documentation](https://github.com/mozilla/node-convict/blob/master/packages/convict/MIGRATING_FROM_CONVICT_5_TO_6.md) for further information
+- Convict has been upgraded to 6.0.0. You may have to install additional packages if your application uses custom configuration providers with one of the following format in their schema: `"email"`, `"ipaddress"`, `"url"`, `"duration"` or `"timestamp"`. See [their migration documentation](https://github.com/mozilla/node-convict/blob/master/packages/convict/MIGRATING_FROM_CONVICT_5_TO_6.md) for further information
 - `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used anymore
 - The Wishlist feature is now always enabled for Magento 2
 - The Sitemap generation script has been revamped to use the latest version of the underlying library that contained heavy changes (it would be safe to double check that no regression was introduced in your context and we'd appreciate an issue if you find something ;))
