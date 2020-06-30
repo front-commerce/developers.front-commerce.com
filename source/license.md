@@ -28,17 +28,9 @@ delivering what you need on time for your project… **it is maybe being worked 
 by our team or asked by another person right now!**
 
 **As a developer or agency**, you can also become a **Partner** and help us with our
-mission while being prepared for the future of e-commerce. In 2018 we are
+mission while being prepared for the future of e-commerce. We are
 looking to work with close partners and build a rich ecosystem with different
-domains:
-
-- UX designers,
-- front-end agencies,
-- microservices addicts,
-- Magento agencies,
-- accessibility experts,
-- e-commerce consultants
-- … you?
+domains: digital agencies, microservices addicts, Magento agencies, accessibility experts, e-commerce consultants, … you?
 
 We need partners who believe in our mission and our product, to get more
 feedback about our choices and widespread the adoption of Front-Commerce.

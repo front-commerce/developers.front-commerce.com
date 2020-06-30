@@ -15,6 +15,7 @@ layout: index
     <li><a class="link button"  href="/blog">Blog</a></li>
     <li><a class="link button"  href="https://demo.front-commerce.com/">Demo store</a></li>
     <li><a class="link button"  href="https://styleguide.front-commerce.com/">Styleguide</a></li>
+    <li><a class="link button"  href="https://twitter.com/Front_Commerce?ref_src=twsrc%5Etfw">@Front_Commerce</a></li>
   </ul>
 </section>
 
