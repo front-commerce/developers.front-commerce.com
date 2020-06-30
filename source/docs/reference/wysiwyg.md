@@ -3,7 +3,9 @@ id: wysiwyg-reference
 title: WYSIWYG components
 ---
 
-For a tangible example and explanation, please refer to [Display WYSIWYG content](/docs/advanced/theme/wysiwyg.html) advanced documentation.
+For a tangible example and explanation, please refer to [Display WYSIWYG content (legacy)](/docs/advanced/theme/wysiwyg-legacy.html) advanced documentation.
+
+Please note that this reference is about the legacy `Wysiwyg` component. The new behavior is fully described in the new [Display WYSIWYG content](/docs/advanced/theme/wysiwyg.html)
 
 ## `EnhanceWysiwyg`
 
