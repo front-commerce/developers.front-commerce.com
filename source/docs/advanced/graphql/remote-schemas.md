@@ -155,7 +155,7 @@ By default, the user IP address is the only information forwarded to the remote 
 There might be situations where the remote service requires specific HTTP headers or content.
 For instance, you may have to provide an API key in all calls or an `Authorization` header to act as the currently logged in Customer.
 
-Front-Commerce allows you to configure the underlying implementation (Apollo HTTP Link) using the [`remoteSchema.linkContextBuilders` GraphQL module definition key](/docs/reference/graphql-module-definition.html#linkContextBuilders-optional).
+Front-Commerce allows you to configure the underlying implementation using the [`remoteSchema.makeExecutor` GraphQL module definition key](/docs/reference/graphql-module-definition.html#linkContextBuilders-optional).
 
 ## Mix local and remote schemas
 

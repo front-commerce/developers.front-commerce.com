@@ -70,6 +70,7 @@ sidebar_categories:
     - docs/reference/environment-variables
     - docs/reference/cli
     - docs/reference/graphql-module-definition
+    - docs/reference/remote-schema-helpers
     - docs/reference/graphql-context
     - docs/reference/api
     - docs/reference/routing

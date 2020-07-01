@@ -263,11 +263,61 @@ export default {
 };
 ```
 
-### `linkContextBuilders` (optional)
+#### `executor` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-beta.3`_
+  _This feature has been added in version `2.0.0`_
 </blockquote>
+
+The `executor` key allows you to optionally modify the underlying [executor](https://www.graphql-tools.com/docs/remote-schemas/#wrapschemaschemaconfig) for each request sent to the remote schema.
+
+For instance it allows you to add new headers to your requests if the remote schema needs them. This is usually the case when there is an authentication system in your remote service.
+
+You can create your own executor from scratch by following [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor) from GraphQL Tools or use the `makeExecutor` helper available in Front-Commerce.
+
+The following example demonstrates how to add an Authorization header to your requests.
+
+```js
+import makeExecutor from "server/core/graphql/makeExecutor";
+
+const authenticateRequest = () => (fetchOptions, { context }) => {
+  const req = (context && context.req) || {};
+  const authService = makeAuthServiceFromRequest(req);
+  if (!authService.isAuthenticated()) {
+    return fetchOptions;
+  }
+
+  return {
+    ...fetchOptions,
+    headers: {
+      ...(fetchOptions.headers || {}),
+      Authorization: `Bearer ${authService.getAuthToken()}`,
+    },
+  };
+};
+
+// […]
+export default {
+  namespace: "Acme/RemoteFeature",
+  remoteSchema: {
+    uri: "https://remote-feature.acme.org/graphql",
+    // […]
+      executor: makeExecutor(uri, {
+        fetchOptionsAdapter: withMagentoAuthorizationHeaders(),
+      }),
+  }
+};
+```
+
+### Deprecated fields
+
+#### `linkContextBuilders` (optional)
+
+<blockquote class="feature--new">
+  _This feature has been added in version `1.0.0-beta.3` and is deprecated since 2.0.0_
+</blockquote>
+
+This option will be ignored if `executor` option is defined.
 
 The `linkContextBuilders` key allows you to optionally modify the underlying [Apollo’s HTTP Link context](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#context) for each request. Please note that the HTTP Link context is different from the [GraphQL Context](/docs/reference/graphql-context.html) (even if they share the same term!).
 
@@ -302,11 +352,13 @@ export default {
 };
 ```
 
-### `apolloLinkHttpOptions` (optional)
+#### `apolloLinkHttpOptions` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `2.0.0-rc.0`_
+  _This feature has been added in version `2.0.0-rc.0` and is deprecated since 2.0.0__
 </blockquote>
+
+This option will be ignored if `executor` option is defined.
 
 The `apolloLinkHttpOptions` key allows you to customize options passed to the [apollo-link-http](https://www.apollographql.com/docs/link/links/http/#options) that fetches the schema.
 
