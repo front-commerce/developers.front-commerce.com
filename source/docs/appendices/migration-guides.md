@@ -111,7 +111,9 @@ For a fully backward compatible change, you can refactor your code as below (or 
 const ids = [1, 2, 3];
 
 - return loader.loadMany(ids);
-+ return Promise.all(ids.map(loader.load));
++ return Promise.all(ids.map(
++   (id) => loader.load(id)
++ ));
 ```
 
 ### `graphql-tools` now in 6.x: remote schema stitching need changes
