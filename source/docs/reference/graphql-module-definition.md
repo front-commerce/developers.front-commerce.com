@@ -130,7 +130,7 @@ export default {
 <blockquote class="info">
   **In depth:** under the hood, all module’s `typeDefs` are merged in a single
   array passed to graphql-tools'
-  [`makeExecutableSchema`](https://www.apollographql.com/docs/graphql-tools/generate-schema.html#makeExecutableSchema)
+  [`makeExecutableSchema`](https://www.graphql-tools.com/docs/generate-schema/#makeexecutableschemaoptions)
   function
 </blockquote>
 
@@ -138,7 +138,7 @@ export default {
 
 This is an object containing all the resolvers providing data for the fields defined in the schema (usually from your `typeDefs`). This is where the implementation resides.
 
-Resolver map must follow [the format documented in Apollo Tools](https://www.apollographql.com/docs/graphql-tools/resolvers.html).
+Resolver map must follow [the format documented in GraphQL Tools](https://www.graphql-tools.com/docs/resolvers).
 
 ```js
 // or import resolvers from './resolvers.js';
@@ -165,7 +165,7 @@ export default {
   **In depth:** under the hood, all module’s `resolvers` are merged in a single
   object (using [lodash.merge](https://lodash.com/docs/#merge) passed to
   graphql-tools'
-  [`makeExecutableSchema`](https://www.apollographql.com/docs/graphql-tools/generate-schema.html#makeExecutableSchema)
+  [`makeExecutableSchema`](https://www.graphql-tools.com/docs/generate-schema/#makeexecutableschemaoptions)
   function. It is possible to override resolvers declared in another module by
   declaring it as a dependency and registering a local resolver.
 </blockquote>
@@ -242,12 +242,12 @@ A set of default transformations are applied: read [the dedicated documentation 
 
 The `transforms` key allows you to optionally manipulate the remote schema before it is stitched with the existing Front-Commerce schema.
 
-It must be an array of valid [`graphql-tools` Schema Transforms](https://www.apollographql.com/docs/graphql-tools/schema-transforms), and will be applied **before** Front-Commerce’s [default transforms](/docs/advanced/graphql/remote-schemas.html#Default-transforms).
+It must be an array of valid [`graphql-tools` Schema Transforms](https://www.graphql-tools.com/docs/schema-stitching/#using-with-transforms), and will be applied **before** Front-Commerce’s [default transforms](/docs/advanced/graphql/remote-schemas.html#Default-transforms).
 
 Example:
 
 ```js
-import { FilterRootFields } from "graphql-tools";
+import { FilterRootFields } from "@graphql-tools/wrap";
 
 export default {
   namespace: "Acme/RemoteFeature",
@@ -263,7 +263,7 @@ export default {
 };
 ```
 
-#### `executor` (optional)
+### `executor` (optional)
 
 <blockquote class="feature--new">
   _This feature has been added in version `2.0.0`_
@@ -273,9 +273,9 @@ The `executor` key allows you to optionally modify the underlying [executor](htt
 
 For instance it allows you to add new headers to your requests if the remote schema needs them. This is usually the case when there is an authentication system in your remote service.
 
-You can create your own executor from scratch by following [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor) from GraphQL Tools or use the `makeExecutor` helper available in Front-Commerce.
+You can create your own executor from scratch by following [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor) from GraphQL Tools or use the [`makeExecutor` helper](/docs/reference/remote-schema-helpers.html#makeExecutor) available in Front-Commerce.
 
-The following example demonstrates how to add an Authorization header to your requests.
+The following example demonstrates how to add an `Authorization` header to your requests.
 
 ```js
 import makeExecutor from "server/core/graphql/makeExecutor";
