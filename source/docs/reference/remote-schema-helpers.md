@@ -7,7 +7,7 @@ This page references the helpers available when creating a [Remote GraphQL modul
 
 ## `makeExecutor`
 
-While one can create their own executors from scratch by following [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor), we have created a `makeExecutor` with sane defaults.
+While one can create their own executors from scratch by following [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor), we have created `server/core/graphql/makeExecutor` with sane defaults.
 
 It will create an executor that will:
 

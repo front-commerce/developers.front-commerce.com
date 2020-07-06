@@ -314,7 +314,7 @@ export default {
 #### `linkContextBuilders` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `1.0.0-beta.3` and is deprecated since 2.0.0_
+  _This feature has been added in version `1.0.0-beta.3` and is deprecated since `2.0.0`_
 </blockquote>
 
 This option will be ignored if `executor` option is defined.
@@ -355,7 +355,7 @@ export default {
 #### `apolloLinkHttpOptions` (optional)
 
 <blockquote class="feature--new">
-  _This feature has been added in version `2.0.0-rc.0` and is deprecated since 2.0.0__
+  _This feature has been added in version `2.0.0-rc.0` and is deprecated since `2.0.0`__
 </blockquote>
 
 This option will be ignored if `executor` option is defined.
