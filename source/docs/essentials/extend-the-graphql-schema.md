@@ -224,7 +224,7 @@ instance by fetching remote datasources or transforming data.
 
 Resolvers are exposed using the `resolvers` key of the module definition. It
 should be a
-[**Resolver map**](https://www.apollographql.com/docs/graphql-tools/resolvers):
+[**Resolver map**](https://www.graphql-tools.com/docs/resolvers):
 an object where each key is a GraphQL type name, and values are mapping between
 field names and resolver function. Resolver functions may return a
 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
@@ -233,7 +233,7 @@ for asynchronous operations.
 <blockquote class="more">
   To know more about resolvers and their internals, we recommend the reading of
   [GraphQL Tools resolvers
-  documentation](https://www.apollographql.com/docs/graphql-tools/resolvers).
+  documentation](https://www.graphql-tools.com/docs/resolvers).
 </blockquote>
 
 First, update the module definition as follow:
