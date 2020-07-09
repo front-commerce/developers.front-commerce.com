@@ -5,7 +5,7 @@ title: Detect admin users
 
 _This feature has been added in version `2.1.0`_
 
-In some rare cases you could want to display things differently when the e-merchant is navigating your Front-Commerce application. For instance some pages may be protected and only accessible to the e-merchants of your shop. The rest of the users won't be able to read its content.
+In some specific use cases you may want to adapt the application when the e-merchant is navigating your Front-Commerce application. For instance some pages may be protected and only accessible to the e-merchants of your shop. The rest of the users won't be able to read its content.
 
 In Front-Commerce, we've achieved this by injecting something in the user's session when they are navigating Magento's backend. This documentation page details how it works and how you can use it.
 
@@ -13,7 +13,7 @@ In Front-Commerce, we've achieved this by injecting something in the user's sess
 
 First, you need to make sure that you've configured the tokens that will enable the communication between Magento and Front-Commerce:
 
-- In Magento's store configuration, in General > General > Front-Commerce, fill in the "Magento Admin Token" field. It should be a random string of 32+ characters.
+- In Magento's store configuration, under the "General > General > Front-Commerce" section, fill in the "Magento Admin Token" field. It should be a random string of 32+ characters.
 - In your `.env` in Front-Commerce's folder, add `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN=<token>` where `<token>` should be replaced by the string you used in Magento.
 
 You can then restart your environment and the admin role should now be enabled for all the users that have logged into Magento's administration panel in the previous 30 minutes.
@@ -108,7 +108,7 @@ export default {
 };
 ```
 
-We can then use the `MagentoAdmin` loader to only return data when the admin is connected and use this information to authenticate the request. Please note that in this example, I've added a header using a specific token (`x-custom-header`). But this is an imaginary header for now and depends on how you have implemented `/admin-custom-endpoint` in your Magento. However the goal is to always have a protection on your Magento endpoint to make sure that only a request coming from Front-Commerce and with the correct information will be able to use this endpoint. Otherwise, if your Magento URL is compromised, any user could request sensitive admin data.
+We can then use the `MagentoAdmin` loader to only return data when the admin is connected and use this information to authenticate the request. Please note that this example illustrates how to add a header using a specific token (`x-custom-header`). But this is an imaginary header for now and depends on how you have implemented `/admin-custom-endpoint` in your Magento. However the goal is to always have a protection on your Magento endpoint to make sure that only a request coming from Front-Commerce and with the correct information will be able to use this endpoint. Otherwise, if your Magento URL is compromised, any user could request sensitive admin data.
 
 ```diff
 // server/modules/admin-data/loaders.js
@@ -139,7 +139,7 @@ import { AdminDataLoader } from "./loaders";
 
 <blockquote class="important">
 **Important:** In case you rely on [Front-Commerce's caching mechanism](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html) you will need to make sure that data fetched by admins are not cached in the same namespace as your normal users.
-For this reason, please make sure to update your [Caching strategies](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Caching-strategies) with the relevant configurations.
+For this reason, please make sure to update your [Caching strategies](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#PerMagentoAdminRole) with the relevant `PerMagentoAdminRole` configuration.
 </blockquote>
 
 ## Change the behavior depending on the admin connected
@@ -174,5 +174,6 @@ class AuthenticatedAdminData implements AuthenticatedAdminDataInterface
 * If you are not in `developer` mode in magento, please make sure to rerun `bin/magento setup:di:compile` command.
 * You will then be able to use the following in Front-Commerce's server code for any authenticated admin users.
 ```js
-console.log(loaders.MagentoAdmin.getAdminData().adminId)
+const adminData = await loaders.MagentoAdmin.getAdminData();
+console.log(adminData.adminId)
 ```

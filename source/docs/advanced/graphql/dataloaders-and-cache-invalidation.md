@@ -412,7 +412,7 @@ export default {
 _Since version 2.1.0_
 </blockquote>
 
-The `PerMagentoAdminRole` implementation is a decorator that is specific to Magento 2 module. It will decorate the existing caching strategies so that DataLoader keys are different for admin users and customers. This is useful if a custom Magento API returns a different result for admins and normal customers.
+The `PerMagentoAdminRole` implementation is a decorator that is specific to Magento 2 integrations. It will decorate the existing caching strategies so that DataLoader keys are different for admin users and customers. This is useful if a custom Magento API returns a different result for admins and normal customers.
 
 Here is a configuration example:
 
