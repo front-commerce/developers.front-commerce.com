@@ -87,6 +87,7 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
     - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+- `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to [detect admin users](/docs/magento2/detect-admin-users.html) in Front-Commerce configured in « Stores > Configurations > General > General > Front-Commerce > Magento Admin Token »
 
 ### Elasticsearch
 
