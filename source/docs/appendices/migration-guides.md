@@ -7,6 +7,228 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.0.0-rc.2` -> `2.0.0`
+
+Over the years, we've deprecated a lot of code and provided backwards-compatible adapters to cope with API changes in dependencies.
+This release is about removing all this code, and upgrading all dependencies to their latest version.
+
+All deprecated code has been removed. If your application relied on it (deprecation warnings in `2.0.0-rc.2` or earlier), please update your code.
+
+We've done our best to document every changes so you could upgrade your application with confidence, however it should be handled with attention and care.
+
+<blockquote class="important">
+We highly recommend you to plan the `2.0.0` in two steps: first migrate to `2.0.0-rc.2` and ensure that no deprecation warnings are triggered, then migrate from `2.0.0-rc.2` to `2.0.0` and do a full round of testing to ensure your app works as expected.
+</blockquote>
+
+### Compatibility with Magento modules 1.x+ only
+
+Feature flags were implemented in the core to support 3-years old Magento modules. We've dropped this support and recommend that you **ensure to have a Magento module version greater than 1.0.0!**
+
+### Sharp and libvips minor update
+
+[`sharp`](https://www.npmjs.com/package/sharp) has been updated from 0.23 to 0.25, which requires libvips v8.9.1 (instead of v8.8.1).
+You may have to rebuild it by removing your `node_modules` folder or run `npm rebuild`.
+
+Further details available on https://sharp.pixelplumbing.com/changelog.
+
+### `date-fns` isn't a Front-Commerce dependency anymore
+
+[`date-fns`](https://www.npmjs.com/package/date-fns) has been removed from dependencies in favor of a native `winston` plugin that timestamps log entries, and custom functions elsewhere.
+
+It allows developer to choose the version of `date-fns` they prefer and reduce the bundle size. Please ensure you are not using `date-fns` in your application, or install it in your project. The version in Front-Commerce was 1.30.1, and the latest available is 2.14.0.
+
+For backwards compatibility, you can run:
+```shell
+npm install --save date-fns@1.30.1
+```
+
+> **Logging format update:** a timestamp is now automatically added to log messages as the `timestamp` field of each entry (in GMT time). `date` fields were removed. You can update your custom logs to do so too.
+
+See [this commit](https://gitlab.com/front-commerce/front-commerce/-/commit/bf9f9ace04bc24a7391fe36c267dd94857663db0) and [this one](https://gitlab.com/front-commerce/front-commerce/-/commit/60c31720fe3f113961555c493417b8c8bd45509b) for an overview of those changes.
+
+### Make linting pass again
+
+Dependencies were updated, a first step would be to automatically update as much as your codebase as possible to ensure it matches the latest conventions and good practices.
+You can run:
+
+```shell
+npm run lint -- --fix
+```
+
+Below are the main updates to be aware of.
+
+#### Prettier updated to 2.x
+
+We've updated Prettier to its latest version (1.x -> 2.x). It will not cause any issues to your application, but may break snapshot tests. Your code will have to be reformatted with the latest Prettier version.
+
+It introduced trailing commas, parents for single param arrow functions and other changes. You can read [Prettier 2.0 "2020" blog post](https://prettier.io/blog/2020/03/21/2.0.0.html) for further details.
+
+#### ESLint and rules updated to 7.x
+
+ESLint (and related rules) have been updated to their latest version. Please ensure your code match the latest rules if your app uses Front-Commerce's default rules.
+
+See [Migrating to v7.0.0](https://eslint.org/docs/user-guide/migrating-to-7.0.0) for further details.
+
+### ElasticSearch related changes
+
+#### `@elastic/elasticsearch` must be installed
+
+Recent versions of the official [`@elastic/elasticsearch`](https://www.npmjs.com/package/@elastic/elasticsearch) client are versioned against the corresponding ElasticSearch version they are compatible with. We decided to make it a [peer-dependency](https://nodejs.org/es/blog/npm/peer-dependencies/) of `front-commerce`'s package instead of being a direct dependency to allow developers to choose the exact version they need.
+
+You must install it in your application, with the version matching your server version. For now, only 6.x is supported.
+
+```shell
+npm install --save @elastic/elasticsearch@6
+```
+
+**This library had several breaking changes** that only applications with custom queries should care about. If your application is using the standard ElasticSearch integration (with configurations and no custom layers etc…) then **you won't be impacted.**
+
+For applications with custom querying, the most important change to be aware of is that `client.search` now returns an object instead of the body. You will have to update your code as below:
+
+```diff
+- const body = await queryBuilder.products(request);
++ const { body } = await queryBuilder.products(request);
+```
+
+See [the official documentation](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/breaking-changes.html#_talk_is_cheap_show_me_the_code) for further details.
+
+#### Deprecations removed
+
+The deprecations introduced in `2.0.0-rc.2` have been removed. Ensure that your `FRONT_COMMERCE_ES_ALIAS` only contains the index prefix for instance.
+> You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
+
+It is important to acknowledge [Elasticsearch related changes from our previous release](#Elasticsearch-related-changes) if you are upgrading from an earlier version.
+
+### GraphQL Dataloaders: `loadMany()` change
+
+The [`dataloader`](https://www.npmjs.com/package/dataloader) library has been updated to 2.0.0. There is only one important API change to be aware of.
+
+The `loadMany()` method will now return an array that may contain Error instances along with valid results when a key failed instead of rejecting the promise. Please read [the release notes](https://github.com/graphql/dataloader/releases/tag/v2.0.0) for further information.
+
+For a fully backward compatible change, you can refactor your code as below (or leverage this new feature for a more resilient app):
+
+```diff
+const ids = [1, 2, 3];
+
+- return loader.loadMany(ids);
++ return Promise.all(ids.map(
++   (id) => loader.load(id)
++ ));
+```
+
+### `graphql-tools` now in 6.x: remote schema stitching need changes
+
+`graphql-tools` has been migrated to its latest version (v6). This is a huge improvement for the library: after years of slow developments, the project has been taken over from Apollo by the Guild team. Front-Commerce now uses modules from the `@graphql-tools` monorepo, a new and fresh version of this library. See https://the-guild.dev/blog/graphql-tools-v6 for more context.
+
+**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](https://developers.front-commerce.com/docs/advanced/graphql/remote-schemas.html) for an updated guide.
+
+**<abbr title="Too Long; Didn't Read">TL;DR</abbr>:**
+
+* GraphQL modules using remote schema must now provide a custom _executor_ (that will execute remote fetching queries), instead of the deprecated `apolloLinkHttpOptions` and `linkContextBuilders` options (we shipped helpers to help in this task)
+* GraphQL transforms such as `FilterRootFields` must now be imported from `@graphql-tools/wrap` instead of `graphql-tools`.
+
+Here is an example from [Front-Commerce's Magento 2 GraphQL remote schema module's migration](https://gitlab.com/front-commerce/front-commerce/-/commit/964cb0dee8b614053c9147997f26c07327e61a0a#e9c8fef58455edd870533da439f028dca7618e8c_1_1):
+
+```diff
+- import { FilterRootFields } from "graphql-tools";
+- import authenticateRequest from "./authenticateRequest";
++ import { FilterRootFields } from "@graphql-tools/wrap";
++ import makeExecutor from "server/core/graphql/makeExecutor";
++ import withMagentoAuthorizationHeaders from "./withMagentoAuthorizationHeaders";
+import log from "../../../../scripts/log";
+
+// […]
+
+    const uri = config.magento.endpoint + "/graphql";
+
+    return {
+      uri: uri,
+      transforms: [
+        new FilterRootFields(
+          (operation, rootField) =>
+            operation === "Query" && rootField === "storeConfig"
+        ),
+      ],
+-      linkContextBuilders: [authenticateRequest()],
++      executor: makeExecutor(uri, {
++        fetchOptionsAdapter: withMagentoAuthorizationHeaders(),
++      }),
+    };
+  },
+};
+```
+
+### `axios`: double-check custom interceptors
+
+`axios` has been updated from 0.15.3 to 0.19.2. This change won't affect you if you are using the default Front-Commerce factories when using axios. If you did, here is what will impact you:
+
+The most notable breaking change is related to how duplicate headers are handled (see https://github.com/axios/axios/pull/874 and [the whole changelog](https://github.com/axios/axios/blob/master/CHANGELOG.md) if interested). It should not impact your application though.
+
+Another low-level change from 0.17 is that the base url is now prepended to the `config.url` [**AFTER** interceptors (and not *BEFORE*)](https://github.com/axios/axios/pull/950/files#diff-91dcec0516f33811ee5fa71297160b3bL40). **If your app relies on custom interceptors, please ensure they are still working correctly.**
+You can use the `finalUrlFromConfig` helper function from a helper module added to mimic `axios` core feature. See [this commit](https://gitlab.com/front-commerce/front-commerce/-/commit/3fff1a398f7b33d56546b987e15c5f5dc6d43524#24dda67967f430db4a7fe8010764e27d5d7d01b6_63_67) for an example.
+
+### `react-intl`: changes for strings containing HTML tags
+
+`react-intl` was updated from 3.x to 4.x. The main breaking change is that missing tags will now throw errors if your i18n messages contain HTML tags. Please [pass additional rendering parameters for these tags](https://formatjs.io/docs/react-intl/upgrade-guide-4x#migrating-off-embedded-html-in-messages) in your `intl.formatMessage` calls.
+
+Here is what to do:
+
+1. search for HTML tags into your translation files
+2. use the translation id to find its usages in your components
+3. for each one, update your code as below
+
+```diff
+- intl.formatMessage("Hello <strong>Bob</strong>");
++ intl.formatMessage("Hello <strong>Bob</strong>", {
++   strong: (text) => <strong>{text}</strong>,
++ });
+```
+
+> Front-Commerce's core only had 1 usage (id: `modules.Checkout.CartRecap.titleCount`) that you may have to fix yourselves if you overrode the `theme/modules/Checkout/CartRecap/CartRecap.js` component.
+
+You must also ensure that your app doesn't use `<FormattedHTMLMessage>` or `intl.formatHTMLMessage` that have been removed. See [the list of breaking changes](https://formatjs.io/docs/react-intl/upgrade-guide-4x/#breaking-api-changes).
+
+### `formsy-react` updated to 2.x
+
+`formsy-react` has been updated from 1.1.5 to 2.0.3. Some internal methods have been
+renamed and subtle low-level behavior changes were introduced (required errors by default in errors
+etc…).
+
+**If you were using [Front-Commerce's wrappers introduced in 2.0.0-rc.0](https://developers.front-commerce.com/docs/appendices/migration-guides.html#Abstract-Formsy) you might not encounter any issues**.
+Otherwise, we recommend to refactor your code to use them!
+
+See [Formsy's upgrade guide](https://github.com/formsy/formsy-react#1x-to-2x-upgrade-guide) for exhaustive details about low-level changes.
+
+### Stripe embedded payment updated
+
+Stripe libraries were updated.
+
+The [`stripe`](https://www.npmjs.com/package/stripe) Node.js library was updated from 7.15.0 to 8.60.0. See [the migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8) in case your application relies on advanced features.
+
+The react library has bigger changes. Front-Commerce is now using the official and rebranded [@stripe/react-stripe-js](https://www.npmjs.com/package/@stripe/react-stripe-js) instead of the deprecated [react-stripe-elements](https://github.com/stripe/react-stripe-elements) library. If you overrode Stripe components, please check [the "migrating from react-stripe-elements" guide](https://github.com/stripe/react-stripe-js/blob/master/docs/migrating.md) for migration instructions (imports etc…).
+
+We rewrote default components to use new Stripe components:
+- the `<StripeCheckoutElement>` has been simplified in FC, please reapply your changes to the latest version if you overrode it
+- the `<StripeCheckout>` component was totally rewritten to use hooks. It is very unlikely that you overrode it, but if you did please update your override.
+
+### Miscellaneous and unlikely impacting backwards incompatible changes
+
+Some minor changes were introduced in dependencies or while removing deprecated code. They are unlikely impacting a standard application, but worth mentioning in case you relied on some low-level APIs.
+
+- The `<ExistingAddress />` and `<NewAddress />` components used in the checkout were updated to use the `<Checkbox />` component as they were using a deprecated one. **Make sure it doesn't have an impact on your styles, or update your imports if you overrode them.**
+- `i18n-iso-countries` has been updated to 6.x, if your application was using its `getNames()` helper function, please ensure it works with [the new API](https://github.com/michaelwittig/node-i18n-iso-countries/releases/tag/v6.0.0)
+- webpack's `url-loader` updated from 3.x to 4.x. It may cause different mimetypes for rare types (see
+ [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
+- `graphql` has been upgraded from 14.6.0 to 15.1.0. It is very likely backwards compatible for your app, even though backward incompatible changes were introduced for subtle use cases: see [v15.0.0 release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) if curious
+- `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](https://developers.front-commerce.com/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
+- The `ProductStockLoader` no longer takes the `FeatureFlag` loader as parameter. Please remove this parameter if you were instantiating it manually.
+- `loaders.Url.matchBy` has been removed from Magento2's module. It was only used for the deprecated `Query.matchUrls` field and might not impact your codebase, but **it's worth mentioning in case your relied on it since it wasn't issuing deprecation warnings itself.**
+- Convict has been upgraded to 6.0.0. You may have to install additional packages if your application uses custom configuration providers with one of the following format in their schema: `"email"`, `"ipaddress"`, `"url"`, `"duration"` or `"timestamp"`. See [their migration documentation](https://github.com/mozilla/node-convict/blob/master/packages/convict/MIGRATING_FROM_CONVICT_5_TO_6.md) for further information
+- `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used anymore
+- The Wishlist feature is now always enabled for Magento 2
+- The Sitemap generation script has been revamped to use the latest version of the underlying library that contained heavy changes (it would be safe to double check that no regression was introduced in your context and we'd appreciate an issue if you find something ;))
+
+
 ## `2.0.0-rc.1` -> `2.0.0-rc.2`
 
 **IMPORTANT: this release should be the last one before `2.0.0`. It means that you MUST ensure that your application does not trigger any deprecation warnings so you could upgrade to future Front-Commerce releases.**

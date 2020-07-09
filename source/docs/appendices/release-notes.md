@@ -5,6 +5,22 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+## 2.0.0
+
+> * Remove deprecation warnings
+> * Update dependencies
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.0.0)
+
+Requirements:
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 or 6.8 with the plugins:
+    - analysis-phonetic
+    - analysis-icu
+- Magento: 2.3.1+
+
 ## 1.0.0-beta.4
 
 > * Bug fixes
