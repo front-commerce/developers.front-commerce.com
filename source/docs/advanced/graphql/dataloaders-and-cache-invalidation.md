@@ -406,6 +406,37 @@ export default {
 };
 ```
 
+### `PerMagentoAdminRole`
+
+<blockquote class="feature--new">
+_Since version 2.1.0_
+</blockquote>
+
+The `PerMagentoAdminRole` implementation is a decorator that is specific to Magento 2 module. It will decorate the existing caching strategies so that DataLoader keys are different for admin users and customers. This is useful if a custom Magento API returns a different result for admins and normal customers.
+
+Here is a configuration example:
+
+```js
+// my-module/config/caching.js
+export default {
+  strategies: [
+    // The PerMagentoAdminRole strategy MUST be registered after a persistent cache implementation
+    // because it has no effect in the context of the default per-request in-memory caching.
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "127.0.0.1"
+      }
+    },
+    {
+      implementation: "PerMagentoAdminRole",
+      supports: ["CatalogProduct"],
+    },
+  ]
+};
+```
+
 ### Advanced usage
 
 If you need additional implementations or want to leverage strategies for a specific use case, please [contact us](mailto:contact@front-commerce.com) so we can discuss it and guide you!

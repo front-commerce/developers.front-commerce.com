@@ -60,6 +60,7 @@ sidebar_categories:
     - docs/magento2/i18n
     - docs/magento2/add-new-attribute
     - docs/magento2/using-magento-configuration
+    - docs/magento2/detect-admin-users
   Magento1:
     - docs/magento1/overview
     - docs/magento1/installation
