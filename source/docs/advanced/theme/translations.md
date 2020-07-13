@@ -73,7 +73,7 @@ Please refer to [react-intl documentation](https://github.com/yahoo/react-intl/w
 
 Now that you have defined what should be translated in your application, you actually need to translate your application. This is a two-step process:
 
-1. Run the following script that will fetch all your translatable strings in your application and gather them in a JSON file located in `translations/[lang].json`
+1. Run the following script that will fetch all your translatable strings in your application and gather them in a JSON file located in `translations/[locale].json`
 ```sh
 npm run translate
 ```
@@ -81,25 +81,27 @@ npm run translate
 
 Note that for some translations you won't need to change anything. This usually happens for the default language and for business phrases such as "SKU", etc.
 
-However, `react-intl` will warn you against those cases because it might be an actual translation that is missing. Luckily, you can opt-out of this warning for specific translations ids by adding it to the `translations/whitelist_[lang].json` file.
+However, `react-intl` will warn you against those cases because it might be an actual translation that is missing. Luckily, you can opt-out of this warning for specific translations ids by adding it to the `translations/whitelist_[locale].json` file.
 
 This task can be daunting at first, but it will make your life easier in the future when you will need to know which string was not translated in a recent update.
 
 ### Translations fallback
 
-With `react-intl` translations are usually grouped into a single file. In our case, we would expect them to be in `translations/whitelist_[lang].json`. But in Front-Commerce's case, we don't want you to be troubled by translations that are handled by the core.
+With `react-intl` translations are usually grouped into a single file. In our case, we would expect them to be in `translations/[locale].json`. But in Front-Commerce's case, we don't want you to be troubled by translations that are handled by the core.
 
 That's why Front-Commerce uses a mechanism called **translations fallbacks**. Instead of relying on a single file for translations, Front-Commerce will look out for translations in the following locations and pick the ones that exist:
 
-* Front-Commerce core: `node_modules/front-commerce/translations/[lang].json`
-* from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[lang].json`
-* from your project: `translations/[lang].json`
+* Front-Commerce core: `node_modules/front-commerce/translations/[short-locale].json` or `node_modules/front-commerce/translations/[locale].json`
+* from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[short-locale].json` or `<my-module>/translations/[locale].json`
+* from your project: `translations/[short-locale].json` or `translations/[locale].json`
+
+`[short-locale]` here means that we are only taking the first particle of the `locale`. E.g. if the locale was `en-GB`, the short-locale would be `en`.
 
 If a translation key is defined in multiple files, the last one (according to the above list) will be be used. This is especially useful if you want to change the core's translations.
 
 > You can see exactly which translation files are used by opening the files located in `.front-commerce/translations/`.
 
-Please keep in mind that when you run `npm run translate`, new keys will be added to `translations/[lang].json`. However, if you are developing a module it can make sense to manually create the files in `<my-module>/translations/[lang].json` and relocate the translations there.
+Please keep in mind that when you run `npm run translate`, new keys will be added to `translations/[locale].json`. However, if you are developing a module it can make sense to add the translations to `<my-module>/translations/[locale].json`. You can do this by using `npm run translate -- -m <my-module>`.
 
 ## About dynamic content
 
