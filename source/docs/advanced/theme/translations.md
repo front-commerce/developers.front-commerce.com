@@ -95,7 +95,7 @@ That's why Front-Commerce uses a mechanism called **translations fallbacks**. In
 * from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[short-locale].json` or `<my-module>/translations/[locale].json`
 * from your project: `translations/[short-locale].json` or `translations/[locale].json`
 
-`[short-locale]` here means that we are only taking the first particle of the `locale`. E.g. if the locale was `en-GB`, the short-locale would be `en`.
+`[short-locale]` here means that we are only taking the first particle of the `locale`. E.g. if the locale was `en-GB`, the short-locale would be `en`. That's how `en-GB` would load translations from both `en.json` and `en-GB.json` files.
 
 If a translation key is defined in multiple files, the last one (according to the above list) will be be used. This is especially useful if you want to change the core's translations.
 
