@@ -50,6 +50,15 @@ sidebar_categories:
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
+  Payments:
+    - docs/advanced/payments/overview
+    - docs/advanced/payments/payment-workflows
+    - docs/advanced/payments/front-commerce-payments
+    - docs/advanced/payments/magento2-headless-payments
+    - docs/advanced/payments/stripe
+    - docs/advanced/payments/paypal
+    - docs/advanced/payments/payzen
+    - docs/advanced/payments/ingenico
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
