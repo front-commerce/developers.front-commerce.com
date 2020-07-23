@@ -10,9 +10,10 @@ Front-Commerce’s Magento module provides a generic way to expose Magento payme
 ## Supported Payment platforms
 
 Our Magento2 integration currently provides native adapters for the platforms below, learn how to install each one of them from the related documentation page:
+- [Affirm](/docs/advanced/payments/affirm.html#Magento2-module)
+- [Ingenico](/docs/advanced/payments/ingenico.html#Magento2-module)
 - [Paypal](/docs/advanced/payments/paypal.html#Magento2-module)
 - [PayZen](/docs/advanced/payments/payzen.html#Magento2-module)
-- [Ingenico](/docs/advanced/payments/ingenico.html#Magento2-module)
 
 <blockquote class="info">
   If you want to use a Payment module not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.

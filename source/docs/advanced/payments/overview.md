@@ -10,9 +10,10 @@ In this section, you will learn how payments can be added to an application. It 
 - [Understanding payment workflows](/docs/advanced/payments/payment-workflows.html)
 - [Front-Commerce payments](/docs/advanced/payments/front-commerce-payments.html)
 - [Magento2 headless payments](/docs/advanced/payments/magento2-headless-payments.html)
-- [Stripe](/docs/advanced/payments/stripe.html)
+- [Affirm](/docs/advanced/payments/affirm.html)
+- [Ingenico](/docs/advanced/payments/ingenico.html)
 - [Paypal](/docs/advanced/payments/paypal.html)
 - [Payzen](/docs/advanced/payments/payzen.html)
-- [Ingenico](/docs/advanced/payments/ingenico.html)
+- [Stripe](/docs/advanced/payments/stripe.html)
 
 Payments are a sensitive part of any eCommerce store. Our team is dedicated to make projects a success and we recommend you to [get in touch with us](mailto:contact@front-commerce.com) so we can provide recommendations about payment integration. **We are always looking for supporting more payment methods.**
