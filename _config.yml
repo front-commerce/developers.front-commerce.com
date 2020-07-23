@@ -72,6 +72,7 @@ sidebar_categories:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
     - docs/advanced/payments/front-commerce-payments
+    - docs/advanced/payments/adyen
     - docs/advanced/payments/affirm
     - docs/advanced/payments/ingenico
     - docs/advanced/payments/paypal
