@@ -23,7 +23,7 @@ Front-Commerce Payments are currently available for the platforms below, learn h
 
 Front-Commerce handle payments directly, without the need for a payment integration in your eCommerce system. However, **Front-Commerce provides a generic Payment method** tailored for your eCommerce platform so that you can still benefit from its order management features and workflows.
 
-From your eCommerce system's perspective, a payment made with Front-Commerce is integrated in a similar way than checks / wire payments (sometimes named "offline payment"). The difference is that it Front-Commerce will update orders statuses upon receiving automatic notifications from the payment service.
+From your eCommerce system's perspective, a payment made with Front-Commerce is integrated in a similar way than checks / wire payments (sometimes named "offline payment"). The difference is that Front-Commerce will update orders statuses upon receiving automatic notifications from the payment service.
 
 ## Implement a new Front-Commerce Payment method
 

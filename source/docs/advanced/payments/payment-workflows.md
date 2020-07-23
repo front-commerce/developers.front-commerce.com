@@ -5,7 +5,9 @@ title: Understanding payment workflows
 
 Front-Commerce provides different hooks allowing to use the payment method of your choice. This section explains the high-level payment workflows supported.
 
-Front-Commerce has a concept of "payment workflow" to model a payment scenario from a customer standpoint. This is a core concept to understand for anyone wanting to create a really custom checkout or implement a new payment method. It is important that developers understand them so they could choose a payment method knowingly.
+A "payment workflow" is a model representing payment scenario from a customer standpoint. This is a core concept to understand for anyone wanting to create a really custom checkout or implement a new payment method. It is important that developers understand them so they could choose a payment method knowingly.
+
+If your goal is to use an existing payment integration, please refer to the integrations listed in the [Payment overview](/docs/advanced/payments/overview.html).
 
 So far, 3 workflows are supported and are explained below:
 - Direct Order
