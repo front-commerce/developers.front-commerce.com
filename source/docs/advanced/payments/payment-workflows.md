@@ -22,7 +22,7 @@ _Examples:_ check, wire payments, free…
 
 When Customers select the payment method and finish the checkout process, their order is placed immediately without any extra payment step involved and they are redirected on the checkout success page.
 
-It is sometimes possible to display additional input (or external payment forms) during the payment method selection step in Front-Commerce so that Customers can Authorize the payment. When submitting the order, the Direct Order workflow could include additional data (such as an authorization payment token) that could be captured synchronously.
+It is sometimes possible to display additional input (or external payment forms) during the payment method selection step in Front-Commerce so that Customers can Authorize the payment. When submitting the order, the Direct Order workflow could include additional data (such as account IBAN information for a SEPA payment, an authorization payment token to allow a capture…) that could be stored or used by the eCommerce system or administrators.
 
 Below, a diagram representing successive interactions (with a Magento platform as example):
 <figure>

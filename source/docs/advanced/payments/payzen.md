@@ -104,6 +104,6 @@ See the test for an example (while a detailed documentation is being written):
 **Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
 </blockquote>
 
-Front-Commerce Magento2 module contains [headless payment adapters](/docs/advanced/payments/magento2-headless-payments.html) for the [**PayZen Standard** method](https://github.com/lyra/plugin-magento) (Lyra's official Magento module).
+Front-Commerce Magento2 module contains [headless payment adapters](/docs/magento2/headless-payments.html) for the [**PayZen Standard** method](https://github.com/lyra/plugin-magento) (Lyra's official Magento module).
 
 The PayZen module must be configured in a normal way, as for a non-headless Magento store.

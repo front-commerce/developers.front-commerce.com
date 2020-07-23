@@ -50,16 +50,6 @@ sidebar_categories:
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
-  Payments:
-    - docs/advanced/payments/overview
-    - docs/advanced/payments/payment-workflows
-    - docs/advanced/payments/front-commerce-payments
-    - docs/advanced/payments/magento2-headless-payments
-    - docs/advanced/payments/affirm
-    - docs/advanced/payments/ingenico
-    - docs/advanced/payments/paypal
-    - docs/advanced/payments/payzen
-    - docs/advanced/payments/stripe
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -71,12 +61,22 @@ sidebar_categories:
     - docs/magento2/add-new-attribute
     - docs/magento2/using-magento-configuration
     - docs/magento2/detect-admin-users
+    - docs/magento2/headless-payments
   Magento1:
     - docs/magento1/overview
     - docs/magento1/installation
     - docs/magento1/add-custom-endpoint
     - docs/magento1/event-list
     - docs/magento1/generate-api-doc
+  Payments:
+    - docs/advanced/payments/overview
+    - docs/advanced/payments/payment-workflows
+    - docs/advanced/payments/front-commerce-payments
+    - docs/advanced/payments/affirm
+    - docs/advanced/payments/ingenico
+    - docs/advanced/payments/paypal
+    - docs/advanced/payments/payzen
+    - docs/advanced/payments/stripe
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations

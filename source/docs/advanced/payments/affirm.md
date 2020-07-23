@@ -17,7 +17,7 @@ This page contains information about the different ways you can accept payments 
 
 Front-Commerce for Magento2 contains a `FrontCommerce_HeadlessAffirm` module that turns the [Affirm's official Magento extension](https://github.com/Affirm/Magento2_Affirm) into a headless payment method for Front-Commerce. It is aimed at being transparent for Magento administrators and developers while allowing for a better Customer experience in a Front-Commerce application.
 
-This integration is slightly different from [traditional Magento2 headless payments](/docs/advanced/payments/magento2-headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to Authorize payments from the checkout page. No redirection to Affirm is involved, the Customer remains on the Front-Commerce store.
+This integration is slightly different from [traditional Magento2 headless payments](/docs/magento2/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to Authorize payments from the checkout page. No redirection to Affirm is involved, the Customer remains on the Front-Commerce store.
 
 Here is how to set this payment method up.
 
