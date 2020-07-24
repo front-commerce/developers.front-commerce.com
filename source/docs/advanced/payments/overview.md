@@ -1,6 +1,6 @@
 ---
-id: payments
-title: Payments overview
+id: payments-overview
+title: Overview
 ---
 
 There are many ways to integrate payments in Front-Commerce. We support different payment workflows, payment modules from different platforms (Magento2 …) and Front-Commerce can also process payments itself with Front-Commerce payment modules.

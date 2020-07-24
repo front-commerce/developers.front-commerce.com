@@ -1,5 +1,5 @@
 ---
-id: overview
+id: theme-overview
 title: Overview
 ---
 

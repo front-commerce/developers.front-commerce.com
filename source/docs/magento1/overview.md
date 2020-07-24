@@ -1,5 +1,5 @@
 ---
-id: overview
+id: magento1-overview
 title: Overview
 ---
 
