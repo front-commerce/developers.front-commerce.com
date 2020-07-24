@@ -1,5 +1,5 @@
 ---
-id: overview
+id: checkout-overview
 title: Overview
 ---
 

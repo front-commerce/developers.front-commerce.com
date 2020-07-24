@@ -1,5 +1,5 @@
 ---
-id: installation
+id: magento1-installation
 title: Installation
 ---
 
