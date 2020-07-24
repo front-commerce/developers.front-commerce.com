@@ -18,7 +18,7 @@
     <meta name="description" content="<%- page.description %>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% if (config.favicon) {  %>
-      <link rel="shortcut icon" type="image/png" href="<%= url_for(config.favicon, { relative: false }) %>" sizes="16x16 32x32 64x64">
+      <link rel="shortcut icon" type="image/png" href="<%= url_for(config.favicon, { relative: false }) %>?v=2" sizes="16x16 32x32 64x64">
     <% } %>
 
     <!-- Social -->
