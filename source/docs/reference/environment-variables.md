@@ -95,7 +95,7 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
-- `FRONT_COMMERCE_ES_VERSION`: Elasticsearch server version (ex: `6.7`)
+- ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
 ### Paypal
 
