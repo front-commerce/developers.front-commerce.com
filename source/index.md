@@ -5,7 +5,7 @@ layout: index
 ---
 
 <section class="hero">
-  <h1><img src="images/fc_logo_2018--inline.svg" alt="Front-Commerce" /></h1>
+  <h1><img src="images/fcLogo2RowsBlack.svg" alt="Front-Commerce" /></h1>
   <p>Craft delightful e-commerce experiences<br />using modern web technologies</p>
   <div class="center getting-started"><a class="link primary button" href="/docs/">Getting Started</a></div>
   <ul class="button-list">

@@ -7,6 +7,38 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.0.0` -> `2.1.0`
+
+### Magento 2.3.5 and <abbr title="Multiple Source Inventory">MSI</abbr> Support
+
+Front-Commerce is now fully compatible with MSI. In order to do so, please make sure that the Front-Commerce module installed on your Magento 2 (`front-commerce/magento2-module`) is >= 2.0.0.
+
+### Magento configuration loader
+
+While it was possible to fetch configurations from Magento2 by using the GraphQL module, it is now possible to fetch these options through a REST endpoint. This will improve performance and allow you to reuse these configurations directly in your resolvers.
+
+Please refer to [Using Magento Configuration](/docs/magento2/using-magento-configuration.html) for further information.
+
+### Magento Admin Detection
+
+It is now possible to detect if the user connected on the shop is an admin that is connected in Magento. Only thing is you must setup the following environment variable: `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`.
+
+Please refer to [Detect admin users](/docs/magento2/detect-admin-users.html) for more details.
+
+### Translation locales variants
+
+<blockquote>
+**Important:** Please remove your `.front-commerce/translations` folder after updating to 2.1.0. Otherwise your local build will fail.
+</blockquote>
+
+Previously, the translation mechanism only accepted a main language (`fr`, `en`, ...). It is now possible to set translation files using locales that includes the country (`fr-FR`, `en-US`, `en-GB`, ...).
+
+In new projects, new locales in the `config/stores.js` will automatically create `translations/<new-locale>.json` files so you don't have to worry about it.
+
+In existing projects that already have main language translation files (e.g. `translations/en.json`) new files won't be created automatically. This means that if you have a store using `en-US` and a store using `en-GB` while only having a `translations/en.json` file in your project, both stores will use `translations/en.json`. If you want to add specificities for each locale, please create manually the files with the correct filename (`translations/en-GB.json`, `translations/en-US.json`).
+
+Please note that if some translations are shared across `en-GB` and `en-US`, you can put them in a `translations/en.json`. It will still be used even if you have created `translations/en-GB.json` or `translations/en-US.json`.
+
 ## `2.0.0-rc.2` -> `2.0.0`
 
 Over the years, we've deprecated a lot of code and provided backwards-compatible adapters to cope with API changes in dependencies.

@@ -87,6 +87,7 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
     - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+- `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to [detect admin users](/docs/magento2/detect-admin-users.html) in Front-Commerce configured in « Stores > Configurations > General > General > Front-Commerce > Magento Admin Token »
 
 ### Elasticsearch
 
@@ -94,7 +95,7 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
-- `FRONT_COMMERCE_ES_VERSION`: Elasticsearch server version (ex: `6.7`)
+- ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
 ### Paypal
 
