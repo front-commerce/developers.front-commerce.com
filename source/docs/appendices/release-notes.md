@@ -5,6 +5,41 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+
+## 2.1.1
+
+> * Fix a regression in cache invalidation using Redis strategy
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.1)
+
+Requirements:
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 or 6.8 with the plugins:
+    - analysis-phonetic
+    - analysis-icu
+- Magento: 2.3.1+
+
+## 2.1.0
+
+> * Magento 2.3.5 and MSI Support
+> * Magento2 configurations
+> * Magento2 admin detection
+> * Affirm and Adyen (developer preview) Magento2 payment methods
+> * Translation improvements
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.0)
+
+Requirements:
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 or 6.8 with the plugins:
+    - analysis-phonetic
+    - analysis-icu
+- Magento: 2.3.1+
+
 ## 2.0.0
 
 > * Remove deprecation warnings
