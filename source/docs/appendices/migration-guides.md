@@ -7,6 +7,37 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.1.1` -> `2.2.0`
+
+### Currency selector for Magento 1
+
+A store in Magento can now have multiple currencies and user can switch between them. To enable this feature, you need to:
+
+1. Enable multiple currencies in your Magento admin panel ([first part of this blog post](https://inchoo.net/magento/how-to-add-currency-selector-to-magentos-header/))
+2. Update your `config/stores.js` by adding an `availableCurrencies` key to the relevant store. (e.g. `availableCurrencies: ["EUR", "USD", "GBP"]`)
+3. Update your `config/caching.js` strategies in case you are using redis:
+```diff
+// ...
+  strategies: [
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "127.0.0.1",
+        db: 0,
+      },
+    },
++    {
++      implementation: "PerCurrency",
++      // The support list should contain any loader that send different
++      // currency values based on the user's selected currency
++      supports: ["CatalogPrice", "CatalogProductChildrenPrice"],
++    },
+// ...
+```
+
+You can then restart your server and the currency selector should appear in the header. If this is not the case, please check if you have changed the header behavior and add `<CurrencySelector />` from `theme/modules/User/CurrencySelector` in the relevant place. In Front-Commerce's core, it is used in `theme/layouts/Header/TopBar`.
+
 ## `2.0.0` -> `2.1.0`
 
 ### Magento 2.3.5 and <abbr title="Multiple Source Inventory">MSI</abbr> Support

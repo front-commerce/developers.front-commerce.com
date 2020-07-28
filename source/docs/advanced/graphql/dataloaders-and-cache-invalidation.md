@@ -406,6 +406,37 @@ export default {
 };
 ```
 
+### `PerCurrency`
+
+<blockquote class="feature--new">
+_Since version 2.2.0_
+</blockquote>
+
+The `PerCurrency` implementation is a decorator that is specific to Magento 1 integrations. It will decorate the existing caching strategies so that DataLoader keys are different depending on the store's currency selected by the user. This is only useful if a store has multiple currencies ([`config/stores.js::availableCurrencies`](/docs/advanced/production-ready/multistore.html#Multiple-currencies)). It should be used on any DataLoader that returns a price value based on the user's session.
+
+Here is a configuration example:
+
+```js
+// my-module/config/caching.js
+export default {
+  strategies: [
+    // The PerCurrency strategy MUST be registered after a persistent cache implementation
+    // because it has no effect in the context of the default per-request in-memory caching.
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "127.0.0.1"
+      }
+    },
+    {
+      implementation: "PerCurrency",
+      supports: ["CatalogPrice", "CatalogProductChildrenPrice"],
+    },
+  ]
+};
+```
+
 ### `PerMagentoAdminRole`
 
 <blockquote class="feature--new">
