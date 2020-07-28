@@ -445,8 +445,42 @@ If you need additional implementations or want to leverage strategies for a spec
 
 For persistent cache, it is necessary that remote systems invalidate cache when relevant.
 
-Front-Commerce provides several endpoints for it. They respond to `GET` queries and are secured with a token to be passed in a `auth-token` header.
+Front-Commerce provides several endpoints for it. They respond to `GET` or `POST` queries and are secured with a token to be passed in a `auth-token` header.
 The expected token must be configured with the [`FRONT_COMMERCE_CACHE_API_TOKEN` environment variable](/docs/reference/environment-variables.html#Cache).
+
+### `POST` for batched invalidations
+
+<blockquote class="feature--new">
+_Since version 2.1.0_
+</blockquote>
+
+This is the recommended way to invalidate cache. It allows to invalidate several entries in one HTTP call which is more efficient.
+
+* Endpoint: `/_cache` invalidate all data from the scopes sent in the body
+* Body: list of cache invalidation descriptor with the following object keys
+  * `scope`: shop code (for instance one store)
+  * `key`: loader key to invalidate
+  * `id`: single id to invalidate for the `key` loader (in the given `scope`)
+
+For each key of the invalidation descriptor, it is possible to define the value `"all"` (reserved keyword) to invalidate every defined object. See the example below.
+
+Example:
+```
+[
+  { scope: "default", key: "CatalogProduct", id: "VSK12" },
+  { scope: "default", key: "all", id: "VSK13" },
+  { scope: "all", key: "CatalogCategory", id: "42" },
+  { scope: "default", key: "CmsPage", id: "all" },
+]
+```
+
+<blockquote class="info">
+  The payload is [currently limited to 1Mb](https://gitlab.com/front-commerce/front-commerce/-/blob/11cda1367e693fc228cf2bf92b3f7cc54c260e2f/src/server/express/config.js#L39) to prevent abuses. Let us know if you reach this limit.
+</blockquote>
+
+### `GET` for atomic invalidations
+
+These endpoints were the first ones implemented in Front-Commerce. They are less efficient than batching invalidations, but may be more convenient for webhooks or simple scripts.
 
 * `/_cache`: invalidate all data in persistent cache
 * `/_cache/:scope`: invalidate all data for a given scope (for instance one store)
