@@ -7,14 +7,25 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## `2.1.1` -> `2.2.0`
+## `2.1.x` -> `2.2.0`
 
 ### Currency selector for Magento 1
 
 A store in Magento can now have multiple currencies and user can switch between them. To enable this feature, you need to:
 
 1. Enable multiple currencies in your Magento admin panel ([first part of this blog post](https://inchoo.net/magento/how-to-add-currency-selector-to-magentos-header/))
-2. Update your `config/stores.js` by adding an `availableCurrencies` key to the relevant store. (e.g. `availableCurrencies: ["EUR", "USD", "GBP"]`)
+2. Update your `config/stores.js` by adding an `availableCurrencies` key to the relevant store:
+```diff
+module.exports = {
+  // the key is the code of your store
+  default_en: {
+    // ...
+    currency: "EUR",
++    availableCurrencies: ["EUR", "GBP"]
+    // ...
+  },
+}
+```
 3. Update your `config/caching.js` strategies in case you are using redis:
 ```diff
 // ...
