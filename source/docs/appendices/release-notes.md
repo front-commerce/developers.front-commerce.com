@@ -6,20 +6,23 @@ title: Release notes
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
 
+## 2.1.2
+
+> It contains 2 bugfixes:
+>  * the service worker can now be built in production mode
+>  * the HTTP Basic Auth protection (for staging servers) works again (a regression was introduced in [2.0.0](#2-0-0), when we've upgraded a dependency)
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.2)
+
+Requirements: same than [2.1.0](#2-1-0)
+
 ## 2.1.1
 
 > * Fix a regression in cache invalidation using Redis strategy
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.1)
 
-Requirements:
-- Reverse Proxy : Nginx 1.10 or more
-- NodeJS: 10.15+
-- Redis: 3.2
-- ElasticSearch: 6.7 or 6.8 with the plugins:
-    - analysis-phonetic
-    - analysis-icu
-- Magento: 2.3.1+
+Requirements: same than [2.1.0](#2-1-0)
 
 ## 2.1.0
 
