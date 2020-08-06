@@ -9,6 +9,22 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.1.x` -> `2.2.0`
 
+### New Magento 1 features
+
+Here is the list of newly supported features for Magento 1 coming with the 2.2.0 release:
+
+* Guest Checkout
+* Bundle Products
+* Virtual Products
+
+In order to get these, you must upgrade your Magento 1's FC module to version 1.2.0.
+
+These new features shouldn't impact your store if you don't need them. If you do, and they don't seem to work, please check that the files you have overriden don't miss any feature.
+
+For the Guest Checkout, you need to make sure that you have enabled it in Magento 1's admin « System > Configuration > Sales > Checkout > Checkout Options > Allow Guest Checkout ».
+
+If you are looking for these features in Magento 2, please contact us.
+
 ### Currency selector for Magento 1
 
 A store in Magento can now have multiple currencies and user can switch between them. To enable this feature, you need to:
