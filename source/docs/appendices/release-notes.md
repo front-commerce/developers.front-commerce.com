@@ -5,6 +5,14 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+## 2.1.3
+
+> It contains 1 bugfix:
+>  * the "Use for shipping" toggle is now working again for new addresses created in the checkout (regression introduced in 2.0.0)
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.3)
+
+Requirements: same than [2.1.0](#2-1-0)
 
 ## 2.1.2
 
