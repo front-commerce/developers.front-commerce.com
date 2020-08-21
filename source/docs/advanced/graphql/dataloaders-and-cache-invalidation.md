@@ -506,7 +506,8 @@ Example:
 ```
 
 <blockquote class="info">
-  The payload is [currently limited to 1Mb](https://gitlab.com/front-commerce/front-commerce/-/blob/11cda1367e693fc228cf2bf92b3f7cc54c260e2f/src/server/express/config.js#L39) to prevent abuses. Let us know if you reach this limit.
+  The payload is [limited to 1Mb by default](https://gitlab.com/front-commerce/front-commerce/-/blob/2af896b935b2ead5d1ea5b76bc6109b1a3f56ecd/src/server/express/config/expressConfigProvider.js#L10) to prevent abuses. You can extend this limit using configurations. See ["I cannot `POST` a big payload to the server
+"](/docs/appendices/troubleshooting.html#I-cannot-POST-a-big-payload-to-the-server) for a way to define a greater value.
 </blockquote>
 
 ### `GET` for atomic invalidations
