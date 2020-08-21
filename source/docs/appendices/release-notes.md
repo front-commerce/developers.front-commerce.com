@@ -5,6 +5,14 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+## Latest version
+
+**Front-Commerce [`2.1.3`](#2-1-3)**
+
+Compatible with:
+- **Magento2**: 2.3.1+ (Open Source & Commerce)
+- **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+
 ## 2.1.3
 
 > It contains 1 bugfix:
@@ -50,7 +58,7 @@ Requirements:
     - analysis-phonetic
     - analysis-icu
 - Magento2: 2.3.1+ (Open Source & Commerce)
-- Magento1: CE 1.7+, EE 1.12+
+- Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
 ## 2.0.0
 
@@ -67,7 +75,7 @@ Requirements:
     - analysis-phonetic
     - analysis-icu
 - Magento2: 2.3.1+ (Open Source & Commerce)
-- Magento1: CE 1.7+, EE 1.12+
+- Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
 ## 1.0.0-beta.4
 
