@@ -65,6 +65,27 @@ module.exports = {
 
 You can then restart your server and the currency selector should appear in the header. If this is not the case, please check if you have changed the header behavior and add `<CurrencySelector />` from `theme/modules/User/CurrencySelector` in the relevant locations. In Front-Commerce's core, [it is used in `theme/layouts/Header/TopBar`](https://gitlab.com/front-commerce/front-commerce/-/blob/11cda1367e693fc228cf2bf92b3f7cc54c260e2f/src/web/theme/layouts/Header/TopBar.js#L23).
 
+### Regions/State in addresses for some countries
+
+Front-Commerce will now display a region/state selector in address forms when required by Magento (both 1 & 2) configuration. Existing applications may have some migration steps to benefit from this feature.
+
+#### Update your overridden Address components
+
+While we've made several efforts to implement it in a backward compatible way (no fatal error), you will not see this additional selector if you overrode some key components. The selector will only appear if it receives the expected data!
+
+Please check for overrides of the following components (and update them accordingly):
+- **ToDo (with links to changelog && diffs)**
+
+#### Ensure your Magento instance supports this feature
+
+You must ensure that the Magento module is up-to-date, so the required configurations are made available through the API.
+
+If that's not possible, for Magento2 you can manually expose configurations from the version `2.0.0` of the module. If you can't upgrade to `2.2.0` then add the configuration below ([as documented in "Using Magento Configuration"](/docs/magento2/using-magento-configuration.html#Fetch-configurations-from-frontcommerce-storeConfigs-Magento-endpoint)):
+```
+<item name="general/region/state_required" xsi:type="string">general/region/state_required</item>
+<item name="general/region/display_all" xsi:type="string">general/region/display_all</item>
+```
+
 ## `2.0.0` -> `2.1.0`
 
 ### Magento 2.3.5 and <abbr title="Multiple Source Inventory">MSI</abbr> Support
