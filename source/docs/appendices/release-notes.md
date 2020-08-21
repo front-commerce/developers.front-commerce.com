@@ -49,7 +49,8 @@ Requirements:
 - ElasticSearch: 6.7 or 6.8 with the plugins:
     - analysis-phonetic
     - analysis-icu
-- Magento: 2.3.1+
+- Magento2: 2.3.1+ (Open Source & Commerce)
+- Magento1: CE 1.7+, EE 1.12+
 
 ## 2.0.0
 
@@ -65,7 +66,8 @@ Requirements:
 - ElasticSearch: 6.7 or 6.8 with the plugins:
     - analysis-phonetic
     - analysis-icu
-- Magento: 2.3.1+
+- Magento2: 2.3.1+ (Open Source & Commerce)
+- Magento1: CE 1.7+, EE 1.12+
 
 ## 1.0.0-beta.4
 
