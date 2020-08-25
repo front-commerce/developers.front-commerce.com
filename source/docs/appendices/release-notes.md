@@ -10,6 +10,7 @@ This page lists the public releases will let you know what's important if you ne
 **Front-Commerce [`2.1.3`](#2-1-3)**
 
 Compatible with:
+- **Node.js:** 10.15+
 - **Magento2**: 2.3.1+ (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
