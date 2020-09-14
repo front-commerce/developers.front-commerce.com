@@ -97,20 +97,6 @@ layout: index
 
   <p>We're driving our next integrations depending on our future clients needs. So feel free to contact us if you have any specific needs. We're willing to take advantage of our flexibility to adapt to our client's roadmaps.</p>
 
-  <p>However, for now we're especially looking into solutions such as:</p>
-
-  <ul>
-    <li><a href="https://www.akeneo.com/">Akeneo</a></li>
-    <li><a href="https://www.drupal.org/">Drupal</a></li>
-    <li><a href="https://sylius.com/">Sylius</a></li>
-    <li><a href="https://oroinc.com/b2b-ecommerce/">OroCommerce</a></li>
-    <li><a href="https://www.marello.com/">Marello</a></li>
-    <li><a href="https://www.axelor.com/">Axelor</a></li>
-    <li><a href="https://www.bigcommerce.com/">BigCommerce</a></li>
-    <li><a href="https://www.elasticpath.com/">Elasticpath</a></li>
-    <li><a href="https://www.izberg-marketplace.com/">Izberg</a></li>
-  </ul>
-
   <p>
     <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20roadmap&body=Hi%2C%0D%0A%0D%0AI%20am%20interested%20in%20your%20product%2C%20and%20would%20love%20to%20know%20if%20you%20considered%20...">
       Ask us about our roadmap <span class="icon-arrow-right-alt"></span>
