@@ -7,6 +7,32 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.2.x` -> `2.3.0`
+
+## New Magento 2 features
+
+The Bundle products are now available for Magento 2. In order to enable these, please
+keep in mind that you will need to update your Magento 2's Front-Commerce module to version 2.2.0.
+
+Moreover, if you have cache strategies influence price loaders, you should add the ``loader key to the`supports` list:
+
+```diff
+// ...
+  strategies: [
+// ...
+    {
+      implementation: "PerCurrency",
+      // The support list should contain any loader that send different
+      // currency values based on the user's selected currency
+      supports: [
+        "CatalogPrice",
+        "CatalogProductChildrenPrice",
++        "CatalogProductBundlePrice",
+      ],
+    },
+// ...
+```
+
 ## `2.1.x` -> `2.2.0`
 
 ### New Magento 1 features
