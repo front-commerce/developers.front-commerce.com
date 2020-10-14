@@ -9,7 +9,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.2.x` -> `2.3.0`
 
-## New Magento 2 features
+## Bundle products (Magento 2)
 
 The Bundle products are now available for Magento 2. In order to enable these, please
 keep in mind that you will need to update your Magento 2's Front-Commerce module to version 2.2.0.
@@ -32,6 +32,12 @@ Moreover, if you have cache strategies influence price loaders, you should add t
     },
 // ...
 ```
+
+## Optional zip codes (Magento 2 & Magento 1)
+
+Some countries don't need zipcodes for their addresses. This is now possible in both Magento 1 & Magento 2. In order to support this feature, you will need to update the Front-Commerce modules in Magento (2.2.0 for Magento 2 & 1.3.0 for Magento 1).
+
+If you have updated the `Form`, `AddressForm` or `CountryFieldWithRegion` components, please consider backporting the changes from Front-Commerce. Details can be found [in this merge request](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/272/diffs). If you have any trouble upgrading, feel free to contact us.
 
 ## `2.1.x` -> `2.2.0`
 
