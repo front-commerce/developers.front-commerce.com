@@ -9,7 +9,7 @@ That is what Front-Commerce’s Dispatcher is responsible for, and what we will 
 
 ## What is the goal of the Dispatcher?
 
-The dispatcher is actually a component within Front-Commerce that will be displayed in case no other route was found. Its goal will be to ask the server (by using the `matchUrls` query in your GraphQL Schema) what kind of page is associated with the current URL and will display the page's component accordingly.
+The dispatcher is actually a component within Front-Commerce that will be displayed in case no other route was found. Its goal will be to ask the server (by using the `route` root query in your GraphQL Schema) what kind of page is associated with the current URL and will display the page's component accordingly.
 
 Below is a flowchart illustrating the URL resolution logic:
 
@@ -22,16 +22,16 @@ If you come from a Magento background, this is the concept behind [URL Rewrites]
 In Front-Commerce’s core integrations (such as Magento2), the association between a URL and a page is already implemented for entities like Products, Categories, CMS pages… But depending on your own site, you might need to add new ones.
 
 To do so, you will need to proceed in two steps:
-* Support the new URLs in the `matchUrls` query in your GraphQL Schema
-* Add the mapping between the type returned by `matchUrls` and the page component that should be displayed
+* Support the new URLs in the `route` query in your GraphQL Schema
+* Add the mapping between the type returned by `route` and the page component that should be displayed
 
-## Support the new URLs in the `matchUrls`
+## Support the new URLs in the `route`
 
 <blockquote class="info">
 **Magento:** If the url you are trying to add are managed by Magento, you don't need any of this. You should instead [add an url rewrite directly in your backend](https://devdocs.magento.com/guides/v2.2/cloud/configure/import-url-rewrites.html), since the mechanism already exists in the Magento module of Front-Commerce.
 </blockquote>
 
-The goal here will be [to override the resolver](/docs/reference/graphql-module-definition.html#resolvers-optional) of `matchUrls` in order to add your own URLs.
+The goal here will be [to override the resolver](/docs/reference/graphql-module-definition.html#resolvers-optional) of `route` in order to add your own URLs.
 
 1. Create a custom GraphQL module that will add new `resolvers` to your GraphQL Schema See [Create a new GraphQL module](/docs/essentials/extend-the-graphql-schema.html) for more details.
 2. Create a loader that will match a URL string with an Entity (the object returned below):
@@ -69,11 +69,11 @@ const MyModuleUrlLoader = makeDataLoader => () => {
 
     Here, we only handle `my-dynamic-custom-url` URL. However, you will most likely need to fetch the result from one of your backend instead. If you do so, the final result should still match the structure of an Entity as presented above.
 
-3. Override the `matchUrls` query in order to use your brand new Loader.
+3. Override the `route` query in order to use your brand new Loader.
 ```js
 const resolvers = {
   Query: {
-    matchUrls: (_, { url }, { loaders }) => {
+    route: (_, { url }, { loaders }) => {
       return loaders.MyModuleUrl.matchBy(url)
         .then((result) => {
           if (result) {
@@ -87,14 +87,14 @@ const resolvers = {
 };
 ```
     Note that we don't want to forget to call the initial `loaders.Url.matchBy` here. If we don't, we will break the base functionalities of Front-Commerce.
-    
+
     Additionally, since we are using an existing loader, we must make sure that our dependencies are correctly configured in our module. In case of a store using Magento, we should add the dependency on `Magento2/Url` module. See [Graphql module definition Reference](/docs/reference/graphql-module-definition.html#dependencies-optional) for more details.
 
 Once you've done these three steps, you should be able to test that everything works as expected by using the GraphQL Playground at http://localhost:4000/playground and executing the following query:
 
 ```gql
 {
-  matchUrls(url: "my-dynamic-custom-url") {
+  route(url: "my-dynamic-custom-url") {
     url
     type
     identifier
@@ -106,7 +106,7 @@ Once you've done these three steps, you should be able to test that everything w
 
 ## Add the mapping between the `type` and the page component
 
-Once your server is correctly configured, you need to map the `type` that is returned in your `matchUrls` query to an actual component.
+Once your server is correctly configured, you need to map the `type` that is returned in your `route` query to an actual component.
 
 To do so, you need to create the `my-module/web/moduleRoutes.js` file in your module that will contain the mapping. You might have already created if you followed the [Add a new page](/docs/essentials/add-a-page-client-side.html#Map-the-URL-to-the-page-component) guide. But instead of using the default export, you will need to export a named object `dispatchedRoutes`.
 
@@ -127,10 +127,10 @@ export const dispatchedRoutes = {
 // ];
 ```
 
-In the props passed to a render function (L6), you will have access to a `matched` property that is in fact the object returned by your `matchUrls` GraphQL query.
+In the props passed to a render function (L6), you will have access to a `matched` property that is in fact the object returned by your `route` GraphQL query.
 
 Once you've created your file, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/my-dynamic-custom-url` URL. It will display `MyCustomPage` component.
 
-And this is it! From now on, any URL that is matched to a particular `type` in your `matchUrls` query, will now be displayed with the render function defined in your `dispatchedRoutes` export under the matching key. Otherwise, a 404 page will still be displayed to the user.
+And this is it! From now on, any URL that is matched to a particular `type` in your `route` query, will now be displayed with the render function defined in your `dispatchedRoutes` export under the matching key. Otherwise, a 404 page will still be displayed to the user.
