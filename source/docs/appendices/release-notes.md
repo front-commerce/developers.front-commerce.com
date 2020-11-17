@@ -5,6 +5,23 @@ title: Release notes
 
 This page lists the public releases will let you know what's important if you need to upgrade to this version.
 
+## 2.2.0
+
+> - Support more features from Magento 1 (Guest Checkout, Bundle Products, Virtual Products, Credit Memo)
+> - Allow to switch currency inside of a store view
+> - Improve regions/state selectors
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.2.0)
+
+Requirements:
+
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2
+- ElasticSearch: 6.7 or 6.8 with the plugins:
+  - analysis-phonetic
+  - analysis-icu
+- Magento: 2.3.1+
 
 ## 2.1.1
 
