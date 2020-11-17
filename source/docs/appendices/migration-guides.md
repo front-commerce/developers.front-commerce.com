@@ -13,9 +13,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 Here is the list of newly supported features for Magento 1 coming with the 2.2.0 release:
 
-* Guest Checkout
-* Bundle Products
-* Virtual Products
+- Guest Checkout
+- Bundle Products
+- Virtual Products
+- Credit Memo
 
 In order to get these, you must upgrade your Magento 1's FC module to version 1.2.0.
 
