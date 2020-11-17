@@ -58,7 +58,7 @@ module.exports = {
 +      implementation: "PerCurrency",
 +      // The support list should contain any loader that send different
 +      // currency values based on the user's selected currency
-+      supports: ["CatalogPrice", "CatalogProductChildrenPrice"],
++      supports: ["CatalogPrice", "CatalogProductChildrenPrice", "CatalogProductBundle"],
 +    },
 // ...
 ```

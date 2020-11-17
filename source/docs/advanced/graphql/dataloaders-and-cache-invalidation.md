@@ -431,7 +431,12 @@ export default {
     },
     {
       implementation: "PerCurrency",
-      supports: ["CatalogPrice", "CatalogProductChildrenPrice"],
+      supports: [
+        "CatalogPrice",
+        "CatalogProductChildrenPrice",
+        "CatalogProductBundlePrice", // only for Magento 2
+        "CatalogProductBundle", // only for Magento 1
+      ],
     },
   ]
 };
