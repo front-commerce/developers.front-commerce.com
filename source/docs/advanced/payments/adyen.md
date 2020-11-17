@@ -8,7 +8,7 @@ This page contains information about the different ways you can accept payments 
 ## Magento2 module
 
 <blockquote class="feature--new">
-  **DEVELOPER PREVIEW** _This feature is currently in **developer preview** since Front-Commerce `2.1.0`. It is planned to be **production ready** in the next `2.2.0` release. Some APIs may evolve by then._
+  **DEVELOPER PREVIEW** _This feature is currently in **developer preview** since Front-Commerce `2.1.0`. It is planned to be **production ready** in a next release (`2.3.0` hopefully). Some APIs may evolve by then._
 </blockquote>
 
 <blockquote class="note">
@@ -49,7 +49,7 @@ In your Front-Commerce application:
 As a temporary way to configure the Web Drop-in, you must configure the Origin key for your domain using the `FRONT_COMMERCE_ADYEN_TMP_ORIGIN_KEY` variable in your `.env` file. See [Adyen's documentation page explaining how to get your client key](https://docs.adyen.com/user-management/client-side-authentication#get-your-client-key).
 
 <blockquote class="note">
-**NOTE** This is a temporary variable that might not be needed anymore in 2.2.0… so don't overengineer its definition!
+**NOTE** This is a temporary variable that might not be needed anymore in 2.3.0… so don't overengineer its definition!
 </blockquote>
 
 ### Register your Adyen payment component

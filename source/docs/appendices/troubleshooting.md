@@ -79,6 +79,39 @@ See https://developers.google.com/web/fundamentals/performance/webpack/monitor-a
 4. ensure your cache is up to date. If using redis, run [`redis-cli flushall`](https://redis.io/commands/flushall) to empty all keys
 5. check for the resulting data in your GraphQL resolvers by adding `console.log()`s so you can follow where data are incorrectly transformed
 
+## I cannot `POST` a big payload to the server
+
+<blockquote class="feature--new">
+    _This value is configurable since version `2.2.0`_
+</blockquote>
+
+Front-Commerce's server contains 2 configurations defining a maximum size for `POST` payloads to prevent abuses.
+
+The `express.graphQLBodyParserConfig.limit` (for GraphQL payloads size) and `express.jsonParserConfig.limit` configurations (for `POST` to server endoints, such as cache invalidation) can be overridden using a [configuration provider](/docs/advanced/server/configurations.html).
+
+<blockquote class="tip">
+  **Tip:** in DEV mode, you can view the current value for these configurations by opening the [/__front-commerce/debug](http://localhost:4000/__front-commerce/debug) URL.
+</blockquote>
+
+Here is an example of such config provider:
+```js
+export default {
+  name: "express-configuration-overrides",
+  values: Promise.resolve({
+    express: {
+      graphQLBodyParserConfig: {
+        limit: "10mb" // default 1mb
+      },
+      jsonParserConfig: {
+        limit: "10mb" // default 1mb
+      }
+    }
+  })
+};
+```
+
+The provider must then be [registered in your application](/docs/advanced/server/configurations.html#Register-a-configuration-provider) as any other one.
+
 ## Another issue?
 
 Please contact our support or open an issue describing the encountered problem along with your environment using `npx envinfo --system --binaries`

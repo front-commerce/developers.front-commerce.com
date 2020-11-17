@@ -7,6 +7,86 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.1.x` -> `2.2.0`
+
+### New Magento 1 features
+
+Here is the list of newly supported features for Magento 1 coming with the 2.2.0 release:
+
+- Guest Checkout
+- Bundle Products
+- Virtual Products
+- Credit Memo
+
+In order to get these, you must upgrade your Magento 1's FC module to version 1.2.0.
+
+These new features shouldn't impact your store if you don't need them. If you do, and they don't seem to work, please check that the files you have overriden don't miss any feature.
+
+For the Guest Checkout, you need to make sure that you have enabled it in Magento 1's admin « System > Configuration > Sales > Checkout > Checkout Options > Allow Guest Checkout ».
+
+If you are looking for these features in Magento 2, please contact us.
+
+### Currency selector for Magento 1
+
+A store in Magento can now have multiple currencies and user can switch between them. To enable this feature, you need to:
+
+1. Enable multiple currencies in your Magento admin panel ([first part of this blog post](https://inchoo.net/magento/how-to-add-currency-selector-to-magentos-header/))
+2. Update your `config/stores.js` by adding an `availableCurrencies` key to the relevant store:
+```diff
+module.exports = {
+  // the key is the code of your store
+  default_en: {
+    // ...
+    currency: "EUR",
++    availableCurrencies: ["EUR", "GBP"]
+    // ...
+  },
+}
+```
+3. Update your `config/caching.js` strategies in case you are using redis:
+```diff
+// ...
+  strategies: [
+    {
+      implementation: "Redis",
+      supports: "*",
+      config: {
+        host: "127.0.0.1",
+        db: 0,
+      },
+    },
++    {
++      implementation: "PerCurrency",
++      // The support list should contain any loader that send different
++      // currency values based on the user's selected currency
++      supports: ["CatalogPrice", "CatalogProductChildrenPrice", "CatalogProductBundle"],
++    },
+// ...
+```
+
+You can then restart your server and the currency selector should appear in the header. If this is not the case, please check if you have changed the header behavior and add `<CurrencySelector />` from `theme/modules/User/CurrencySelector` in the relevant locations. In Front-Commerce's core, [it is used in `theme/layouts/Header/TopBar`](https://gitlab.com/front-commerce/front-commerce/-/blob/11cda1367e693fc228cf2bf92b3f7cc54c260e2f/src/web/theme/layouts/Header/TopBar.js#L23).
+
+### Regions/State in addresses for some countries
+
+Front-Commerce will now display a region/state selector in address forms when required by Magento (both 1 & 2) configuration. Existing applications may have some migration steps to benefit from this feature.
+
+#### Update your overridden Address components
+
+While we've made several efforts to implement it in a backward compatible way (no fatal error), you will not see this additional selector if you overrode some key components. The selector will only appear if it receives the expected data!
+
+Please check for overrides of the following components (and update them accordingly):
+- **ToDo (with links to changelog && diffs)**
+
+#### Ensure your Magento instance supports this feature
+
+You must ensure that the Magento module is up-to-date, so the required configurations are made available through the API.
+
+If that's not possible, for Magento2 you can manually expose configurations from the version `2.0.0` of the module. If you can't upgrade to `2.2.0` then add the configuration below ([as documented in "Using Magento Configuration"](/docs/magento2/using-magento-configuration.html#Fetch-configurations-from-frontcommerce-storeConfigs-Magento-endpoint)):
+```
+<item name="general/region/state_required" xsi:type="string">general/region/state_required</item>
+<item name="general/region/display_all" xsi:type="string">general/region/display_all</item>
+```
+
 ## `2.0.0` -> `2.1.0`
 
 ### Magento 2.3.5 and <abbr title="Multiple Source Inventory">MSI</abbr> Support
