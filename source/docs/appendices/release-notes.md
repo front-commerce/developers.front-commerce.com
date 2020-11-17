@@ -23,7 +23,7 @@ Compatible with:
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.2.0)
 
-Requirements: same than [2.1.0](#2-1-0)
+Requirements: same as [2.1.0](#2-1-0)
 
 ## 2.1.3
 
@@ -33,7 +33,7 @@ Requirements: same than [2.1.0](#2-1-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.3)
 
-Requirements: same than [2.1.0](#2-1-0)
+Requirements: same as [2.1.0](#2-1-0)
 
 ## 2.1.2
 
@@ -44,7 +44,7 @@ Requirements: same than [2.1.0](#2-1-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.2)
 
-Requirements: same than [2.1.0](#2-1-0)
+Requirements: same as [2.1.0](#2-1-0)
 
 > > > > > > > master
 
@@ -54,7 +54,7 @@ Requirements: same than [2.1.0](#2-1-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.1)
 
-Requirements: same than [2.1.0](#2-1-0)
+Requirements: same as [2.1.0](#2-1-0)
 
 ## 2.1.0
 
