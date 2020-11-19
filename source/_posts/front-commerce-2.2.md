@@ -42,7 +42,7 @@ Don't want to choose? It is now possible to mix CMS pages from different sources
 - support credit memos in Magento 1
 - fixes in the checkout to improve the validation of the shipping step
 - support headless payments for Magento 1 modules (see [reference](/docs/magento1/headless-payments.html))
-- improved support for a wider range of HTML content in our `<Wysiwyg>` component along with DX to pinpoint obvious mistakes (see [front-commerce/front-commerce#45e421a3](https://gitlab.com/front-commerce/front-commerce/commit/45e421a371d1f289a9857a7cbbdcc7ab1e84f72c) - accessible to customers only)
+- improved support for a wider range of HTML content in our `<Wysiwyg>` component along with DX to pinpoint obvious mistakes
 - improve sitemap generation resilience with retries when the server is busy/unavailable during generation
 - created new helpers for developers to use Magento2's GraphQL API
 
