@@ -68,6 +68,7 @@ sidebar_categories:
     - docs/magento1/add-custom-endpoint
     - docs/magento1/event-list
     - docs/magento1/generate-api-doc
+    - docs/magento1/headless-payments
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
