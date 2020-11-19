@@ -17,8 +17,38 @@ Our Magento1 integration currently provides native adapters for the platforms be
   If you want to use a Payment module not yet listed above, please [contact us](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.
 </blockquote>
 
-## Implement a new Magento1 Payment method Adapter
+## Implement a new Magento1 Payment method
 
 <blockquote class="wip">
 **Work In Progress** This section will be documented in the future. In the meantime, please [contact us](mailto:contact@front-commerce.com) so we can show you the steps to create your own headless payment in Magento1.
 </blockquote>
+
+### Implement payment method with redirect after order
+
+<blockquote class="info">
+**Payment flows:** [Redirect after order](/docs/advanced/payments/payment-workflows.html#Redirect-After-Order)
+</blockquote>
+
+1. Add your own payment instance on `config.xml` file
+
+  First think you need to do, it's create your own model who implement `FrontCommerce_Integration_Model_Headlesspayment_Interface` class and add on `<config><frontcommerce><payment_instances><{payment_method_code}>{class_name}</{payment_method_code}></payment_instances></frontcommerce></config>` xml node in your `config.xml` file.
+
+  note: don't forget to replace `{payment_method_code}` by your method payment code and `{class_name}` by class name who you just create
+
+2. Implement mandatory function in your own model
+  - `isHtml(): Boolean` if your payment return type is HTML content or not
+  - `isUrl(): Boolean` if your payment return type is URL or not
+  - `getValue(Mage_Sales_Model_Order $order): String` return URL or HTML when this payment method is call on front
+  - `getResponseSuccess(String $action, [String] $additionalData): Boolean` Failed or success payment action
+  - `getResponseMessage(String $action, [String] $additionalData): [String]` Failed action message
+    - in success case: return array of `quote_id` and `order_id`:
+    ```
+    return [
+      (int) $additionalData['quote_id'], (int)  $additionalData['order_id']
+    ];
+    ```
+    - in faile case: return array of error message:
+    ```
+    return [{error message}]
+    ```
+  - `returnAction(String $action, [String] $additionalData): Boolean` Callback after payment, for exemple, you can add your custom code here for retrieve customer cart after cancel payment
