@@ -24,9 +24,9 @@ This page contains the most common errors you may encounter, along with informat
 3. does the response send you a cookie with a valid domain?
 4. are secrets for your backend correctly set?
 5. is the session store correctly set? (see `config/sessions.js`)
-    * for Filesystem storage: ensure you have the permissions to write session files (the default location is `.front-commerce/sessions`)
-    * using another storage: is its configuration valid?
-    * having multiple Front-Commerce processes: ensure that you are using a session store that's compatible with a distributed architecture (ex: redis, memcached, etc.).
+   - for Filesystem storage: ensure you have the permissions to write session files (the default location is `.front-commerce/sessions`)
+   - using another storage: is its configuration valid?
+   - having multiple Front-Commerce processes: ensure that you are using a session store that's compatible with a distributed architecture (ex: redis, memcached, etc.).
 
 ## Redirection loop
 
@@ -35,12 +35,12 @@ This page contains the most common errors you may encounter, along with informat
 1. check the stdout/stderr of your server and the `/logs` folder, there may be useful information
 2. what is the output of a `curl -I http://example.com` (replace with the url causing issues)
 3. it could be a redirection from the shop detection mechanism that redirects to the default one because it cannot find one matching the current url
-    1. turn on the configuration debug mode using `DEBUG="experimental:front-commerce:config"`
-    2. is the list of `validUrls` correct? Are urls from `config/stores.js` valid?
-    3. is the `url` logged the one you used in your browser? If it has the port in it, it's likely because your server proxy/load balancer is not well configured. Please configure it so it adds `X-Forwarded-Proto`, `X-Forwarded-Port` and `X-Forwarded-For` headers ([classic headers for proxies and load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/x-forwarded-headers.html)). [Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/).
+   1. turn on the configuration debug mode using `DEBUG="experimental:front-commerce:config"`
+   2. is the list of `validUrls` correct? Are urls from `config/stores.js` valid?
+   3. is the `url` logged the one you used in your browser? If it has the port in it, it's likely because your server proxy/load balancer is not well configured. Please configure it so it adds `X-Forwarded-Proto`, `X-Forwarded-Port` and `X-Forwarded-For` headers ([classic headers for proxies and load balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/x-forwarded-headers.html)). [Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/).
 4. it is redirecting to HTTPS although I don't have HTTPS on my server
-    1. if it is your production server, please fix this! This is a severe security issue for your website and your users. It can also negatively impact your SEO and the trust of your users.
-    2. if you know what you are doing, please make sure that your proxy sets `X-Forwarded-Proto` with `https` ([Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/))
+   1. if it is your production server, please fix this! This is a severe security issue for your website and your users. It can also negatively impact your SEO and the trust of your users.
+   2. if you know what you are doing, please make sure that your proxy sets `X-Forwarded-Proto` with `https` ([Example configuration for nginx proxy](https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/))
 
 ## JavaScript is not loading on my site
 
@@ -62,10 +62,10 @@ This page contains the most common errors you may encounter, along with informat
 
 Build your application locally with the appropriate debug flag: `DEBUG=front-commerce:webpack npm run build`
 
-* look for big libraries and try to avoid their usage client side if possible, or find smaller alternatives (e.g: [date-fns](https://date-fns.org/) over [moment.js](https://momentjs.com/))
-* look for libraries achieving the same task, and see if you couldn't adapt your code to only use one of them
-* ensure that there is no import of server side code in your client bundle
-* look for libraries duplicated across different chunks, they may be candidates to code splitting using loadable components
+- look for big libraries and try to avoid their usage client side if possible, or find smaller alternatives (e.g: [date-fns](https://date-fns.org/) over [moment.js](https://momentjs.com/))
+- look for libraries achieving the same task, and see if you couldn't adapt your code to only use one of them
+- ensure that there is no import of server side code in your client bundle
+- look for libraries duplicated across different chunks, they may be candidates to code splitting using loadable components
 
 See https://developers.google.com/web/fundamentals/performance/webpack/monitor-and-analyze for further information
 
@@ -94,19 +94,20 @@ The `express.graphQLBodyParserConfig.limit` (for GraphQL payloads size) and `exp
 </blockquote>
 
 Here is an example of such config provider:
+
 ```js
 export default {
   name: "express-configuration-overrides",
   values: Promise.resolve({
     express: {
       graphQLBodyParserConfig: {
-        limit: "10mb" // default 1mb
+        limit: "10mb", // default 1mb
       },
       jsonParserConfig: {
-        limit: "10mb" // default 1mb
-      }
-    }
-  })
+        limit: "10mb", // default 1mb
+      },
+    },
+  }),
 };
 ```
 
