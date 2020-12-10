@@ -7,6 +7,19 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## Next
+
+### Virtual products for Magento 2
+
+In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use theme in Magento 2.
+
+### Street lines
+
+Previously, the address form could hold two lines for the street input. It is now using the number of lines configured in the Magento backend (Magento 1 & Magento 2). In order to use this feature, please make sure that:
+
+- your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
+- you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at [this commit](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) to learn how to update your own component.
+
 ## `2.1.x` -> `2.2.0`
 
 ### New Magento 1 features
