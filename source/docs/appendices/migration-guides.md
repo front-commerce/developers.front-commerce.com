@@ -18,7 +18,7 @@ In release 2.2.0 we've added support for Virtual Products in Magento 1. It is no
 Previously, the address form could hold two lines for the street input. It is now using the number of lines configured in the Magento backend (Magento 1 & Magento 2). In order to use this feature, please make sure that:
 
 - your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
-- you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at [this commit](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) to learn how to update your own component.
+- you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at these two commits ([807fa0a8](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) & [49be4da9](https://gitlab.com/front-commerce/front-commerce/-/commit/49be4da9d0efa47eaac8d06dad80a689f4260dc6)) to learn how to update your own component.
 
 ## `2.1.x` -> `2.2.0`
 
