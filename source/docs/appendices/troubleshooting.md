@@ -121,6 +121,22 @@ The provider must then be [registered in your application](/docs/advanced/server
 2. Is your image size properly defined? There is a validation step that should trigger some logs in your server if it is not defined properly.
 3. Is the size of your image preset (in `src/config/images.js`) an odd number? Since by default the images are resized in a 0.5 size, odd numbers can't be used in `width` or `height`. Please change it to an adjacent pair number.
 
+## I cannot view information when my product SKU contains a slash (`/`)
+
+> You experience 404 pages or errors when accessing a product containing a `/` in its SKU
+
+This is because the SKU is used (for Magento 2 and Magento 1 at least) as a parameter in a REST API. Such API calls can be incorrectly routed to the platform due to server configuration.
+
+First, enable `DEBUG=axios` to view the failing API calls so you can reproduce it outside of Front-Commerce.
+
+Then check your server documentation to see how to configure it accordingly:
+- in Apache, you will have to add `AllowEncodedSlashes On` to your VirtualHost.
+- in Nginx, `proxy_pass`.
+
+Sources:
+- https://github.com/magento/magento2/issues/13343#issuecomment-362783825 (and https://github.com/magento/magento2/issues?q=is%3Aissue+sort%3Aupdated-desc+slash+sku+api+is%3Aclosed)
+- https://stackoverflow.com/a/4443129
+
 ## Another issue?
 
 Please contact our support or open an issue describing the encountered problem along with your environment using `npx envinfo --system --binaries`
