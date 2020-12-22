@@ -151,15 +151,27 @@ module.exports = {
         name: "google-analytics",
         // Usually we always need to set it to true since GDPR
         needConsent: true,
-        settings: {
+        // Some integrations may have a privacy mode allowing them
+        // to be enabled by default. Use this configuration to always
+        // enable it. It is irrelevant if `needConsent` is `false`.
+        enabledByDefault: true,
+
+        // Settings can be an object or a function that will be called
+        // with the current consent authorization from the visitor.
+        // Using a function can allow to have different settings depending
+        // on the context
+        settings: (authorization) => {
           // Settings needed by the integration
           // The fact that it the key "Google Analytics" is
           // defined by the integration itself
-          "Google Analytics": {
-            trackingId: "123456",
-            enhancedEcommerce: true
-          }
+          return {
+            "Google Analytics": {
+              trackingId: "UA-123-1",
+              anonymizeIp: !authorization,
+            },
+          };
         },
+
         // integration that will add itself to the `analytics.js` lib
         script: () =>
           require("@segment/analytics.js-integration-google-analytics")
