@@ -24,7 +24,7 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 ### `config/website.js`
 
 <blockquote class="feature--new">
-  _`search.attributeFacetMinimumDocumentCount` and `search.categoryFacetMinimumDocumentCount` have been added in Front-Commerce `2.3.0`. Before this version, Front-Commerce behaves as if those parameters are set to 1._
+  _`search.attributeFacetMinimumDocumentCount` and `search.categoryFacetMinimumDocumentCount` have been added in Front-Commerce `2.3.0`. Before this version, Front-Commerce behaved as if those parameters were set to 1._
 </blockquote>
 
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
