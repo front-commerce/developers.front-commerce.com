@@ -175,6 +175,16 @@ Here is a list of available debug namespaces:
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 - `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
 
+<blockquote class="note">
+In `development` environment, the source maps for both the server and the client sides are generated.
+That means you can easily use the step by step debugging for both, see:
+
+<ul>
+  <li>[Node.js debugging guide](https://nodejs.org/en/docs/guides/debugging-getting-started/)</li>
+  <li>[The Firefox JavaScript Debugger](https://developer.mozilla.org/en-US/docs/Tools/Debugger) or [Debugging JavaScript in Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/javascript/)</li>
+</ul>
+</blockquote>
+
 ## Deprecation warnings
 
 Front-Commerce leverages the [depd](https://www.npmjs.com/package/depd) package to show deprecation warnings so you can upgrade your codebase for compatibility with the next major version.
