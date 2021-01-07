@@ -10,6 +10,7 @@ In this section, you will learn how payments can be added to an application. It 
 - [Understanding payment workflows](/docs/advanced/payments/payment-workflows.html)
 - [Front-Commerce payments](/docs/advanced/payments/front-commerce-payments.html)
 - [Affirm](/docs/advanced/payments/affirm.html)
+- [BuyBox](/docs/advanced/payments/buybox.html)
 - [Ingenico](/docs/advanced/payments/ingenico.html)
 - [Paypal](/docs/advanced/payments/paypal.html)
 - [Payzen](/docs/advanced/payments/payzen.html)
