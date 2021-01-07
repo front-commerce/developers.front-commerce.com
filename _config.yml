@@ -75,6 +75,7 @@ sidebar_categories:
     - docs/advanced/payments/front-commerce-payments
     - docs/advanced/payments/adyen
     - docs/advanced/payments/affirm
+    - docs/advanced/payments/buybox
     - docs/advanced/payments/ingenico
     - docs/advanced/payments/paypal
     - docs/advanced/payments/payzen
