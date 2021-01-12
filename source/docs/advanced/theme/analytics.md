@@ -174,7 +174,7 @@ module.exports = {
 
         // integration that will add itself to the `analytics.js` lib
         script: () =>
-          require("@segment/analytics.js-integration-google-analytics")
+          import("@segment/analytics.js-integration-google-analytics"),
       }
       // You can add other integrations here. They are loaded asynchronously and
       // won't impact the user's performance too much (as long as there are not
