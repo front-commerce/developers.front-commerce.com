@@ -10,6 +10,7 @@ Front-Commerce’s Magento module provides a generic way to expose Magento payme
 ## Supported Payment platforms
 
 Our Magento2 integration currently provides native adapters for the platforms below, learn how to install each one of them from the related documentation page:
+
 - [Affirm](/docs/advanced/payments/affirm.html#Magento2-module)
 - [Ingenico](/docs/advanced/payments/ingenico.html#Magento2-module)
 - [Paypal](/docs/advanced/payments/paypal.html#Magento2-module)
@@ -30,11 +31,13 @@ We will explain the mechanisms available to implement your own adapter if suppor
 **Payment Adapters must implement the [`\FrontCommerce\Integration\Api\HeadlessPayment\Adapter`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Api/HeadlessPayment/Adapter.php) interface no matter the [workflows](/docs/advanced/payments/payment-workflows.html) they support.**
 
 Front-Commerce module will simulate a Magento action as if the page was loaded in a frontend context. It will:
+
 1. create a `RequestInterface` instance
 2. dispatch the request through Magento’s Front Controller
 3. converts the response into a Front-Commerce headless API response
 
 Adapters must implement methods that are called at key times in order to:
+
 - allow to initialize the request
 - or convert a response depending on the payment module internal implementations
 
@@ -158,3 +161,30 @@ Below is an example from Front-Commerce's core:
 <blockquote class="note">
 We encourage you to investigate existing Adapters' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/tree/master/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter) to learn about advanced patterns.
 </blockquote>
+
+### Allow the Payment's URLs
+
+Since we're using Magento's modules, this means that we also need to use their URLs. However, in Front-Commerce, there's is an option that let's you disable the Magento's front-end in order to redirect users from Magento to Front-Commerce.
+
+Using the `di.xml`, you will need to inject routing policies in order to make sure that the URLs needed for the payment method is allowed.
+
+<blockquote class="important">
+**Important:** Please make sure to test your payment after you've enabled the option: "Stores > Configuration > General > General > Front-Commerce > Disable Magento Front-End"
+</blockquote>
+
+Below is an example from Front-Commerce's core:
+
+```xml
+<type name="FrontCommerce\Integration\Observer\DisableFrontEnd">
+    <arguments>
+        <argument name="routingPolicies" xsi:type="array">
+            <item name="/^.*\/?\bswagger\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+            <item name="/^.*\/?\bstatic\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+            <item name="/^.*\/?\bpaypal\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+            <item name="/^.*\/?\bpayzen\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+            <item name="/^.*\/?\bops\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+            <item name="/^.*\/?\badyen\b\//" xsi:type="const">FrontCommerce\Integration\Observer\DisableFrontEnd::ROUTING_POLICY_ACCEPT</item>
+        </argument>
+    </arguments>
+</type>
+```
