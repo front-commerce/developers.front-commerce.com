@@ -162,7 +162,7 @@ Below is an example from Front-Commerce's core:
 We encourage you to investigate existing Adapters' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/tree/master/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter) to learn about advanced patterns.
 </blockquote>
 
-### Allow the Payment's URLs
+## Allow the Payment's URLs
 
 Since we're using Magento's modules, this means that we also need to use their URLs. However, in Front-Commerce, there's is an option that let's you disable the Magento's front-end in order to redirect users from Magento to Front-Commerce.
 
