@@ -61,7 +61,9 @@ export default branchServerClient(
 )(MyClientSideComponent);
 ```
 
-Please keep in mind that the server version will always be displayed first. This means that if you are on a category page and navigate to a product page, it will first display the server version of the product page. When it's done loading, it will then display the client version. The goal here is to enable faster navigation and display only critical information on page mount.
+Please keep in mind that by default the server version will always be displayed first. This means that if you are on a category page and navigate to a product page, it will first display the server version of the product page. When it's done loading, it will then display the client version. The goal here is to enable faster navigation and display only critical information on page mount.
+
+If you want to change this behavior and display the client version of the branch, you can use **`branchServerClient`'s third parameter** to pass the `{ preferClientSide: true }` option.
 
 <blockquote class="tip">
   **Tip:** the function name (branch**Server**_Client_) is a good way to remember that the first parameter is what is rendered on the **server**, and the second on the _client_.

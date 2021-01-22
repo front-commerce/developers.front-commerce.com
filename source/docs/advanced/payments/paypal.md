@@ -56,11 +56,14 @@ In your Front-Commerce application:
 ### Register your Paypal payment component
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register Paypal
+
 ```diff
 +import PaypalButton from "./PaypalButton";
 
@@ -100,15 +103,30 @@ The Paypal payment module is extensible. It leverages Front-Commerce's "data tra
 Both the payer data and payer units objects can be customized at application level. It allows to add additional metadata depending on your own logic. For this, you can use the `registerPayerDataTransform` and `registerPurchaseUnitsDataTransform` methods of the Paypal loader to add your custom transformers.
 
 See the tests for an example (while a detailed documentation is being written):
-* https://gitlab.com/front-commerce/front-commerce/-/blob/c1ca1ef8a60ecb545e2758d04a4d11577e764658/src/server/modules/payment-paypal/__pacts__/loaders.js#L230
-* https://gitlab.com/front-commerce/front-commerce/-/blob/c1ca1ef8a60ecb545e2758d04a4d11577e764658/src/server/modules/payment-paypal/__pacts__/loaders.js#L281
+
+- https://gitlab.com/front-commerce/front-commerce/-/blob/c1ca1ef8a60ecb545e2758d04a4d11577e764658/src/server/modules/payment-paypal/__pacts__/loaders.js#L230
+- https://gitlab.com/front-commerce/front-commerce/-/blob/c1ca1ef8a60ecb545e2758d04a4d11577e764658/src/server/modules/payment-paypal/__pacts__/loaders.js#L281
 
 ## Magento2 module
 
 <blockquote class="wip">
-**Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from [existing Magento resources](https://docs.magento.com/user-guide/configuration/sales/paypal-express-checkout.html). Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
 </blockquote>
 
 Front-Commerce Magento2 module contains [headless payment adapters](/docs/magento2/headless-payments.html) for the **Paypal Express** payment method.
 
 The Paypal module must be configured in a normal way, as for a non-headless Magento store.
+
+## Magento1 module
+
+<blockquote class="wip">
+**Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+</blockquote>
+
+Front-Commerce Magento1 module contains [headless payment adapters](/docs/magento1/headless-payments.html) for the **Paypal Standard** payment method.
+
+The Paypal module must be configured in a normal way, as for a non-headless Magento store.
+
+<blockquote class="important">
+**Important:** Depending on your Magento1 configuration, you may need additional configuration steps. Please [contact us](mailto:contact@front-commerce.com) if you encounter any issue.
+</blockquote>

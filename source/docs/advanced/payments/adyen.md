@@ -87,7 +87,8 @@ To allow loading stripe related remote resources:
       styleSrc: [],
 -      imgSrc: [],
 +      imgSrc: ["*.adyen.com"],
-      connectSrc: [],
+-      connectSrc: [],
++      connectSrc: ["*.adyen.com"],
       baseUri: []
     }
   },

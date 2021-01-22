@@ -9,7 +9,18 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.2.x` -> `2.3.0`
 
-## Bundle products (Magento 2)
+### Virtual products for Magento 2
+
+In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use theme in Magento 2.
+
+### Street lines
+
+Previously, the address form could hold two lines for the street input. It is now using the number of lines configured in the Magento backend (Magento 1 & Magento 2). In order to use this feature, please make sure that:
+
+- your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
+- you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at these two commits ([807fa0a8](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) & [49be4da9](https://gitlab.com/front-commerce/front-commerce/-/commit/49be4da9d0efa47eaac8d06dad80a689f4260dc6)) to learn how to update your own component.
+
+### Bundle products (Magento 2)
 
 The Bundle products are now available for Magento 2. In order to enable these, please
 keep in mind that you will need to update your Magento 2's Front-Commerce module to version 2.2.0.
@@ -33,7 +44,7 @@ Moreover, if you have cache strategies influence price loaders, you should add t
 // ...
 ```
 
-## Optional zip codes (Magento 2 & Magento 1)
+### Optional zip codes (Magento 2 & Magento 1)
 
 Some countries don't need zipcodes for their addresses. This is now possible in both Magento 1 & Magento 2. In order to support this feature, you will need to update the Front-Commerce modules in Magento (2.2.0 for Magento 2 & 1.3.0 for Magento 1).
 
@@ -45,9 +56,10 @@ If you have updated the `Form`, `AddressForm` or `CountryFieldWithRegion` compon
 
 Here is the list of newly supported features for Magento 1 coming with the 2.2.0 release:
 
-* Guest Checkout
-* Bundle Products
-* Virtual Products
+- Guest Checkout
+- Bundle Products
+- Virtual Products
+- Credit Memo
 
 In order to get these, you must upgrade your Magento 1's FC module to version 1.2.0.
 
@@ -57,12 +69,17 @@ For the Guest Checkout, you need to make sure that you have enabled it in Magent
 
 If you are looking for these features in Magento 2, please contact us.
 
+### New Magento 2 features
+
+The most notable newly available feature for Magento 2 is the support for Grouped Products. To enable these, you need to make sure that your Magento has the module `magento/module-grouped-product-graph-ql` installed. This is by default since 2.3.5.
+
 ### Currency selector for Magento 1
 
 A store in Magento can now have multiple currencies and user can switch between them. To enable this feature, you need to:
 
 1. Enable multiple currencies in your Magento admin panel ([first part of this blog post](https://inchoo.net/magento/how-to-add-currency-selector-to-magentos-header/))
 2. Update your `config/stores.js` by adding an `availableCurrencies` key to the relevant store:
+
 ```diff
 module.exports = {
   // the key is the code of your store
@@ -74,7 +91,9 @@ module.exports = {
   },
 }
 ```
+
 3. Update your `config/caching.js` strategies in case you are using redis:
+
 ```diff
 // ...
   strategies: [
@@ -90,7 +109,7 @@ module.exports = {
 +      implementation: "PerCurrency",
 +      // The support list should contain any loader that send different
 +      // currency values based on the user's selected currency
-+      supports: ["CatalogPrice", "CatalogProductChildrenPrice"],
++      supports: ["CatalogPrice", "CatalogProductChildrenPrice", "CatalogProductBundle"],
 +    },
 // ...
 ```
@@ -105,7 +124,8 @@ Front-Commerce will now display a region/state selector in address forms when re
 
 While we've made several efforts to implement it in a backward compatible way (no fatal error), you will not see this additional selector if you overrode some key components. The selector will only appear if it receives the expected data!
 
-Please check for overrides of the following components (and update them accordingly):
+Please check for overrides of the Address related components (and update them accordingly).
+
 - **ToDo (with links to changelog && diffs)**
 
 #### Ensure your Magento instance supports this feature
@@ -113,6 +133,7 @@ Please check for overrides of the following components (and update them accordin
 You must ensure that the Magento module is up-to-date, so the required configurations are made available through the API.
 
 If that's not possible, for Magento2 you can manually expose configurations from the version `2.0.0` of the module. If you can't upgrade to `2.2.0` then add the configuration below ([as documented in "Using Magento Configuration"](/docs/magento2/using-magento-configuration.html#Fetch-configurations-from-frontcommerce-storeConfigs-Magento-endpoint)):
+
 ```
 <item name="general/region/state_required" xsi:type="string">general/region/state_required</item>
 <item name="general/region/display_all" xsi:type="string">general/region/display_all</item>
@@ -267,8 +288,8 @@ const ids = [1, 2, 3];
 
 **<abbr title="Too Long; Didn't Read">TL;DR</abbr>:**
 
-* GraphQL modules using remote schema must now provide a custom _executor_ (that will execute remote fetching queries), instead of the deprecated `apolloLinkHttpOptions` and `linkContextBuilders` options (we shipped helpers to help in this task)
-* GraphQL transforms such as `FilterRootFields` must now be imported from `@graphql-tools/wrap` instead of `graphql-tools`.
+- GraphQL modules using remote schema must now provide a custom _executor_ (that will execute remote fetching queries), instead of the deprecated `apolloLinkHttpOptions` and `linkContextBuilders` options (we shipped helpers to help in this task)
+- GraphQL transforms such as `FilterRootFields` must now be imported from `@graphql-tools/wrap` instead of `graphql-tools`.
 
 Here is an example from [Front-Commerce's Magento 2 GraphQL remote schema module's migration](https://gitlab.com/front-commerce/front-commerce/-/commit/964cb0dee8b614053c9147997f26c07327e61a0a#e9c8fef58455edd870533da439f028dca7618e8c_1_1):
 
@@ -307,7 +328,7 @@ import log from "../../../../scripts/log";
 
 The most notable breaking change is related to how duplicate headers are handled (see https://github.com/axios/axios/pull/874 and [the whole changelog](https://github.com/axios/axios/blob/master/CHANGELOG.md) if interested). It should not impact your application though.
 
-Another low-level change from 0.17 is that the base url is now prepended to the `config.url` [**AFTER** interceptors (and not *BEFORE*)](https://github.com/axios/axios/pull/950/files#diff-91dcec0516f33811ee5fa71297160b3bL40). **If your app relies on custom interceptors, please ensure they are still working correctly.**
+Another low-level change from 0.17 is that the base url is now prepended to the `config.url` [**AFTER** interceptors (and not _BEFORE_)](https://github.com/axios/axios/pull/950/files#diff-91dcec0516f33811ee5fa71297160b3bL40). **If your app relies on custom interceptors, please ensure they are still working correctly.**
 You can use the `finalUrlFromConfig` helper function from a helper module added to mimic `axios` core feature. See [this commit](https://gitlab.com/front-commerce/front-commerce/-/commit/3fff1a398f7b33d56546b987e15c5f5dc6d43524#24dda67967f430db4a7fe8010764e27d5d7d01b6_63_67) for an example.
 
 ### `react-intl`: changes for strings containing HTML tags

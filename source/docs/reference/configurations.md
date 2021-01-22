@@ -23,6 +23,10 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 
 ### `config/website.js`
 
+<blockquote class="feature--new">
+  _`search.attributeFacetMinimumDocumentCount` and `search.categoryFacetMinimumDocumentCount` have been added in Front-Commerce `2.3.0`. Before this version, Front-Commerce behaved as if those parameters were set to 1._
+</blockquote>
+
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
 * `root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu. It will then be the children of this category that will be displayed.
@@ -50,7 +54,10 @@ This configuration file should contain any thing that impacts the content of you
 * `search`: an object that defines how the Elasticsearch queries should be made.
   * `dynamicFacetSize`: number of filters to fetch from Elasticsearch
   * `ignoredAttributeKeys`: filters that are returned by Elasticsearch but we don't need to display
+  * `attributeFacetMinimumDocumentCount`: the minimum number of document an attribute facet needs to match to be displayed. It is set to 1 by default, that means only attribute facets leading to at least one document are displayed. By setting it to 0, attribute facets leading to no document are also displayed but disabled in the UI.
   * `authorizedCategoriesFacet`: array of ids of the categories that should be displayed in the filters. The string `"*"` can be used to allow all categories. Default value: `[]`.
+  * `categoryFacetMinimumDocumentCount`: the minimum number of document a category facet needs to match to be displayed. It is set to 1 by default, that means only category facets leading to at least one document are displayed. By setting it to 0, category facets leading to no document are also displayed but disabled in the UI.
+* `theme-color`: a CSS value that will be used in your layout for a `<meta name="theme-color" />`
 * `phoneNumber`: support/contact number of the website
 * `email`: support/contact email of the website
 * `maxAddressLength`: max length for one line of address ([default is 35](https://webarchive.nationalarchives.gov.uk/+/http://www.cabinetoffice.gov.uk/media/254290/GDS%20Catalogue%20Vol%202.pdf))

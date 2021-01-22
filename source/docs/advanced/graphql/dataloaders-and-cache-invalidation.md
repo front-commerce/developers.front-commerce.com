@@ -439,7 +439,8 @@ export default {
       supports: [
         "CatalogPrice",
         "CatalogProductChildrenPrice",
-        "CatalogProductBundlePrice",
+        "CatalogProductBundlePrice", // only for Magento 2
+        "CatalogProductBundle", // only for Magento 1
       ],
     },
   ]

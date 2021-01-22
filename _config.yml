@@ -50,6 +50,7 @@ sidebar_categories:
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
+    - docs/advanced/production-ready/front-commerce-and-pm2
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -66,14 +67,17 @@ sidebar_categories:
     - docs/magento1/overview
     - docs/magento1/installation
     - docs/magento1/add-custom-endpoint
+    - docs/magento1/exposing-additional-attributes
     - docs/magento1/event-list
     - docs/magento1/generate-api-doc
+    - docs/magento1/headless-payments
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
     - docs/advanced/payments/front-commerce-payments
     - docs/advanced/payments/adyen
     - docs/advanced/payments/affirm
+    - docs/advanced/payments/buybox
     - docs/advanced/payments/ingenico
     - docs/advanced/payments/paypal
     - docs/advanced/payments/payzen
