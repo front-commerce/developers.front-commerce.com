@@ -360,7 +360,8 @@ export default {
         // see https://www.npmjs.com/package/redis#options-object-properties
         host: "127.0.0.1",
         port: 6379,
-        db: 1
+        db: 1,
+        // defaultExpireInSeconds: 864000 // default: ten days
       }
     }
   ]
