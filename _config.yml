@@ -66,6 +66,7 @@ sidebar_categories:
     - docs/magento1/overview
     - docs/magento1/installation
     - docs/magento1/add-custom-endpoint
+    - docs/magento1/exposing-additional-attributes
     - docs/magento1/event-list
     - docs/magento1/generate-api-doc
     - docs/magento1/headless-payments
