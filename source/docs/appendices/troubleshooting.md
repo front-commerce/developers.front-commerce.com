@@ -101,17 +101,29 @@ export default {
   values: Promise.resolve({
     express: {
       graphQLBodyParserConfig: {
-        limit: "10mb", // default 1mb
+        limit: "10mb" // default 1mb
       },
       jsonParserConfig: {
-        limit: "10mb", // default 1mb
-      },
-    },
-  }),
+        limit: "10mb" // default 1mb
+      }
+    }
+  })
 };
 ```
 
 The provider must then be [registered in your application](/docs/advanced/server/configurations.html#Register-a-configuration-provider) as any other one.
+
+## The signature is invalid. Verify and try again.
+
+> **Magento2** returns a 401 HTTP Code with the following error message:
+> `The signature is invalid. Verify and try again.`
+
+It is very likely an OAuth error, for a feature using an **Admin loader** in Front-Commerce.
+
+1. ensure your OAuth configuration is correct. If it is correct, you might be able to view orders from a Customer account.
+2. ensure your Magento application [is patched with this fix for ZF1 OAuth Signature class](https://github.com/magento/zf1/pull/34)
+
+If the problem persists, please contact us.
 
 ## My images are not loading properly
 
@@ -119,7 +131,7 @@ The provider must then be [registered in your application](/docs/advanced/server
 
 1. Is your Magento endpoint correctly configured? A common error is having an URL with `http` instead of `https`.
 2. Is your image size properly defined? There is a validation step that should trigger some logs in your server if it is not defined properly.
-3. Is the size of your image preset (in `src/config/images.js`) an odd number? Since by default the images are resized in a 0.5 size, odd numbers can't be used in `width` or `height`. Please change it to an adjacent pair number.
+3. Is the size of your image preset (in `src/config/images.js`) an odd number? Since by default the images are resized in a 0.5 size, **odd numbers can't be used** in `width` or `height`. Please change it to an adjacent pair number.
 
 ## I cannot view information when my product SKU contains a slash (`/`)
 
