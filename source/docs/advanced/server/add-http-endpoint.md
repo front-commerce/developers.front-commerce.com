@@ -110,3 +110,23 @@ export default {
 Indeed, if you don't set this key to `true`, Front-Commerce will check that you don't setup an invalid path.
 
 For instance, if your application is a migration from an older website, you might want to intercept all your requests to redirect old URLs to new ones. In `express`, you can do this by creating a middleware. But this means that all the URLs need to pass by this middleware. This is what `__dangerouslyOverrideBasePathChecks` stands for: it lets you define the path you want (`/` in this case) even if it seems dangerous. Once it is set, the middleware can add the redirections for the relevant URLs.
+
+## Subdirectory based urls and global middleware
+
+If your store URLs are `/fr` and `/en`, you may want to add a root middleware that would for instance handle `/.well-known` urls.
+
+Using `endpoint.__dangerouslyOverrideBasePathChecks` as illustrated in the previous section would still mount the returned router under each sub-directory (`/fr/.well-known` and `/en/.well-known`).
+
+In this case, you must use the `rootEndpoint` key. It has the exact same signature than `endpoint` but will mount the returned router at the global level.
+
+```js
+import router from './express'
+
+export default {
+  rootEndpoint: {
+    __dangerouslyOverrideBasePathChecks: true,
+    path: "/",
+    router: router
+  }
+};
+```
