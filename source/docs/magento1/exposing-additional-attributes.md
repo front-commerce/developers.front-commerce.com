@@ -3,10 +3,28 @@ id: exposing-additional-attributes
 title: Exposing additional attributes
 ---
 
-In case where you need to expose new attributes on the existing endpoint you can simply add this attribute on your `api2.xml` file. For that, you need to retrieve resource name (API_UNIQUE_NAME value if you follow the basic structure shown in "Add custom endpoint section") and add your attribute(s) into the `attributes` node.
+In many shops, there are more attributes than the standard ones available in Magento. This can achieved in several ways in Magento but it then needs to be fetched by Front-Commerce. This can be done by exposing the newly created attributes in the endpoints already used in Front-Commerce. For instance, when retrieving products, Front-Commerce uses the `/api/rest/products` URL.
 
-- How to retrieve the resource name: you can retrieve this data on all `api2.xml` file.
-- Expose attribute `custom_attribute` for customer data:
+In this documentation guide, you will learn how to add these attributes to any endpoint.
+
+## Overview
+
+In case where you need to expose new attributes on the existing endpoint you can add this attribute on your `api2.xml` file.
+
+For that, you need to retrieve resource name (API_UNIQUE_NAME value if you follow the basic structure shown in "Add custom endpoint section") and add your attribute(s) into the `attributes` node.
+
+## Retrieve the resource name
+
+You can find this data on all `api2.xml` files.
+
+## Update your `api2.xml` file
+
+In this section you will learn how to expose a `custom_attribute` for the most common Magento resources.
+
+### Customer data
+
+It can be achieved with the following XML instructions:
+
 ```
 # Your api2.xml file
 ...
@@ -19,7 +37,11 @@ In case where you need to expose new attributes on the existing endpoint you can
 </resources>
 ...
 ```
-- Expose attribute `custom_attribute` for product data:
+
+### Product data
+
+It can be achieved with the following XML instructions:
+
 ```
 # Your api2.xml file
 ...
@@ -32,7 +54,11 @@ In case where you need to expose new attributes on the existing endpoint you can
 </resources>
 ...
 ```
-- Expose attribute `custom_attribute` for category data:
+
+### Category data
+
+It can be achieved with the following XML instructions:
+
 ```
 # Your api2.xml file
 ...
@@ -45,8 +71,10 @@ In case where you need to expose new attributes on the existing endpoint you can
 </resources>
 ...
 ```
-- Forcing attributes:
-Sometime some attributes is forcing exclude. You can retrieve an example on `app/code/community/Clockworkgeek/Extrarestful/etc/api2.xml` file:
+
+## For attributes excluded by another module
+
+Sometimes, you will stumble upon modules that force attribute's exclusion. You can find an example in the `app/code/community/Clockworkgeek/Extrarestful/etc/api2.xml` file:
 ```
 ...
 <category translate="title" module="extrarestful">
@@ -80,9 +108,10 @@ Sometime some attributes is forcing exclude. You can retrieve an example on `app
 </category>
 ...
 ```
-for avoid this exclude, you can simply retrieve node who you want to avoid in your own `api2.xml` file and set to `0`.
 
-example for avoiding image restriction for guest and customer:
+To revert this exclude, you should retrieve the node you want to "disable" in your own `api2.xml` file and set its value to `0`.
+
+For instance, to allow Guests and Customers to access categories images you would do as below:
 ```
 # Your api2.xml file
 ...
@@ -104,3 +133,5 @@ example for avoiding image restriction for guest and customer:
 </resources>
 ...
 ```
+
+If you have any questions, please do not hesitate to ask us.

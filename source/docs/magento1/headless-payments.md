@@ -23,7 +23,7 @@ Our Magento1 integration currently provides native adapters for the platforms be
 **Work In Progress** This section will be documented in the future. In the meantime, please [contact us](mailto:contact@front-commerce.com) so we can show you the steps to create your own headless payment in Magento1.
 </blockquote>
 
-### Implement payment method with redirect after order
+### Using the "redirect after order" flow
 
 <blockquote class="info">
 **Payment flows:** [Redirect after order](/docs/advanced/payments/payment-workflows.html#Redirect-After-Order)
@@ -31,23 +31,23 @@ Our Magento1 integration currently provides native adapters for the platforms be
 
 1. Add your own payment instance on `config.xml` file
 
-  First think you need to do, it's create your own model who implement `FrontCommerce_Integration_Model_Headlesspayment_Interface` class and add on `<config><frontcommerce><payment_instances><{payment_method_code}>{class_name}</{payment_method_code}></payment_instances></frontcommerce></config>` xml node in your `config.xml` file.
+  First, you need to create your own model implementing the `FrontCommerce_Integration_Model_Headlesspayment_Interface` interface and register it using the `<config><frontcommerce><payment_instances><{payment_method_code}>{class_name}</{payment_method_code}></payment_instances></frontcommerce></config>` XML node in your `config.xml` file.
 
-  note: don't forget to replace `{payment_method_code}` by your method payment code and `{class_name}` by class name who you just create
+  **Note:** don't forget to replace `{payment_method_code}` by your method payment code and `{class_name}` by the class names you've just created
 
-2. Implement mandatory function in your own model
+2. Implement the interface methods in your own model:
   - `isHtml(): Boolean` if your payment return type is HTML content or not
   - `isUrl(): Boolean` if your payment return type is URL or not
   - `getValue(Mage_Sales_Model_Order $order): String` return URL or HTML when this payment method is call on front
   - `getResponseSuccess(String $action, [String] $additionalData): Boolean` Failed or success payment action
   - `getResponseMessage(String $action, [String] $additionalData): [String]` Failed action message
-    - in success case: return array of `quote_id` and `order_id`:
+    - in success case, return an array of `quote_id` and `order_id`:
     ```
     return [
       (int) $additionalData['quote_id'], (int)  $additionalData['order_id']
     ];
     ```
-    - in faile case: return array of error message:
+    - in case of errors, return an array of error messages:
     ```
     return [{error message}]
     ```

@@ -3,7 +3,9 @@ id: add-custom-endpoint
 title: Add your custom endpoint
 ---
 
-When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from a REST endpoint of Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html). In this documentation, you will learn how to create a new REST endpoint in your Magento 1, this is not specific to Front-Commerce module and you can follow the Magento tutorial [How to Extend the Magento REST API to Use Coupon Auto Generation](https://devdocs.magento.com/guides/m1x/other/ht_extend_magento_rest_api.html) if you need to understand more about the Magento 1 REST Api.
+When customizing your shop, you may need to retrieve data from Magento. This is done by fetching data from a REST endpoint of Magento that will be used in a [GraphQL module](/docs/essentials/extend-the-graphql-schema.html).
+
+In this documentation, you will learn how to create a new REST endpoint in your Magento 1 project. This is not specific to Front-Commerce module and you can follow the Magento tutorial [How to Extend the Magento REST API to Use Coupon Auto Generation](https://devdocs.magento.com/guides/m1x/other/ht_extend_magento_rest_api.html) if you need to understand more about the Magento 1 REST API.
 
 This can be done by completing the following steps:
 
