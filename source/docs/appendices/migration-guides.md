@@ -7,7 +7,7 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## Next
+## `2.2.x` -> `2.3.0`
 
 ### Virtual products for Magento 2
 
@@ -19,6 +19,36 @@ Previously, the address form could hold two lines for the street input. It is no
 
 - your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
 - you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at these two commits ([807fa0a8](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) & [49be4da9](https://gitlab.com/front-commerce/front-commerce/-/commit/49be4da9d0efa47eaac8d06dad80a689f4260dc6)) to learn how to update your own component.
+
+### Bundle products (Magento 2)
+
+The Bundle products are now available for Magento 2. In order to enable these, please
+keep in mind that you will need to update your Magento 2's Front-Commerce module to version 2.2.0.
+
+Moreover, if you have cache strategies influence price loaders, you should add the ``loader key to the`supports` list:
+
+```diff
+// ...
+  strategies: [
+// ...
+    {
+      implementation: "PerCurrency",
+      // The support list should contain any loader that send different
+      // currency values based on the user's selected currency
+      supports: [
+        "CatalogPrice",
+        "CatalogProductChildrenPrice",
++        "CatalogProductBundlePrice",
+      ],
+    },
+// ...
+```
+
+### Optional zip codes (Magento 2 & Magento 1)
+
+Some countries don't need zipcodes for their addresses. This is now possible in both Magento 1 & Magento 2. In order to support this feature, you will need to update the Front-Commerce modules in Magento (2.2.0 for Magento 2 & 1.3.0 for Magento 1).
+
+If you have updated the `Form`, `AddressForm` or `CountryFieldWithRegion` components, please consider backporting the changes from Front-Commerce. Details can be found [in this merge request](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/272/diffs). If you have any trouble upgrading, feel free to contact us.
 
 ## `2.1.x` -> `2.2.0`
 
@@ -94,7 +124,7 @@ Front-Commerce will now display a region/state selector in address forms when re
 
 While we've made several efforts to implement it in a backward compatible way (no fatal error), you will not see this additional selector if you overrode some key components. The selector will only appear if it receives the expected data!
 
-Please check for overrides of the following components (and update them accordingly):
+Please check for overrides of the Address related components (and update them accordingly).
 
 - **ToDo (with links to changelog && diffs)**
 
@@ -172,7 +202,6 @@ Further details available on https://sharp.pixelplumbing.com/changelog.
 It allows developer to choose the version of `date-fns` they prefer and reduce the bundle size. Please ensure you are not using `date-fns` in your application, or install it in your project. The version in Front-Commerce was 1.30.1, and the latest available is 2.14.0.
 
 For backwards compatibility, you can run:
-
 ```shell
 npm install --save date-fns@1.30.1
 ```
@@ -230,7 +259,6 @@ See [the official documentation](https://www.elastic.co/guide/en/elasticsearch/c
 #### Deprecations removed
 
 The deprecations introduced in `2.0.0-rc.2` have been removed. Ensure that your `FRONT_COMMERCE_ES_ALIAS` only contains the index prefix for instance.
-
 > You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
 
 It is important to acknowledge [Elasticsearch related changes from our previous release](#Elasticsearch-related-changes) if you are upgrading from an earlier version.
@@ -344,7 +372,6 @@ The [`stripe`](https://www.npmjs.com/package/stripe) Node.js library was updated
 The react library has bigger changes. Front-Commerce is now using the official and rebranded [@stripe/react-stripe-js](https://www.npmjs.com/package/@stripe/react-stripe-js) instead of the deprecated [react-stripe-elements](https://github.com/stripe/react-stripe-elements) library. If you overrode Stripe components, please check [the "migrating from react-stripe-elements" guide](https://github.com/stripe/react-stripe-js/blob/master/docs/migrating.md) for migration instructions (imports etc…).
 
 We rewrote default components to use new Stripe components:
-
 - the `<StripeCheckoutElement>` has been simplified in FC, please reapply your changes to the latest version if you overrode it
 - the `<StripeCheckout>` component was totally rewritten to use hooks. It is very unlikely that you overrode it, but if you did please update your override.
 
@@ -355,7 +382,7 @@ Some minor changes were introduced in dependencies or while removing deprecated 
 - The `<ExistingAddress />` and `<NewAddress />` components used in the checkout were updated to use the `<Checkbox />` component as they were using a deprecated one. **Make sure it doesn't have an impact on your styles, or update your imports if you overrode them.**
 - `i18n-iso-countries` has been updated to 6.x, if your application was using its `getNames()` helper function, please ensure it works with [the new API](https://github.com/michaelwittig/node-i18n-iso-countries/releases/tag/v6.0.0)
 - webpack's `url-loader` updated from 3.x to 4.x. It may cause different mimetypes for rare types (see
-  [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
+ [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
 - `graphql` has been upgraded from 14.6.0 to 15.1.0. It is very likely backwards compatible for your app, even though backward incompatible changes were introduced for subtle use cases: see [v15.0.0 release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) if curious
 - `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](https://developers.front-commerce.com/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
 - The `ProductStockLoader` no longer takes the `FeatureFlag` loader as parameter. Please remove this parameter if you were instantiating it manually.
@@ -364,6 +391,7 @@ Some minor changes were introduced in dependencies or while removing deprecated 
 - `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used anymore
 - The Wishlist feature is now always enabled for Magento 2
 - The Sitemap generation script has been revamped to use the latest version of the underlying library that contained heavy changes (it would be safe to double check that no regression was introduced in your context and we'd appreciate an issue if you find something ;))
+
 
 ## `2.0.0-rc.1` -> `2.0.0-rc.2`
 
@@ -401,9 +429,9 @@ If you were manually building a Magento2 `CustomerLoader` instance, be aware tha
 
 Elasticsearch configuration is now more robust and support multi-store configuration. You may have to update your environment variables to match the stricter constraints:
 
-- `FRONT_COMMERCE_ES_DISABLE` MUST now be set to `true` if your application does not leverage Elasticsearch
-- `FRONT_COMMERCE_ES_HOST` MUST otherwise be set and **not end with a trailing slash**
-- `FRONT_COMMERCE_ES_ALIAS` SHOULD now be the index common prefix shared across stores. The store code is now appended by Front-Commerce. You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
+* `FRONT_COMMERCE_ES_DISABLE` MUST now be set to `true` if your application does not leverage Elasticsearch
+* `FRONT_COMMERCE_ES_HOST` MUST otherwise be set and **not end with a trailing slash**
+* `FRONT_COMMERCE_ES_ALIAS` SHOULD now be the index common prefix shared across stores. The store code is now appended by Front-Commerce. You will very likely have to change `FRONT_COMMERCE_ES_ALIAS=magento2_default` to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will be appended from your `stores.js` configuration).
 
 #### Deprecated APIs
 
@@ -482,10 +510,9 @@ This will allow better tree shaking and a better validation of your builds in th
 We've been accumulating technical debt about upgrading the libraries Front-Commerce depends on for a bit of time because our server code mixed syntaxes between commonjs and ES modules. This means that we now have upgraded everything to their latest version and you will need to update your code accordingly.
 
 Here the list of the main updates you need to be concerned about:
-
-- react and react-dom: `16.8.6` -> `16.8.9`
+* react and react-dom: `16.8.6` -> `16.8.9`
   New deprecations have been put in place by React itself. We've fixed them in Front-Commerce, but you will most likely have them in your own codebase. Please update your code accordingly. [Details](https://reactjs.org/blog/2019/08/08/react-v16.9.0.html#new-deprecations)
-- [autoprefixer](https://github.com/postcss/autoprefixer): `6.7.6` -> `9.6.1`
+* [autoprefixer](https://github.com/postcss/autoprefixer): `6.7.6` -> `9.6.1`
   Please define your [browserslist](https://github.com/browserslist/browserslist) in package.json. For instance it could look like this:
   ```
   "browserslist": [
@@ -495,29 +522,29 @@ Here the list of the main updates you need to be concerned about:
     "Firefox ESR"
   ]
   ```
-- [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5`
+* [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5`
   It should be compatible. However you will have warnings if you use `formsy-react-2`. Simply rename it to `formsy-react`. Please have a look at the [Abstract Formsy section](#Abstract-Formsy) below to learn about broader changes regarding the form inputs.
-- [react-helmet](https://github.com/nfl/react-helmet) -> [react-helmet-async](https://github.com/staylor/react-helmet-async)
+* [react-helmet](https://github.com/nfl/react-helmet) -> [react-helmet-async](https://github.com/staylor/react-helmet-async)
   It should be compatible. However you will have warnings if you use `react-helmet`. Simply rename it to `react-helmet-async`. The goal is to have a better SSR support.
-- [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
+* [react-intl](https://github.com/formatjs/react-intl): `2.4.0` -> `3.2.3`
   It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
   FormattedMessage no longer insert spans around your messages. This might lead to some styling issues. Add manually a `span` around your message if this is the case.
-- [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
+* [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
   It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
-- [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
+* [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
   Should be compatible since we are using a facade in FC `theme/components/helpers/MediaQuery`. If you are using something else, please make sure your code still works.
-- [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`
+* [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`
   See [CHANGELOG](https://github.com/ReactTraining/react-router/releases/tag/v5.0.0) for more details.
-  - Make sure that you always import your components from the `react-router` or `react-router-dom` and no longer use `react-router/XXX` or `react-router-dom/XXX`.
-  - You no longer have access to the old context. Please use `withRouter` or `<Route />` instead.
-- [recompose](https://github.com/acdlite/recompose): `0.26.0` -> `0.30.0`
+  * Make sure that you always import your components from the `react-router` or `react-router-dom` and no longer use `react-router/XXX` or `react-router-dom/XXX`.
+  * You no longer have access to the old context. Please use `withRouter` or `<Route />` instead.
+* [recompose](https://github.com/acdlite/recompose): `0.26.0` -> `0.30.0`
   `mapPropsStream` works but triggers warnings because of `react@16.9.0`.
   Please use `web/core/utils/mapPropsStream.js` instead.
-- migration of [loadable-components](https://github.com/smooth-code/loadable-components)@1.1.1 -> [@loadable/component](https://github.com/smooth-code/loadable-components)@5.10.2
-  - Rename your imports to `@loadable/component`
-  - Rename `LoadingComponent` to `fallback`
-  - Use an ErrorBoundary rather than the `ErrorComponent`
-  - Add `%%__HEAD__%%` and `%%__SPLIT__%%` to your `template/index.html` if you have one.
+* migration of [loadable-components](https://github.com/smooth-code/loadable-components)@1.1.1 -> [@loadable/component](https://github.com/smooth-code/loadable-components)@5.10.2
+  * Rename your imports to `@loadable/component`
+  * Rename `LoadingComponent` to `fallback`
+  * Use an ErrorBoundary rather than the `ErrorComponent`
+  * Add `%%__HEAD__%%` and `%%__SPLIT__%%` to your `template/index.html` if you have one.
 
 ### Display error pages
 
@@ -525,9 +552,9 @@ Error pages now have their own template: `template/error.html`. Please override 
 
 This template is used for the following pages:
 
-- Offline
-- Maintenance (503)
-- ServerError (500)
+* Offline
+* Maintenance (503)
+* ServerError (500)
 
 ### Better SSR fallback
 
@@ -540,11 +567,10 @@ If you still want to display the `theme/pages/SsrFallback` in dev mode, add `FRO
 ### Responsive images
 
 Your previous images will still work. However we have added a new component in `theme/components/atoms/Image` that will always give the proper image size to your browser.
-
-- Supports srcset and webp
-- Improved lazy loading
-- Same API as `<ResizedImage />`
-- Improved DX by explicitly failing in dev mode and failing silently in production mode
+* Supports srcset and webp
+* Improved lazy loading
+* Same API as `<ResizedImage />`
+* Improved DX by explicitly failing in dev mode and failing silently in production mode
 
 We will migrate progressively the components in Front-Commerce's core, but feel free to start migrating your own code for improved performance and UX.
 
@@ -570,25 +596,24 @@ For existing projects, the goal would be to replace `formsy-react`'s HOC by `wit
 
 Previously, if you needed to use new routes or sub-routes, you needed to do one of the following:
 
-- override the `web/Routes.js` file
-- add the route using the `web/moduleRoutes.js` file
-- or declare sub-routes in existing pages
+* override the `web/Routes.js` file
+* add the route using the `web/moduleRoutes.js` file
+* or declare sub-routes in existing pages
 
 This led to several issues:
 
-- developers needed to handle code splitting themselves, which could led to bigger initial javascript load
-- it was hard to have a global vision of the existing routes in a Front-Commerce application
-- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+* developers needed to handle code splitting themselves, which could led to bigger initial javascript load
+* it was hard to have a global vision of the existing routes in a Front-Commerce application
+* Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
 
 This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
 
 The TL;DR of the new routing system is that you now have a `web/theme/routes` folder available in your modules which can contain 5 kind of files:
-
-- normal routes files like `about.js` which will map the exported component to the `/about` url
-- `index.js`: maps the exported component to the `/` url
-- `_layout.js`: wraps the routes in the same folder with the exported component
-- `_inner-layout.js`: wraps the routes in the same folder with the exported component but won't discard the parent's layout
-- `_error.js`: exports the component that will displayed in case there's a 404 error or if one of the component does not manage to render
+* normal routes files like `about.js` which will map the exported component to the `/about` url
+* `index.js`: maps the exported component to the `/` url
+* `_layout.js`: wraps the routes in the same folder with the exported component
+* `_inner-layout.js`: wraps the routes in the same folder with the exported component but won't discard the parent's layout
+* `_error.js`: exports the component that will displayed in case there's a 404 error or if one of the component does not manage to render
 
 For more information, please have a look at the [Routes reference](/docs/reference/routing.html).
 
@@ -597,41 +622,42 @@ For more information, please have a look at the [Routes reference](/docs/referen
 
 1. If you already have a `web/index.js` file in your module, rename it to `web/client.js`
 2. Add Front-Commerce's web module to your project in `.front-commerce.js`
-   ```diff
-   module.exports = {
-     name: "Front Commerce DEV",
-     url: "http://www.front-commerce.test",
-     modules: ["./src"],
-     serverModules: [
-       { name: "FrontCommerce", path: "server/modules/front-commerce" },
-       { name: "Magento2", path: "server/modules/magento2" }
-   -  ]
-   +  ],
-   +  webModules: [{ name: "FrontCommerce", path: "front-commerce/src/web" }]
-   };
-   ```
+    ```diff
+    module.exports = {
+      name: "Front Commerce DEV",
+      url: "http://www.front-commerce.test",
+      modules: ["./src"],
+      serverModules: [
+        { name: "FrontCommerce", path: "server/modules/front-commerce" },
+        { name: "Magento2", path: "server/modules/magento2" }
+    -  ]
+    +  ],
+    +  webModules: [{ name: "FrontCommerce", path: "front-commerce/src/web" }]
+    };
+    ```
 3. If you have some custom routes, declare your own routes by:
-   - Creating an empty `web/index.js` file
-   - Add your own web module to `.front-commerce.js`
-     ```diff
-     module.exports = {
-       name: "Front Commerce DEV",
-       url: "http://www.front-commerce.test",
-       modules: ["./src"],
-       serverModules: [
-         { name: "FrontCommerce", path: "server/modules/front-commerce" },
-         { name: "Magento2", path: "server/modules/magento2" }
-       ],
-     -  webModules: [{ name: "FrontCommerce", path: "./src/web" }]
-     +  webModules: [
-     +    { name: "FrontCommerce", path: "front-commerce/src/web" },
-     +    { name: "MyModule", path: "./src/web" },
-     +  ]
-     };
-     ```
+    * Creating an empty `web/index.js` file
+    * Add your own web module to `.front-commerce.js`
+        ```diff
+        module.exports = {
+          name: "Front Commerce DEV",
+          url: "http://www.front-commerce.test",
+          modules: ["./src"],
+          serverModules: [
+            { name: "FrontCommerce", path: "server/modules/front-commerce" },
+            { name: "Magento2", path: "server/modules/magento2" }
+          ],
+        -  webModules: [{ name: "FrontCommerce", path: "./src/web" }]
+        +  webModules: [
+        +    { name: "FrontCommerce", path: "front-commerce/src/web" },
+        +    { name: "MyModule", path: "./src/web" },
+        +  ]
+        };
+        ```
 4. Find any page that uses the `Route` component from `react-router`. Here are a few pointer about how to migrate those files. However, if you're not sure or if you have trouble making it work, feel free to reach our team. We will make sure to make this as painless as possible.
-_ If it's `web/moduleRoutes.js`, it will continue to work, but is deprecated. Please create a route file per `<Route>` as described in [Add a page client side](/docs/essentials/add-a-page-client-side.html)
-_ If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder. \* If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
+    * If it's `web/moduleRoutes.js`, it will continue to work, but is deprecated. Please create a route file per `<Route>` as described in [Add a page client side](/docs/essentials/add-a-page-client-side.html)
+    * If it's a file that does not exist in Front-Commerce's core, this most likely means that the component should be a layout and the associated routes should be new files created in your `web/route` folder.
+    * If it's a file you've overridden from Front-Commerce's core, please check in the core how the file changed. If it's still used, the `<Route>` components have most likely been replaced with the children property. If it's not, it usually means that it is now replaced by a layout. If you're not sure, feel free to contact our team. We will make sure to make this as painless as possible.
 </details>
 
 ### ID types in GraphQL definitions
@@ -647,19 +673,19 @@ Please note that if in your code, you relied on some int types, there might be c
 <details>
 <summary>Exhaustive list of changes <code>ID</code> changes</summary>
 
-- `src/web/theme/modules/Cart/CartItem/CartItemOptionsUpdater/UpdateCartItemMutation.gql`: `$item_id: ID!`
-- `src/web/theme/modules/Cart/CartItem/CartItemQuantityForm/UpdateCartItemQtyMutation.gql`: `$item_id: ID!`
-- `src/web/theme/modules/Cart/CartItem/CartItemRemoveForm/RemoveCartItemMutation.gql`: `$item_id: ID!`
-- `src/web/theme/modules/Checkout/AddressRecap/CurrentColissimoPickupAddress.gql`: `$cartId: ID!`
-- `src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/ColissimoForm/ColissimoQuery.gql`: `$addressId: ID!`
-- `src/web/theme/modules/Checkout/ShippingMethod/SetShippingInformationMutation.gql`: `$cartId: ID!`
-- `src/web/theme/modules/Checkout/withCheckoutTracking/CheckoutSuccessTrackingQuery.gql`: `$orderId: ID!`
-- `src/web/theme/modules/ProductList/Featured/FeaturedProductsQuery.gql`: `$id: ID!`
-- `src/web/theme/modules/User/Address/AddressForm/RemoveAddressForm/RemoveAddressMutation.gql`: `$addressId: ID!`
-- `src/web/theme/modules/User/Order/OrderRenewButton/RenewOrderMutation.gql`: `$order_id: ID!`
-- `src/web/theme/modules/Wishlist/AddProductToWishlist/RemoveProductFromWishlistMutation.gql`: `$itemId: ID!`
-- `src/web/theme/pages/Account/Orders/Details/OrderDetailsQuery.gql`: `$orderId: ID!`
-- `src/web/theme/pages/Category/CategoryQuery.gql`: `$id: ID!`
+* `src/web/theme/modules/Cart/CartItem/CartItemOptionsUpdater/UpdateCartItemMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Cart/CartItem/CartItemQuantityForm/UpdateCartItemQtyMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Cart/CartItem/CartItemRemoveForm/RemoveCartItemMutation.gql`: `$item_id: ID!`
+* `src/web/theme/modules/Checkout/AddressRecap/CurrentColissimoPickupAddress.gql`: `$cartId: ID!`
+* `src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/ColissimoForm/ColissimoQuery.gql`: `$addressId: ID!`
+* `src/web/theme/modules/Checkout/ShippingMethod/SetShippingInformationMutation.gql`: `$cartId: ID!`
+* `src/web/theme/modules/Checkout/withCheckoutTracking/CheckoutSuccessTrackingQuery.gql`: `$orderId: ID!`
+* `src/web/theme/modules/ProductList/Featured/FeaturedProductsQuery.gql`: `$id: ID!`
+* `src/web/theme/modules/User/Address/AddressForm/RemoveAddressForm/RemoveAddressMutation.gql`: `$addressId: ID!`
+* `src/web/theme/modules/User/Order/OrderRenewButton/RenewOrderMutation.gql`: `$order_id: ID!`
+* `src/web/theme/modules/Wishlist/AddProductToWishlist/RemoveProductFromWishlistMutation.gql`: `$itemId: ID!`
+* `src/web/theme/pages/Account/Orders/Details/OrderDetailsQuery.gql`: `$orderId: ID!`
+* `src/web/theme/pages/Category/CategoryQuery.gql`: `$id: ID!`
 
 </details>
 
@@ -686,17 +712,17 @@ export default {
       implementation: "Redis",
       supports: "*",
       config: {
-        host: "127.0.0.1",
-      },
+        host: "127.0.0.1"
+      }
     },
     {
       implementation: "PerMagentoCustomerGroup",
       supports: ["CatalogPrice"],
       config: {
-        defaultGroupId: 0,
-      },
-    },
-  ],
+        defaultGroupId: 0
+      }
+    }
+  ]
 };
 ```
 
@@ -790,11 +816,11 @@ While working on our compatibility with Magento 2.3, we decided to use [ElasticS
 
 During this change, we needed to update some parts of the GraphQL schema. If you don't use our implementation, this won't impact you. However, if you do, here is what changed in the schema:
 
-- `AttributeBucket.swatch` was removed in favor of `AttributeBucket.productAttributeValue.swatch`. The reasoning behind this is that what's interesting is not the swatch itself but the whole attribute which is available at `AttributeBucket.productAttributeValue`.
-- Layers related types are now interfaces (Bucket, DynamicFacet, FixedFacet) with concrete implementations (AttributeFacet...).
-- `DynamicFacet.bucket` has been renamed in
-  `DynamicFacet.buckets` (plural).
-- `SearchResult.layer` was renamed to `SearchResult.products`
+* `AttributeBucket.swatch` was removed in favor of `AttributeBucket.productAttributeValue.swatch`. The reasoning behind this is that what's interesting is not the swatch itself but the whole attribute which is available at `AttributeBucket.productAttributeValue`.
+* Layers related types are now interfaces (Bucket, DynamicFacet, FixedFacet) with concrete implementations (AttributeFacet...).
+* `DynamicFacet.bucket` has been renamed in
+`DynamicFacet.buckets` (plural).
+* `SearchResult.layer` was renamed to `SearchResult.products`
 
 Please check your front-end queries to ensure to update them accordingly. If you need any help about these, feel free to [contact us](mailto:contact@front-commerce.com).
 
@@ -804,13 +830,13 @@ A basic wishlist is now available in Front-Commerce by default with the Magento2
 However, for existing shops, you need to check a few things in order to make sure that the wishlist is available for your customers. Indeed, the impacted components are likely to have been overridden.
 
 1. Upgrade your `front-commerce/magento2-module` to version `1.0.0-beta.1` or higher.
-   - make sure to update `FRONT_COMMERCE_MAGENTO_MODULE_VERSION` accordingly
+    * make sure to update `FRONT_COMMERCE_MAGENTO_MODULE_VERSION` accordingly
 2. Check that the wishlist is available in the customer's account
-   - the route must exist (`node_modules/front-commerce/src/web/theme/pages/Account/Account.js`)
-   - a link must in the account navigation (`node_modules/front-commerce/src/web/theme/modules/User/AccountNavigation/AccountNavigation.js`)
+    * the route must exist (`node_modules/front-commerce/src/web/theme/pages/Account/Account.js`)
+    * a link must in the account navigation (`node_modules/front-commerce/src/web/theme/modules/User/AccountNavigation/AccountNavigation.js`)
 3. Check that the user can actually add the product to their wishlist
-   - either on the product page itself (`node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/Synthesis.js`)
-   - or on the product item used for product listings (`src/web/theme/modules/ProductView/ProductItem/ProductItemActions/ProductItemActions.js`)
+    * either on the product page itself (`node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/Synthesis.js`)
+    * or on the product item used for product listings (`src/web/theme/modules/ProductView/ProductItem/ProductItemActions/ProductItemActions.js`)
 
 ### Storybook 5
 
@@ -832,9 +858,9 @@ If you relied on them, you will now need to add them manually. We are still in t
 
 ### Deprecations
 
-- Environment variables from your `.env` will in the future be loaded dynamically. You won't need to rebuild your server to update your server's environment variables. To ensure that you have the newest behavior, please set `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true`. To keep the deprecated one, please use `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false`. See [How to update environment variables](/docs/reference/environment-variables.html#How-to-update-environment-variables).
-- While upgrading the search behavior, we have also changed deprecated the `search.blacklistKeys` configuration in `config/website.js`. This now should be `search.ignoredAttributeKeys` which is less offensive and more explicit. Moreover, `search.fixedFacets` and `search.categoriesField` are no longer used.
-- While upgrading the search behavior, we have split the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
+* Environment variables from your `.env` will in the future be loaded dynamically. You won't need to rebuild your server to update your server's environment variables. To ensure that you have the newest behavior, please set `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true`. To keep the deprecated one, please use `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false`. See [How to update environment variables](/docs/reference/environment-variables.html#How-to-update-environment-variables).
+* While upgrading the search behavior, we have also changed deprecated the `search.blacklistKeys` configuration in `config/website.js`. This now should be `search.ignoredAttributeKeys` which is less offensive and more explicit. Moreover, `search.fixedFacets` and `search.categoriesField` are no longer used.
+* While upgrading the search behavior, we have split the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This  means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
 
 ## Branching model
 
@@ -973,9 +999,9 @@ The checkout was already pretty clean. Since it is a crucial part of any e-comme
 
 However, the Address components were a bit confusing in the Checkout because these were used in the Account too. To make it clearer for integrators, we've moved the generic Address components to `theme/modules/User/Address`. This means that in this folder you will now find:
 
-- Address components (previously in `theme/components/molecules/Address`) to display an address in different formats
-- Forms components (previously in `theme/modules/Checkout/Address`) to create, edit or remove an address
-- EditableAddress (previously in `theme/modules/Checkout/Address`) that lets you display an Address and lets the User edit and Address if they need to
+* Address components (previously in `theme/components/molecules/Address`) to display an address in different formats
+* Forms components (previously in `theme/modules/Checkout/Address`) to create, edit or remove an address
+* EditableAddress  (previously in `theme/modules/Checkout/Address`) that lets you display an Address and lets the User edit and Address if they need to
 
 <details>
 <summary>List of the changed translations regarding the Address components</summary>
