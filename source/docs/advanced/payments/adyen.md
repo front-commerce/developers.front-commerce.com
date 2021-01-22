@@ -8,7 +8,7 @@ This page contains information about the different ways you can accept payments 
 ## Magento2 module
 
 <blockquote class="feature--new">
-  **DEVELOPER PREVIEW** _This feature is currently in **developer preview** since Front-Commerce `2.1.0`. It is planned to be **production ready** in a next release (`2.3.0` hopefully). Some APIs may evolve by then._
+  _Since version 2.3.0 (developer preview since 2.1.0)_
 </blockquote>
 
 <blockquote class="note">
@@ -21,9 +21,11 @@ This integration is slightly different from [traditional Magento2 headless payme
 
 Here is how to set this payment method up.
 
-### Install and configure the `Adyen_Payment` Magento2 extension
+### Install and configure the `Adyen_Payment` Magento2 extension (6.5+)
 
-Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments.
+Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments. The minimum supported version is [6.5.0](https://github.com/Adyen/adyen-magento2/releases/tag/6.5.0).
+
+You must configure the "Payment Origin URL" in the "Advanced: PWA" with your Front-Commerce URL **for each of your stores**.
 
 <blockquote class="important">
 **IMPORTANT** please note that enabling or disabling payments in Magento's admin area has no effect on payment methods visible on the storefront. This is a *feature* from the module: every active payment methods in Adyen will be available. **You either have to filter them in the frontend or from your Adyen account.**
@@ -35,24 +37,31 @@ In your Front-Commerce application:
 
 ```diff
 // .front-commerce.js
-   modules: [],
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/payment-magento2-adyen"],
    serverModules: [
      { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
 -    { name: "Magento2", path: "server/modules/magento2" }
 +    { name: "Magento2", path: "server/modules/magento2" },
-+    { name: "Magento2Adyen", path: "server/modules/payment-magento2-adyen" },
++    {
++      name: "Magento2Adyen",
++      path: "payment-magento2-adyen/server/modules/payment-magento2-adyen",
++    }
+   ],
+   webModules: [
+-    { name: "FrontCommerce", path: "front-commerce/src/web" }
++    { name: "FrontCommerce", path: "front-commerce/src/web" },
++    {
++      name: "Magento2Adyen",
++      path: "front-commerce/modules/payment-magento2-adyen/web",
++    }
    ]
 ```
-
-### Define the `FRONT_COMMERCE_ADYEN_TMP_ORIGIN_KEY` environment variable
-
-As a temporary way to configure the Web Drop-in, you must configure the Origin key for your domain using the `FRONT_COMMERCE_ADYEN_TMP_ORIGIN_KEY` variable in your `.env` file. See [Adyen's documentation page explaining how to get your client key](https://docs.adyen.com/user-management/client-side-authentication#get-your-client-key).
+### Register your Adyen payment components
 
 <blockquote class="note">
-**NOTE** This is a temporary variable that might not be needed anymore in 2.3.0… so don't overengineer its definition!
+**NOTE** this is a temporary way to setup payment components. We are aware that it is tedious. It will definitely change in the future, when Front-Commerce will support new extension points for Payments.
 </blockquote>
-
-### Register your Adyen payment component
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
 ```
@@ -63,19 +72,71 @@ cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/Additio
 ```diff
 +import Magento2AdyenCheckout from "./Magento2AdyenCheckout";
 
+const ComponentMap = {};
+
+const getAdditionalDataComponent = (method) => {
++  if (method.code.startsWith("adyen_")) {
++    return Magento2AdyenCheckout;
++  }
+  return ComponentMap[method.code];
+};
+```
+3. Override the file that lets you register additional payments actions in Front-Commerce
+```
+mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
+cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
+```
+4. Register the Adyen action
+```diff
+import None from "./AdditionalAction/None";
++import Magento2Adyen from "./AdditionalAction/Magento2Adyen";
+
+const ComponentMap = {};
+
+const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
++  if (paymentCode.startsWith("adyen")) {
++    return Magento2Adyen;
++  }
+  return ComponentMap?.[paymentCode] ?? None;
+};
+```
+5. register custom Flash message components to display payment messages in an optimized way (**recommended**)
+```
+mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
+cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
+```
+  and
+```diff
+import React from "react";
+import {
+  InfoAlert,
+  ErrorAlert,
+  SuccessAlert,
+} from "theme/components/molecules/Alert";
+import { BodyParagraph } from "theme/components/atoms/Typography/Body";
++ import {
++   AdyenPaymentSuccess,
++   AdyenPaymentError,
++ } from "theme/modules/Adyen/FlashMessage";
+
+// […]
 const ComponentMap = {
-+  adyen_cc: Magento2AdyenCheckout,
-+  adyen_hpp: Magento2AdyenCheckout,
+  default: makeAlertMessageComponent(InfoAlert),
+  info: makeAlertMessageComponent(InfoAlert),
+  error: makeAlertMessageComponent(ErrorAlert),
+  success: makeAlertMessageComponent(SuccessAlert),
++  adyenSuccess: AdyenPaymentSuccess,
++  adyenError: AdyenPaymentError,
 };
 ```
 
-<blockquote class="note">
-**NOTE** this is a temporary way to setup this checkout component. It will definitely change in the next version, when Front-Commerce will support new extension points for Payments.
-</blockquote>
-
 ### Update your CSPs
 
-To allow loading stripe related remote resources:
+<blockquote class="important">
+**IMPORTANT** CSPs can cause issues with some 3DS2 authentication mechanisms. Please check with the Adyen support if there are known workarounds. **Otherwise you may have to disable CSP altogether.**
+</blockquote>
+
+To allow loading Adyen related remote resources:
 
 ```diff
 // my-module/config/website.js
@@ -92,6 +153,17 @@ To allow loading stripe related remote resources:
       baseUri: []
     }
   },
+```
+
+### Register custom styles (optional)
+
+Developers can [customize Adyen drop-in UI styles using CSS](https://docs.adyen.com/checkout/drop-in-web/customization).
+
+You can add an optional stylesheet from Front-Commerce in your application to customize styles. The provided stylesheet reuses existing styles from the theme as much as possible for a good integration by default. You can override it if needed to adapt the UI as wanted.
+
+Add the following line to your `web/theme/modules/_modules.scss` file to load these styles:
+```scss
+@import "~theme/modules/Adyen/dropinCustomizations";
 ```
 
 ### That's it!
