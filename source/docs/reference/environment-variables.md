@@ -142,6 +142,10 @@ More documentation about this module will be available soon. Please [contact us]
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
 - `FRONT_COMMERCE_ENABLE_SOURCE_MAP`: `true` if your code needs to expose source maps in production. By default it's `false` unless you've set `FRONT_COMMERCE_ENV=dev`.
 
+## Current experiments
+
+- `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: enable Apollo Server experimental NewRelic instrumentation
+- `FRONT_COMMERCE_EXPRESS_SHOP_FALLBACK_REDIRECT_HTTP_CODE`: allow to change the default store fallback HTTP code
 
 ## Debugging
 
@@ -149,16 +153,16 @@ More documentation about this module will be available soon. Please [contact us]
 _Since version 1.0.0-beta.0_
 </blockquote>
 
-Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.
+Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.\
 The `DEBUG` environment variable can be used to enable logging for different part of Front-Commerce, and some of the used libraries.
 
-Front-Commerce debugs are in the `front-commerce` namespace.
+Front-Commerce debugs are in the `front-commerce` namespace.\
 One can enable all of them using the following definition: `DEBUG="front-commerce:*"`
 
-The core also allows you to debug API calls to remote services made in the server.
+The core also allows you to debug API calls to remote services made in the server.\
 To do so, define `DEBUG=axios`.
 
-Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.
+Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.\
 Learn more in [the `debug` package documentation](https://www.npmjs.com/package/debug).
 
 Here is a list of available debug namespaces:
@@ -166,14 +170,27 @@ Here is a list of available debug namespaces:
 - `axios`: debugs axios requests and responses (using [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
 - `express-http-proxy`: debugs media requests proxied by the media middleware (see [express-http-proxy](https://www.npmjs.com/package/express-http-proxy#trace-debugging))
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
+- `front-commerce:admin-bar`: debugs calls and role injection mechanisms for logging as a customer and other actions
+- `front-commerce:authorization`: debugs proxy authorization for remote sources (see `makeProtectedProxyRouter.js`)
 - `front-commerce:cache`: debugs cache invalidation calls and strategies information
-- `front-commerce:elasticsearch`: debugs all elasticsearch queries
+- `front-commerce:cart`: debugs cart corrupted data received from remote sources
+- `front-commerce:cluster`: debugs the node process id and other information to help configuring cluster mode
+- `front-commerce:config`: dumps the configuration for a typical request at the `/__front-commerce/debug` URL
+- `front-commerce:dispatcher`: debugs information about routes dispatching for registered page types
+- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
+- `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
+- `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:performance`: allow to debug server performance in production by enabling server timings
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 - `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
+
+**Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
 
 <blockquote class="note">
 In `development` environment, the source maps for both the server and the client sides are generated.
