@@ -7,11 +7,23 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.3.x` -> `2.4.0`
+
+<blockquote class="important">
+  **We recommend that you first follow the [`2.2.x` -> `2.3.0` migration guide](#2-2-x-gt-2-3-0).**
+  This release was mostly focused on a new optional base theme, and there are not many upgrade instructions.
+</blockquote>
+
 ## `2.2.x` -> `2.3.0`
+
+<blockquote class="important">
+  **We recommend that you use these upgrade instructions while upgrading your application to Front-Commerce 2.4 directly.**
+  It was released a few days after 2.3 and will not be a big upgrade (it was mostly focused on a new optional base theme).
+</blockquote>
 
 ### Virtual products for Magento 2
 
-In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use theme in Magento 2.
+In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use them in Magento 2.
 
 ### Street lines
 
