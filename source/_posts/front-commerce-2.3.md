@@ -1,9 +1,9 @@
 ---
-title: "Release: Front-Commerce 2.3"
+title: "2.3: advanced Magento 2 features, new Payment methods and performance improvements"
 date: 2021-01-13
 ---
 
-Front-Commerce 2.3 is our first release of 2021. It contains an increased support of Magento 2 advanced features, new Payment methods and performance improvements. Read more about this version.
+Front-Commerce 2.3 is our first release of 2021. It contains an increased support of Magento 2 advanced features (such as more product types, guest checkout and product reviews), new Payment methods and performance improvements.
 
 <!-- more -->
 
