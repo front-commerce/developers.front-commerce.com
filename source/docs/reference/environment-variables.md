@@ -135,6 +135,10 @@ More documentation about this module will be available soon. Please [contact us]
 - `FRONT_COMMERCE_PAYZEN_PRIVATE_KEY`
 - `FRONT_COMMERCE_PAYZEN_SHA256`
 
+### BuyBox
+
+See [our dedicated documentation page](/docs/advanced/payments/buybox.html#Configure-your-environment).
+
 ## Build related variables
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)

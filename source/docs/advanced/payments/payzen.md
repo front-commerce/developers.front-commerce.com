@@ -5,6 +5,11 @@ title: PayZen integration
 
 This page contains information about the different ways you can accept payments with [PayZen](https://payzen.eu/) in your Front-Commerce application.
 
+* [Front-Commerce Payment](#Front-Commerce-Payment)
+* [Magento2 module](#Magento2-module)
+
+> **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
+
 ## Front-Commerce Payment
 
 This section explains how to configure and customize the PayZen Front-Commerce Payment module into an existing Front-Commerce application. The implementation use [PayZen embedded form / Javascript with REST API](https://payzen.io/fr-FR/rest/V4.0/javascript/) to create payments.

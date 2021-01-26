@@ -5,6 +5,12 @@ title: Paypal integration
 
 This page contains information about the different ways you can accept payments with [Paypal](https://paypal.com/) in your Front-Commerce application.
 
+* [Front-Commerce Payment](#Front-Commerce-Payment)
+* [Magento2 module](#Magento2-module)
+* [Magento1 module](#Magento1-module)
+
+> **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
+
 ## Front-Commerce Payment
 
 This section explains how to configure and customize the Paypal Front-Commerce Payment module into an existing Front-Commerce application. The implementation use [Paypal Checkout Smart Payment Buttons](https://developer.paypal.com/docs/checkout/) to create payments.
