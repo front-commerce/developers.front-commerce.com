@@ -14,6 +14,18 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
   This release was mostly focused on a new optional base theme, and there are not many upgrade instructions.
 </blockquote>
 
+### Cart item may not have product data attached
+
+We fixed some issues in case products added to cart went out of stock. Our default components were not resilient to Cart items not having an attached product anymore and led to errors.
+
+If you've overridden these components, please update them to ensure they can handle such use-case. You can refer to [these changes as an example](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/339/diffs#41f37f156cb39d8de257eb219fc96d2a29e3c398).
+
+### Ensure that invoices are appropriately exposed to Customers
+
+By default in this version, Magento 2 invoices will appear in the Customer account for each Order (unless you override some components). They could print it from the web. **We recommend you to ensure that printed invoices match your brand.**
+
+If your invoicing process is different you could disable them altogether or customize the behavior. Please read our [Invoice feature documentation page](/docs/advanced/features/invoices.html) to learn about the extension points. It illustrates how you could customize invoices to **replace them with a downloadable PDF** for instance.
+
 ## `2.2.x` -> `2.3.0`
 
 <blockquote class="important">
@@ -21,9 +33,24 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
   It was released a few days after 2.3 and will not be a big upgrade (it was mostly focused on a new optional base theme).
 </blockquote>
 
-### Virtual products for Magento 2
+### Update the Front-Commerce Magento module
 
-In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use them in Magento 2.
+While this Front-Commerce version works with older Front-Commerce Magento module versions, it is recommended to update the Magento module to its latest version to benefit from the latest feature (grouped products support, more efficient category fetching, new configurations…).
+
+For Magento 2, you must install the **2.2.0** module version and the **1.3.0** version for Magento 1.
+
+With this release Front-Commerce also starts to use **Magento 2 GraphQL API** for new features. You must **ensure that GraphQL usage is allowed in your Magento environment**.
+
+### Improve your images
+
+Images are an important factor of web performance.
+
+This release contains several improvements to the `<Image>` component. It may solve issues you faced and open the room for improvements in your theme. We recommend that you ensure that images work as expected, and if possible leverage these improvements:
+- if there is a background on the image, it will now be used to replace the transparent parts within the image
+- images are now loaded using an element from the DOM instead of an abstract element created in javascript. This allows to make sure that the image loaded fits what the browser is supposed to load. You still have to set [the `sizes` attribute on your images](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes) for an optimized loading.
+- the `<Image>` component now has a `priority` prop to preload images and render them on the server (without lazy loading). **We recommend that you use this new prop for above the fold images** to improve the perceived performance.
+- if your theme contains a list of images but you don't actually know the ratio of the final image, you might be interested by the newly introduced `placeholderHeight` attribute of images presets (see [the updated `config/images.js` example](/docs/advanced/production-ready/media-middleware.html#How-to-configure-it))
+- ensure you no longer use our 0.x `<ResizedImage>` component ([introduced in 2.0.0-rc.0](#Responsive-images)). The `<Image>` component has the same API and should work seamlessly.
 
 ### Street lines
 
@@ -31,6 +58,12 @@ Previously, the address form could hold two lines for the street input. It is no
 
 - your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
 - you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at these two commits ([807fa0a8](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) & [49be4da9](https://gitlab.com/front-commerce/front-commerce/-/commit/49be4da9d0efa47eaac8d06dad80a689f4260dc6)) to learn how to update your own component.
+
+### Virtual products for Magento 2
+
+In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use them in Magento 2.
+
+If you want to use this feature, please ensure that your checkout customization **support skipping the shipping step** for Carts only containing virtual products.
 
 ### Bundle products (Magento 2)
 
@@ -56,11 +89,79 @@ Moreover, if you have cache strategies influence price loaders, you should add t
 // ...
 ```
 
+### Grouped products (Magento 2)
+
+Grouped products are now supported for Magento 2. In order to enable these, please keep in mind that you will need to update your Magento 2's Front-Commerce module to version 2.2.0.
+
 ### Optional zip codes (Magento 2 & Magento 1)
 
 Some countries don't need zipcodes for their addresses. This is now possible in both Magento 1 & Magento 2. In order to support this feature, you will need to update the Front-Commerce modules in Magento (2.2.0 for Magento 2 & 1.3.0 for Magento 1).
 
 If you have updated the `Form`, `AddressForm` or `CountryFieldWithRegion` components, please consider backporting the changes from Front-Commerce. Details can be found [in this merge request](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/272/diffs). If you have any trouble upgrading, feel free to contact us.
+
+### Product reviews for Magento < 2.4.1
+
+If your Magento version is lower than 2.4.1, you must install the [front-commerce-magento/module-review-graph-ql](https://github.com/front-commerce/magento-module-review-graph-ql) module to enable support for the product reviews feature.
+
+```
+composer require front-commerce-magento/module-review-graph-ql:4.1.2
+```
+
+### Checkout overrides
+
+If you have a customized checkout, we recommend that you double check it after an upgrade. Front-Commerce 2.3.0 brings several fixes for edge cases that you might want to integrate in your checkout.
+
+#### Guest checkout
+
+When enabling the guest checkout, we recommend that you rigorously test your checkout process as a guest to ensure your customizations supports it. A common issue could be that [you rely on an address `id` or customer `id` whereas in such scenario there aren't any](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/242).
+
+Custom payment and shipping methods may not support it too. You can look at how Front-Commerce's core payment methods handle this as an inspiration. If you have any questions, please don't hesitate to contact us.
+
+#### Payment form improvements
+
+The payment form was heavily covered with tests and some edge cases were fixed. If you had overridden it, please check [these changes](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/316/diffs#62ede4890a658456822c51902ba132fb53a655bc) to backport them in your theme.
+
+#### Addresses and transitions
+
+Several state transitions could led to a poor user experience when customers manipulated addresses from the Checkout. We improved a few things in the core to support them. If you have overridden the `stepDefinitions.js`, the `User/Address/AddressForm` module or the `Checkout/ShippingMethod` module you might want to double check the differences.
+
+See the Pull Requests [#253](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/253) and [#242](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/242).
+
+### Impersonate as customer (Magento 2)
+
+To leverage this new feature, you will have some manual configurations to do.
+Read the [Log as Customer documentation page](/docs/magento2/log-as-customer.html) for a guide.
+
+### Sitemaps
+
+We've improved error messages and retries for sitemap. A bug that prevented to leverage ElasticSearch results has been fixed too.
+
+Please check that your sitemaps still works fine after the upgrade because internal mechanisms have changed and your customizations may be impacted (even if this is unlikely). Please contact us if you detect any regression.
+
+### ElasticSearch 7.x and ElasticSuite 2.9+
+
+Front-Commerce is now compatible with both ElasticSearch 6.x and 7.x. If you want to upgrade your ElasticSearch server to 7.x, you will have to update the `@elastic/elasticsearch` client version in your project accordingly:
+
+```
+npm install --save @elastic/elasticsearch@7
+```
+
+We also introduced a `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION` environment variable to enable support for versions >= 2.9. **If you upgrade the Magento 2 ElasticSuite module to a recent version, you must define this variable**. It allows Front-Commerce to adapt its queries to a new indexing pattern.
+
+### New Flash messages mechanism
+
+Front-Commerce 2.3 introduces a “flash message” mechanism to allow developers to implement ephemeral messages without boilerplate. It may be useful to refactor existing developments to use it.
+
+[Read the Flash Messages documentation](/docs/advanced/features/flash-messages.html) to learn more about it.
+
+### New configurations
+
+You may be interested in customizing new configurations added in this version:
+- `analytics.integrations.enabledByDefault` in [config/analytics.js](/docs/advanced/theme/analytics.html#Add-an-integration) (useful for Google analytics with `anonymizeIp` for instance)
+- `search.attributeFacetMinimumDocumentCount` and `search.categoryFacetMinimumDocumentCount` in [`config/website.js`](/docs/reference/configurations.html#config-website-js)
+- `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER=true` in your `.env` to turn on an experimental logging of GraphQL resolvers metrics in New Relic. It uses the [New Relic Apollo Server plugin](https://www.npmjs.com/package/@newrelic/apollo-server-plugin).
+- PM2 configuration: we've [documented some useful configurations](/docs/advanced/production-ready/front-commerce-and-pm2.html) if you use Front-Commerce with PM2
+- `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED=false` in your `.env` to disable access logs (in `logs/access.log`). If you have a proxy with access logs it will make you save some disk space!
 
 ## `2.1.x` -> `2.2.0`
 

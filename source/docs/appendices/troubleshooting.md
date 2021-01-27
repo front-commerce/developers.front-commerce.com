@@ -149,6 +149,16 @@ Sources:
 - https://github.com/magento/magento2/issues/13343#issuecomment-362783825 (and https://github.com/magento/magento2/issues?q=is%3Aissue+sort%3Aupdated-desc+slash+sku+api+is%3Aclosed)
 - https://stackoverflow.com/a/4443129
 
+## I'm using ElasticSearch for Magento 2 and categories are empty
+
+> No products appear in your categories or search results
+
+It is very likely due to a mismatch between Front-Commerce ElasticSearch queries and the way data are indexed in ElasticSearch. Different versions of ElasticSuite index data differently.
+
+For ElasticSuite versions < 2.9, there is nothing special to do. For ElasticSuite versions 2.9+ you have to define the `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION` environment variable with your ElasticSuite version. Front-Commerce will detect it and run queries that match the way data are indexed.
+
+*Note: this setting was [introduced in Front-Commerce 2.3](/docs/appendices/migration-guides.html#ElasticSearch-7-x-and-ElasticSuite-2-9)*
+
 ## Another issue?
 
 Please contact our support or open an issue describing the encountered problem along with your environment using `npx envinfo --system --binaries`

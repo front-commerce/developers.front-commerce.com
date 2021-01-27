@@ -57,6 +57,10 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.
 - `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
 
+### Server
+
+- `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED`: in some contexts, the proxy already has access logs and it is not useful to have a duplication. Logs grow unnecessarily and it adds an overhead. You can set `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED=false` to disable Front-Commerce access logs (in logs/access.log).
+- `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: set it to `true` to turn on an experimental logging of GraphQL resolvers metrics in New Relic. It uses the [New Relic Apollo Server plugin](https://www.npmjs.com/package/@newrelic/apollo-server-plugin)
 
 ### Sitemap
 
@@ -95,6 +99,7 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
+- `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION`: the version of the ElasticSuite module installed. By default, Front-Commerce considers a version < 2.9.
 - ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
 ### Paypal
