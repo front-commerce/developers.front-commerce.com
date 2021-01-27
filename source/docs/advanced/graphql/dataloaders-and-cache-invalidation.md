@@ -360,7 +360,8 @@ export default {
         // see https://www.npmjs.com/package/redis#options-object-properties
         host: "127.0.0.1",
         port: 6379,
-        db: 1
+        db: 1,
+        // defaultExpireInSeconds: 864000 // default: ten days
       }
     }
   ]
@@ -395,9 +396,14 @@ export default {
     {
       implementation: "PerMagentoCustomerGroup",
       // Will scope all data from the CatalogPrice DataLoader with the customer group
+      // (and other relevant price data loaders)
       // before they are transmitted to the previous strategy (Redis).
       // Other dataLoaders will use Redis storage in a standard fashion.
-      supports: ["CatalogPrice"],
+      supports: [
+        "CatalogPrice",
+        "CatalogProductChildrenPrice",
+        "CatalogProductBundlePrice",
+      ],
       config: {
         defaultGroupId: 0
       }

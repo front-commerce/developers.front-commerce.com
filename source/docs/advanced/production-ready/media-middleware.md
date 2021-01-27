@@ -45,6 +45,14 @@ module.exports = {
     },
     small: { width: 200, height: 200, bgColors: [] },
     medium: { width: 474, height: 474, bgColors: [] },
+    mediumNoRation: {
+      width: 474,
+      // the placeholder image may have a different height than the loaded image
+      // when you have a list of images but don't actually know the ratio of the final image
+      // you can replace the height with placeholderHeight in the preset
+      placeholderHeight: 474,
+      bgColors: []
+    },
     large: { width: 1100, height: 1100, bgColors: [] }
   },
   // allowed medias
@@ -71,14 +79,14 @@ http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cov
 * `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the the `defaultBgColor`
 * `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hidding any of its content. The space left in your image will be filled with the `bgColor` attribute.
 
-### `<ResizedImage>` component
+### `<Image>` component
 
-However, this can be troublesome to setup manually for you. This is why in Front-Commerce you should rather use the `<ResizedImage>` React component.
+However, this can be troublesome to setup manually for you. This is why in Front-Commerce you should rather use the `<Image>` React component.
 
 ```jsx
-import ResizedImage from "theme/components/atoms/ResizedImage";
+import Image from "theme/components/atoms/Image";
 
-<ResizedImage
+<Image
   src="/media/path/to/my/image.jpg"
   alt="a suited description of the image"
   format="small"
@@ -92,7 +100,22 @@ The path of the image here is the path of the image on the proxy.
 
 This component will automatically fetch the image through the proxy with the correct settings. Moreover, it will display a spinner while the image is loading and a fallback image if it breaks.
 
-It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. Thus, to disable lazyloading, you should use the option `dangerouslyDisableLazyLoad`.
+It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. To disable lazyloading, you can use the option `dangerouslyDisableLazyLoad` or (even better in this example) **the `priority` prop that will also add a `<link rel="preload">` to the page.**
+
+For a more data-efficient browser preload, we also recommend that you define the [`sizes` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes) for the image. Here is an example:
+
+```
+<Image
+  src="/media/path/to/my/image.jpg"
+  alt="a suited description of the image"
+  format="small"
+  appearance="full"
+  priority
+  sizes="(max-width: 45em) 50vw,
+         (max-width: 70em) 33vw,
+         25vw"
+/>
+```
 
 ## Add your own media proxy endpoint
 

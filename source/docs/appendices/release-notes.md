@@ -7,13 +7,56 @@ This page lists the public releases will let you know what's important if you ne
 
 ## Latest version
 
-**Front-Commerce [`2.2.0`](#2-2-0)**
+**Front-Commerce [`2.4.0`](#2-4-0)**
 
 Compatible with:
 
 - **Node.js:** 10.15+
-- **Magento2**: 2.3.1+ (Open Source & Commerce)
+- **Magento2**: 2.3.2+ (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+
+## 2.4.0
+
+Requirements: same as [2.3.0](#2-3-0)
+
+## 2.3.0
+
+> **Magento 2:**
+>   - Product reviews support
+>   - Bundle and virtual products support
+>   - Textual product custom options support
+>   - Guest checkout support. Customers can register after placing an order as guests
+>   - New payment methods available:
+>       - Adyen
+>       - BuyBox
+>   - Log as a customer from Magento admin area
+>
+> **Magento (all versions):**
+> New Magento configurations supported for Customer addresses:
+>   - optional zip code support,
+>   - configurable number of lines for street inputs
+>
+> **Front-Commerce payments:**
+>   - all existing Front-Commerce payment methods are now compatible with Guest checkout
+>
+> **Technical improvements:**
+>   - ElasticSearch 7.x and ElasticSuite 2.10 support
+>   - Support for always enabled analytics scripts
+>   - Checkout and Front-Commerce payment improvements: more scenarii are now possible, edge cases better supported in payment form interactions
+>   - Allow to link to external invoice files
+>   - Performance improvements
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.3.0)
+
+Requirements:
+- Magento2: 2.3.2+ (Open Source & Commerce)
+- or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2+
+- ElasticSearch: 6.7+ and 7.x with the plugins:
+  - analysis-phonetic
+  - analysis-icu
 
 ## 2.2.0
 
@@ -45,8 +88,6 @@ Requirements: same as [2.1.0](#2-1-0)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/2.1.2)
 
 Requirements: same as [2.1.0](#2-1-0)
-
-> > > > > > > master
 
 ## 2.1.1
 

@@ -18,6 +18,10 @@ First, you need to make sure that you've configured the tokens that will enable 
 
 You can then restart your environment and the admin role should now be enabled for all the users that have logged into Magento's administration panel in the previous 30 minutes.
 
+*If you think it didn't work correctly, you can **manually force a new authentication from the "Reload storefront session" link** in the admin footer. It is added by the Front-Commerce Magento module:*
+
+![Reload storefront session link in Magento admin area footer](./assets/admin-reload-storefront-session.png)
+
 ## Detecting the admin role in Front-Commerce
 
 Now that the session has the admin role, you will need to use the `MagentoAdmin` loader in Front-Commerce. For instance, let's create a loader that checks the admin status before sending a request to Magento.
@@ -57,8 +61,8 @@ import { AdminDataLoader } from "./loaders";
 export const AdminDataLoader = (axiosInstance) => {
   return {
     loadData: async () => {
-      const response = await axiosInstance.get("/admin-custom-endpoint")
-      return response.data
+      const response = await axiosInstance.get("/admin-custom-endpoint");
+      return response.data;
     },
   };
 };
@@ -126,9 +130,9 @@ import { AdminDataLoader } from "./loaders";
 +           // We pass a header here considering that the `/admin-custom-endpoint`
 +           // now only accepts requests with this header
 +           "x-custom-header": "your custom header matching a custom configuration in your Magento"
-+         }    
++         }
 +       })
-        return response.data
+        return response.data;
 +     } else {
 +       return null;
 +     }
@@ -175,5 +179,17 @@ class AuthenticatedAdminData implements AuthenticatedAdminDataInterface
 * You will then be able to use the following in Front-Commerce's server code for any authenticated admin users.
 ```js
 const adminData = await loaders.MagentoAdmin.getAdminData();
-console.log(adminData.adminId)
+console.log(adminData.adminId);
 ```
+
+## Simulating different admin data
+
+In **development mode**, one can call the `/__front-commerce/UNSAFE_injectRole` url with a `data` query parameter to inject custom JSON serialized data in the admin session. It is useful to **simulate different admin information locally** without worrying about session cookies issues.
+
+Here is a sample `curl` request to achieve this:
+
+```
+curl -v 'http://localhost:4000/__front-commerce/UNSAFE_injectRole?data={"foo":"bar"}'
+```
+
+Please note that this featured is only enabled if [the environment is configured](#Configuring-your-environment) and `NODE_ENV` is `development`.

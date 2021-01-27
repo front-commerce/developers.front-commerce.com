@@ -57,6 +57,10 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.
 - `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
 
+### Server
+
+- `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED`: in some contexts, the proxy already has access logs and it is not useful to have a duplication. Logs grow unnecessarily and it adds an overhead. You can set `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED=false` to disable Front-Commerce access logs (in logs/access.log).
+- `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: set it to `true` to turn on an experimental logging of GraphQL resolvers metrics in New Relic. It uses the [New Relic Apollo Server plugin](https://www.npmjs.com/package/@newrelic/apollo-server-plugin)
 
 ### Sitemap
 
@@ -95,6 +99,7 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
+- `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION`: the version of the ElasticSuite module installed. By default, Front-Commerce considers a version < 2.9.
 - ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
 ### Paypal
@@ -135,6 +140,10 @@ More documentation about this module will be available soon. Please [contact us]
 - `FRONT_COMMERCE_PAYZEN_PRIVATE_KEY`
 - `FRONT_COMMERCE_PAYZEN_SHA256`
 
+### BuyBox
+
+See [our dedicated documentation page](/docs/advanced/payments/buybox.html#Configure-your-environment).
+
 ## Build related variables
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
@@ -142,6 +151,10 @@ More documentation about this module will be available soon. Please [contact us]
 - `WEBPACK`: `true` if the javascript code you are executing is bundled with webpack or `false` if it is server code not within your webpack environment
 - `FRONT_COMMERCE_ENABLE_SOURCE_MAP`: `true` if your code needs to expose source maps in production. By default it's `false` unless you've set `FRONT_COMMERCE_ENV=dev`.
 
+## Current experiments
+
+- `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: enable Apollo Server experimental NewRelic instrumentation
+- `FRONT_COMMERCE_EXPRESS_SHOP_FALLBACK_REDIRECT_HTTP_CODE`: allow to change the default store fallback HTTP code
 
 ## Debugging
 
@@ -149,16 +162,16 @@ More documentation about this module will be available soon. Please [contact us]
 _Since version 1.0.0-beta.0_
 </blockquote>
 
-Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.
+Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.\
 The `DEBUG` environment variable can be used to enable logging for different part of Front-Commerce, and some of the used libraries.
 
-Front-Commerce debugs are in the `front-commerce` namespace.
+Front-Commerce debugs are in the `front-commerce` namespace.\
 One can enable all of them using the following definition: `DEBUG="front-commerce:*"`
 
-The core also allows you to debug API calls to remote services made in the server.
+The core also allows you to debug API calls to remote services made in the server.\
 To do so, define `DEBUG=axios`.
 
-Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.
+Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.\
 Learn more in [the `debug` package documentation](https://www.npmjs.com/package/debug).
 
 Here is a list of available debug namespaces:
@@ -166,14 +179,37 @@ Here is a list of available debug namespaces:
 - `axios`: debugs axios requests and responses (using [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
 - `express-http-proxy`: debugs media requests proxied by the media middleware (see [express-http-proxy](https://www.npmjs.com/package/express-http-proxy#trace-debugging))
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
+- `front-commerce:admin-bar`: debugs calls and role injection mechanisms for logging as a customer and other actions
+- `front-commerce:authorization`: debugs proxy authorization for remote sources (see `makeProtectedProxyRouter.js`)
 - `front-commerce:cache`: debugs cache invalidation calls and strategies information
-- `front-commerce:elasticsearch`: debugs all elasticsearch queries
+- `front-commerce:cart`: debugs cart corrupted data received from remote sources
+- `front-commerce:cluster`: debugs the node process id and other information to help configuring cluster mode
+- `front-commerce:config`: dumps the configuration for a typical request at the `/__front-commerce/debug` URL
+- `front-commerce:dispatcher`: debugs information about routes dispatching for registered page types
+- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
+- `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
+- `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:performance`: allow to debug server performance in production by enabling server timings
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 - `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
+
+**Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
+
+<blockquote class="note">
+In `development` environment, the source maps for both the server and the client sides are generated.
+That means you can easily use the step by step debugging for both, see:
+
+<ul>
+  <li>[Node.js debugging guide](https://nodejs.org/en/docs/guides/debugging-getting-started/)</li>
+  <li>[The Firefox JavaScript Debugger](https://developer.mozilla.org/en-US/docs/Tools/Debugger) or [Debugging JavaScript in Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/javascript/)</li>
+</ul>
+</blockquote>
 
 ## Deprecation warnings
 

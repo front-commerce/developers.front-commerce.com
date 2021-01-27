@@ -50,6 +50,11 @@ sidebar_categories:
     - docs/advanced/production-ready/logging
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
+    - docs/advanced/production-ready/front-commerce-and-pm2
+  Features:
+    - docs/advanced/features/overview
+    - docs/advanced/features/invoices
+    - docs/advanced/features/flash-messages
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -61,6 +66,7 @@ sidebar_categories:
     - docs/magento2/add-new-attribute
     - docs/magento2/using-magento-configuration
     - docs/magento2/detect-admin-users
+    - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
   Magento1:
     - docs/magento1/overview
@@ -76,6 +82,7 @@ sidebar_categories:
     - docs/advanced/payments/front-commerce-payments
     - docs/advanced/payments/adyen
     - docs/advanced/payments/affirm
+    - docs/advanced/payments/buybox
     - docs/advanced/payments/ingenico
     - docs/advanced/payments/paypal
     - docs/advanced/payments/payzen

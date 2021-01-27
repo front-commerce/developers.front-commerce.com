@@ -5,6 +5,11 @@ title: Ingenico integration
 
 This page contains information about the different ways you can accept payments with [Ingenico](https://www.ingenico.com/) (Ogone) in your Front-Commerce application.
 
+* [Front-Commerce Payment](#Front-Commerce-Payment)
+* [Magento2 module](#Magento2-module)
+
+> **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
+
 ## Front-Commerce Payment
 
 This section explains how to configure and customize the Ingenico Front-Commerce Payment module into an existing Front-Commerce application. The implementation use [Ingenico's FlexCheckout solution](https://epayments-support.ingenico.com/en/integration/all-sales-channels/flexcheckout/index) to create payments.
