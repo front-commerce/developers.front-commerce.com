@@ -18,6 +18,10 @@ First, you need to make sure that you've configured the tokens that will enable 
 
 You can then restart your environment and the admin role should now be enabled for all the users that have logged into Magento's administration panel in the previous 30 minutes.
 
+*If you think it didn't work correctly, you can **manually force a new authentication from the "Reload storefront session" link** in the admin footer. It is added by the Front-Commerce Magento module:*
+
+![Reload storefront session link in Magento admin area footer](./assets/admin-reload-storefront-session.png)
+
 ## Detecting the admin role in Front-Commerce
 
 Now that the session has the admin role, you will need to use the `MagentoAdmin` loader in Front-Commerce. For instance, let's create a loader that checks the admin status before sending a request to Magento.

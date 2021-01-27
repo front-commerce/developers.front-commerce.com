@@ -23,6 +23,7 @@ In this section, you will learn information about Magento 2 integration with Fro
 - [Using Magento configuration](/docs/magento2/using-magento-configuration.html)
 - [Add a new attribute](/docs/magento2/add-new-attribute.html)
 - [Detect admin users](/docs/magento2/detect-admin-users.html)
+- [Log as a Customer](/docs/magento2/log-as-customer.html)
 
 We are still in the process of writing the documentation. But we will cover the following topics:
 

@@ -62,6 +62,7 @@ sidebar_categories:
     - docs/magento2/add-new-attribute
     - docs/magento2/using-magento-configuration
     - docs/magento2/detect-admin-users
+    - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
   Magento1:
     - docs/magento1/overview
