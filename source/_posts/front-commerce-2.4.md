@@ -14,7 +14,13 @@ While 2.3 was focused on feature coverage, 2.4 focused on a new theme.
 
 Please read our [Front-Commerce 2.3 release announcement](/blog/2021/01/13/front-commerce-2.3/) to know about recent features.
 
-## Meet Chocolatine, our new default theme
+## Meet "Chocolatine", our new default theme
+
+[![Front-Commerce new theme](/images/blog/chocolatine.jpg)](https://magento2.front-commerce.app)
+<div class="center">
+*"Chocolatine" on our demo store: [magento2.front-commerce.app](https://magento2.front-commerce.app)*
+</div>
+
 
 We have been working on a new starter theme for future projects.
 Our goal was to improve our base theme so that new projects could start with a theme that was good enough to prototype and iterate.
@@ -22,7 +28,7 @@ Our goal was to improve our base theme so that new projects could start with a t
 After some research, we've decided to leverage [the great UX and UI work from the ICEO team](https://www.behance.net/gallery/86012235/eCommerce-Free-UI-Kit) and use it as an starting point.
 It's name is "**Chocolatine**" *in reference to the correct way to pronounce "[Pain au chocolat](https://en.wikipedia.org/wiki/Pain_au_chocolat)" in French ;-)*
 
-This new theme provides a flexible foundation, ready to be adapted according to the merchant's brand. It allows to **deploy a new store in weeks instead of months**.
+This new theme provides a flexible foundation, ready to be adapted according to the merchant's brand. It allows to **deploy a new store in weeks instead of months**. It is [already used in production](https://www.lilinappy.fr/) by some of our customers.
 
 ### A ready-to-use User Interface
 
@@ -34,7 +40,8 @@ This new theme improves the User experience, with a special focus on mobile uses
 - an additional information area designed for extension with your product data,
 - efficient category filters,
 - seamless checkout,
-- product recommendations area
+- product recommendations area,
+- mega menu with mobile version
 
 ### Accessibility improvements
 
@@ -61,6 +68,7 @@ The user perceived performance was improved. We introduced UI skeletons and a fa
 
 ## New feature: invoices
 
+A new feature landed in this release too.
 Magento 2 invoices are now displayed in the Customer account. Customers can print them from the web, and developers can customize the print layout to match their needs.
 
 In Front-Commerce 2.3, it was already possible to link to external binary files (e.g PDF) for invoices. Merchants are now free to use whatever solution works from them depending on their context.

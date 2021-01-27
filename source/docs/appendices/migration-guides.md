@@ -14,9 +14,11 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
   This release was mostly focused on a new optional base theme, and there are not many upgrade instructions.
 </blockquote>
 
-### Cart item may not have product data attached
+### Cart content edge cases
 
-We fixed some issues in case products added to cart went out of stock. Our default components were not resilient to Cart items not having an attached product anymore and led to errors.
+We fixed some issues in case a product previously added to cart **went out of stock**.
+
+Our default components were also not resilient to Cart items not having an attached product and led to errors if a product **was removed from the website**.
 
 If you've overridden these components, please update them to ensure they can handle such use-case. You can refer to [these changes as an example](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/339/diffs#41f37f156cb39d8de257eb219fc96d2a29e3c398).
 
@@ -59,7 +61,7 @@ Previously, the address form could hold two lines for the street input. It is no
 - your FC module in Magento is up to date (front-commerce/magento1-module >= 1.3.0 & front-commerce/magento2-module >= 2.3.0)
 - you didn't override the `<AddressForm />` component or apply the updates to your own version. You can have a look at these two commits ([807fa0a8](https://gitlab.com/front-commerce/front-commerce/-/commit/807fa0a81669067b9e78ebe412de1c71ced35a90) & [49be4da9](https://gitlab.com/front-commerce/front-commerce/-/commit/49be4da9d0efa47eaac8d06dad80a689f4260dc6)) to learn how to update your own component.
 
-### Virtual products for Magento 2
+### Virtual products (Magento 2)
 
 In release 2.2.0 we've added support for Virtual Products in Magento 1. It is now possible to use them in Magento 2.
 
@@ -974,11 +976,6 @@ If you relied on them, you will now need to add them manually. We are still in t
 * Environment variables from your `.env` will in the future be loaded dynamically. You won't need to rebuild your server to update your server's environment variables. To ensure that you have the newest behavior, please set `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true`. To keep the deprecated one, please use `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false`. See [How to update environment variables](/docs/reference/environment-variables.html#How-to-update-environment-variables).
 * While upgrading the search behavior, we have also changed deprecated the `search.blacklistKeys` configuration in `config/website.js`. This now should be `search.ignoredAttributeKeys` which is less offensive and more explicit. Moreover, `search.fixedFacets` and `search.categoriesField` are no longer used.
 * While upgrading the search behavior, we have split the core's search definition from the Magento 2's implementation. This means that future integrations will let you use different backends while keeping your frontend intact. We've grouped the core's search functionality in `server/modules/front-commerce/search`. This  means that we have also moved `server/modules/front-commerce-core` to `server/modules/front-commerce/core`. By default, `.front-commerce.js` should now use `server/modules/front-commerce`, in order to load both the core and the search.
-
-## Branching model
-
-Please note that from now on, all developments will happen on the main `master` branch.
-If you want to be on the edge you must now use the `master` branch instead of the `develop` (now removed).
 
 ## `1.0.0-alpha.1` -> `1.0.0-alpha.2`
 
