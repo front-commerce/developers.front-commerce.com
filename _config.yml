@@ -51,6 +51,10 @@ sidebar_categories:
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
     - docs/advanced/production-ready/front-commerce-and-pm2
+  Features:
+    - docs/advanced/features/overview
+    - docs/advanced/features/invoices
+    - docs/advanced/features/flash-messages
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure

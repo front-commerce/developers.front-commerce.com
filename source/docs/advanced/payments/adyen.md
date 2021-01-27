@@ -100,10 +100,10 @@ const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
   return ComponentMap?.[paymentCode] ?? None;
 };
 ```
-5. register custom Flash message components to display payment messages in an optimized way (**recommended**)
+5. register [custom Flash message components](/docs/advanced/features/flash-messages.html#Create-custom-flash-message-components) to display payment messages in an optimized way (**recommended**)
 ```
-mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
-cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
+mkdir -p my-module/web/theme/modules/FlashMessages
+cp -u node_modules/front-commerce/src/web/theme/modules/FlashMessages/getFlashMessageComponent.js my-module/web/theme/modules/FlashMessages/getFlashMessageComponent.js
 ```
   and
 ```diff
