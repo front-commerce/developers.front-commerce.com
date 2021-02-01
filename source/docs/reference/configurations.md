@@ -178,6 +178,12 @@ export default {
 };
 ```
 
+### `config/sessions.js`
+
+Allows to define configurations related to the sessions of the users connected to your website.
+
+- `store`: factory function to use a custom data store to support sessions rather than the default one relying on the filesystem. For instance, if you want to connect to redis, you would have to return in the `store` function a `new RedisStore(options)` from [connect-redis](https://github.com/tj/connect-redis).
+
 ### `config/rateLimit.js`
 
 Allows to define configurations related to GraphQL rate limiting feature.
