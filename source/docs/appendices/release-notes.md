@@ -7,7 +7,7 @@ This page lists the public releases will let you know what's important if you ne
 
 ## Latest version
 
-**Front-Commerce [`2.4.0`](#2-4-0)**
+**Front-Commerce [`2.4.1`](#2-4-1)**
 
 Compatible with:
 
@@ -15,6 +15,24 @@ Compatible with:
 - **Magento2**: 2.3.2+ (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
+## 2.4.1
+
+> This release contains several important bugfixes:
+>
+> - allow guest customers with an address in a country with a required region to place a Magento2 order
+> - display warnings to customers when products from their cart went out of stock or were removed from the website
+> - better customer feedback during the checkout when their cart becomes impossible to finalize (if the last product was just bought for instance)
+> - security improvements and robustness of the client logging API
+>
+> **We highly recommend this upgrade to Magento 2 users.**
+> The `2.2.0-rc.4` release fixes Magento and Front-Commerce API that were exposing products from other websites in a multistore environment.
+> Many edge cases were found with our deep investigations: bundle items all out of stock, grouped products, crossell products only in another website etc.
+>
+> We ended up fixing many things from the core ourselves, and hope you'll now have a consistent catalog !
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.1)
+
+Requirements: same as [2.1.0](#2-1-0)
 ## 2.4.0
 
 Requirements: same as [2.3.0](#2-3-0)
