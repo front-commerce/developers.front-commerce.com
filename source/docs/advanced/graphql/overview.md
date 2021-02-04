@@ -13,8 +13,4 @@ You can already find documentation for:
 * [Remote schemas](./remote-schemas.html)
 * [Rate Limiting](./rate-limiting.html)
 
-And we are currently writing documentation about:
-
-* Dataloaders and cache invalidation <!-- TODO link to github issue -->
-
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
