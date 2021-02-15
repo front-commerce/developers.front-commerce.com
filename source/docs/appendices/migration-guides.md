@@ -13,8 +13,8 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 In this release we've mainly worked on supporting new shipping methods. This means that we are now compatible with the following methods with pickup points:
 
-- Colissimo (M2) - see [/docs/advanced/shipping/colissimo.html](Documentation) (the experimental one that lived in the core was removed)
-- Mondial Relay (M1) - see [/docs/advanced/shipping/mondial-relay.html](Documentation)
+- Colissimo (M2) - see [Documentation](/docs/advanced/shipping/colissimo.html) (the experimental one that lived in the core was removed)
+- Mondial Relay (M1) - see [Documentation](/docs/advanced/shipping/mondial-relay.html)
 
 We've also made sure that Colissimo M1 was compatible with FC although we're not supporting pickup points yet.
 

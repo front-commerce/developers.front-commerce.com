@@ -13,7 +13,7 @@ _Since version 2.5.0_
 
 The integration of Magento in Magento 1 & Front-Commerce relies on [man4x's module](https://github.com/OpenMageModuleFostering/man4x_mondialrelay) for pickup points.
 
-You will also need the [front-commerce/mondial-relay-magento1-module](https://github.com/front-commerce/mondialrelay-magento1-module-front-commerce) for extra endpoints needed in Front-Commerce.
+You will also need the [front-commerce/mondialrelay-magento1-module](https://github.com/front-commerce/magento1-module-mondialrelay-front-commerce) for extra endpoints needed in Front-Commerce.
 
 ## Installation
 
