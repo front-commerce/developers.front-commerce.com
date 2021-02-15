@@ -8,9 +8,9 @@ We support different kind of payments depending on the platform you are working 
 - [Colissimo](/docs/advanced/shipping/colissimo.html)
 - [Mondial Relay](/docs/advanced/shipping/mondial-relay.html)
 
-If you are looking for details about a specific eCommerce platform, please visit their dedicated page:
+Moreover, the following guides should help you implement custom integrations by using what's available in Front-Commerce:
 
-- [Magento2](/docs/magento2/shipping.html)
-- [Magento1](/docs/magento1/shipping.html)
+- [Custom Shipping Information](/docs/advanced/shipping/custom-shipping-information.html)
+- [Add a shipping method with pickup points](/docs/advanced/shipping/add-new-shipping-data-in-graphql.html)
 
 If you are looking for detailed information about an existing shipping method or if you're curious about a new integration, please [contact us](mailto:contact@front-commerce.com). **We are always looking to support more shipping methods.**

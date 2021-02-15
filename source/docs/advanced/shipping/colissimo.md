@@ -15,13 +15,13 @@ The integration of Colissimo in Magento 2 & Front-Commerce relies on [Magentix's
 
 ### Installation
 
-1. Install necessary dependencies :
+- Install necessary dependencies :
 
 ```shell
-npm i leaflet@^1.7 react-leaflet@^3.0
+npm install leaflet@^1.7 react-leaflet@^3.0
 ```
 
-2. Use the module in your .front-commerce.js
+- Use the module in your .front-commerce.js
 
 ```diff
 // .front-commerce.js
@@ -43,7 +43,7 @@ module.exports = {
 };
 ```
 
-3. Import styles
+- Import styles of Colissimo by overriding the `_modules.scss`
 
 ```diff
 // src/web/theme/modules/_modules.scss
@@ -51,7 +51,7 @@ module.exports = {
 +@import "~theme/modules/Colissimo/Colissimo";
 ```
 
-4. Import Colissimo component in Shipping additionalData component
+- Import Colissimo component in by overriding the getAdditionalDataComponent used for Shipping methods
 
 ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -66,7 +66,7 @@ const ComponentMap = {
 
 ```
 
-5. Allow OpenStreetMap tile loading in the Content Security Policies
+- Allow OpenStreetMap tile loading in the Content Security Policies
 
 ```diff
 // src/config/website.js

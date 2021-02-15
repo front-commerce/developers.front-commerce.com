@@ -95,7 +95,7 @@ Things to understand here:
 - `CustomMethod.AddressRecapLine` (optional) is used to change how the shipping address is displayed in the checkout recap once you've selected your custom shipping method. For instance this is what you will use to display a pickup address instead of the shipping address filled by the user.
 - `submitAdditionalData` sends and array of objects with a `key` and `value` to your backend. This means that when the shipping method will be set, the additional data will be sent to your backend at the same time. We'll see in the next section how to act on them.
 
-In this example we're only setting a text input, but you can do fancier things like fetching a list of pickup points from GraphQL and displaying them here. To do so, you need to use `<PostalAddressSelector />` component that allows to select a pickup. If you need such a component, please contact us so we can guide you through the steps of creating the GraphQL schema.
+In this example we're only setting a text input, but you can do fancier things like fetching a list of pickup points from GraphQL and displaying them here. To do so, you need to use `<PostalAddressSelector />` component that allows to select a pickup. See [Add a shipping method with pickup points](/docs/advanced/shipping/add-new-shipping-data-in-graphql.html) documentation for more information.
 
 ## Send the additional data to your backend
 

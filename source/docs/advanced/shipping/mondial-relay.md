@@ -11,17 +11,19 @@ This page contains information about the different ways you can ship orders with
 _Since version 2.5.0_
 </blockquote>
 
-The integration of Colissimo in Magento 1 & Front-Commerce relies on [man4x's module](https://github.com/OpenMageModuleFostering/man4x_mondialrelay) for pickup points.
+The integration of Magento in Magento 1 & Front-Commerce relies on [man4x's module](https://github.com/OpenMageModuleFostering/man4x_mondialrelay) for pickup points.
+
+You will also need the [front-commerce/mondial-relay-magento1-module](https://github.com/front-commerce/mondialrelay-magento1-module-front-commerce) for extra endpoints needed in Front-Commerce.
 
 ## Installation
 
-1. Install necessary dependencies :
+- Install necessary dependencies :
 
 ```shell
-npm i leaflet@^1.7 react-leaflet@^3.0
+npm install leaflet@^1.7 react-leaflet@^3.0
 ```
 
-2. Use the module in your .front-commerce.js
+- Use the module in your .front-commerce.js
 
 ```diff
 // .front-commerce.js
@@ -43,7 +45,7 @@ module.exports = {
 };
 ```
 
-3. Import styles
+- Import styles of Mondial Relay by overriding the `_modules.scss`
 
 ```diff
 // src/web/theme/modules/_modules.scss
@@ -51,7 +53,7 @@ module.exports = {
 +@import "~theme/modules/MondialRelay/MondialRelay";
 ```
 
-4. Import Mondialrelay component in Shipping additionalData component
+- Import MondialRelay component in by overriding the getAdditionalDataComponent used for Shipping methods
 
 ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -63,10 +65,9 @@ const ComponentMap = {
 +    mondialrelaypickup: MondialRelay,
 +  },
 };
-
 ```
 
-5. Allow OpenStreetMap tile loading in the Content Security Policies
+- Allow OpenStreetMap tile loading in the Content Security Policies
 
 ```diff
 // src/config/website.js
