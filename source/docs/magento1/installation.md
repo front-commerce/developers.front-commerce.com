@@ -30,6 +30,7 @@ First, you need to create (or retrieve existing) token from your Gitlab account 
 
 2. Configuration and required
 
+- Community edition version:
 ```
 composer config minimum-stability dev
 composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
@@ -37,18 +38,39 @@ composer config repositories.front-commerce-restful git https://github.com/PH2M/
 composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
 composer require front-commerce/magento1-module:"dev-master"
 ```
+For the main module `front-commerce/magento1-module` require, is strongly recommend to using a fixed version ([see available release for Community Edition](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases))
 
-For the main module `front-commerce/magento1-module` require, is strongly recommend to using a fixed version ([see available release](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases))
+- Enterprise edition version:
+```
+composer config minimum-stability dev
+composer config repositories.front-commerce-ee git https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce
+composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+composer config repositories.front-commerce-restful git https://github.com/PH2M/Magento-Extra-RESTful
+composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
+composer require front-commerce/magento1-module-enterprise:"dev-master"
+```
+For the main module `front-commerce/magento1-module-enterprise:"dev-master"` require, is strongly recommend to using a fixed version ([see available release for Enterprise Edition](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce/-/releases))
 
 ### Install directly in your Magento app folder
 
-1. Clone or download https://gitlab.com/front-commerce/magento1-module-front-commerce.git
-2. Copy `app` directory and paste it in your Magento's root directory
-3. Clone or download https://github.com/PH2M/Magento-Extra-RESTful
-4. Copy `modules/Clockworkgeek_Extrarestful.xml` file and paste it in your Magento's `app/etc/modules` directory
-5. Create `app/code/community/Clockworkgeek/Extrarestful` directory in your Magento's
-6. Copy all directories inside `code` in your Magento's `app/code/community/Clockworkgeek/Extrarestful` directory
+- Community edition version:
+    1. Clone or download https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+    2. Copy `app` directory and paste it in your Magento's root directory
+    3. Clone or download https://github.com/PH2M/Magento-Extra-RESTful
+    4. Copy `modules/Clockworkgeek_Extrarestful.xml` file and paste it in your Magento's `app/etc/modules` directory
+    5. Create `app/code/community/Clockworkgeek/Extrarestful` directory in your Magento's
+    6. Copy all directories inside `code` in your Magento's `app/code/community/Clockworkgeek/Extrarestful` directory
+- Enterprise edition version:
+    1. Clone or download https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+    2. Copy `app` directory and paste it in your Magento's root directory
+    3. Clone or download https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce
+    4. Copy `app` directory and paste it in your Magento's root directory
+    5. Clone or download https://github.com/PH2M/Magento-Extra-RESTful
+    6. Copy `modules/Clockworkgeek_Extrarestful.xml` file and paste it in your Magento's `app/etc/modules` directory
+    7. Create `app/code/community/Clockworkgeek/Extrarestful` directory in your Magento's
+    8. Copy all directories inside `code` in your Magento's `app/code/community/Clockworkgeek/Extrarestful` directory
 
+-
 ## Configuration
 <blockquote class="note">
 If the installation is successful, in Magento's administration panel, you will have a new entry "Front-Commerce" in the top menu and a new tab "Front-Commerce" in System > Configuration.
