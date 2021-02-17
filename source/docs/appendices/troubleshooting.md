@@ -159,6 +159,30 @@ For ElasticSuite versions < 2.9, there is nothing special to do. For ElasticSuit
 
 *Note: this setting was [introduced in Front-Commerce 2.3](/docs/appendices/migration-guides.html#ElasticSearch-7-x-and-ElasticSuite-2-9)*
 
+## I have an error when using Magento 2's GraphQL
+
+```
+Class Magento\\GraphQl\\Model\\Query\\ContextExtensionInterfaceFactory does not exist
+```
+
+This can happen when running the following GraphQL query directly in Magento.
+
+```graphql
+{
+  productsBySkus(skus: ["24-UB02"]) {
+    sku
+  }
+}
+```
+
+However, this only happens if you've run `setup:di:compile` in `developer` environment. In developer mode you don't need to compile Magento's code. You can do so by deleting the files in the `generated` folder.
+
+```
+rm -rf generated/{code,metadata}
+```
+
+In `production` mode, the error won't occur.
+
 ## Another issue?
 
 Please contact our support or open an issue describing the encountered problem along with your environment using `npx envinfo --system --binaries`
