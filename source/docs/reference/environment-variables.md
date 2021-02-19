@@ -162,16 +162,16 @@ See [our dedicated documentation page](/docs/advanced/payments/buybox.html#Confi
 _Since version 1.0.0-beta.0_
 </blockquote>
 
-Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.\
+Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug) package to show useful debugging information in the console.
 The `DEBUG` environment variable can be used to enable logging for different part of Front-Commerce, and some of the used libraries.
 
-Front-Commerce debugs are in the `front-commerce` namespace.\
+Front-Commerce debugs are in the `front-commerce` namespace.
 One can enable all of them using the following definition: `DEBUG="front-commerce:*"`
 
-The core also allows you to debug API calls to remote services made in the server.\
+The core also allows you to debug API calls to remote services made in the server.
 To do so, define `DEBUG=axios`.
 
-Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.\
+Both examples above can be combined as follow: `DEBUG="front-commerce:*,axios"`.
 Learn more in [the `debug` package documentation](https://www.npmjs.com/package/debug).
 
 Here is a list of available debug namespaces:
