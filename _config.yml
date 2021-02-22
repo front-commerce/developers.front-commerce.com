@@ -90,6 +90,7 @@ sidebar_categories:
   Shipping:
     - docs/advanced/shipping/overview
     - docs/advanced/shipping/custom-shipping-information
+    - docs/advanced/shipping/display-a-map
     - docs/advanced/shipping/add-new-shipping-data-in-graphql
     - docs/advanced/shipping/colissimo
     - docs/advanced/shipping/mondial-relay
