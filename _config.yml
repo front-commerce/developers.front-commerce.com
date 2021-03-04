@@ -87,6 +87,12 @@ sidebar_categories:
     - docs/advanced/payments/paypal
     - docs/advanced/payments/payzen
     - docs/advanced/payments/stripe
+  Shipping:
+    - docs/advanced/shipping/overview
+    - docs/advanced/shipping/custom-shipping-information
+    - docs/advanced/shipping/add-new-shipping-data-in-graphql
+    - docs/advanced/shipping/colissimo
+    - docs/advanced/shipping/mondial-relay
   Reference:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
