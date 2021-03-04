@@ -15,6 +15,22 @@ Compatible with:
 - **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
+## 2.4.5
+
+> This release contains a bugfix that improves resilience in case of ElasticSearch downtimes.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.5)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.4
+
+> This release contains minor bugfixes related to displaying invoices and dropdown.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.4)
+
+Requirements: same as [2.4.0](#2-4-0)
+
 ## 2.4.3
 
 > This release contains additional fixes related to product visibility, and fixes the payments method order if you are using Front-Commerce payments.
