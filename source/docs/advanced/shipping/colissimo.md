@@ -3,7 +3,7 @@ id: colissimo
 title: Colissimo integration
 ---
 
-This page contains information about the different ways you can accept payments with [Affirm](https://www.affirm.com/) in your Front-Commerce application.
+This page contains information about the different ways you can accept shippings with [Colissimo](https://www.laposte.fr/colissimo) in your Front-Commerce application.
 
 ## Magento2 module
 
