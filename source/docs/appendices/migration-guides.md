@@ -24,6 +24,33 @@ For those relying on `theme/components/components.scss` directly, this also mean
 
 Finally, the additional shipping method's components should now handle the submit button on their own. The legacy behavior is still supported, but this feature will likely be deprecated in the future. See [Custom Shipping Information](/docs/advanced/shipping/custom-shipping-information.html) for more details.
 
+### Support of Magento 1 Enterprise features
+
+In this release comes the first official support for a Magento 1 Enterprise feature. This is the grounding work that will also to support more features in the future.
+
+This first feature is RMA (Return Merchandize Authorization). In order to add support for this feature, you will need to:
+
+- Install the new [front-commerce/magento1-module-enterprise](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce). The installation documentation is available in the [Magento 1 installation guide](/docs/magento1/installation.html).
+- Add the Magento1 Enterprise GraphQL module in your `.front-commerce.js`
+  ```diff
+  module.exports = {
+    // ...
+    serverModules: [
+      { name: "FrontCommerce", path: "server/modules/front-commerce" },
+      { name: "Magento1", path: "server/modules/magento1" },
+  +    { name: "Magento1ee", path: "server/modules/magento1ee" },
+    ],
+    // ...
+  };
+  ```
+- Ensure that the returns are properly displayed on the customer's order page if the feature is enabled in Magento. If you didn't override any file related to the Account pages, it will work out of the box. If you did, you can check that it's still working by ensuring that the following features work:
+  - If the order was shipped, a link to create a return should appear in the `<OrderActions />` component
+  - Clicking on this link, the user should land on a form displaying the list of items they can return
+  - Upon a successful submission, the user will be redirected to the order page, and a success message should appear above the order. If this is not the case, please ensure that `<FlashSuccessMessage />` is available in the `<AccountLayout />` component.
+  - On an order with a registered RMA should display a `Returned Items` section. If this is not the case, this means that you should check your `theme/pages/Account/Order/Details/Details.js` and ensure that the `<OrderReturns />` is properly used.
+  - Your CSS stylesheets should either import the core's `theme/modules/_modules.scss` and `theme/pages/_pages.scss`, or you should ensure that your overrides import
+    `theme/modules/User/Order/OrderReturns/OrderReturns`, `theme/modules/User/Return/ReturnsTable/ReturnsTable` and `theme/pages/Account/Orders/Details/ReturnForm/ReturnForm"`,
+
 ## `2.3.x` -> `2.4.0`
 
 <blockquote class="important">
