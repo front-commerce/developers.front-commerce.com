@@ -361,7 +361,7 @@ export default {
         host: "127.0.0.1",
         port: 6379,
         db: 1,
-        // defaultExpireInSeconds: 864000 // default: ten days
+        // defaultExpireInSeconds: 82800 // default: 23 hours
       }
     }
   ]
