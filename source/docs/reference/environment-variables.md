@@ -110,6 +110,7 @@ To use Algolia, you should put these variables:
 - `FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY`: [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
 - `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`: a prefix to use to build index names
 
+You can find these credentials on the [Algolia Dashboard](https://www.algolia.com/dashboard/api-keys), on the **API keys** page from the menu.
 ### Paypal
 
 <blockquote class="wip">
