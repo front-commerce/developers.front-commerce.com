@@ -99,6 +99,10 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 - `FRONT_COMMERCE_ES_HOST`: the host of your Elasticsearch instance, without trailing slash (ex: `http://es.front-commerce.local:9200`)
 - `FRONT_COMMERCE_ES_ALIAS`: the alias prefix shared for your stores Elasticsearch indexes (ex: `magento2`). The store code will be appended.
+- `FRONT_COMMERCE_ES_DISABLE`: setting it to `"true"` allows to disable the use of
+  Elasticsearch. As of 2.5.0, if you don't want to use Elasticsearch at all, you can
+  simply not enable the `datasource-elasticsearch` module. This environment can
+  still be used to quickly disable Elasticsearch usage without changing the code.
 - `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION`: the version of the ElasticSuite module installed. By default, Front-Commerce considers a version < 2.9.
 - ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
