@@ -103,7 +103,7 @@ When your products are indexed in an Elasticsearch, you should put these variabl
   Elasticsearch. As of 2.5.0, if you don't want to use Elasticsearch at all, you can
   simply not enable the `datasource-elasticsearch` module. This environment can
   still be used to quickly disable Elasticsearch usage without changing the code.
-- `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION`: the version of the ElasticSuite module installed. By default, Front-Commerce considers a version < 2.9.
+- `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION`: the version of the ElasticSuite module installed (only relevant for Magento2 based setup). By default, Front-Commerce considers a version < 2.9.
 - ~~FRONT_COMMERCE_ES_VERSION: Elasticsearch server version (ex: 6.7)~~ deprecated in `2.0.0-rc.0` and removed in `2.0.0`
 
 ### Algolia
