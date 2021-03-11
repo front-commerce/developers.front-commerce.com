@@ -43,6 +43,7 @@ sidebar_categories:
     - docs/advanced/performance/preloading-routes
     - docs/advanced/performance/faster-server-side-rendering
     - docs/advanced/performance/server-timings
+    - docs/advanced/performance/improve-your-core-web-vitals
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
