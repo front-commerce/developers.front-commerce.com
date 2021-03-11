@@ -57,7 +57,7 @@ This first feature is RMA (Return Merchandize Authorization). In order to add su
   - Your CSS stylesheets should either import the core's `theme/modules/_modules.scss` and `theme/pages/_pages.scss`, or you should ensure that your overrides import
     `theme/modules/User/Order/OrderReturns/OrderReturns`, `theme/modules/User/Return/ReturnsTable/ReturnsTable` and `theme/pages/Account/Orders/Details/ReturnForm/ReturnForm"`.
 
-### Elasticsarch in a dedicated module
+### Elasticsearch in a dedicated module
 
 Elasticsearch related code has been moved to a dedicated module. As a result, if
 you were using it in 2.4.x you now need to enable the module in your
