@@ -55,7 +55,7 @@ This first feature is RMA (Return Merchandize Authorization). In order to add su
   - Upon a successful submission, the user will be redirected to the order page, and a success message should appear above the order. If this is not the case, please ensure that `<FlashSuccessMessage />` is available in the `<AccountLayout />` component.
   - On an order with a registered RMA should display a `Returned Items` section. If this is not the case, this means that you should check your `theme/pages/Account/Order/Details/Details.js` and ensure that the `<OrderReturns />` is properly used.
   - Your CSS stylesheets should either import the core's `theme/modules/_modules.scss` and `theme/pages/_pages.scss`, or you should ensure that your overrides import
-    `theme/modules/User/Order/OrderReturns/OrderReturns`, `theme/modules/User/Return/ReturnsTable/ReturnsTable` and `theme/pages/Account/Orders/Details/ReturnForm/ReturnForm"`,
+    `theme/modules/User/Order/OrderReturns/OrderReturns`, `theme/modules/User/Return/ReturnsTable/ReturnsTable` and `theme/pages/Account/Orders/Details/ReturnForm/ReturnForm"`.
 
 ### Elasticsarch in a dedicated module
 
