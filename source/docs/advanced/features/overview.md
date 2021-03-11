@@ -9,5 +9,6 @@ Front-Commerce has several extension points that allow to override default imple
 
 * [Invoices](./invoices.html)
 * [Flash messages](./flash-messages.html)
+* [Display a map](./display-a-map.html)
 
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.

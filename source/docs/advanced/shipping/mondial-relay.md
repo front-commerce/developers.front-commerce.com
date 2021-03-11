@@ -15,13 +15,11 @@ The integration of Magento in Magento 1 & Front-Commerce relies on [man4x's modu
 
 You will also need the [front-commerce/mondialrelay-magento1-module](https://github.com/front-commerce/magento1-module-mondialrelay-front-commerce) for extra endpoints needed in Front-Commerce.
 
+## Install a map module
+
+This module uses the Front-Commerce Map's component to display pickup points. Thus, before proceeding, please make sure that you've chosen a Map implementation from [Display a map](/docs/advanced/features/display-a-map.html).
+
 ## Installation
-
-- Install necessary dependencies :
-
-```shell
-npm install leaflet@^1.7 react-leaflet@^3.0
-```
 
 - Use the module in your .front-commerce.js
 
@@ -30,7 +28,11 @@ npm install leaflet@^1.7 react-leaflet@^3.0
 module.exports = {
   name: "Front Commerce DEV",
   url: "http://www.front-commerce.test",
-+  modules: ["./modules/shipping-mondialrelay-magento1"],
+  modules: [
++    "./node_modules/front-commerce/modules/shipping-mondialrelay-magento1"
+    "./node_modules/front-commerce/theme-chocolatine"
+    "./src"
+  ],
   serverModules: [
     { name: "FrontCommerce", path: "server/modules/front-commerce" },
     { name: "Magento1", path: "server/modules/magento1" },
@@ -65,21 +67,4 @@ const ComponentMap = {
 +    mondialrelaypickup: MondialRelay,
 +  },
 };
-```
-
-- Allow OpenStreetMap tile loading in the Content Security Policies
-
-```diff
-// src/config/website.js
-
-  // [...]
-  contentSecurityPolicy: {
-      // [...]
-      imgSrc: [
-        // [...]
-+        "*.openstreetmap.org",
-      ],
-      // [...]
-  }
-  // [...]
 ```

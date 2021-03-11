@@ -55,6 +55,7 @@ sidebar_categories:
     - docs/advanced/features/overview
     - docs/advanced/features/invoices
     - docs/advanced/features/flash-messages
+    - docs/advanced/features/display-a-map
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
