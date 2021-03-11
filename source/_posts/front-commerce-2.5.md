@@ -57,6 +57,22 @@ There is now magic here though. Even if we keep improving the foundation your st
 
 We have created **a new [Improve your Core Web Vitals](/docs/advanced/performance/improve-your-core-web-vitals.html) page** in our documentation dedicated to help you understand what is killing your <abbr title="Cumulative Layout Shift">CLS</abbr>, increasing your <abbr title="Largest Contentful Paint">LCP</abbr> or slowing your <abbr title="First Input Delay">FID</abbr>… and how to fight back. Keep it in your bookmarks as we will enrich it over time!
 
+## Other changes
+
+- Enabled the use of a product image for swatches on Magento 2
+- Improved order statuses to fetch the label from Magento (supports custom statuses)
+- Defined titles for all User account pages
+- Payline payment method for Magento 1 (in early preview, will be production ready in 2.6)
+- Added performant image `sizes` and `priority` properties on the default theme
+- Optimized fonts performance in Chocolatine
+- Added code samples on new projects home page to improve the onboarding process
+- Displayed multiple buttons consistently for order actions
+- Reduced the ElasticSearch timeout to ensure that Front-Commerce fallback mechanism can serve a response to Visitors when the ES server does not respond
+- Fixed delayed closing and toggle callback for the Dropdown component
+- Fixed an issue with server modules on Windows environments
+- Fixed a broken link in Chocolatine's drawer "Wishlist" link
+- Fixed the redirection after login in the default theme, to honor the `redirectTo` parameter
+
 <hr />
 <div class="center">
   <p>
