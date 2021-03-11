@@ -11,7 +11,6 @@ We support different kind of payments depending on the platform you are working 
 Moreover, the following guides should help you implement custom integrations by using what's available in Front-Commerce:
 
 - [Custom Shipping Information](/docs/advanced/shipping/custom-shipping-information.html)
-- [Display a map](/docs/advanced/shipping/display-a-map.html)
 - [Add a shipping method with pickup points](/docs/advanced/shipping/add-new-shipping-data-in-graphql.html)
 
 If you are looking for detailed information about an existing shipping method or if you're curious about a new integration, please [contact us](mailto:contact@front-commerce.com). **We are always looking to support more shipping methods.**

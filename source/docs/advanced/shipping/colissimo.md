@@ -15,7 +15,7 @@ The integration of Colissimo in Magento 2 & Front-Commerce relies on [Magentix's
 
 ## Install a map module
 
-This module uses the Front-Commerce Map's component to display pickup points. Thus, before proceeding, please make sure that you've chose a Map implementation from [Display a map](/docs/advanced/shipping/display-a-map.html).
+This module uses the Front-Commerce Map's component to display pickup points. Thus, before proceeding, please make sure that you've chose a Map implementation from [Display a map](/docs/advanced/features/display-a-map.html).
 
 ### Installation
 
