@@ -9,6 +9,12 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.4.0` -> `2.5.0`
 
+### Default Redis TTL change
+
+We've reduced the default TTL for the [Redis application caching strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Redis). It used to be 10 days, and we reduced it to 23h to ensure cache invalidation misses don't impact the store for too long.
+
+We feel it's a better default. If you it to be 10 days again, please update your `caching.js` with the `defaultExpireInSeconds: 864000` value.
+
 ### New shipping methods
 
 In this release we've mainly worked on supporting new shipping methods. This means that we are now compatible with the following methods with pickup points:
