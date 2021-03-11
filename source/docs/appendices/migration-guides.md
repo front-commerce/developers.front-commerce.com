@@ -57,6 +57,53 @@ This first feature is RMA (Return Merchandize Authorization). In order to add su
   - Your CSS stylesheets should either import the core's `theme/modules/_modules.scss` and `theme/pages/_pages.scss`, or you should ensure that your overrides import
     `theme/modules/User/Order/OrderReturns/OrderReturns`, `theme/modules/User/Return/ReturnsTable/ReturnsTable` and `theme/pages/Account/Orders/Details/ReturnForm/ReturnForm"`,
 
+### Elasticsarch in a dedicated module
+
+Elasticsearch related code has been moved to a dedicated module. As a result, if
+you were using it in 2.4.x you now need to enable the module in your
+`.front-commerce.js`.
+
+<blockquote class="warning">
+Known issue: the Elasticsearch server module needs to be enabled **before** the Magento's module.
+</blockquote>
+
+For a Magento2 based Front-Commerce setup:
+
+```diff
+// .front-commerce.js
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
+   serverModules: [
+     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
++    {
++      name: "Magento2Elasticsearch",
++      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
++    },
+     { name: "Magento2", path: "server/modules/magento2" },
+   ]
+```
+
+For a Magento1 based Front-Commerce setup:
+
+```diff
+// .front-commerce.js
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
+   serverModules: [
+     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
++    {
++      name: "Magento1Elasticsearch",
++      path: "datasource-elasticsearch/server/modules/magento1-elasticsearch",
++    },
+     { name: "Magento1", path: "server/modules/magento1" },
+   ]
+```
+
+If in your custom code, you were importing files from
+`server/core/esDatasource`, Front-Commerce will issue some deprecation warnings.
+To fix those, you have to replace every occurence of `server/core/esDatasource/`
+by `datasource-elasticsearch/server/datasource/` while importing components.
+
 ## `2.3.x` -> `2.4.0`
 
 <blockquote class="important">
