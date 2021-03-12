@@ -3,7 +3,7 @@ title: '2.5: RMA feature, search datasources and shipping modules'
 date: 2021-03-11
 ---
 
-Front-Commerce 2.5 is one of the most productive release we had so far. Our team worked hard to improve the product and increase its flexibility:
+Front-Commerce 2.5 is one of the most productive releases we had so far. Our team worked hard to improve the product and increase its flexibility:
 - search datasources allows you to choose between Algolia or ElasticSearch to power your search
 - new Shipping modules and Map implementations will reduce your integration costs
 - allow your Customers to return products with <abbr title="Return Merchandise Authorization">RMA</abbr>
@@ -57,7 +57,7 @@ Our value proposition has always been to help you deliver smooth buying experien
 
 **From 2.5 onwards, Front-Commerce stores can aim for providing a best-in-class user experience and obtain great Core Web Vitals scores**.
 
-There is now magic here though. Even if we keep improving the foundation your store is built upon, **it requires some efforts from your team too**. Understanding a Lighthouse report or a using the performance Devtools panel is important, so that you can spot what are the issues in your theme. Then (and only then), you could use what Front-Commerce offers to implement the optimization.
+There is now magic here though. Even if we keep improving the foundation your store is built upon, **it requires some efforts from your team too**. Understanding a Lighthouse report or a using the performance Devtools panel is important, so that you can spot issues in your theme. Then (and only then), you could use what Front-Commerce offers to implement the optimization.
 
 We have created **a new [Improve your Core Web Vitals](/docs/advanced/performance/improve-your-core-web-vitals.html) page** in our documentation dedicated to help you understand what is killing your <abbr title="Cumulative Layout Shift">CLS</abbr>, increasing your <abbr title="Largest Contentful Paint">LCP</abbr> or slowing your <abbr title="First Input Delay">FID</abbr>… and how to fight back. Keep it in your bookmarks as we will enrich it over time!
 
@@ -74,7 +74,7 @@ We have created **a new [Improve your Core Web Vitals](/docs/advanced/performanc
 - Reduced the ElasticSearch timeout to ensure that Front-Commerce fallback mechanism can serve a response to Visitors when the ES server does not respond
 - Fixed delayed closing and toggle callback for the Dropdown component
 - Fixed an issue with server modules on Windows environments
-- Fixed a broken link in Chocolatine's drawer "Wishlist" link
+- Fixed a broken "Wishlist" link in Chocolatine's drawer
 - Fixed the redirection after login in the default theme, to honor the `redirectTo` parameter
 
 <hr />
