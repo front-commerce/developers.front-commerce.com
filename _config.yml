@@ -73,6 +73,7 @@ sidebar_categories:
   Magento1:
     - docs/magento1/overview
     - docs/magento1/installation
+    - docs/magento1/search-engine
     - docs/magento1/add-custom-endpoint
     - docs/magento1/exposing-additional-attributes
     - docs/magento1/event-list
