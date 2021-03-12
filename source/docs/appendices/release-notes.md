@@ -7,13 +7,25 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.4.3`](#2-4-3)**
+**Front-Commerce [`2.5.0`](#2-5-0)**
 
 Compatible with:
 
 - **Node.js:** 10.15+
 - **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+
+## 2.5.0
+
+> This release contains product improvements that increase its flexibility:
+> - search datasources allows you to choose between Algolia or ElasticSearch to power your search
+> - new Shipping modules and Map implementations will reduce your integration costs
+> - allow your Customers to return products with RMA
+> - leverage our low-level tools to improve your Core Web Vitals
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.0)
+
+Requirements: same as [2.4.0](#2-4-0)
 
 ## 2.4.5
 

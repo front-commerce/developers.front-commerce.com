@@ -15,11 +15,15 @@ Front-Commerce 2.5 is one of the most productive release we had so far. Our team
 
 In this release, we've continued to increase our feature coverage by implementing <abbr title="Return Merchandise Authorization">RMA</abbr>. **Customers can now select products they purchased from their Order page and ask for a return**. They can view all their returns from their account dashboard.
 
+<div class="center">
+![The Return form on mobile](/images/blog/rma.png)
+</div>
+
 While the UI is platform agnostic, we implemented the supporting server implementation in the **Magento1 Enterprise** module. It is fully integrated in the workflow you are used to and administrators can manage RMAs from the admin panel as usual.
 
 ## Search datasources: Algolia, ElasticSearch
 
-We've reworked our search feature to allow registering different **datasources modules** without impact your code. Our existing ElasticSearch implementation has been extracted in a datasource module, and we implemented a new Algolia datasource module as part of this release.
+We've reworked our search feature to allow registering different **datasources modules** without impacting your code. Our existing ElasticSearch implementation has been extracted in a datasource module, and we implemented a new Algolia datasource module as part of this release.
 
 **The Algolia module allows Customers to find the product they are looking for (search, facets…) without friction** thanks to Algolia advanced merchandising features. The datasource only supports products search for now. Category and CMS pages search will come later.
 

@@ -9,11 +9,15 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.4.0` -> `2.5.0`
 
+To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
+- Magento 1: [1.3.0](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.0) + [EE module](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce)
+- Magento 2: [2.3.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.3.0)
+
 ### Default Redis TTL change
 
 We've reduced the default TTL for the [Redis application caching strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Redis). It used to be 10 days, and we reduced it to 23h to ensure cache invalidation misses don't impact the store for too long.
 
-We feel it's a better default. If you it to be 10 days again, please update your `caching.js` with the `defaultExpireInSeconds: 864000` value.
+We feel it's a better default. If you want it to be 10 days again, please update your `caching.js` with the `defaultExpireInSeconds: 864000` value.
 
 ### New shipping methods
 
