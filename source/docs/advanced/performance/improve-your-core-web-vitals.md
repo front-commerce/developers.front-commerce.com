@@ -5,7 +5,7 @@ title: Improve your Core Web Vitals
 
 Hi! You were fast… it means that you are interested in improving your application. Great!
 
-> We will improve this page in the next few hours (we had to sleep a bit and have family time!).
+> We will keep improving this page in the next few days.
 
 ## Some reading and links to keep you busy
 
