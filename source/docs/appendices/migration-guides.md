@@ -13,6 +13,8 @@ To leverage all the new features, we recommend that you upgrade your Magento mod
 - Magento 1: [1.3.0](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.0) + [EE module](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce)
 - Magento 2: [2.3.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.3.0)
 
+Front-Commerce Cloud customers must update the FCC submodule to version [1.4.0](https://gitlab.com/front-commerce/front-commerce-cloud/-/releases/1.4.0).
+
 ### Default Redis TTL change
 
 We've reduced the default TTL for the [Redis application caching strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation.html#Redis). It used to be 10 days, and we reduced it to 23h to ensure cache invalidation misses don't impact the store for too long.
