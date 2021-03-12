@@ -68,7 +68,7 @@ you were using it in 2.4.x you now need to enable the module in your
 `.front-commerce.js`.
 
 <blockquote class="warning">
-Known issue: the Elasticsearch server module needs to be enabled **before** the Magento's module.
+⚠️ Known issue: the Elasticsearch server module needs to be enabled **before** the Magento's module.
 </blockquote>
 
 For a Magento2 based Front-Commerce setup:
@@ -103,10 +103,37 @@ For a Magento1 based Front-Commerce setup:
    ]
 ```
 
+#### Deprecated search related API
+
+Some modules and functions related to search have been deprecated.
+
 If in your custom code, you were importing files from
 `server/core/esDatasource`, Front-Commerce will issue some deprecation warnings.
 To fix those, you have to replace every occurence of `server/core/esDatasource/`
 by `datasource-elasticsearch/server/datasource/` while importing components.
+
+`makeSearchDatasource` available in `server/modules/magento2/core/factories` or
+`server/modules/magento1/core/factories` is deprecated. Instead, you can
+directly retrieve the registered datasource, for instance if you are working in
+a `contextEnhancer`:
+
+```diff
+-import { makeSearchDataSource } from "server/modules/magento2/core/factories";
+-
+-const esDatasource = makeSearchDataSource();
+-
+ export default {
+   namespace: "MyProject/Search",
+-  dependencies: ["Magento2/Catalog/Layers"],
++  dependencies: ["Front-Commerce/Search", "Magento2/Catalog/Layers"],
+   typeDefs,
+   contextEnhancer: ({ req, loaders }) => {
++    const esDatasource = loaders.Search.buildSearchDatasource();
+     // do stuff with esDatasource
+     // ...
+   }
+ };
+```
 
 ## `2.3.x` -> `2.4.0`
 
