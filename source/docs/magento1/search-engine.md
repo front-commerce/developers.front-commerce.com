@@ -31,10 +31,10 @@ indexed in Elasticsearch.
 
 ### Front-Commerce configuration
 
-First, you need to make sure the Elasticsearch search client is installed:
+First, you need to make sure the Elasticsearch search client is installed with a version that matches your ElasticSearch server:
 
 ```
-npm i @elastic/elasticsearch
+npm i @elastic/elasticsearch@6
 ```
 
 On Front-Commerce side, you need to enable the Elasticsearch datasource by
