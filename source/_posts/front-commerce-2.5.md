@@ -57,7 +57,7 @@ Our value proposition has always been to help you deliver smooth buying experien
 
 **From 2.5 onwards, Front-Commerce stores can aim for providing a best-in-class user experience and obtain great Core Web Vitals scores**.
 
-There is now magic here though. Even if we keep improving the foundation your store is built upon, **it requires some efforts from your team too**. Understanding a Lighthouse report or a using the performance Devtools panel is important, so that you can spot issues in your theme. Then (and only then), you could use what Front-Commerce offers to implement the optimization.
+There is no magic here though. Even if we keep improving the foundation your store is built upon, **it requires some efforts from your team too**. Understanding a Lighthouse report or a using the performance Devtools panel is important, so that you can spot issues in your theme. Then (and only then), you could use what Front-Commerce offers to implement the optimization.
 
 We have created **a new [Improve your Core Web Vitals](/docs/advanced/performance/improve-your-core-web-vitals.html) page** in our documentation dedicated to help you understand what is killing your <abbr title="Cumulative Layout Shift">CLS</abbr>, increasing your <abbr title="Largest Contentful Paint">LCP</abbr> or slowing your <abbr title="First Input Delay">FID</abbr>… and how to fight back. Keep it in your bookmarks as we will enrich it over time!
 
