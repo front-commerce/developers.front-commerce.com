@@ -24,8 +24,9 @@ Hi! You were fast… it means that you are interested in improving your applicat
 
 Using: `<Image src="xxxx" priority />`
 
-### Improve your font performances
+### Improve your fonts performance
 
+- [Self-host your custom (Google) fonts](https://www.zdnet.com/article/chromes-new-cache-partitioning-system-impacts-google-fonts-performance/)
 - Use WOFF2 format
 - Use `font-display: optional`
 - Preload key fonts by naming them with the suffix: `*.priority.woff2`
