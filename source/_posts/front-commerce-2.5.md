@@ -39,7 +39,7 @@ The first two carriers supported are **Colissimo** (compatible with [Magento2's 
 
 Be it for **a Store Locator or Pickup points selectors**, our Customers often asked us if we provided performant components to display maps on their storefront. We seized the opportunity of working on Shipping modules to build "Map agnostic" components in Front-Commerce core. It means that **if your application or module relies on Front-Commerce Map components, it will be compatible with any compatible Map implementations.**
 
-This first release contains Map implementations for the two most commons Map providers: **OpenStreetMap** (using the Leaflet library) and **Google Maps**. It means for instance that you can choose whether your Customers select a Colissimo Pickup point from an <abbr title="OpenStreetMap">OSM</abbr> or a Google map!
+This first release contains Map implementations for the two most commons Map providers: **OpenStreetMap** (using the [Leaflet library](https://react-leaflet.js.org/)) and **[Google Maps ](https://www.npmjs.com/package/react-google-maps)**. It means for instance that you can choose whether your Customers select a Colissimo Pickup point from an <abbr title="OpenStreetMap">OSM</abbr> or a Google map!
 
 In the future, we could support more implementations such as Mapbox or Maptiler to allow you to build a perfect integrated experience for your Customers.
 
@@ -68,13 +68,13 @@ We have created **a new [Improve your Core Web Vitals](/docs/advanced/performanc
 - Defined titles for all User account pages
 - Payline payment method for Magento 1 (in early preview, will be production ready in 2.6)
 - Added performant image `sizes` and `priority` properties on the default theme
-- Optimized fonts performance in Chocolatine
+- Optimized fonts performance in theme Chocolatine
 - Added code samples on new projects home page to improve the onboarding process
 - Displayed multiple buttons consistently for order actions
 - Reduced the ElasticSearch timeout to ensure that Front-Commerce fallback mechanism can serve a response to Visitors when the ES server does not respond
 - Fixed delayed closing and toggle callback for the Dropdown component
 - Fixed an issue with server modules on Windows environments
-- Fixed a broken "Wishlist" link in Chocolatine's drawer
+- Fixed a broken "Wishlist" link in theme Chocolatine's drawer
 - Fixed the redirection after login in the default theme, to honor the `redirectTo` parameter
 
 <hr />
