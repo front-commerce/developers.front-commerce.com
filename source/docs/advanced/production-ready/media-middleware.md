@@ -102,7 +102,7 @@ This component will automatically fetch the image through the proxy with the cor
 
 It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. To disable lazyloading, you can use the option `dangerouslyDisableLazyLoad` or (even better in this example) **the `priority` prop that will also add a `<link rel="preload">` to the page.**
 
-For a more data-efficient browser preload, we also recommend that you define the [`sizes` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes) for the image. Here is an example:
+For a more data-efficient browser preload, we also recommend that you define the [`sizes` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes) for the image. A more detailed explanation about the `sizes` attribute and how to determine the best `sizes` for your image check out this [srcset + sizes = AWESOME!](https://ericportis.com/posts/2014/srcset-sizes/#part-2) article. [The "Images size" section below](#image-sizes) explains how we added `sizes` attributes in our themes, and how and when you should override it. Here is an example of the `sizes` attribute:
 
 ```
 <Image
@@ -116,6 +116,114 @@ For a more data-efficient browser preload, we also recommend that you define the
          25vw"
 />
 ```
+
+## Image Sizes
+
+<blockquote class="tip">
+**Prerequisites**: be sure you have a good understanding of how the browser selects what image to load. It is a process that depends on the rendered image width and the image widths available in its `srcset` attribute (the [srcset + sizes = AWESOME!](https://ericportis.com/posts/2014/srcset-sizes/#part-2) article is a good explanation).
+</blockquote>
+
+We have added sensible defaults to image sizes on key components in the principal pages. Figuring the correct `sizes` to set can be a daunting task. You need to know the different sizes available for your image. You must also take into account the size it will be rendered as, in relation to media breakpoints on the page and parent containers' `max-width`, `padding` and `margin` properties.
+
+### A method to determine image sizes
+
+To simplify this process we devised a smart way to determine these numbers in a very straightforward way.
+
+1. First open the page you want to setup the `sizes` property of.
+2. Open the developers tools and paste the below snippet in the `console` tab.
+3. Before you hit the enter key edit the condition indicated in the snippet to match the image you want.
+4. Hit the enter key.
+5. Now you have 4 new global functions you can use `getImage`, `resetIsMyImage`, `getSizesStats`, `clearSizesStats`.
+   - Use the `getImage` function to test the condition you set if it returns the correct image.
+   - In case `getImage` was returning the wrong image. Use `resetIsMyImage` to change the condition.
+   - `getSizesStats` returns the sizes stats collected so far.
+   - `clearSizesStats` clears the stats collected so far.
+6. To start collecting stats of how your image width changes with viewport width start resizing your browser window from small (say 300px) to extra large. Be gentle with the resizing so as to capture more data points. Be extra gentle around break points to capture the breakpoint perfectly.
+7. Run `getSizesStats()` in your `console` tab. It will print a long string.
+8. Copy the string in 7. (everything in between the double quotes).
+9. Paste the string you copied in 8. In to a spreadsheet.
+10. Now you can plot how the image width changes with viewport width.
+11. Using the above information and the different sizes available for your image, you can build a `sizes` value that matches your scenario. Check [example below](#image-sizes-example) for a hands-on exercise.
+
+```js
+var { getSizesStats, getImage, resetIsMyImage, clearSizesStats } = ((
+  isMyImage = (img) => {
+    return (
+      // IMPORTANT UPDATE THE CONDITION BELOW TO MATCH THE IMAGE YOU WANT TO TRACK
+      (img.alt || "").trim().toLowerCase() ===
+        "your-image-alt".trim().toLowerCase() &&
+      (img.src || "")
+        .trim()
+        .toLowerCase()
+        .indexOf("your-image-src".trim().toLowerCase()) >= 0 &&
+      (img?.attributes?.some_custom_prop?.value || "").trim().toLowerCase() ===
+        "your-custom-image-prop-value".trim().toLowerCase() &&
+      (img.className || "").toLowerCase().indexOf("your-class-name") >= 0
+    );
+  }
+) => {
+  const getImage = () => {
+    return Array.prototype.filter.call(
+      document.getElementsByTagName("img"),
+      isMyImage
+    )[0];
+  };
+
+  const stats = [];
+  window.addEventListener("resize", () => {
+    const windowSize = window.innerWidth;
+    const img = getImage();
+    if (!stats.find(([winSize]) => winSize === windowSize)) {
+      stats.push([windowSize, img.offsetWidth]);
+    }
+  });
+  return {
+    getSizesStats: () => {
+      stats.sort(([winSize1], [winSize2]) => winSize1 - winSize2);
+      return stats.map((itm) => itm.join("\t")).join("\n");
+    },
+    getImage,
+    clearSizesStats: () => {
+      stats.splice(0, stats.length);
+    },
+    resetIsMyImage: (newIsMyImage) => {
+      isMyImage = newIsMyImage;
+    },
+  };
+})();
+```
+
+### Image Sizes Example:
+
+Let's say the data you collected in the [A method to determine image sizes section above](#a-method-to-determine-image-sizes) are as follows:
+
+![Alt](./sizes-graph.png "Sizes Graph")
+
+And let's further assume that the image sizes available are [68, 136, 272, 544]. Notice from the above:
+
+1. For the viewport width of 1320 the size of the image becomes larger than 272 (the 272 sized image is not enough in this case). This means for viewport widths above 1320 the 544 image size is needed.
+2. For viewport width between 1120 and 1320 the image size is always between 136 and 272. This means for viewport widths above between 1120 and 1320 the 272 image size is sufficient.
+3. For viewport width between 1020 and 1120 the image size is larger than 272 again. This means for viewport widths between 1020 and 1120 the 544 image size is needed.
+4. For viewport width less than 1020 the image size on the image is always between 136 and 272 again. This means for viewport widths less than 1020 the 272 image size is sufficient.
+5. All this translates to the below sizes attribute (p.s. we gave it a 10px buffer):
+
+```jsx
+<Image
+  ...otherImageProps
+  sizes={`
+    (min-width: 1310px) 544px
+    (min-width: 1120px) 272px
+    (min-width: 1010px) 544px
+    272px
+  `}
+/>
+```
+
+Now go to the file `CategoryConstants.js` under `./theme-chocolatine/web/theme/pages/Category/` folder. You will find the exact same `sizes` we deduced above there. No magic numbers!
+
+### Image Sizes Defaults
+
+We have used the method explained above to set default `sizes` accross the theme. Those defaults found in the Constants file of the respective page are related to the image presets in the `<theme>/config/images.js` and the default values of some SCSS variables like `$boxSizeMargin`, `$smallContainerWidth` and `$containerWidth` in the `<theme>/web/theme/main.scss` file. So if you have customized any of the default configurations that affect how the image sizes change with viewport width, **you should definitely consider adapting the `sizes` values in the Constants files.**
 
 ## Add your own media proxy endpoint
 
