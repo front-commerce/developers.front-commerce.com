@@ -33,15 +33,17 @@ The button would likely be a component that would look like this:
 import React from "react";
 import Button from "theme/components/atoms/Button";
 
-const AddIngredientsToCart = ({addToCart}) => {
+const AddIngredientsToCart = ({ addToCart }) => {
   return (
-    <Button onClick={() => {
-      addToCart();
-    }}>
+    <Button
+      onClick={() => {
+        addToCart();
+      }}
+    >
       Add ingredients
     </Button>
   );
-}
+};
 
 export default AddIngredientsToCart;
 ```
@@ -75,7 +77,7 @@ Additionally, you may wonder what name and properties you should give to your ev
 
 ### Track an event as a React Component
 
-If you don't have an actual callback where to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle]((http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)).
+If you don't have an actual callback where to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](<(http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)>).
 
 For instance, in Front-Commerce's core, we are using `withTrackOnMount` like this to track when a user sees their cart.
 
@@ -84,10 +86,10 @@ import withTrackOnMount from "theme/modules/Analytics/withTrackOnMount";
 
 export default withTrackOnMount({
   event: "Cart Viewed",
-  isResolvedFromProps: props => !props.loading && props.cart,
+  isResolvedFromProps: (props) => !props.loading && props.cart,
   shouldUpdateEvent: (prevProps, nextProps) =>
     prevProps.cart.id !== nextProps.cart.id,
-  mapPropsToProperties: props => {
+  mapPropsToProperties: (props) => {
     return {
       cart_id: props.cart.id,
       products: props.cart.items.map((item, index) => ({
@@ -95,17 +97,18 @@ export default withTrackOnMount({
         name: item.name,
         quantity: item.qty,
         price: item.priceInfo.price.priceInclTax.value.amount,
-        position: index + 1
-      }))
+        position: index + 1,
+      })),
     };
-  }
-})(Cart)
+  },
+})(Cart);
 ```
 
 <blockquote class="note">
 Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackOnMount) to have a detailed explanation of the API of `withTrackOnMount`.
 
 Note that if you prefer to use render props you can refer to [`TrackOnMount`](docs/reference/analytics-components.html#TrackOnMount).
+
 </blockquote>
 
 ### Track page
@@ -117,10 +120,11 @@ To make this distinction clear, we provide an enhancer in the same spirit of `wi
 `withTrackPage` is an enhancer that lets you track a page each time a component is rendered and when the location has changed.
 
 For instance, in Front-Commerce's core
+
 ```jsx
 import withTrackPage from "theme/modules/Analytics/withTrackPage";
 
-withTrackPage("Home")(Cart)
+withTrackPage("Home")(Cart);
 ```
 
 <blockquote class="note">
@@ -129,6 +133,7 @@ Please refer to [Analytics React Components](/docs/reference/analytics-component
 Note that if you prefer to use render props you can refer to [`TrackPage`](docs/reference/analytics-components.html#TrackPage).
 
 Moreover, we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
+
 </blockquote>
 
 ## Add an integration
@@ -175,12 +180,12 @@ module.exports = {
         // integration that will add itself to the `analytics.js` lib
         script: () =>
           import("@segment/analytics.js-integration-google-analytics"),
-      }
+      },
       // You can add other integrations here. They are loaded asynchronously and
       // won't impact the user's performance too much (as long as there are not
       // too many).
-    ]
-  }
+    ],
+  },
 };
 ```
 
@@ -262,15 +267,15 @@ export default {
             "__utmb",
             "__utmc",
             "__utmt",
-            "__utmz"
+            "__utmz",
           ],
           description:
             "Google Analytics cookies, from Google, are meant to gather statistics about visits.",
-          link: "https://support.google.com/analytics/answer/6004245"
-        }
-      ]
-    }
-  ]
+          link: "https://support.google.com/analytics/answer/6004245",
+        },
+      ],
+    },
+  ],
 };
 ```
 
