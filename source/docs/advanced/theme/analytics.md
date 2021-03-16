@@ -230,7 +230,7 @@ Here is a list of integrations frequently used accross eCommerce shops:
       needConsent: true,
       settings: (authorization) => {
         return {
-          "Google Analytics": {
+          "Google Tag Manager": {
             containerID: "GW-123",
           },
         };
