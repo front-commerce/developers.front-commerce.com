@@ -27,6 +27,14 @@ Compatible with:
 
 Requirements: same as [2.4.0](#2-4-0)
 
+## 2.4.6
+
+> This release contains a bugfix of guest orders not being tracked.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.6)
+
+Requirements: same as [2.4.0](#2-4-0)
+
 ## 2.4.5
 
 > This release contains a bugfix that improves resilience in case of ElasticSearch downtimes.
