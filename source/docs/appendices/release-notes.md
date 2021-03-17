@@ -15,6 +15,14 @@ Compatible with:
 - **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
+## 2.5.1
+
+> This release contains a bugfix of guest orders not being tracked.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.1)
+
+Requirements: same as [2.4.0](#2-4-0)
+
 ## 2.5.0
 
 > This release contains product improvements that increase its flexibility:
