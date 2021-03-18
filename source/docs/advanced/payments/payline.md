@@ -20,9 +20,9 @@ This page contains information about the different ways you can accept payments 
 **Note** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
 </blockquote>
 
-Front-Commerce for Magento 1 requires a `FrontCommerce_Payline` module that turns the [Monext Payline official Magento 1 extension](https://docs.monext.fr/display/DT/Plugin+Magento+1) into a headless payment method for Front-Commerce. It is aimed at being transparent for Magento administrators and developers while allowing for a better Customer experience in a Front-Commerce application.
+Front-Commerce for Magento 1 requires a [`FrontCommerce_Payline` module](https://github.com/front-commerce/magento1-module-payline-front-commerce) that turns the [Monext Payline official Magento 1 extension](https://docs.monext.fr/display/DT/Plugin+Magento+1) into a headless payment method for Front-Commerce. It is aimed at being transparent for Magento administrators and developers while allowing for a better Customer experience in a Front-Commerce application.
 
-This integration is slightly different from [traditional Magento1 headless payments](/docs/magento2/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to get payment information from the checkout page. No redirection to Payline is involved (except for 3DS or PayPal authentication), the Customer remains on the Front-Commerce store.
+This integration is slightly different from [traditional Magento1 headless payments](/docs/magento1/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to get payment information from the checkout page. No redirection to Payline is involved (except for 3DS or PayPal authentication), the Customer remains on the Front-Commerce store.
 
 Here is how to set this payment method up.
 
@@ -111,4 +111,4 @@ To allow loading Monext Online (Payline) related remote resources:
 
 ### That's it!
 
-You can now configure the Magento extension to use a HOMO mode and [test the integration](https://docs.monext.fr/display/DT/Les+cartes+de+test)
+You can now configure the Magento extension to use the ["HOMO" Environment](https://docs.monext.fr/display/DT/Plugin+Magento+1#PluginMagento1-Commonsettings/Param%C3%A8trescommuns) and [test the integration](https://docs.monext.fr/display/DT/Les+cartes+de+test)
