@@ -67,6 +67,7 @@ This means that for each logger, each message will be sent using these transport
   The only option available is `filename` which is the name of the file that will be put in the `logs` folder of your project.
 * `type: "sentry"`: it will send the message to a sentry instance. Sentry is a tool that will make it easier to triage errors and assign some of your team members to their resolution.  
   The only option available is `options` which is the object given to the transport lib [winston-sentry-log](https://github.com/franciscofsales/winston-sentry-log#readme)
+* `type: "console"`: it will send the message to stdout/stderr. This is indended for customers that already have a log handeling system (like if running in kubernetes or a cloud platform).  
 
 There will be most likely more transport configurations in the future, but more likely [we will add a feature to add your own custom transport (#104)](https://gitlab.com/front-commerce/front-commerce/issues/104).
 
