@@ -7,6 +7,10 @@ Historically, Magento2 did not support headless payments. Even though some payme
 
 Front-Commerce’s Magento module provides a generic way to expose Magento payment modules headlessly and supports [the relevant Front-Commerce payment workflows](/docs/advanced/payments/payment-workflows.html).
 
+<blockquote class="important">
+**Important:** the implementation uses very low-level Magento mechanisms. One must be very careful about the implementation and **must rigorously test the payment integration** because some extensions could have nasty side effects. Read more about it in the [Warnings & Known issues](#Warnings-amp-Known-issues) section if you plan to use such payment methods.
+</blockquote>
+
 ## Supported Payment platforms
 
 Our Magento2 integration currently provides native adapters for the platforms below, learn how to install each one of them from the related documentation page:
@@ -188,3 +192,53 @@ Below is an example from Front-Commerce's core:
     </arguments>
 </type>
 ```
+
+## Warnings & Known issues
+
+Front-Commerce Headless Payment support relies on Magento low-level internal code. The Magento classes used have some internal state for optimization purpose, and depending on Magento versions and installed modules it could lead to undesirable behaviors.
+
+**We recommend that you test payments workflows rigorously for Payment Methods relying on Front-Commerce Headless Payment mechanisms.** If you need help investigating such issues, please contact us.
+
+### How does it work?
+
+It is important to understand how Headless Payment works to understand the limitations and reasons of the issues:
+1. Front-Commerce calls REST endpoints provided by the Front-Commerce Magento module (headless payments API)
+2. the REST endpoint will load the relevant headless payment adapter
+3. it then bootstraps [a Magento internal Request](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/64784f627064d0068ca04842317eb69f3fd143b7/app/code/FrontCommerce/Integration/Model/HeadlessPayments.php#L148) object, and initializes it with session information (user, order, quote…) by delegating some initialization to the payment adapter
+4. it then dispatches the request (in an emulated `frontend` Magento area)
+5. the Magento internal HTTP response is finally converted back to a Front-Commerce headless payment response (the payment adapter is responsible for extracting and transforming data)
+6. the Front-Commerce headless payment endpoint returns the JSON response that is understood and used by Front-Commerce to do whatever is needed (redirect the customer to a success page, to the payment provider page …)
+
+**The steps 3 and 4 above will trigger low-level Magento mechanisms and there are known side effects in some Magento versions**. Switching from a `webapi_rest` area to a `frontend` area (for another internal Magento Request) and then switching back to the `webapi_rest` area to send the API response… is what may cause issues.
+
+### Known issues
+
+There are still some issues we know about and were not able to solve in our module, either because Magento does not provide extension point to do it from a module or because it is difficult to do it across the whole range of Magento versions Front-Commerce supports.
+
+#### Magento 2.3
+
+No known issues! 😎
+
+#### Magento 2.4.0+
+
+> "CSP can only be configured for storefront or admin area" error
+
+This error is due to event handlers being merged and not reset upon Magento area switch. `Magento_Csp` event handlers (for `frontend` area) are incorrectly executed when sending back the `webapi_rest` HTTP response.
+
+Possible workarounds:
+- disable `Magento_Csp` module: for an admin-only store, it could make sense!
+- patch the `Magento\Framework\Config\Data\Scoped` class with the patch attached in the related issue
+
+[Read the related issue for details](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/issues/49).
+
+#### Magento 2.4.1+
+
+> "Notice: Undefined index: Magento\Webapi\Controller\Rest" error
+
+This error is due to the `$this->_pluginInstances` attribute is not reset properly when we switch between Magento areas.
+
+Possible workarounds:
+- call `$pluginList->getNext($type, $method, $code);` in the interceptor to reinitialize internal state properly
+- patch the `PluginList` class to handle this edge case (undefined index)
+
+[Read the related issue for details](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/issues/57).

@@ -3,17 +3,80 @@ id: release-notes
 title: Release notes
 ---
 
-This page lists the public releases will let you know what's important if you need to upgrade to this version.
+This page lists the public releases and will let you know what is included in each release so you could clearly define an upgrade plan for your project.
 
 ## Latest version
 
-**Front-Commerce [`2.4.1`](#2-4-1)**
+**Front-Commerce [`2.5.0`](#2-5-0)**
 
 Compatible with:
 
 - **Node.js:** 10.15+
-- **Magento2**: 2.3.2+ (Open Source & Commerce)
+- **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+
+## 2.5.1
+
+> This release contains a bugfix of guest orders not being tracked.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.1)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.5.0
+
+> This release contains product improvements that increase its flexibility:
+> - search datasources allows you to choose between Algolia or ElasticSearch to power your search
+> - new Shipping modules and Map implementations will reduce your integration costs
+> - allow your Customers to return products with RMA
+> - leverage our low-level tools to improve your Core Web Vitals
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.0)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.6
+
+> This release contains a bugfix of guest orders not being tracked.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.6)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.5
+
+> This release contains a bugfix that improves resilience in case of ElasticSearch downtimes.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.5)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.4
+
+> This release contains minor bugfixes related to displaying invoices and dropdown.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.4)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.3
+
+> This release contains additional fixes related to product visibility, and fixes the payments method order if you are using Front-Commerce payments.
+>
+> It requires [Front-Commerce Magento2 module 2.2.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.2.0) to fully enable these fixes.
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.3)
+
+Requirements: same as [2.4.0](#2-4-0)
+
+## 2.4.2
+
+> This release contains a **CRITICAL bugfix** for applications using the base theme.
+> The regression introduced in Front-Commerce 2.4.0 prevents Customers to move to the next checkout step if they first tried to submit the payment form without accepting GSC (unless they temporarily select another payment method and reselect the previous one).
+
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.2)
+
+Requirements: same as [2.4.0](#2-4-0)
 
 ## 2.4.1
 
@@ -32,10 +95,23 @@ Compatible with:
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.1)
 
-Requirements: same as [2.1.0](#2-1-0)
+Requirements: same as [2.4.0](#2-4-0)
+
 ## 2.4.0
 
-Requirements: same as [2.3.0](#2-3-0)
+> This release brings a **new base theme ("Chocolatine")**. It contains several accessibility improvements, and provides a better user experience out of the box.
+>
+> It also contains a new feature: invoices. **Magento 2 invoices** are now displayed in the Customer account. Customers can print them from the web, and developers can customize the print layout to match their needs.
+
+Requirements:
+- Magento2: 2.3.2+ -> 2.4.1 - requires [magento module version 2.2.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.2.0) - (Open Source & Commerce)
+- or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+- Reverse Proxy : Nginx 1.10 or more
+- NodeJS: 10.15+
+- Redis: 3.2+
+- ElasticSearch: 6.7+ and 7.x with the plugins:
+  - analysis-phonetic
+  - analysis-icu
 
 ## 2.3.0
 
@@ -67,7 +143,7 @@ Requirements: same as [2.3.0](#2-3-0)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.3.0)
 
 Requirements:
-- Magento2: 2.3.2+ (Open Source & Commerce)
+- Magento2: 2.3.2+ -> 2.4.0 (Open Source & Commerce)
 - or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - Reverse Proxy : Nginx 1.10 or more
 - NodeJS: 10.15+

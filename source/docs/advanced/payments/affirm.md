@@ -74,7 +74,7 @@ const ComponentMap = {
 
 ### Update your CSPs
 
-To allow loading stripe related remote resources:
+To allow loading Affirm related remote resources:
 
 ```diff
 // my-module/config/website.js
