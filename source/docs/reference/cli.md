@@ -95,6 +95,7 @@ If some translations are missing, the script will throw an error. This lets you 
 ### Options
 
 - `--ignore-build`: By default, this command will build your application to make sure that no translation is forgotten. However, if you've just run `front-commerce build`, this step is not necessary. `--ignore-build` option is what makes it possible not to build the application during the translation.
+- `--module` (`-m`): scope translations to a specific module registered in your `.front-commerce.js` configuration file. Translation files will be written in the `/path/to/module/translations` directory instead of your application's one.
 
 ## `front-commerce test`
 
