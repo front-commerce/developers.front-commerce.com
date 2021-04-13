@@ -7,9 +7,16 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.5.0` -> `2.6.0`
+
+### New icon required
+
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in both [the base theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95) and [the theme chocolatine's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/theme-chocolatine/web/theme/components/atoms/Icon/Icon.js#L104). If you have not overridden the `<Icon>` you do not have to do anything. However if you did update the `<Icon>` component please add an icon named `share` to the list of icons. You are free to pick any icon you find fit. Failing to add an icon named `share` in the list of icons in the `<Icon>` component will result in an error message being displayed when the user visits his wishlist page. P.S. If you already have an icon with the `share` key and it works with the share wishlist functionality then you are all set.
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
+
 - Magento 1: [1.3.0](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.0) + [EE module](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce)
 - Magento 2: [2.3.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.3.0)
 
