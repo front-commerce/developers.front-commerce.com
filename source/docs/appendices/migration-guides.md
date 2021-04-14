@@ -55,6 +55,15 @@ In case you have overridden `_modules.scss` you need to add the following line t
 @import "~theme/modules/ProductView/ProductName/ProductName";
 ```
 
+### Automatic Algolia configuration
+
+The Front-Commerce Algolia module is now automatically configured with the
+Algolia's configuration filled in the Magento 1 backoffice. As a result, the
+environment variables `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`,
+`FRONT_COMMERCE_ALGOLIA_APPLICATION_ID`,
+`FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY` can safely be removed from the
+`.env` file.
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
