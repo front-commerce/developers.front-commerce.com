@@ -13,6 +13,48 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in both [the base theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95) and [the theme chocolatine's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/theme-chocolatine/web/theme/components/atoms/Icon/Icon.js#L104). If you have not overridden the `<Icon>` you do not have to do anything. However if you did update the `<Icon>` component please add an icon named `share` to the list of icons. You are free to pick any icon you find fit. Failing to add an icon named `share` in the list of icons in the `<Icon>` component will result in an error message being displayed when the user visits his wishlist page. P.S. If you already have an icon with the `share` key and it works with the share wishlist functionality then you are all set.
 
+### Style sheets updates
+
+In case you have overridden `_modules.scss` you need to add the following line to it:
+
+```
+@import "~theme/modules/ProductThumbnail/ProductThumbnail";
+@import "~theme/modules/Wishlist/AddAllWishlistToCartModal/AddAllWishlistToCartModal";
+@import "~theme/modules/Wishlist/ShareWishlistModal/ShareWishlistModal";
+
+```
+
+#### In case you are using theme chocolatine
+
+1. If you have overridden `_pages.scss` you need to add to it:
+
+```
+@import "~theme/pages/SharedWishlist/SharedWishlist";
+```
+
+2. If you have overridden `_components.scss` you need to:
+
+- Remove:
+
+```
+@import "~./atoms/Tag/Tag";
+```
+
+- And Add
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+```
+
+#### In case you are using the base theme:
+
+1. If you have overridden `_components.scss` you need to add to it:
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+@import "~theme/modules/ProductView/ProductName/ProductName";
+```
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
