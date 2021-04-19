@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### New icon required
 
-In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in both [the base theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95) and [the theme chocolatine's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/theme-chocolatine/web/theme/components/atoms/Icon/Icon.js#L104). If you have not overridden the `<Icon>` you do not have to do anything. However if you did update the `<Icon>` component please add an icon named `share` to the list of icons. You are free to pick any icon you find fit. Failing to add an icon named `share` in the list of icons in the `<Icon>` component will result in an error message being displayed when the user visits his wishlist page. P.S. If you already have an icon with the `share` key and it works with the share wishlist functionality then you are all set.
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
 
 ### Style sheets updates
 
