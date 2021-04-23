@@ -64,7 +64,7 @@ That’s it! You have successfully registered the module in your Front-Commerce 
 
 Let's add the description of a `Product` to a `ProductItem` as an example of overriding the base theme.
 
-The original file is: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/theme/modules/ProductView/ProductItem/ProductItem.js)
+The original file is: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/modules/ProductView/ProductItem/ProductItem.js)
 
 <blockquote class="info">
 Please refer to the [Front-Commerce’s folder structure documentation page](/docs/concepts/front-commerce-folder-structure.html) to get a better
@@ -78,7 +78,7 @@ understanding of how components are organized in the base theme.
 The `description` information is not included in the GraphQL fields fetched by the application in the base theme.
 You will thus need to update the fragment related to `ProductItem`.
 
-The original fragment file is collocated with the original component at: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql)
+The original fragment file is collocated with the original component at: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql)
 
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
 2. add the field `description` to the fragment.

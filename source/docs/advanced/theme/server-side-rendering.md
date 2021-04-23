@@ -109,7 +109,7 @@ This behavior is leveraging [Front-Commerce's configuration system](/docs/advanc
 }
 ```
 
-If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/master/src/server/express/ssr/deviceConfigProvider.js) for implementation details and [contact us](mailto:contact@front-commerce.com) if you think of improvements.
+If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/express/ssr/deviceConfigProvider.js) for implementation details and [contact us](mailto:contact@front-commerce.com) if you think of improvements.
 
 ## SSR Fallback when things go wrong
 

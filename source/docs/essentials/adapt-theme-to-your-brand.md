@@ -40,7 +40,7 @@ theme.
 
 Since we use the Atomic Design principles, the tokens are within atoms of
 our base theme. From your application, you will find the base theme in the
-[`node_modules/front-commerce/src/web/`](https://gitlab.com/front-commerce/front-commerce/tree/master/src/web) directory and atoms under its `theme/components/atoms` subdirectory.
+[`node_modules/front-commerce/src/web/`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web) directory and atoms under its `theme/components/atoms` subdirectory.
 
 In this guide,
 we'll focus on the colors and the typography settings. But feel free to go
