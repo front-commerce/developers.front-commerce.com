@@ -9,6 +9,12 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.5.0` -> `2.6.0`
 
+### Minimum Node.js version
+
+Node.js 10.x [reaches its end of life in the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version 12.22.1.
+
+We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
+
 ### New icon required
 
 In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
