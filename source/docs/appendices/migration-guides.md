@@ -9,6 +9,32 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.5.0` -> `2.6.0`
 
+### Dependencies update
+
+In this release we have updated several dependencies. For most of them, the
+upgrade will be transparent. However, the following dependency updates require
+some attention though:
+
+* [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
+    not used at all by Front-Commerce. If you use it, you have to make sure it's
+    installed on your environment by running `npm i base-64`.
+* [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
+    has been updated to 6.0.0. In this new release, there's [a new rule we don't
+    follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
+    If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
+    need to do the same change. In addition, depending on your code, eslint
+    might also warn you about new errors.
+* [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
+    Among other changes, it contains a fix that makes sure [the `@` character is
+    correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
+    As a result, remote APIs now receive `%40` instead of a plain `@` when this
+    character is used in a query string parameter.
+* [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
+    used. It now adds a `rel` attribute on previous/next buttons.
+* [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
+    5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
+    compared to 4.x.
+
 ### New icon required
 
 In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
