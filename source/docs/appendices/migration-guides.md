@@ -7,9 +7,58 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.5.0` -> `2.6.0`
+
+### New icon required
+
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
+
+### Style sheets updates
+
+In case you have overridden `_modules.scss` you need to add the following line to it:
+
+```
+@import "~theme/modules/ProductThumbnail/ProductThumbnail";
+@import "~theme/modules/Wishlist/AddAllWishlistToCartModal/AddAllWishlistToCartModal";
+@import "~theme/modules/Wishlist/ShareWishlistModal/ShareWishlistModal";
+
+```
+
+#### In case you are using theme chocolatine
+
+1. If you have overridden `_pages.scss` you need to add to it:
+
+```
+@import "~theme/pages/SharedWishlist/SharedWishlist";
+```
+
+2. If you have overridden `_components.scss` you need to:
+
+- Remove:
+
+```
+@import "~./atoms/Tag/Tag";
+```
+
+- And Add
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+```
+
+#### In case you are using the base theme:
+
+1. If you have overridden `_components.scss` you need to add to it:
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+@import "~theme/modules/ProductView/ProductName/ProductName";
+```
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
+
 - Magento 1: [1.3.0](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.0) + [EE module](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce)
 - Magento 2: [2.3.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.3.0)
 
