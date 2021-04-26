@@ -100,7 +100,6 @@ After the installation, you need to configure it, at least:
    section, set the _Enable Indexing_ option
 1. in the same section, fill the credentials you can find on [the Algolia
    Dashboard](https://www.algolia.com/dashboard/api-keys)
-1. take note of the index name prefix (`magento_` by default)
 
 You can then run the indexer so that the products are indexed in Algolia's
 index.
@@ -134,8 +133,29 @@ making the changes in your `.front-commerce.js` file similar to:
 ⚠️ Known issue: the Algolia server module needs to be enabled **before** the Magento's module.
 </blockquote>
 
-Then, in your `.env` file, you need to define [all the Algolia related
-environment variables](/docs/reference/environment-variables.html#Algolia).
+As of Front-Commerce 2.6, Algolia's module is automatically configured. If you
+are using Front-Commerce 2.5, you need to define [all the Algolia related
+environment variables](/docs/reference/environment-variables.html#Algolia) in
+your `.env` file.
+
+Front-Commerce 2.6 takes the following parameters from Magento:
+
+* [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+* [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+* the index name prefix
+* the number of values per facet
+* the configured facet attributes
+
+On the configured facets, only the attribute name is taken into account (Facet
+type, Label, Searchable and Create Query rule are ignored for now). If you want
+facets on the categories, you need to add `category_ids` to the configured
+facets.
+
+<blockquote class="warning">
+⚠️ For performance reason, the configuration retrieved from Magento is cached. As
+a result, after changing a parameter in the backoffice, the new parameter will
+be taken into account after at most one minute by Front-Commerce.
+</blockquote>
 
 After restarting Front-Commerce, you should be able run a GraphQL query to
 search for products, for instance:

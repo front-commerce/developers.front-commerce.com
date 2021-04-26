@@ -108,7 +108,12 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 ### Algolia
 
-To use Algolia, you should put these variables:
+<blockquote class="info">
+As of Front-Commerce 2.6, [the Algolia Front-Commerce
+module](/docs/magento1/search-engine.html#Algolia) is automatically configured
+based on Magento1 configuration. Those environment variables only apply to
+Front-Commerce 2.5 with Magento1.
+</blockquote>
 
 - `FRONT_COMMERCE_ALGOLIA_APPLICATION_ID`: [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id) that identify your application in Algolia
 - `FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY`: [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
