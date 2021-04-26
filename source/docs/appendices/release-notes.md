@@ -7,11 +7,11 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.5.0`](#2-5-0)**
+**Front-Commerce [`2.6.0`](#2-6-0)**
 
 Compatible with:
 
-- **Node.js:** 10.15+
+- **Node.js:** 12.22+
 - **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
