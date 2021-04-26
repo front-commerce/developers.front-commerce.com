@@ -780,7 +780,7 @@ Here the list of the main updates you need to be concerned about:
   It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
   FormattedMessage no longer insert spans around your messages. This might lead to some styling issues. Add manually a `span` around your message if this is the case.
 - [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
-  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
+  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/CHANGELOG.md#-600).
 - [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
   Should be compatible since we are using a facade in FC `theme/components/helpers/MediaQuery`. If you are using something else, please make sure your code still works.
 - [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`

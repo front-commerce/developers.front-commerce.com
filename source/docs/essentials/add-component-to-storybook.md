@@ -132,7 +132,7 @@ add a new type of button: `tertiary`.
 To add this story, you will need to override the `Button.story.js` in the same
 way you overrode the `Button.js`. This means that you should copy the existing
 story from
-[`node_modules/front-commerce/src/web/theme/components/atoms/Button/Button.story.js`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/theme/components/atoms/Button/Button.story.js)
+[`node_modules/front-commerce/src/web/theme/components/atoms/Button/Button.story.js`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/components/atoms/Button/Button.story.js)
 to `my-module/web/theme/components/atoms/Button/Button.story.js`.
 
 Once you have copied the file, you need to restart the Storybook with
@@ -162,16 +162,16 @@ issues and have created helpers that should make your life easier when
 documenting those complex components.
 
 These helpers are located in
-[`node_modules/front-commerce/src/web/storybook/addons`](https://gitlab.com/front-commerce/front-commerce/tree/master/src/web/storybook/addons) and you can import them by
+[`node_modules/front-commerce/src/web/storybook/addons`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/storybook/addons) and you can import them by
 using the alias `web/storybook/addons/...`. For now, we have four of them:
 
-* [`web/storybook/addons/apollo/ApolloDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/storybook/addons/apollo/ApolloDecorator.js): mocks the data fetched by your
+* [`web/storybook/addons/apollo/ApolloDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/apollo/ApolloDecorator.js): mocks the data fetched by your
 components
-* [`web/storybook/addons/form/formDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/storybook/addons/form/formDecorator.js): mocks a Form surounding the input
+* [`web/storybook/addons/form/formDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/form/formDecorator.js): mocks a Form surounding the input
 component you are documenting
-* [`web/storybook/addons/intl/IntlDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/storybook/addons/intl/IntlDecorator.js): allows you to switch between the
+* [`web/storybook/addons/intl/IntlDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/intl/IntlDecorator.js): allows you to switch between the
 languages of your shop
-* [`web/storybook/addons/router/routerDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/web/storybook/addons/router/routerDecorator.js): mocks the routing and the URLs of
+* [`web/storybook/addons/router/routerDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/router/routerDecorator.js): mocks the routing and the URLs of
 your application
 
 <!-- TODO document usage of each of these helpers -->
