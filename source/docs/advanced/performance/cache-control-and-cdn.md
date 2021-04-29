@@ -1,0 +1,76 @@
+---
+id: cache-control-and-cdn
+title: Cache Control and CDN
+---
+
+<blockquote class="feature--new">
+  _This feature has been added in version `2.6.0`_
+</blockquote>
+
+To enable CDN caching you need to first set up proper [cache headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) for your site.
+
+In Front-Commerce we have implemented a mechanism where you can easily set up the `cache-control` headers for different parts of your site. You can also provide a custom implementation of the `cache-control` if needed (e.g. products with old last modified have longer caching duration).
+
+# Category/Product/CMS Pages
+
+To set up cache control headers for category/product/cms pages, first override `src/web/theme/pages/Category/CategoryCacheControlFragment.gql`, `src/web/theme/pages/Product/ProductCacheControlFragment.gql`, `src/web/theme/pages/CmsPage/CmsPageCacheControlFragment.gql`. Then uncomment the `cacheControl` part of the query. Finally set the `sMaxAge` and `staleWhileRevalidate` values to meet your requirements. So your query should look like this:
+
+```gql
+fragment CategoryCacheControlFragment on Category {
+  cacheControl(input: { sMaxAge: 600, staleWhileRevalidate: 3600 }) {
+    sMaxAge
+    staleWhileRevalidate
+  }
+}
+```
+
+P.S. we use `sMaxAge` instead of `maxAge` because this is the header used by CDN cache.
+
+# Static Pages
+
+To set up cache control headers for static pages you need to set a static attribute on the exported component of that page. Please make sure that this attribute is hoisted all the way to be visible on the exported route component (see `src/web/theme/routes/index.js`). Your static page component should look something like this:
+
+```js
+import Home from "theme/pages/Home";
+
+export default Home;
+
+Home.cacheControlDefinition = {
+  sMaxAge: 10,
+  staleWhileRevalidate: 1000,
+};
+```
+
+# Graph QL queries
+
+To enable caching for Graph QL queries you should make your Graph QL queries use the `GET` method. This can be done by adding the following environment variable to your `.env` file:
+
+```
+FRONT_COMMERCE_WEB_USE_GET_FOR_PERSISTED_QUERIES=true
+```
+
+Once you have enabled `GET` for your Graph QL queries the dispatcher will automatically set the values for the `cache-control` header based on the route (category/product/cms page).
+
+# Setting up the CDN
+
+Finally after you have set up the appropriate cache controls for your site you now need to configure the CDN. Front-Commerce requires one setting on the CDN to work properly and that is to exclude the cache for requests with a cookie `connect.sid`. How this can be achieved depends on your CDN. It is however common to have it as an exclusion regular expression, in that case you have to set it to `^connect.sid` (`^` denoting starts with). If you are using Front-Commerce cloud solution this comes pre configured for you so you do not have to do anything.
+
+# Advanced usage
+
+## Customise cache headers per category/product/CMS page
+
+You can have a more fine grained control on your cache headers' configurations than the one presented [in the Category/Product/CMS Pages above](#Category%2fProduct%2fCMS-Pages). This can be done in the resolver/loader of the module itself.
+
+For example let us have a look at the resolver of the Magento 2 Categories found at `src/server/modules/magento2/catalog/categories/resolvers.js`. You can see a section there dedicated to cache control. It is there that you can add any logic you want to tweek the cache control headers to your liking depending on the category at hand. Note we recommend you write the logic in the loader and call it from the resolver as with any other function.
+
+## Implementing cache control for your custom module
+
+Say you have a custom module and you want to add caching capabilities to your module. In Front-Commerce this is possible by implementing the `Cacheable` Graph QL interface and adding the `cacheControl` field to your module's resolver. You can see that is exactly what we did for the Products module in Magento 2 `src/server/modules/magento2/catalog/products/schema.gql` and `src/server/modules/magento2/catalog/products/resolvers.js` respectively.
+
+You also need to make sure that from the client side the `cacheControl` field is requested by your Graph QL query related to your custom module, and is set up with proper values (e.g. `src/web/theme/pages/Product/ProductCacheControlFragment.gql`).
+
+# Notes
+
+Please note that caching is disabled by default for user related content and for cart related content. This is done to avoid inadvertently caching sensitive user information.
+
+To avoid any performance regression it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider documentation](/docs/appendices/migration-guides#Wishlist-Provider)
