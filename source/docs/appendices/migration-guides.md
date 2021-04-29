@@ -11,19 +11,13 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Minimum Node.js version
 
-Node.js 10.x [reaches its end of life in the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version 12.22.1.
+Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version 12.22.1.
 
 We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
 
 ### Wishlist Provider
 
-In this release we have implemented a wishlist provider that takes care of:
-
-- Checking if the wishlist feature is enabled
-- Loading wishlist
-- Checking if product is in wishlist
-
-By doing so we have unified some queries related to the wishlist moved them to the provider. It is highly recommended you switch to using the wishlist provider for the functionalities it provided instead of relying on querying the data directly. This will also help reduce the number of requests you do to the server (like in the case of checking if product is in wishlist). We have also updated the `withIsProductInWishlist` HOC to use the provider so continuing to use it is ok.
+In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimise some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated. It is highly recommended you switch to using the wishlist provider for the functionalities it provided instead of relying on querying the data directly. This will also help reduce the number of requests you do to the server (like in the case of checking if a product is in wishlist). We have also updated the `withIsProductInWishlist` HOC to use the provider so continuing to use it is ok.
 
 Deprecated queries/fragments:
 
@@ -34,9 +28,37 @@ Deprecated queries/fragments:
 - `WishlistProductItemFragment`. Use `LoadWishlistItemFragment` instead
 - `AddProductToWishlistFragment`. Use `useLoadWishlistItem` hook instead
 
+#### Enabling the wishlist provider
+
+The wishlist provider is enabled by default in Front-Commerce 2.6.0. However you need to make sure you have not overridden the following:
+
+- `src/web/makeApp.js`
+- any story that uses the wishlist
+
+If you have overridden `src/web/makeApp.js` you need to make sure that the provider is included in the `makeApp` function just above the `<Routes>` component as follows:
+
+```jsx
+import { WishlistProvider } from "theme/modules/Wishlist/WishlistProvider/WishlistProvider";
+
+  ... // later in makeApp function...
+  <WishlistProvider>
+    <Router>
+      <Routes />
+    </Router>
+  </WishlistProvider>
+  ...
+```
+
+If you have updated a story or created any story related to or uses the wishlist, you need to:
+
+- Add the `WishlistDecorator` to your story just above the `ApolloDecorator`
+- use the `wishlistMeFakeValues` helper function to provide fake values to the `ApolloDecorator`.
+
+Please refer to [the `WishlistProvider` documentation](/docs/reference/wishlist-provider) for more details
+
 ### New icon required
 
-In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overridden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visit their wishlist page.
 
 ### Style sheets updates
 
