@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Minimum Node.js version
 
-Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version 12.22.1.
+Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version **12.22.1**.
 
 We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
 
@@ -35,7 +35,7 @@ The wishlist provider is enabled by default in Front-Commerce 2.6.0. However you
 - [`src/web/makeApp.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js)
 - any story that uses the wishlist
 
-If you have overridden `src/web/makeApp.js` you need to make sure that the provider is included in the `makeApp` function [just above the `<Routes>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js#L53) as follows:
+If you have overridden `src/web/makeApp.js` (**which is NOT recommended! ;-)**) you need to make sure that the provider is included in the `makeApp` function [just above the `<Routes>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js#L53) as follows:
 
 ```jsx
 import { WishlistProvider } from "theme/modules/Wishlist/WishlistProvider/WishlistProvider";
@@ -122,6 +122,18 @@ environment variables `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`,
 The Cookie consent bar now contains a "Deny all" button by default to comply with [some European](https://www.iubenda.com/en/help/23748-reject-button-cookie-banner) [recommendations](https://www.cnil.fr/fr/cookies-et-traceurs-comment-mettre-mon-site-web-en-conformite). Please ensure that you include it in your theme if you customized the bar.
 
 New options were also added in the analytics initialization, which allows you to use the user consents in external integrations. We've updated our [<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics.html#Google-Tag-Manager) to illustrate this.
+
+### Updated dependencies
+
+We updated [many dependencies](https://gitlab.com/front-commerce/front-commerce/-/commits/main/package.json) in this release. If you find any issues, please keep that in mind and don't hesitate to contact us in case of doubt.
+
+Here are the most important changes from our changelogs analysis.
+- `axios` was updated to 0.21.1 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/462))
+- `helmet` was updated to 4.5.0 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/469))
+- `eslint` and related dependencies were updated. If you've customized its configuration you may have to disable the `import/no-anonymous-default-export` rule ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/460))
+- `react-intl` was updated to 5.15.8 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/457) and [breaking changes](https://formatjs.io/docs/react-intl/upgrade-guide-5x/#breaking-api-changes) if you face issues)
+- `html-entities` was updated to 2.3.2 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/470))
+- `react-paginate` was updated and now uses rel prev/next by default ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/463#note_555995920))
 
 ## `2.4.0` -> `2.5.0`
 
