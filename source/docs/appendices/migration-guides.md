@@ -17,7 +17,9 @@ We also recommend to use Node.js 14.x as this version is also supported and it i
 
 ### Wishlist Provider
 
-In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimise some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated. It is highly recommended you switch to using the wishlist provider for the functionalities it provided instead of relying on querying the data directly. This will also help reduce the number of requests you do to the server (like in the case of checking if a product is in wishlist). We have also updated the `withIsProductInWishlist` HOC to use the provider so continuing to use it is ok.
+By doing so, we have unified some queries related to the wishlist moved them to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
+
+In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimise some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated or moved to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
 
 Deprecated queries/fragments:
 
