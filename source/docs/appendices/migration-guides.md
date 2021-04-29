@@ -117,6 +117,12 @@ environment variables `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`,
 `FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY` can safely be removed from the
 `.env` file.
 
+### Analytics and cookie bar
+
+The Cookie consent bar now contains a "Deny all" button by default to comply with [some European](https://www.iubenda.com/en/help/23748-reject-button-cookie-banner) [recommendations](https://www.cnil.fr/fr/cookies-et-traceurs-comment-mettre-mon-site-web-en-conformite). Please ensure that you include it in your theme if you customized the bar.
+
+New options were also added in the analytics initialization, which allows you to use the user consents in external integrations. We've updated our [<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics.html#Google-Tag-Manager) to illustrate this.
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
