@@ -63,20 +63,9 @@ In case you have overridden `_modules.scss` you need to add the following line t
 
 ### Cache Control and CDN
 
-To enable caching please:
+Front-Commerce 2.6 comes with a new powerful HTTP cache mechanism, Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
 
-- Add `FRONT_COMMERCE_WEB_USE_GET_FOR_PERSISTED_QUERIES=true` environment variable (P.S. this will disable query batching)
-- Override `*CacheControlFragment.gql` fragments (Category / Product / CMS Page has the following fragments)
-- Also for static pages add a static attribute `cacheControlDefinition` with the following properties:
-
-```json5
-{
-  sMaxAge: 10,
-  staleWhileRevalidate: 1000,
-}
-```
-
-Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
+To avoid any performance regression when enabling cache control it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider migration guide](#Wishlist-Provider)
 
 ### Automatic Algolia configuration
 

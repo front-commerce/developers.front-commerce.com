@@ -1,6 +1,6 @@
 ---
 id: cache-control-and-cdn
-title: Cache Control and CDN
+title: Cache control and CDN/Reverse proxy
 ---
 
 <blockquote class="feature--new">
@@ -10,8 +10,6 @@ title: Cache Control and CDN
 # NOTES
 
 Caching is disabled by default for user related content and for cart related content. This is done to avoid inadvertently caching sensitive user information.
-
-To avoid any performance regression it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider documentation](/docs/appendices/migration-guides#Wishlist-Provider)
 
 # Introduction
 
@@ -32,7 +30,7 @@ fragment CategoryCacheControlFragment on Category {
 }
 ```
 
-P.S. we use `sMaxAge` instead of `maxAge` because this is the header used by CDN cache.
+P.S. we use `sMaxAge` instead of `maxAge` because this is the value used by shared caches (e.g. reverse proxies or CDN)
 
 # Static Pages
 
@@ -41,12 +39,12 @@ To set up cache control headers for static pages you need to set a static attrib
 ```js
 import Home from "theme/pages/Home";
 
-export default Home;
-
 Home.cacheControlDefinition = {
   sMaxAge: 10,
   staleWhileRevalidate: 1000,
 };
+
+export default Home;
 ```
 
 # GraphQL queries
