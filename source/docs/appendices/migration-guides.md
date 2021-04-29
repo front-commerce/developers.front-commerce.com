@@ -61,6 +61,23 @@ In case you have overridden `_modules.scss` you need to add the following line t
 @import "~theme/modules/ProductView/ProductName/ProductName";
 ```
 
+### Cache Control and CDN
+
+To enable caching please:
+
+- Add `FRONT_COMMERCE_WEB_USE_GET_FOR_PERSISTED_QUERIES=true` environment variable (P.S. this will disable query batching)
+- Override `*CacheControlFragment.gql` fragments
+- Also for static pages add a static attribute `cacheControlDefinition` with the following properties:
+
+```json5
+{
+  sMaxAge: 10,
+  staleWhileRevalidate: 1000,
+}
+```
+
+Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
+
 ### Automatic Algolia configuration
 
 The Front-Commerce Algolia module is now automatically configured with the
