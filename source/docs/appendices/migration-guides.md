@@ -66,7 +66,7 @@ In case you have overridden `_modules.scss` you need to add the following line t
 To enable caching please:
 
 - Add `FRONT_COMMERCE_WEB_USE_GET_FOR_PERSISTED_QUERIES=true` environment variable (P.S. this will disable query batching)
-- Override `*CacheControlFragment.gql` fragments
+- Override `*CacheControlFragment.gql` fragments (Category / Product / CMS Page has the following fragments)
 - Also for static pages add a static attribute `cacheControlDefinition` with the following properties:
 
 ```json5

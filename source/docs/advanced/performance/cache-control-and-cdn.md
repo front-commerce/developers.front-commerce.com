@@ -19,9 +19,9 @@ To enable CDN caching you need to first set up proper [cache headers](https://de
 
 In Front-Commerce we have implemented a mechanism where you can easily set up the `cache-control` headers for different parts of your site. You can also provide a custom implementation of the `cache-control` if needed (e.g. products with old last modified have longer caching duration).
 
-# Category/Product/CMS Pages
+# Dynamic Pages
 
-To set up cache control headers for category/product/cms pages, first override `src/web/theme/pages/Category/CategoryCacheControlFragment.gql`, `src/web/theme/pages/Product/ProductCacheControlFragment.gql`, `src/web/theme/pages/CmsPage/CmsPageCacheControlFragment.gql`. Then uncomment the `cacheControl` part of the query. Finally set the `sMaxAge` and `staleWhileRevalidate` values to meet your requirements. So your query should look like this:
+The default theme already contains specific fragments that you can override to customize Cache-Control settings for the most common pages. Please look for the `*CacheControlFragment.gql` files across the theme. Override the desired `*CacheControlFragment.gql` file. Then uncomment the `cacheControl` part of the query. Finally set the `sMaxAge` and `staleWhileRevalidate` values to meet your requirements. For example the `CategoryCacheControlFragment.gql` could look something like this:
 
 ```gql
 fragment CategoryCacheControlFragment on Category {
