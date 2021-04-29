@@ -69,7 +69,7 @@ Finally after you have set up the appropriate cache controls for your site you n
 
 ## Customise cache headers per category/product/CMS page
 
-You can have a more fine grained control on your cache headers' configurations than the one presented [in the Category/Product/CMS Pages above](#Category%2fProduct%2fCMS-Pages). This can be done in the resolver/loader of the module itself.
+You can have a more fine grained control on your cache headers' configurations than the one presented [in the Dynamic Pages above](#Dynamic-Pages). This can be done in the resolver/loader of the module itself.
 
 For example let us have a look at the resolver of the Magento 2 Categories found at `src/server/modules/magento2/catalog/categories/resolvers.js`. You can see a section there dedicated to cache control. It is there that you can add any logic you want to tweek the cache control headers to your liking depending on the category at hand. Note we recommend you write the logic in the loader and call it from the resolver as with any other function.
 
