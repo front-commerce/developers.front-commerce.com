@@ -17,27 +17,25 @@ We also recommend to use Node.js 14.x as this version is also supported and it i
 
 ### Wishlist Provider
 
-By doing so, we have unified some queries related to the wishlist moved them to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
-
-In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimise some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated or moved to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
+In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimize some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated or moved to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
 
 Deprecated queries/fragments:
 
-- `WishlistProductGridQuery`. Use `LoadWishlistQuery` instead
-- `AddProductToWishlistQuery`. Use `useLoadWishlistItem` hook instead
-- `IsWishlistEnabledQuery`. Use `useIsWishlistEnabled` hook instead
-- `WishlistProductGridFragment`. Use `LoadWishlistQueryFragment` instead
-- `WishlistProductItemFragment`. Use `LoadWishlistItemFragment` instead
-- `AddProductToWishlistFragment`. Use `useLoadWishlistItem` hook instead
+- `WishlistProductGridQuery`: use `LoadWishlistQuery` instead
+- `AddProductToWishlistQuery`: use `useLoadWishlistItem` hook instead
+- `IsWishlistEnabledQuery`: use `useIsWishlistEnabled` hook instead
+- `WishlistProductGridFragment`: use `LoadWishlistQueryFragment` instead
+- `WishlistProductItemFragment`: use `LoadWishlistItemFragment` instead
+- `AddProductToWishlistFragment`: use `useLoadWishlistItem` hook instead
 
 #### Enabling the wishlist provider
 
 The wishlist provider is enabled by default in Front-Commerce 2.6.0. However you need to make sure you have not overridden the following:
 
-- `src/web/makeApp.js`
+- [`src/web/makeApp.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js)
 - any story that uses the wishlist
 
-If you have overridden `src/web/makeApp.js` you need to make sure that the provider is included in the `makeApp` function just above the `<Routes>` component as follows:
+If you have overridden `src/web/makeApp.js` you need to make sure that the provider is included in the `makeApp` function [just above the `<Routes>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js#L53) as follows:
 
 ```jsx
 import { WishlistProvider } from "theme/modules/Wishlist/WishlistProvider/WishlistProvider";

@@ -69,7 +69,7 @@ const MyComponent = ({ sku }) => {
 
 # The WishlistDecorator
 
-When developing stories for components using the `WishlistProvider`'s hooks you need to have the `WishlistProvider` as an ancestor to your story. We have created a `WishlistDecorator` to help with this process. You must add the `WishlistDecorator` above the `ApolloDecorator` in your story as follows:
+When developing stories for components using the `WishlistProvider`'s hooks you need to add the `WishlistDecorator` above the `ApolloDecorator` in your story as follows:
 
 ```jsx
   ...
