@@ -7,9 +7,138 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.5.0` -> `2.6.0`
+
+### Minimum Node.js version
+
+Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version **12.22.1**.
+
+We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
+
+### Wishlist Provider
+
+In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimize some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated or moved to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
+
+Deprecated queries/fragments:
+
+- `WishlistProductGridQuery`: use `LoadWishlistQuery` instead
+- `AddProductToWishlistQuery`: use `useLoadWishlistItem` hook instead
+- `IsWishlistEnabledQuery`: use `useIsWishlistEnabled` hook instead
+- `WishlistProductGridFragment`: use `LoadWishlistQueryFragment` instead
+- `WishlistProductItemFragment`: use `LoadWishlistItemFragment` instead
+- `AddProductToWishlistFragment`: use `useLoadWishlistItem` hook instead
+
+#### Enabling the wishlist provider
+
+The wishlist provider is enabled by default in Front-Commerce 2.6.0. However you need to make sure you have not overridden the following:
+
+- [`src/web/makeApp.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js)
+- any story that uses the wishlist
+
+If you have overridden `src/web/makeApp.js` (**which is NOT recommended! ;-)**) you need to make sure that the provider is included in the `makeApp` function [just above the `<Routes>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js#L53) as follows:
+
+```jsx
+import { WishlistProvider } from "theme/modules/Wishlist/WishlistProvider/WishlistProvider";
+
+  ... // later in makeApp function...
+  <WishlistProvider>
+    <Router>
+      <Routes />
+    </Router>
+  </WishlistProvider>
+  ...
+```
+
+If you have updated a story or created any story related to or uses the wishlist, you need to:
+
+- Add the `WishlistDecorator` to your story just above the `ApolloDecorator`
+- use the `wishlistMeFakeValues` helper function to provide fake values to the `ApolloDecorator`.
+
+Please refer to [the `WishlistProvider` documentation](/docs/reference/wishlist-provider) for more details
+
+### New icon required
+
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overridden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visit their wishlist page.
+
+### Style sheets updates
+
+In case you have overridden `_modules.scss` you need to add the following line to it:
+
+```
+@import "~theme/modules/ProductThumbnail/ProductThumbnail";
+@import "~theme/modules/Wishlist/AddAllWishlistToCartModal/AddAllWishlistToCartModal";
+@import "~theme/modules/Wishlist/ShareWishlistModal/ShareWishlistModal";
+
+```
+
+#### In case you are using theme chocolatine
+
+1. If you have overridden `_pages.scss` you need to add to it:
+
+```
+@import "~theme/pages/SharedWishlist/SharedWishlist";
+```
+
+2. If you have overridden `_components.scss` you need to:
+
+- Remove:
+
+```
+@import "~./atoms/Tag/Tag";
+```
+
+- And Add
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+```
+
+#### In case you are using the base theme:
+
+1. If you have overridden `_components.scss` you need to add to it:
+
+```
+@import "~theme/components/atoms/Tag/Tag";
+@import "~theme/modules/ProductView/ProductName/ProductName";
+```
+
+### Cache Control and CDN
+
+Front-Commerce 2.6 comes with a new powerful HTTP cache mechanism, Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
+
+To avoid any performance regression when enabling cache control it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider migration guide](#Wishlist-Provider)
+
+### Automatic Algolia configuration
+
+The Front-Commerce Algolia module is now automatically configured with the
+Algolia's configuration filled in the Magento 1 backoffice. As a result, the
+environment variables `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`,
+`FRONT_COMMERCE_ALGOLIA_APPLICATION_ID`,
+`FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY` can safely be removed from the
+`.env` file.
+
+### Analytics and cookie bar
+
+The Cookie consent bar now contains a "Deny all" button by default to comply with [some European](https://www.iubenda.com/en/help/23748-reject-button-cookie-banner) [recommendations](https://www.cnil.fr/fr/cookies-et-traceurs-comment-mettre-mon-site-web-en-conformite). Please ensure that you include it in your theme if you customized the bar.
+
+New options were also added in the analytics initialization, which allows you to use the user consents in external integrations. We've updated our [<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics.html#Google-Tag-Manager) to illustrate this.
+
+### Updated dependencies
+
+We updated [many dependencies](https://gitlab.com/front-commerce/front-commerce/-/commits/main/package.json) in this release. If you find any issues, please keep that in mind and don't hesitate to contact us in case of doubt.
+
+Here are the most important changes from our changelogs analysis.
+- `axios` was updated to 0.21.1 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/462))
+- `helmet` was updated to 4.5.0 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/469))
+- `eslint` and related dependencies were updated. If you've customized its configuration you may have to disable the `import/no-anonymous-default-export` rule ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/460))
+- `react-intl` was updated to 5.15.8 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/457) and [breaking changes](https://formatjs.io/docs/react-intl/upgrade-guide-5x/#breaking-api-changes) if you face issues)
+- `html-entities` was updated to 2.3.2 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/470))
+- `react-paginate` was updated and now uses rel prev/next by default ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/463#note_555995920))
+
 ## `2.4.0` -> `2.5.0`
 
 To leverage all the new features, we recommend that you upgrade your Magento modules to their latest version:
+
 - Magento 1: [1.3.0](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.0) + [EE module](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce)
 - Magento 2: [2.3.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.3.0)
 

@@ -63,7 +63,8 @@ const serviceConfigurationProvider = {
   name,
   schema,
   values,
-  slowValuesOnEachRequest
+  slowValuesOnEachRequest,
+  fetchRemoteConfiguration,
 };
 ```
 
@@ -182,6 +183,23 @@ const slowValuesOnEachRequest = req => {
 };
 ```
 
+</blockquote>
+
+### Remotely fetched values (key `fetchRemoteConfiguration`, optional)
+
+> **Note:** `fetchRemoteConfiguration` is a low level API in Front-Commerce. You
+> shouldn't need it in most cases.
+
+`fetchRemoteConfiguration` is a function that is called at a later stage in
+Front-Commerce request handling cycle to receive a fully initialized `request`
+object, so that, for instance, [you can instantiate a loader to retrieve some
+configuration from Magento](https://gitlab.com/front-commerce/front-commerce/-/commit/f57ccabae32ebe6243fc213485078cb1f98f8a30#9e3c152a167c50222b152728db1b5946d409ba89_0_29).
+
+<blockquote class="warning">
+**Warning:** Like `slowValuesOnEachRequest`, `fetchRemoteConfiguration` can have
+a huge impact on the performances. If you really need to implement it, please
+make sure to memoize its result to limit the performance impact as much as
+possible.
 </blockquote>
 
 ## Register a configuration provider
