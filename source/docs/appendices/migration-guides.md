@@ -15,6 +15,25 @@ Node.js 10.x [reaches its end of life in the end of April 2021](https://nodejs.o
 
 We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
 
+### Wishlist Provider
+
+In this release we have implemented a wishlist provider that takes care of:
+
+- Checking if the wishlist feature is enabled
+- Loading wishlist
+- Checking if product is in wishlist
+
+By doing so we have unified some queries related to the wishlist moved them to the provider. It is highly recommended you switch to using the wishlist provider for the functionalities it provided instead of relying on querying the data directly. This will also help reduce the number of requests you do to the server (like in the case of checking if product is in wishlist). We have also updated the `withIsProductInWishlist` HOC to use the provider so continuing to use it is ok.
+
+Deprecated queries/fragments:
+
+- `WishlistProductGridQuery`. Use `LoadWishlistQuery` instead
+- `AddProductToWishlistQuery`. Use `useLoadWishlistItem` hook instead
+- `IsWishlistEnabledQuery`. Use `useIsWishlistEnabled` hook instead
+- `WishlistProductGridFragment`. Use `LoadWishlistQueryFragment` instead
+- `WishlistProductItemFragment`. Use `LoadWishlistItemFragment` instead
+- `AddProductToWishlistFragment`. Use `useLoadWishlistItem` hook instead
+
 ### New icon required
 
 In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
