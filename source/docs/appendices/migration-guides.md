@@ -61,6 +61,12 @@ In case you have overridden `_modules.scss` you need to add the following line t
 @import "~theme/modules/ProductView/ProductName/ProductName";
 ```
 
+### Cache Control and CDN
+
+Front-Commerce 2.6 comes with a new powerful HTTP cache mechanism, Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
+
+To avoid any performance regression when enabling cache control it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider migration guide](#Wishlist-Provider)
+
 ### Automatic Algolia configuration
 
 The Front-Commerce Algolia module is now automatically configured with the
