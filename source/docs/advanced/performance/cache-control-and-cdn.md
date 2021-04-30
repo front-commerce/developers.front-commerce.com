@@ -60,7 +60,7 @@ Once you have enabled `GET` for your GraphQL queries the dispatcher will automat
 
 **Please note:** setting `FRONT_COMMERCE_WEB_USE_GET_FOR_PERSISTED_QUERIES=true` will disable GraphQL query batching.
 
-## Setting up the CDN
+## CDN or Reverse proxy configuration
 
 Finally after you have set up the appropriate cache controls for your site you now need to configure a CDN (or a reverse proxy such as Nginx) which will take care of caching pages for users. See [Which CDN providers support stale-while-revalidate?](https://www.ctrl.blog/entry/cdn-rfc5861-support.html) for a list of CDN that supports it. As of 2.6, Front-Commerce requires that the CDN ignores the cache for requests containing a cookie named `connect.sid`. Please refer to your CDN's documentation for more details. **If you are using Front-Commerce Cloud, you have nothing to do** unless you changed default values. Please [contact us](support@front-commerce.com) if you need support to enable caching.
 
