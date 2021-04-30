@@ -15,6 +15,27 @@ Compatible with:
 - **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
+## 2.6.0
+
+> Front-Commerce 2.6 embraces HTTP Caching to bring your storefront performance to a whole new level.
+>
+> Leverage proxy or CDN caching to get the performance of static websites with the flexibility you’d expect for a dynamic eCommerce storefront. We’re eager to see what you will do with this!
+>
+> We’ve also added new features (Store credits, wishlist improvements, remote configuration), updated our dependencies and fixed several issues.
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/04/29/front-commerce-2.6/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.0)
+
+Requirements:
+- Magento2: 2.3.2+ -> 2.4.1 - requires [magento module version 2.2.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.2.0) - (Open Source & Commerce)
+- or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+- Reverse Proxy : Nginx 1.16 or more
+- NodeJS: 12.22+
+- Redis: 3.2+
+- ElasticSearch: 6.7+ and 7.x with the plugins:
+  - analysis-phonetic
+  - analysis-icu
+
 ## 2.5.1
 
 > This release contains a bugfix of guest orders not being tracked.

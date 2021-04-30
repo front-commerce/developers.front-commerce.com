@@ -10,7 +10,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
 
-Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version **12.22.1**.
+Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the minimum supported Node.js version in Front-Commerce is **12.22.1**.
 
 We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
 
