@@ -8,7 +8,6 @@ This area will contain the Migration steps to follow for upgrading your store to
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
 ## `2.5.0` -> `2.6.0`
-
 ### Minimum Node.js version
 
 Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version **12.22.1**.
@@ -125,15 +124,29 @@ New options were also added in the analytics initialization, which allows you to
 
 ### Updated dependencies
 
-We updated [many dependencies](https://gitlab.com/front-commerce/front-commerce/-/commits/main/package.json) in this release. If you find any issues, please keep that in mind and don't hesitate to contact us in case of doubt.
+In this release we have updated [several dependencies](https://gitlab.com/front-commerce/front-commerce/-/commits/main/package.json). For most of them, the
+upgrade will be transparent. However, the following dependency updates require
+some attention though:
 
-Here are the most important changes from our changelogs analysis.
-- `axios` was updated to 0.21.1 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/462))
-- `helmet` was updated to 4.5.0 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/469))
-- `eslint` and related dependencies were updated. If you've customized its configuration you may have to disable the `import/no-anonymous-default-export` rule ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/460))
-- `react-intl` was updated to 5.15.8 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/457) and [breaking changes](https://formatjs.io/docs/react-intl/upgrade-guide-5x/#breaking-api-changes) if you face issues)
-- `html-entities` was updated to 2.3.2 ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/470))
-- `react-paginate` was updated and now uses rel prev/next by default ([see <abbr title="Merge Request">MR</abbr>](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/463#note_555995920))
+* [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
+    not used at all by Front-Commerce. If you use it, you have to make sure it's
+    installed on your environment by running `npm i base-64`.
+* [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
+    has been updated to 6.0.0. In this new release, there's [a new rule we don't
+    follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
+    If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
+    need to do the same change. In addition, depending on your code, eslint
+    might also warn you about new errors.
+* [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
+    Among other changes, it contains a fix that makes sure [the `@` character is
+    correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
+    As a result, remote APIs now receive `%40` instead of a plain `@` when this
+    character is used in a query string parameter.
+* [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
+    used. It now adds a `rel` attribute on previous/next buttons.
+* [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
+    5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
+    compared to 4.x.
 
 ## `2.4.0` -> `2.5.0`
 
