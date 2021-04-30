@@ -213,7 +213,7 @@ You can configure these behaviors by passing options to `withFormHandlers(option
 
 With those configurations, this allows you to potentially transform the input's display into anything you seem fit. For instance, a DateInput could be created and transformed into either a datepicker or multiple input fields without impacting the external API.
 
-One could use the [`node_modules/front-commerce/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/master/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) to better understand how it works.
+One could use the [`node_modules/front-commerce/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) to better understand how it works.
 
 ### Use another form library than Formsy
 

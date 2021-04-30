@@ -7,7 +7,7 @@ With Front-Commerce comes a CLI tool (`front-commerce`) that helps you launch th
 
 These commands should be launched from your project's root directory. This can be done by:
 
-- Using npm scripts (just like [front-commerce-skeleton/package.json](https://gitlab.com/front-commerce/front-commerce-skeleton/blob/master/package.json#L7))
+- Using npm scripts (just like [front-commerce-skeleton/package.json](https://gitlab.com/front-commerce/front-commerce-skeleton/blob/main/package.json#L7))
 - Prefixing the commands with `npx` which will call the `front-commerce` bin in your project
 
 ## `front-commerce help`

@@ -8,36 +8,56 @@ This area will contain the Migration steps to follow for upgrading your store to
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
 ## `2.5.0` -> `2.6.0`
+### Minimum Node.js version
 
-### Dependencies update
+Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the required minimum Node.js version has been updated to the version **12.22.1**.
 
-In this release we have updated several dependencies. For most of them, the
-upgrade will be transparent. However, the following dependency updates require
-some attention though:
+We also recommend to use Node.js 14.x as this version is also supported and it is the current active Long Term Support Node.js release.
 
-* [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
-    not used at all by Front-Commerce. If you use it, you have to make sure it's
-    installed on your environment by running `npm i base-64`.
-* [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
-    has been updated to 6.0.0. In this new release, there's [a new rule we don't
-    follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
-    If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
-    need to do the same change. In addition, depending on your code, eslint
-    might also warn you about new errors.
-* [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
-    Among other changes, it contains a fix that makes sure [the `@` character is
-    correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
-    As a result, remote APIs now receive `%40` instead of a plain `@` when this
-    character is used in a query string parameter.
-* [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
-    used. It now adds a `rel` attribute on previous/next buttons.
-* [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
-    5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
-    compared to 4.x.
+### Wishlist Provider
+
+In this release we have implemented a [wishlist provider](/docs/reference/wishlist-provider) to unify and optimize some queries related to the wishlist. As a result a number of Graph QL queries and fragments have been deprecated or moved to the provider. If you use this feature or have overridden related components, we highly recommend you to update them. Leveraging the wishlist provider instead of querying the data directly reduces the number of client / server requests and make your application more performant.
+
+Deprecated queries/fragments:
+
+- `WishlistProductGridQuery`: use `LoadWishlistQuery` instead
+- `AddProductToWishlistQuery`: use `useLoadWishlistItem` hook instead
+- `IsWishlistEnabledQuery`: use `useIsWishlistEnabled` hook instead
+- `WishlistProductGridFragment`: use `LoadWishlistQueryFragment` instead
+- `WishlistProductItemFragment`: use `LoadWishlistItemFragment` instead
+- `AddProductToWishlistFragment`: use `useLoadWishlistItem` hook instead
+
+#### Enabling the wishlist provider
+
+The wishlist provider is enabled by default in Front-Commerce 2.6.0. However you need to make sure you have not overridden the following:
+
+- [`src/web/makeApp.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js)
+- any story that uses the wishlist
+
+If you have overridden `src/web/makeApp.js` (**which is NOT recommended! ;-)**) you need to make sure that the provider is included in the `makeApp` function [just above the `<Routes>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/makeApp.js#L53) as follows:
+
+```jsx
+import { WishlistProvider } from "theme/modules/Wishlist/WishlistProvider/WishlistProvider";
+
+  ... // later in makeApp function...
+  <WishlistProvider>
+    <Router>
+      <Routes />
+    </Router>
+  </WishlistProvider>
+  ...
+```
+
+If you have updated a story or created any story related to or uses the wishlist, you need to:
+
+- Add the `WishlistDecorator` to your story just above the `ApolloDecorator`
+- use the `wishlistMeFakeValues` helper function to provide fake values to the `ApolloDecorator`.
+
+Please refer to [the `WishlistProvider` documentation](/docs/reference/wishlist-provider) for more details
 
 ### New icon required
 
-In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overriden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visits their wishlist page.
+In this release we added the functionality to share a wishlist. As such we needed a share icon. We added this icon in [the theme's <Icon> component](https://gitlab.com/front-commerce/front-commerce/-/blob/2.6.0/src/web/theme/components/atoms/Icon/Icon.js#L95). If you have overridden the `<Icon>` component please add an icon named `share` to the list of icons. Failing to display a `<Icon icon="share">` component will result in an error message being displayed when users visit their wishlist page.
 
 ### Style sheets updates
 
@@ -80,6 +100,53 @@ In case you have overridden `_modules.scss` you need to add the following line t
 @import "~theme/components/atoms/Tag/Tag";
 @import "~theme/modules/ProductView/ProductName/ProductName";
 ```
+
+### Cache Control and CDN
+
+Front-Commerce 2.6 comes with a new powerful HTTP cache mechanism, Please refer to [the Cache Control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn) for a more in depth explanation about the topic
+
+To avoid any performance regression when enabling cache control it is highly recommended to use the `<WishlistProvider>` to handle wishlist related tasks (such as checking if a product is in the wishlist). This is the default behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce at or after 2.6.0 you have nothing to worry about. However if you upgraded from versions lower than 2.6.0 please refer to the [WishlistProvider migration guide](#Wishlist-Provider)
+
+### Automatic Algolia configuration
+
+The Front-Commerce Algolia module is now automatically configured with the
+Algolia's configuration filled in the Magento 1 backoffice. As a result, the
+environment variables `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`,
+`FRONT_COMMERCE_ALGOLIA_APPLICATION_ID`,
+`FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY` can safely be removed from the
+`.env` file.
+
+### Analytics and cookie bar
+
+The Cookie consent bar now contains a "Deny all" button by default to comply with [some European](https://www.iubenda.com/en/help/23748-reject-button-cookie-banner) [recommendations](https://www.cnil.fr/fr/cookies-et-traceurs-comment-mettre-mon-site-web-en-conformite). Please ensure that you include it in your theme if you customized the bar.
+
+New options were also added in the analytics initialization, which allows you to use the user consents in external integrations. We've updated our [<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics.html#Google-Tag-Manager) to illustrate this.
+
+### Updated dependencies
+
+In this release we have updated [several dependencies](https://gitlab.com/front-commerce/front-commerce/-/commits/main/package.json). For most of them, the
+upgrade will be transparent. However, the following dependency updates require
+some attention though:
+
+* [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
+    not used at all by Front-Commerce. If you use it, you have to make sure it's
+    installed on your environment by running `npm i base-64`.
+* [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
+    has been updated to 6.0.0. In this new release, there's [a new rule we don't
+    follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
+    If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
+    need to do the same change. In addition, depending on your code, eslint
+    might also warn you about new errors.
+* [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
+    Among other changes, it contains a fix that makes sure [the `@` character is
+    correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
+    As a result, remote APIs now receive `%40` instead of a plain `@` when this
+    character is used in a query string parameter.
+* [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
+    used. It now adds a `rel` attribute on previous/next buttons.
+* [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
+    5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
+    compared to 4.x.
 
 ## `2.4.0` -> `2.5.0`
 
@@ -855,7 +922,7 @@ Here the list of the main updates you need to be concerned about:
   It should be compatible for the use cases in FC. If you use specific features, please check them and fix them.
   FormattedMessage no longer insert spans around your messages. This might lead to some styling issues. Add manually a `span` around your message if this is the case.
 - [react-paginate](https://github.com/AdeleD/react-paginate): `5.0.0` -> `6.3.0`
-  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/HISTORY.md#-600).
+  It should be compatible [unless you were using `breakLabel`](https://github.com/AdeleD/react-paginate/blob/master/CHANGELOG.md#-600).
 - [react-responsive](https://github.com/contra/react-responsive): `3.0.0` -> `8.0.1`
   Should be compatible since we are using a facade in FC `theme/components/helpers/MediaQuery`. If you are using something else, please make sure your code still works.
 - [react-router](https://github.com/ReactTraining/react-router/): `4.3.1` -> `5.0.1`

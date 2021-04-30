@@ -239,7 +239,7 @@ return fooLoader.load(id).then(data => data.value)
 
 Writing batching functions and loaders could lead to reusing the same patterns. We have extracted some utility functions to help you in this task.
 
-One can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitlab.com/front-commerce/front-commerce/blob/master/src/server/core/graphql/dataloaderHelpers.js) module.
+One can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/server/core/graphql/dataloaderHelpers.js) module.
 
 ### `reorderForIds`
 

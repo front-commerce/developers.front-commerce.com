@@ -32,7 +32,7 @@ Our Magento2 integration currently provides native adapters for the platforms be
 
 We will explain the mechanisms available to implement your own adapter if supported Magento payment modules do not suit your needs.
 
-**Payment Adapters must implement the [`\FrontCommerce\Integration\Api\HeadlessPayment\Adapter`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Api/HeadlessPayment/Adapter.php) interface no matter the [workflows](/docs/advanced/payments/payment-workflows.html) they support.**
+**Payment Adapters must implement the [`\FrontCommerce\Integration\Api\HeadlessPayment\Adapter`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/Adapter.php) interface no matter the [workflows](/docs/advanced/payments/payment-workflows.html) they support.**
 
 Front-Commerce module will simulate a Magento action as if the page was loaded in a frontend context. It will:
 
@@ -51,7 +51,7 @@ Adapters must implement methods that are called at key times in order to:
 **Payment flows:** [Redirect before order](/docs/advanced/payments/payment-workflows.html#Redirect-Before-Order)
 </blockquote>
 
-Converts an internal Magento response to a [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php) value object.
+Converts an internal Magento response to a [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php) value object.
 
 ```php
 public function redirectionFromCheckoutRedirectActionResponse(
@@ -66,7 +66,7 @@ public function redirectionFromCheckoutRedirectActionResponse(
 **Payment flows:** [Redirect after order](/docs/advanced/payments/payment-workflows.html#Redirect-After-Order)
 </blockquote>
 
-Converts an internal Magento response to a [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php) value object.
+Converts an internal Magento response to a [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php) value object.
 
 ```php
 public function redirectionFromCheckoutRedirectAfterActionResponse(
@@ -129,7 +129,7 @@ public function changeAfterCheckoutResponseFromResult(
 **Payment flows:** [Redirect before order](/docs/advanced/payments/payment-workflows.html#Redirect-Before-Order), [Redirect after order](/docs/advanced/payments/payment-workflows.html#Redirect-After-Order)
 </blockquote>
 
-This is a factory to build a [`ProxiedAction`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Api/HeadlessPayment/ProxiedAction.php) matching the next step for the Customer depending on information transmitted by the payment system in the return url the user was redirected to when coming back to the store
+This is a factory to build a [`ProxiedAction`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/ProxiedAction.php) matching the next step for the Customer depending on information transmitted by the payment system in the return url the user was redirected to when coming back to the store
 
 ```php
 public function buildReturnFromPlatformProxiedAction(
@@ -145,7 +145,7 @@ Example: `throw new \RuntimeException('Checkout flow not supported');`
 
 ## Register the Payment Adapter
 
-Wether you've implemented a new Payment Adapter or are reusing an existing one, adapters have to be registered so Front-Commerce's module could instantiate it when relevant. Using the `di.xml`, inject the adapter in the [`FrontCommerce\Integration\Model\HeadlessPayments\AdapterFactory` `$adapters` constructor param](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/master/app/code/FrontCommerce/Integration/Model/HeadlessPayments/AdapterFactory.php#L12).
+Wether you've implemented a new Payment Adapter or are reusing an existing one, adapters have to be registered so Front-Commerce's module could instantiate it when relevant. Using the `di.xml`, inject the adapter in the [`FrontCommerce\Integration\Model\HeadlessPayments\AdapterFactory` `$adapters` constructor param](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/AdapterFactory.php#L12).
 
 Below is an example from Front-Commerce's core:
 
@@ -163,7 +163,7 @@ Below is an example from Front-Commerce's core:
 ```
 
 <blockquote class="note">
-We encourage you to investigate existing Adapters' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/tree/master/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter) to learn about advanced patterns.
+We encourage you to investigate existing Adapters' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/tree/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter) to learn about advanced patterns.
 </blockquote>
 
 ## Allow the Payment's URLs

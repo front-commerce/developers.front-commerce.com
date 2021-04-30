@@ -108,7 +108,12 @@ When your products are indexed in an Elasticsearch, you should put these variabl
 
 ### Algolia
 
-To use Algolia, you should put these variables:
+<blockquote class="info">
+As of Front-Commerce 2.6, [the Algolia Front-Commerce
+module](/docs/magento1/search-engine.html#Algolia) is automatically configured
+based on Magento1 configuration. Those environment variables only apply to
+Front-Commerce 2.5 with Magento1.
+</blockquote>
 
 - `FRONT_COMMERCE_ALGOLIA_APPLICATION_ID`: [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id) that identify your application in Algolia
 - `FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY`: [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
@@ -204,13 +209,12 @@ Here is a list of available debug namespaces:
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
-- `front-commerce:performance`: allow to debug server performance in production by enabling server timings
+- `front-commerce:performance`: allow to debug server performance in production by enabling [server timings](/docs/advanced/performance/server-timings.html)
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
-- `front-commerce:performance`: forces activation of [server timings](/docs/advanced/performance/server-timings.html)
 
 **Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
 
