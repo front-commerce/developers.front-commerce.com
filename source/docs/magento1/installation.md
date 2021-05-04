@@ -146,12 +146,13 @@ You must generate admin tokens to configure Front-Commerce.
   - Apply them
     - Whit GIT: `git apply fix-sort-params-core.patch`
     - Without GIT: `patch -p1 < fix-sort-params-core.patch`
-  
+
 ### **URLs settings**
 
   - Go to System > Configuration > Front-Commerce General > URLs Settings
   - Add your Front-Commerce Front URL. In development environment, it should be `http://localhost:4000/`. In production environment, it is the URL of your main store.
   - Go to System > Configuration > General > Web
+  - Make sure _Add Store Code to Urls_ is disabled
   - Set your base URL (secure + unsecure) with your Front-Commerce front URL (`http://localhost:4000/` in development environment) for each store view value. You can keep your admin URL for the default value.
 
 ### **Cache settings**
