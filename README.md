@@ -9,7 +9,7 @@ Please use Github issues and PR for feedbacks, suggestions and improvements.
 This contents in this repository is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-The code though is under [MIT License](https://github.com/front-commerce/developers.front-commerce.com/blob/master/LICENSE.md).
+The code though is under [MIT License](https://github.com/front-commerce/developers.front-commerce.com/blob/main/LICENSE.md).
 
 ## Setup
 
