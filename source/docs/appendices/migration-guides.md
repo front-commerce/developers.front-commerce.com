@@ -15,7 +15,7 @@ As of the 2.7 version, Front-Commerce fetches the attributes on which facets can
 
 1. make sure the attributes on which you want some facets are configured so that _Use in Layered Navigation_ is set to _Filterable (with results)_
 1. if you need to have an attribute configured this way but still want to ignore it in the facets, you can add it to the `search.ignoredAttributeKeys` configuration
-1. you can safely remove attribute codes from `search.ignoredAttributeKeys` that were added to prevent wrong Elasticsearch queries (`description`, `short_description`,…)
+1. you can remove attribute codes that are not "Used in Layered Navigation" from the `search.ignoredAttributeKeys` configuration. They were probably text fields added here to prevent incorrect Elasticsearch queries (`description`, `short_description`,…)
 
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
