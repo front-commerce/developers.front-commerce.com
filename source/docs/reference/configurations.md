@@ -29,7 +29,7 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
-* `root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu. It will then be the children of this category that will be displayed.
+* ~~`root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu.~~ Removed in `2.7.0`.
 * `default_image_url` (ex: an absolute URL of an image): which image to use when no image path has been given to [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware.html#lt-ResizedImage-gt-component)
 * `defaultTitle`: the default meta title of your application
 * `defaultDescription`: the default meta description of your application

@@ -17,6 +17,12 @@ As of the 2.7 version, Front-Commerce fetches the attributes on which facets can
 1. if you need to have an attribute configured this way but still want to ignore it in the facets, you can add it to the `search.ignoredAttributeKeys` configuration
 1. you can remove attribute codes that are not "Used in Layered Navigation" from the `search.ignoredAttributeKeys` configuration. They were probably text fields added here to prevent incorrect Elasticsearch queries (`description`, `short_description`,…)
 
+### `root_categories_path` configuration removed
+
+The `root_categories_path` configuration key from `website.js` is not used anymore. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
+
+It was first introduced for the navigation menu in Magento GraphQL modules (then unused), but used for breadcrumbs. We've reworked how breadcrumbs are generated from the category "path" value returned by magento to make it useless. We now always remove the first two category levels of the path, no matter their values. It prevent userland errors due to a misconfiguration of their app.
+
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
 
