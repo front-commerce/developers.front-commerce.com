@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### More reliable facets generation with Elasticsearch
 
-As off the 2.7 version, Front-Commerce fetches the attributes on which facets can be generated from Magento (for both version 1 and 2). Previously, the implementation was relying on an attribute added in the Elasticsearch index by the ElasticSuite module to figure out which ones can be used to generate facets. This could lead to wrong Elasticsearch queries and it was common to have to ignore some attributes using [the `search.ignoredAttributeKeys` configuration](/docs/reference/configurations.html#config-website-js). As a result, when upgrading to 2.7:
+As of the 2.7 version, Front-Commerce fetches the attributes on which facets can be generated from Magento (for both version 1 and 2). Previously, the implementation was relying on an attribute added in the Elasticsearch index by the ElasticSuite module to figure out which ones can be used to generate facets. This could lead to wrong Elasticsearch queries and it was common to have to ignore some attributes using [the `search.ignoredAttributeKeys` configuration](/docs/reference/configurations.html#config-website-js). As a result, when upgrading to 2.7:
 
 1. make sure the attributes on which you want some facets are configured so that _Use in Layered Navigation_ is set to _Filterable (with results)_
 1. if you need to have an attribute configured this way but still want to ignore it in the facets, you can add it to the `search.ignoredAttributeKeys` configuration
