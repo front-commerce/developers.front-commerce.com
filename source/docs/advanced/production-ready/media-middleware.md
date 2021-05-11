@@ -314,3 +314,11 @@ But this is still not ideal because it means that on the first launch of your se
 To answer this, we have created a script that fetches all the image URLs used in your catalog and put them in cache. It launchs a warmup of your image caches that you could use before a deployment or with a cron every night.
 
 Documentation about this script is available in the [`scripts/imageWarmUp.js` reference page](/docs/reference/scripts.html#imageWarmUp-js).
+
+## Ignore caching through a regular expression
+
+While the caching functionality is really useful there comes a time where you want to disable the caching for certain routes.
+
+In Front-Commerce we have implemented a mechanism to bypass the cache for routes that matches specified RegExp. Use `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` environment variable to specify a pattern that you want to bypass the cache for. For example, setting `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `/media/excel` will bypass the cache for all routes matching `/media/excel` like `/media/excel/Book1.xlsx`.
+
+Please note to [escape regular expression sepcial characters](https://javascript.info/regexp-escaping) when needed.
