@@ -9,6 +9,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.6.0` -> `2.7.0`
 
+### Canonical URLs
+
+In this release, we have changed both the default theme and the theme chocolatine to add the canonical URL to the category, cms, product and home pages. For the category, cms and product pages, the [`CategorySeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/519), [`CmsPageSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/513) and [`ProductSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/498) components have respectively been modified, so if you have overridden one of those, you might want to synchronize your own version with these changes. For the home page, we have introduced the [`HomeSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/511) component that you might want to use on own home page implementation.
+
 ### More reliable facets generation with Elasticsearch
 
 As of the 2.7 version, Front-Commerce fetches the attributes on which facets can be generated from Magento (for both version 1 and 2). Previously, the implementation was relying on an attribute added in the Elasticsearch index by the ElasticSuite module to figure out which ones can be used to generate facets. This could lead to wrong Elasticsearch queries and it was common to have to ignore some attributes using [the `search.ignoredAttributeKeys` configuration](/docs/reference/configurations.html#config-website-js). As a result, when upgrading to 2.7:
