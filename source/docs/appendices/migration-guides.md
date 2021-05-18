@@ -21,6 +21,23 @@ As of the 2.7 version, Front-Commerce fetches the attributes on which facets can
 1. if you need to have an attribute configured this way but still want to ignore it in the facets, you can add it to the `search.ignoredAttributeKeys` configuration
 1. you can remove attribute codes that are not "Used in Layered Navigation" from the `search.ignoredAttributeKeys` configuration. They were probably text fields added here to prevent incorrect Elasticsearch queries (`description`, `short_description`,…)
 
+### `pact` 4.x dependency removed
+
+If your application contains Pact tests and you saw the following deprecation message in your current version, you will have an action to do during this migration:
+> server/model/__fixtures__/provider/makeDescribeWithProvider deprecated Will be removed in 3.0.0. Please update your tests by moving them in a `__pacts__` directory and setup interactions in each test. Front-Commerce will setup everything for you, using the latest @pact-foundation/pact library.
+
+The warning warns about usage of a deprecated `makeDescribeWithProvider` helper used by Front-Commerce when you import `describeWithProvider` directly in a test from a `__tests__` server directory.
+```
+// DEPRECATED
+import { describeWithProvider } from "server/model/__fixtures__/provider/magento2";
+```
+
+Since [Front-Commerce 2.0.0](https://gitlab.com/front-commerce/front-commerce/commit/f69fd72717e99040e7e613705752f1175f589509), we use the latest `@pact-foundation/pact` library. Front-Commerce's [`test` CLI command](/docs/reference/cli.html#front-commerce-test) will automatically provide a `describeWithProvider` function in your tests from the `__pacts__` directory. It runs Pact tests in a more stable way and is the recommended way to use Pact in your application.
+
+We've finished to update all of our internal tests to this latest version and have removed the direct dependency to the old Pact version to prevents downloading the Pact binary twice during an `npm install`. Your tests using the deprecated `describeWithProvider` will now fail unless you:
+- add the dependency back to your project
+- or (**RECOMMENDED**) you move your tests to a `__pacts__` directory and update them a bit. See [commits from our own migration](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/commits) (especially [this one](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/diffs?commit_id=f195479395a51f62664ca5522e0915f345ff22b4)) for examples and details.
+
 ### `root_categories_path` configuration removed
 
 The `root_categories_path` configuration key from `website.js` is not used anymore. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
