@@ -1,9 +1,9 @@
 ---
 id: payzen
-title: PayZen integration
+title: PayZen / Lyra Collect integration
 ---
 
-This page contains information about the different ways you can accept payments with [PayZen](https://payzen.eu/) in your Front-Commerce application.
+This page contains information about the different ways you can accept payments with [PayZen](https://payzen.eu/) or [Lyra Collect](https://www.lyra.com/lyra-collect/) in your Front-Commerce application.
 
 * [Front-Commerce Payment](#Front-Commerce-Payment)
 * [Magento2 module](#Magento2-module)
@@ -14,11 +14,22 @@ This page contains information about the different ways you can accept payments 
 
 This section explains how to configure and customize the PayZen Front-Commerce Payment module into an existing Front-Commerce application. The implementation use [PayZen embedded form / Javascript with REST API](https://payzen.io/fr-FR/rest/V4.0/javascript/) to create payments.
 
+### Lyra Collect support
+
+Lyra Collect is a payment solution that shares the same infrastructure and API with Payzen. In Front-Commerce, it is the exact same module that is used. The only differences are:
+- the `FRONT_COMMERCE_PAYZEN_PRODUCT` environment variable (to be set to `lyra_collect`)
+- the URLs to use when [updating your CSPs](#Update-your-CSPs) should be `api.lyra.com` instead of `static.payzen.eu`
+
 ### Configure your environment
 
-<blockquote class="wip">
-**Work In Progress** See [PayZen related environment variables](/docs/reference/environment-variables.html#Payzen) for information.
-</blockquote>
+Get your access keys by following the [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html). Update your `.env` with the following values:
+
+```shell
+FRONT_COMMERCE_PAYZEN_PUBLIC_KEY=58039770:testpublickey_xxxxxxx
+FRONT_COMMERCE_PAYZEN_PRIVATE_KEY=58039770:testpassword_yyyyyyy
+FRONT_COMMERCE_PAYZEN_SHA256=xxxxxxxxx
+#FRONT_COMMERCE_PAYZEN_PRODUCT=payzen # use lyra_collect to switch to Lyra Collect's API URLs
+```
 
 ### Register the PayZen payment module
 
@@ -78,10 +89,10 @@ To allow loading PayZen related remote resources:
 -      frameSrc: [],
 -      styleSrc: [],
 -      imgSrc: [],
-+      scriptSrc: ["api.lyra.com", "api.payzen.eu"],
-+      frameSrc: ["api.lyra.com"],
-+      styleSrc: ["api.lyra.com", "api.payzen.eu"],
-+      imgSrc: ["api.lyra.com"],
++      scriptSrc: ["static.payzen.eu"],
++      frameSrc: ["static.payzen.eu"],
++      styleSrc: ["static.payzen.eu"],
++      imgSrc: ["static.payzen.eu"],
       styleSrc: [],
       imgSrc: [],
       connectSrc: [],
@@ -89,6 +100,10 @@ To allow loading PayZen related remote resources:
     }
   },
 ```
+
+<blockquote class="important">
+**Lyra Collect:** when using the Lyra Collect integration, use the `api.lyra.com` value instead of `static.payzen.eu` in the example above.
+</blockquote>
 
 ### Advanced: customize data sent to PayZen
 

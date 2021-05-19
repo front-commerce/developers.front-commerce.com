@@ -44,6 +44,42 @@ The `root_categories_path` configuration key from `website.js` is not used anymo
 
 It was first introduced for the navigation menu in Magento GraphQL modules (then unused), but used for breadcrumbs. We've reworked how breadcrumbs are generated from the category "path" value returned by magento to make it useless. We now always remove the first two category levels of the path, no matter their values. It prevent userland errors due to a misconfiguration of their app.
 
+### Payzen / Lyra Collect URL changes
+
+We've consolidated the Payzen module to support Lyra Collect. Both products are based on the same APIs and client libraries, but loaded from different sources. It appeared that we were using a mix of both URLs, and we've cleaned this a bit.
+
+If you use Payzen as Front-Commerce embedded payment method you must:
+- update your `config/website.js` CSP configurations
+- ensure that the `PayzenEmbeddedQuery` query contains the `assetsBaseUrl` field
+
+#### CSP configurations update
+
+Replace `api.payzen.eu` and `api.lyra.com` in your `config/website.js` file with the `static.payzen.eu` domain to ensure that the CSPs will allow to load the payment form assets. **Please do a test payment to ensure that everything is working as expected**.
+
+If you are using Lyra Collect, use the `api.lyra.com` value as per [our documentation](xxxxx)
+
+#### `PayzenEmbeddedQuery` query update
+
+If you have overridden `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenEmbeddedQuery.gql`, please update it as follow:
+```diff
+query PayzenEmbeddedQuery {
+  shop {
+    id
+    locale
+  }
+  cart {
+    id
+    payZenEmbedded {
+      formToken
+      publicKey
++      assetsBaseUrl
+    }
+  }
+}
+```
+
+and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
+
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
 
