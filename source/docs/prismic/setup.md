@@ -10,7 +10,7 @@ Here are the steps to install and configure the Front-Commerce Prismic module. T
 First, make sure you have access to [the Front-Commerce Prismic module repository](https://gitlab.com/front-commerce/front-commerce-prismic/). Then you can run the following command:
 
 ```sh
-npm i git+ssh://git@gitlab.com/front-commerce/front-commerce-prismic.git
+npm install git+ssh://git@gitlab.com/front-commerce/front-commerce-prismic.git
 ```
 
 ## Configure the environment for Prismic
