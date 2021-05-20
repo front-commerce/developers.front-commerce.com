@@ -17,6 +17,23 @@ This page explains all the tools at your disposal to implement a totally custom,
 **Important:** caching is disabled by default for user related content and for cart related content. This is done to avoid inadvertently caching sensitive user information.
 </blockquote>
 
+## Preface
+
+In Front-Commerce we support the `s-max-age` and the `stale-while-revalidate` cache control headers:
+
+- The `s-max-age` header is used to instruct the CDN or reverse-proxy the time it can serve the cached response directly from cache without revalidating.
+
+- The `stale-while-revalidate` header is used to instruct the CDN or reverse-proxy that after the the `s-max-age` have passed how long can it still serve from the cache while at the same time revalidating its cache.
+
+For example if `s-max-age` is 60 seconds and `stale-while-revalidate` is 10 minutes, it means that once a resource is cached, the CDN/reverse-proxy can serve it from cache for one minute without even validating with the server, and after 60 seconds and before 10 minutes any request to the resource will:
+- be served from cache
+- at the same time the resource will be requested from the server
+- the cache will be updated in the background
+- the validity of the resource would be reseted
+
+However if 10 minutes pass without the resource being revalidated, the next request to the resource will be not be served from the cache but will be requested from the server directly.
+
+In this example, the longer an _outdated_ data can be served to the user is **11 minutes (60sec + 10min)**. For more information on the subject please refer to [Keeping things fresh with stale-while-revalidate](https://web.dev/stale-while-revalidate/) (P.S. we use `sMaxAge` instead of `maxAge` because this is the value used by CDNs\reverse-proxies)
 
 ## Dynamic Pages
 
