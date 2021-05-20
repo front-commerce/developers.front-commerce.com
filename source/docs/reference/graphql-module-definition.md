@@ -280,7 +280,7 @@ The following example demonstrates how to add an `Authorization` header to your 
 ```js
 import makeExecutor from "server/core/graphql/makeExecutor";
 
-const authenticateRequest = () => (fetchOptions, { context }) => {
+const authenticateRequest = (fetchOptions, { context }) => {
   const req = (context && context.req) || {};
   const authService = makeAuthServiceFromRequest(req);
   if (!authService.isAuthenticated()) {
@@ -303,7 +303,7 @@ export default {
     uri: "https://remote-feature.acme.org/graphql",
     // […]
       executor: makeExecutor(uri, {
-        fetchOptionsAdapter: withMagentoAuthorizationHeaders(),
+        fetchOptionsAdapter: authenticateRequest,
       }),
   }
 };
