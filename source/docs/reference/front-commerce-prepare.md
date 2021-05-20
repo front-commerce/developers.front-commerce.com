@@ -1,5 +1,5 @@
 ---
-id: front-commerce-prepare-js
+id: front-commerce-prepare
 title: front-commerce-prepare.js
 ---
 

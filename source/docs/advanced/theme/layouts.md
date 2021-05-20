@@ -126,7 +126,7 @@ You can see that it works just like the Blog's layout. However, keep in mind tha
 To see this live, remember to restart your application before seeing the changes (`npm run start`).
 
 <blockquote class="warning">
-    **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules. However you can use [`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare.js#onCreateRoute) to filter the file you don't need in your project.
+    **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules. However you can use [`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare.html#onCreateRoute) to filter the file you don't need in your project.
 </blockquote>
 
 <blockquote class="info">

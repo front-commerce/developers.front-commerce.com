@@ -148,15 +148,12 @@ More documentation about this module will be available soon. Please [contact us]
 
 ### Payzen
 
-<blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
-</blockquote>
-
-[Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html)
+Get your access keys by following the [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html). See [our documentation page](/docs/advanced/payments/payzen.html#Configure-your-environment) for further details.
 
 - `FRONT_COMMERCE_PAYZEN_PUBLIC_KEY`
 - `FRONT_COMMERCE_PAYZEN_PRIVATE_KEY`
 - `FRONT_COMMERCE_PAYZEN_SHA256`
+- `FRONT_COMMERCE_PAYZEN_PRODUCT`: use `lyra_collect` to use [Lyra Collect](https://www.lyra.com/lyra-collect/) instead of PayZen. Default: `payzen`.
 
 ### BuyBox
 
