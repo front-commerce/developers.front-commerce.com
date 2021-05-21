@@ -82,6 +82,9 @@ sidebar_categories:
     - docs/magento1/generate-api-doc
     - docs/magento1/headless-payments
     - docs/magento1/advanced
+  Prismic:
+    - docs/prismic/index
+    - docs/prismic/installation
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
