@@ -56,7 +56,7 @@ If you use Payzen as Front-Commerce embedded payment method you must:
 
 Replace `api.payzen.eu` and `api.lyra.com` in your `config/website.js` file with the `static.payzen.eu` domain to ensure that the CSPs will allow to load the payment form assets. **Please do a test payment to ensure that everything is working as expected**.
 
-If you are using Lyra Collect, use the `api.lyra.com` value as per [our documentation](xxxxx)
+If you are using Lyra Collect, use the `api.lyra.com` value as per [our documentation](/docs/advanced/payments/payzen.html#Lyra-Collect-supportq)
 
 #### `PayzenEmbeddedQuery` query update
 
