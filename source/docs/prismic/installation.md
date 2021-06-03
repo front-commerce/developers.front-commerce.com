@@ -31,7 +31,11 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
 
 ## Configure Front-Commerce to use the Prismic module
 
-For that, you have to apply the following changes to your `.front-commerce.js`
+For that, you have to apply some changes to your `.front-commerce.js`.
+
+### Magento2
+
+In a Magento2 based setup:
 
 ```diff
  modules: [
@@ -45,7 +49,29 @@ For that, you have to apply the following changes to your `.front-commerce.js`
      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
    },
    { name: "Magento2", path: "server/modules/magento2" },
-+  { name: "Prismic", path: "prismic/server/modules/prismic/cms" },
++  { name: "Prismic", path: "prismic/server/modules/prismic" },
+ ],
+ webModules: [
+   { name: "FrontCommerce", path: "front-commerce/src/web" },
+```
+
+### Magento1
+
+In a Magento1 based setup:
+
+```diff
+ modules: [
+   "./node_modules/front-commerce/modules/datasource-elasticsearch",
+   "./node_modules/front-commerce/theme-chocolatine",
++  "./node_modules/front-commerce-prismic/prismic",
+   "./src",
+ ],
+ serverModules: [
+@@ -13,6 +14,7 @@ module.exports = {
+     path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+   },
+   { name: "Magento2", path: "server/modules/magento2" },
++  { name: "Prismic", path: "prismic/server/modules/prismic/index.magento1.js" },
  ],
  webModules: [
    { name: "FrontCommerce", path: "front-commerce/src/web" },
