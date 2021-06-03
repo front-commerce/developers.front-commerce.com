@@ -29,9 +29,17 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
 * `FRONT_COMMERCE_PRISMIC_ACCESS_TOKEN` is the access token for the repository, go to _Settings > API & Security_ and create an application and copy the _Permanent access token_ generated for this application
 * `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` is a secret key used to clear caches in Front-Commerce. To define it, go to _Settings > Webhook_ and create a webhook pointing to your Front-Commerce URL `https://my-shop.example.com/prismic/webhook`. In the webhook form, you can configure a _Secret_. This is the one you should use in this environment variable.
 
+<blockquote class="note">
+Configuring a webhook is required so that Front-Commerce fetches the last version of the Prismic content. In a development environment, you might skip this step but in that case, you will have to restart Front-Commerce after each publish operation in Prismic.
+</blockquote>
+
 ## Configure Front-Commerce to use the Prismic module
 
-For that, you have to apply the following changes to your `.front-commerce.js`
+For that, you have to apply some changes to your `.front-commerce.js`.
+
+### Magento2
+
+In a Magento2 based setup:
 
 ```diff
  modules: [
@@ -45,7 +53,29 @@ For that, you have to apply the following changes to your `.front-commerce.js`
      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
    },
    { name: "Magento2", path: "server/modules/magento2" },
-+  { name: "Prismic", path: "prismic/server/modules/prismic/cms" },
++  { name: "Prismic", path: "prismic/server/modules/prismic" },
+ ],
+ webModules: [
+   { name: "FrontCommerce", path: "front-commerce/src/web" },
+```
+
+### Magento1
+
+In a Magento1 based setup:
+
+```diff
+ modules: [
+   "./node_modules/front-commerce/modules/datasource-elasticsearch",
+   "./node_modules/front-commerce/theme-chocolatine",
++  "./node_modules/front-commerce-prismic/prismic",
+   "./src",
+ ],
+ serverModules: [
+@@ -13,6 +14,7 @@ module.exports = {
+     path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+   },
+   { name: "Magento2", path: "server/modules/magento2" },
++  { name: "Prismic", path: "prismic/server/modules/prismic/index.magento1.js" },
  ],
  webModules: [
    { name: "FrontCommerce", path: "front-commerce/src/web" },
