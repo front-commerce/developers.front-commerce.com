@@ -87,12 +87,62 @@ query PayzenEmbeddedQuery {
 
 and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
 
+### core atoms updated
+
+The following core atoms where updated to accomodate the SmartForms functionality:
+
+1. `BaseInput.js`
+2. `FormComponent.js`
+3. `Input.js`
+4. `Textarea.js`
+
+If you have overridden any of the above atoms and you want to use the SmartForms functionality, you need to ensure you add the suggestions functionality to `<BaseInput>`, `<Input>` and `<Textarea>`, and also add the `useFormFieldState`, `useFormDataSetter` and `useFormErrorSetter` to `<FormComponent>`. For further reference please take a look at the corresponding files in [the 2.6-2.7 diff](https://gitlab.com/front-commerce/front-commerce/-/compare/2.6.0...2.7.0?from_project_id=9218054) to help you integrate the updates in the files you have overridden.
+
 ### Style sheets updates
 
 In case you have overridden `_pages.scss` you need to add the following line to it to include styles for the Guest order search feature:
 
 ```
 @import "~theme/pages/Orders/Orders";
+```
+
+In case you have overridden `_Input.scss` you need to add the following to it to include styles for the smart forms module:
+
+```
+.input-wrapper {
+  &__suggestions {
+    .autocomplete-results__option {
+      cursor: pointer;
+    }
+
+    &-wrapper {
+      position: relative;
+      height: 0;
+    }
+
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background: $white;
+    border: 1px solid $shade05;
+    border-top: none;
+    box-sizing: border-box;
+    padding: $boxSizeMargin;
+  }
+}
+```
+
+In case you are using base theme and have overridden `_components.scss` you need to add the following line to it:
+
+```
+@import "~theme/components/organisms/Autocomplete/Autocomplete";
+```
+
+In case you are using theme chocolatine and have overridden `_components.scss` you need to perform the following update:
+
+```diff
+-@import "~./organisms/Autocomplete/Autocomplete";
++@import "~theme/components/organisms/Autocomplete/Autocomplete";
 ```
 
 ## `2.5.0` -> `2.6.0`
