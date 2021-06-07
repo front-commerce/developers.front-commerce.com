@@ -12,12 +12,17 @@ The goal is to chose one to make sure that all maps accross the website look the
 
 ### Open Street Map (OSM) with Leaflet
 
+<blockquote class="important">
+  <strong>Known issue:</strong>
+  using `react-leaflet` v3.2.0 is known for generating an issue in Front-Commerce because of Webpack4 usage. This issue [has been identified in the library](https://github.com/PaulLeCam/react-leaflet/issues/883) and a [Pull Request is awaiting approval](https://github.com/PaulLeCam/react-leaflet/pull/885). Until it is fixed, or Front-Commerce has migrated to Webpack5 please use `react-leaflet` v3.1.0.
+</blockquote>
+
 If you want to use Open Street Map, you will need to follow these steps:
 
 - install the required libraries
 
 ```shell
-npm install leaflet@^1.7 react-leaflet@^3.0
+npm install leaflet@^1.7 react-leaflet@3.1.0 @react-leaflet/core@1.0.2
 ```
 
 - register the module in your application. Edit your `.front-commerce.js` as below:
