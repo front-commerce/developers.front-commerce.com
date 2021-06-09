@@ -87,6 +87,14 @@ query PayzenEmbeddedQuery {
 
 and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
 
+### Style sheets updates
+
+In case you have overridden `_pages.scss` you need to add the following line to it to include styles for the Guest order search feature:
+
+```
+@import "~theme/pages/Orders/Orders";
+```
+
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
 
