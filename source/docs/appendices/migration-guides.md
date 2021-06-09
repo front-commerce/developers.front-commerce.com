@@ -9,6 +9,15 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.6.0` -> `2.7.0`
 
+### `FRONT_COMMERCE_FAST` mode removed
+
+Introduced in version 2.0, this experimental flag could help improving SSR performance by only executing the top level GraphQL query.
+It could lead to issues, and was not a huge performance boost.
+
+Since 2.6, one can use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to achieve the same goal in a more efficient manner. For this reason, we've removed the `FRONT_COMMERCE_FAST` SSR mode.
+
+You should remove `FRONT_COMMERCE_FAST` from your environment variables. It is now unused.
+
 ### EXIF orientation now honored for images
 
 Images having an EXIF orientation metadata are now properly rotated and optimized by [the media middleware](/docs/advanced/production-ready/media-middleware.html).
