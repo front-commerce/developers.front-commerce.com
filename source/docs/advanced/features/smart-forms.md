@@ -5,7 +5,11 @@ title: Smart Forms
 
 Front-Commerce has a built-in implementation agnostic smart form fields/hooks. The smart form fields/hooks help the user while he is filling the form by providing smart suggestions based on his input or by validating/properly formatting his input. The smart form fields can be used as a drop in replacements for their non smart counterparts, While the hooks are to be installed on the `<Form>` level. We have also shipped a capency implementation for these smart form elements that you can opt-in to.
 
-Note: Smart form fields are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
+Notes:
+
+1. Smart form fields are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
+
+2. The smart form functionality shipped first in 2.7.0. If you are using a previous version of front-commerce you need to update to atleast version 2.7.0 to be able to leverage the smart form functionality. Please have a look at the [2.7.0 migration guide](/docs/appendices/migration-guides.html#2-6-0-gt-2-7-0) to help you update to front-commerce version 2.7.0.
 
 ### Default
 
