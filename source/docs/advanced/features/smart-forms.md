@@ -202,8 +202,8 @@ const MyAwesomeForm = ({
 + });
 
   return (
--    <Form onValidSubmit={onSubmit}>
-+    <Form onValidSubmit={onSubmitWrapper(onSubmit)}>
+-   <Form onValidSubmit={onSubmit}>
++   <Form onValidSubmit={onSubmitWrapper(onSubmit)}>
 +     {validating ? 'Validating Phone Number...' : null}
 +     {validationError ? validationError : null}
       ...your form fields
