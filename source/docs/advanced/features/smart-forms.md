@@ -215,3 +215,5 @@ const MyAwesomeForm = ({
   );
 };
 ```
+
+After implementing the above changes, when the user submits the form it will validate the phone number first. Then if the phone number is valid the form will be submitted. Otherwise the form will not be submitted and the `validationError` variable above will be set to a translated message of `"Invalid phone number"`. (P.S. if for some the form validation fails for reasons other than the phone number being invalid, the form submit will be called as to not block the user).
