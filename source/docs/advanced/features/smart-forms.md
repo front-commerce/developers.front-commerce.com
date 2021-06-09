@@ -3,13 +3,13 @@ id: smart-forms
 title: Smart Forms
 ---
 
-Front-Commerce has a built-in implementation agnostic smart form fields. The smart form fields help the user while he is filling the form by providing smart suggestions based on his input. These smart form fields can be used as a drop in replacements for their non smart counterparts. We have aslo shipped a capency implementation for these smart form elements that you can opt-in to.
+Front-Commerce has a built-in implementation agnostic smart form fields/hooks. The smart form fields/hooks help the user while he is filling the form by providing smart suggestions based on his input or by validating/properly formatting his input. The smart form fields can be used as a drop in replacements for their non smart counterparts, While the hooks are to be installed on the `<Form>` level. We have also shipped a capency implementation for these smart form elements that you can opt-in to.
 
-Note: Smart form elements are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
+Note: Smart form fields are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
 
 ### Default
 
-Please note that by default the smart forms components have not impementaion. To make them work you should provide an impementaion to load suggestions/format/validate set form fields.
+Please note that by default the smart forms comes with no backend impementaion. To make them work you should provide an impementaion to load suggestions/format/validate set form fields, or configure your site to use our capency implementation.
 
 We have shipped a capency implementation with front-commerce 2.7. You can check it out in the [smart-forms-capency module](https://gitlab.com/front-commerce/front-commerce/-/tree/2.7.0/modules/smart-forms-capency/server/modules/capency). To enable the capency smart form module you need to:
 
