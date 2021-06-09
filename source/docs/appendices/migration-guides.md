@@ -82,7 +82,7 @@ and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/Payze
 
 ### Style sheets updates
 
-In case you have overridden `_pages.scss` you need to add the following line to it:
+In case you have overridden `_pages.scss` you need to add the following line to it to include styles for the Guest order search feature:
 
 ```
 @import "~theme/pages/Orders/Orders";
