@@ -87,7 +87,7 @@ query PayzenEmbeddedQuery {
 
 and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
 
-### core atoms updated
+### Core Form atoms updated
 
 The following core atoms where updated to accomodate the SmartForms functionality:
 
