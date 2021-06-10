@@ -233,7 +233,7 @@ Here is a list of integrations frequently used accross eCommerce shops:
       settings: (authorization, otherAuthorizations) => {
         return {
           "Google Tag Manager": {
-            containerID: "GW-123",
+            containerId: "GW-123",
             // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
             userConsents: otherAuthorizations
           },
