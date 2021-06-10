@@ -187,7 +187,7 @@ P.S. the default for `countryFieldName` is "country"
 
 Smart forms also provide some hooks to help validate form fields. These hooks needs to be setup at the `<Form>` level.
 
-## usePhoneNumberValidation
+## `usePhoneNumberValidation`
 
 `usePhoneNumberValidation` is used to validate the phone number on form submit. To properly setup phone number validation using the `usePhoneNumberValidation` hook you need to update your `<Form>` as noted below:
 
@@ -217,3 +217,102 @@ const MyAwesomeForm = ({
 ```
 
 After implementing the above changes, when the user submits the form it will validate the phone number first. Then if the phone number is valid the form will be submitted. Otherwise the form will not be submitted and the `validationError` variable above will be set to a translated message of `"Invalid phone number"`. (P.S. if for some the form validation fails for reasons other than the phone number being invalid, the form submit will be called as to not block the user).
+
+## `useEmailServerValidation`
+
+As its name suggests, `useEmailServerValidation` can be used to validate an email with the help of a server GraphQL API.
+
+### Basic usage
+
+When calling this hook, you have to pass three parameters:
+
+1. the name of the field where the user is suppose to enter an email
+1. a loading handling function. It will receive a boolean indicating when the server validation starts or ends
+1. a submit function. It will receive a hash with the field values. Typically, this function would call the GraphQL API to store the entity the form is about
+
+So on an existing form, you would do the following changes:
+
+```diff
+import Form from "theme/components/atoms/Form/Form";
+import { Email } from "theme/components/atoms/Form/Input";
++import { useEmailServerValidation } from "theme/modules/SmartForms/Field/Email";
+
+ const MyAwesomeForm = ({ email }) => {
+   const submit = (data) => {
+     // your submit implementation
+   };
++  const setLoading = (isLoading) {
++    // do something when the server starts or ends
++  };
++  const onSubmit = useEmailServerValidation("email", setLoading, submit);
+
+   return (
+-    <Form onValidSubmit={submit}>
++    <Form onValidSubmit={onSubmit}>
+        <Email name="email" id="email" value={email} required />
+        <!-- probably some other fields -->
+     </Form>
+```
+
+With this code, when the user submits the form, the hook will call the GraphQL API to validate the email. The GraphQL email validation API is designed [to return different validation statuses](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/546/diffs#e987e1da0e06e52d1b120c9d0081953f11fc8c7a_13_18) (not only valid/invalid) and by default, the `onSubmit` handler returned by `useEmailServerValidation` has the following behaviour:
+
+* with a `disabled` validation status, the `submit` function is directly called
+* with a `valid` validation status, the `submit` function is directly called
+* with a `warn` validation status, the `submit` function is not called, instead the email field is updated with the warning message returned by the server
+* with a `error` validation status, the `submit` function is not called, instead the email field is updated with the error message returned by the server.
+
+In addition, the `onSubmit` handler will directly call the `submit` function if the application was unable to reach the validation API (network error, server error,…).
+
+### Advanced usage
+
+It's possible to implement a different behaviour for one or several statuses. For that, you can pass an additional object to define custom status handlers. For instance, if you want to ignore `warn` status and display the server error message somewhere else, you can write something like:
+
+```diff
+import Form from "theme/components/atoms/Form/Form";
+import { Email } from "theme/components/atoms/Form/Input";
++import { useEmailServerValidation } from "theme/modules/SmartForms/Field/Email";
+
+ const MyAwesomeForm = ({ email }) => {
+   const submit = (data) => {
+     // your submit implementation
+   };
++  const [errorMessage, setErrorMessage] = useState("");
++  const setLoading = (isLoading) {
++    // do something when the server starts or ends
++  };
++  const onSubmit = useEmailServerValidation("email", setLoading, submit, {
++    valid: (context) => {
++      setErrorMessage("");
++      context.defaultImplementation(context);
++    },
++    disabled: (context) => {
++      setErrorMessage("");
++      context.defaultImplementation(context);
++    },
++    warn: (context) => {
++      setErrorMessage("");
++      context.submit(context.formModel);
++    },
++    error: (context) => {
++      setLoading(false);
++      setErrorMessage(context.validationResult.message);
++    },
++  });
+
+   return (
+-    <Form onValidSubmit={submit}>
++    <Form onValidSubmit={onSubmit}>
+        <Email name="email" id="email" value={email} required />
+        <!-- probably some other fields -->
++       {errorMessage ? <p>{errorMessage}</p> : null}
+     </Form>
+```
+
+As shown in the previous example, custom status handlers are indexed by validation status (`disabled`, `valid`, `warn` or `error`). They all receive a context object that contains the following properties:
+
+ * `formModel`: an object with the value of fields in the form
+ * `emailField`: the name of the email field passed to `useEmailServerValidation`
+ * `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/546/diffs#e987e1da0e06e52d1b120c9d0081953f11fc8c7a_13_25) returned by the server
+ * `updateInputsWithError`: a function to [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)
+ * `submit`: the submit handler passed to `useEmailServerValidation`
+ * `defaultImplementation`: the default status handler implementation.
