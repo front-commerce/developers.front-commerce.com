@@ -9,7 +9,7 @@ title: Serving assets from a CDN/custom domain
 
 ## Configuration
 
-Serving assets from a custom domain can be done with a simple configuration:
+Serving assets from a custom domain can be done with a configuration change:
 
 1. for each stores in `config/stores`, you can add a `assetsBaseUrl` entry so that for this stores, static assets and images are served from it. For instance:
   ```js

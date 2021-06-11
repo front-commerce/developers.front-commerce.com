@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Support serving assets from a CDN or different domain
 
-To allow [serving assets from a custom domain (e.g. a CDN)](/docs/advanced/performance/assets-cdn-domain.html), we had to do some changes to our themes' `template/index.html`,`template/error.html` and `core/shop/ShopQuery.gql`, so if you have overridden one of those files, you have to apply [similar changes](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/557/diffs):
+To allow [serving assets from a custom domain (e.g. a CDN)](/docs/advanced/performance/assets-cdn-domain.html), we had to do some changes to our themes' `template/index.html`, `template/error.html` and `core/shop/ShopQuery.gql`, so if you have overridden one of those files, you have to apply [similar changes](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/557/diffs):
 
 1. in `index.html`, make sure there's a `script` tag defining `window.__ASSETS_BASE_URL__` for instance right after the one defining `window.__BASE_URL__`:
    ```html
