@@ -254,7 +254,7 @@ import { Email } from "theme/components/atoms/Form/Input";
      </Form>
 ```
 
-With this code, when the user submits the form, the hook will call the GraphQL API to validate the email. The GraphQL email validation API is designed [to return different validation statuses](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/546/diffs#e987e1da0e06e52d1b120c9d0081953f11fc8c7a_13_18) (not only valid/invalid) and by default, the `onSubmit` handler returned by `useEmailServerValidation` has the following behaviour:
+With this code, when the user submits the form, the hook will call the GraphQL API to validate the email. The GraphQL email validation API is designed [to return different validation statuses](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L22) (not only valid/invalid) and by default, the `onSubmit` handler returned by `useEmailServerValidation` has the following behaviour:
 
 * with a `disabled` validation status, the `submit` function is directly called
 * with a `valid` validation status, the `submit` function is directly called
@@ -312,7 +312,7 @@ As shown in the previous example, custom status handlers are indexed by validati
 
  * `formModel`: an object with the value of fields in the form
  * `emailField`: the name of the email field passed to `useEmailServerValidation`
- * `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/546/diffs#e987e1da0e06e52d1b120c9d0081953f11fc8c7a_13_25) returned by the server
+ * `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L29) returned by the server
  * `updateInputsWithError`: a function to [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)
  * `submit`: the submit handler passed to `useEmailServerValidation`
  * `defaultImplementation`: the default status handler implementation.
