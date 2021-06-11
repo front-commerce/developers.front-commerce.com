@@ -3,21 +3,21 @@ id: smart-forms
 title: Smart Forms
 ---
 
-Front-Commerce has a built-in implementation agnostic smart form fields/hooks. The smart form fields/hooks help the user while he is filling the form by providing smart suggestions based on his input or by validating/properly formatting his input. The smart form fields can be used as a drop in replacements for their non smart counterparts, While the hooks are to be installed on the `<Form>` level. We have also shipped a capency implementation for these smart form elements that you can opt-in to.
+Front-Commerce has a built-in implementation agnostic Smart Form fields/hooks. The Smart Form fields/hooks help the user while he is filling the form by providing smart suggestions based on his input or by validating/properly formatting his input. The Smart Form fields can be used as a drop in replacements for their non smart counterparts, while the hooks are to be installed on the `<Form>` level. We have also shipped a Capency implementation for these Smart Form elements that you can opt-in to.
 
 Notes:
 
 1. Smart form fields are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
 
-2. The smart form functionality shipped first in 2.7.0. If you are using a previous version of front-commerce you need to update to atleast version 2.7.0 to be able to leverage the smart form functionality. Please have a look at the [2.7.0 migration guide](/docs/appendices/migration-guides.html#2-6-0-gt-2-7-0) to help you update to front-commerce version 2.7.0.
+2. The Smart Form functionality shipped first in 2.7.0. If you are using a previous version of Front-Commerce you need to update to at least version 2.7.0 to be able to leverage the Smart Form functionality. Please have a look at the [2.7.0 migration guide](/docs/appendices/migration-guides.html#2-6-0-gt-2-7-0) to help you update to Front-Commerce version 2.7.0.
 
 ### Default
 
-Please note that by default the smart forms comes with no backend impementaion. To make them work you should provide an impementaion to load suggestions/format/validate set form fields, or configure your site to use our capency implementation.
+Please note that by default the Smart Forms comes with no backend implementation. To make them work you should provide an implementation to load suggestions/format/validate set form fields, or configure your site to use our Capency implementation.
 
-We have shipped a capency implementation with front-commerce 2.7. You can check it out in the [smart-forms-capency module](https://gitlab.com/front-commerce/front-commerce/-/tree/2.7.0/modules/smart-forms-capency/server/modules/capency). To enable the capency smart form module you need to:
+We have shipped a Capency implementation with Front-Commerce 2.7. You can check it out in the [smart-forms-capency module](https://gitlab.com/front-commerce/front-commerce/-/tree/2.7.0/modules/smart-forms-capency/server/modules/capency). To enable the Capency Smart Form module you need to:
 
-1. Register for a capency account (check [capency solutions](https://www.capency.com/en/our-solutions/) for mor details).
+1. Register for a Capency account (check [Capency solutions](https://www.capency.com/en/our-solutions/) for more details).
 1. Add the following environment variables to your `.env` file:
 
 ```diff
@@ -26,7 +26,7 @@ We have shipped a capency implementation with front-commerce 2.7. You can check 
 +FRONT_COMMERCE_CAPENCY_URL_CAP_EMAIL=url_from_step_1
 ```
 
-1. Add the capency module to your .front-commerce.js file:
+1. Add the Capency module to your .front-commerce.js file:
 
 ```diff
 module.exports = {
@@ -105,7 +105,7 @@ P.S. the default for `countryFieldName` is "country" and for `postcodeFieldName`
 
 ### Smart Postcode
 
-The smart postcode field is located at `src/web/theme/modules/SmartForms/Field/Postcode` it can be used as a replacement to the `<Text/>` atom. It will help the user autocomplete the postcode field by providing him with suggestions based on the country he has selected. The suggestions when seleced by the user will also set the city field. (e.g. if the user selects 75001 as the postcode while having France as a country the city will be set to Paris).
+The smart postcode field is located at `src/web/theme/modules/SmartForms/Field/Postcode` it can be used as a replacement to the `<Text/>` atom. It will help the user autocomplete the postcode field by providing him with suggestions based on the country he has selected. The suggestions when selected by the user will also set the city field. (e.g. if the user selects 75001 as the postcode while having France as a country the city will be set to Paris).
 
 You can customize the fields that represent the country and the city in your form by providing the following props to your component:
 
@@ -127,7 +127,7 @@ P.S. the default for `countryFieldName` is "country" and for `cityFieldName` is 
 
 ### Smart Street
 
-The smart street field is located at `src/web/theme/modules/SmartForms/Field/Street` it can be used as a replacement to the `<Textarea/>` atom. It will help the user autocomplete the street address field by providing him with suggestions based on the country, city and postcode he has selected. The suggestions when seleced by the user will also set the country, city and postcode fields (e.g. if postcode was 75000 and user selects Quai Branly as street the postcode will be set to 75007 a more precise postcode).
+The smart street field is located at `src/web/theme/modules/SmartForms/Field/Street` it can be used as a replacement to the `<Textarea/>` atom. It will help the user autocomplete the street address field by providing him with suggestions based on the country, city and postcode he has selected. The suggestions when selected by the user will also set the country, city and postcode fields (e.g. if postcode was 75000 and user selects Quai Branly as street the postcode will be set to 75007 a more precise postcode).
 
 You can customize the fields that represent the country, the city and the postcode in your form by providing the following props to your component:
 
@@ -187,7 +187,7 @@ P.S. the default for `countryFieldName` is "country"
 
 Smart forms also provide some hooks to help validate form fields. These hooks needs to be setup at the `<Form>` level.
 
-## usePhoneNumberValidation
+## `usePhoneNumberValidation`
 
 `usePhoneNumberValidation` is used to validate the phone number on form submit. To properly setup phone number validation using the `usePhoneNumberValidation` hook you need to update your `<Form>` as noted below:
 
@@ -217,3 +217,102 @@ const MyAwesomeForm = ({
 ```
 
 After implementing the above changes, when the user submits the form it will validate the phone number first. Then if the phone number is valid the form will be submitted. Otherwise the form will not be submitted and the `validationError` variable above will be set to a translated message of `"Invalid phone number"`. (P.S. if for some the form validation fails for reasons other than the phone number being invalid, the form submit will be called as to not block the user).
+
+## `useEmailServerValidation`
+
+As its name suggests, `useEmailServerValidation` can be used to validate an email with the help of a server GraphQL API.
+
+### Basic usage
+
+When calling this hook, you have to pass three parameters:
+
+1. the name of the field where the user is suppose to enter an email
+1. a loading handling function. It will receive a boolean indicating when the server validation starts or ends
+1. a submit function. It will receive a hash with the field values. Typically, this function would call the GraphQL API to store the entity the form is about
+
+So on an existing form, you would do the following changes:
+
+```diff
+import Form from "theme/components/atoms/Form/Form";
+import { Email } from "theme/components/atoms/Form/Input";
++import { useEmailServerValidation } from "theme/modules/SmartForms/Field/Email";
+
+ const MyAwesomeForm = ({ email }) => {
+   const submit = (data) => {
+     // your submit implementation
+   };
++  const setLoading = (isLoading) {
++    // do something when the server starts or ends
++  };
++  const onSubmit = useEmailServerValidation("email", setLoading, submit);
+
+   return (
+-    <Form onValidSubmit={submit}>
++    <Form onValidSubmit={onSubmit}>
+        <Email name="email" id="email" value={email} required />
+        <!-- probably some other fields -->
+     </Form>
+```
+
+With this code, when the user submits the form, the hook will call the GraphQL API to validate the email. The GraphQL email validation API is designed [to return different validation statuses](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L22) (not only valid/invalid) and by default, the `onSubmit` handler returned by `useEmailServerValidation` has the following behaviour:
+
+* with a `disabled` validation status, the `submit` function is directly called
+* with a `valid` validation status, the `submit` function is directly called
+* with a `warn` validation status, the `submit` function is not called, instead the email field is updated with the warning message returned by the server
+* with a `error` validation status, the `submit` function is not called, instead the email field is updated with the error message returned by the server.
+
+In addition, the `onSubmit` handler will directly call the `submit` function if the application was unable to reach the validation API (network error, server error,…).
+
+### Advanced usage
+
+It's possible to implement a different behaviour for one or several statuses. For that, you can pass an additional object to define custom status handlers. For instance, if you want to ignore `warn` status and display the server error message somewhere else, you can write something like:
+
+```diff
+import Form from "theme/components/atoms/Form/Form";
+import { Email } from "theme/components/atoms/Form/Input";
++import { useEmailServerValidation } from "theme/modules/SmartForms/Field/Email";
+
+ const MyAwesomeForm = ({ email }) => {
+   const submit = (data) => {
+     // your submit implementation
+   };
++  const [errorMessage, setErrorMessage] = useState("");
++  const setLoading = (isLoading) {
++    // do something when the server starts or ends
++  };
++  const onSubmit = useEmailServerValidation("email", setLoading, submit, {
++    valid: (context) => {
++      setErrorMessage("");
++      context.defaultImplementation(context);
++    },
++    disabled: (context) => {
++      setErrorMessage("");
++      context.defaultImplementation(context);
++    },
++    warn: (context) => {
++      setErrorMessage("");
++      context.submit(context.formModel);
++    },
++    error: (context) => {
++      setLoading(false);
++      setErrorMessage(context.validationResult.message);
++    },
++  });
+
+   return (
+-    <Form onValidSubmit={submit}>
++    <Form onValidSubmit={onSubmit}>
+        <Email name="email" id="email" value={email} required />
+        <!-- probably some other fields -->
++       {errorMessage ? <p>{errorMessage}</p> : null}
+     </Form>
+```
+
+As shown in the previous example, custom status handlers are indexed by validation status (`disabled`, `valid`, `warn` or `error`). They all receive a context object that contains the following properties:
+
+ * `formModel`: an object with the value of fields in the form
+ * `emailField`: the name of the email field passed to `useEmailServerValidation`
+ * `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L29) returned by the server
+ * `updateInputsWithError`: a function to [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)
+ * `submit`: the submit handler passed to `useEmailServerValidation`
+ * `defaultImplementation`: the default status handler implementation.
