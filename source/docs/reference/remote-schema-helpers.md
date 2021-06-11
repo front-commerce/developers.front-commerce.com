@@ -17,7 +17,7 @@ It will create an executor that will:
 
 The `makeExecutor` takes two parameters:
 
-* `uri` (`string | (fetchOptions, graphQLExecutionInfo) => string`): The URI where the Remote GraphQL schema lives. It can either be a string or a function if the URI can change based on the user's request (ex: language, store id, etc.) 
+* `uri` (`string | (graphQLExecutionInfo) => string`): The URI where the Remote GraphQL schema lives. It can either be a string or a function if the URI can change based on the user's request (ex: language, store id, etc.)
 * `options` (`object`): An optional object containing the following keys:
     * `fetcher` optional: The fetcher used to execute the request. By default it is `isomorphic-fetch`
     * `fetchOptionsAdapter` optional (`(fetchOptions) => fetchOptions`): transforms the options passed to the `fetcher` when executing the request
