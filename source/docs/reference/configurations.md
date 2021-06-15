@@ -29,7 +29,7 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
-* `root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu. It will then be the children of this category that will be displayed.
+* ~~`root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu.~~ Removed in `2.7.0`.
 * `default_image_url` (ex: an absolute URL of an image): which image to use when no image path has been given to [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware.html#lt-ResizedImage-gt-component)
 * `defaultTitle`: the default meta title of your application
 * `defaultDescription`: the default meta description of your application
@@ -53,7 +53,7 @@ This configuration file should contain any thing that impacts the content of you
   When a CSP is missing, your browser will let you know in its console.
 * `search`: an object that defines how the Elasticsearch queries should be made.
   * `dynamicFacetSize`: number of filters to fetch from Elasticsearch
-  * `ignoredAttributeKeys`: filters that are returned by Elasticsearch but we don't need to display
+  * `ignoredAttributeKeys`: attribute codes to ignore when generating facets with Elasticsearch
   * `attributeFacetMinimumDocumentCount`: the minimum number of document an attribute facet needs to match to be displayed. It is set to 1 by default, that means only attribute facets leading to at least one document are displayed. By setting it to 0, attribute facets leading to no document are also displayed but disabled in the UI.
   * `authorizedCategoriesFacet`: array of ids of the categories that should be displayed in the filters. The string `"*"` can be used to allow all categories. Default value: `[]`.
   * `categoryFacetMinimumDocumentCount`: the minimum number of document a category facet needs to match to be displayed. It is set to 1 by default, that means only category facets leading to at least one document are displayed. By setting it to 0, category facets leading to no document are also displayed but disabled in the UI.

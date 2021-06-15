@@ -63,13 +63,8 @@ To do so, you need to merge your queries and move them as early as possible in y
 }
 ```
 
-## Limit the number of render iteration
+## Send correct headers to leverage proxy or CDN caching
 
-But there is also in Front-Commerce the possibility to force only one iteration of the loop mentioned above. This can be enabled by setting the `FRONT_COMMERCE_FAST` environment variable to `true`.
+CDN and proxies allow to cache generated pages for the next users. By sending correct HTTP headers, you could allow them to cache pages generated during SSR and improve the performance and scalability of your application.
 
-This can improve your SSR times drastically. However you must be aware that only the top-level queries will be executed on the server. The generated HTML may not contain data that are important for your users, or Search Engines. Such content would be loaded client-side though. This is a tradeoff between safety and speed.
-
-In a default Front-Commerce theme, rest assured that you can enable `FRONT_COMMERCE_FAST=true` without a second thought. However, as you customize your shop, you may notice some data that are not rendered properly server side. This might be the cause and you will have two options:
-
-* set back `FRONT_COMMERCE_FAST=false`
-* fuse your GraphQL queries to ensure that there is no unwanted cascade
+See [Cache control and CDN](/docs/advanced/performance/cache-control-and-cdn.html) for further information.

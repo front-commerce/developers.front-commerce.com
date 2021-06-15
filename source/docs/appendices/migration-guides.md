@@ -7,6 +7,166 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.6.0` -> `2.7.0`
+
+### Support serving assets from a CDN or different domain
+
+To allow [serving assets from a custom domain (e.g. a CDN)](/docs/advanced/performance/assets-cdn-domain.html), we had to do some changes to our themes' `template/index.html`, `template/error.html` and `core/shop/ShopQuery.gql`, so if you have overridden one of those files, you have to apply [similar changes](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/557/diffs):
+
+1. in `index.html`, make sure there's a `script` tag defining `window.__ASSETS_BASE_URL__` for instance right after the one defining `window.__BASE_URL__`:
+   ```html
+    <script>
+      window.__ASSETS_BASE_URL__ = "%%__ASSETS_BASE_URL__%%";
+    </script>
+   ```
+1. in both `error.html` and `index.html`, make sure `<link>`s reference external assets with `%%__ASSETS_BASE_URL__%%` instead of `%%__BASE_URL__%%`
+1. in `ShopQuery.gql`, add `imageBaseUrl` to the list of requested fields
+
+### `FRONT_COMMERCE_FAST` mode removed
+
+Introduced in version 2.0, this experimental flag could help improving SSR performance by only executing the top level GraphQL query.
+It could lead to issues, and was not a huge performance boost.
+
+Since 2.6, one can use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to achieve the same goal in a more efficient manner. For this reason, we've removed the `FRONT_COMMERCE_FAST` SSR mode.
+
+You should remove `FRONT_COMMERCE_FAST` from your environment variables. It is now unused.
+
+### EXIF orientation now honored for images
+
+Images having an EXIF orientation metadata are now properly rotated and optimized by [the media middleware](/docs/advanced/production-ready/media-middleware.html).
+It will solve issues with existing media, but one must keep in mind that it may lead to an orientation different from previous versions.
+
+See [the related Merge Request](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/544) for details.
+
+### Canonical URLs
+
+In this release, we have changed both the default theme and the theme chocolatine to add the canonical URL to the category, cms, product and home pages. For the category, cms and product pages, the [`CategorySeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/519), [`CmsPageSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/513) and [`ProductSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/498) components have respectively been modified, so if you have overridden one of those, you might want to synchronize your own version with these changes. For the home page, we have introduced the [`HomeSeo`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/511) component that you might want to use on own home page implementation.
+
+### More reliable facets generation with Elasticsearch
+
+As of the 2.7 version, Front-Commerce fetches the attributes on which facets can be generated from Magento (for both version 1 and 2). Previously, the implementation was relying on an attribute added in the Elasticsearch index by the ElasticSuite module to figure out which ones can be used to generate facets. This could lead to wrong Elasticsearch queries and it was common to have to ignore some attributes using [the `search.ignoredAttributeKeys` configuration](/docs/reference/configurations.html#config-website-js). As a result, when upgrading to 2.7:
+
+1. make sure the attributes on which you want some facets are configured so that _Use in Layered Navigation_ is set to _Filterable (with results)_
+1. if you need to have an attribute configured this way but still want to ignore it in the facets, you can add it to the `search.ignoredAttributeKeys` configuration
+1. you can remove attribute codes that are not "Used in Layered Navigation" from the `search.ignoredAttributeKeys` configuration. They were probably text fields added here to prevent incorrect Elasticsearch queries (`description`, `short_description`,…)
+
+### `pact` 4.x dependency removed
+
+If your application contains Pact tests and you saw the following deprecation message in your current version, you will have an action to do during this migration:
+> server/model/__fixtures__/provider/makeDescribeWithProvider deprecated Will be removed in 3.0.0. Please update your tests by moving them in a `__pacts__` directory and setup interactions in each test. Front-Commerce will setup everything for you, using the latest @pact-foundation/pact library.
+
+The warning warns about usage of a deprecated `makeDescribeWithProvider` helper used by Front-Commerce when you import `describeWithProvider` directly in a test from a `__tests__` server directory.
+```
+// DEPRECATED
+import { describeWithProvider } from "server/model/__fixtures__/provider/magento2";
+```
+
+Since [Front-Commerce 2.0.0](https://gitlab.com/front-commerce/front-commerce/commit/f69fd72717e99040e7e613705752f1175f589509), we use the latest `@pact-foundation/pact` library. Front-Commerce's [`test` CLI command](/docs/reference/cli.html#front-commerce-test) will automatically provide a `describeWithProvider` function in your tests from the `__pacts__` directory. It runs Pact tests in a more stable way and is the recommended way to use Pact in your application.
+
+We've finished to update all of our internal tests to this latest version and have removed the direct dependency to the old Pact version to prevents downloading the Pact binary twice during an `npm install`. Your tests using the deprecated `describeWithProvider` will now fail unless you:
+- add the dependency back to your project
+- or (**RECOMMENDED**) you move your tests to a `__pacts__` directory and update them a bit. See [commits from our own migration](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/commits) (especially [this one](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/diffs?commit_id=f195479395a51f62664ca5522e0915f345ff22b4)) for examples and details.
+
+### `root_categories_path` configuration removed
+
+The `root_categories_path` configuration key from `website.js` is not used anymore. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
+
+It was first introduced for the navigation menu in Magento GraphQL modules (then unused), but used for breadcrumbs. We've reworked how breadcrumbs are generated from the category "path" value returned by magento to make it useless. We now always remove the first two category levels of the path, no matter their values. It prevent userland errors due to a misconfiguration of their app.
+
+### Payzen / Lyra Collect URL changes
+
+We've consolidated the Payzen module to support Lyra Collect. Both products are based on the same APIs and client libraries, but loaded from different sources. It appeared that we were using a mix of both URLs, and we've cleaned this a bit.
+
+If you use Payzen as Front-Commerce embedded payment method you must:
+- update your `config/website.js` CSP configurations
+- ensure that the `PayzenEmbeddedQuery` query contains the `assetsBaseUrl` field
+
+#### CSP configurations update
+
+Replace `api.payzen.eu` and `api.lyra.com` in your `config/website.js` file with the `static.payzen.eu` domain to ensure that the CSPs will allow to load the payment form assets. **Please do a test payment to ensure that everything is working as expected**.
+
+If you are using Lyra Collect, use the `api.lyra.com` value as per [our documentation](/docs/advanced/payments/payzen.html#Lyra-Collect-supportq)
+
+#### `PayzenEmbeddedQuery` query update
+
+If you have overridden `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenEmbeddedQuery.gql`, please update it as follow:
+```diff
+query PayzenEmbeddedQuery {
+  shop {
+    id
+    locale
+  }
+  cart {
+    id
+    payZenEmbedded {
+      formToken
+      publicKey
++      assetsBaseUrl
+    }
+  }
+}
+```
+
+and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
+
+### Core Form atoms updated
+
+The following core atoms where updated to accomodate the SmartForms functionality:
+
+1. `BaseInput.js`
+2. `FormComponent.js`
+3. `Input.js`
+4. `Textarea.js`
+
+If you have overridden any of the above atoms and you want to use the SmartForms functionality, you need to ensure you add the suggestions functionality to `<BaseInput>`, `<Input>` and `<Textarea>`, and also add the `useFormFieldState`, `useFormDataSetter` and `useFormErrorSetter` to `<FormComponent>`. For further reference please take a look at the corresponding files in [the 2.6-2.7 diff](https://gitlab.com/front-commerce/front-commerce/-/compare/2.6.0...2.7.0?from_project_id=9218054) to help you integrate the updates in the files you have overridden.
+
+### Style sheets updates
+
+In case you have overridden `_pages.scss` you need to add the following line to it to include styles for the Guest order search feature:
+
+```
+@import "~theme/pages/Orders/Orders";
+```
+
+In case you have overridden `_Input.scss` you need to add the following to it to include styles for the smart forms module:
+
+```
+.input-wrapper {
+  &__suggestions {
+    .autocomplete-results__option {
+      cursor: pointer;
+    }
+
+    &-wrapper {
+      position: relative;
+      height: 0;
+    }
+
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background: $white;
+    border: 1px solid $shade05;
+    border-top: none;
+    box-sizing: border-box;
+    padding: $boxSizeMargin;
+  }
+}
+```
+
+In case you are using base theme and have overridden `_components.scss` you need to add the following line to it:
+
+```
+@import "~theme/components/organisms/Autocomplete/Autocomplete";
+```
+
+In case you are using theme chocolatine and have overridden `_components.scss` you need to perform the following update:
+
+```diff
+-@import "~./organisms/Autocomplete/Autocomplete";
++@import "~theme/components/organisms/Autocomplete/Autocomplete";
+```
+
 ## `2.5.0` -> `2.6.0`
 ### Minimum Node.js version
 

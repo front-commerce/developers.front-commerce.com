@@ -45,6 +45,7 @@ sidebar_categories:
     - docs/advanced/performance/server-timings
     - docs/advanced/performance/improve-your-core-web-vitals
     - docs/advanced/performance/cache-control-and-cdn
+    - docs/advanced/performance/assets-cdn-domain
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware
@@ -58,6 +59,7 @@ sidebar_categories:
     - docs/advanced/features/invoices
     - docs/advanced/features/flash-messages
     - docs/advanced/features/display-a-map
+    - docs/advanced/features/smart-forms
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -71,6 +73,7 @@ sidebar_categories:
     - docs/magento2/detect-admin-users
     - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
+    - docs/magento2/advanced
   Magento1:
     - docs/magento1/overview
     - docs/magento1/installation
@@ -80,6 +83,10 @@ sidebar_categories:
     - docs/magento1/event-list
     - docs/magento1/generate-api-doc
     - docs/magento1/headless-payments
+    - docs/magento1/advanced
+  Prismic:
+    - docs/prismic/index
+    - docs/prismic/installation
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows

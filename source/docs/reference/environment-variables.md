@@ -54,7 +54,7 @@ Configure the execution environment of the Front-Commerce's application:
 
 ### Performance
 
-- `FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.
+- ~~`FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.~~ Removed in version 2.7. Please use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to improve performance of SSR pages.
 - `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
 
 ### Server
@@ -148,15 +148,12 @@ More documentation about this module will be available soon. Please [contact us]
 
 ### Payzen
 
-<blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
-</blockquote>
-
-[Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html)
+Get your access keys by following the [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html). See [our documentation page](/docs/advanced/payments/payzen.html#Configure-your-environment) for further details.
 
 - `FRONT_COMMERCE_PAYZEN_PUBLIC_KEY`
 - `FRONT_COMMERCE_PAYZEN_PRIVATE_KEY`
 - `FRONT_COMMERCE_PAYZEN_SHA256`
+- `FRONT_COMMERCE_PAYZEN_PRODUCT`: use `lyra_collect` to use [Lyra Collect](https://www.lyra.com/lyra-collect/) instead of PayZen. Default: `payzen`.
 
 ### BuyBox
 
