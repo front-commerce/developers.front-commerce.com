@@ -9,14 +9,14 @@ Front-Commerce 2.7 is available! This new version integrates practical solutions
 
 ## New Feature: SmartForms has been developed in-house in order to guarantee you valid customer data.
 
-With SmartForms completing a form is quicker for your users, and also reduces the number of invalid data inputs by controlling the integrity of the data entered.
+With [SmartForms](/docs/advanced/features/smart-forms.html) completing a form is quicker for your users, and also reduces the number of invalid data inputs by controlling the integrity of the data entered.
 
 Our first integration uses CapAddress (by Capency) but SmartForms has been conceived with an agnostic design to connect to other systems later on.
 
 
 ## You can also benefit from Prismic!
 
-With the addition of Prismic, content management will be simplified for the entire team. Rich content modeling (reusable slices, page specific templates) for dynamic content, all whilst maintaining the coherence and the separation of concerns between developers and content publishers. 😅
+With the addition of [Prismic](/docs/prismic/), content management will be simplified for the entire team. Rich content modeling (reusable slices, page specific templates) for dynamic content, all whilst maintaining the coherence and the separation of concerns between developers and content publishers. 😅
 
 Prismic [recently announced an exciting vision for content creation with Slices](https://prismic.io/announcement/from-headless-cms-to-custom-website-builder) and Front-Commerce will allow you to leverage it! Please [contact us](mailto:contact@front-commerce.com) if you want to use Prismic with your Front-Commerce application.
 
