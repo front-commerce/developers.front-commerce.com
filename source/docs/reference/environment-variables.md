@@ -159,6 +159,17 @@ Get your access keys by following the [Payzen documentation](https://payzen.io/f
 
 See [our dedicated documentation page](/docs/advanced/payments/buybox.html#Configure-your-environment).
 
+### Capency
+
+See [our related documentation](/docs/advanced/features/smart-forms.html#Capency-CapAddress-CapPhone-CapEmail) for details.
+
+- `FRONT_COMMERCE_CAPENCY_DISABLED`: set to `true` to temporary disable all the Capency integration
+- `FRONT_COMMERCE_CAPENCY_AUTH_USERNAME`
+- `FRONT_COMMERCE_CAPENCY_AUTH_PASSWORD`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_EMAIL`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_ADDRESS`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_PHONE`
+
 ## Build related variables
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
