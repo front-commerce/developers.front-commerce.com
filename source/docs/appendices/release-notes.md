@@ -12,11 +12,24 @@ This page lists the public releases and will let you know what is included in ea
 Compatible with:
 
 - **Node.js:** 12.22+
-- **Magento2**: 2.3.2 -> 2.4.1 (Open Source & Commerce)
+- **Magento2**: 2.3.2 -> 2.4.2-p1 (Open Source & Commerce)
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
 ## 2.7.0
 
+> Front-Commerce 2.7 integrates practical solutions to improve your efficiency.
+>
+> SmartForms has been developed in-house in order to guarantee you valid customer data.
+>
+> Prismic integration enable rich content modeling for the entire team using dynamic content types.
+>
+> Magento 2.4.2-p1 support, and many other miscellaneous features.
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/06/15/front-commerce-2.7/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.0)
+
+Requirement changes:
+- Magento2: 2.3.2+ -> 2.4.2-p1 - requires [magento module version 2.4.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.4.0) - (Open Source & Commerce)
 
 ## 2.6.0
 
