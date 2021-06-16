@@ -3,30 +3,43 @@ id: smart-forms
 title: Smart Forms
 ---
 
-Front-Commerce has a built-in implementation agnostic Smart Form fields/hooks. The Smart Form fields/hooks help the user while he is filling the form by providing smart suggestions based on his input or by validating/properly formatting his input. The Smart Form fields can be used as a drop in replacements for their non smart counterparts, while the hooks are to be installed on the `<Form>` level. We have also shipped a Capency implementation for these Smart Form elements that you can opt-in to.
+Front-Commerce has a built-in implementation agnostic **Smart Form fields/hooks** feature. Smart Form fields/hooks help users while they are filling a form. They provide smart suggestions based on their input and can validate or homogeneously format the data.
+
+The Smart Form fields can be used as a drop in replacements for their non smart counterparts, while the hooks are to be installed on the `<Form>` level.
 
 Notes:
 
 1. Smart form fields are required to be inside a `<Form>` component as they rely heavily on the Form API and in some cases on other values in the `Form` (e.g. city suggestions rely on selected country).
-
 2. The Smart Form functionality shipped first in 2.7.0. If you are using a previous version of Front-Commerce you need to update to at least version 2.7.0 to be able to leverage the Smart Form functionality. Please have a look at the [2.7.0 migration guide](/docs/appendices/migration-guides.html#2-6-0-gt-2-7-0) to help you update to Front-Commerce version 2.7.0.
 
-### Default
+## Configuring an integration
 
-Please note that by default the Smart Forms comes with no backend implementation. To make them work you should provide an implementation to load suggestions/format/validate set form fields, or configure your site to use our Capency implementation.
+By default, the Smart Forms comes with no backend implementation in production. A naive implementations exist in development mode so you can work on integrating and test forms. Before adding Smart Forms to your application, you will have to configure an existing backend implementation (or write a specific one).
 
-We have shipped a Capency implementation with Front-Commerce 2.7. You can check it out in the [smart-forms-capency module](https://gitlab.com/front-commerce/front-commerce/-/tree/2.7.0/modules/smart-forms-capency/server/modules/capency). To enable the Capency Smart Form module you need to:
+<blockquote class="info">
+  We aim at supporting other services in the future. If you want to use a specific service to provide SmartForms feature, please let us know!
+</blockquote>
+
+### Capency (CapAddress, CapPhone, CapEmail)
+
+We have shipped a Capency implementation with Front-Commerce 2.7. You can check it out in the [smart-forms-capency module](https://gitlab.com/front-commerce/front-commerce/-/tree/2.7.0/modules/smart-forms-capency/server/modules/capency).
+
+To enable the Capency Smart Form module you need to:
 
 1. Register for a Capency account (check [Capency solutions](https://www.capency.com/en/our-solutions/) for more details).
-1. Add the following environment variables to your `.env` file:
+2. Add the following environment variables to your `.env` file:
 
 ```diff
 +FRONT_COMMERCE_CAPENCY_AUTH_USERNAME=user_name_from_step_1
 +FRONT_COMMERCE_CAPENCY_AUTH_PASSWORD=password_from_step_1
 +FRONT_COMMERCE_CAPENCY_URL_CAP_EMAIL=url_from_step_1
++FRONT_COMMERCE_CAPENCY_URL_CAP_ADDRESS=url_from_step_1
++FRONT_COMMERCE_CAPENCY_URL_CAP_PHONE=url_from_step_1
 ```
 
-1. Add the Capency module to your .front-commerce.js file:
+The different services URL may be identical or different depending on your Capency setup. Please follow instructions received by the Capency support team.
+
+3. Add the Capency module to your .front-commerce.js file:
 
 ```diff
 module.exports = {
@@ -50,6 +63,12 @@ module.exports = {
   ],
 };
 ```
+
+Restart the project, and your existing fields should now use Capency webservices to provide suggestions and validate data.
+
+<blockquote class="info">
+  **ProTip:** you can use the `front-commerce:smart-forms:capency` value in your `DEBUG` environment variable to view more details about API interactions with Capency services.
+</blockquote>
 
 ## Smart Forms Fields
 
