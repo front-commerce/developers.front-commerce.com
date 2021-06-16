@@ -98,7 +98,7 @@ By typing `yourhostname/playground` or `yourhostname/graphiql` (in our case `loc
 **You will need to restart the application to access the updated schema in the playground.**
 
 And here is a screenshot of the GraphQL query.
-![GraphQL query screenshot to show how to request the rate of a product](./assets/graphiql-rate-screenshot.png)
+![GraphQL query screenshot to show how to request the rate of a product](./assets/playground-rate-screenshot.png)
 
 ```graphql
 {
