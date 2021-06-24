@@ -47,7 +47,7 @@ module.exports = {
     },
     small: { width: 200, height: 200, bgColors: [] },
     medium: { width: 474, height: 474, bgColors: [] },
-    mediumNoRation: {
+    mediumNoRatio: {
       width: 474,
       // the placeholder image may have a different height than the loaded image
       // when you have a list of images but don't actually know the ratio of the final image
@@ -78,8 +78,8 @@ http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cov
 ```
 
 * `format`: must be one of the keys available in your `presets` configuration or `original` to request the image without any transformation
-* `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the the `defaultBgColor`
-* `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hidding any of its content. The space left in your image will be filled with the `bgColor` attribute.
+* `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the `defaultBgColor`
+* `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hiding any of its content. The space left in your image will be filled with the `bgColor` attribute.
 
 ### `<Image>` component
 
@@ -225,7 +225,7 @@ Now go to the file `CategoryConstants.js` under `./theme-chocolatine/web/theme/p
 
 ### Image Sizes Defaults
 
-We have used the method explained above to set default `sizes` accross the theme. Those defaults found in the Constants file of the respective page are related to the image presets in the `<theme>/config/images.js` and the default values of some SCSS variables like `$boxSizeMargin`, `$smallContainerWidth` and `$containerWidth` in the `<theme>/web/theme/main.scss` file. So if you have customized any of the default configurations that affect how the image sizes change with viewport width, **you should definitely consider adapting the `sizes` values in the Constants files.**
+We have used the method explained above to set default `sizes` across the theme. Those defaults found in the Constants file of the respective page are related to the image presets in the `<theme>/config/images.js` and the default values of some SCSS variables like `$boxSizeMargin`, `$smallContainerWidth` and `$containerWidth` in the `<theme>/web/theme/main.scss` file. So if you have customized any of the default configurations that affect how the image sizes change with viewport width, **you should definitely consider adapting the `sizes` values in the Constants files.**
 
 ## Add your own media proxy endpoint
 
@@ -313,7 +313,7 @@ This is why we have added caching: if an image is proxied once, the resized imag
 
 But this is still not ideal because it means that on the first launch of your server, many images will need to be resized during your users' requests.
 
-To answer this, we have created a script that fetches all the image URLs used in your catalog and put them in cache. It launchs a warmup of your image caches that you could use before a deployment or with a cron every night.
+To answer this, we have created a script that fetches all the image URLs used in your catalog and put them in cache. It launches a warmup of your image caches that you could use before a deployment or with a cron every night.
 
 Documentation about this script is available in the [`scripts/imageWarmUp.js` reference page](/docs/reference/scripts.html#imageWarmUp-js).
 
