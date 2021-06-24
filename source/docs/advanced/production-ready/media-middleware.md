@@ -36,7 +36,9 @@ Once that's done, you need to configure the different formats that your server i
 module.exports = {
   // background of your images if they are not in the correct ratio
   defaultBgColor: "FFFFFF",
-  // different formats available
+  // different formats available, in addition to those explicitly declared here
+  // there's an `original` preset which allows to retrieve the image without
+  // any transformation.
   presets: {
     thumbnail: {
       width: 50, // size of the resized image
@@ -75,7 +77,7 @@ With actual values, it would look like this:
 http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cover=true
 ```
 
-* `format`: must be one of the keys available in your `presets` configuration
+* `format`: must be one of the keys available in your `presets` configuration or `original` to request the image without any transformation
 * `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the the `defaultBgColor`
 * `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hidding any of its content. The space left in your image will be filled with the `bgColor` attribute.
 
