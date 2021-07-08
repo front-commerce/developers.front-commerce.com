@@ -3,9 +3,9 @@ id: feature-flags
 title: Feature Flags
 ---
 
-Some modules in front-commerce have feature flags that are used to enable/disable set module.
+Some modules in Front-Commerce use feature flags to enable or disable its features.
 
-### Enabling/Disabling a feature
+## Enabling or Disabling a feature
 
 Typically the feature flag is defined inside the folder of the module in a loader called `featureFlagLoader.js`. So for example the feature flag for the wishlist module on magento1 is located at `src/server/modules/magento1/wishlist/featureFlagLoader.js`.
 
