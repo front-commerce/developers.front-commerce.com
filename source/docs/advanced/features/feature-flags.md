@@ -7,9 +7,9 @@ Some modules in Front-Commerce use feature flags to enable or disable its featur
 
 ## Enabling or Disabling a feature
 
-Feature flags are resolved by the [FeatureFlagLoader](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/core/loaders.js#L7) which is typically overrided in the contextEnhancer of each module supporting a feature flag (e.g. [wishlist](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/wishlist/index.js#L21), [search](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/search/index.js#L41)).
+Feature flags are resolved by the [FeatureFlagLoader](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/core/loaders.js#L7) which is typically overrided in the [`contextEnhancer`](/docs/reference/graphql-module-definition.html#contextEnhancer-optional) of each module supporting a feature flag (e.g. [wishlist](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/wishlist/index.js#L21), [search](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/search/index.js#L41)).
 
-To enable or disable a feature it is sufficient to update the overrided `FeatureFlag` in the `contexEnhancer` of the module and make it return `true` (to enable the feature) or `false` (to disable the feature) ONLY when the name matches the module's name. For example setting the below in `src/server/modules/magento1/wishlist/featureFlagLoader.js` (used in the wishlist context enhancer) will disable the wishlist feature.
+To enable or disable a feature one must update the overriden `FeatureFlag` loader in the `contexEnhancer` of the module and ensure `isActive` returns `true` (to enable the feature) or `false` (to disable the feature) ONLY when the name matches the feature flag's name. For example setting the below in `src/server/modules/magento1/wishlist/featureFlagLoader.js` (used in the wishlist context enhancer) will disable the wishlist feature.
 
 ```js
 const WishlistFeatureFlagLoader = (loader) => {
