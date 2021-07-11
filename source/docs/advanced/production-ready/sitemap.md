@@ -46,7 +46,7 @@ However, if you need to setup your own routes, you will need to register your ow
 If the pages you are adding to your sitemap are static and exist regardless of the state of your shop, you can add them by creating `config/hardcodedSitemap.js` in your module.
 
 ```js
-module.exports = [
+export default [
   {
     path: "/",
     priority: 1,

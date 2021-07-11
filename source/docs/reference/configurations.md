@@ -84,7 +84,7 @@ This file should export an object where the keys are the store's code (see [Conf
 Configure a [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) on your server (usually for dev environments).
 
 ```js
-module.exports = {
+export default {
   // enable basic authentication
   enable: true,
   // allow these IPs to bypass the basic authentication
@@ -115,7 +115,7 @@ By default most proxies are setting either `x-real-ip` or `x-forwarded-for`. So 
 Allows to define static routes within your application that aren't already fetched dynamically from your backend. Each object should match the Sitemapable interface of `src/server/model/store/schema.gql`
 
 ```js
-module.exports = [
+export default [
   {
     path: "/",
     priority: 1,
@@ -132,7 +132,7 @@ Allows to define which kind of entities should be returned within the search bar
 Available values are : "products", "categories" and "pages".
 
 ```js
-module.exports = ["products", "categories", "pages"];
+export default ["products", "categories", "pages"];
 ```
 
 ### `config/caching.js`
