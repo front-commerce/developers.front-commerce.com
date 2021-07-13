@@ -235,7 +235,7 @@ const MyAwesomeForm = ({
 };
 ```
 
-After implementing the above changes, when the user submits the form it will validate the phone number first. Then if the phone number is valid the form will be submitted. Otherwise the form will not be submitted and the `validationError` variable above will be set to a translated message of `"Invalid phone number"`. (P.S. if for some the form validation fails for reasons other than the phone number being invalid, the form submit will be called as to not block the user).
+After implementing the above changes, when the user submits the form it will validate the phone number first. Then if the phone number is valid the form will be submitted. Otherwise the form will not be submitted and the `validationError` variable above will be set to a translated message of `"Invalid phone number"`. (P.S. if the form validation fails for reasons other than the phone number being invalid, the form will be submitted to not block the user).
 
 ## `useEmailServerValidation`
 
@@ -260,8 +260,8 @@ import { Email } from "theme/components/atoms/Form/Input";
    const submit = (data) => {
      // your submit implementation
    };
-+  const setLoading = (isLoading) {
-+    // do something when the server starts or ends
++  const setLoading = (isLoading) => {
++    // do something when the server validation starts or ends
 +  };
 +  const onSubmit = useEmailServerValidation("email", setLoading, submit);
 
@@ -296,8 +296,8 @@ import { Email } from "theme/components/atoms/Form/Input";
      // your submit implementation
    };
 +  const [errorMessage, setErrorMessage] = useState("");
-+  const setLoading = (isLoading) {
-+    // do something when the server starts or ends
++  const setLoading = (isLoading) => {
++    // do something when the server validation starts or ends
 +  };
 +  const onSubmit = useEmailServerValidation("email", setLoading, submit, {
 +    valid: (context) => {
