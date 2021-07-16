@@ -7,6 +7,16 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.7.0` -> `2.8.0`
+
+### Disable response compression
+
+You can now disable response compression from the Front-Commerce server. It allows to reduce your server CPU usage in contexts where a frontend CDN or proxy can handle compression more efficiently.
+
+If your application is deployed in such context, you might consider disabling it.
+
+Set the `FRONT_COMMERCE_EXPRESS_COMPRESSION_ENABLED=false` environment variable to disable it globally, or add the `x-no-compression` request header to prevent compressing specific requests.
+
 ## `2.6.0` -> `2.7.0`
 
 ### Support serving assets from a CDN or different domain

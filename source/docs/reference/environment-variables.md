@@ -56,6 +56,7 @@ Configure the execution environment of the Front-Commerce's application:
 
 - ~~`FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.~~ Removed in version 2.7. Please use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to improve performance of SSR pages.
 - `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
+- `FRONT_COMMERCE_EXPRESS_COMPRESSION_ENABLED`: set it to `false` to disable server responses compression. It allows to reduce your server CPU usage in contexts where a frontend CDN or proxy can handle compression more efficiently. It can also be disable per request, if the request contains the `x-no-compression` header.
 
 ### Server
 
