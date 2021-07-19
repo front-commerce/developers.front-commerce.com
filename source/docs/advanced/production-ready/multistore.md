@@ -28,6 +28,8 @@ module.exports = {
     default_country_id: "FR",
     // The url used for this store
     url: process.env.FRONT_COMMERCE_EN_URL,
+    // an optional URL that will be used to serve static assets, if not defined assets are served from the url above.
+    //assetsBaseUrl: http://a.cdn.mybrand.com
     // data to load for this language
     countries: (IsoCountries) =>
       IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json")),
@@ -53,6 +55,8 @@ Its main goal is to tell your application how to fetch the correct translations 
 A store is always associated with a single URL. Store is not based on cookies or session but on the fetched URL. This means that you can have either a set of subdomains (`fr.example.com`, `en.example.com`, etc.) or base paths per stores (`www.example.com/fr`, `www.example.com/en`, etc.).
 
 These URLs should be defined in the `url` key of the store object specified above. Since you will most likely have a local environment, a staging environment and a production environment, we encourage you to use environment variables.
+
+In addition, it's possible to [configure Front-Commerce to serve static assets from a different domain](/docs/advanced/performance/assets-cdn-domain.html) and to optimize caching, all stores can share the same.
 
 ### Why are my URLs in GraphQL not using the basePath of my store?
 

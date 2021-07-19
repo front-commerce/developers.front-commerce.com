@@ -54,7 +54,7 @@ Configure the execution environment of the Front-Commerce's application:
 
 ### Performance
 
-- `FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.
+- ~~`FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one render to fetch data server side. cf. [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) for more details.~~ Removed in version 2.7. Please use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to improve performance of SSR pages.
 - `ENGINE_API_KEY`: set it to enable [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager) on your GraphQL schema, using Apollo Engine
 
 ### Server
@@ -158,6 +158,17 @@ Get your access keys by following the [Payzen documentation](https://payzen.io/f
 ### BuyBox
 
 See [our dedicated documentation page](/docs/advanced/payments/buybox.html#Configure-your-environment).
+
+### Capency
+
+See [our related documentation](/docs/advanced/features/smart-forms.html#Capency-CapAddress-CapPhone-CapEmail) for details.
+
+- `FRONT_COMMERCE_CAPENCY_DISABLED`: set to `true` to temporary disable all the Capency integration
+- `FRONT_COMMERCE_CAPENCY_AUTH_USERNAME`
+- `FRONT_COMMERCE_CAPENCY_AUTH_PASSWORD`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_EMAIL`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_ADDRESS`
+- `FRONT_COMMERCE_CAPENCY_URL_CAP_PHONE`
 
 ## Build related variables
 

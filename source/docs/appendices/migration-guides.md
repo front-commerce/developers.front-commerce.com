@@ -9,6 +9,28 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.6.0` -> `2.7.0`
 
+### Support serving assets from a CDN or different domain
+
+To allow [serving assets from a custom domain (e.g. a CDN)](/docs/advanced/performance/assets-cdn-domain.html), we had to do some changes to our themes' `template/index.html`, `template/error.html` and `core/shop/ShopQuery.gql`, so if you have overridden one of those files, you have to apply [similar changes](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/557/diffs):
+
+1. in `index.html`, make sure there's a `script` tag defining `window.__ASSETS_BASE_URL__` for instance right after the one defining `window.__BASE_URL__`:
+   ```html
+    <script>
+      window.__ASSETS_BASE_URL__ = "%%__ASSETS_BASE_URL__%%";
+    </script>
+   ```
+1. in both `error.html` and `index.html`, make sure `<link>`s reference external assets with `%%__ASSETS_BASE_URL__%%` instead of `%%__BASE_URL__%%`
+1. in `ShopQuery.gql`, add `imageBaseUrl` to the list of requested fields
+
+### `FRONT_COMMERCE_FAST` mode removed
+
+Introduced in version 2.0, this experimental flag could help improving SSR performance by only executing the top level GraphQL query.
+It could lead to issues, and was not a huge performance boost.
+
+Since 2.6, one can use [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn.html) to achieve the same goal in a more efficient manner. For this reason, we've removed the `FRONT_COMMERCE_FAST` SSR mode.
+
+You should remove `FRONT_COMMERCE_FAST` from your environment variables. It is now unused.
+
 ### EXIF orientation now honored for images
 
 Images having an EXIF orientation metadata are now properly rotated and optimized by [the media middleware](/docs/advanced/production-ready/media-middleware.html).
@@ -87,12 +109,62 @@ query PayzenEmbeddedQuery {
 
 and ensure that the `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenScriptWrapper.js` is not overridden either (very unlikely).
 
+### Core Form atoms updated
+
+The following core atoms where updated to accomodate the SmartForms functionality:
+
+1. `BaseInput.js`
+2. `FormComponent.js`
+3. `Input.js`
+4. `Textarea.js`
+
+If you have overridden any of the above atoms and you want to use the SmartForms functionality, you need to ensure you add the suggestions functionality to `<BaseInput>`, `<Input>` and `<Textarea>`, and also add the `useFormFieldState`, `useFormDataSetter` and `useFormErrorSetter` to `<FormComponent>`. For further reference please take a look at the corresponding files in [the 2.6-2.7 diff](https://gitlab.com/front-commerce/front-commerce/-/compare/2.6.0...2.7.0?from_project_id=9218054) to help you integrate the updates in the files you have overridden.
+
 ### Style sheets updates
 
 In case you have overridden `_pages.scss` you need to add the following line to it to include styles for the Guest order search feature:
 
 ```
 @import "~theme/pages/Orders/Orders";
+```
+
+In case you have overridden `_Input.scss` you need to add the following to it to include styles for the smart forms module:
+
+```
+.input-wrapper {
+  &__suggestions {
+    .autocomplete-results__option {
+      cursor: pointer;
+    }
+
+    &-wrapper {
+      position: relative;
+      height: 0;
+    }
+
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background: $white;
+    border: 1px solid $shade05;
+    border-top: none;
+    box-sizing: border-box;
+    padding: $boxSizeMargin;
+  }
+}
+```
+
+In case you are using base theme and have overridden `_components.scss` you need to add the following line to it:
+
+```
+@import "~theme/components/organisms/Autocomplete/Autocomplete";
+```
+
+In case you are using theme chocolatine and have overridden `_components.scss` you need to perform the following update:
+
+```diff
+-@import "~./organisms/Autocomplete/Autocomplete";
++@import "~theme/components/organisms/Autocomplete/Autocomplete";
 ```
 
 ## `2.5.0` -> `2.6.0`
