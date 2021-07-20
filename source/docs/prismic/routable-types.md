@@ -178,7 +178,7 @@ export default {
 };
 ```
 
-2. Enable sitemap in the module definition file:
+2\. Enable sitemap in the module definition file:
 
 ```diff
 // index.js
