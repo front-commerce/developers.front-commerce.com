@@ -60,7 +60,7 @@ Note we added a path field resolver that appends the shop's baseUrl  to the `url
 
 ## Register the Prismic custom type as a routable type
 
-To make a custom Prismic type routable it must be registered with the Prismic module. First ensure that the `Prismic/core` is added as a module's dependency then use `loaders.Prismic.registerRoutableType` to add the custom type as routable type:
+To make a custom Prismic type routable it must be registered with the Prismic module. First ensure that the `Prismic/Core` is added as a module's dependency then use `loaders.Prismic.registerRoutableType` to add the custom type as a routable type:
 
 ```diff
 import typeDefs from "./schema.gql";
@@ -100,7 +100,7 @@ export default {
 };
 ```
 
-Note the `postTransformer` above is optional. It is a function that will be called after the transformation is done using `contentTransformOptions`. it is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the transformed document or if you want to suppress a document from showing using some custom logic (returning a falsy value).
+Note the `postTransformer` above is optional. It is a function that will be called after the transformation is done using `contentTransformOptions`. It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
 
 ## Map GraphQL type to a component
 
