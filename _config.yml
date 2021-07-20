@@ -87,6 +87,7 @@ sidebar_categories:
   Prismic:
     - docs/prismic/index
     - docs/prismic/installation
+    - docs/prismic/routable-types
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
