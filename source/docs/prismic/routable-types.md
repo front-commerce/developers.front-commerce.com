@@ -5,11 +5,11 @@ title: Prismic Routable Types
 
 To make a custom Prismic data type routable these steps are required:
 
-- [Create a field to represent the Url of the custom type](#create-a-field-to-represent-the-url-of-the-custom-type)
-- [Create a GraphQL type to represent the custom type](#create-a-graph-ql-type-to-represent-the-custom-type)
-- [Register the Prismic custom type as a routable type](#register-the-prismic-custom-type-as-a-routable-type)
-- [Map GraphQL type to a component](#map-graph-ql-type-to-a-component)
-- Optionally [add a routable custom type to the sitemap](#add-a-routable-custom-type-to-the-sitemap)
+- [Create a field to represent the Url of the custom type](#Create-a-field-to-represent-the-Url-of-the-custom-type)
+- [Create a GraphQL type to represent the custom type](#Create-a-GraphQL-type-to-represent-the-custom-type)
+- [Register the Prismic custom type as a routable type](#Register-the-Prismic-custom-type-as-a-routable-type)
+- [Map GraphQL type to a component](#Map-GraphQL-type-to-a-component)
+- Optionally [add a routable custom type to the sitemap](#Add-a-routable-custom-type-to-the-sitemap)
 
 ## Create a field to represent the Url of the custom type
 
