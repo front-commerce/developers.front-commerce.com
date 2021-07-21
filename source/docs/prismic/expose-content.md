@@ -109,6 +109,68 @@ export default {
 };
 ```
 
+#### Title field handling
+
+In this example, the title is exposed as a plain string in the graph. However, the `TitleTransformer` also generates an HTML representation of the field. So if you need to retrieve the HTML code instead, you can define a custom resolver on the `title` field of the `Homepage` type:
+
+```diff
+export default {
+  Query: {
+    homepage: async (root, args, { loaders }) => {
+      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+      const homepage = await loaders.Prismic.loadSingle("homepage", {
+        fieldTransformers: {
+          title: new TitleTransformer(),
+          image: new ImageTransformer(),
+          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+      return homepage;
+    },
+  },
++ Homepage: {
++   title: (homepageContent) => homepageContent.title.html;
++ }
+};
+```
+
+In addition, Title and Rich Text fields are very similar; a Title field can be seen as a restricted Rich Text field. As a result, the Transformers dedicated to Rich Text fields can also be used on Title fields. So if you want to expose the title as a `DefaultWysiwyg`, you can do the following changes, in the `schema.gql`:
+
+```diff
+type Homepage {
+- title: String
++ title: DefaultWysiwyg
+  image: String
+  text: DefaultWysiwyg
+}
+
+extend type Query {
+  homepage: Homepage
+}
+```
+
+and in the resolver:
+
+```diff
+export default {
+  Query: {
+    homepage: async (root, args, { loaders }) => {
+-     const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
++     const { RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+      const homepage = await loaders.Prismic.loadSingle("homepage", {
+        fieldTransformers: {
+-         title: new TitleTransformer(),
++         title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          image: new ImageTransformer(),
+          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+      return homepage;
+    },
+  },
+};
+```
+
 ### Expose a list of FAQs
 
 #### Define the schema
