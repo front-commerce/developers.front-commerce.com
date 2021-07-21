@@ -7,7 +7,7 @@ The Prismic Front-Commerce module provides a loader and the infrastructure to ex
 
 ## Prerequisites
 
-To benefit from this API, you first need to [install the Prismic module](/docs/prismic/installation.html). You will also need [a custom GraphQL module](/docs/essentials/extend-the-graphql-schema.html) to define a custom GraphQL schema matching the content you want to expose and implement the corresponding resolver. It also recommended to have read [the Prismic Core Concepts documentation](https://prismic.io/docs/core-concepts).
+To benefit from this API, you first need to [install the Prismic module](/docs/prismic/installation.html). You will also need [a custom GraphQL module](/docs/essentials/extend-the-graphql-schema.html) to define a GraphQL schema matching the content you want to expose and implement the corresponding resolver. It also recommended to have read [the Prismic Core Concepts documentation](https://prismic.io/docs/core-concepts).
 
 ## Prismic loader API
 
@@ -31,7 +31,7 @@ const homepage = await loaders.Prismic.loadSingle("homepage");
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
 
-For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose those field in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
+For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
 
 ```js
 const { DateTransformer } = loaders.Prismic.transformers;
@@ -111,7 +111,7 @@ export default {
 
 #### Image field handling
 
-In this example, without a dedicated resolver, the `image` field of the `Homepage` type is the path to the image of [the `main` view](https://prismic.io/docs/technologies/templating-image-field-javascript#get-an-image-view). In Prismic, while configuring an Image field in the Custom Type editor, it is possible to define several views to get the same image under a different format. Those views can also be exposed in the Graph. For instance, if you have defined a `thumbnail` view, it can be exposed in the graph by applying the following changes, in `schema.gql`:
+In this example, without a dedicated resolver, the `image` field of the `Homepage` type is the path to the image of [the `main` view](https://prismic.io/docs/technologies/templating-image-field-javascript#get-an-image-view). In Prismic, while configuring an Image field in the Custom Type editor, it is possible to define several views to get the same image under a different format. Those views can also be exposed in the Graph. For instance, if you have defined a `thumbnail` view, it can be exposed in the graph by applying the following changes. In `schema.gql`:
 
 ```diff
 type Homepage {
@@ -125,7 +125,7 @@ extend type Query {
 }
 ```
 
-and in the resolver:
+And in the resolver:
 
 ```diff
 export default {
@@ -152,7 +152,7 @@ export default {
 
 > The `ImageTransformer` also rewrites the image path provided by the Prismic API to use a custom image proxy defined by the module. This path rewrite makes those image path directly usable by [Front-Commerce's `<Image />` component](https://developers.front-commerce.com/docs/advanced/production-ready/media-middleware.html#lt-Image-gt-component).
 
-In addition, each view carries some metadata like the alternative text or the image dimensions. The following changes allow to expose the alternative text:
+In addition, each view carries some metadata like the alternative text or the image dimensions. The following changes allow to expose the alternative text of both the `tumbnail` and the `main` views:
 
 ```diff
 type Homepage {
@@ -168,7 +168,7 @@ extend type Query {
 }
 ```
 
-in the resolver:
+In the resolver:
 
 ```diff
 export default {
@@ -224,7 +224,7 @@ export default {
 };
 ```
 
-In addition, Title and Rich Text fields are very similar; a Title field can be seen as a restricted Rich Text field. As a result, the Transformers dedicated to Rich Text fields can also be used on Title fields. So if you want to expose the title as a `DefaultWysiwyg`, you can do the following changes, in the `schema.gql`:
+In addition, Title and Rich Text fields are very similar; a Title field can be seen as a restricted Rich Text field. As a result, the Transformers dedicated to Rich Text fields can also be used on Title fields. So if you want to expose the title as a `DefaultWysiwyg`, you can do the following changes instead. In the `schema.gql`:
 
 ```diff
 type Homepage {
@@ -239,7 +239,7 @@ extend type Query {
 }
 ```
 
-and in the resolver:
+And in the resolver:
 
 ```diff
 export default {
@@ -271,7 +271,7 @@ Let's assume you have created a Custom Type _FAQ_ which identifier is `faq`. Thi
 * `answer` of type Rich Text
 * `link` of type Link
 
-Like in the previous example, we can model the corresponding GraphQL type after the Custom Type and in this case we add a root query to retrieve a list of FAQ with a basic pagination and search capability:
+Like in the previous example, we can model the corresponding GraphQL type after the Custom Type and in this case we add a root query to retrieve a list of FAQ with a basic pagination and search capabilities:
 
 ```graphql
 type Faq {
