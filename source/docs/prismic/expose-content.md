@@ -265,10 +265,11 @@ export default {
 
 #### Define the schema
 
-Let's assume you have created a Custom Type _FAQ_ which identifier is `faq`. This Custom Type has two fields:
+Let's assume you have created a Custom Type _FAQ_ which identifier is `faq`. This Custom Type has three fields:
 
 * `question` of type Key Text
 * `answer` of type Rich Text
+* `link` of type Link
 
 Like in the previous example, we can model the corresponding GraphQL type after the Custom Type and in this case we add a root query to retrieve a list of FAQ with a basic pagination and search capability:
 
@@ -276,6 +277,7 @@ Like in the previous example, we can model the corresponding GraphQL type after 
 type Faq {
   question: String
   answer: DefaultWysiwyg
+  link: String
 }
 
 input FaqQueryInput {
@@ -299,7 +301,7 @@ export default {
   Query: {
     faqList: (root, { params }, { loaders }) => {
       const { search, page } = params;
-      const { DateTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+      const { LinkTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
       const ListQuery = loaders.Prismic.queries.ListQuery;
       const query = new ListQuery(pageSize, page ? page : 1);
 
@@ -312,6 +314,50 @@ export default {
         fieldTransformers: {
           // no transformer needed for `question` field as it's a key text field
           answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          link: new LinkTransformer(),
+        },
+      });
+
+      return faqList.list;
+    },
+  },
+};
+```
+
+#### Handling links
+
+Both the `LinkTransformer` and `RichtextToWysiwygTransformer` can be configured to recognize local URLs and rewrite them as site relative links. That way, those links won't break the SPA navigation and contributors don't have to worry about the environment when adding a link.
+
+To benefit from that feature, the following changes have to be applied to the resolver:
+
+```diff
+const pageSize = 10;
+
+export default {
+  Query: {
+    faqList: (root, { params }, { loaders }) => {
+      const { search, page } = params;
+      const { LinkTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+      const ListQuery = loaders.Prismic.queries.ListQuery;
+      const query = new ListQuery(pageSize, page ? page : 1);
+
+      query.type("faq").sortBy("document.last_publication_date", "asc");
+      if (search) {
+        query.search(search);
+      }
+
++     const linkTransformer = new LinkTransformer([
++       "localhost",
++       "staging.example.com",
++       "production.example.com"
++     ]);
+      const faqList loaders.Prismic.loadList(query, {
+        fieldTransformers: {
+          // no transformer needed for `question` field as it's a key text field
+-         answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+-         link: new LinkTransformer(),
++         answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg, linkTransformer),
++         link: linkTransformer,
         },
       });
 
