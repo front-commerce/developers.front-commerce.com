@@ -206,6 +206,7 @@ Here is a list of available debug namespaces:
 - `express-http-proxy`: debugs media requests proxied by the media middleware (see [express-http-proxy](https://www.npmjs.com/package/express-http-proxy#trace-debugging))
 - `express-session`: debugs cookies and how sessions are stored for each request (see [express-session](https://github.com/expressjs/session))
 - `front-commerce:admin-bar`: debugs calls and role injection mechanisms for logging as a customer and other actions
+- `front-commerce:algolia`: debugs detailed information about Algolia queries and interactions
 - `front-commerce:authorization`: debugs proxy authorization for remote sources (see `makeProtectedProxyRouter.js`)
 - `front-commerce:cache`: debugs cache invalidation calls and strategies information
 - `front-commerce:cart`: debugs cart corrupted data received from remote sources
@@ -213,6 +214,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:config`: dumps the configuration for a typical request at the `/__front-commerce/debug` URL
 - `front-commerce:dispatcher`: debugs information about routes dispatching for registered page types
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
@@ -220,8 +222,8 @@ Here is a list of available debug namespaces:
 - `front-commerce:performance`: allow to debug server performance in production by enabling [server timings](/docs/advanced/performance/server-timings.html)
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
+- `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
-- `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 
 **Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
