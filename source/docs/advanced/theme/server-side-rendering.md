@@ -123,6 +123,20 @@ Hopefully the previous screen will prevent such errors to occur in production, b
 
 If you still want to display the `theme/pages/SsrFallback` page in dev mode, [add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables](/docs/reference/environment-variables.html#DX).
 
+## Restrictions on pages that will be server-rendered
+
+<blockquote class="feature--new">
+  _This feature has been added in version `2.8.0`_
+</blockquote>
+
+Front-Commerce avoids to unnecessary render a full 404 page server-side for URLs that don't need it. When bots access random URLs (e.g: `dump.sql.gz`, `password.txt` etc…) or outdated static assets, Front-Commerce will return a simpler 404 error.
+
+Pages are server-rendered when accessed with the following URL patterns:
+- without extension (e.g: `/contact`, `/faq/our-return-policy`…)
+- with an `.html` extension (e.g: `/contact.html`, `/wooden-table-with-chairs.html`…)
+
+**If your application contains pages whose URL have extensions other than `.html`, please contact us.**
+
 ## Learn more
 
 If you want to learn more about <abbr title="Server Side Rendering">SSR</abbr> in Front-Commerce, we recommend you to understand how [Server timings](/docs/advanced/performance/server-timings.html) could help you to spot performance issues and read the [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) documentation page.

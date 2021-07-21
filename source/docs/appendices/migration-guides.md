@@ -9,6 +9,12 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.7.0` -> `2.8.0`
 
+### Ensure your pages will be rendered server side
+
+We've added a guard to ensure that Server Side Rendering [is only tried for relevant pages](/docs/advanced/theme/server-side-rendering.html#Restrictions-on-pages-that-will-be-server-rendered). Front-Commerce will now only render pages on the server for URLs that have **no extension** or the `.html` extension.
+
+If your application contains pages whose URL have extensions other than `.html`, please contact us.
+
 ### New features in `2.8.0`
 
 These new features may be relevant for your existing application:
