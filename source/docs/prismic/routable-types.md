@@ -100,7 +100,7 @@ export default {
 };
 ```
 
-Note the `postTransformer` above is optional. It is a function that will be called after the transformation is done using `contentTransformOptions`. It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
+Note the `postTransformer` above is optional. It is a function that will be called after [the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content.html#Field-Transformers). It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
 
 ## Map GraphQL type to a component
 
