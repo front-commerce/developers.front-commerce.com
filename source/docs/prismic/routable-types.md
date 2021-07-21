@@ -3,13 +3,17 @@ id: routable-types
 title: Prismic Routable Types
 ---
 
+You might want to create new pages managed from Prismic. These pages should be accessible with an URL and may have to be included in the Sitemap (e.g: `/our-company`).
+
+This documentation page explain how the Prismic module allows to leverage [Front-Commerce's Dispatcher](https://developers.front-commerce.com/docs/advanced/theme/route-dispatcher.html) to make content from custom types routable.
+
 To make a custom Prismic data type routable these steps are required:
 
 - [Create a field to represent the Url of the custom type](#Create-a-field-to-represent-the-Url-of-the-custom-type)
 - [Create a GraphQL type to represent the custom type](#Create-a-GraphQL-type-to-represent-the-custom-type)
 - [Register the Prismic custom type as a routable type](#Register-the-Prismic-custom-type-as-a-routable-type)
 - [Map GraphQL type to a component](#Map-GraphQL-type-to-a-component)
-- Optionally [add a routable custom type to the sitemap](#Add-a-routable-custom-type-to-the-sitemap)
+- [Add a routable custom type to the sitemap](#Add-a-routable-custom-type-to-the-sitemap)
 
 ## Create a field to represent the Url of the custom type
 
