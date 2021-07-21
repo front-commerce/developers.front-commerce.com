@@ -46,6 +46,7 @@ sidebar_categories:
     - docs/advanced/performance/improve-your-core-web-vitals
     - docs/advanced/performance/cache-control-and-cdn
     - docs/advanced/performance/assets-cdn-domain
+    - docs/advanced/performance/deactivating-unnecessary-features
   Production ready:
     - docs/advanced/production-ready/overview
     - docs/advanced/production-ready/media-middleware

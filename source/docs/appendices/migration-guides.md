@@ -9,13 +9,11 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.7.0` -> `2.8.0`
 
-### Disable response compression
+### New features in `2.8.0`
 
-You can now disable response compression from the Front-Commerce server. It allows to reduce your server CPU usage in contexts where a frontend CDN or proxy can handle compression more efficiently.
+These new features may be relevant for your existing application:
 
-If your application is deployed in such context, you might consider disabling it.
-
-Set the `FRONT_COMMERCE_EXPRESS_COMPRESSION_ENABLED=false` environment variable to disable it globally, or add the `x-no-compression` request header to prevent compressing specific requests.
+- reduce CPU usage by [deactivating response compression](/docs/advanced/performance/deactivating-unnecessary-features.html#Deactivate-response-compression)
 
 ## `2.6.0` -> `2.7.0`
 

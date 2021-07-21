@@ -10,5 +10,6 @@ In this section, you will learn advanced information about Performance in Front-
 * [Server Timings](./server-timings.html)
 * [Improve your Core Web Vitals](./improve-your-core-web-vitals.html)
 * [Serving assets from a CDN/custom domain](./assets-cdn-domain.html)
+* [Deactivating unnecessary features](./deactivating-unnecessary-features.html)
 
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
