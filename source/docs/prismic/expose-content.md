@@ -109,6 +109,96 @@ export default {
 };
 ```
 
+#### Image field handling
+
+In this example, without a dedicated resolver, the `image` field of the `Homepage` type is the path to the image of [the `main` view](https://prismic.io/docs/technologies/templating-image-field-javascript#get-an-image-view). In Prismic, while configuring an Image field in the Custom Type editor, it is possible to define several views to get the same image under a different format. Those views can also be exposed in the Graph. For instance, if you have defined a `thumbnail` view, it can be exposed in the graph by applying the following changes, in `schema.gql`:
+
+```diff
+type Homepage {
+  image: String
++ thumbnail: String
+  text: DefaultWysiwyg
+}
+
+extend type Query {
+  homepage: Homepage
+}
+```
+
+and in the resolver:
+
+```diff
+export default {
+  Query: {
+    homepage: async (root, args, { loaders }) => {
+      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+      const homepage = await loaders.Prismic.loadSingle("homepage", {
+        fieldTransformers: {
+          title: new TitleTransformer(),
+          image: new ImageTransformer(),
+          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+      return homepage;
+    },
+  },
++ Homepage: {
++   thumbnail: (homepageContent) => {
++     return homepageContent.image.thumbnail;
++   }
++ }
+};
+```
+
+> The `ImageTransformer` also rewrites the image path provided by the Prismic API to use a custom image proxy defined by the module. This path rewrite makes those image path directly usable by [Front-Commerce's `<Image />` component](https://developers.front-commerce.com/docs/advanced/production-ready/media-middleware.html#lt-Image-gt-component).
+
+In addition, each view carries some metadata like the alternative text or the image dimensions. The following changes allow to expose the alternative text:
+
+```diff
+type Homepage {
+  image: String
++ imageAlt: String
+  thumbnail: String
++ thumbnailAlt: String
+  text: DefaultWysiwyg
+}
+
+extend type Query {
+  homepage: Homepage
+}
+```
+
+in the resolver:
+
+```diff
+export default {
+  Query: {
+    homepage: async (root, args, { loaders }) => {
+      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+      const homepage = await loaders.Prismic.loadSingle("homepage", {
+        fieldTransformers: {
+          title: new TitleTransformer(),
+          image: new ImageTransformer(),
+          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+      return homepage;
+    },
+  },
+  Homepage: {
++   imageAlt: (homepageContent) => {
++     return homepageContent.image.main.alt;
++   },
+    thumbnail: (homepageContent) => {
+      return homepageContent.image.thumbnail;
+    },
++   thumbnailAlt: (homepageContent) => {
++     return homepageContent.image.thumbnail.alt;
++   },
+  }
+};
+```
+
 #### Title field handling
 
 In this example, the title is exposed as a plain string in the graph. However, the `TitleTransformer` also generates an HTML representation of the field. So if you need to retrieve the HTML code instead, you can define a custom resolver on the `title` field of the `Homepage` type:
