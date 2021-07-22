@@ -90,6 +90,7 @@ sidebar_categories:
     - docs/prismic/installation
     - docs/prismic/expose-content
     - docs/prismic/routable-types
+    - docs/prismic/integration-fields
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
