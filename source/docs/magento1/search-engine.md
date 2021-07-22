@@ -100,7 +100,7 @@ After the installation, you need to configure it, at least:
    section, set the _Enable Indexing_ option
 1. in the same section, fill the credentials you can find on [the Algolia
    Dashboard](https://www.algolia.com/dashboard/api-keys)
-1. The attribute `category_ids` must be listed in both the facets configuration and in the indexed product attributes (and there it must be set as _Searchable_)
+1. The attribute `category_ids` must be listed in both the facets configuration and in the indexed product attributes (and there it must be set as _Searchable_) as Front-Commerce relies on it to list the products in categories.
 
 
 You can then run the indexer so that the products are indexed in Algolia's
