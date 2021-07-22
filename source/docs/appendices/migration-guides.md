@@ -7,6 +7,16 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.8.0` -> `2.9.0`
+
+No action needed for migrating to this version.
+
+### New features in `2.9.0`
+
+These new features may be relevant for your existing application:
+
+- no new feature yet!
+
 ## `2.7.0` -> `2.8.0`
 
 ### Ensure your pages will be rendered server side
