@@ -56,6 +56,8 @@ A store is always associated with a single URL. Store is not based on cookies or
 
 These URLs should be defined in the `url` key of the store object specified above. Since you will most likely have a local environment, a staging environment and a production environment, we encourage you to use environment variables.
 
+Please ensure that the store URLs you use do not end with a slash(`/`). For example `www.example.com/en` is correct, whereas `www.example.com/en/` is wrong and will cause issues.
+
 In addition, it's possible to [configure Front-Commerce to serve static assets from a different domain](/docs/advanced/performance/assets-cdn-domain.html) and to optimize caching, all stores can share the same.
 
 ### Why are my URLs in GraphQL not using the basePath of my store?
