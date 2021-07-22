@@ -15,9 +15,9 @@ To benefit from this API, you first need to [install the Prismic module](/docs/p
 
 The Prismic loader has the following API to request Content from Prismic:
 
-* `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/0.5.0/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+* `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
 * `loadByUID(typeIdentifier, uid[, options])` returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
-* `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/0.5.0/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/0.5.0/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
+* `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
 
 ### Field Transformers
 
@@ -44,7 +44,7 @@ const homepage = await loaders.Prismic.loadSingle("homepage", {
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
 
-The complete list of available Transformers can be found under [the `transformers` directory in Prismic module](https://gitlab.com/front-commerce/front-commerce-prismic/-/tree/0.5.0/prismic/server/modules/prismic/core/loaders/transformers). We will use some of them in the following examples.
+The complete list of available Transformers can be found under [the `transformers` directory in Prismic module](https://gitlab.com/front-commerce/front-commerce-prismic/-/tree/main/prismic/server/modules/prismic/core/loaders/transformers). We will use some of them in the following examples.
 
 ## Implementation examples
 
