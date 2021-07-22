@@ -25,9 +25,7 @@ First, **update your GraphQL Schema** to reflect the Slice Zone definition. A Sl
 
 ```diff
 type Homepage {
-  some_text: String
   title: String
-  sales_date: Date
 +  mainContent: [HomePageSlice]
 }
 +
@@ -43,13 +41,27 @@ type Homepage {
 + type Push {
 +   blocks: [PushBlock]
 + }
++ type PushBlock {
++   title: String
++   image: String
++   cta: CallToAction
++   format: String
++   cellSize: String
++ }
++
++ #[…]
++
++ type CallToAction {
++   url: String
++   text: String
++ }
 ```
 
 In your resolvers, load your content as usual [with the Prismic loader](/docs/prismic/expose-content.html#Methods-to-query-content).
 
-In addition to the `fieldTransformers` parameter (for fields), the loader methods accept a `supportedSlices` key. It allows to define to data format for Slices supported by the content type, when a Slice Zone is configured.
+In addition to [the `fieldTransformers` parameter](/docs/prismic/expose-content.html#Field-Transformers), the loader methods accept a `supportedSlices` key. It allows to define to a data structure for the Slices available in the Custom Type.
 
-For a content type containing a title and a Slice Zone with only one type of Slice (`featured_products` exposed under the GraphQL `FeaturedProducts` type), the change would look like this:
+For a Custom type containing a title and a Slice Zone with only one type of Slice (`featured_products` exposed under the GraphQL `FeaturedProducts` type), the change would look like this:
 
 ```diff
 {
@@ -83,16 +95,19 @@ export default {
   Carousel: {
     slides: (content) => content.items,
   },
-  CarouselSlide: {
-    title: (content) => content.slide_title,
-    image: (content) => content.slide_image,
+
+  Push: {
+    blocks: (content) => content.items,
+  },
+  PushBlock: {
     cta: (content) => ({
-      url: content.slide_cta_url,
-      text: content.slide_cta_text,
+      url: content.push_url,
+      text: content.push_link_text,
     }),
   },
 
   FeaturedProducts: {
+    sectionTitle: (content) => content.section_title,
     category: (content) => {
       // A Category Integration Field as documented in examples
       // see https://developers.front-commerce.com/docs/prismic/integration-fields.html#Create-resolvers-for-these-fields
@@ -192,7 +207,7 @@ Several components and their fragments can now be assembled together in a Slice 
 // theme/modules/Slices/Home/index.js
 import makeSliceLibrary from "theme/modules/Prismic/Slices/makeSliceLibrary";
 
-// "HomePageSlice" is the name of the GraphQL type exposing the Slice Zone
+// "HomePageSlice" is the name of the GraphQL union type exposing the Slice Zone
 const sliceLibrary = makeSliceLibrary("HomePageSlice", [
   { component: Push, fragment: PushFragment },
   { component: FeaturedProducts, fragment: FeaturedProductsFragment },
@@ -227,7 +242,6 @@ First, update the GraphQL query to add the Slice zone field (`mainContent` in ou
 query HomeQuery {
   homepage {
     title
-    some_text
 +    mainContent {
 +      # Fragment name = {GraphQL Type}Fragment
 +      ...HomePageSliceFragment
