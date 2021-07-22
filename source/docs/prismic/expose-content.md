@@ -67,7 +67,7 @@ export default {
 
 #### Define the schema
 
-Let's assume you have created a Single Custom Type _Homepage_ which identifier is `homepage`. This Custom Type has three fields:
+Let's assume you have created a Single Custom Type _Homepage_ whose identifier is `homepage`. This Custom Type has three fields:
 
 * `title` of type Title
 * `image` of type Image
