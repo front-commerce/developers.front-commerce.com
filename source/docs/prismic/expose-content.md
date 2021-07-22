@@ -115,6 +115,7 @@ In this example, without a dedicated resolver, the `image` field of the `Homepag
 
 ```diff
 type Homepage {
+  title: String
   image: String
 + thumbnail: String
   text: DefaultWysiwyg
@@ -156,6 +157,7 @@ In addition, each view carries some metadata like the alternative text or the im
 
 ```diff
 type Homepage {
+  title: String
   image: String
 + imageAlt: String
   thumbnail: String
