@@ -33,8 +33,12 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
 In case of trouble, `front-commerce:prismic` can be added to the `DEBUG` environment variable value, this value turns the debug on for Prismic module and make it verbose.
 </blockquote>
 
-<blockquote class="note">
-Configuring a webhook is required so that Front-Commerce fetches the last version of the Prismic content. In a development environment, you might skip this step but in that case, you will have to restart Front-Commerce after each publish operation in Prismic.
+<blockquote class="tip">
+Configuring a webhook is required so that Front-Commerce fetches the last version of the Prismic content. In a development environment, you might skip this step. To make sure your running Front-Commerce uses the last version of the Prismic content without restarting it, you can use the following _oneliner_ from the skeleton directory to simulate a webhook call:
+
+```sh
+source .env ; PAYLOAD=`printf '{"secret": "%s", "type": "api-update", "masterRef": true}' $FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` ; curl -H "Content-Type: application/json" -d "$PAYLOAD" $FRONT_COMMERCE_URL/prismic/webhook
+```
 </blockquote>
 
 ## Configure Front-Commerce to use the Prismic module
