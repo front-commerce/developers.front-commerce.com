@@ -89,6 +89,7 @@ sidebar_categories:
     - docs/prismic/index
     - docs/prismic/installation
     - docs/prismic/expose-content
+    - docs/prismic/content-slices
     - docs/prismic/routable-types
     - docs/prismic/integration-fields
   Payments:
