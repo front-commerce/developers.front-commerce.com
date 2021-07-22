@@ -5,7 +5,7 @@ title: Integration fields
 
 Prismic [Integration fields](https://prismic.io/feature/integration-field) are custom fields for retrieving content from external systems. When using Prismic with Front-Commerce, you might want to create Integration fields for Categories, Products or other custom entities in order to improve the Content Management experience.
 
-**Enable Content managers to build a landing page by selecting Products retrieved from your eCommerce backend without leaving the writing room** for instance. As developer, seamlessly access the related Product data in GraphQL so that you can leverage and reuse existing GraphQL fragments and UI components.
+**Enable Content managers to build a landing page by selecting Products retrieved from your eCommerce backend without leaving the writing room**. As a developer you can seamlessly access the related Product data in GraphQL so that you can leverage and reuse existing GraphQL fragments and UI components.
 
 If this is relevant for your project, follow instructions in this page to learn how you can create Integration fields that works with your existing Front-Commerce application and data.
 
@@ -13,12 +13,12 @@ If this is relevant for your project, follow instructions in this page to learn 
 
 Front-Commerce currently support Integration fields in a "Pull" mode. Here is how it works:
 
-1. Developers register Integration fields in Front-Commerce for the data to expose to Prismic (with code)
-1. Configure the Integration field in Prismic and add these fields to custom types or Slices
+1. [Developers register Integration fields in Front-Commerce](#Register-Integration-fields-in-Front-Commerce) for the data to expose to Prismic (with code)
+1. [Configure the Integration field in Prismic](#Configure-Integration-fields-in-Prismic)
 1. Prismic will regularly pull data from a Front-Commerce read API endpoint
-1. Content managers will see up-to-date data in the writing room and could select elements made available by Front-Commerce
-1. Developers implement Prismic requests that know how to transform values from an integration field into rich data from their application (with code)
-1. Frontend developers can build pages by requesting data from GraphQL as usual. There is no difference in data that comes from Prismic or the eCommerce platform.
+2. [Add these fields to custom types or Slices](#Update-your-types-and-data-in-Prismic) so Content managers will see up-to-date data in the writing room and could select elements made available by Front-Commerce
+3. [Developers implement Prismic requests that know how to transform values from an integration field](#Expose-data-in-your-GraphQL-schema) into rich data from their application (with code)
+4. Frontend developers can build pages by requesting data from GraphQL as usual. There is no difference in data that comes from Prismic or the eCommerce platform.
 
 This allows to design rich custom content types that will mix and match data from several datasources **without introducing complexity for your frontend.**
 
@@ -76,7 +76,7 @@ curl --user 'a-secret-defined-in-webhook-configuration:' http://localhost:4000/p
 curl --user 'a-secret-defined-in-webhook-configuration:' http://localhost:4000/prismic/integration/Product?page=2
 ```
 
-You must see a paginated JSON description of your data matching [Prismic's Custom API Format](https://prismic.io/docs/core-concepts/integration-fields-setup#pull-data-into-prismic-from-a-custom-api). **If this is not happening, you might have an error in the registration.**
+You must see a paginated JSON description of your data matching [Prismic's Custom API Format](https://prismic.io/docs/core-concepts/integration-fields-setup#pull-data-into-prismic-from-a-custom-api). **If this is not happening, you might have an error in the registration.** Enable the `DEBUG=front-commerce:prismic` flag to gain a better understanding of the error.
 
 ## Configure Integration fields in Prismic
 
@@ -110,13 +110,13 @@ In the writing room, Content managers can now create or update documents to sele
 
 ## Expose data in your GraphQL schema
 
-This section supposes that you have already exposed data from the previously modified Prismic custom type in your GraphQL schema. It will guide you throughout the process of exposing an additional Integration field data.
+This section supposes that you already have [exposed content from the previously modified Prismic custom type in your GraphQL schema](/docs/prismic/expose-content.html). It will guide you throughout the process of exposing an additional Integration field data.
 
 **We've tried to make the process as idiomatic as what you might know from implementing custom Front-Commerce features.**
 
 ### Add the field to your schema
 
-First, you have to update your GraphQL schema definition with the new field to expose. Instead of exposing an id or a SKU, we will expose an existing GraphQL type for a `product` field.
+First, you have to update your GraphQL schema definition with the new field to expose. Instead of exposing an id or a SKU, we will expose an existing GraphQL type, in this case a Product for a `product` field.
 
 ```diff
 type MyPrismicContent {
@@ -157,11 +157,11 @@ const all = await loaders.Prismic.loadSingle("allfields", {
 **WIP:** as of version `0.5` of the Prismic module, resolvers must be defined as described below. We will try in a future version of the module to make it work out-of-the-box, without resolver changes if field names match.
 </blockquote>
 
-To prevent fetching data systematically, fields resolve with either a `null` value (field empty in Prismic) or an object with a `raw` value and a `loadValue()` method to actually fetch the related data.
+To prevent fetching data systematically, fields resolve with either a `null` value (empty field in Prismic) or an object with a `raw` value and a `loadValue()` method to actually fetch the related data.
 
 You will then have to update your resolvers to fetch integration fields real data. For the example above, here is how it would look:
 
-```
+```javascript
 export default {
   MyPrismicContent: {
     product: (content) => {
