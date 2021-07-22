@@ -46,7 +46,7 @@ Since [Node.js 10.x reaches its end of life tomorrow](https://nodejs.org/en/abou
 
 ## 🚀 Performance: build instant storefronts that scale
 
-Front-Commerce 2.6 brings new primitives and low-level improvements to help you leverage underrated HTTP Caching standards. Developers now have a fine-grained control for **two important Cache-Control values: `s-max-age` and `stale-while-revalidate`** sent by Front-Commerce.
+Front-Commerce 2.6 brings new primitives and low-level improvements to help you leverage underrated HTTP Caching standards. Developers now have a fine-grained control for **two important Cache-Control values: `s-maxage` and `stale-while-revalidate`** sent by Front-Commerce.
 
 Basically, it means that **store owners can now scale their storefront for huge traffic peaks by sacrificing freshness of data**:
 - is it a big deal to have a change on your homepage visible at most 30 seconds later, if it allows to display it in less than 100ms to thousands of users visiting your store after a TV advertising?
