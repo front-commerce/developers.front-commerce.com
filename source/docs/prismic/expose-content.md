@@ -31,7 +31,7 @@ const homepage = await loaders.Prismic.loadSingle("homepage");
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
 
-For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
+For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. Instances of the transformers can be passed to `loadSingle`, `loadByUID` and `loadList` to transform the loaded Prismic Content. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
 
 ```js
 const { DateTransformer } = loaders.Prismic.transformers;
