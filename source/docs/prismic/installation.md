@@ -34,7 +34,7 @@ In case of trouble, `front-commerce:prismic` can be added to the `DEBUG` environ
 </blockquote>
 
 <blockquote class="tip">
-Configuring a webhook is required so that Front-Commerce fetches the last version of the Prismic content. In a development environment, you might skip this step. To make sure your running Front-Commerce uses the last version of the Prismic content without restarting it, you can use the following _oneliner_ from the skeleton directory to simulate a webhook call:
+Configuring a webhook is required so that Front-Commerce fetches the last version of the Prismic content. In a development environment, you might skip this step. To make sure your currently running Front-Commerce instance uses the lastest version of the Prismic content without restarting it, you can use the following _oneliner_ from the skeleton directory to simulate a webhook call:
 
 ```sh
 source .env ; PAYLOAD=`printf '{"secret": "%s", "type": "api-update", "masterRef": true}' $FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` ; curl -H "Content-Type: application/json" -d "$PAYLOAD" $FRONT_COMMERCE_URL/prismic/webhook
