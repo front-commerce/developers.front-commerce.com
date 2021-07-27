@@ -65,12 +65,14 @@ Note we added a path field resolver that appends the shop's baseUrl to the `url`
 
 ## Add GraphQL type to the dispatcher query
 
-Override `DispatcherQuery` if you havent already done so. You can find it under `src/web/theme/modules/Router/DispatcherQuery.gql`.
+Override `DispatcherQuery` if you have not already done so. You can find it under `src/web/theme/modules/Router/DispatcherQuery.gql`.
 
-Add a segment to `DispatcherQuery` that represents your newly created GraphQL type as noted below:
+Add an [inline fragment](https://graphql.org/learn/queries/#inline-fragments) to the `DispatcherQuery` for your newly created GraphQL type:
 
 ```diff
 ...
++import 'path_to_your_fragment/AlbumFragment.gql'
++import 'path_to_your_fragment/AlbumCacheControlFragment.gql'
 query MatchUrls($url: String!, $params: QueryInput) {
   route(url: $url) {
     path
@@ -99,7 +101,16 @@ query MatchUrls($url: String!, $params: QueryInput) {
 }
 ```
 
-Note: for more related to setting up cache control check [the cache control and cdn documentation](/docs/advanced/performance/cache-control-and-cdn)
+```diff
++# AlbumFragment.gql
++fragment AlbumFragment on Album {
++  artist
++  title
++  release_date
++}
+```
+
+Note: for more info related to setting up cache control check [the cache control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn)
 
 ## Register the Prismic custom type as a routable type
 
