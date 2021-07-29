@@ -38,6 +38,12 @@ Configuring a webhook is required so that Front-Commerce fetches the last versio
 
 ```sh
 source .env ; PAYLOAD=`printf '{"secret": "%s", "type": "api-update", "masterRef": true}' $FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` ; curl -H "Content-Type: application/json" -d "$PAYLOAD" $FRONT_COMMERCE_URL/prismic/webhook
+
+curl --location -g --request POST '{FRONT_COMMERCE_URL}/default/prismic/webhook' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "secret": FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET, "type": "api-update", "masterRef": true
+}'
 ```
 </blockquote>
 
