@@ -107,7 +107,7 @@ const MyCustomLoader = (axiosInstance) => {
     See [Loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html) documentation to learn how to instantiate your loader and add it to your GraphQL context.
     </blockquote>
 
-Once you've done these three steps, you should be able to test that everything works as expected by using the GraphQL Playground at http://localhost:4000/playground and executing the following query:
+Once you've done, you should be able to test that everything works as expected by using the GraphQL Playground at http://localhost:4000/playground and executing the following query:
 
 ```gql
 {
