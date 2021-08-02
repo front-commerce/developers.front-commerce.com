@@ -9,7 +9,13 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.8.0` -> `2.9.0`
 
-No action needed for migrating to this version.
+### Sass Update
+
+We have updated sass to its last stable version (1.36). In the 1.33 version, [`/` as division has been deprecated](https://sass-lang.com/documentation/breaking-changes/slash-div), as a result when upgrading to 2.9, you might see some deprecation warnings when starting Front-Commerce. To avoid those warnings, you can use the sass-migrator script to automatically fix your Sass files:
+
+```sh
+npx sass-migrator division --no-multiplication src/web/**/*.scss
+```
 
 ### New features in `2.9.0`
 
