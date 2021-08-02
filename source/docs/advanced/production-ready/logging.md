@@ -41,6 +41,12 @@ module.exports = {
       filename: "server.log"
     }
   ],
+  payment: [
+    {
+      type: "file",
+      filename: "payment.log",
+    },
+  ],
   client: [
     {
       type: "file",
@@ -56,7 +62,7 @@ module.exports = {
 };
 ```
 
-In this example, we've told the logging system to output every message in three files `server.log`, `client.log`, `access.log` that will be accessible in the `logs/` folder of your application.
+In this example, we've told the logging system to output every message in four files `server.log`, `payment.log`, `client.log`, `access.log` that will be accessible in the `logs/` folder of your application.
 
 But how does this work?
 
@@ -73,7 +79,7 @@ There will be most likely more transport configurations in the future, but more 
 
 # Add a new logger
 
-Splitting your messages in the three default loggers (`access`, `client`, `server`) might be enough. But in some cases, you may want to move the messages into another logger to make it either to follow what happens for a specific feature.
+Splitting your messages in the four default loggers (`access`, `client`, `server`, `payment`) might be enough. But in some cases, you may want to move the messages into another logger to make it either to follow what happens for a specific feature.
 
 <blockquote class="important">
 **Important:** The new loggers you will create are only available server side. If you need to use this logger from the client side, you will need to either create a GraphQL mutation or a custom HTTP endpoint. This will allow the client to send a message to the server which will then be able to log it. <!-- TODO links to GraphQL Mutation + HTTP Endpoint -->

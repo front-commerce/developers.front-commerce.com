@@ -17,11 +17,37 @@ We have updated sass to its last stable version (1.36). In the 1.33 version, [`/
 npx sass-migrator division --no-multiplication src/web/**/*.scss
 ```
 
+### Dedicated Payment logs
+
+In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
+
+By default, a new `logs/payment.log` file will be used, but you will see a warning:
+> You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
+
+To remove this warning please update your `src/config/logging.js` configuration file with a new `payment` entry:
+
+```diff
+module.exports = {
+  server: [
+    {
+      type: "file",
+      filename: "server.log",
+    },
+  ],
++  payment: [
++    {
++      type: "file",
++      filename: "payment.log",
++    },
++  ],
+  client: [
+```
+
 ### New features in `2.9.0`
 
 These new features may be relevant for your existing application:
 
-- no new feature yet!
+- New logger dedicated to payments. If you maintain a custom Front-Commerce payment implementation you might want to use the new `loaders.Payment.getLogger()` method to inject this logger instead of using `winston`.
 
 ## `2.7.0` -> `2.8.0`
 
