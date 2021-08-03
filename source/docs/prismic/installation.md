@@ -30,7 +30,7 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
 * `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` is a secret key used to clear caches in Front-Commerce and to secure [Integration Fields API endpoints](/docs/prismic/integration-fields.html). To define it, go to _Settings > Webhook_ and create a webhook pointing to your Front-Commerce URL `https://my-shop.example.com/prismic/webhook`. In the webhook form, you can configure a _Secret_. This is the one you should use in this environment variable.
 
 <blockquote class="tip">
-In case of trouble, `front-commerce:prismic` can be added to the `DEBUG` environment variable value, this value turns the debug on for Prismic module and make it verbose.
+In case of trouble, `front-commerce:prismic` (or `front-commerce:prismic*` to include more specific namespaces) can be added to the `DEBUG` environment variable value, this value turns the debug on for Prismic module and make it verbose.
 </blockquote>
 
 <blockquote class="note">

@@ -47,6 +47,7 @@ It is very unlikely that you were using these features but if you did, please re
 These new features may be relevant for your existing application:
 
 - For custom options, the Graph now exposes an `extraCost` field where you can find the rate to apply or the prices including and excluding taxes of each option and value.
+- Prismic API is now cached using the `PrismicAPI` dataloader. Ensure your `caching.js` config supports this key if you want to benefit from it. A specific `front-commerce:prismic:cache` debug flag allows you to view usage information.
 
 ## `2.7.0` -> `2.8.0`
 
