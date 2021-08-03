@@ -133,6 +133,4 @@ Front-Commerce Magento1 module contains [headless payment adapters](/docs/magent
 
 The Paypal module must be configured in a normal way, as for a non-headless Magento store.
 
-<blockquote class="important">
-**Important:** Depending on your Magento1 configuration, you may need additional configuration steps. Please [contact us](mailto:contact@front-commerce.com) if you encounter any issue.
-</blockquote>
+To enable **Paypal Standard** (instead of **Paypal Express**), you may have to update your database manually. See [Disable paypal express when enabling paypal standard in Magento 1.9.1](https://magento.stackexchange.com/a/75971) for details.
