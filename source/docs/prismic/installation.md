@@ -41,10 +41,6 @@ Configuring a webhook is required so that Front-Commerce fetches the last versio
 
 For that, you have to apply some changes to your `.front-commerce.js`.
 
-### Magento2
-
-In a Magento2 based setup:
-
 ```diff
  modules: [
    "./node_modules/front-commerce/modules/datasource-elasticsearch",
@@ -63,130 +59,10 @@ In a Magento2 based setup:
    { name: "FrontCommerce", path: "front-commerce/src/web" },
 ```
 
-### Magento1
+The module is ready!
 
-In a Magento1 based setup:
+**You can now use the `Prismic` loader to [Expose Prismic Content in your project](/docs/prismic/expose-content.html).**
 
-```diff
- modules: [
-   "./node_modules/front-commerce/modules/datasource-elasticsearch",
-   "./node_modules/front-commerce/theme-chocolatine",
-+  "./node_modules/front-commerce-prismic/prismic",
-   "./src",
- ],
- serverModules: [
-@@ -13,6 +14,7 @@ module.exports = {
-     path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
-   },
-   { name: "Magento2", path: "server/modules/magento2" },
-+  { name: "Prismic", path: "prismic/server/modules/prismic/index.magento1.js" },
- ],
- webModules: [
-   { name: "FrontCommerce", path: "front-commerce/src/web" },
-```
+## Optional: update your CSP
 
-## Configure required types in your Prismic repository
-
-The Front-Commerce Prismic module needs 2 custom types to be created, one for the pages and one the blocks.
-
-### CMS Page
-
-On `http://your-repository.prismic.io/masks/`, click on _Create new_ and create a _Repeatable Type_ named `CMS Page` which _API ID_ is `cms-page`, then in the _JSON editor_ tab in the right pane, paste the following code:
-
-```json
-{
-  "Main" : {
-    "uid" : {
-      "type" : "UID",
-      "config" : {
-        "label" : "UID",
-        "placeholder" : "URL used by FC to access the CMS content"
-      }
-    },
-    "meta_title" : {
-      "type" : "Text",
-      "config" : {
-        "label" : "Meta title",
-        "placeholder" : "Meta title for SEO purposes"
-      }
-    },
-    "meta_description" : {
-      "type" : "Text",
-      "config" : {
-        "label" : "Meta description",
-        "placeholder" : "Meta description for SEO purposes"
-      }
-    },
-    "title" : {
-      "type" : "Text",
-      "config" : {
-        "label" : "Title",
-        "placeholder" : "title"
-      }
-    },
-    "content_heading" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "heading1",
-        "label" : "Content heading",
-        "placeholder" : "Title of the page"
-      }
-    },
-    "content" : {
-      "type" : "StructuredText",
-      "config" : {
-        "multi" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
-        "label" : "Content",
-        "placeholder" : "Content of the page"
-      }
-    }
-  }
-}
-```
-
-And finally, save the type.
-
-### CMS Block
-
-On `http://your-repository.prismic.io/masks/`, click on _Create new_ and create a _Repeatable Type_ named `CMS Block`which _API ID_ is `cms-block`, then in the _JSON editor_ tab in the right pane, paste the following code:
-
-```json
-{
-  "Main": {
-    "uid": {
-      "type": "UID",
-      "config": {
-        "label": "UID",
-        "placeholder": "URL used by FC to access the CMS content"
-      }
-    },
-    "title": {
-      "type": "Text",
-      "config": {
-        "label": "Title",
-        "placeholder": "Title of the page"
-      }
-    },
-    "content": {
-      "type": "StructuredText",
-      "config": {
-        "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
-        "label": "Content",
-        "placeholder": "Content of the page"
-      }
-    }
-  }
-}
-```
-
-And finally, save the type.
-
-## Test it
-
-You can now (re)start Front-Commerce to take your configuration changes into account.
-
-To test it, on Prismic side, you can now create a new `CMS Page` content. When creating the page, take note of the `UID` you set, it will be used as the page identifier so the page will be accessible in Front-Commerce at the URL `http://your-fc-url/the-uid-you-defined`.
-
-<blockquote class="tip">
-If you include images in your content, don't forget to add the domain `images.prismic.io` to `imgSrc` in [the `contentSecurityPolicy` configuration](/docs/reference/configurations.html#config-website-js).
-</blockquote>
+If you plan to directly include images in your content, don't forget to add the domain `images.prismic.io` to `imgSrc` in [the `contentSecurityPolicy` configuration](/docs/reference/configurations.html#config-website-js).
