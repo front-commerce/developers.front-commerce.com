@@ -34,6 +34,13 @@ So if you have overridden those files, you have to apply [the same update than t
 
 We highly recommend you to test your product and cart pages for products with custom options of both "fixed price" and "percentage" types if your project makes use of this Magento feature.
 
+### Prismic legacy features removed
+
+In order to make code more maintainable, we've removed two legacy features from the Prismic module:
+- Default CMS module
+- Default GraphQL remote schema stitching
+
+It is very unlikely that you were using these features but if you did, please read [the related Merge Request](https://gitlab.com/front-commerce/front-commerce-prismic/-/merge_requests/43) for replacement options.
 
 ### New features in `2.9.0`
 
