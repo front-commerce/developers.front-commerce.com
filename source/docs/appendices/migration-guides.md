@@ -42,12 +42,39 @@ In order to make code more maintainable, we've removed two legacy features from 
 
 It is very unlikely that you were using these features but if you did, please read [the related Merge Request](https://gitlab.com/front-commerce/front-commerce-prismic/-/merge_requests/43) for replacement options.
 
+### Dedicated Payment logs
+
+In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
+
+By default, a new `logs/payment.log` file will be used, but you will see a warning:
+> You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
+
+To remove this warning please update your `src/config/logging.js` configuration file with a new `payment` entry:
+
+```diff
+module.exports = {
+  server: [
+    {
+      type: "file",
+      filename: "server.log",
+    },
+  ],
++  payment: [
++    {
++      type: "file",
++      filename: "payment.log",
++    },
++  ],
+  client: [
+```
+
 ### New features in `2.9.0`
 
 These new features may be relevant for your existing application:
 
 - For custom options, the Graph now exposes an `extraCost` field where you can find the rate to apply or the prices including and excluding taxes of each option and value.
 - Prismic API calls are now cached using the `PrismicAPI` dataloader. Ensure your `caching.js` config supports this key if you want to benefit from it. A specific `front-commerce:prismic:cache` debug flag allows you to view usage information. The new`FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS` environment variable allows to change [the default TTL configuration](/docs/prismic/installation.html#Configure-the-environment-for-Prismic).
+- New logger dedicated to payments. If you maintain a custom Front-Commerce payment implementation you might want to use the new `loaders.Payment.getLogger()` method to inject this logger instead of using `winston`.
 
 ## `2.7.0` -> `2.8.0`
 
