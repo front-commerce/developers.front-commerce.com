@@ -42,6 +42,21 @@ In order to make code more maintainable, we've removed two legacy features from 
 
 It is very unlikely that you were using these features but if you did, please read [the related Merge Request](https://gitlab.com/front-commerce/front-commerce-prismic/-/merge_requests/43) for replacement options.
 
+### Front-Commerce Payment module
+
+We've extracted payment related code from Magento 1 and Magento 2 modules into a platform agnostic Front-Commerce Payment module.
+While we paid attention to backwards compatibility, if you implemented payment methods in Front-Commerce we recommend that you test them once again.
+
+The `PaymentLoader` is not exported by default from `server/modules/magentoX/checkout/loaders`. We recommend that you use the loader in `server/modules/front-commerce/payment/loaders` now. To reuse the exact same (deprecated) code, you will have to update your import as below:
+
+```diff
+- import { PaymentLoader } from "server/modules/magentoX/checkout/loaders";
++ // TODO use server/modules/front-commerce/payment/loaders
++ import PaymentLoader from "server/modules/magentoX/checkout/loaders/payment";
+```
+
+Migration will depends on what you've implemented. Please contact us if you have any questions.
+
 ### Dedicated Payment logs
 
 In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
