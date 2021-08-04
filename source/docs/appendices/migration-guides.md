@@ -17,6 +17,31 @@ We have updated sass to its last stable version (1.36). In the 1.33 version, [`/
 npx sass-migrator division --no-multiplication src/web/**/*.scss
 ```
 
+### Customs options `price` and `price_type` field deprecations
+
+<blockquote class="important">
+This features requires an up-to-date Magento module, for Magento1 you need at least [the version 1.3.3](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.3) while for Magento2, the minimum required version is [the 2.5.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.5.0).
+</blockquote>
+
+As of the version 2.9.0, the `price` and `price_type` fields of the types `ProductCustomOption` and `ProductCustomOptionValue` have been deprecated in order to provide both the price including and excluding taxes for each options. Custom options prices or rate are now carried by the `extraCost` field available in those types. To stop using those deprecated fields, the following files have been modified:
+
+- `theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql`
+- `theme/components/organisms/Configurator/ProductConfiguratorFragment.gql`
+- `theme/components/organisms/Configurator/CustomOption/CustomOptionLabelWithPrice.js`
+- `theme/modules/ProductView/withSelectedCustomOptions.js`
+
+So if you have overridden those files, you have to apply [the same update than the one done in Front-Commerce](https://gitlab.com/front-commerce/front-commerce/-/commit/71ddc7be40df3fb05574bb46b39becbed12cf5ef?merge_request_iid=622).
+
+We highly recommend you to test your product and cart pages for products with custom options of both "fixed price" and "percentage" types if your project makes use of this Magento feature.
+
+### Prismic legacy features removed
+
+In order to make code more maintainable, we've removed two legacy features from the Prismic module:
+- Default CMS module
+- Default GraphQL remote schema stitching
+
+It is very unlikely that you were using these features but if you did, please read [the related Merge Request](https://gitlab.com/front-commerce/front-commerce-prismic/-/merge_requests/43) for replacement options.
+
 ### Dedicated Payment logs
 
 In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
@@ -47,6 +72,8 @@ module.exports = {
 
 These new features may be relevant for your existing application:
 
+- For custom options, the Graph now exposes an `extraCost` field where you can find the rate to apply or the prices including and excluding taxes of each option and value.
+- Prismic API calls are now cached using the `PrismicAPI` dataloader. Ensure your `caching.js` config supports this key if you want to benefit from it. A specific `front-commerce:prismic:cache` debug flag allows you to view usage information.
 - New logger dedicated to payments. If you maintain a custom Front-Commerce payment implementation you might want to use the new `loaders.Payment.getLogger()` method to inject this logger instead of using `winston`.
 
 ## `2.7.0` -> `2.8.0`

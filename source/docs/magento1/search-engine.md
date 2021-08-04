@@ -100,6 +100,8 @@ After the installation, you need to configure it, at least:
    section, set the _Enable Indexing_ option
 1. in the same section, fill the credentials you can find on [the Algolia
    Dashboard](https://www.algolia.com/dashboard/api-keys)
+1. The attribute `category_ids` must be listed in both the facets configuration and in the indexed product attributes (and there it must be set as _Searchable_) as Front-Commerce relies on it to list the products in categories.
+
 
 You can then run the indexer so that the products are indexed in Algolia's
 index.
@@ -146,10 +148,7 @@ Front-Commerce 2.6 takes the following parameters from Magento:
 * the number of values per facet
 * the configured facet attributes
 
-On the configured facets, only the attribute name is taken into account (Facet
-type, Label, Searchable and Create Query rule are ignored for now). If you want
-facets on the categories, you need to add `category_ids` to the configured
-facets.
+On the configured facets, only the attribute name is taken into account (Facet type, Label, Searchable and Create Query rule are ignored for now).
 
 <blockquote class="warning">
 ⚠️ For performance reason, the configuration retrieved from Magento is cached. As
@@ -177,3 +176,8 @@ query Search {
 
 If you are using the default theme or the theme Chocolatine, the search bar
 should now be visible.
+
+
+<blockquote class="warning">
+⚠️ For now Front-Commerce Algolia implementation is only able to provide Product search. If you need to search through Categories or CMS pages, please [contact us](mailto:contact@front-commerce.com).
+</blockquote>

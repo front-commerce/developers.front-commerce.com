@@ -221,12 +221,13 @@ Here is a list of available debug namespaces:
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:performance`: allow to debug server performance in production by enabling [server timings](/docs/advanced/performance/server-timings.html)
+- `front-commerce:prismic`: turns [the Prismic module](/docs/prismic/) debug on
+- `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically. Can be targetted directly, or included with the previous namespace using `DEBUG=front-commerce:prismic*`
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
-- `front-commerce:prismic`: turns [the Prismic module](/docs/prismic/) debug on
 
 **Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
 

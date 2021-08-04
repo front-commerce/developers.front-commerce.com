@@ -3,7 +3,7 @@ id: prismic-overview
 title: Overview
 ---
 
-The Front-Commerce Prismic module brings support for the headless CMS [Prismic](https://prismic.io/) to Front-Commerce. For now, it allows to replace Magento2's CMS pages and blocks system with content coming from a Prismic repository.
+The Front-Commerce Prismic module brings support for the headless CMS [Prismic](https://prismic.io/) to Front-Commerce. It allows to expose content coming from a Prismic repository in your GraphQL API and create relationships with data from other systems.
 
 - [Installation](/docs/prismic/installation.html)
 - [Expose Prismic content](/docs/prismic/expose-content.html)

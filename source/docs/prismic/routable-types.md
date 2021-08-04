@@ -11,6 +11,7 @@ To make a custom Prismic data type routable these steps are required:
 
 - [Create a field to represent the Url of the custom type](#Create-a-field-to-represent-the-Url-of-the-custom-type)
 - [Create a GraphQL type to represent the custom type](#Create-a-GraphQL-type-to-represent-the-custom-type)
+- [Add GraphQL type to the dispatcher query](#Add-GraphQL-type-to-the-dispatcher-query)
 - [Register the Prismic custom type as a routable type](#Register-the-Prismic-custom-type-as-a-routable-type)
 - [Map GraphQL type to a component](#Map-GraphQL-type-to-a-component)
 - [Add a routable custom type to the sitemap](#Add-a-routable-custom-type-to-the-sitemap)
@@ -60,7 +61,56 @@ export default {
 +};
 ```
 
-Note we added a path field resolver that appends the shop's baseUrl  to the `url` field of our custom Prismic type.
+Note we added a path field resolver that appends the shop's baseUrl to the `url` field of our custom Prismic type.
+
+## Add GraphQL type to the dispatcher query
+
+Override `DispatcherQuery` if you have not already done so. You can find it under `src/web/theme/modules/Router/DispatcherQuery.gql`.
+
+Add an [inline fragment](https://graphql.org/learn/queries/#inline-fragments) to the `DispatcherQuery` for your newly created GraphQL type:
+
+```diff
+...
++import 'path_to_your_fragment/AlbumFragment.gql'
++import 'path_to_your_fragment/AlbumCacheControlFragment.gql'
+query MatchUrls($url: String!, $params: QueryInput) {
+  route(url: $url) {
+    path
+    __typename
+    ... on RedirectEntity {
+      redirectTo
+      redirectType
+    }
+    ... on Product {
+      ...ProductFragment
+      ...ProductCacheControlFragment
+    }
+    ... on Category {
+      ...CategoryFragment
+      ...CategoryCacheControlFragment
+    }
+    ... on CmsPage {
+      ...CmsPageFragment
+      ...CmsPageCacheControlFragment
+    }
++    ... on Album {
++      ...AlbumFragment
++      ...AlbumCacheControlFragment # optional check note below for link
++    }
+  }
+}
+```
+
+```diff
++# AlbumFragment.gql
++fragment AlbumFragment on Album {
++  artist
++  title
++  release_date
++}
+```
+
+Note: for more info related to setting up cache control check [the cache control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn)
 
 ## Register the Prismic custom type as a routable type
 
