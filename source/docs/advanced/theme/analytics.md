@@ -214,6 +214,7 @@ Here is a list of integrations frequently used accross eCommerce shops:
           "Google Analytics": {
             trackingId: "UA-123-1",
             anonymizeIp: !authorization,
+            // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
           },
         };
       },

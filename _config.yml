@@ -29,6 +29,7 @@ sidebar_categories:
     - docs/advanced/graphql/meta-modules
     - docs/advanced/graphql/slim-down-resolvers-with-loaders
     - docs/advanced/graphql/dataloaders-and-cache-invalidation
+    - docs/advanced/graphql/change-resolver-behavior
     - docs/advanced/graphql/remote-schemas
     - docs/advanced/graphql/rate-limiting
   Checkout:
