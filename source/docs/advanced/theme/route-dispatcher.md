@@ -42,8 +42,8 @@ import { makeUserClientFromRequest } from "server/modules/magento2/core/factorie
 
 const moduleDefinition = {
   namespace: "MyCustomModule",
--  dependencies: ["Front-Commerce/Core"],
-+  dependencies: [],
+-  dependencies: [],
++  dependencies: ["Front-Commerce/Core"],
   typeDefs,
   contextEnhancer: ({ req, loaders }) => {
     const axiosInstance = makeUserClientFromRequest(req);
