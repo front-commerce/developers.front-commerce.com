@@ -58,66 +58,121 @@ const moduleDefinition = {
 export default moduleDefinition;
 ```
 
-```diff
+```js
 // urlMatcher.js
-+const myCustomUrlMatcher = (loader) => async (url, match) => {
-+  if(match.__typename) {
-+    // a match have been already loaded (you can still override it or return it as is like we do here)
-+    return match;
-+  }
-+  const myMatch = await loader.loadByUrl(url);
-+  if(!myMatch) {
-+    return match; // return original match if none is found (this is needed!)
-+  }
-+  return { // return your custom routable entity
-+    path: <canonical_url>,      // depending on your use case can be same as url
-+    url,
-+    __typename: 'MyCustomType', // the GraphQL type of your custom type (should be added in schema.gql),
-+    ...myMatch, // or some adaptation of it. this will be available to your component defined bellow on a prop called `matched`
-+  }
-+};
-+
-+export default myCustomUrlMatcher;
+const myCustomUrlMatcher = (loader) => async (url, match) => {
+  if (match.__typename) {
+    // a match have been already loaded (you can still override it or return it as is like we do here)
+    return match;
+  }
+  const myMatch = await loader.loadByUrl(url);
+  if (!myMatch) {
+    return match; // return original match if none is found (this is needed!)
+  }
+  return {
+    // return your custom routable entity
+    path: myMatch.canonical_url || url, // depending on your use case can be same as url
+    url,
+    __typename: "MyCustomType", // the GraphQL type of your custom type (should be added in schema.gql),
+    ...myMatch, // or some adaptation of it. this will be available to your component defined bellow on a prop called `matched`
+  };
+};
+
+export default myCustomUrlMatcher;
 ```
 
-```diff
+```gql
 # schema.gql
-+MyCustomType {
-+  title: String! # example field
-+  ... # define own schema
-+}
+MyCustomType implements Routable {
+  path: String! # needed for Routable
+  title: String! # example field
+  ... # define own schema
+}
 ```
 
-```diff
+```js
 // loader.js
 const MyCustomLoader = (axiosInstance) => {
   return {
-+    loadByUrl: (url) => {
-+      return ( // example: get data by issuing an external api call
-+        axiosInstance.get(...)
-+        .then((response) => response.data)
-+        .catch((err) => err.response?.status === 404 ? null : Promise.reject(err));
-+      );
-+    },
+    loadByUrl: (url) => {
+      return (
+        // example: get data by issuing an external api call
+        axiosInstance
+          .get(`/my/api/my-custom-entity?url=${encodeURIComponent(url)}`)
+          .then((response) => response.data)
+          .catch((err) =>
+            err.response?.status === 404 ? null : Promise.reject(err)
+          )
+      );
+    },
   };
 };
 ```
 
-    <blockquote class="note">
+<blockquote class="note">
     See [Loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html) documentation to learn how to instantiate your loader and add it to your GraphQL context.
-    </blockquote>
+</blockquote>
 
-Once you've done, you should be able to test that everything works as expected by using the GraphQL Playground at http://localhost:4000/playground and executing the following query:
+Once this is done, you should be able to test that everything works as expected by using the GraphQL Playground at http://localhost:4000/playground and executing the following query:
 
 ```gql
 {
   route(url: "some-dynamic-custom-url") {
-    url
-    title # example
-    ...   # custom type fields
+    path
+    ... on MyCustomType {
+      title # example
+    }
   }
 }
 ```
+
+## Add GraphQL type to the dispatcher query
+
+Override `DispatcherQuery` if you have not already done so. You can find it under `src/web/theme/modules/Router/DispatcherQuery.gql`.
+
+Add an [inline fragment](https://graphql.org/learn/queries/#inline-fragments) to the `DispatcherQuery` for your newly created GraphQL type:
+
+```diff
+...
++import 'path_to_your_fragment/MyCustomTypeFragment.gql'
++import 'path_to_your_fragment/MyCustomTypeCacheControlFragment.gql'
+query MatchUrls($url: String!, $params: QueryInput) {
+  route(url: $url) {
+    path
+    __typename
+    ... on RedirectEntity {
+      redirectTo
+      redirectType
+    }
+    ... on Product {
+      ...ProductFragment
+      ...ProductCacheControlFragment
+    }
+    ... on Category {
+      ...CategoryFragment
+      ...CategoryCacheControlFragment
+    }
+    ... on CmsPage {
+      ...CmsPageFragment
+      ...CmsPageCacheControlFragment
+    }
++    ... on MyCustomType {
++      ...MyCustomTypeFragment
++      ...MyCustomTypeCacheControlFragment # optional check note below for link
++    }
+  }
+}
+```
+
+```gql
+# MyCustomTypeFragment.gql
+fragment AlbumFragment on Album {
+  title
+  # more fields go here
+}
+```
+
+Note: for more info related to setting up cache control check [the cache control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn)
 
 ## Add the mapping between the `__typename` and the page component
 
