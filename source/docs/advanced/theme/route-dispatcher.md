@@ -166,7 +166,7 @@ query MatchUrls($url: String!, $params: QueryInput) {
 
 ```gql
 # MyCustomTypeFragment.gql
-fragment AlbumFragment on Album {
+fragment MyCustomTypeFragment on MyCustomType {
   title
   # more fields go here
 }
