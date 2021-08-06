@@ -24,6 +24,7 @@ In Front-Commerce’s core integrations (such as Magento2), the association betw
 To do so, you will need to proceed in two steps:
 
 - Register a new urlMatcher
+- Add GraphQL type to the dispatcher query
 - Add the mapping between the type returned by `route` and the page component that should be displayed
 
 ## Register a new urlMatcher
