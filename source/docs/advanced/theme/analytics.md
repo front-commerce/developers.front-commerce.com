@@ -15,7 +15,7 @@ If we represent how it works, it would look like this:
 
 Across your React application, you can track events using functions such as `trackEvent` or `trackPage`. Then, the event is dispatched to all the relevant integrations registered in your application.
 
-This means that once you have correctly configured events in your React Components, adding new trackings can be really straightforward.
+This means that once you have correctly configured events in your React Components, adding new tracking can be really straightforward.
 
 ## Track an event
 
@@ -73,7 +73,7 @@ export default AddIngredientsToCart;
 
 This `trackEvent` method is actually a shortcut that lets you call the `analytics.track` method of `analytics.js`. It uses the exact same API. See [the official documentation](https://segment.com/docs/spec/track/) for more detailed information.
 
-Additionally, you may wonder what name and properties you should give to your events. It depends on the integrations you are using and if you want to create a new event or use Semantic ones (supported events within Segment.io). To learn more about this, please refere to the [Semantic Events documentation](https://segment.com/docs/spec/semantic/).
+Additionally, you may wonder what name and properties you should give to your events. It depends on the integrations you are using and if you want to create a new event or use Semantic ones (supported events within Segment.io). To learn more about this, please refer to the [Semantic Events documentation](https://segment.com/docs/spec/semantic/).
 
 ### Track an event as a React Component
 
@@ -113,7 +113,7 @@ Note that if you prefer to use render props you can refer to [`TrackOnMount`](do
 
 ### Track page
 
-In trackings scripts, there is often a distinction between the `page` and the `event` even though a `page` event is only a subset of the `event`s.
+In tracking scripts, there is often a distinction between the `page` and the `event` even though a `page` event is only a subset of the `event`s.
 
 To make this distinction clear, we provide an enhancer in the same spirit of `withTrackOnMount` but for page events: `withTrackPage`.
 
@@ -199,7 +199,7 @@ However, please note that some integrations are not up to date. Even if you find
 
 ### Main integrations
 
-Here is a list of integrations frequently used accross eCommerce shops:
+Here is a list of integrations frequently used across e-commerce shops:
 
 #### Google Analytics
 
@@ -271,7 +271,7 @@ export default {
         "These cookies allows us to measure the traffic on our contents and hence to improve them.",
       services: [
         {
-          // The name should be the same as mentionned in the `config/analytics.js` file
+          // The name should be the same as mentioned in the `config/analytics.js` file
           name: "google-analytics",
           title: "Google Analytics",
           // display all the cookies managed by Google Analytics
@@ -349,7 +349,7 @@ PixelIntegration.prototype.page = function (track) {
 // its properties. If you are trying to track a specific event, this will be useful.
 // If you don't need to track a page, you can ignore the
 // PixelIntegration.prototype.page method altogether.
-PixelIntegration.prototype.page = function (track) {
+PixelIntegration.prototype.event = function (track) {
   const name = track.name();
   // In this example we're only tracking the event "Order Completed" which
   // is called upon an order success. If you're not sure what event you want
@@ -393,7 +393,7 @@ const PixelIntegration = integration("Pixel")
 +}
 ```
 
-This means that we're declaring a tag with a name `tagName` that should be loaded during the intialization phase. To do so, we're calling `this.load` with the same `tagName` in `PixelIntegration.prototype.initialize`. And once it's done, we're telling the integration we're done and we can start tracking by calling `this.ready`. You can write an initialization phase as complex as you want. Feel free to dig into `segment-integration`'s repository to see more in depth examples. For instance, [Google Tag Manager's implementation](https://github.com/segment-integrations/analytics.js-integration-google-tag-manager/blob/b6269d800cafeef50461ef012176070ed1f55b96/lib/index.js) can be a good starting point.
+This means that we're declaring a tag with a name `tagName` that should be loaded during the initialization phase. To do so, we're calling `this.load` with the same `tagName` in `PixelIntegration.prototype.initialize`. And once it's done, we're telling the integration we're done and we can start tracking by calling `this.ready`. You can write an initialization phase as complex as you want. Feel free to dig into `segment-integration`'s repository to see more in depth examples. For instance, [Google Tag Manager's implementation](https://github.com/segment-integrations/analytics.js-integration-google-tag-manager/blob/b6269d800cafeef50461ef012176070ed1f55b96/lib/index.js) can be a good starting point.
 
 #### Register this new integration in your analytics.js
 
@@ -448,7 +448,7 @@ Indeed, if we're doing this, it's likely to be because the tracking service want
   </script>
   ```
 
-- Look inside the script itself. The script you've been given may be a shortcut and the solution might live in the script itself. If this is the case, this means that you can try to dupplicate the scripts content and adapt it to your integration.
+- Look inside the script itself. The script you've been given may be a shortcut and the solution might live in the script itself. If this is the case, this means that you can try to duplicate the scripts content and adapt it to your integration.
 - If none of the solutions above work, you can always try to load the script several times by adding a `?random=${new Date().getTime()}` at the end of the URL. This will trick the browser into thinking they are different scripts and allow you to load it multiple times.
 
-Implementing a great tagging plan for an eCommerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.
+Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.
