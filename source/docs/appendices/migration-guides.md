@@ -7,6 +7,96 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.8.0` -> `2.9.0`
+
+### Sass Update
+
+We have updated sass to its last stable version (1.36). In the 1.33 version, [`/` as division has been deprecated](https://sass-lang.com/documentation/breaking-changes/slash-div), as a result when upgrading to 2.9, you might see some deprecation warnings when starting Front-Commerce. To avoid those warnings, you can use the sass-migrator script to automatically fix your Sass files:
+
+```sh
+npx sass-migrator division --no-multiplication src/web/**/*.scss
+```
+
+### Customs options `price` and `price_type` field deprecations
+
+<blockquote class="important">
+This features requires an up-to-date Magento module, for Magento1 you need at least [the version 1.3.3](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/releases/1.3.3) while for Magento2, the minimum required version is [the 2.5.0](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.5.0).
+</blockquote>
+
+As of the version 2.9.0, the `price` and `price_type` fields of the types `ProductCustomOption` and `ProductCustomOptionValue` have been deprecated in order to provide both the price including and excluding taxes for each options. Custom options prices or rate are now carried by the `extraCost` field available in those types. To stop using those deprecated fields, the following files have been modified:
+
+- `theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql`
+- `theme/components/organisms/Configurator/ProductConfiguratorFragment.gql`
+- `theme/components/organisms/Configurator/CustomOption/CustomOptionLabelWithPrice.js`
+- `theme/modules/ProductView/withSelectedCustomOptions.js`
+
+So if you have overridden those files, you have to apply [the same update than the one done in Front-Commerce](https://gitlab.com/front-commerce/front-commerce/-/commit/71ddc7be40df3fb05574bb46b39becbed12cf5ef?merge_request_iid=622).
+
+We highly recommend you to test your product and cart pages for products with custom options of both "fixed price" and "percentage" types if your project makes use of this Magento feature.
+
+### Prismic legacy features removed
+
+In order to make code more maintainable, we've removed two legacy features from the Prismic module:
+- Default CMS module
+- Default GraphQL remote schema stitching
+
+It is very unlikely that you were using these features but if you did, please read [the related Merge Request](https://gitlab.com/front-commerce/front-commerce-prismic/-/merge_requests/43) for replacement options.
+
+### Front-Commerce Payment module
+
+We've extracted payment related code from Magento 1 and Magento 2 modules into a platform agnostic Front-Commerce Payment module.
+While we paid attention to backwards compatibility, if you implemented payment methods in Front-Commerce we recommend that you test them once again.
+
+The `PaymentLoader` is not exported by default from `server/modules/magentoX/checkout/loaders`. We recommend that you use the loader in `server/modules/front-commerce/payment/loaders` now. To reuse the exact same (deprecated) code, you will have to update your import as below:
+
+```diff
+- import { PaymentLoader } from "server/modules/magentoX/checkout/loaders";
++ // TODO use server/modules/front-commerce/payment/loaders
++ import PaymentLoader from "server/modules/magentoX/checkout/loaders/payment";
+```
+
+Migration will depends on what you've implemented. Please contact us if you have any questions.
+
+### Dedicated Payment logs
+
+In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
+
+By default, a new `logs/payment.log` file will be used, but you will see a warning:
+> You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
+
+To remove this warning please update your `src/config/logging.js` configuration file with a new `payment` entry:
+
+```diff
+module.exports = {
+  server: [
+    {
+      type: "file",
+      filename: "server.log",
+    },
+  ],
++  payment: [
++    {
++      type: "file",
++      filename: "payment.log",
++    },
++  ],
+  client: [
+```
+
+### Magento 1 module update may be needed
+
+We added caching in the default Magento 1 category listing page.
+
+If you're not relying on a search datasource for this page (facets etc…), you must ensure that the Magento 1 module is up-to-date (1.4.0+). Starting from 1.4.0, the module will invalidate the product list cache whenever a product is updated.
+
+### New features in `2.9.0`
+
+These new features may be relevant for your existing application:
+
+- For custom options, the Graph now exposes an `extraCost` field where you can find the rate to apply or the prices including and excluding taxes of each option and value.
+- Prismic API calls are now cached using the `PrismicAPI` dataloader. Ensure your `caching.js` config supports this key if you want to benefit from it. A specific `front-commerce:prismic:cache` debug flag allows you to view usage information. The new`FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS` environment variable allows to change [the default TTL configuration](/docs/prismic/installation.html#Configure-the-environment-for-Prismic).
+- New logger dedicated to payments. If you maintain a custom Front-Commerce payment implementation you might want to use the new `loaders.Payment.getLogger()` method to inject this logger instead of using `winston`.
+
 ## `2.7.0` -> `2.8.0`
 
 ### Ensure your pages will be rendered server side

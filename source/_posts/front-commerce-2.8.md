@@ -1,6 +1,6 @@
 ---
 title: '2.8: Content-Driven Commerce with Prismic, Proximis connector in alpha and Summer backlog cleaning'
-date: 2021-22-0
+date: 2021-07-22
 ---
 
 Front-Commerce 2.8 is available! This new version contains advanced Prismic features for Content Driven storefronts, an alpha version of our new Proximis connector and several "Summer backlog cleaning" items (bugfixes, improvements from performance profilings, technical debt removal).
