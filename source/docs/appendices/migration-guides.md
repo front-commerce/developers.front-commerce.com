@@ -83,6 +83,12 @@ module.exports = {
   client: [
 ```
 
+### Magento 1 module update may be needed
+
+We added caching in the default Magento 1 category listing page.
+
+If you're not relying on a search datasource for this page (facets etc…), you must ensure that the Magento 1 module is up-to-date (1.4.0+). Starting from 1.4.0, the module will invalidate the product list cache whenever a product is updated.
+
 ### New features in `2.9.0`
 
 These new features may be relevant for your existing application:
