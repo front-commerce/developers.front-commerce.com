@@ -8,7 +8,7 @@ Front-Commerce has a generic map component that can be used by modules to displa
 - [Open Street Map with Leaflet](#Open-Street-Map-OSM-with-Leaflet)
 - [Google Maps](#Google-Maps)
 
-The goal is to chose one to make sure that all maps accross the website look the same.
+The goal is to choose one to make sure that all maps accross the website look the same.
 
 ### Open Street Map (OSM) with Leaflet
 
