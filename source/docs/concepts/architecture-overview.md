@@ -10,7 +10,7 @@ platforms and what is its role.
 
 Front-Commerce is the interface between users and your different services. It
 acts as a Gateway for your different APIs. **You can host it on your
-infrastructure**, as soon as it supports Node.js apps.
+infrastructure** as long as it supports Node.js apps.
 
 <blockquote class="note">
 **Note:** your services do not have to be publicly exposed on the web anymore.
