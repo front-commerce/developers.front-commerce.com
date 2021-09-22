@@ -29,8 +29,8 @@ But first, let's define what is an ideal UI Component.
 In Front-Commerce we call UI component any component that is:
 
 - **Reusable in many contexts**: if a component is used only once in the whole
-  application, it might be a smell that it does not exist purely for UI
-  purpose. The component most likely needs to be moved to the `web/theme/modules` folder (see [Create a Business Component](./create-a-business-component.html)).
+  application, it might feel like it doesn't exist purely for UI
+  purposes. The component most likely needs to be moved to the `web/theme/modules` folder (see [Create a Business Component](./create-a-business-component.html)).
   That's also the reason why we avoid to give names too close to its business
   use. For instance, we don't want to have a UI component that would be called
   `ProductDescription`. It would be better to go for a `Description` that would
@@ -39,13 +39,13 @@ In Front-Commerce we call UI component any component that is:
   hide styles or [<abbr title="Document Object Model">DOM</abbr>](https://fr.wikipedia.org/wiki/Document_Object_Model) concerns from their parents. It may be hard to achieve
   sometimes, but it will greatly improve the parent component's readability. For
   instance, a UI component should not give the opportunity to pass a `className`
-  in its props as it may lead to many styles inconsistencies across the theme.
+  in its props as it may lead to many style inconsistencies across the theme.
 
 ## How to build a UI Component?
 
-Alright, that's nice in theory, but how does it translate in practice? We'll try
-to get a bit more tangible by creating a UI component needed for adding a
-Reinsurance Banner in a page similar to the following mockup.
+Alright, that's nice in theory, but how does it translate in practice? First,
+we’ll try to get a bit more tangible by creating a UI component for adding
+a Reinsurance Banner on a page similar to the following mockup.
 
 ![The reinsurance banner that we will implement](assets/reinsurance.jpg)
 
@@ -123,10 +123,14 @@ once you've [registered your module](extend-the-theme.html#Configure-your-custom
   import IllustratedContent from "./IllustratedContent.js";
   import { storiesOf } from "@storybook/react";
 
-  storiesOf("components.molecules.IllustratedContent", module).add("default", () => {
-    return <IllustratedContent />;
-  });
+  storiesOf("components.molecules.IllustratedContent", module).add(
+    "default",
+    () => {
+      return <IllustratedContent />;
+    }
+  );
   ```
+
   <blockquote class="note">
     For a more detailed explanation of how Storybook works in the context of Front-Commerce, please refer to [Add a component to Storybook](./add-component-to-storybook.html).
   </blockquote>
@@ -166,7 +170,7 @@ const IllustratedContent = ({ media, children }) => (
 
 IllustratedContent.propTypes = {
   media: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default IllustratedContent;
