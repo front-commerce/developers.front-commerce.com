@@ -173,7 +173,7 @@ fragment MyCustomTypeFragment on MyCustomType {
 }
 ```
 
-Note: for more info related to setting up cache control check [the cache control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn)
+Note: for more info related to setting up cache control check [the cache control and CDN documentation](/docs/advanced/performance/cache-control-and-cdn.html)
 
 ## Add the mapping between the `__typename` and the page component
 
