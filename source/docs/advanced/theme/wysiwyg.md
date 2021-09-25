@@ -11,12 +11,12 @@ It is named <code>WysiwygV2</code> because it has performance improvements over 
 </blockquote>
 
 <blockquote class="important">
-**Note:** The WysiwygV2 is not used in the default theme yet because of backward compatibility issues. It will come in next releases, but you can already use it today in your own theme by overriding the components that should use it.
+**Note:** The WysiwygV2 is not used in the default theme yet because of backward compatibility issues. It will arrive in a future release, but you can already use it today in your own theme by overriding the components that should use it.
 </blockquote>
 
 ## `<WysiwygV2 />` usage
 
-You can use this component by using the following code:
+Here is an example of using this component:
 
 ```jsx
 import React from "react";
@@ -99,7 +99,11 @@ Each service is likely to have their own set of rules and constraints when it co
 
 We are solving this by creating a new Wysiwyg Type for each service. In the previous section, we've mentioned the type `MagentoWysiwyg`. It uses the exact same mechanisms as the one we will describe below.
 
-If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](#MagentoWysiwyg).
+<!-- @TODO: Fix linking to MagentoWysiwyg
+    The link to #MagentoWysiwyg is not working, so documentation might be missing, or should
+    it be pointing to `/docs/advanced/theme/wysiwyg-platform.html#Add-a-custom-Magento-Widget`?
+-->
+<!-- If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](#MagentoWysiwyg).  -->
 
 **Steps to create a new Wysiwyg Type (`CustomWysiwyg`)**
 

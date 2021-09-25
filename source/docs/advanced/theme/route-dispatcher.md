@@ -179,12 +179,12 @@ Note: for more info related to setting up cache control check [the cache control
 
 Once your server is correctly configured, you need to map the `__typename` of your GraphQL datatype to a custom component.
 
-To do so, you need to create the `my-module/web/moduleRoutes.js` file in your module that will contain the mapping. You might have already created if you followed the [Add a new page](/docs/essentials/add-a-page-client-side.html#Map-the-URL-to-the-page-component) guide. But instead of using the default export, you will need to export a named object `dispatchedRoutes`.
+To do so, you need to create the `my-module/web/moduleRoutes.js` file in your module that will contain the mapping. You might have already created it if you followed the [Add a new page](/docs/essentials/add-a-page-client-side.html#Map-the-URL-to-the-page-component) guide. But instead of using the default export, you will need to export a named object `dispatchedRoutes`.
 
 This object has `__typenames` as keys (in our case `MyCustomType`), and a render function as values that will tell the application what to render for a specific key (in our case, it renders `MyCustomPage`). This will give you something like this:
 
 ```js
-//` my-module/web/moduleRoutes.js`
+// my-module/web/moduleRoutes.js
 import React from "react";
 import MyCustomPage from "theme/pages/MyCustomPage";
 
@@ -198,10 +198,10 @@ export const dispatchedRoutes = {
 // ];
 ```
 
-In the props passed to a render function (L6), you will have access to a `matched` property that is in fact the object returned by your `matchUrl` function.
+In the props passed to a render function (L6), you will have access to a `matched` property which is the object returned by your `matchUrl` function.
 
 Once you've created your file, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/some-dynamic-custom-url` URL. It will display `MyCustomPage` component.
 
-And this is it! From now on, any URL that is matched by the url matcher, will now be displayed with the render function defined in your `dispatchedRoutes` export under the matching key. Otherwise, a 404 page will still be displayed to the user.
+And that is it! 🎉 From now on, any URL that is matched by the url matcher, will now be displayed with the render function defined in your `dispatchedRoutes` export under the matching key. Otherwise, a 404 page will still be displayed to the user.
