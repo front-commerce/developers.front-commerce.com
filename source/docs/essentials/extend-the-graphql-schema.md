@@ -126,7 +126,7 @@ We would like to:
 1. add a `clicksCounter` field to the existing `Product` type
 2. add an `incrementProductCounter` mutation
 
-It could look like so:
+It could look something like this:
 
 ```graphql
 # my-module/server/modules/clicks-counters/schema.gql
@@ -140,8 +140,8 @@ extend type Mutation {
 ```
 
 <blockquote class="info">
-  The `Product` type is part of Front-Commerce’s `Magento2` module. The
-  `MutationSuccess` type used as the mutation response type is part of
+  The `Product` type is part of Front-Commerce’s `Magento2` module. <br />
+  The `MutationSuccess` type, used as the response for the mutation, is part of
   Front-Commerce’s core.
 </blockquote>
 
@@ -152,14 +152,15 @@ extend type Query {
   clicksCounterByProductSKU(sku: String!): Int
 }
 ```
-However we feel it would have been less intuitive for frontend developers. It
-may seem more natural for people used to design relational databases or REST
-APIs, but we recommend to try limiting as much as possible the number of
-top-level queries in your projects to learn _thinking in GraphQL_.
+However, we feel it would have been less intuitive for front-end developers. On 
+the other hand, it may seem more natural for developers familiar with designing 
+relational databases or REST APIs. Still, we recommend limiting as much 
+as possible the number of top-level queries in your projects to learn _thinking 
+in GraphQL_.
 
 </blockquote>
 
-Then expose the schema using the `typeDefs` key of the module definition. We
+Let's expose the schema using the `typeDefs` key of the module definition. We
 recommend to make the dependency to Magento’s Product module explicit by adding
 a `dependencies` key. Update the
 `my-module/server/modules/clicks-counters/index.js` entrypoint:
@@ -179,7 +180,7 @@ export default {
 ```
 
 <blockquote class="info">
-  Webpack is in fact taking care of converting SDL into a Javascript object
+  Webpack is taking care of converting SDL into a Javascript object
   using an appropriate loader.
 </blockquote>
 
@@ -231,7 +232,7 @@ field names and resolver function. Resolver functions may return a
 for asynchronous operations.
 
 <blockquote class="more">
-  To know more about resolvers and their internals, we recommend the reading of
+  To learn more about resolvers and their internals, we recommend reading
   [GraphQL Tools resolvers
   documentation](https://www.graphql-tools.com/docs/resolvers).
 </blockquote>
@@ -284,7 +285,7 @@ Let’s analyze this code in detail.
 
 #### Returning the counter value for every `Product`
 
-First of all, the exported resolver map defines a resolver for the
+The first part of the export defines a resolver for the
 `clicksCounter` field of any `Product` field.
 
 ```js
@@ -360,7 +361,7 @@ The resolver will:
    request, it defaults to `1`.
 3. set this new incremented value for the counter
 4. finally, return a value matching the `MutationSuccess` Front-Commerce type
-   which in this example is always successful (`{success: true}`).
+   which in this example is always successful (` { success: true } `).
    <!-- TODO Add a reference page (and link it from here) for the MutationSuccess type -->
 
 <blockquote class="info">
@@ -393,7 +394,7 @@ Try to execute the previous query again in your GraphQL playground:
 }
 ```
 
-You must now have a real value returned!
+You should now have a real value returned!
 
 ```json
 {

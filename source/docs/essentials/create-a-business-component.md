@@ -62,7 +62,7 @@ through:
 ### Installing the dependencies
 
 To create the map, we are going to use the
-[**react-leaflet**](https://react-leaflet.js.org/en/) package. It provides a
+[**react-leaflet**](https://react-leaflet.js.org/) package. It provides a
 component that uses leaflet under the hood. It will allow us to display the
 position of our store within [OpenStreetMap](https://www.openstreetmap.org/search?query=Toulouse#map=12/43.6007/1.4329).
 
@@ -80,7 +80,7 @@ npm install react-leaflet leaflet
 #### Override the default Home page
 
 Before starting to edit the Home page, you first need to extend the theme.
-If you don't have any module yet, please refer to
+If you don't have a module yet, please refer to
 [Extend the theme](./extend-the-theme.html#Configure-your-custom-theme-and-use-it-in-your-application).
 Once you have one, the goal will be to override the Home component from [`node_modules/front-commerce/src/web/theme/pages/Home/Home.js`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/pages/Home/Home.js)
 to `my-module/web/theme/pages/Home/Home.js`.
@@ -206,9 +206,9 @@ export default StoreLocator;
 ```
 
 - `my-module/web/theme/modules/StoreLocator/StoreLocator.story.js`:
-  will add a story to the Storybook of your application. This will serve as living
-  documentation and will allow anyone to understand what is StoreLocator used for and how
-  to use it.
+  will add a story to the Storybook of your application. The story will serve as living
+  documentation that will allow anyone to understand what the StoreLocator is used for
+  and how to use it.
 
 ```jsx
 // my-module/web/theme/modules/StoreLocator/StoreLocator.story.js
@@ -311,9 +311,8 @@ It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL.
 <p>You may think that some queries are already launched in our `EnhanceHome`
 and that splitting the StoreLocatorQuery from them is inefficient. But
 `react-apollo` will handle that for you. It will batch the requests to avoid too
-many network rountrips. This allows us to only think about what a component needs.
-The responsibility for the retrieval of its data lies with it and it allows us
-to use it anywhere.</p>
+many network roundtrips. This allows us to only think about what a component needs. 
+The responsibility for retrieving its data lies with it and allows us to use it anywhere.</p>
 
 <p>However, if it is important in your case to fuse your queries, you may be
 interested by the concept of
@@ -323,8 +322,8 @@ It allows you to split part of your queries without splitting the end query.</p>
 
 ### Making it dynamic
 
-Now that we have our Enhancer ready, we are going to use it in our store
-locator. The major change here is that your data come from your Enhancer and
+Now that we have our Enhancer ready, we are going to use it in our store locator. 
+The significant change here is that your data comes from your Enhancer and
 is passed down to your component by `props`.
 
 But when dealing with asynchronous resources like fetching data from the backend,

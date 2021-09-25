@@ -1058,7 +1058,7 @@ If your store was running on `2.0.0-rc.1`, you should empty the application cach
 
 ### More flexible store URLs
 
-It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
+It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain a URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
 
 Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details.
 
@@ -1261,7 +1261,7 @@ This led to several issues:
 
 - developers needed to handle code splitting themselves, which could led to bigger initial javascript load
 - it was hard to have a global vision of the existing routes in a Front-Commerce application
-- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped a URL to a route
 
 This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
 

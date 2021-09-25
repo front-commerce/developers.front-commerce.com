@@ -63,7 +63,7 @@ export default {
 
 ### Make invoice files downloadable for Customers
 
-You must implement [a custom router](/docs/advanced/server/add-http-endpoint.html) to expose the PDF file on an URL. The implementation of this route is up to you and depends on your context.
+You must implement [a custom router](/docs/advanced/server/add-http-endpoint.html) to expose the PDF file on a URL. The implementation of this route is up to you and depends on your context.
 
 It might be a simple proxy, but if your remote data source does not implement access control you may have to roll your own authorization checks to ensure that Customers cannot access invoices that don't belong to them.
 
