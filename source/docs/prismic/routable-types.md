@@ -5,7 +5,7 @@ title: Prismic Routable Types
 
 You might want to create new pages managed from Prismic. These pages should be accessible with a URL and may have to be included in the Sitemap (e.g: `/our-company`).
 
-This documentation page explain how the Prismic module allows to leverage [Front-Commerce's Dispatcher](https://developers.front-commerce.com/docs/advanced/theme/route-dispatcher.html) to make content from custom types routable.
+This documentation page explain how the Prismic module allows to leverage [Front-Commerce's Dispatcher](/docs/advanced/theme/route-dispatcher.html) to make content from custom types routable.
 
 To make a custom Prismic data type routable these steps are required:
 

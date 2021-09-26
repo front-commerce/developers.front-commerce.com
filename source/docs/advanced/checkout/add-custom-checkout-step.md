@@ -3,7 +3,7 @@ id: add-custom-checkout-step
 title: Add a custom checkout step
 ---
 
-The checkout is one of the most complex part of any e-commerce website. It is full of rules and easy to be in an invalid step. If you use a rather standard checkout (shipping/billing address, shipment methods, payment methods and place order), you hopefully won't have to change anything more than a few components to adapt them to your own look and feel.
+The checkout is one of the most complex parts of any e-commerce website. It is full of rules and easy to be in an invalid step. If you use a relatively standard checkout (shipping/billing address, shipment methods, payment methods and place order), you hopefully won't have to change anything more than a few components to adapt them to your look and feel.
 
 However, if you need to add a custom step, you'll need to change a few things.
 

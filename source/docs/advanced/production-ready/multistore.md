@@ -89,7 +89,7 @@ query ShopQuery {
 }
 ```
 
-### How should I get the URL in an other store?
+### How should I get the URL in another store?
 
 URLs may change between stores. This is the case for the base url of your store but also for the actual path of your page. For instance a `/shirts.html` URL would be changed in `/chemises.html` in french. This can be done by executing the following GraphQL query:
 
@@ -108,7 +108,7 @@ It will return in `translatedUrl` the correct URL in the other store.
 
 <blockquote class="feature--new">
 This feature has been added in version 2.2.0 for Magento 1. Please contact us if you need it for another platform.
-</bloquote>
+</blockquote>
 
 With **Magento1** it is possible to handle multiple currencies for a single store. To do so, you need to define the `availableCurrencies` key for the stores using multiple currencies. This will add a button in your shop's header that let's the user choose which currency to use. By default, a user will be using the currency specified in the `currency` key.
 

@@ -48,7 +48,7 @@ The complete list of available Transformers can be found under [the `transformer
 
 ## Implementation examples
 
-Those examples assume that you have created [a GraphQL module](https://developers.front-commerce.com/docs/essentials/extend-the-graphql-schema.html#Create-a-new-GraphQL-module) and that it is already registered. Before being able to use the Prismic module API, you have to make sure `Prismic/Core` is a dependency of your module. In addition, we will use the Wysiwyg feature provided by `Front-Commerce/Wysiwyg`, so this one also needs to be in the dependencies:
+Those examples assume that you have created [a GraphQL module](/docs/essentials/extend-the-graphql-schema.html#Create-a-new-GraphQL-module) and that it is already registered. Before being able to use the Prismic module API, you have to make sure `Prismic/Core` is a dependency of your module. In addition, we will use the Wysiwyg feature provided by `Front-Commerce/Wysiwyg`, so this one also needs to be in the dependencies:
 
 ```diff
 import typeDefs from "./schema.gql";
@@ -151,9 +151,9 @@ export default {
 };
 ```
 
-> The `ImageTransformer` also rewrites the image path provided by the Prismic API to use a custom image proxy defined by the module. This path rewrite makes those image path directly usable by [Front-Commerce's `<Image />` component](https://developers.front-commerce.com/docs/advanced/production-ready/media-middleware.html#lt-Image-gt-component).
+> The `ImageTransformer` also rewrites the image path provided by the Prismic API to use a custom image proxy defined by the module. This path rewrite makes those image path directly usable by [Front-Commerce's `<Image />` component](/docs/advanced/production-ready/media-middleware.html#lt-Image-gt-component).
 
-In addition, each view carries some metadata like the alternative text or the image dimensions. The following changes allow to expose the alternative text of both the `tumbnail` and the `main` views:
+In addition, each view carries some metadata like the alternative text or the image dimensions. The following changes allow to expose the alternative text of both the `thumbnail` and the `main` views:
 
 ```diff
 type Homepage {

@@ -14,7 +14,7 @@ Notes:
 
 ## Configuring an integration
 
-By default, the Smart Forms comes with no backend implementation in production. In development mode (i.e. `FRONT_COMMERCE_ENV=dev`), a naive implementations exists so that you can work on integrating and testing Smart Forms components. Before adding Smart Forms to your application, you will have to configure an existing backend implementation (or write a specific one).
+By default, the Smart Forms comes with no backend implementation in production. In development mode (i.e. `FRONT_COMMERCE_ENV=dev`), naive implementations exists so that you can work on integrating and testing Smart Forms components. Before adding Smart Forms to your application, you will have to configure an existing backend implementation (or write a specific one).
 
 <blockquote class="info">
   We aim at supporting other services in the future. If you want to use a specific service to provide SmartForms feature, please let us know!

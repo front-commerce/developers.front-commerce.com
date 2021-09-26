@@ -11,7 +11,7 @@ title: Serving assets from a CDN/custom domain
 
 Serving assets from a custom domain can be done with a configuration change:
 
-1. for each stores in `config/stores`, you can add a `assetsBaseUrl` entry so that for this stores, static assets and images are served from it. For instance:
+1. for each store in `config/stores`, you can add a `assetsBaseUrl` entry so that static assets and images are served from it. For instance:
   ```js
     module.exports = {
       default: {
@@ -26,10 +26,10 @@ Serving assets from a custom domain can be done with a configuration change:
   };
   ```
   In a multiple store setup, it's possible to use the same `assetsBaseUrl` for all stores.
-1. [Configure the Content Security Policy](https://developers.front-commerce.com/docs/reference/configurations.html#config-website-js) so that assets can be loaded from this external URL
+1. [Configure the Content Security Policy](/docs/reference/configurations.html#config-website-js) so that assets can be loaded from this external URL
 
 After restarting Front-Commerce, your assets should be loaded from this custom domain.
 
 <blockquote class="note">
-The `assetsBaseUrl` configuration has effects only in `production` environment. In `development` environment, your assets will still be served from the root of your application.
+The `assetsBaseUrl` configuration only effects your `production` environment. In the `development` environment, your assets will still be served from the root of your application.
 </blockquote>

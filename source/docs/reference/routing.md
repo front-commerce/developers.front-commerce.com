@@ -17,16 +17,16 @@ Routes are detected from the `theme/routes/` folder within the folder indicated 
 
 Within the `web/theme/routes` folder, the following file structures will be transformed to the following URLs used in [React Router](https://reacttraining.com/react-router/web/guides/quick-start):
 
-| file path                              | url                |                                         |
-| -------------------------------------- | ------------------ | --------------------------------------- |
-| `web/theme/routes/index.js`            | `/`                |                                         |
-| `web/theme/routes/file.js`             | `/file`            |                                         |
-| `web/theme/routes/[slug].js`           | `/:slug`           |                                         |
-| `web/theme/routes/id-[id].js`          | `/id-:id`          |                                         |
-| `web/theme/routes/[id]id.js`           | `/:idid`           | Becareful with this unexpected behavior |
-| `web/theme/routes/deep/path/index.js`  | `/deep/path`       |                                         |
-| `web/theme/routes/deep/path/file.js`   | `/deep/path/file`  |                                         |
-| `web/theme/routes/deep/path/[slug].js` | `/deep/path/:slug` |                                         |
+| file path                              | url                |                                           |
+| -------------------------------------- | ------------------ | ----------------------------------------- |
+| `web/theme/routes/index.js`            | `/`                |                                           |
+| `web/theme/routes/file.js`             | `/file`            |                                           |
+| `web/theme/routes/[slug].js`           | `/:slug`           |                                           |
+| `web/theme/routes/id-[id].js`          | `/id-:id`          |                                           |
+| `web/theme/routes/[id]id.js`           | `/:idid`           | Be careful with this unexpected behaviour |
+| `web/theme/routes/deep/path/index.js`  | `/deep/path`       |                                           |
+| `web/theme/routes/deep/path/file.js`   | `/deep/path/file`  |                                           |
+| `web/theme/routes/deep/path/[slug].js` | `/deep/path/:slug` |                                           |
 
 ## How routes are overridden?
 

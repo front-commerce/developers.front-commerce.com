@@ -25,7 +25,7 @@ Compatible with:
 >
 > Magento 2.4.2-p1 support, and many other miscellaneous features.
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/06/15/front-commerce-2.7/)
+- [Announcement](/blog/2021/06/15/front-commerce-2.7/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.0)
 
 Requirement changes:
@@ -39,7 +39,7 @@ Requirement changes:
 >
 > We’ve also added new features (Store credits, wishlist improvements, remote configuration), updated our dependencies and fixed several issues.
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/04/29/front-commerce-2.6/)
+- [Announcement](/blog/2021/04/29/front-commerce-2.6/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.0)
 
 Requirements:
@@ -376,8 +376,8 @@ Requirements:
 
 > Improve the Cart and refactor styles to ease themes development
 
-- [Announcement](https://developers.front-commerce.com/blog/2019/03/25/release-1.0.0-alpha.2/)
-- [Migration guide](https://developers.front-commerce.com/docs/appendices/migration-guides.html#1-0-0-alpha-1-gt-1-0-0-alpha-2)
+- [Announcement](/blog/2019/03/25/release-1.0.0-alpha.2/)
+- [Migration guide](/docs/appendices/migration-guides.html#1-0-0-alpha-1-gt-1-0-0-alpha-2)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-alpha.2)
 
 Requirements:

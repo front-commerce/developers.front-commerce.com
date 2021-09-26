@@ -309,7 +309,7 @@ extend type Product {
 
 The resolver function will use the `sku` key from its parent data and will
 return the the current counter value from its local state (defaulting to `0` if
-no clicks occured).
+no clicks occurred).
 
 It is important to understand that the `sku` is not a parameter provided by
 frontend developers in the Query. It comes from data returned by earlier
@@ -357,7 +357,7 @@ The resolver will:
 1. use the mandatory `sku` argument to fetch the current counter value from its
    local state
 2. increment the counter value of the `incrementValue` optional argument. If the
-   `incrementValue` argument has not been defined explicitely in the GraphQL
+   `incrementValue` argument has not been defined explicitly in the GraphQL
    request, it defaults to `1`.
 3. set this new incremented value for the counter
 4. finally, return a value matching the `MutationSuccess` Front-Commerce type
