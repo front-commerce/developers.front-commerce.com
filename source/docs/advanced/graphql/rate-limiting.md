@@ -65,7 +65,7 @@ export default {
 The difference here is that we replaced the resolver declaration with a `limitRateByClientIp` call.
 `limitRateByClientIp` accepts 2 parameters:
 
-1. the rate limit definition: an object with `max` (number of accesses allowed) and `window` (duration, in a format supported by [ms](https://github.com/zeit/ms)) properties
+1. the rate limit definition: an object with `max` (number of accesses allowed) and `window` (duration, in a format supported by [ms](https://github.com/vercel/ms)) properties
 2. the original resolver, to call when conditions are satisfied and the user is allowed to access it
 
 In case of abuses, GraphQL will return an Error for the field that has been limited. Here is an example:

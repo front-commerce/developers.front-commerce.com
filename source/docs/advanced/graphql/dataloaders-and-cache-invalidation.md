@@ -5,7 +5,7 @@ title: DataLoaders and cache invalidation
 
 One of the main responsibility of GraphQL modules in Front-Commerce is fetching data from remote sources in resolvers. A naive approach may reach a few limits in a real application, that is why **Front-Commerce provides helpers allowing developers to build high-performance applications**.
 
-This section introduce the DataLoader pattern and how to use it in a Front-Commerce application. It then details how to configure the caching layer to keep remote API response in cache to boost performance. Finally, it explains how to invalidate the cache from remote systems.
+This section introduces the `DataLoader` pattern and how to use it in a Front-Commerce application. It then details how to configure the caching layer to keep remote API response in cache to boost performance. Finally, it explains how to invalidate the cache from remote systems.
 
 By the end of this guide, you will have a good understanding of the mechanisms at your disposal to compensate for the slowness of a remote API.
 
@@ -44,7 +44,7 @@ This problem is also known as [the N+1 problem](https://engineering.shopify.com/
 
 Batching, in this context is the process of grouping every data that is required so that they could be retrieved in an efficient manner.
 
-Let's suppose that our category contained 10 products `PANT-01`, `PANT-02`, …, `PANT-10`. Then, instead of making 10 HTTP requests for each product stock, we could leverage batching to fetch all product inventories with a single remote API call (ex: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`).
+Let's suppose that our category contained 10 products `PANT-01, PANT-02, …, PANT-10`. Then, instead of making 10 HTTP requests for each product stock, we could leverage batching to fetch all product inventories with a single remote API call (ex: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`).
 
 These kind of batch endpoints are not always available on remote services. But if they exist, they can avoid many remote API calls and lead to better performance.
 
@@ -239,7 +239,7 @@ return fooLoader.load(id).then(data => data.value)
 
 Writing batching functions and loaders could lead to reusing the same patterns. We have extracted some utility functions to help you in this task.
 
-One can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/server/core/graphql/dataloaderHelpers.js) module.
+You can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/server/core/graphql/dataloaderHelpers.js) module.
 
 ### `reorderForIds`
 
@@ -333,7 +333,7 @@ const loader = makeDataLoader("CatalogCategory")(ids =>
 
 By default, all dataLoaders are using a **per-request in-memory caching strategy**. It means that during the same GraphQL query, the same data will only be requested once.
 
-Front-Commerce is also shipped with a persistent cache implementation, using a Redis strategy (see [Caching strategies](#Caching-strategies)). One can implement new strategies to support more services (we also can help and support more strategies, please [contact us](mailto:contact@front-commerce.com)).
+Front-Commerce is also shipped with a persistent cache implementation, using a Redis strategy (see [Caching strategies](#Caching-strategies)). You can implement new strategies to support more services (we also can help and support more strategies, please [contact us](mailto:contact@front-commerce.com)).
 
 The DataLoader cache must be configured in the [`config/caching.js` configuration file](/docs/reference/configurations.html#config-caching-js). Please refer to the reference documentation for further details or read the following section to choose the most relevant strategies for your context.
 
