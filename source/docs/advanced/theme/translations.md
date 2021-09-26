@@ -51,7 +51,7 @@ For instance, let's see how to transform your values in react-intl Components.
     <blockquote class="note">
     However, for this particular use case we have abstracted this in Front-Commerce with the [`theme/components/atoms/Price`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/components/atoms/Typography/Price) component (and its variants: `ProductPrice`, `PriceOrFree`). We recommend you to use it instead, so you could benefit from better integration with its related GraphQL Type.
     </blockquote>
-* [and many more](https://github.com/yahoo/react-intl/wiki/Components)
+* [and many more](https://formatjs.io/docs/react-intl/components/)
 
 ### Without React Component
 
@@ -63,11 +63,25 @@ For instance, this is the case when you want to add some label attributes to you
 <span class="icon" aria-label="Icon title displayed for screen readers" />
 ```
 
-Fortunately, this is correctly handled by react-intl if you use [`defineMessages`](https://github.com/yahoo/react-intl/wiki/API#definemessages) combined with [`injectIntl`](https://github.com/yahoo/react-intl/wiki/API#injection-api).
+Fortunately, this is correctly handled by react-intl if you use [`defineMessages`](https://formatjs.io/docs/react-intl/api/#definemessagesdefinemessage) combined with [`injectIntl HOC`](https://formatjs.io/docs/react-intl/upgrade-guide-3x/#new-useintl-hook-as-an-alternative-of-injectintl-hoc) or the [`useIntl hook`](https://formatjs.io/docs/react-intl/api/#useintl-hook).
 
-<blockquote class="wip">
-Please refer to [react-intl documentation](https://github.com/yahoo/react-intl/wiki/API#injection-api) for more information about these two methods. We plan to add an example here in the future but didn't have time to document it yet.
-</blockquote>
+
+```jsx
+// injectIntl HOC
+import { injectIntl } from 'react-intl';
+
+const MyComponentWithHOC = injectIntl(({intl, ...props}) => {
+  return (<span class="icon" aria-label={intl.formatMessage({id:"screen-reader-icon-title", defaultMessage:"Icon title displayed for screen readers"})} />)
+})
+
+// useIntl Hook
+import { useIntl } from 'react-intl';
+
+const MyComponentWithHook = props => {
+  const intl = useIntl()
+  return <span class="icon" aria-label={intl.formatMessage({id:"screen-reader-icon-title", defaultMessage:"Icon title displayed for screen readers"})} />
+}
+```
 
 ## Translate what's in your components
 
@@ -77,7 +91,7 @@ Now that you have defined what should be translated in your application, you act
 ```sh
 npm run translate
 ```
-2. Translate the strings available in those files, and you are good to go :)
+2. Translate the strings available in those files, and you are good to go 🙂
 
 Note that for some translations you won't need to change anything. This usually happens for the default language and for business phrases such as "SKU", etc.
 

@@ -3,7 +3,7 @@ id: wysiwyg-platform
 title: WYSIWYG customization
 ---
 
-In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them. If you want to learn how the core WYSIWYG component work instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
+In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them. If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
 
 Each platform has a specific type of WYSIWYG. This allows to render your content differently depending of its origin. For instance a content from WordPress might have some specific media shortcodes while Magento will have some widgets to display a category name. In the following section you will learn about the one implemented in Front-Commerce:
 
@@ -37,7 +37,7 @@ The MagentoWyswiyg's goal is to support all the default features in Magento 1 & 
 **Default transforms**
 
 * `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
-* `<widget>` tags are transformed `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+* `<widget>` tags are transformed `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It comes from the `{% raw %}{{widget}}{% endraw %}` shortcode.
 
 ### Add a custom Magento Widget
 
