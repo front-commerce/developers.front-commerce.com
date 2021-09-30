@@ -7,6 +7,58 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.9.0` -> `2.10.0`
+
+### Configurable options HOC refactoring
+
+In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react. We then created hooks that use these functions and finally refactored the HOCs to use these functions/hooks while ensuring that the HOCs signature and functionality does not change. We also added `useSelectedProductWithConfigurableOptions(product, selectedOptions)` that we think is useful when dealing with configurable product options. `useSelectedProductWithConfigurableOptions` accepts as input:
+
+- The product
+- The initial selected options (with one of the following formats `{ [optionId]: valueId }` or `{ [attribute or label], [value or optionValue] }`)
+
+And returns an Object with the following properties:
+
+- selectedProduct: The selected product (does not change the sku of the input product)
+- setOption: A function to set an option
+- selectedOptions: The current selected options in the format `{ [optionId]: valueId }`
+- baseProduct: The base product (that the selected product is part of)
+- selectedSku: The sku if the selected product
+
+### CartItemOptionsUpdater needs `product` prop
+
+`<CartItemOptionsUpdater>` now expects a `product` prop if you are using it you should now send it the `product` as a prop like below:
+
+```diff
+-<CartItemOptionsUpdater {...props} />
++<CartItemOptionsUpdater product={product} {...props} />
+```
+
+### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
+
+`currentOptions` is deprecated in `<ConfigurableOptions>` (format `{ optionLabel: valueLabel }`). `<ConfigurableOptions>` now expects `selectedOptions` (format `{ optionId: valueId }` same as what `useSelectedProductWithConfigurableOptions` returns)
+
+```diff
+-<ConfigurableOptions currentOptions={currentOptions} {...props} />
++<ConfigurableOptions selectedOptions={selectedOptions} {...props} />
+```
+
+### New style sheet for `CartItemOptionsUpdater`
+
+add the following line to `theme/modules/_modules.scss`
+
+```scss
+@import "~theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdater";
+```
+
+### import `hasCartItemOptions` from its own file in theme chocolatine
+
+We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions` to `theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions` so if you where using it you need to change where you are importing if like below:
+
+```diff
+-import { hasCartItemOptions } from "theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions";
++import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
+```
+
 ## `2.8.0` -> `2.9.0`
 
 ### Sass Update
