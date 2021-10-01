@@ -7,6 +7,56 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.9.0` -> `2.10.0`
+
+### Configurable options HOC refactoring
+
+In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
+
+This refactoring homogeneized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
+
+### CartItemOptionsUpdater needs `product` prop
+
+`<CartItemOptionsUpdater>` now expects a `product` prop if you are using it you should now send it the `product` as a prop like below:
+
+```diff
+-<CartItemOptionsUpdater {...props} />
++<CartItemOptionsUpdater product={product} {...props} />
+```
+
+### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
+
+`currentOptions` is deprecated in `<ConfigurableOptions>` (format `{ optionLabel: valueLabel }`). `<ConfigurableOptions>` now expects `selectedOptions` (format `{ optionId: valueId }` same as what `useSelectedProductWithConfigurableOptions` returns)
+
+```diff
+-<ConfigurableOptions currentOptions={currentOptions} {...props} />
++<ConfigurableOptions selectedOptions={selectedOptions} {...props} />
+```
+
+### New style sheet for `CartItemOptionsUpdater`
+
+add the following line to `theme/modules/_modules.scss`
+
+```scss
+@import "~theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdater";
+```
+
+### import `hasCartItemOptions` from its own file in theme chocolatine
+
+We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions` to `theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions` so if you where using it you need to change where you are importing if like below:
+
+```diff
+-import { hasCartItemOptions } from "theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions";
++import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
+```
+
+
+### New features in `2.10.0`
+
+These new features may be relevant for your existing application:
+
+- [A new hook to homogeneize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
+
 ## `2.8.0` -> `2.9.0`
 
 ### Sass Update
