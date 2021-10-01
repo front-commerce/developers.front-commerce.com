@@ -11,18 +11,9 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Configurable options HOC refactoring
 
-In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react. We then created hooks that use these functions and finally refactored the HOCs to use these functions/hooks while ensuring that the HOCs signature and functionality does not change. We also added `useSelectedProductWithConfigurableOptions(product, selectedOptions)` that we think is useful when dealing with configurable product options. `useSelectedProductWithConfigurableOptions` accepts as input:
+In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
 
-- The product
-- The initial selected options (with one of the following formats `{ [optionId]: valueId }` or `{ [attribute or label], [value or optionValue] }`)
-
-And returns an Object with the following properties:
-
-- selectedProduct: The selected product (does not change the sku of the input product)
-- setOption: A function to set an option
-- selectedOptions: The current selected options in the format `{ [optionId]: valueId }`
-- baseProduct: The base product (that the selected product is part of)
-- selectedSku: The sku if the selected product
+This refactoring homogeneized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
 
 ### CartItemOptionsUpdater needs `product` prop
 
@@ -58,6 +49,13 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 -import { hasCartItemOptions } from "theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions";
 +import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
 ```
+
+
+### New features in `2.10.0`
+
+These new features may be relevant for your existing application:
+
+- [A new hook to homogeneize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
 
 ## `2.8.0` -> `2.9.0`
 

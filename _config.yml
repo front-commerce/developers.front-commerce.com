@@ -124,6 +124,7 @@ sidebar_categories:
     - docs/reference/analytics-components
     - docs/reference/scripts
     - docs/reference/front-commerce-prepare
+    - docs/reference/use-selected-product-with-configurable-options
   Appendices:
     - docs/appendices/troubleshooting
     - docs/appendices/release-process
