@@ -21,7 +21,7 @@ In this release the Magento2 Adyen Front-Commerce module got a major revamp to m
 
 In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
 
-This refactoring homogeneized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
+This refactoring homogenized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
 
 ### CartItemOptionsUpdater needs `product` prop
 
@@ -64,7 +64,7 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
-- [A new hook to homogeneize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
+- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
 
 ## `2.8.0` -> `2.9.0`
 
@@ -118,7 +118,7 @@ Migration will depends on what you've implemented. Please contact us if you have
 
 ### Dedicated Payment logs
 
-In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
+In this release, we've split payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
 
 By default, a new `logs/payment.log` file will be used, but you will see a warning:
 > You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
