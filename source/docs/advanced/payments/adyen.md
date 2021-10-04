@@ -15,21 +15,31 @@ This page contains information about the different ways you can accept payments 
 **Note** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
 </blockquote>
 
-Front-Commerce is compatible with [Adyen's official Magento module PWA storefront integration](https://docs.adyen.com/plugins/magento-2/magento-pwa-storefront) in its native version.
+Front-Commerce is compatible with [Adyen's official Magento headless integration](https://docs.adyen.com/plugins/magento-2/magento-headless-integration) in its native version.
 
-This integration is slightly different from [traditional Magento2 headless payments](/docs/magento2/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to display and Authorize payments from the checkout page, using [Adyen's Web Drop-in integration](https://docs.adyen.com/checkout/drop-in-web) on the front-end. No redirection to other payment platform is involved unless its absolutely necessary, the Customer remains on the Front-Commerce store.
+This integration is slightly different from [traditional Magento2 headless payments](/docs/magento2/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to display and Authorize payments from the checkout page, using [Adyen's Web Drop-in integration](https://docs.adyen.com/online-payments/drop-in-web) on the front-end. No redirection to other payment platform is involved unless its absolutely necessary, the Customer remains on the Front-Commerce store.
 
 Here is how to set this payment method up.
 
-### Install and configure the `Adyen_Payment` Magento2 extension (6.5+)
+### Install and configure the `Adyen_Payment` Magento2 extension (7.2+)
 
-Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments. The minimum supported version is [6.5.0](https://github.com/Adyen/adyen-magento2/releases/tag/6.5.0).
+Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments. The minimum supported version is [7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0).
 
 You must configure the "Payment Origin URL" in the "Advanced: PWA" with your Front-Commerce URL **for each of your stores**.
 
 <blockquote class="important">
 **IMPORTANT** please note that enabling or disabling payments in Magento's admin area has no effect on payment methods visible on the storefront. This is a *feature* from the module: every active payment methods in Adyen will be available. **You either have to filter them in the frontend or from your Adyen account.**
 </blockquote>
+
+### Add the Adyen client key in the environment
+
+You need to define the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable so that it contains [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication) for the domains of your Front-Commerce stores:
+
+```sh
+# In .env
+FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
+# the Adyen client key is prefixed with live_ or test_
+```
 
 ### Register the Adyen for Magento2 payment module in Front-Commerce
 
@@ -38,14 +48,14 @@ In your Front-Commerce application:
 ```diff
 // .front-commerce.js
 -  modules: [],
-+  modules: ["./node_modules/front-commerce/modules/payment-magento2-adyen"],
++  modules: ["./node_modules/front-commerce/modules/payment-adyen"],
    serverModules: [
      { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
 -    { name: "Magento2", path: "server/modules/magento2" }
 +    { name: "Magento2", path: "server/modules/magento2" },
 +    {
 +      name: "Magento2Adyen",
-+      path: "payment-magento2-adyen/server/modules/payment-magento2-adyen",
++      path: "payment-adyen/server/modules/magento2-payment-adyen",
 +    }
    ],
    webModules: [
@@ -53,7 +63,7 @@ In your Front-Commerce application:
 +    { name: "FrontCommerce", path: "front-commerce/src/web" },
 +    {
 +      name: "Magento2Adyen",
-+      path: "front-commerce/modules/payment-magento2-adyen/web",
++      path: "front-commerce/modules/payment-adyen/web",
 +    }
    ]
 ```
