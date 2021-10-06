@@ -203,7 +203,7 @@ Here is a list of integrations frequently used accross eCommerce shops:
 
 #### Google Analytics
 
-  - `npm install --save front-commerce/analytics.js-integration-google-analytics`
+  - `npm install --save @segment/analytics.js-integration-google-analytics`
   - Configuration example in `src/config/analytics.js`
     ```js
     {
@@ -225,7 +225,7 @@ Here is a list of integrations frequently used accross eCommerce shops:
 
 #### Google Tag Manager
 
-  - `npm install --save front-commerce/analytics.js-integration-google-tag-manager`
+  - `npm install --save @segment/analytics.js-integration-google-tag-manager`
   - Configuration example in `src/config/analytics.js`
     ```js
     {
