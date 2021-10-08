@@ -225,6 +225,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically. Can be targetted directly, or included with the previous namespace using `DEBUG=front-commerce:prismic*`
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
+- `front-commerce:shipping:mondialrelay`: debugs MondialRelay related operations
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle

@@ -9,6 +9,12 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.9.0` -> `2.10.0`
 
+### Magento1 MondialRelay module update
+
+In this release we have added support for MondialRelay as a shipping method in Magento2 based Front-Commerce implementation. As a result, we have changed the way files are organized on the disk.
+
+In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Magento1-based-application). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
+
 ### Magento2 Adyen module update
 
 In this release the Magento2 Adyen Front-Commerce module got a major revamp to make it compatible with the latest Magento2 Adyen plugin (7.2). Several steps are needed to upgrade your project if you are using this payment platform:
@@ -64,6 +70,7 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application)
 - [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
 
 ## `2.8.0` -> `2.9.0`
