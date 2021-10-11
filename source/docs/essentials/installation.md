@@ -87,7 +87,9 @@ For instance, to interact with Magento2 you will need to configure a few things:
   - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: you will need to ensure that the key
   configured here is identical to Magento’s `fc_cache_api_token` custom variable
-  to enable cache invalidation from Magento2
+  to enable cache invalidation from Magento2 (available in the `System > Other Settings > Custom Variables` page of
+  Magento admin area)
+- : indicate your magento instance's endpoint url (`FRONT_COMMERCE_MAGENTO_ENDPOINT`) and front-commerce module version (`FRONT_COMMERCE_MAGENTO_MODULE_VERSION`), 
 
 We invite you to dig into the other configurations and tweak them if you wish.
 See [our documentation](/docs/reference/environment-variables.html#Remote-services-configuration) for further information.

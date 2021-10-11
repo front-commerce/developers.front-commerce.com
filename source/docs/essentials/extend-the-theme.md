@@ -99,7 +99,7 @@ The original fragment file is collocated with the original component at: [`node_
 The data will now be fetched from GraphQL every time the `ProductItem` is used (product listings, upsells…) and will be available for you to render it as wanted.
 
 <blockquote class="warning">
-**Important:** in development mode, you MIGHT restart the application for the override to be detected.
+**Important:** in development mode, you MIGHT need to restart the application for the override to be detected.
 The tools used to provide the override feature do not detect automatically that you're trying to override a file yet. This is an upcoming improvement, see [#63](https://gitlab.com/front-commerce/front-commerce/issues/63) for further information.
 </blockquote>
 
