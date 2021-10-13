@@ -23,6 +23,15 @@ In this release the Magento2 Adyen Front-Commerce module got a major revamp to m
 1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so you have [to configure the environment so that it is defined](/docs/advanced/payments/adyen.html#Add-the-Adyen-client-key-in-the-environment)
 1. we have made some changes and fixes to [the Adyen related frontend components](https://gitlab.com/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen). If you have overridden some of those, you have to backport the changes.
 
+### Magento1 Payline module update
+
+In this release, we've implemented automatic configuration for the Payline environment from the related Magento setting.
+Payline will use the `HOMO` or `PRODUCTION` environment based on what is configured in Magento.
+
+If using Payline, you should update the Magento module to version [1.3.0](https://github.com/front-commerce/magento1-module-payline-front-commerce/releases/tag/1.3.0).
+If you don't, you will see the error below in your logs (and the `PRODUCTION` environment will be used):
+> ERROR on reorderForIds, the id payment/payline_common/environment has no associated result
+
 ### Configurable options HOC refactoring
 
 In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
