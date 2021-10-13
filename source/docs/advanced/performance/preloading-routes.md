@@ -129,7 +129,7 @@ If you inspect your network dev tools in your browser, you should see some reque
 
 Under the hood, it looks into the `.front-commerce/themes.es.js` file generated at build time from your `theme/routes` folders (cf. [Routing documentation](/docs/reference/routing.html)). If the URL matches one of the routes available here, it will preload the component and then preload its data using the `preload` static property of the component.
 
-This is why if you are have trouble preloading data on one of your custom routes, you first need to make sure that the `preload` property is available. If it is not, please refer to [the first part of this documentation](#How-to-preload-data).
+This is why if you have trouble preloading data on one of your custom routes, you first need to make sure that the `preload` property is available. If it is not, please refer to [the first part of this documentation](#How-to-preload-data).
 
 Additionally, it will also preload the data needed for the layouts around the matched route. This means that you can also set a `preload` static property on layouts and inner layouts.
 
