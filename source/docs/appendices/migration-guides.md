@@ -34,11 +34,13 @@ If you don't, you will see the error below in your logs (and the `PRODUCTION` en
 
 ### Configurable options HOC refactoring
 
+**We highly recommend to test products configuration on the product and cart pages after this migration.** Product configuration, bundle and custom options selectors where homogeneized between these pages to fix some issues.
+
 In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
 
 This refactoring homogenized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
 
-### CartItemOptionsUpdater needs `product` prop
+#### CartItemOptionsUpdater needs `product` prop
 
 `<CartItemOptionsUpdater>` now expects a `product` prop if you are using it you should now send it the `product` as a prop like below:
 
@@ -47,7 +49,7 @@ This refactoring homogenized how options were used and allowed us to fix some di
 +<CartItemOptionsUpdater product={product} {...props} />
 ```
 
-### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
+#### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
 
 `currentOptions` is deprecated in `<ConfigurableOptions>` (format `{ optionLabel: valueLabel }`). `<ConfigurableOptions>` now expects `selectedOptions` (format `{ optionId: valueId }` same as what `useSelectedProductWithConfigurableOptions` returns)
 
@@ -56,7 +58,7 @@ This refactoring homogenized how options were used and allowed us to fix some di
 +<ConfigurableOptions selectedOptions={selectedOptions} {...props} />
 ```
 
-### New style sheet for `CartItemOptionsUpdater`
+#### New style sheet for `CartItemOptionsUpdater`
 
 add the following line to `theme/modules/_modules.scss`
 
@@ -64,7 +66,7 @@ add the following line to `theme/modules/_modules.scss`
 @import "~theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdater";
 ```
 
-### import `hasCartItemOptions` from its own file in theme chocolatine
+#### Import `hasCartItemOptions` from its own file in theme chocolatine
 
 We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions` to `theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions` so if you where using it you need to change where you are importing if like below:
 
@@ -73,6 +75,12 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 +import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
 ```
 
+### SmartForms field internal changes
+
+In this release, we've reworked the internals of SmartForm fields to better support browser autocomplete.
+
+The public API remains unchanged but if you've overriden internal components, please check your overrides against their original. See these Merge Requests: [#641](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/641) and [#645](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/645)
+
 
 ### New features in `2.10.0`
 
@@ -80,7 +88,7 @@ These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
 - [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application)
-- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
+- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options.html)
 
 ## `2.8.0` -> `2.9.0`
 
