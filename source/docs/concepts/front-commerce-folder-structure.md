@@ -24,7 +24,7 @@ src/
 
 ## src/config/
 
-The config contains all the files that allow you to configure the behaviour of Front-Commerce.
+The config contains all the files that allow you to configure the behavior of Front-Commerce.
 
 See more details within the [Reference documentation](/docs/reference/configurations.html).
 
