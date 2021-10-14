@@ -99,11 +99,7 @@ Each service is likely to have their own set of rules and constraints when it co
 
 We are solving this by creating a new Wysiwyg Type for each service. In the previous section, we've mentioned the type `MagentoWysiwyg`. It uses the exact same mechanisms as the one we will describe below.
 
-<!-- @TODO: Fix linking to MagentoWysiwyg
-    The link to #MagentoWysiwyg is not working, so documentation might be missing, or should
-    it be pointing to `/docs/advanced/theme/wysiwyg-platform.html#Add-a-custom-Magento-Widget`?
--->
-<!-- If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](#MagentoWysiwyg).  -->
+If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg).
 
 **Steps to create a new Wysiwyg Type (`CustomWysiwyg`)**
 
