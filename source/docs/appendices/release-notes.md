@@ -19,7 +19,7 @@ Compatible with:
 
 ## 2.10.0
 
-> The 2.10 release brings Front-Commerce to the omnichannel market. With Proximis headless capabilities, merchants can now offer a great experience to their customers no matter where they are.
+> The 2.10 release brings Front-Commerce to the unified commerce market. With Proximis headless capabilities, merchants can now offer a great experience to their customers no matter where they are.
 >
 > We’ve improved our Front-Commerce modules offer too, with a shipping and a payment provider that solve B2C merchants needs.
 
