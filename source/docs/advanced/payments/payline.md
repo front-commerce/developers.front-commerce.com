@@ -5,11 +5,6 @@ title: Monext Online integration
 
 This page contains information about the different ways you can accept payments with [Monext Online (Payline)](https://www.monext.fr/online) in your Front-Commerce application.
 
-<blockquote class="important">
-  **EARLY PREVIEW:** _This payment method is currently in early preview. It will be production ready in Front-Commerce `2.6.0`_
-</blockquote>
-
-
 ## Magento1 module
 
 <blockquote class="feature--new">
