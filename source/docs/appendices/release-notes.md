@@ -13,6 +13,7 @@ Compatible with:
 
 - **Node.js:** 12.22+
 - **Magento2**: 2.3.2 -> 2.4.3-p1 (Open Source & Commerce)
+  - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
 
@@ -28,6 +29,8 @@ Compatible with:
 
 Requirement changes:
 - Magento2: 2.3.2+ -> 2.4.3-p1 - (Open Source & Commerce)
+
+Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 
 ## 2.9.0
 
