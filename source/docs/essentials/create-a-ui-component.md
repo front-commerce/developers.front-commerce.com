@@ -120,6 +120,7 @@ once you've [registered your module](extend-the-theme.html#Configure-your-custom
   understand what is `IllustratedContent` used for and how to use it.
 
   ```jsx
+  import React from "react";
   import IllustratedContent from "./IllustratedContent.js";
   import { storiesOf } from "@storybook/react";
 
@@ -243,11 +244,13 @@ the default one.
 
 ```jsx
 // src/web/theme/ui/molecules/IllustratedContent/IllustratedContent.story.js
+import React from "react";
 import IllustratedContent from "./IllustratedContent.js";
 import { storiesOf } from "@storybook/react";
-import Icon from "theme/ui/atoms/Icon";
-import { H3 } from "theme/ui/atoms/Typography/Heading";
-import Paragraph from "theme/ui/atoms/Typography/Paragraph";
+import Icon from "theme/components/atoms/Icon";
+import { H3 } from "theme/components/atoms/Typography/Heading";
+import { BodyParagraph } from "theme/components/atoms/Typography/Body";
+
 
 storiesOf("molecules.IllustratedContent", module)
   .add("default", () => {
@@ -261,10 +264,10 @@ storiesOf("molecules.IllustratedContent", module)
     return (
       <IllustratedContent media={<Icon icon="truck" />}>
         <H3>Shipping within 48h</H3>
-        <Paragraph>
+        <BodyParagraph>
           We are using many delivery services to let you choose what is best for
           you!
-        </Paragraph>
+        </BodyParagraph>
       </IllustratedContent>
     );
   })
