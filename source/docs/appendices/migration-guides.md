@@ -9,12 +9,15 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.10.0` -> `2.11.0`
 
-N/A
+### Dependencies updates
+
+Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
+- `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
 
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-- None yet!
+- Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
 ## `2.9.0` -> `2.10.0`
 
