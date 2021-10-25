@@ -5,6 +5,10 @@ title: Quick orders
 
 # QuickOrder Component
 
+<blockquote class="feature--new">
+_Since version 2.11_
+</blockquote>
+
 You may want to allow your customers to directly order an item based on its unique code.
 
 The <QuickOrder /> component does that by show a simple compact form with item code and quantity information.
