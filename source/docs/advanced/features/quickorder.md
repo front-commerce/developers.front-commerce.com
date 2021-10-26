@@ -31,6 +31,11 @@ const MyPage = () => {
 }
 ```
 
+You will also need to add the following line to your `web/theme/modules/_modules.scss` file:
+
+```diff
++@import "~theme/modules/QuickOrder/QuickOrder";
+```
 
 ## Customize the QuickOrder texts
 
