@@ -321,7 +321,10 @@ Documentation about this script is available in the [`scripts/imageWarmUp.js` re
 
 While the proxy and caching functionality is really useful you may want to disable it for certain routes or files.
 
-In Front-Commerce we have implemented a mechanism to bypass the cache for routes that matches specified RegExp. Use `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` environment variable to specify a pattern that you want to bypass the cache for. For example, setting `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `/media/excel` will bypass the cache for all routes matching `/media/excel` like `/media/excel/Book1.xlsx`.
+In Front-Commerce we have implemented a mechanism to bypass the cache for routes that matches specified RegExp. Use `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` environment variable to specify a pattern that you want to bypass the cache for. This pattern will be matched against the file full URL without the query string (e.g. `https://www.example.com/path/to/the/file.png`). Usage examples:
+
+- if you want to allow files under `/media/excel` to be available without modifications, you can set `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `/media/excel`,
+- if you want to allow `.svg` and `.mp4` files to be available without modifications, you can set `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `\.(svg|mp4)$`
 
 Setting `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` will set the `ignoreCacheRegex` config of the [`expressConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/cf83e8bac722295403cc89c66fa39758eeaa25c6/src/server/express/config/expressConfigProvider.js#L53). Consequently it will be available on `staticConfigFromProviders.express.ignoreCacheRegex` should you ever need it.
 
