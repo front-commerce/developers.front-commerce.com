@@ -7,6 +7,7 @@ In this section, you will learn advanced information about the Node.js server in
 
 * [Add custom endpoints to your server](./add-http-endpoint.html)
 * [Configurations](./configurations.html)
+* [Customize response HTTP headers](./customize-response-http-headers.html)
 
 We are currently writing documentation about:
 
