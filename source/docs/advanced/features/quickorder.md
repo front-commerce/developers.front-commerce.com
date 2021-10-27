@@ -9,16 +9,16 @@ title: Quick orders
 _Since version 2.11_
 </blockquote>
 
-You may want to allow your customers to directly order an item based on its unique code.
+You may want to allow your customers to directly order an item based on its <abbr title="Stock Keeping Unit">SKU</abbr>
 
-The <QuickOrder /> component does that by show a simple compact form with item code and quantity information.
+The `<QuickOrder />` component enables that by displaying a compact form to enter SKU and quantity information.
 
 The component automatically adds the item to the cart with the set quantity.
 
 
 ## Display QuickOrder 
 
-You can include the component in your page with the following lines:
+You must include the component in your page with the following lines:
 
 ```diff
 import React from "react";
@@ -39,14 +39,7 @@ You will also need to add the following line to your `web/theme/modules/_modules
 
 ## Customize the QuickOrder texts
 
-The placeholders and messages displayed by the QuickOrder component are based on the following translations keys :
-
-```json
-  "modules.QuickOrder.Labels.Sku": "Item code",
-  "modules.QuickOrder.Labels.Quantity": "Quantity",
-  "modules.QuickOrder.Labels.Confirmed": "The product has been added to the cart",
-  "modules.QuickOrder.Actions.AddToCart": "Add to the cart",
-```
+The placeholders and messages displayed by the QuickOrder component have translation keys prefixed with `modules.QuickOrder`. You can customize the text from your application translations files.
 
 <div class="center">
   <a class="link primary button" href="/docs/advanced/theme/translations.html">Learn about translations in Front-Commerce</a>
