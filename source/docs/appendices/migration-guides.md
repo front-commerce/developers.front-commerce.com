@@ -494,6 +494,7 @@ some attention though:
 * [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
     5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
     compared to 4.x.
+* [`helmet`](https://www.npmjs.com/package/helmet) has been updated to 4.5.0. As a result, [some middlewares previously included by default are not called anymore](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-removed) while [several middlewares are now enabled by default](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-added-by-default). Those HTTP headers [can be customized if needed](/docs/advanced/server/customize-response-http-headers.html).
 
 ## `2.4.0` -> `2.5.0`
 
