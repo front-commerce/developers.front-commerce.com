@@ -12,7 +12,6 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 
 ## `2.9.0` -> `2.10.0`
