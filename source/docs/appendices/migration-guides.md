@@ -17,6 +17,7 @@ Here are some highlights of the main changes in upstream libraries that *unlikel
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
+- [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
 ## `2.9.0` -> `2.10.0`
