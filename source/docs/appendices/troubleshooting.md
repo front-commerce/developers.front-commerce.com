@@ -129,7 +129,7 @@ If the problem persists, please contact us.
 
 > There is an error when I try to display an image through Front-Commerce's proxy.
 
-1. Is your Magento endpoint correctly configured? A common error is having an URL with `http` instead of `https`.
+1. Is your Magento endpoint correctly configured? A common error is having a URL with `http` instead of `https`.
 2. Is your image size properly defined? There is a validation step that should trigger some logs in your server if it is not defined properly.
 3. Is the size of your image preset (in `src/config/images.js`) an odd number? Since by default the images are resized in a 0.5 size, **odd numbers can't be used** in `width` or `height`. Please change it to an adjacent pair number.
 

@@ -5,7 +5,7 @@ title: Layouts
 
 When you are on a website, you expect to see the same kind of information on any page: the logo, the menu, maybe a footer, etc. But in some cases you may needed finer control over which page should display what. How does this translate in Front-Commerce?
 
-By creating `_layout.js` and `_inner-layout.js` files in your `web/theme/routes` folder. This is what we will explain in this guide.
+By creating `_layout.js` and `_inner-layout.js` files in your `web/theme/routes` folder to enable dynamic layouts. This is what we will explain in this guide.
 
 If you don't know what is the purpose of the `web/theme/routes` or how to use it, please first refer to the guide [Add a new page](/docs/essentials/add-a-page-client-side.html). Moreover, to complete this guide about layouts, you will need to have a module correctly setup in your project with a [web module preconfigured](/docs/essentials/add-a-page-client-side.html#Declare-your-module-as-a-web-module).
 
@@ -19,7 +19,7 @@ Let's take a Category page.
 ![A category page displays the list of the products of the category below the header and the menu.](./assets/category.png)
 </figure>
 
-The contents that are specific to this Category are the title, the products, the facets, etc. However, the header with the logo and the menu is not specific to the category page. You expect it to see it on the product page too.
+The contents that are specific to this Category are the title, the products, the facets, etc. The header with the logo and the menu are not specific to the category page. You expect it to see it on the product page too.
 
 Thus, the **layout** is everything that is not specific to the page you are displaying.
 
@@ -82,14 +82,14 @@ The children property here is the content of the route that will be displayed if
 
 Other pages will keep the root `_layout.js` and won't be affected by the blog's layout.
 
-To see this live, remember to restart your application before seeing the changes (`npm run start`).
+Remember to restart your application to see the changes (`npm run start`).
 
 <blockquote class="note">
     **Important:** If you need to override an existing `_layout.js` you can by coping it in your own web module. Moreover, you can create new layouts wherever you want. For instance, if a module defined some routes in `/blog` but didn't create a `/blog/_layout.js`, you can create it in your own module and all the routes in `/blog` will use this new layout.
 </blockquote>
 
 <blockquote class="note">
-    **Note:** In Front-Commerce's core, this is already the case for the `/checkout` that uses a leaner layout than the rest of the shop.
+    **Note:** In Front-Commerce's core, this is already the case for the `/checkout` route, which uses a leaner layout than the rest of the shop.
 </blockquote>
 
 ### Define an Inner Layout for a list of route
@@ -123,7 +123,7 @@ export default AccountLayout;
 
 You can see that it works just like the Blog's layout. However, keep in mind that you don't need to repeat the surrounding layout. For instance, there's no header and logo in my Inner Layout.
 
-To see this live, remember to restart your application before seeing the changes (`npm run start`).
+Remember to restart your application to see the changes (`npm run start`).
 
 <blockquote class="warning">
     **Warning:** You can't create an `_inner-layout.js` if a `_layout.js` file already exists at the same level. This is the case for the files in *your* modules but also for files in other's modules. However you can use [`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare.html#onCreateRoute) to filter the file you don't need in your project.

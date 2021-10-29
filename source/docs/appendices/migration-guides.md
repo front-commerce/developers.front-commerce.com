@@ -256,7 +256,7 @@ We've finished to update all of our internal tests to this latest version and ha
 
 ### `root_categories_path` configuration removed
 
-The `root_categories_path` configuration key from `website.js` is not used anymore. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
+The `root_categories_path` configuration key from `website.js` is not used any more. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
 
 It was first introduced for the navigation menu in Magento GraphQL modules (then unused), but used for breadcrumbs. We've reworked how breadcrumbs are generated from the category "path" value returned by magento to make it useless. We now always remove the first two category levels of the path, no matter their values. It prevent userland errors due to a misconfiguration of their app.
 
@@ -932,7 +932,7 @@ You may have to rebuild it by removing your `node_modules` folder or run `npm re
 
 Further details available on https://sharp.pixelplumbing.com/changelog.
 
-### `date-fns` isn't a Front-Commerce dependency anymore
+### `date-fns` isn't a Front-Commerce dependency any more
 
 [`date-fns`](https://www.npmjs.com/package/date-fns) has been removed from dependencies in favor of a native `winston` plugin that timestamps log entries, and custom functions elsewhere.
 
@@ -1023,7 +1023,7 @@ const ids = [1, 2, 3];
 
 `graphql-tools` has been migrated to its latest version (v6). This is a huge improvement for the library: after years of slow developments, the project has been taken over from Apollo by the Guild team. Front-Commerce now uses modules from the `@graphql-tools` monorepo, a new and fresh version of this library. See https://the-guild.dev/blog/graphql-tools-v6 for more context.
 
-**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](https://developers.front-commerce.com/docs/advanced/graphql/remote-schemas.html) for an updated guide.
+**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](/docs/advanced/graphql/remote-schemas.html) for an updated guide.
 
 **<abbr title="Too Long; Didn't Read">TL;DR</abbr>:**
 
@@ -1097,7 +1097,7 @@ You must also ensure that your app doesn't use `<FormattedHTMLMessage>` or `intl
 renamed and subtle low-level behavior changes were introduced (required errors by default in errors
 etc…).
 
-**If you were using [Front-Commerce's wrappers introduced in 2.0.0-rc.0](https://developers.front-commerce.com/docs/appendices/migration-guides.html#Abstract-Formsy) you might not encounter any issues**.
+**If you were using [Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/appendices/migration-guides.html#Abstract-Formsy) you might not encounter any issues**.
 Otherwise, we recommend to refactor your code to use them!
 
 See [Formsy's upgrade guide](https://github.com/formsy/formsy-react#1x-to-2x-upgrade-guide) for exhaustive details about low-level changes.
@@ -1124,11 +1124,11 @@ Some minor changes were introduced in dependencies or while removing deprecated 
 - webpack's `url-loader` updated from 3.x to 4.x. It may cause different mimetypes for rare types (see
   [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
 - `graphql` has been upgraded from 14.6.0 to 15.1.0. It is very likely backwards compatible for your app, even though backward incompatible changes were introduced for subtle use cases: see [v15.0.0 release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) if curious
-- `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](https://developers.front-commerce.com/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
+- `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
 - The `ProductStockLoader` no longer takes the `FeatureFlag` loader as parameter. Please remove this parameter if you were instantiating it manually.
 - `loaders.Url.matchBy` has been removed from Magento2's module. It was only used for the deprecated `Query.matchUrls` field and might not impact your codebase, but **it's worth mentioning in case your relied on it since it wasn't issuing deprecation warnings itself.**
 - Convict has been upgraded to 6.0.0. You may have to install additional packages if your application uses custom configuration providers with one of the following format in their schema: `"email"`, `"ipaddress"`, `"url"`, `"duration"` or `"timestamp"`. See [their migration documentation](https://github.com/mozilla/node-convict/blob/master/packages/convict/MIGRATING_FROM_CONVICT_5_TO_6.md) for further information
-- `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used anymore
+- `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used any more
 - The Wishlist feature is now always enabled for Magento 2
 - The Sitemap generation script has been revamped to use the latest version of the underlying library that contained heavy changes (it would be safe to double check that no regression was introduced in your context and we'd appreciate an issue if you find something ;))
 
@@ -1142,7 +1142,7 @@ If your store was running on `2.0.0-rc.1`, you should empty the application cach
 
 ### More flexible store URLs
 
-It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
+It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain a URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
 
 Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details.
 
@@ -1345,7 +1345,7 @@ This led to several issues:
 
 - developers needed to handle code splitting themselves, which could led to bigger initial javascript load
 - it was hard to have a global vision of the existing routes in a Front-Commerce application
-- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped a URL to a route
 
 This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
 
@@ -1549,7 +1549,7 @@ Please update your PHP dependencies by using the latest beta in your Magento pro
 
 ### Translations
 
-We have introduced the mechanism of [Translation Fallback](https://developers.front-commerce.com/docs/advanced/theme/translations.html#Translations-fallback). This is means that you will have fewer conflicts during next upgrades.
+We have introduced the mechanism of [Translation Fallback](/docs/advanced/theme/translations.html#Translations-fallback). This is means that you will have fewer conflicts during next upgrades.
 
 ### Improved search experience
 

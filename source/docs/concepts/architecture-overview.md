@@ -13,7 +13,7 @@ acts as a Gateway for your different APIs. **You can host it on your
 infrastructure** as long as it supports Node.js apps.
 
 <blockquote class="note">
-**Note:** your services do not have to be publicly exposed on the web anymore.
+**Note:** your services do not have to be publicly exposed on the web any more.
 You could add firewall rules or networking restrictions so only
 Front-Commerce’s middleware is allowed to interact with them.
 </blockquote>
@@ -58,7 +58,7 @@ As soon as Customers receive a response from the server (with a readable HTML
 page), **the React application becomes their main interface (3)**.
 
 Interactions may at some point trigger actions or require further data. An HTTP
-request will be send to the server and **GraphQL will respond (4)** with a
+request will be sent to the server and **GraphQL will respond (4)** with a
 minimal and size-efficient JSON response.
 
 Front-Commerce’s GraphQL middleware is a key component of this architecture. It
@@ -70,4 +70,4 @@ Data retrieval in the GraphQL middleware has been designed to allow developers t
 
 ## Front-Commerce in depth
 
-Now that you know how Front-Commerce works, you can take try to follow the [Essentials guides](/docs/essentials/installation.html). This will let you know how common tasks are acheived within Front-Commerce.
+Now that you know how Front-Commerce works, you can take try to follow the [Essentials guides](/docs/essentials/installation.html). This will let you know how common tasks are achieved within Front-Commerce.

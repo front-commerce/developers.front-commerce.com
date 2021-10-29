@@ -120,7 +120,6 @@ sidebar_categories:
     - docs/reference/graphql-module-definition
     - docs/reference/remote-schema-helpers
     - docs/reference/graphql-context
-    - docs/reference/api
     - docs/reference/routing
     - docs/reference/analytics-components
     - docs/reference/scripts

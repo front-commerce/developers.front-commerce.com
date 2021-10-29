@@ -124,7 +124,7 @@ This is a basic structure of this config file:
                 <attributes>
                     <entity_id>Post ID</entity_id>
                     <title>Title</title>
-                    <descrition>Description</descrition>
+                    <description>Description</description>
                     <link>Link</link>
                     <image>Image</image>
                 </attributes>
@@ -232,7 +232,7 @@ In case you need to ensure your endpoints works as expected, you can either use 
 
 - Guest testing: If your endpoint can be access in guest mode, you can simply send GET / POST / DELETE / UPDATE request
   to your endpoint for see the response
-- Customer testing: You need to add credential and token for your request. You can retrieve all this informations in your database
+- Customer testing: You need to add credential and token for your request. You can retrieve all this information in your database
 
   - Consumer Key = `key` in table `oauth_consumer`
   - Consumer Secret = `secret` in table `oauth_consumer`

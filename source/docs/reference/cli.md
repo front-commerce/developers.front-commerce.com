@@ -52,7 +52,7 @@ A basic config could be :
 
 The files linted are the files within the modules you have defined in [`.front-commerce.js`](/docs/reference/front-commerce-js.html). However, the modules that are in `node_modules` won't be linted.
 
-> Please note that the errors and warnings that this tool will log are also displayed when using `front-commerce start` in development mode. The `front-commerce lint` command is mainly useful when you want to ensure that your code is correctly linted before commiting it to your repository.
+> Please note that the errors and warnings that this tool will log are also displayed when using `front-commerce start` in development mode. The `front-commerce lint` command is mainly useful when you want to ensure that your code is correctly linted before committing it to your repository.
 
 ## `front-commerce prepare`
 

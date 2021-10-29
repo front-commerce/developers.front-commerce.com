@@ -5,7 +5,7 @@ title: Configurations
 
 Configuration is a part of software development that can quickly become messy. Validation, detection, performance... There is a lot to take care of. In Front-Commerce we solved this by defining what we call **Configuration Providers**.
 
-In this guide we will see how they work and how to create your own create new configurations or override existing ones.
+In this guide we will see how they work and how to create new configurations or override existing ones.
 
 ## What is a configuration provider?
 
@@ -13,7 +13,7 @@ The goal is to give access to a configuration object that contains all the confi
 
 However, not all applications will need every single configuration. For instance, a shop that chose to use [Algolia](https://www.algolia.com/) won't have the same configurations than a shop that chose [Elasticsearch](https://www.elastic.co/) for product search. The goal of the configuration providers is to define the configurations needed for the specific modules you use in your application.
 
-On server start, the configuration providers will then be combined to create the global configuration object. This configuration object will then available on each server request.
+On server start, the configuration providers will then be combined to create the global configuration object. This configuration object will then be available on each server request.
 
 This can be illustrated by starting your Front-Commerce server with the environment variable `DEBUG=front-commerce:config`. If your server is running on `http://localhost:4000` and you open the URL [`/__front-commerce/debug`](http://localhost:4000/__front-commerce/debug), you will have a dump of the configuration for this specific request under the section `req.config`.
 
@@ -171,7 +171,7 @@ const slowValuesOnEachRequest = req => {
 import memoize from "lodash/memoize";
 
 const getShopIdFromHostname = memoize(hostname => {
-  /* here should live the definition of the `currentShopId` variable */
+  /* The definition of the `currentShopId` variable should live here */
   return {
     currentShopId: currentShopId
   };
