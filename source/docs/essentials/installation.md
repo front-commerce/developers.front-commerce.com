@@ -77,19 +77,7 @@ These kind of tokens are configured as environment variables
 You will find an exhaustive list of available variables commented in the `.env` file,
 with links to relevant documentation pages.
 
-For instance, to interact with Magento2 you will need to configure a few things:
-
-- Magento2 keys (available in the `System > Extensions > Integrations` page of
-  Magento admin area) should be defined in:
-  - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
-  - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
-  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
-  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
-- `FRONT_COMMERCE_CACHE_API_TOKEN`: you will need to ensure that the key
-  configured here is identical to Magento’s `fc_cache_api_token` custom variable
-  to enable cache invalidation from Magento2
-
-We invite you to dig into the other configurations and tweak them if you wish.
+We invite you to dig into the remote services configurations and tweak them if you wish.
 See [our documentation](/docs/reference/environment-variables.html#Remote-services-configuration) for further information.
 
 #### Configure stores

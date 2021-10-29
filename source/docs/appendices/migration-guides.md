@@ -7,6 +7,89 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.9.0` -> `2.10.0`
+
+### Magento1 MondialRelay module update
+
+In this release we have added support for MondialRelay as a shipping method in Magento2 based Front-Commerce implementation. As a result, we have changed the way files are organized on the disk.
+
+In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Magento1-based-application). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
+
+### Magento2 Adyen module update
+
+In this release the Magento2 Adyen Front-Commerce module got a major revamp to make it compatible with the latest Magento2 Adyen plugin (7.2). Several steps are needed to upgrade your project if you are using this payment platform:
+
+1. the Magento2 Adyen Front-Commerce module has been moved. As a result, you have to [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen.html#Register-the-Adyen-for-Magento2-payment-module-in-Front-Commerce).
+1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so you have [to configure the environment so that it is defined](/docs/advanced/payments/adyen.html#Add-the-Adyen-client-key-in-the-environment)
+1. we have made some changes and fixes to [the Adyen related frontend components](https://gitlab.com/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen). If you have overridden some of those, you have to backport the changes.
+
+### Magento1 Payline module update
+
+In this release, we've implemented automatic configuration for the Payline environment from the related Magento setting.
+Payline will use the `HOMO` or `PRODUCTION` environment based on what is configured in Magento.
+
+If using Payline, you should update the Magento module to version [1.3.0](https://github.com/front-commerce/magento1-module-payline-front-commerce/releases/tag/1.3.0).
+If you don't, you will see the error below in your logs (and the `PRODUCTION` environment will be used):
+> ERROR on reorderForIds, the id payment/payline_common/environment has no associated result
+
+### Configurable options HOC refactoring
+
+**We highly recommend to test products configuration on the product and cart pages after this migration.** Product configuration, bundle and custom options selectors where homogeneized between these pages to fix some issues.
+
+In this release we have done a refactor of the configurable product options. We have extracted much of the logic from configurable product options from HOCs into functions that can be used even outside of react.
+
+This refactoring homogenized how options were used and allowed us to fix some discrepancies between the product page and cart item update configurators. Internal APIs were updated to cope with this change, and we deprecated some legacy props.
+
+#### CartItemOptionsUpdater needs `product` prop
+
+`<CartItemOptionsUpdater>` now expects a `product` prop if you are using it you should now send it the `product` as a prop like below:
+
+```diff
+-<CartItemOptionsUpdater {...props} />
++<CartItemOptionsUpdater product={product} {...props} />
+```
+
+#### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
+
+`currentOptions` is deprecated in `<ConfigurableOptions>` (format `{ optionLabel: valueLabel }`). `<ConfigurableOptions>` now expects `selectedOptions` (format `{ optionId: valueId }` same as what `useSelectedProductWithConfigurableOptions` returns)
+
+```diff
+-<ConfigurableOptions currentOptions={currentOptions} {...props} />
++<ConfigurableOptions selectedOptions={selectedOptions} {...props} />
+```
+
+#### New style sheet for `CartItemOptionsUpdater`
+
+add the following line to `theme/modules/_modules.scss`
+
+```scss
+@import "~theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdater";
+```
+
+#### Import `hasCartItemOptions` from its own file in theme chocolatine
+
+We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions` to `theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions` so if you where using it you need to change where you are importing if like below:
+
+```diff
+-import { hasCartItemOptions } from "theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions";
++import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
+```
+
+### SmartForms field internal changes
+
+In this release, we've reworked the internals of SmartForm fields to better support browser autocomplete.
+
+The public API remains unchanged but if you've overriden internal components, please check your overrides against their original. See these Merge Requests: [#641](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/641) and [#645](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/645)
+
+
+### New features in `2.10.0`
+
+These new features may be relevant for your existing application:
+
+- [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application)
+- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options.html)
+
 ## `2.8.0` -> `2.9.0`
 
 ### Sass Update
@@ -59,7 +142,7 @@ Migration will depends on what you've implemented. Please contact us if you have
 
 ### Dedicated Payment logs
 
-In this release, we've splitted payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
+In this release, we've split payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
 
 By default, a new `logs/payment.log` file will be used, but you will see a warning:
 > You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
@@ -411,6 +494,7 @@ some attention though:
 * [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
     5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
     compared to 4.x.
+* [`helmet`](https://www.npmjs.com/package/helmet) has been updated to 4.5.0. As a result, [some middlewares previously included by default are not called anymore](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-removed) while [several middlewares are now enabled by default](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-added-by-default). Those HTTP headers [can be customized if needed](/docs/advanced/server/customize-response-http-headers.html).
 
 ## `2.4.0` -> `2.5.0`
 

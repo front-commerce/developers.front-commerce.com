@@ -93,6 +93,9 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
     - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
 - `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to [detect admin users](/docs/magento2/detect-admin-users.html) in Front-Commerce configured in « Stores > Configurations > General > General > Front-Commerce > Magento Admin Token »
+- `FRONT_COMMERCE_CACHE_API_TOKEN`: The key
+  configured here must be identical to Magento’s `fc_cache_api_token` custom variable
+  to enable cache invalidation from Magento2 (configured in « System > Other Settings > Custom Variables » )
 
 ### Elasticsearch
 
@@ -225,6 +228,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically. Can be targetted directly, or included with the previous namespace using `DEBUG=front-commerce:prismic*`
 - `front-commerce:scripts`: debugs all scripts and tooling related commands (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
+- `front-commerce:shipping:mondialrelay`: debugs MondialRelay related operations
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle

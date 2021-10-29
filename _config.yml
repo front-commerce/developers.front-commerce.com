@@ -38,6 +38,7 @@ sidebar_categories:
   Server:
     - docs/advanced/server/overview
     - docs/advanced/server/add-http-endpoint
+    - docs/advanced/server/customize-response-http-headers
     - docs/advanced/server/configurations
   Performance:
     - docs/advanced/performance/overview
@@ -123,6 +124,7 @@ sidebar_categories:
     - docs/reference/analytics-components
     - docs/reference/scripts
     - docs/reference/front-commerce-prepare
+    - docs/reference/use-selected-product-with-configurable-options
   Appendices:
     - docs/appendices/troubleshooting
     - docs/appendices/release-process

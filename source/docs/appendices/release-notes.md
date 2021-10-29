@@ -7,13 +7,47 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.7.0`](#2-7-0)**
+**Front-Commerce [`2.10.0`](#2-10-0)**
 
 Compatible with:
 
 - **Node.js:** 12.22+
-- **Magento2**: 2.3.2 -> 2.4.2-p1 (Open Source & Commerce)
+- **Magento2**: 2.3.2 -> 2.4.3-p1 (Open Source & Commerce)
+  - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
+- **Proximis**: latest version
+
+## 2.10.0
+
+> The 2.10 release brings Front-Commerce to the unified commerce market. With Proximis headless capabilities, merchants can now offer a great experience to their customers no matter where they are.
+>
+> We’ve improved our Front-Commerce modules offer too, with a shipping and a payment provider that solve B2C merchants needs.
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/10/14/front-commerce-2.10/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.0)
+
+
+Requirement changes:
+- Magento2: 2.3.2+ -> 2.4.3-p1 - (Open Source & Commerce)
+
+Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
+
+## 2.9.0
+
+> We focused on delivering incremental improvements to existing features.
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/09/02/front-commerce-2.9/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.0)
+
+## 2.8.0
+
+> This new version contains advanced Prismic features for Content Driven storefronts, an alpha version of our new Proximis connector and several “Summer backlog cleaning” items (bugfixes, improvements from performance profilings, technical debt removal).
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/07/22/front-commerce-2.8/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.0)
+
+Requirement changes:
+- Proximis: latest version
 
 ## 2.7.0
 
