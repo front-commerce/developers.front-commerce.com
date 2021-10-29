@@ -116,3 +116,16 @@ After the scope, you can use any Jest option. For instance if you want to run th
 **Tip:** If you are abstracting the `front-commerce` CLI with [npm scripts](https://docs.npmjs.com/misc/scripts), please note that you can pass any option(s) to your npm script by using this syntax: `npm run test -- <option1> <option2>`.
 
 </blockquote>
+
+## `front-commerce codemod`
+
+This command will allow your to migrate your codebase to the latest version of Front-Commerce.
+
+| Options                 | Description                                   |
+|-------------------------|-----------------------------------------------|
+| `help`                  | Outputs all the available options.            |
+| `-l, --list`            | List all the available codemods               |
+| `-t, --type [codemod]`  | The type of codemod you would like to run     |
+| `-d, --dry`             | Do a dry run, this will not save the changes  |
+| `-Y, --yes`             | Automatically answer yes to all questions     |
+
