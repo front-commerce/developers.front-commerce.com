@@ -13,7 +13,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 In this release, we have added the ability for customers to zoom in on product images in the product page. For that, we have implemented [a `<Ligthbox />` component](https://magento2.front-commerce.app/styleguide/?path=/story/modules-organisms-lightbox--with-images) that leverages [react-image-lightbox library](https://www.npmjs.com/package/react-image-lightbox) behind the scene.
 
-This feature is enabled by default in both in theme Chocolatine and in the base theme. Depending on your Front-Commerce integration, you might want to benefit from the feature or to disable it.
+This feature is enabled by default in both in theme Chocolatine and in the base theme. **You MUST decide whether you want it or not and follow the related instructions below:**
+
+- [Integrating the zoom in feature](#Integrating-the-zoom-in-feature)
+- or [Disabling the zoom in feature](#Disabling-the-zoom-in-feature)
 
 #### Disabling the zoom in feature
 
