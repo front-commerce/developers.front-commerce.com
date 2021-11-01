@@ -21,4 +21,4 @@ const MyComponent = () => (
 
 ### Useful links
 
-- [Codemod to transform relative to absolute](/docs/reference/cli#codemod)
+- [Codemod to transform relative to absolute](/docs/reference/cli.html#front-commerce-codemod)
