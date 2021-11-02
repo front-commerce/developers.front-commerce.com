@@ -20,6 +20,16 @@ These new features may be relevant for your existing application:
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
+### Storybook 6
+
+Your styleguide is now powered by Storybook 6. 
+
+This induces several changes in your custom stories.
+
+- The organization of stories is now only manageable with `/`, please set your story name like this : `section/path/of/your/story/Component`
+- As knobs are now deprecated, we highly encourages you to use controls from now on. see [the official documentation for more details](https://storybook.js.org/addons/@storybook/addon-knobs)
+- The way to import markdown files in stories has changed, please move from `import readme from "./readme.md";` to `import { html as readme } from "./readme.md";`
+
 ## `2.9.0` -> `2.10.0`
 
 ### Magento1 MondialRelay module update

@@ -124,7 +124,7 @@ once you've [registered your module](extend-the-theme.html#Configure-your-custom
   import IllustratedContent from "./IllustratedContent.js";
   import { storiesOf } from "@storybook/react";
 
-  storiesOf("components.molecules.IllustratedContent", module).add(
+  storiesOf("components/molecules/IllustratedContent", module).add(
     "default",
     () => {
       return <IllustratedContent />;

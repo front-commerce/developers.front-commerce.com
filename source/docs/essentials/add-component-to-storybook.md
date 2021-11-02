@@ -57,7 +57,7 @@ import { storiesOf } from "@storybook/react";
 import Icon from "theme/ui/atoms/Icon";
 import { H3 } from "theme/ui/atoms/Typography/Heading";
 
-storiesOf("components.molecules.IllustratedContent", module)
+storiesOf("components/molecules/IllustratedContent", module)
   .add("default", () => {
     return (
       <IllustratedContent media={<Icon icon="truck" />}>
@@ -96,7 +96,7 @@ import Icon from "theme/ui/atoms/Icon";
 import { H3 } from "theme/ui/atoms/Typography/Heading";
 +import Paragraph from "theme/ui/atoms/Typography/Paragraph";
 
-storiesOf("components.molecules.IllustratedContent", module)
+storiesOf("components/molecules/IllustratedContent", module)
   .add("default", () => {
     <IllustratedContent media={<Icon icon="truck" />}>
       <H3>Shipping within 48h</H3>
