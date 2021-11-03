@@ -28,7 +28,13 @@ This induces several changes in your custom stories.
 
 - The organization of stories is now only manageable with `/`, please set your story name like this : `section/path/of/your/story/Component`
 - As knobs are now deprecated, we highly encourages you to use controls from now on. see [the official documentation for more details](https://storybook.js.org/addons/@storybook/addon-knobs)
-- The way to import markdown files in stories has changed, please move from `import readme from "./readme.md";` to `import { html as readme } from "./readme.md";`
+- The way to import markdown files in stories has changed, please update your code as below:
+```diff
+- import readme from "./readme.md";
++ import { html as readme } from "./readme.md";
+```
+
+Front-commerce provides a codemod to automatically migrate the hierarchy and readme imports. Run `npx jscodeshift -t scripts/codemod/transforms/storybook6-hierarchy.js <module_path>` to make the necessary replacements in all .story.js files.
 
 ## `2.9.0` -> `2.10.0`
 
