@@ -41,6 +41,10 @@ Then, depending on the amount of customization, you might also have to bring cha
 
 In a nutshell, when the feature is enabled, we place a transparent button on top of the product image; if the customer clicks on it, we then render a `<Lightbox />` for that image.
 
+### MondialRelay shipping in a Magento2 based project
+
+In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
+
 ### Dependencies updates
 
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
