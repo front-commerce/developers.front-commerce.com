@@ -12,6 +12,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 ### Webpack 5
 Front-Commerce is now on webpack 5! 🚀 
 
+We have listed all the breaking changes with with a fix that you should apply.
 <!-- TODO : add comparison results -->
 
 #### ⚠ Absolute paths
@@ -24,6 +25,15 @@ We added a [codemod cli](/docs/reference/cli.html#front-commerce-codemod) which 
 ```diff
 - import PrimaryButton from './PrimaryButton';
 + import PrimaryButton from 'theme/components/atoms/Button/PrimaryButton';
+```
+
+#### ⚠ Inject Script
+Due to the way webpack injects scripts into the html, we have to filter out any scripts from being re-injected.
+
+You can fix this by filtering the `headTags` in your templates `src/templates/index.html`
+```diff
+- <%= htmlWebpackPlugin.tags.headTags %>
++ <%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.tagName ==='link').join('') %>
 ```
 
 #### ⚠ CSS Loader update (`3.6.0` -> `5.2.4`)
