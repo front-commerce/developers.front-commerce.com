@@ -9,6 +9,30 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.10.0` -> `2.11.0`
 
+### Webpack 5
+Front-Commerce is now on webpack 5! 🚀 
+
+<!-- TODO : add comparison results -->
+
+#### ⚠ Absolute paths
+During the update, we depreciated the old `theme-resolver` in favour of the built in webpack 5 [alias resolver](https://webpack.js.org/configuration/resolve/#resolvealias). To ensure that the aliases can resolve correctly, absolute paths should be used instead of relative paths.
+
+<blockquote class="note">
+We added a [codemod cli](/docs/reference/cli.html#front-commerce-codemod) which will help you convert all the paths. You can simply run `front-commerce codemod -t relative-to-absolute-paths` to apply the changes.
+</blockquote>
+
+```diff
+- import PrimaryButton from './PrimaryButton';
++ import PrimaryButton from 'theme/components/atoms/Button/PrimaryButton';
+```
+
+#### ⚠ CSS Loader update (`3.6.0` -> `5.2.4`)
+Contains changes in `url()` imports resolution for inlining images in CSS files.
+
+<blockquote class="note">
+Inline syntax was changed, please write ~ before the file request, i.e. rewrite `url(~!!loader!package/img.png)` to `url(!!loader!~package/img.png)`
+</blockquote>
+
 ### Zoom-in on product images
 
 In this release, we have added the ability for customers to zoom in on product images in the product page. For that, we have implemented [a `<Ligthbox />` component](https://magento2.front-commerce.app/styleguide/?path=/story/modules-organisms-lightbox--with-images) that leverages [react-image-lightbox library](https://www.npmjs.com/package/react-image-lightbox) behind the scene.
