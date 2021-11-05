@@ -34,7 +34,7 @@ This induces several changes in your custom stories.
 + import { html as readme } from "./readme.md";
 ```
 
-Front-commerce provides a codemod to automatically migrate the hierarchy and readme imports. Run `npx jscodeshift -t scripts/codemod/transforms/storybook5-to-storybook6.js <module_path>` to make the necessary replacements in all .story.js files.
+Front-commerce provides a codemod to automatically migrate the hierarchy and readme imports. Run `front-commerce codemod -t storybook5-to-storybook6` to make the necessary replacements in all .story.js files.
 
 ## `2.9.0` -> `2.10.0`
 
