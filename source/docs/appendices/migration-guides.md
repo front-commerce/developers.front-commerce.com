@@ -50,14 +50,17 @@ In this version, we have improved the MondialRelay shipping support with Magento
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
 - `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
 
-## Unnecessary unsafeHtml for products and cart items
+## Unnecessary safeHtml in product overviews
 
-Until now, the names of products and cart items needed to be binded as HTML content in the react components.
-You may now bind them directly as the special characters are now handled by GraphQL 
+The product overview component does not need to escape the product name with safeHtml anymore.
+
+If you did override any of the following components, you can safely remove safeHtml calls in thems:
+- src/web/theme/modules/ProductView/Overview/Overview.js
+- theme-chocolatine/web/theme/modules/ProductView/ProductItem/Overview/Overview.js
 
 ```diff
 - {<span dangerouslySetInnerHTML={{ __html: safeHtml(name) }} />}
-+ <span>{name}</span>
++ {name}
 ```
 
 ### New features in `2.11.0`
