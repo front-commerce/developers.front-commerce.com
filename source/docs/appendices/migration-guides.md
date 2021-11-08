@@ -52,11 +52,12 @@ Here are some highlights of the main changes in upstream libraries that *unlikel
 
 ## Unnecessary safeHtml in product overviews
 
-The product overview component does not need to escape the product name with safeHtml anymore.
+The product overview component does not need to escape the product name with `safeHtml`.
 
-If you did override any of the following components, you can safely remove safeHtml calls in thems:
-- src/web/theme/modules/ProductView/Overview/Overview.js
-- theme-chocolatine/web/theme/modules/ProductView/ProductItem/Overview/Overview.js
+If you did override any of the following components, you can safely [remove `safeHtml` calls](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/750) in them:
+
+- `src/web/theme/modules/ProductView/Overview/Overview.js`
+- `theme-chocolatine/web/theme/modules/ProductView/ProductItem/Overview/Overview.js`
 
 ```diff
 - {<span dangerouslySetInnerHTML={{ __html: safeHtml(name) }} />}
