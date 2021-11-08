@@ -45,6 +45,22 @@ In a nutshell, when the feature is enabled, we place a transparent button on top
 
 In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
 
+### New icon required
+
+In this release we added a new Alert component `<WarnAlert>`. As such we needed a warning icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `warn` to the list of icons to avoid any error messages in the page loading.
+
+```diff
+import {
+  ...
++ IoIosWarning,
+} from "react-icons/io";
+
+const keyToComponent = {
+  ...
++ warn: IoIosWarning,
+};
+```
+
 ### Dependencies updates
 
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
