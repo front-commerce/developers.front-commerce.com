@@ -83,6 +83,7 @@ If you did override any of the following components, you can safely [remove `saf
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
+- [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Customer can now zoom in on product images in the product page
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**

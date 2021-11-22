@@ -17,6 +17,7 @@ In this section, you will learn how payments can be added to an application. It 
 - [Paypal](/docs/advanced/payments/paypal.html)
 - [Payzen](/docs/advanced/payments/payzen.html)
 - [Stripe](/docs/advanced/payments/stripe.html)
+- [Payment on account (B2B)](/docs/advanced/payments/payment-on-account.html)
 
 If you are looking for details about a specific eCommerce platform, please visit their dedicated page:
 - [Magento2 headless payments](/docs/magento2/headless-payments.html)
