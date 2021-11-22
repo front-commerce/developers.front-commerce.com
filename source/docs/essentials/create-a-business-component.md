@@ -69,11 +69,13 @@ position of our store within [OpenStreetMap](https://www.openstreetmap.org/searc
 This is one of the biggest advantages of using React to build our front-end, we
 have access to this huge ecosystem.
 
-Let's install the two required packages:
+Let's install the required packages ([versions are important](/docs/advanced/features/display-a-map.html#Open-Street-Map-OSM-with-Leaflet)):
 
 ```sh
-npm install react-leaflet leaflet
+npm install leaflet@^1.7 react-leaflet@3.1.0 @react-leaflet/core@1.0.2
 ```
+
+> **Note:** Front-Commerce also [provides a `<Map>` component](/docs/advanced/features/display-a-map.html) that would be a better candidate for a real project. In order to learn Front-Commerce we prefer to document how to do things yourself. As a stretch goal, you can try to replace your components with the `<Map>` one.
 
 ### Our new Homepage
 
@@ -112,7 +114,7 @@ The first working version will look like:
 // my-module/theme/pages/Home/Home.js;
 
 // ... Existing imports
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
@@ -120,7 +122,7 @@ import "leaflet/dist/images/marker-shadow.png";
 const Home = ({ store }) => (
   <div className="page page--home">
     {/* ... The rest of the homepage */}
-    <Map
+    <MapContainer
       center={[43.584296, 1.44182]}
       zoom={14}
       style={{ height: "600px", width: "800px" }}
@@ -134,7 +136,7 @@ const Home = ({ store }) => (
           <span>My awesome store is HERE!</span>
         </Popup>
       </Marker>
-    </Map>
+    </MapContainer>
   </div>
 );
 // ...
@@ -143,7 +145,7 @@ const Home = ({ store }) => (
 With that, you should see the map appear in your homepage.
 
 <blockquote class="important">
-  **Important:** if you detect issues with remote assets (images, CSS…) not being loaded, you may have to update your <abbr title="Content Security Policy">CSP</abbr> headers to allow new domains. You could achieve this by modifying your [`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/configurations.html#config-website-js).
+  **Important:** you will detect issues with remote assets (images, CSS…) not being loaded. It is related to the default <abbr title="Content Security Policy">CSP</abbr> headers sent by Front-Commerce. To allow new domains, you should modify your [`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/configurations.html#config-website-js) (i.e: define `imgSrc: ["*.openstreetmap.org"]`).
 </blockquote>
 
 ### Extracting our new component
@@ -160,14 +162,14 @@ in `my-module/theme/modules`.
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
 
 const StoreLocator = props => {
   return (
-    <Map
+    <MapContainer
       center={[43.584296, 1.44182]}
       zoom={14}
       style={{ height: "600px", width: "800px" }}
@@ -181,7 +183,7 @@ const StoreLocator = props => {
           <span>My awesome store is HERE!</span>
         </Popup>
       </Marker>
-    </Map>
+    </MapContainer>
   );
 };
 
@@ -343,7 +345,7 @@ For error handling, you could take a look at
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
@@ -366,7 +368,7 @@ const StoreLocator = props => {
 
   return (
     <div>
-      <Map
+      <MapContainer
         center={coordinates}
         zoom={defaultZoom}
         style={{ height: "600px", width: "800px" }}
@@ -384,7 +386,7 @@ const StoreLocator = props => {
             </div>
           </Popup>
         </Marker>
-      </Map>
+      </MapContainer>
     </div>
   );
 };
