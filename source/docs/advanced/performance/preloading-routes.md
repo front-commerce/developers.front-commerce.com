@@ -142,8 +142,8 @@ The `usePreload` hook will take care of this for you by calling the `preload` st
 * `match`: a [React Router object](https://reacttraining.com/react-router/web/api/match) that describes the currently matched route.
     * `params` (object): Key/value pairs parsed from the URL corresponding to the dynamic segments of the path
     * `isExact` (boolean): true if the entire URL was matched (no trailing characters)
-    * `path` (string): The path pattern used to match. Useful for building nested <Route>s
-    * `url` (string): The matched portion of the URL. Useful for building nested <Link>s
+    * `path` (string): The path pattern used to match. Useful for building nested `<Route>`s
+    * `url` (string): The matched portion of the URL. Useful for building nested `<Link>`s
 * `location`: a [React Router object](https://reacttraining.com/react-router/web/api/location) that describes the url that you passed to the `preload` function (`/venia-dresses` in the example above)
 
 These two parameters allow you to almost expect to have the same properties between the `options` and `preloadOptions` functions of `graphqlWithPreload`.
