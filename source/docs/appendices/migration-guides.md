@@ -47,17 +47,23 @@ In this version, we have improved the MondialRelay shipping support with Magento
 
 ### New icon required
 
-In this release we added a new Alert component `<WarnAlert>`. As such we needed a warning icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `warn` to the list of icons to avoid any error messages in the page loading.
+In this release we added a new Alert component `<WarnAlert>`. As such we needed a warning icon. 
+
+We also needed a new people icon for the b2b module.
+
+We added these icons in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add both icons as follows to the list of icons to avoid any error messages at page loading. 
 
 ```diff
 import {
   ...
 + IoIosWarning,
++ IoIosPeople,
 } from "react-icons/io";
 
 const keyToComponent = {
   ...
 + warn: IoIosWarning,
++ users: IoIosPeople,
 };
 ```
 
