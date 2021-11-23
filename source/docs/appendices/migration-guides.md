@@ -7,6 +7,44 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.11.0` -> `2.12.0`
+
+### Show Password action and related icon
+
+The `<Password>` input now displays a show/hide icon allowing the user to clearly see its password.
+
+As such we needed a new eye-off icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
+
+```diff
+import {
+  ...
++ IoIosEyeOff,
+} from "react-icons/io";
+
+const keyToComponent = {
+  ...
+  eye: IoIosEye,
++ "eye-off": IoIosEyeOff,
+  pencil: IoMdCreate,
+  ...
+};
+```
+
+This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
+
+```diff
+...
+@import "~theme/components/atoms/Form/Label/Label";
++@import "~theme/components/atoms/Form/Input/Password/Password";
+@import "~theme/components/atoms/Form/Input/Select/Select";
+...
+```
+
+### New features in `2.11.0`
+
+These new features may be relevant for your existing application:
+- `<Password>` fields now display an eye icon to show the password clearly
+
 ## `2.10.0` -> `2.11.0`
 
 ### Zoom-in on product images
