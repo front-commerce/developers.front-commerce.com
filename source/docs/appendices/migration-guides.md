@@ -45,7 +45,7 @@ In a nutshell, when the feature is enabled, we place a transparent button on top
 
 In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
 
-### New icon required
+### New icons required
 
 In this release, two new icons (`warn` and `users`) were added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
 
