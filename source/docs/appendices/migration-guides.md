@@ -84,12 +84,19 @@ If you did override any of the following components, you can safely [remove `saf
 + {name}
 ```
 
+### New Magento `<WysiwygV2>` transforms may conflict with yours
+
+In order to support Magento Page Builder's default content types, we have added new components to the [default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg).
+
+See [the Page Builder ones](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js) and ensure there is no collision with your custom WYSIWYG components. While very unlikely, it could be possible. For instance, if you may have overridden the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwyg.js` to add a custom `heading` component to the `componentsMap`.
+
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Customer can now zoom in on product images in the product page
+- [Magento Page Builder content](/docs/magento2/page-builder.html) is now supported for `MagentoWysiwyg` data. You can register new content types and extend our default ones.
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
 ## `2.9.0` -> `2.10.0`
