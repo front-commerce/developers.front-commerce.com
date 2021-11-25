@@ -81,7 +81,6 @@ export {
 };
 ```
 
-
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
