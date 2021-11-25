@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.10.0`](#2-10-0)**
+**Front-Commerce [`2.11.0`](#2-11-0)**
 
 Compatible with:
 
@@ -16,6 +16,15 @@ Compatible with:
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.11.0
+
+> With its 2.11 release, Front-Commerce continues its exploration of the wide world of B2B commerce! You’ll now be able to deal with Company accounts and company users on Magento 2. A big step for us, knowing the ever-increasing popularity if B2B e-commerce websites.
+>
+> You will also discover various changes and bug corrections, to make your Front-Commerce instances even more efficient!
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/11/24/front-commerce-2.11/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.0)
 
 ## 2.10.0
 
