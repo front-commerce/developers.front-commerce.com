@@ -19,6 +19,10 @@ During this release, we have welcomed **2 new developers, Paul and Alexandre and
 
 As a merchant in a B2B sector, your clients are businesses that need to manage their company information, users' access rights as well as the different expenses made by their team on your B2B e-commerce platform: with this functional package, you can make them autonomous and reduce your customer support interventions.
 
+<div class="center">
+![Adobe Commerce B2B screens in Front-Commerce](/images/blog/2.11-b2b-screens.png)
+</div>
+
 ### **Payment on account and credit limit**
 
 One of the preferred payment methods for a business is **payment on account**: orders can be placed according to a credit limit and invoicing is managed between the buying company and the seller.
