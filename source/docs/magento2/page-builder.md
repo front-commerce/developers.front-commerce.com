@@ -12,7 +12,7 @@ _Since version 2.11.0 (early preview)_
 <br>
 **Early preview:** we're currently looking for feedbacks about this feature. The core API is stable and ready for use in your storefronts. We're improving default content types support. Please contact us if you're using this feature.
 <br>
-**WIP:** this documentation page will get more details in the next few days
+**Work In Progress:** this documentation page will get more details in the next few days
 </blockquote>
 
 ## Prerequisites
@@ -90,7 +90,7 @@ The `PageBuilder` loader allows you to register new content types.
 
 First, you must define your content type. Content types must extend the `ContentType` class (see below). The `name` should match Magento's content type identifier and the `extractData` method can be used to return structured data to be exposed as GraphQL fields for this type.
 
-```
+```javascript
 import ContentType from "server/modules/magento2/wysiwyg/loaders/content-types/ContentType";
 
 export default class Foo extends ContentType {
@@ -106,7 +106,7 @@ export default class Foo extends ContentType {
 
 Then you must register it from a `contextEnhancer`, using the `PageBuilder.registerContentType` method:
 
-```
+```javascript
 PageBuilder.registerContentType(
   new Foo(), // <-- the content type defined above
   "MyPageBuilderFooData" // <-- the GraphQL type for related data default to MagentoPageBuilderDefaultData (if no additional data)

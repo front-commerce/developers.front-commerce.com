@@ -260,9 +260,9 @@ If you need more information about implementing this, please contact us.
 _Since version 2.11_
 </blockquote>
 
-You may want to render inline styles dynamically when displaying WYSIWYG components. It can be required if content managers can customize how a given element is displayed for instance (e.g: alignment, border color etc…).
+You may want to render inline styles dynamically when displaying WYSIWYG components. It can be required if content managers customizes how a given element is displayed for instance (e.g: alignment, border color etc…).
 
-Eeach `<WysiwygV2>` component is wrapped into a unique id. The Front-Commerce WYSIWYG provides a `<Style>` component that allows you to render styles that could be restricted to the current WYSIWYG context only (and prevent side effects on other parts of the page).
+Each `<WysiwygV2>` component is wrapped into a unique id. The Front-Commerce WYSIWYG mechanism provides a `<Style>` component that allows you to render styles that could be restricted to the current WYSIWYG context only (and prevent side effects on other parts of the page)
 
 Here is how you could use it from a WYSIWYG component:
 
