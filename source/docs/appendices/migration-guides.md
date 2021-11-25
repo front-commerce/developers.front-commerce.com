@@ -56,13 +56,37 @@ input,
 select {
   height: 3.4rem;
 }
-
 ```
+
+### New PasswordValidator
+
+In order to use the `<PasswordValidator>` you may need to include it in some files if you overrode them :
+
+`_components.scss`
+
+```diff
+@import "~theme/components/atoms/Form/Input/Password/Password";
++@import "~theme/components/atoms/Form/Input/PasswordValidator/PasswordValidator";
+@import "~theme/components/atoms/Form/Input/Select/Select";
+```
+
+`src/web/theme/components/atoms/Form/Input/index.js`
+
+```diff
++import PasswordValidator from "./PasswordValidator";
+
+export {
+  ...
++ PasswordValidator,
+};
+```
+
 
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - `<Password>` fields now display an eye icon to show the password clearly
+- A new `<PasswordValidator>` input type shows a helper of password's strength criterias to the user
 
 ## `2.10.0` -> `2.11.0`
 
