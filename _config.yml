@@ -76,6 +76,7 @@ sidebar_categories:
     - docs/magento2/detect-admin-users
     - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
+    - docs/magento2/page-builder
     - docs/magento2/advanced
   Magento1:
     - docs/magento1/overview

@@ -37,7 +37,8 @@ The MagentoWyswiyg's goal is to support all the default features in Magento 1 & 
 **Default transforms**
 
 * `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
-* `<widget>` tags are transformed `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+* `<widget>` tags are transformed into `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+* `<style>` tags are transformed to support [Magento's Page Builder](/docs/magento2/page-builder.html) format. The `#html-body` selector is replaced with the `<WysiwygV2>` root selector. See [WYSIWYG dynamic styles](/docs/advanced/theme/wysiwyg.html#Dynamic-styles) for details.
 
 ### Add a custom Magento Widget
 
