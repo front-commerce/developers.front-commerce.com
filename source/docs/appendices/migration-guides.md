@@ -11,7 +11,15 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Show Password action and related icon
 
-The `<Password>` input now displays a show/hide icon allowing the user to clearly see its password.
+The `<Password>` input now displays a show/hide icon allowing the user to clearly see its password. You can disable this behavior by adding a disableShowPassword attribute like bellow :
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword={true}
+/>
+```
 
 As such we needed a new eye-off icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
 
@@ -38,6 +46,17 @@ This new `Password` component requires a stylesheet to add in the `_components.s
 +@import "~theme/components/atoms/Form/Input/Password/Password";
 @import "~theme/components/atoms/Form/Input/Select/Select";
 ...
+```
+
+If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
+
+```diff
+input,
++.input-height,
+select {
+  height: 3.4rem;
+}
+
 ```
 
 ### New features in `2.11.0`
