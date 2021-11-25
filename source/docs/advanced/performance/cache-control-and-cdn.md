@@ -29,11 +29,11 @@ For example if `s-maxage` is 60 seconds and `stale-while-revalidate` is 10 minut
 - be served from cache
 - at the same time the resource will be requested from the server
 - the cache will be updated in the background
-- the validity of the resource would be reseted
+- the validity of the resource would be reset
 
 However if 10 minutes pass without the resource being revalidated, the next request to the resource will be not be served from the cache but will be requested from the server directly.
 
-In this example, the longer an _outdated_ data can be served to the user is **11 minutes (60sec + 10min)**. For more information on the subject please refer to [Keeping things fresh with stale-while-revalidate](https://web.dev/stale-while-revalidate/) (P.S. we use `sMaxAge` instead of `maxAge` because this is the value used by CDNs\reverse-proxies)
+In this example, the longest _outdated_ data can be served to the user is **11 minutes (60sec + 10min)**. For more information on the subject please refer to [Keeping things fresh with stale-while-revalidate](https://web.dev/stale-while-revalidate/) (P.S. we use `sMaxAge` instead of `maxAge` because this is the value used by CDNs\reverse-proxies)
 
 ## Dynamic Pages
 
@@ -87,7 +87,7 @@ Finally after you have set up the appropriate cache controls for your site you n
 
 You can have a more fine grained control on your cache headers' configurations than the one presented [in the Dynamic Pages above](#Dynamic-Pages). This can be done in the resolver/loader of the module itself.
 
-For example let us have a look at the resolver of the Magento 2 Categories found at `src/server/modules/magento2/catalog/categories/resolvers.js`. You can see a section there dedicated to cache control. It is there that you can add any logic you want to tweek the cache control headers to your liking depending on the category at hand. Note we recommend you write the logic in the loader and call it from the resolver as with any other function.
+For example let us have a look at the resolver of the Magento 2 Categories found at `src/server/modules/magento2/catalog/categories/resolvers.js`. You can see a section there dedicated to cache control. It is there that you can add any logic you want to tweak the cache control headers to your liking depending on the category at hand. Note we recommend you write the logic in the loader and call it from the resolver as with any other function.
 
 ### Implementing cache control for your custom module
 

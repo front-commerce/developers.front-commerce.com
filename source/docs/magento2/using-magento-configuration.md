@@ -24,7 +24,7 @@ http://magento.test/rest/V1/default/frontcommerce/storeConfigs?keys[]=design/hea
 
 This endpoint is protected and only users having the permission `Magento_Config::config` have the right get data from this endpoint. In Front-Commerce everything is already setup so that you don't need to care about this permission. But if you want to test this endpoint manually (with cURL, Postman or the tool of your choice), please make sure that you have added an oAuth2 authentication with the correct secrets.
 
-Moreover, this endpoint only exposes keys that were previsouly defined in the DI of your Magento. By default only `design/footer/absolute_footer` and `design/header/welcome` will be available on the endpoint. This allows to avoid exposing sensitive information and reduces the attack surface of your API. However, you can add in your own `di.xml` the following XML to ensure that more keys are available in your endpoint.
+Moreover, this endpoint only exposes keys that were previously defined in the DI of your Magento. By default only `design/footer/absolute_footer` and `design/header/welcome` will be available on the endpoint. This allows to avoid exposing sensitive information and reduces the attack surface of your API. However, you can add in your own `di.xml` the following XML to ensure that more keys are available in your endpoint.
 
 ```diff
 <?xml version="1.0" ?>

@@ -40,5 +40,5 @@ The `req` key contains the current HTTP request (from [Express server](https://e
 
 It could be useful in some specific cases, but we generally recommend **NOT TO** use it directly. Resolvers should to use [`loaders`](#loaders) instead.
 
-One of the reason why it has been introduced in the core, is to allow context customization in Remote schema stitching scenarii.
+One of the reason why it has been introduced in the core, is to allow context customization in Remote schema stitching scenario.
 See [`linkContextBuilders` for an usage example](/docs/reference/graphql-module-definition.html#linkContextBuilders-optional).

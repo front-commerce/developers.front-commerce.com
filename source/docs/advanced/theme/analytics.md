@@ -25,7 +25,7 @@ Most of the e-commerce related events are already implemented within Front-Comme
 
 To do so, you will need to call the method `trackEvent` from `web/utils/analytics`.
 
-For instance, let's say that you are building a grocery store and that you have created Recipe pages that display a list of ingredients needed for the current recipe. Below this list, you have a created a button that adds all the ingredients to the cart of the user, and you want to know if this button is useful and if users click on it.
+For instance, let's say that you are building a grocery store and that you have created Recipe pages that display a list of ingredients needed for the current recipe. Below this list, you have created a button that adds all the ingredients to the cart of the user, and you want to know if this button is useful and if users click on it.
 
 The button would likely be a component that would look like this:
 
@@ -77,9 +77,9 @@ Additionally, you may wonder what name and properties you should give to your ev
 
 ### Track an event as a React Component
 
-If you don't have an actual callback where to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](<(http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)>).
+If you don't have an actual callback to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](<(http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)>).
 
-For instance, in Front-Commerce's core, we are using `withTrackOnMount` like this to track when a user sees their cart.
+For instance, in Front-Commerce's core, we are using `withTrackOnMount` to track when a user sees their cart.
 
 ```jsx
 import withTrackOnMount from "theme/modules/Analytics/withTrackOnMount";
@@ -138,7 +138,7 @@ Moreover, we didn't talk about a `trackPage` method here. This is because a `Pag
 
 ## Add an integration
 
-An integration will listen each `event` and `page` tracking in your application and will send it to your tracking service. To configure which tracking service your application will use, you need to edit the `config/analytics.js` file:
+An integration will listen to each `event` and `page` tracking in your application and will send it to your tracking service. To configure which tracking service your application will use, you need to edit the `config/analytics.js` file:
 
 ```js
 module.exports = {
@@ -245,7 +245,7 @@ Here is a list of integrations frequently used across e-commerce shops:
     }
     ```
 
-In GTM, you will then be able to leverage several specific things configure your integrations _(since Front-Commerce 2.6)_.
+In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
 
 First, the `userConsents` configuration option will be pushed to your dataLayer as the `userConsents` value. You can reference it from a Variable in GTM. Here is an example:
 <figure>

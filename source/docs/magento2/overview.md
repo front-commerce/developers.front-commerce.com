@@ -26,6 +26,7 @@ In this section, you will learn information about Magento 2 integration with Fro
 - [Log as a Customer](/docs/magento2/log-as-customer.html)
 - [Headless payments](/docs/magento2/headless-payments.html)
 - [Page Builder support](/docs/magento2/page-builder.html)
+- [B2B support](/docs/magento2/b2b.html)
 - [Advanced specific features](/docs/magento2/advanced.html)
 
 We are still in the process of writing the documentation. But we will cover the following topics:

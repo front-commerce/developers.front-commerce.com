@@ -11,7 +11,7 @@ If you are willing to display these pickups in the checkout this guide will help
 _Since version 2.1.0_
 </blockquote>
 
-> **Prequisite:** To go through this guide, you'll need to have a created a [new GraphQL module](https://developers.front-commerce.com/docs/essentials/extend-the-graphql-schema.html) and to know how to [fetch data in a component](/docs/essentials/create-a-business-component.html#Fetching-our-data).
+> **Prerequisite:** To go through this guide, you'll need to have a created a [new GraphQL module](/docs/essentials/extend-the-graphql-schema.html) and to know how to [fetch data in a component](/docs/essentials/create-a-business-component.html#Fetching-our-data).
 
 ## Add pickups to your GraphQL Schema
 

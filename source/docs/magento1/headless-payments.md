@@ -51,4 +51,4 @@ Our Magento1 integration currently provides native adapters for the platforms be
     ```
     return [{error message}]
     ```
-  - `returnAction(String $action, [String] $additionalData): Boolean` Callback after payment, for exemple, you can add your custom code here for retrieve customer cart after cancel payment
+  - `returnAction(String $action, [String] $additionalData): Boolean` Callback after payment, for example, you can add your custom code here for retrieve customer cart after cancel payment

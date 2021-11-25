@@ -57,7 +57,7 @@ module.exports = {
     },
     large: { width: 1100, height: 1100, bgColors: [] }
   },
-  // allowed medias
+  // allowed media
   extensions: [".jpg", ".jpeg", ".png"]
 };
 ```
@@ -83,7 +83,7 @@ http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cov
 
 ### `<Image>` component
 
-However, this can be troublesome to setup manually for you. This is why in Front-Commerce you should rather use the `<Image>` React component.
+However, this can be troublesome to setup manually. This is why in Front-Commerce you should rather use the `<Image>` React component.
 
 ```jsx
 import Image from "theme/components/atoms/Image";
@@ -102,11 +102,11 @@ The path of the image here is the path of the image on the proxy.
 
 This component will automatically fetch the image through the proxy with the correct settings. Moreover, it will display a spinner while the image is loading and a fallback image if it breaks.
 
-It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. To disable lazyloading, you can use the option `dangerouslyDisableLazyLoad` or (even better in this example) **the `priority` prop that will also add a `<link rel="preload">` to the page.**
+It will also lazyload the image. However, in some cases you might not want this to happen. For instance, you don't want this to happen on the main image of your product page. To disable lazyloading, you can use the option `dangerouslyDisableLazyLoad` or (even better in the following example) **the `priority` prop that will also add a `<link rel="preload">` to the page.**
 
 For a more data-efficient browser preload, we also recommend that you define the [`sizes` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes) for the image. A more detailed explanation about the `sizes` attribute and how to determine the best `sizes` for your image check out this [srcset + sizes = AWESOME!](https://ericportis.com/posts/2014/srcset-sizes/#part-2) article. [The "Images size" section below](#image-sizes) explains how we added `sizes` attributes in our themes, and how and when you should override it. Here is an example of the `sizes` attribute:
 
-```
+```jsx
 <Image
   src="/media/path/to/my/image.jpg"
   alt="a suited description of the image"
@@ -129,7 +129,7 @@ We have added sensible defaults to image sizes on key components in the principa
 
 ### A method to determine image sizes
 
-To simplify this process we devised a smart way to determine these numbers in a very straightforward way.
+To simplify this process we devised a smart method to determine these numbers in a very straightforward way.
 
 1. First open the page you want to setup the `sizes` property of.
 2. Open the developers tools and paste the below snippet in the `console` tab.
@@ -221,7 +221,7 @@ And let's further assume that the image sizes available are [68, 136, 272, 544].
 />
 ```
 
-Now go to the file `CategoryConstants.js` under `./theme-chocolatine/web/theme/pages/Category/` folder. You will find the exact same `sizes` we deduced above there. No magic numbers!
+If you look at the `CategoryConstants.js` under `./theme-chocolatine/web/theme/pages/Category/` folder. You will notice the exact same `sizes` as we have deduced above. No magic numbers! 🧙‍♂️
 
 ### Image Sizes Defaults
 
@@ -236,7 +236,7 @@ Implementing the media proxy is possible by combining the following mechanisms:
 - [the `express-http-proxy` middleware](https://www.npmjs.com/package/express-http-proxy)
 - Front-Commerce's `makeImageProxyRouter` library
 
-We will explain how the latest work, so you could use it.
+We will explain how the `makeImageProxyRouter` works, so you could use it.
 
 The `makeImageProxyRouter` can be imported from `server/core/image/makeImageProxyRouter` in your Front-Commerce application. It is an express middleware that takes a function in parameter. This function should be a **proxy middleware factory** (`express-http-proxy`): it must return an instance of a proxy middleware that will handle image resizing.
 
@@ -321,7 +321,10 @@ Documentation about this script is available in the [`scripts/imageWarmUp.js` re
 
 While the proxy and caching functionality is really useful you may want to disable it for certain routes or files.
 
-In Front-Commerce we have implemented a mechanism to bypass the cache for routes that matches specified RegExp. Use `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` environment variable to specify a pattern that you want to bypass the cache for. For example, setting `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `/media/excel` will bypass the cache for all routes matching `/media/excel` like `/media/excel/Book1.xlsx`.
+In Front-Commerce we have implemented a mechanism to bypass the cache for routes that matches specified RegExp. Use `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` environment variable to specify a pattern that you want to bypass the cache for. This pattern will be matched against the file full URL without the query string (e.g. `https://www.example.com/path/to/the/file.png`). Usage examples:
+
+- if you want to allow files under `/media/excel` to be available without modifications, you can set `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `/media/excel`,
+- if you want to allow `.svg` and `.mp4` files to be available without modifications, you can set `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` to `\.(svg|mp4)$`
 
 Setting `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` will set the `ignoreCacheRegex` config of the [`expressConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/cf83e8bac722295403cc89c66fa39758eeaa25c6/src/server/express/config/expressConfigProvider.js#L53). Consequently it will be available on `staticConfigFromProviders.express.ignoreCacheRegex` should you ever need it.
 

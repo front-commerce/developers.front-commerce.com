@@ -49,7 +49,7 @@ cd front-commerce-skeleton
 npm install
 ```
 
-Depending on your internet connexion, feel free to grab some tea and a cookie…
+Depending on your internet connection, feel free to grab some tea and a cookie…
 
 ### Configure the project
 

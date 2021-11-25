@@ -25,7 +25,7 @@ Once the module is declared, Front-Commerce will automatically add your custom s
 
 In the case of the WYSIWYG preview, let's say that when a user visits the `wysiwyg-preview` URL, we want to display static files that will let anyone preview how an html string will be transformed by [Front-Commerce's Wysiwyg component](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/modules/Wysiwyg).
 
-To do so, we need to declare create our server config file `my-module/server/module.config.js`, and configure its `entrypoint` key.
+To do so, we need to create our server config file `my-module/server/module.config.js`, and configure its `entrypoint` key.
 
 ```js
 import router from "./express";
@@ -109,7 +109,7 @@ export default {
 
 Indeed, if you don't set this key to `true`, Front-Commerce will check that you don't setup an invalid path.
 
-For instance, if your application is a migration from an older website, you might want to intercept all your requests to redirect old URLs to new ones. In `express`, you can do this by creating a middleware. But this means that all the URLs need to pass by this middleware. This is what `__dangerouslyOverrideBasePathChecks` stands for: it lets you define the path you want (`/` in this case) even if it seems dangerous. Once it is set, the middleware can add the redirections for the relevant URLs.
+For instance, if your application is a migration from an older website, you might want to intercept all your requests to redirect old URLs to new ones. In `express`, you can do this by creating a middleware. But this means that all the URLs need to pass by this middleware. This is what `__dangerouslyOverrideBasePathChecks` stands for: it lets you define the path you want (`/` in this case) even if it seems dangerous. Once it is set, the middleware can add the redirects for the relevant URLs.
 
 ## Subdirectory based urls and global middleware
 

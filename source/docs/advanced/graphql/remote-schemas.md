@@ -15,7 +15,7 @@ Here are some use cases:
 In Front-Commerce, GraphQL modules can declare their own local schema but they can also reuse remote schemas and make them available in the GraphQL schema.
 This is referred to as **remote schema stitching**.
 
-This page explain how you could expose remote GraphQL schemas as part as your Front-Commerce GraphQL schema.
+This page will explain how you could expose remote GraphQL schemas as part of your Front-Commerce GraphQL schema.
 
 <blockquote class="feature--new">
   _This feature has been added in version `1.0.0-alpha.2`_
@@ -25,7 +25,7 @@ This page explain how you could expose remote GraphQL schemas as part as your Fr
 
 The simplest use case is to expose the whole remote schema in your existing application.
 
-In this example, we are going to illustrate this feature by exposing the [Pokemon GraphQL API](https://graphql-pokemon.now.sh/) in our eCommerce application… you may find it useful if you are selling Pokemon related goodies! :-)
+In this example, we are going to illustrate this feature by exposing the [Pokemon GraphQL API](https://graphql-pokemon.vercel.app/) in our eCommerce application… you may find it useful if you are selling Pokemon related goodies! 😸
 
 First, let’s start by creating a new GraphQL module and register it in our application:
 
@@ -65,7 +65,7 @@ export default {
 -  namespace: "Pokemon"
 +  namespace: "Pokemon",
 +  remoteSchema: {
-+    uri: "https://graphql-pokemon.now.sh/"
++    uri: "https://graphql-pokemon.vercel.app/"
 +  }
 };
 ```
@@ -131,8 +131,8 @@ Here is how you could achieve it thanks to Front-Commerce’s [`remoteSchema.tra
 export default {
   namespace: "Pokemon",
   remoteSchema: {
--    uri: "https://graphql-pokemon.now.sh/"
-+    uri: "https://graphql-pokemon.now.sh/",
+-    uri: "https://graphql-pokemon.vercel.app/"
++    uri: "https://graphql-pokemon.vercel.app/",
 +    transforms: [
 +      new FilterRootFields(
 +        (operation, rootField) =>
@@ -159,8 +159,8 @@ Front-Commerce allows you to configure the underlying implementation using the [
 
 ## Mix local and remote schemas
 
-A GraphQL module can expose both a remote schema and a local one with resolvers.
-Front-Commerce will first merge the remote schema, and then the local one.
+A GraphQL module can expose both a remote schema and a local schema with resolvers.
+Front-Commerce will first merge the remote schema, and then the local schema.
 
 It means that you can add resolvers to enrich remote types with local data.
 In the example below, the module adds a custom `relatedProducts` to the remote `Pokemon` type (named `Pokemon_Pokemon` in Front-Commerce) resolving to products fetched from the pokemon id (in a hypothetical loader).
@@ -185,7 +185,7 @@ export default {
     }
   },
   remoteSchema: {
-    uri: "https://graphql-pokemon.now.sh/"
+    uri: "https://graphql-pokemon.vercel.app/"
   }
 };
 ```
@@ -219,5 +219,5 @@ See [#196](https://gitlab.com/front-commerce/front-commerce/issues/196) for more
 
 <blockquote class="wip">
   This remote schema stitching feature is still being explored, and we are actively looking for feedback to make it better.
-  Please [get in touch](mailto:contact@front-commerce.com) if you want to share your wishes with us or ask any question!
+  Please [get in touch](mailto:contact@front-commerce.com) if you want to share your thoughts with us or ask any question!
 </blockquote>

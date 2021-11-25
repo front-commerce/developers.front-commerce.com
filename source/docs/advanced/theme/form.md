@@ -170,6 +170,33 @@ For instance, if you first render `<Form key="0" />` and then change the key to 
 
 Thus, to reset a form after its submission and avoid issues with form states and validations, you would need to store a `key` state that you would update on form submission success.
 
+```jsx
+const MyResettableForm = () => {
+  const [formKey, setFormKey] = useState(new Date().valueOf())
+
+  const handleResetForm = (e) => {
+    e?.preventDefault()
+    setFormKey(new Date().valueOf());
+  }
+
+  return (
+    <Form key={formKey}>
+      <FormItem label="Email">
+        <Email id="email" name="email" />
+      </FormItem>
+
+      <FormItem label="Content">
+        <Textarea id="content" name="content" />
+      </FormItem>
+      <Button onClick={handleResetForm}>Reset</Button>
+      <SubmitButton>Send</SubmitButton>
+    </Form>
+  )
+}
+
+export default MyResettableForm
+```
+
 ### New input types
 
 The available inputs in Front-Commerce should cover most of your use cases. However, this might not be sufficient and you may need to implement your own form field from scratch.
@@ -213,10 +240,10 @@ You can configure these behaviors by passing options to `withFormHandlers(option
 
 With those configurations, this allows you to potentially transform the input's display into anything you seem fit. For instance, a DateInput could be created and transformed into either a datepicker or multiple input fields without impacting the external API.
 
-One could use the [`node_modules/front-commerce/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) to better understand how it works.
+You can look at [`node_modules/front-commerce/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Form/Input/Checkbox/Checkbox.js) to better understand how the form input api works.
 
 ### Use another form library than Formsy
 
 This is possible thanks to `withFormHandlers` and the `Form` component. In today's Front-Commerce code this is the only places where we are using [`formsy-react`](https://github.com/formsy/formsy-react) we even have a <abbr title="Proof of Concept">PoC</abbr> implementation of a replacement with [`react-final-form`](https://github.com/final-form/react-final-form).
 
-The only thing to keep in mind is that there are most likely features in your forms that use implicit parts of Formsy. Make sure to support them or migrate your code in case you want to use another form library. This is most likely the case for validations for example.
+The only thing to keep in mind is that there are most likely features in your forms that use implicit parts of Formsy. Make sure to support them or migrate your code in case you want to use another form library. This is most likely the case for with validations.

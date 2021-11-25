@@ -63,7 +63,7 @@ export default {
 
 ### Make invoice files downloadable for Customers
 
-You must implement [a custom router](/docs/advanced/server/add-http-endpoint.html) to expose the PDF file on an URL. The implementation of this route is up to you and depends on your context.
+You must implement [a custom router](/docs/advanced/server/add-http-endpoint.html) to expose the PDF file on a URL. The implementation of this route is up to you and depends on your context.
 
 It might be a simple proxy, but if your remote data source does not implement access control you may have to roll your own authorization checks to ensure that Customers cannot access invoices that don't belong to them.
 
@@ -77,7 +77,7 @@ import makeProtectedProxyRouter from "server/core/makeProtectedProxyRouter";
 
 router.get(
   "/invoices",
-  withMagentoProxyHeaders(config), // To allow a Magento protected by htpasswd
+  withMagentoProxyHeaders(config), // To allow a Magento protected by .htpasswd
   makeProtectedProxyRouter(
     (req) => {
       // Am I allowed to view this proxy?
@@ -100,5 +100,5 @@ router.get(
 ```
 
 <blockquote class="info">
-**Note:** when the user is not authorized or the final path does not work, it will display a 404 page instead. This is kind of a security reason but mostly because we don't want to force people to style a new error page!
+**Note:** when the user is not authorized or the final path does not work, it will display a 404 page instead. This is kind of for a security reason but mostly because we don't want to force people to style a new error page!
 </blockquote>

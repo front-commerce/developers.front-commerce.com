@@ -34,9 +34,9 @@ module.exports = {
 };
 ```
 
-This name is used for _Developer Experience_ only and is not aimed at appearing in the theme or any website user message. You may thus use it to redirect to your staging instance, or project management tool for instance.
+This url is used for _Developer Experience_ only and is not aimed at appearing in the theme or any website user message. You may thus use it to redirect to your staging instance, or project management tool for instance.
 
-It is for instance used as link target for the name in the [Storybook design system](/docs/essentials/add-component-to-storybook.html).
+It is for instance used as the link target for the name in the [Storybook design system](/docs/essentials/add-component-to-storybook.html).
 
 <blockquote class="note">
   Use [the `FRONT_COMMERCE_URL` environment variable](/docs/reference/environment-variables.html#Host) to configure the URL used to access to your application.
@@ -102,7 +102,7 @@ As of the latest release, Front-Commerce’s provides the following GraphQL modu
 
 - `server/modules/front-commerce-core`: core features of Front-Commerce.
 - `server/modules/magento2` _(meta module)_: Magento2 GraphQL modules to [use Front-Commerce with all Magento2 supported features](/docs/magento2/overview.html).
-  Register single sub-modules explicitely if you only need a subset of features.
+  Register single sub-modules explicitly if you only need a subset of features.
 - [Front-Commerce’s embedded payment](/docs/advanced/checkout/overview.html) modules:
   - `server/modules/payment-ogone`: Ogone payment platform.
   - `server/modules/payment-paypal`: PayPal payment platform.

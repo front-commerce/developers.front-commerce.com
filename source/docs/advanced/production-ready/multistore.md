@@ -62,7 +62,7 @@ In addition, it's possible to [configure Front-Commerce to serve static assets f
 
 If you are using a base path to define your stores URLs (`www.example.com/fr`, `www.example.com/en`, etc.), you will notice that no URLs available in your GraphQL have the basePath (`/fr` or `/en`). This is not a problem in practice because the `<Link>` component in Front-Commerce will add the basePath automatically. Moreover this enables you to switch easily between subdomains or base paths.
 
-However in some cases you may still need to get the full URL, including the `basePath`. This is the case if you want to display the URL to the user, or if you create a share button that sends an URL to social media.
+However in some cases you may still need to get the full URL, including the `basePath`. This is the case if you want to display the URL to the user, or if you create a share button that sends a URL to social media.
 
 You can get the full URL by using the React hook `web/core/shop/useFullUrl`. It will preprend the passed URL with the base URL of the current store. For instance, if you are on the `default_en` store using the URL `https://www.example.com/en` and you write the following component, it will display the URL `https://www.example.com/en/shirts.html`.
 
@@ -89,7 +89,7 @@ query ShopQuery {
 }
 ```
 
-### How should I get the URL in an other store?
+### How should I get the URL in another store?
 
 URLs may change between stores. This is the case for the base url of your store but also for the actual path of your page. For instance a `/shirts.html` URL would be changed in `/chemises.html` in french. This can be done by executing the following GraphQL query:
 
@@ -108,7 +108,7 @@ It will return in `translatedUrl` the correct URL in the other store.
 
 <blockquote class="feature--new">
 This feature has been added in version 2.2.0 for Magento 1. Please contact us if you need it for another platform.
-</bloquote>
+</blockquote>
 
 With **Magento1** it is possible to handle multiple currencies for a single store. To do so, you need to define the `availableCurrencies` key for the stores using multiple currencies. This will add a button in your shop's header that let's the user choose which currency to use. By default, a user will be using the currency specified in the `currency` key.
 

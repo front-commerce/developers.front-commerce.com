@@ -21,10 +21,10 @@ However, not all variables are exposed in your client code. Client code only hav
 You can't update these variables only by updating your server's variable. This comes from how node works. But there are also some specificities due to Front-Commerce.
 
 * If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
-    * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to make a new `front-commerce build`
+    * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to do a new `front-commerce build`
     * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
 * If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
-    * 🚫 You need to make a new `front-commerce build` and restart your server
+    * 🚫 You need to do a new `front-commerce build` and restart your server
 
 The reason behind these rules is because some variables are defined and bundled within your code during the `build` of your application. For this reason, if you are are in a case where you can't update the variable, you will need to trigger a new build with the new environment variables defined and restart your server.
 
@@ -85,7 +85,7 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 - `FRONT_COMMERCE_MAGENTO_MODULE_VERSION`: the version of the Front-Commerce module installed on your Magento
 - `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the URL of the magento (ex: http://magento2.local)
 <blockquote class="warning">
-**WARNING:** due to the way [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158), using an URL containing basic authentication credentials (such as http://user:password@magento2.local) is not possible yet. It would prevent users to login.
+**WARNING:** due to the way [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158), using a URL containing basic authentication credentials (such as http://user:password@magento2.local) is not possible yet. It would prevent users to login.
 </blockquote>
 - Integration tokens configured in Magento’s « System > Extensions > Integrations » admin page:
     - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
