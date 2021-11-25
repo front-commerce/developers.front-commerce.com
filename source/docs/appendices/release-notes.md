@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.10.0`](#2-10-0)**
+**Front-Commerce [`2.11.0`](#2-11-0-2021-11-25)**
 
 Compatible with:
 
@@ -17,7 +17,16 @@ Compatible with:
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
 
-## 2.10.0
+## 2.11.0 (2021-11-25)
+
+> With its 2.11 release, Front-Commerce continues its exploration of the wide world of B2B commerce! You’ll now be able to deal with Company accounts and company users on Magento 2. A big step for us, knowing the ever-increasing popularity if B2B e-commerce websites.
+>
+> You will also discover various changes and bug corrections, to make your Front-Commerce instances even more efficient!
+
+- [Announcement](https://developers.front-commerce.com/blog/2021/11/24/front-commerce-2.11/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.0)
+
+## 2.10.0 (2021-10-14)
 
 > The 2.10 release brings Front-Commerce to the unified commerce market. With Proximis headless capabilities, merchants can now offer a great experience to their customers no matter where they are.
 >
@@ -32,14 +41,14 @@ Requirement changes:
 
 Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 
-## 2.9.0
+## 2.9.0 (2021-09-02)
 
 > We focused on delivering incremental improvements to existing features.
 
 - [Announcement](https://developers.front-commerce.com/blog/2021/09/02/front-commerce-2.9/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.0)
 
-## 2.8.0
+## 2.8.0 (2021-07-22)
 
 > This new version contains advanced Prismic features for Content Driven storefronts, an alpha version of our new Proximis connector and several “Summer backlog cleaning” items (bugfixes, improvements from performance profilings, technical debt removal).
 
@@ -49,7 +58,7 @@ Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/h
 Requirement changes:
 - Proximis: latest version
 
-## 2.7.0
+## 2.7.0 (2021-06-10)
 
 > Front-Commerce 2.7 integrates practical solutions to improve your efficiency.
 >
@@ -65,7 +74,7 @@ Requirement changes:
 Requirement changes:
 - Magento2: 2.3.2+ -> 2.4.2-p1 - requires [magento module version 2.4.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.4.0) - (Open Source & Commerce)
 
-## 2.6.0
+## 2.6.0 (2021-04-29)
 
 > Front-Commerce 2.6 embraces HTTP Caching to bring your storefront performance to a whole new level.
 >
@@ -86,15 +95,15 @@ Requirements:
   - analysis-phonetic
   - analysis-icu
 
-## 2.5.1
+## 2.5.1 (2021-03-17)
 
 > This release contains a bugfix of guest orders not being tracked.
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.1)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.5.0
+## 2.5.0 (2021-03-11)
 
 > This release contains product improvements that increase its flexibility:
 > - search datasources allows you to choose between Algolia or ElasticSearch to power your search
@@ -104,33 +113,33 @@ Requirements: same as [2.4.0](#2-4-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.0)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.6
+## 2.4.6 (2021-03-17)
 
 > This release contains a bugfix of guest orders not being tracked.
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.6)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.5
+## 2.4.5 (2021-03-03)
 
 > This release contains a bugfix that improves resilience in case of ElasticSearch downtimes.
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.5)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.4
+## 2.4.4 (2021-02-24)
 
 > This release contains minor bugfixes related to displaying invoices and dropdown.
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.4)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.3
+## 2.4.3 (2021-02-19)
 
 > This release contains additional fixes related to product visibility, and fixes the payments method order if you are using Front-Commerce payments.
 >
@@ -138,18 +147,18 @@ Requirements: same as [2.4.0](#2-4-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.3)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.2
+## 2.4.2 (2021-02-10)
 
 > This release contains a **CRITICAL bugfix** for applications using the base theme.
 > The regression introduced in Front-Commerce 2.4.0 prevents Customers to move to the next checkout step if they first tried to submit the payment form without accepting GSC (unless they temporarily select another payment method and reselect the previous one).
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.2)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.1
+## 2.4.1 (2021-02-03)
 
 > This release contains several important bugfixes:
 >
@@ -166,9 +175,9 @@ Requirements: same as [2.4.0](#2-4-0)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.1)
 
-Requirements: same as [2.4.0](#2-4-0)
+Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 
-## 2.4.0
+## 2.4.0 (2021-01-22)
 
 > This release brings a **new base theme ("Chocolatine")**. It contains several accessibility improvements, and provides a better user experience out of the box.
 >
@@ -184,7 +193,7 @@ Requirements:
   - analysis-phonetic
   - analysis-icu
 
-## 2.3.0
+## 2.3.0 (2021-01-12)
 
 > **Magento 2:**
 >   - Product reviews support
@@ -223,7 +232,7 @@ Requirements:
   - analysis-phonetic
   - analysis-icu
 
-## 2.2.0
+## 2.2.0 (2020-11-17)
 
 > - Support more features from Magento 1 (Guest Checkout, Bundle Products, Virtual Products, Credit Memo)
 > - Allow to switch currency inside of a store view
@@ -233,7 +242,7 @@ Requirements:
 
 Requirements: same as [2.1.0](#2-1-0)
 
-## 2.1.3
+## 2.1.3 (2020-08-20)
 
 > It contains 1 bugfix:
 >
@@ -243,7 +252,7 @@ Requirements: same as [2.1.0](#2-1-0)
 
 Requirements: same as [2.1.0](#2-1-0)
 
-## 2.1.2
+## 2.1.2 (2020-07-30)
 
 > It contains 2 bugfixes:
 >
@@ -254,7 +263,7 @@ Requirements: same as [2.1.0](#2-1-0)
 
 Requirements: same as [2.1.0](#2-1-0)
 
-## 2.1.1
+## 2.1.1 (2020-07-27)
 
 > - Fix a regression in cache invalidation using Redis strategy
 
@@ -262,7 +271,7 @@ Requirements: same as [2.1.0](#2-1-0)
 
 Requirements: same as [2.1.0](#2-1-0)
 
-## 2.1.0
+## 2.1.0 (2020-07-24)
 
 > - Magento 2.3.5 and MSI Support
 > - Magento2 configurations
@@ -283,7 +292,7 @@ Requirements:
 - Magento2: 2.3.1+ (Open Source & Commerce)
 - Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
-## 2.0.0
+## 2.0.0 (2020-07-09)
 
 > - Remove deprecation warnings
 > - Update dependencies
@@ -301,7 +310,7 @@ Requirements:
 - Magento2: 2.3.1+ (Open Source & Commerce)
 - Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 
-## 1.0.0-beta.4
+## 1.0.0-beta.4 (2019-06-25)
 
 > - Bug fixes
 > - Enable customizations for session storages (ex: Redis sessions)
@@ -319,7 +328,7 @@ Requirements:
   - analysis-icu
 - Magento: 2.3.1
 
-## 1.0.0-beta.3
+## 1.0.0-beta.3 (2019-06-06)
 
 > - Bug fixes
 > - WYSIWYG improvement with widgets support
@@ -339,7 +348,7 @@ Requirements:
   - analysis-icu
 - Magento: 2.3.1
 
-## 1.0.0-beta.2
+## 1.0.0-beta.2 (2019-05-20)
 
 > - Bug fixes
 
@@ -355,7 +364,7 @@ Requirements:
   - analysis-icu
 - Magento: 2.3.1
 
-## 1.0.0-beta.1
+## 1.0.0-beta.1 (2019-05-07)
 
 > - Bug fixes
 
@@ -371,7 +380,7 @@ Requirements:
   - analysis-icu
 - Magento: 2.3.1
 
-## 1.0.0-beta.0
+## 1.0.0-beta.0 (2019-05-03)
 
 > - Revamp elasticsearch for Magento 2.3 compatibilty
 > - Translation fallbacks
@@ -392,7 +401,7 @@ Requirements:
   - analysis-icu
 - Magento: 2.3.1
 
-## 1.0.0-alpha.3
+## 1.0.0-alpha.3 (2019-03-26)
 
 > Add Stripe payment
 
@@ -406,7 +415,7 @@ Requirements:
 - ElasticSearch: 2.4
 - Magento: 2.2.1
 
-## 1.0.0-alpha.2
+## 1.0.0-alpha.2 (2019-03-21)
 
 > Improve the Cart and refactor styles to ease themes development
 
@@ -422,7 +431,7 @@ Requirements:
 - ElasticSearch: 2.4
 - Magento: 2.2.1
 
-## 1.0.0-alpha.1
+## 1.0.0-alpha.1 (2019-02-26)
 
 > Refactor environment definitions and bug fixes
 
@@ -436,7 +445,7 @@ Requirements:
 - ElasticSearch: 2.4
 - Magento: 2.2.1
 
-## 0.15.0
+## 0.15.0 (2019-01-10)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/0.15.0)
 
@@ -448,7 +457,7 @@ Requirements:
 - ElasticSearch: 2.4
 - Magento: 2.2.1
 
-## 0.13.0
+## 0.13.0 (2018-04-03)
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/0.13.0)
 
