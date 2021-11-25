@@ -1,7 +1,7 @@
 ---
 id: blog
-title: The Front-Commerce technical blog
+title: Front-Commerce's product changelog
 layout: blog
 ---
 
-Learn about latest news, features and stories about Front-Commerce and the PWA ecosystem.
+New updates and improvements to Front-Commerce.

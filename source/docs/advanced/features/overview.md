@@ -11,5 +11,6 @@ Front-Commerce has several extension points that allow to override default imple
 * [Flash messages](./flash-messages.html)
 * [Display a map](./display-a-map.html)
 * [SmartForms](./smart-forms.html)
+* [Quick order](./quickorder.html)
 
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.

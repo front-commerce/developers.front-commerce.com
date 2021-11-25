@@ -3,7 +3,7 @@ id: magento2-advanced
 title: Advanced
 ---
 
-In this section, you will learn some advanced usages of the Magento 1 integration.
+In this section, you will learn some advanced usages of the Magento 2 integration.
 
 ## Additional headers in Magento API calls
 

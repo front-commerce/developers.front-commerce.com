@@ -7,6 +7,91 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.10.0` -> `2.11.0`
+
+### Zoom-in on product images
+
+In this release, we have added the ability for customers to zoom in on product images in the product page. For that, we have implemented [a `<Ligthbox />` component](https://magento2.front-commerce.app/styleguide/?path=/story/modules-organisms-lightbox--with-images) that leverages [react-image-lightbox library](https://www.npmjs.com/package/react-image-lightbox) behind the scene.
+
+This feature is enabled by default in both in theme Chocolatine and in the base theme. **You MUST decide whether you want it or not and follow the related instructions below:**
+
+- [Integrating the zoom in feature](#Integrating-the-zoom-in-feature)
+- or [Disabling the zoom in feature](#Disabling-the-zoom-in-feature)
+
+#### Disabling the zoom in feature
+
+This feature is controlled by the `enableZoomOnImage` property of the product `<Gallery />` component in the base theme or the `<GalleryWithCarousel />` component in theme Chocolatine. So If you want to disable this feature and one of these components is used in your integration, you can pass `false` in the `enableZoomOnImage` property.
+
+<blockquote class="note">
+In the base theme, the `<Gallery />` component is rendered by `theme/modules/ProductView/ProductView`, while in theme Chocolatine, the `<GalleryWithCarousel />` is rendered by `theme/modules/ProductView/Gallery/Gallery`.
+</blockquote>
+
+#### Integrating the zoom in feature
+
+If you want to add that feature to your project you have to define an image format named `zoomable`. For instance, we have added one in [the last version of the Skeleton](https://gitlab.com/front-commerce/front-commerce-skeleton/-/commit/4b0d4175f9468c47e1a9af9329f3856c2b00c025) but the actual format parameters depends on your project constraints.
+
+<blockquote class="note">
+`zoomable` is the default image format used by the `<Lightbox />` component to render the image on which the customer can zoom in. This component accepts an `imageFormat` property in which you can pass an other image format.
+</blockquote>
+
+Then, depending on the amount of customization, you might also have to bring changes similar to what we have done in the merge requests for that feature:
+- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/699/diffs
+- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/717/diffs
+- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/719/diffs
+
+In a nutshell, when the feature is enabled, we place a transparent button on top of the product image; if the customer clicks on it, we then render a `<Lightbox />` for that image.
+
+### MondialRelay shipping in a Magento2 based project
+
+In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
+
+### New icons required
+
+In this release, two new icons (`warn` and `users`) were added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+
+If you have overridden the `<Icon>` component, you need to add both icons as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+import {
+  ...
++ IoIosWarning,
++ IoIosPeople,
+} from "react-icons/io";
+
+const keyToComponent = {
+  ...
++ warn: IoIosWarning,
++ users: IoIosPeople,
+};
+```
+
+### Dependencies updates
+
+Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
+- `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
+
+### Unnecessary safeHtml in product overviews
+
+The product overview component does not need to escape the product name with `safeHtml`.
+
+If you did override any of the following components, you can safely [remove `safeHtml` calls](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/750) in them:
+
+- `src/web/theme/modules/ProductView/Overview/Overview.js`
+- `theme-chocolatine/web/theme/modules/ProductView/ProductItem/Overview/Overview.js`
+
+```diff
+- {<span dangerouslySetInnerHTML={{ __html: safeHtml(name) }} />}
++ {name}
+```
+
+### New features in `2.11.0`
+
+These new features may be relevant for your existing application:
+- [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
+- [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
+- Customer can now zoom in on product images in the product page
+- Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
+
 ## `2.9.0` -> `2.10.0`
 
 ### Magento1 MondialRelay module update

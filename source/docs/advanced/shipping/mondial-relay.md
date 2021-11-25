@@ -15,7 +15,7 @@ No matter the backend solution, the MondialRelay Front-Commerce modules requires
 _Since version 2.10.0_
 </blockquote>
 
-The integration of MondialRelay in Magento2 & Front-Commerce relies on [Magentix' module](https://mondialrelay.magentix.fr/fr/magento-2/) for pickup points. So you first need to [install and configure this module](https://mondialrelay.magentix.fr/fr/magento-2/documentation.html).
+The integration of MondialRelay in Magento2 & Front-Commerce relies on [Magentix' module](https://mondialrelay.magentix.fr/fr/magento-2/) for pickup points. So you first need to [install and configure this module (at least the version 100.10.7)](https://mondialrelay.magentix.fr/fr/magento-2/documentation.html).
 
 Then, within your Front-Commerce project, you have to:
 
