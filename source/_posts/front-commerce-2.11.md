@@ -77,7 +77,7 @@ Specifically in this version you can :
 - **Alert component:** we now have a component way to display warning alert messages to users
 - New: add a mailto link with the new `<MailToLink>` component
 
-    `<MailToLink [email="user@mail.c](mailto:email=%22user@mail.com)om" />` or `<MailToLink email="user@example.com">Contact us</MailToLink>`
+    `<MailToLink email="user@example.com" />` or `<MailToLink email="user@example.com">Contact us</MailToLink>`
 
 - **Wysiwyg:** add a `<Style>` component to include scoped styles
 - **[Prismic](/docs/prismic/)**: improve resilience on remote Prismic errors in case of HTTP errors or timeouts
