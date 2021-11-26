@@ -67,8 +67,13 @@ const keyToComponent = {
 
 ### Dependencies updates
 
+**We recommend to reformat your source code using the latest Prettier version** (see below).
+
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
 - `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
+- `prettier` has been updated [from 2.2.1 to 2.4.1](https://github.com/prettier/prettier/blob/main/CHANGELOG.md) ([MR!742](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/742)). We've reformatted our code with this version, so it may lead to style differences with your overrides. To update your application code, you can run `npx prettier -w ./path/to/your/directories` and commit the changes.
+
+> ProTip™: we've discovered the [git `ignoreRevsFile` option](https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt) it could be useful [in your project too](https://www.moxio.com/blog/43/ignoring-bulk-change-commits-with-git-blame) 😎
 
 ### Unnecessary safeHtml in product overviews
 
