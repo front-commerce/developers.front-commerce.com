@@ -9,19 +9,11 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
-### Show Password action and related icon
+### New icon required
 
-The `<Password>` input now displays a show/hide icon allowing the user to view its password. You can disable this behavior by passing the `disableShowPassword` flag like bellow:
-```diff
-<Password
-  id="password"
-  name="password"
-  required
-+ disableShowPassword={true}
-/>
-```
+In this release, a new `eye-off` was added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
 
-As such we needed a new eye-off icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
+If you have overridden the `<Icon>` component, you need to the icon as follows to the list of icons to avoid any error messages at page loading:
 
 ```diff
 import {
@@ -31,11 +23,20 @@ import {
 
 const keyToComponent = {
   ...
-  eye: IoIosEye,
 + "eye-off": IoIosEyeOff,
-  pencil: IoMdCreate,
-  ...
 };
+```
+### Show Password action and related icon
+
+The `<Password>` input now displays a show/hide icon allowing the user to view its password. You can disable this behavior by passing the `disableShowPassword` flag like below:
+
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword={true}
+/>
 ```
 
 This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
