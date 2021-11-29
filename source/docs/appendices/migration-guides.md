@@ -62,7 +62,7 @@ select {
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-- `<Password>` fields now display an eye icon to show the password clearly
+- the `<Password>` component now allows the user to reveal the password
 
 ## `2.10.0` -> `2.11.0`
 
