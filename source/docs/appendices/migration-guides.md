@@ -7,6 +7,64 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.11.0` -> `2.12.0`
+
+### New icon required
+
+In this release, a new `eye-off` was added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+
+If you have overridden the `<Icon>` component, you need to the icon as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+import {
+  ...
++ IoIosEyeOff,
+} from "react-icons/io";
+
+const keyToComponent = {
+  ...
++ "eye-off": IoIosEyeOff,
+};
+```
+### Show Password action and related icon
+
+The `<Password>` input now displays a show/hide icon allowing the user to view its password. You can disable this behavior by passing the `disableShowPassword` flag like below:
+
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword={true}
+/>
+```
+
+This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
+
+```diff
+...
+@import "~theme/components/atoms/Form/Label/Label";
++@import "~theme/components/atoms/Form/Input/Password/Password";
+@import "~theme/components/atoms/Form/Input/Select/Select";
+...
+```
+
+If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
+
+```diff
+input,
++.input-height,
+select {
+  height: 3.4rem;
+}
+
+```
+
+### New features in `2.11.0`
+
+These new features may be relevant for your existing application:
+- the `<Password>` component now allows the user to reveal the password
+
 ## `2.10.0` -> `2.11.0`
 
 ### Zoom-in on product images
