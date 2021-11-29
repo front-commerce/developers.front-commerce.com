@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Show Password action and related icon
 
-The `<Password>` input now displays a show/hide icon allowing the user to clearly see its password. You can disable this behavior by adding a disableShowPassword attribute like bellow :
+The `<Password>` input now displays a show/hide icon allowing the user to view its password. You can disable this behavior by passing the `disableShowPassword` flag like bellow:
 ```diff
 <Password
   id="password"
