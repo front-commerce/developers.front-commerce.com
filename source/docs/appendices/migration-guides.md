@@ -58,34 +58,36 @@ select {
 }
 ```
 
-### New PasswordValidator
+### New PasswordStrengthHint
 
-In order to use the `<PasswordValidator>` you may need to include it in some files if you overrode them :
+In order to use `<PasswordStrengthHint>` you may need to include it in some files if you overrode them, as well as `<ProgressStatus>` :
 
 `_components.scss`
 
 ```diff
-@import "~theme/components/atoms/Form/Input/Password/Password";
-+@import "~theme/components/atoms/Form/Input/PasswordValidator/PasswordValidator";
-@import "~theme/components/atoms/Form/Input/Select/Select";
++@import "~theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
++@import "~theme/components/atoms/ProgressStatus/ProgressStatus";
 ```
 
 `src/web/theme/components/atoms/Form/Input/index.js`
 
 ```diff
-+import PasswordValidator from "./PasswordValidator";
++import PasswordStrengthHint from "./PasswordStrengthHint";
 
 export {
   ...
-+ PasswordValidator,
++ PasswordStrengthHint,
 };
 ```
+
+The `<PasswordStrengthHint>` is based on a new version of `src/web/theme/components/atoms/Form/Input/Password/passwordValidation.js`, if you overrode it, see the documentation of `<Password>` in the styleguide to understand how to re-override this file.
 
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - `<Password>` fields now display an eye icon to show the password clearly
-- A new `<PasswordValidator>` input type shows a helper of password's strength criterias to the user
+- New component : `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
+- New component : `<ProgressStatus>` to show a progressbar with a label
 
 ## `2.10.0` -> `2.11.0`
 
