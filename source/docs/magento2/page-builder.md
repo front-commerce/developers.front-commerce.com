@@ -49,7 +49,7 @@ We currently support these content types in a basic way:
 
 We'll support more options in the next few weeks.
 
-## Upcoming
+### Upcoming
 
 Our 2.12 focus will be to:
 - expose all possible data in GraphQL for supported content types
