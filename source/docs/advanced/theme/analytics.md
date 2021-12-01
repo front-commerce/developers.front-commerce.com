@@ -300,7 +300,7 @@ The consent for the cookies is stored in 2 cookies:
 1. `hasConsent` cookie which stores if the user provided consent answer (authorized or denied) for all services.
 2. `authorizations` cookie which stores a JSON string of all consents given in the following format `{ [service1_name]: true | false, ... }`
 
-These two cookies' expiration SHOULD be configured in `src/config/website.js` like:
+These two cookies' expiration SHOULD be configured in `src/config/website.js` see [website configurations](/docs/reference/configurations#config-website-js) for details on why it is important to configure this. To configure the expiration of the consent cookies you should update `src/config/website.js` as follows:
 
 ```diff
 module.exports = {
@@ -312,8 +312,6 @@ module.exports = {
 +  cookieMaxAgeInMonths: 13,
 };
 ```
-
-As of `2.12.0` and patch releases `2.11.1`, `2.10.3`, `2.9.5`, `2.8.6`, `2.7.4`, `2.6.3`, `2.5.5`, `2.5.5`, `2.4.9` the default will be 13 month but if you are on Front-Commerce version less than the ones above setting up `cookieMaxAgeInMonths` in your `src/config/website.js` IS A MUST. Otherwise you run the risk of the cookie banner showing to your user everytime he closes and opens his browser. Which is very annoying to the user and may lead to the user denying consent and thus the loss valuable analitics insights.
 
 ### How to create a custom integration?
 
