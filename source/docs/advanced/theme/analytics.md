@@ -309,7 +309,7 @@ module.exports = {
   ....
   rewrittenToRoot: ["/home"],
   useUserTitles: false,
-+  cookieMaxAgeInMonths: 13,
++  cookieMaxAgeInMonths: 12,
 };
 ```
 
