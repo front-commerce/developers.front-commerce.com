@@ -60,7 +60,9 @@ select {
 
 ### New PasswordStrengthHint
 
-In order to use `<PasswordStrengthHint>` you may need to include it in some files if you overrode them, as well as `<ProgressStatus>` :
+We included `<PasswordStrengthHint>` to detail the expected complexity of the password.
+
+If you overrode the following files, you will ned to add the two new components introduced by the feature in them :
 
 `_components.scss`
 
@@ -80,7 +82,57 @@ export {
 };
 ```
 
-The `<PasswordStrengthHint>` is based on a new version of `src/web/theme/components/atoms/Form/Input/Password/passwordValidation.js`, if you overrode it, see the documentation of `<Password>` in the styleguide to understand how to re-override this file.
+You can deactivate of the `PasswordStrengthHint` feature by adding the variable `FRONT_COMMERCE_WEB_PASSWORD_HINT_DISABLE=true` to your environment 
+
+If you overrode some forms with password creation/change (`RegisterForm`, `ChangeUserPasswordForm`, `PasswordReset`, `PasswordResetForm`), you can add the component this way
+
+```diff
++import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
+
+<Password 
+  name="password"
+  ...
+/>
++ <PasswordStrengthHint
++  formValuePath="password" // must equal the password name value 
++/>
+```
+
+### `passwordValidation` deprecation 
+
+The file `src/web/theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated, if you overrode it, you will ned  to override the password validity configuration in `src/web/theme/components/atoms/Form/Input/Password/passwordConfig.js`.
+
+See ??? for more details on the password field validation configuration.
+
+If you overrode some of the impacted components (`RegisterForm`, `ChangeUserPasswordForm`, `PasswordReset`, `PasswordResetForm`), use the new `src/web/theme/components/atoms/Form/Input/Password/passwordFieldValidator.js` instead of the deprecated `passwordValidation` as follow
+
+```diff
+-import {
+-  isPasswordValid,
+-  errorMessage,
+-  MIN_PASSWORD_LENGTH,
+-  MIN_CHAR_CLASSES,
+-} from "theme/components/atoms/Form/Input/Password/passwordValidation";
++import {
++  passwordValidationRules,
++  passwordValidationErrors,
++} from "theme/components/atoms/Form/Input/Password/passwordFieldValidator";
+
+...
+
+<Password 
+  name="password"
+- validations={{
+-   magentoPasswordRule: (_, value) => isPasswordValid(value),
+- }}
++ validations={passwordValidationRules}
+- validationError={intl.formatMessage(errorMessage, {
+-   minLength: MIN_PASSWORD_LENGTH,
+-   minClasses: MIN_CHAR_CLASSES,
+- })}
++ validationError={passwordValidationErrors}
+/>
+```
 
 ### New features in `2.11.0`
 
