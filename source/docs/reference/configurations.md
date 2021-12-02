@@ -30,6 +30,7 @@ _New in version `1.0.0-beta.3`:_ configurations are inherited across themes decl
 This configuration file should contain any thing that impacts the content of your website. The term website refers to what a [`website` is in Magento's ecosystem](https://devdocs.magento.com/guides/v2.3/config-guide/multi-site/ms_over.html).
 
 * ~~`root_categories_path` (ex: `1/517/`): which category to use for the main navigation menu.~~ Removed in `2.7.0`.
+* `cookieMaxAgeInMonths` the consent cookie's maxage in months. The consent cookie stores the user cookies authorizations and when cleared the cookie banner will reapear to the user on next visit. As of `2.12.0` and patch releases `2.11.1`, `2.10.3`, `2.9.5`, `2.8.6`, `2.7.4`, `2.6.3`, `2.5.5`, `2.5.5`, `2.4.9` the default will be 12 month but if you are on Front-Commerce version less than the ones above configuring `cookieMaxAgeInMonths` in your `src/config/website.js` IS A MUST. Otherwise you run the risk of the cookie banner showing to your user everytime he closes and opens his browser. Which is very annoying to the user and may lead to the user denying consent and thus the loss of valuable analytics insights.
 * `default_image_url` (ex: an absolute URL of an image): which image to use when no image path has been given to [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware.html#lt-ResizedImage-gt-component)
 * `defaultTitle`: the default meta title of your application
 * `defaultDescription`: the default meta description of your application

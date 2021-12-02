@@ -295,6 +295,24 @@ export default {
 };
 ```
 
+The consent for the cookies is stored in 2 cookies:
+
+1. `hasConsent` cookie which stores if the user provided consent answer (authorized or denied) for all services.
+2. `authorizations` cookie which stores a JSON string of all consents given in the following format `{ [service1_name]: true | false, ... }`
+
+These two cookies' expiration SHOULD be configured in `src/config/website.js` (see [website configurations](/docs/reference/configurations#config-website-js) for details on why it is important to configure this). To configure the expiration of the consent cookies you should update `src/config/website.js` as follows:
+
+```diff
+module.exports = {
+  default_image_url: "https://placehold.it/150x220",
+  available_page_sizes: [18, 36],
+  ....
+  rewrittenToRoot: ["/home"],
+  useUserTitles: false,
++  cookieMaxAgeInMonths: 12,
+};
+```
+
 ### How to create a custom integration?
 
 You may need to integrate custom tracking scripts in your own application even if they are not provided in [segment-integrations](https://github.com/segment-integrations). The following example explains how to create your custom integration and register it in your `src/config/analytics.js`.
