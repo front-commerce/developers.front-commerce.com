@@ -9,6 +9,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### cookies max age config
+
+`cookieMaxAgeInMonths` configuration in `src/config/website.js` which represents the consent cookie's maxage in months now has a default value of 12 months. Previously if left unconfigured the cookie banner will appear to the user everytime he revisits the site.
+
 ### New icon required
 
 In this release, a new `eye-off` was added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
