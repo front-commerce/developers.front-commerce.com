@@ -6,6 +6,12 @@ title: Search engine
 As of Front-Commerce 2.5.0, it is possible to use Elasticsearch or Algolia to
 bring a search engine to your website.
 
+<blockquote class="warning">
+⚠️ NOTE: The default behaviour in Front-Commerce is that in the top search bar we search products, categories and pages(CMS Pages). While on the search page we search products only. This is an implementation choice we took. It is up to the integrator to modify these behaviour if needed (components and GraphQL queries under `theme/modules/Search` will need to be overriden).
+</blockquote>
+
+<br/>
+
 ## Elasticsearch
 
 ### Requirements
@@ -58,6 +64,8 @@ making the changes in your `.front-commerce.js` file similar to:
 ⚠️ Known issue: the Elasticsearch server module needs to be enabled **before** the Magento's module.
 </blockquote>
 
+<br/>
+
 Then, in your `.env` file, you need to define [the `FRONT_COMMERCE_ES_HOST` and
 `FRONT_COMMERCE_ES_ALIAS` variables](/docs/reference/environment-variables.html#Elasticsearch).
 
@@ -81,6 +89,146 @@ query Search {
 
 If you are using the default theme or the theme Chocolatine, the search bar
 should now be visible.
+
+<blockquote class="warning">
+⚠️ Common mistake: For magento 2 the elasticsuite does not index cms pages. To do that you need to install <a href="https://github.com/Smile-SA/magento2-module-elasticsuite-cms-search" target="_blank">Smile elasticsuite cms search module</a> on your magento instance. Failing to do so will cause the top search bar to malfunction. If you do not need the CMS Page search you can always override related `SearchBar` Components/GraphQL queries to disable the cms page search functionality as in the following diff:
+
+<details>
+<summary>
+Disable CMS Pages Search Diff
+</summary>
+
+#### Base theme:
+
+```
+diff --git a/src/web/theme/modules/Search/SearchBar/Autocomplete/Autocomplete.js b/src/web/theme/modules/Search/SearchBar/Autocomplete/Autocomplete.js
+index 9bc108484..ea9a2c91f 100644
+--- a/src/web/theme/modules/Search/SearchBar/Autocomplete/Autocomplete.js
++++ b/src/web/theme/modules/Search/SearchBar/Autocomplete/Autocomplete.js
+@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
+ import { FormattedMessage } from "react-intl";
+ import ProductsResults from "./ProductsResults";
+ import CategoriesResults from "./CategoriesResults";
+-import PagesResults from "./PagesResults";
+ 
+ const hasResults = ({ products, categories, pages }) =>
+-  products.length || categories.length || pages.length;
++  products.length || categories.length;
+ 
+ const Autocomplete = (props) => {
+   if (!props.results || !hasResults(props.results)) {
+@@ -36,9 +35,6 @@ const Autocomplete = (props) => {
+           onSelect={props.onSelect}
+         />
+       )}
+-      {props.results.pages.length > 0 && (
+-        <PagesResults results={props.results.pages} onSelect={props.onSelect} />
+-      )}
+     </div>
+   );
+ };
+diff --git a/src/web/theme/modules/Search/SearchBar/SearchBarQuery.gql b/src/web/theme/modules/Search/SearchBar/SearchBarQuery.gql
+index 15da9b1a4..9a01d02bd 100644
+--- a/src/web/theme/modules/Search/SearchBar/SearchBarQuery.gql
++++ b/src/web/theme/modules/Search/SearchBar/SearchBarQuery.gql
+@@ -1,6 +1,5 @@
+ #import "theme/modules/Search/SearchBar/ProductAutocompleteFragment.gql"
+ #import "theme/modules/Search/SearchBar/CategoryAutocompleteFragment.gql"
+-#import "theme/modules/Search/SearchBar/PageAutocompleteFragment.gql"
+ 
+ query SearchSuggestions($query: String!, $resultsPerType: Int = 5) {
+   searchSuggestions: search(query: $query) {
+@@ -13,8 +12,5 @@ query SearchSuggestions($query: String!, $resultsPerType: Int = 5) {
+     categories(size: $resultsPerType) {
+       ...CategoryAutocompleteFragment
+     }
+-    pages(size: $resultsPerType) {
+-      ...PageAutocompleteFragment
+-    }
+   }
+ }
+```
+
+#### Theme Chocolatine:
+
+```
+diff --git a/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResults.js b/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResults.js
+index a02d89d6e..65ee82443 100644
+--- a/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResults.js
++++ b/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResults.js
+@@ -12,7 +12,7 @@ import SearchBarResultsError from "./SearchBarResultsEmptyError";
+ import { useAutocompleteOption } from "theme/components/organisms/Autocomplete/useAutocomplete";
+ 
+ const hasResults = ({ products, categories, pages }) =>
+-  products.length > 0 || categories.length > 0 || pages.length > 0;
++  products.length > 0 || categories.length > 0;
+ 
+ const SearchBarResults = (props) => {
+   const isEmpty = !props.results || !hasResults(props.results);
+@@ -36,13 +36,11 @@ const SearchBarResults = (props) => {
+ 
+   const hasProducts = props.results.products.length > 0;
+   const hasCategories = props.results.categories.length > 0;
+-  const hasPages = props.results.pages.length > 0;
+ 
+   return (
+     <div
+       className={classNames("searchbar-results", {
+-        "searchbar-results--two-columns":
+-          hasProducts && (hasCategories || hasPages),
++        "searchbar-results--two-columns": hasProducts && hasCategories,
+       })}
+     >
+       <Stack size="2">
+@@ -56,7 +54,7 @@ const SearchBarResults = (props) => {
+               />
+             </div>
+           )}
+-          {(hasCategories || hasPages) && (
++          {hasCategories && (
+             <div key="categories-pages" className="searchbar-results__element">
+               <Stack size="2" mobileSize="4">
+                 {hasCategories && (
+@@ -67,14 +65,6 @@ const SearchBarResults = (props) => {
+                     onSelect={props.onSelect}
+                   />
+                 )}
+-                {hasPages && (
+-                  <PagesResults
+-                    key="pages"
+-                    results={props.results.pages}
+-                    selected={props.selected}
+-                    onSelect={props.onSelect}
+-                  />
+-                )}
+               </Stack>
+             </div>
+           )}
+diff --git a/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResultsFragment.gql b/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResultsFragment.gql
+index 175f9454c..4fc45fb3a 100644
+--- a/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResultsFragment.gql
++++ b/theme-chocolatine/web/theme/modules/Search/SearchBar/SearchBarResults/SearchBarResultsFragment.gql
+@@ -1,5 +1,4 @@
+ #import "theme/modules/Search/SearchBar/CategoriesResults/CategoriesResultsFragment.gql"
+-#import "theme/modules/Search/SearchBar/PagesResults/PagesResultsFragment.gql"
+ #import "theme/modules/Search/SearchBar/ProductsResults/ProductsResultsFragment.gql"
+ 
+ fragment SearchBarResultsFragment on SearchResult {
+@@ -12,7 +11,4 @@ fragment SearchBarResultsFragment on SearchResult {
+   categories(size: $resultsPerType) {
+     ...CategoriesResultsFragment
+   }
+-  pages(size: $resultsPerType) {
+-    ...PagesResultsFragment
+-  }
+ }
+
+```
+
+</details>
+</blockquote>
+
+<br/>
 
 ## Algolia
 
