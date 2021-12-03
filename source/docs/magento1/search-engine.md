@@ -7,7 +7,7 @@ As of Front-Commerce 2.5.0, it is possible to use Elasticsearch or Algolia to
 bring a search engine to your website.
 
 <blockquote class="warning">
-⚠️ NOTE: The default behaviour in Front-Commerce is that in the top search bar we search products, categories and pages(CMS Pages). While on the search page we search products only. This is an implementation choice we took. It is up to the integrator to modify these behaviour if needed (components and GraphQL queries under `theme/modules/Search` will need to be overriden).
+⚠️ NOTE: The default behavior in Front-Commerce is that in the top search bar we search products, categories and pages(CMS Pages). While on the search page we search products only. This is an implementation choice we took. It is up to the integrator to modify these behavior if needed (components and GraphQL queries under `theme/modules/Search` will need to be overriden).
 </blockquote>
 
 <br/>
