@@ -231,7 +231,7 @@ export default {
 -        key: "key",
 -        secret: "secret"
 -      })
-+      Service: ServiceLoader(req.config.service)
++      Service: new ServiceLoader(req.config.service)
     };
   }
 };

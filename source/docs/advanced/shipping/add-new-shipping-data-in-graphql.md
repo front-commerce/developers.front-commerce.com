@@ -103,13 +103,11 @@ const formatPickupPoint = (pickupPoint) => {
   };
 };
 
-const CustomShippingLoader = () => {
-  return {
-    loadPickupList: async () => {
-      const response = await axios.get("/your-remote-api");
-      return response.data.map(formatPickupPoint);
-    },
-  };
+class CustomShippingLoader {
+  async loadPickupList() {
+    const response = await axios.get("/your-remote-api");
+    return response.data.map(formatPickupPoint);
+  }
 };
 ```
 
@@ -129,7 +127,7 @@ export default {
   ],
   typeDefs,
 +  contextEnhancer: ({ req, loaders }) => {
-+    const CustomShipping = CustomShippingLoader(axiosInstance);
++    const CustomShipping = new CustomShippingLoader(axiosInstance);
 +
 +    return {
 +      CustomShipping,

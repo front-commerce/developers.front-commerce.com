@@ -48,7 +48,7 @@ const moduleDefinition = {
   typeDefs,
   contextEnhancer: ({ req, loaders }) => {
     const axiosInstance = makeUserClientFromRequest(req);
-    const CustomLoader = MyCustomLoader(axiosInstance);
+    const CustomLoader = new MyCustomLoader(axiosInstance);
 +    loaders.Page.registerUrlMatcher(myCustomUrlMatcher(CustomLoader));
     return {
       MyCustomLoader: CustomLoader
@@ -93,20 +93,22 @@ MyCustomType implements Routable {
 
 ```js
 // loader.js
-const MyCustomLoader = (axiosInstance) => {
-  return {
-    loadByUrl: (url) => {
-      return (
-        // example: get data by issuing an external api call
-        axiosInstance
-          .get(`/my/api/my-custom-entity?url=${encodeURIComponent(url)}`)
-          .then((response) => response.data)
-          .catch((err) =>
-            err.response?.status === 404 ? null : Promise.reject(err)
-          )
-      );
-    },
-  };
+class MyCustomLoader {
+  constructor(axiosInstance) {
+    this.axiosInstance = axiosInstance;
+  }
+  
+  async loadByUrl(url) {
+    return (
+      // example: get data by issuing an external api call
+      axiosInstance
+        .get(`/my/api/my-custom-entity?url=${encodeURIComponent(url)}`)
+        .then((response) => response.data)
+        .catch((err) =>
+          err.response?.status === 404 ? null : Promise.reject(err)
+        )
+    );
+  }
 };
 ```
 

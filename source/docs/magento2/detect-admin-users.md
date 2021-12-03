@@ -47,7 +47,7 @@ export default {
     const axiosInstance = makeUserClientFromRequest(req);
 
     return {
-      AdminData: AdminDataLoader(axiosInstance),
+      AdminData: new AdminDataLoader(axiosInstance),
     };
   },
 };
@@ -58,13 +58,15 @@ export default {
 import { makeUserClientFromRequest } from "server/modules/magento1/core/factories";
 import { AdminDataLoader } from "./loaders";
 
-export const AdminDataLoader = (axiosInstance) => {
-  return {
-    loadData: async () => {
-      const response = await axiosInstance.get("/admin-custom-endpoint");
-      return response.data;
-    },
-  };
+export class AdminDataLoader {
+  constructor(axiosInstance) {
+    this.axiosInstance = axiosInstance;
+  }
+
+  async loadData() {
+    const response = await axiosInstance.get("/admin-custom-endpoint");
+    return response.data;
+  }
 };
 ```
 
@@ -105,8 +107,8 @@ export default {
     const axiosInstance = makeUserClientFromRequest(req);
 
     return {
--      AdminData: AdminDataLoader(axiosInstance),
-+      AdminData: AdminDataLoader(axiosInstance, loaders.MagentoAdmin),
+-      AdminData: new AdminDataLoader(axiosInstance),
++      AdminData: new AdminDataLoader(axiosInstance, loaders.MagentoAdmin),
     };
   },
 };
@@ -119,25 +121,28 @@ We can then use the `MagentoAdmin` loader to only return data when the admin is 
 import { makeUserClientFromRequest } from "server/modules/magento1/core/factories";
 import { AdminDataLoader } from "./loaders";
 
--export const AdminDataLoader = (axiosInstance) => {
-+export const AdminDataLoader = (axiosInstance, MagentoAdmin) => {
-  return {
-    loadData: async () => {
-+     if (await MagentoAdmin.isAdmin()) {
--       const response = await axiosInstance.get("/admin-custom-endpoint")
-+       const response = await axiosInstance.get("/admin-custom-endpoint", {
-+         headers: {
-+           // We pass a header here considering that the `/admin-custom-endpoint`
-+           // now only accepts requests with this header
-+           "x-custom-header": "your custom header matching a custom configuration in your Magento"
-+         }
-+       })
-        return response.data;
-+     } else {
-+       return null;
-+     }
-    },
-  };
+export class AdminDataLoader {
+- constructor(axiosInstance) {
++ constructor(axiosInstance, MagentoAdmin) {
+    this.axiosInstance = axiosInstance;
++   this.MagentoAdmin = MagentoAdmin;
+  }
+
+  async loadData() {
++   if (await MagentoAdmin.isAdmin()) {
+-     const response = await axiosInstance.get("/admin-custom-endpoint")
++     const response = await axiosInstance.get("/admin-custom-endpoint", {
++       headers: {
++         // We pass a header here considering that the `/admin-custom-endpoint`
++         // now only accepts requests with this header
++         "x-custom-header": "your custom header matching a custom configuration in your Magento"
++       }
++     })
+      return response.data;
++   } else {
++     return null;
++   }
+  }
 };
 ```
 

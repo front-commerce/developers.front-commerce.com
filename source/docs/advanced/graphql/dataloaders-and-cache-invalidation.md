@@ -123,7 +123,7 @@ export default {
 
     return {
       // create an instance of the loader, to be made available in resolvers
-      Stock: StockLoader(makeDataLoader, axiosInstance)
+      Stock: new StockLoader(makeDataLoader, axiosInstance)
     };
   }
 };

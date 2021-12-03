@@ -208,7 +208,7 @@ export default {
   },
   contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
     return {
-      Message: MessageLoader(makeDataLoader)(config.apiBaseUrl)
+      Message: new MessageLoader(makeDataLoader, config.apiBaseUrl)
     }
   }
 }

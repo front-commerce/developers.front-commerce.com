@@ -84,14 +84,12 @@ Let's say that we have a FAQ with a single page (`/faq/:slug`) for each question
 - declares a loader that allows to fetch all the FAQ entries and returns an array of object containing the slug, the question and the answer for each FAQ entry.
   ```js
   // src/server/modules/faq/loaders.js
-  const FaqLoader = () => {
-    return {
-      allFaq: () => {
-        return fetch("https://my-faq-service.example.org/all").then(
-          response => response.data
-        );
-      }
-    };
+  class FaqLoader {
+    async allFaq() {
+      return fetch("https://my-faq-service.example.org/all").then(
+        response => response.data
+      );
+    }
   };
   ```
 
@@ -148,7 +146,7 @@ export default {
 +  dependencies: ["Front-Commerce/Core"]
 -  contextEnhancer: () => {
 +  contextEnhancer: ({ loaders }) => {
-    const Faq = FaqLoader()
+    const Faq = new FaqLoader()
 
 +    loaders.Sitemap.registerNodesFetcher("Faq", () =>
 +      Faq.loadAll().then(entries => {

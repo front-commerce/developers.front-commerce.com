@@ -138,27 +138,29 @@ Let’s start by creating a new `loader.js` file with our loader module.
 
 ```js
 // my-module/server/modules/clicks-counters/loader.js
-const counters = new Map();
 
-const currentValueOf = sku => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const currentValue = counters.get(sku) || 0;
-      resolve(currentValue);
-    }, Math.random() * 3000);
-  });
-};
+class Loader {
+  constructor() {
+    this.counters = new Map();
+  }
 
-const incrementValueOf = (sku, increment) => {
-  return currentValueOf(sku).then(currentValue =>
-    counters.set(sku, currentValue + increment)
-  );
-};
+  async currentValueOf(sku) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const currentValue = this.counters.get(sku) || 0;
+        resolve(currentValue);
+      }, Math.random() * 3000);
+    });
+  };
 
-export default {
-  loadBySku: sku => currentValueOf(sku),
-  incrementBySku: (sku, increment) => incrementValueOf(sku, increment)
-};
+  async incrementValueOf(sku, increment) {
+    return this.currentValueOf(sku).then(currentValue =>
+      counters.set(sku, currentValue + increment)
+    );
+  };
+}
+
+export default Loader;
 ```
 
 You can then update the resolvers to use this loader:
@@ -177,17 +179,19 @@ You can then update the resolvers to use this loader:
 -  });
 -};
 -
+
++const counterLoader = new CounterLoader();
 export default {
   Product: {
 -    clicksCounter: ({ sku }) => currentValueOf(sku)
-+    clicksCounter: ({ sku }) => CounterLoader.loadBySku(sku)
++    clicksCounter: ({ sku }) => counterLoader.loadBySku(sku)
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
 -      return currentValueOf(sku)
 -        .then(currentValue => counters.set(sku, currentValue + incrementValue))
-+      return CounterLoader.incrementBySku(sku, incrementValue)
++      return counterLoader.incrementBySku(sku, incrementValue)
         .then(() => ({
           success: true
         }));
@@ -273,7 +277,7 @@ export default {
 +  resolvers: resolvers,
 +  contextEnhancer: (params) => {
 +    return {
-+      Counter: CounterLoader
++      Counter: new CounterLoader()
 +    };
 +  }
 };
@@ -316,37 +320,29 @@ Let’s now take a look at a _real-world_ module definition as an example.
 Front-Commerce itself is written as GraphQL modules. You can browse
 Front-Commerce’s source code to find more examples and understand how it works.
 
-Here is for instance how Magento2 CMS module’s definition looks like. You should
+Here is for instance how Magento2 RequisitionLists module’s definition looks like. You should
 see several patterns mentioned previously and get ideas about applying them in
 your application:
 
 ```js
-import {
-  makeUserClientFromRequest
-} from "server/modules/magento2/core/factories";
+import { makeUserGraphQLClientFromRequest } from "server/modules/magento2/core/factories";
 
 import typeDefs from "./schema.gql";
-import resolvers from "./resolvers";
-import { CmsBlockLoader, CmsPageLoader } from "./loaders";
+import resolvers from "./resolver";
+import RequisitionListLoader from "./loaders/RequisitionListLoader";
 
 export default {
-  namespace: "Magento2/Cms",
-  dependencies: [
-    "Magento2/Store" // loaders need the store loader to get the store id
-  ],
+  namespace: "Front-Commerce-B2B/Magento2/RequisitionList",
+  dependencies: [],
   typeDefs,
   resolvers,
-  contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
-    const axiosInstance = makeUserClientFromRequest(
-      config.magentoEndpoint,
-      req
-    );
+  contextEnhancer: ({ req }) => {
+    const axiosGraphQLInstance = makeUserGraphQLClientFromRequest(req);
 
     return {
-      CmsPages: CmsPageLoader(makeDataLoader)(axiosInstance, loaders.Store),
-      CmsBlocks: CmsBlockLoader(makeDataLoader)(axiosInstance, loaders.Store)
+      RequisitionList: new RequisitionListLoader(axiosGraphQLInstance),
     };
-  }
+  },
 };
 ```
 
