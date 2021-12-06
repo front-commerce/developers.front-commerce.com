@@ -14,6 +14,7 @@ You can customize those default rules by overriding `theme/components/atoms/Form
 The configuration expects rules to be followed and status to be shown as follows.
 
 ```javascript
+// theme/components/atoms/Form/Input/Password/passwordConfig.js
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
