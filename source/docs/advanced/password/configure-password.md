@@ -11,7 +11,7 @@ By default, Front-Commerce expects a certain level of complexity from the passwo
 
 You can customize those default rules by overriding `theme/components/atoms/Form/Input/Password/passwordConfig.js`
 
-The configuration expects rules to be followed and status to be shown as follows.
+The configuration expects a list of rules to be satisfied and status to be displayed to users. It should follow the format below:
 
 ```javascript
 // theme/components/atoms/Form/Input/Password/passwordConfig.js
@@ -26,9 +26,9 @@ export default {
     {
       // technical ID, must be unique
       id: "", 
-       // optionnal, enforces this status if isValid returns false
+       // optional, enforces this status if isValid returns false
       invalidStatus: "",
-      // optionnal, label to display for this rule in the hinter, if not set : the rule is not shown
+      // optional, label to display for this rule in the hinter. If it is not defined, the rule is not displayed.
       label: messages.?, 
       // validation method for this rule
       isValid: (password) => true, 

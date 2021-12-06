@@ -9,21 +9,22 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
-### Show Password action and related icon
+### Password field updated with a show/hide feature
 
-The `<Password>` input now displays a show/hide icon allowing the user to clearly see its password. You can disable this behavior by adding a disableShowPassword attribute like bellow :
+The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
 ```diff
 <Password
   id="password"
   name="password"
   required
-+ disableShowPassword={true}
++ disableShowPassword
 />
 ```
 
-As such we needed a new eye-off icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
+As such we needed a new `eye-off` icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
 
 ```diff
+// theme/components/atoms/Icon/Icon.js
 import {
   ...
 + IoIosEyeOff,
@@ -41,6 +42,7 @@ const keyToComponent = {
 This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
 
 ```diff
+// theme/components/_components.scss
 ...
 @import "~theme/components/atoms/Form/Label/Label";
 +@import "~theme/components/atoms/Form/Input/Password/Password";
@@ -51,6 +53,7 @@ This new `Password` component requires a stylesheet to add in the `_components.s
 If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
 
 ```diff
+// theme/components/atoms/Form/Input/_Input.scss
 input,
 +.input-height,
 select {
@@ -58,22 +61,22 @@ select {
 }
 ```
 
-### New PasswordStrengthHint
+### New `<PasswordStrengthHint>` component in default forms
 
-We included `<PasswordStrengthHint>` to detail the expected complexity of the password.
+We've included a `<PasswordStrengthHint>` to provide a better feedback to users about the expected password complexity.
 
-If you overrode the following files, you will ned to add the two new components introduced by the feature in them :
+> If you don't want to use this feature in your application, please follow the [Disable password strength hints](/#TODO) guide
 
-`_components.scss`
+Please update the files below, to ensure that your application displays user forms consistently:
 
 ```diff
+// theme/components/_components.scss
 +@import "~theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
 +@import "~theme/components/atoms/ProgressStatus/ProgressStatus";
 ```
 
-`src/web/theme/components/atoms/Form/Input/index.js`
-
 ```diff
+// theme/components/atoms/Form/Input/index.js
 +import PasswordStrengthHint from "./PasswordStrengthHint";
 
 export {
@@ -82,7 +85,6 @@ export {
 };
 ```
 
-You can deactivate of the `PasswordStrengthHint` feature by adding the variable `FRONT_COMMERCE_WEB_PASSWORD_HINT_DISABLE=true` to your environment 
 
 If you overrode some forms with password creation/change (`RegisterForm`, `ChangeUserPasswordForm`, `PasswordReset`, `PasswordResetForm`), you can add the component this way
 
@@ -100,7 +102,7 @@ If you overrode some forms with password creation/change (`RegisterForm`, `Chang
 
 ### `passwordValidation` deprecation 
 
-The file `src/web/theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated, if you overrode it, you will ned  to override the password validity configuration in `src/web/theme/components/atoms/Form/Input/Password/passwordConfig.js`.
+The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
 
 See ??? for more details on the password field validation configuration.
 
@@ -137,9 +139,9 @@ If you overrode some of the impacted components (`RegisterForm`, `ChangeUserPass
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-- `<Password>` fields now display an eye icon to show the password clearly
-- New component : `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
-- New component : `<ProgressStatus>` to show a progressbar with a label
+- `<Password>` fields now display an eye icon to reveal the password
+- New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
+- New component: `<ProgressStatus>` to show a progressbar with a label
 
 ## `2.10.0` -> `2.11.0`
 
