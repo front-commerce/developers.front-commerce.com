@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### cookies max age config
 
-`cookieMaxAgeInMonths` configuration in `src/config/website.js` which represents the consent cookie's maxage in months now has a default value of 12 months. Previously if left unconfigured the cookie banner will appear to the user everytime he revisits the site.
+The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months . It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
 
 ### New icon required
 
