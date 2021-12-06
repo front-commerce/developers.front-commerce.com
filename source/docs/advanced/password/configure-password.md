@@ -9,7 +9,7 @@ _Since version 2.12.0
 
 By default, Front-Commerce expects a certain level of complexity from the password set by a user (8 characters and at least three character types between lowercase letters, uppercase letters, digits and special characters).
 
-You can customize those default rules by overriding `src/web/theme/components/atoms/Form/Input/Password/passwordConfig.js`
+You can customize those default rules by overriding `theme/components/atoms/Form/Input/Password/passwordConfig.js`
 
 The configuration expects rules to be followed and status to be shown as follows.
 
