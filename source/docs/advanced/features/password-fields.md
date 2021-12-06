@@ -3,8 +3,10 @@ id: password-fields
 title: Password fields
 ---
 
+Your application will require customers to enter their password on several pages (registration, login, password forgotten…). Front-Commerce contains some default components and mechanisms for providing a good user experience while ensuring passwords match the security criteria you may have.
 
-# Configure password validity
+This page contains all information about how to adapt the default Front-Commerce behaviors.
+## Configure password validity
 
 <blockquote class="feature--new">
 _Since version 2.12.0
@@ -59,7 +61,7 @@ export default {
 };
 ```
 
-# Disable password strength hints
+## Disable password strength hints
 
 Front-Commerce provides a `<PasswordStrengthHint>` to provide a detailed feedback to users about the expected password complexity.
 
