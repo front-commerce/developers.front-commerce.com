@@ -30,6 +30,10 @@ const messages = defineMessages({
     id: "components.atoms.Form.Input.PasswordStrengthHint.Status.invalid",
     defaultMessage: "This is an invalid password",
   },
+  tooShort: {
+    id: "components.atoms.Form.Input.PasswordStrengthHint.Status.tooShort",
+    defaultMessage: "Too short",
+  },
 });
 
 export default {
@@ -49,7 +53,7 @@ export default {
     // status key, used by rule.invalidStatus
     TOO_SHORT: { 
       // message to display for this status
-      label: messages.?,
+      label: messages.tooShort,
       // the status to be used from the ProgressStatus component
       status: "error", 
       // minimum number of valid criterias for this status to be display, only the first valid status sorted by minCriterias will be shown
