@@ -1,13 +1,19 @@
 ---
-id: configure-password
-title: Configure password validity
+id: password-fields
+title: Password fields
 ---
+
+
+# Configure password validity
 
 <blockquote class="feature--new">
 _Since version 2.12.0
 </blockquote>
 
-By default, Front-Commerce expects a certain level of complexity from the password set by a user (8 characters and at least three character types between lowercase letters, uppercase letters, digits and special characters).
+Front-Commerce expects a certain level of complexity for the password entered by a user.
+The default is:
+- 8 characters minimum
+- at least 3 types of characters among: lowercase letters, uppercase letters, digits and special characters
 
 You can customize those default rules by overriding `theme/components/atoms/Form/Input/Password/passwordConfig.js`
 
@@ -18,18 +24,21 @@ The configuration expects a list of rules to be satisfied and status to be displ
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-    ...
+  invalid: {
+    id: "components.atoms.Form.Input.PasswordStrengthHint.Status.invalid",
+    defaultMessage: "This is an invalid password",
+  },
 });
 
 export default {
   rules: [
     {
       // technical ID, must be unique
-      id: "", 
+      id: "a-unique-technical-id", 
        // optional, enforces this status if isValid returns false
-      invalidStatus: "",
+      invalidStatus: "TOO_SHORT",
       // optional, label to display for this rule in the hinter. If it is not defined, the rule is not displayed.
-      label: messages.?, 
+      label: messages.invalid, 
       // validation method for this rule
       isValid: (password) => true, 
     },
@@ -49,3 +58,9 @@ export default {
   },
 };
 ```
+
+# Disable password strength hints
+
+Front-Commerce provides a `<PasswordStrengthHint>` to provide a detailed feedback to users about the expected password complexity.
+
+You can deactivate this feature by adding the variable `FRONT_COMMERCE_WEB_PASSWORD_HINT_DISABLE=true` to your environment file.
