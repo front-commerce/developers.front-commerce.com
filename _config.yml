@@ -76,6 +76,7 @@ sidebar_categories:
     - docs/magento2/detect-admin-users
     - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
+    - docs/magento2/b2b
     - docs/magento2/advanced
   Magento1:
     - docs/magento1/overview
@@ -106,6 +107,7 @@ sidebar_categories:
     - docs/advanced/payments/paypal
     - docs/advanced/payments/payzen
     - docs/advanced/payments/stripe
+    - docs/advanced/payments/payment-on-account
   Shipping:
     - docs/advanced/shipping/overview
     - docs/advanced/shipping/custom-shipping-information
@@ -144,7 +146,7 @@ nav_links:
     url: /help.html
   "License":
     url: /license.html
-  "Blog":
+  "Changelog":
     url: /blog/
 
 community_links:

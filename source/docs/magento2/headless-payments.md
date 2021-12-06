@@ -19,6 +19,7 @@ Our Magento2 integration currently provides native adapters for the platforms be
 - [Ingenico](/docs/advanced/payments/ingenico.html#Magento2-module)
 - [Paypal](/docs/advanced/payments/paypal.html#Magento2-module)
 - [PayZen](/docs/advanced/payments/payzen.html#Magento2-module)
+- [Payment on account](/docs/advanced/payments/payment-on-account.html)
 
 <blockquote class="info">
   If you want to use a Payment module not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.

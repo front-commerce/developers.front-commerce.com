@@ -9,22 +9,18 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
-### Password field updated with a show/hide feature
 
-The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
-```diff
-<Password
-  id="password"
-  name="password"
-  required
-+ disableShowPassword
-/>
-```
+### Cookies max age configuration
 
-As such we needed a new `eye-off` icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `eye-off` to the list of icons.
+The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
+
+### New icon required
+
+In this release, a new `eye-off` was added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+
+If you have overridden the `<Icon>` component, you need to the icon as follows to the list of icons to avoid any error messages at page loading:
 
 ```diff
-// theme/components/atoms/Icon/Icon.js
 import {
   ...
 + IoIosEyeOff,
@@ -37,6 +33,18 @@ const keyToComponent = {
   pencil: IoMdCreate,
   ...
 };
+```
+
+### Password field updated with a show/hide feature
+
+The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword
+/>
 ```
 
 This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
@@ -58,7 +66,7 @@ input,
 +.input-height,
 select {
   height: 3.4rem;
-}
+}elements
 ```
 
 ### New `<PasswordStrengthHint>` component in default forms
@@ -150,7 +158,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-- `<Password>` fields now display an eye icon to reveal the password
+- the `<Password>` component now allows the user to reveal the password
 - New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
 - New component: `<ProgressStatus>` to show a progressbar with a label
 
@@ -192,19 +200,23 @@ In a nutshell, when the feature is enabled, we place a transparent button on top
 
 In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
 
-### New icon required
+### New icons required
 
-In this release we added a new Alert component `<WarnAlert>`. As such we needed a warning icon. We added this icon in [the theme's `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js). If you have overridden the `<Icon>` component please add an icon named `warn` to the list of icons to avoid any error messages in the page loading.
+In this release, two new icons (`warn` and `users`) were added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+
+If you have overridden the `<Icon>` component, you need to add both icons as follows to the list of icons to avoid any error messages at page loading:
 
 ```diff
 import {
   ...
 + IoIosWarning,
++ IoIosPeople,
 } from "react-icons/io";
 
 const keyToComponent = {
   ...
 + warn: IoIosWarning,
++ users: IoIosPeople,
 };
 ```
 
@@ -213,7 +225,7 @@ const keyToComponent = {
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
 - `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
 
-## Unnecessary safeHtml in product overviews
+### Unnecessary safeHtml in product overviews
 
 The product overview component does not need to escape the product name with `safeHtml`.
 
@@ -230,6 +242,7 @@ If you did override any of the following components, you can safely [remove `saf
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
+- [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Customer can now zoom in on product images in the product page
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
