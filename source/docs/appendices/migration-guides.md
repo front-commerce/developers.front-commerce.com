@@ -27,25 +27,29 @@ import {
 
 const keyToComponent = {
   ...
+  eye: IoIosEye,
 + "eye-off": IoIosEyeOff,
+  pencil: IoMdCreate,
+  ...
 };
 ```
-### Show Password action and related icon
 
-The `<Password>` input now displays a show/hide icon allowing the user to view its password. You can disable this behavior by passing the `disableShowPassword` flag like below:
+### Password field updated with a show/hide feature
 
+The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
 ```diff
 <Password
   id="password"
   name="password"
   required
-+ disableShowPassword={true}
++ disableShowPassword
 />
 ```
 
 This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
 
 ```diff
+// theme/components/_components.scss
 ...
 @import "~theme/components/atoms/Form/Label/Label";
 +@import "~theme/components/atoms/Form/Input/Password/Password";
@@ -56,18 +60,106 @@ This new `Password` component requires a stylesheet to add in the `_components.s
 If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
 
 ```diff
+// theme/components/atoms/Form/Input/_Input.scss
 input,
 +.input-height,
 select {
   height: 3.4rem;
 }
+```
 
+### New `<PasswordStrengthHint>` component in default forms
+
+We've included a `<PasswordStrengthHint>` to provide a better feedback to users about the expected password complexity.
+
+> If you don't want to use this feature in your application, please follow the [Disable password strength hints](/#TODONOW) guide
+
+Please update the files below, to ensure that your application displays user forms consistently:
+
+```diff
+// theme/components/_components.scss
++@import "~theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
++@import "~theme/components/atoms/ProgressStatus/ProgressStatus";
+```
+
+```diff
+// theme/components/atoms/Form/Input/index.js
++import PasswordStrengthHint from "./PasswordStrengthHint";
+
+export {
+  ...
++ PasswordStrengthHint,
+};
+```
+
+You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected: 
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+Here is an example of the changes involved to use this component (usually added after the `<Password>` field):
+
+```diff
++import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
+
+<Password 
+  name="password"
+  ...
+/>
++ <PasswordStrengthHint
++  formValuePath="password" // must equal the password name value 
++/>
+```
+
+### `passwordValidation` deprecation 
+
+The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
+
+See [the password field's documentation](docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
+
+If you overrode some of the following components: 
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwordFieldValidator.js` instead of the deprecated `passwordValidation` as follow:
+
+```diff
+-import {
+-  isPasswordValid,
+-  errorMessage,
+-  MIN_PASSWORD_LENGTH,
+-  MIN_CHAR_CLASSES,
+-} from "theme/components/atoms/Form/Input/Password/passwordValidation";
++import {
++  passwordValidationRules,
++  passwordValidationErrors,
++} from "theme/components/atoms/Form/Input/Password/passwordFieldValidator";
+
+...
+
+<Password 
+  name="password"
+- validations={{
+-   magentoPasswordRule: (_, value) => isPasswordValid(value),
+- }}
++ validations={passwordValidationRules}
+- validationError={intl.formatMessage(errorMessage, {
+-   minLength: MIN_PASSWORD_LENGTH,
+-   minClasses: MIN_CHAR_CLASSES,
+- })}
++ validationError={passwordValidationErrors}
+/>
 ```
 
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - the `<Password>` component now allows the user to reveal the password
+- New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
+- New component: `<ProgressStatus>` to show a progressbar with a label
 
 ## `2.10.0` -> `2.11.0`
 
