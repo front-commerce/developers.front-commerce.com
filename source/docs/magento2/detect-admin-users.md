@@ -64,7 +64,7 @@ export class AdminDataLoader {
   }
 
   async loadData() {
-    const response = await axiosInstance.get("/admin-custom-endpoint");
+    const response = await this.axiosInstance.get("/admin-custom-endpoint");
     return response.data;
   }
 };
@@ -129,9 +129,9 @@ export class AdminDataLoader {
   }
 
   async loadData() {
-+   if (await MagentoAdmin.isAdmin()) {
++   if (await this.MagentoAdmin.isAdmin()) {
 -     const response = await axiosInstance.get("/admin-custom-endpoint")
-+     const response = await axiosInstance.get("/admin-custom-endpoint", {
++     const response = await this.axiosInstance.get("/admin-custom-endpoint", {
 +       headers: {
 +         // We pass a header here considering that the `/admin-custom-endpoint`
 +         // now only accepts requests with this header

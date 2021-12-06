@@ -101,7 +101,7 @@ class MyCustomLoader {
   async loadByUrl(url) {
     return (
       // example: get data by issuing an external api call
-      axiosInstance
+      this.axiosInstance
         .get(`/my/api/my-custom-entity?url=${encodeURIComponent(url)}`)
         .then((response) => response.data)
         .catch((err) =>

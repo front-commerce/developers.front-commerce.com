@@ -184,14 +184,14 @@ You can then update the resolvers to use this loader:
 export default {
   Product: {
 -    clicksCounter: ({ sku }) => currentValueOf(sku)
-+    clicksCounter: ({ sku }) => counterLoader.loadBySku(sku)
++    clicksCounter: ({ sku }) => CounterLoader.loadBySku(sku)
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
 -      return currentValueOf(sku)
 -        .then(currentValue => counters.set(sku, currentValue + incrementValue))
-+      return counterLoader.incrementBySku(sku, incrementValue)
++      return CounterLoader.incrementBySku(sku, incrementValue)
         .then(() => ({
           success: true
         }));
