@@ -154,12 +154,26 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 />
 ```
 
+## New Confirmation Modal
+
+We added a new `<ConfirmationModal>` in `theme/components/organisms/Modal`.
+If you overrode the `theme/components/organisms/Modal/index.js` file please add the following lines to ensure confirmation modal are working : 
+
+```diff
++import ConfirmationModal from "./ConfirmationModal/ConfirmationModal";
+
+-export { CloseModal };
++export { CloseModal, ConfirmationModal };
+```
+
+
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - the `<Password>` component now allows the user to reveal the password
 - New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
 - New component: `<ProgressStatus>` to show a progressbar with a label
+- New modal: `<ConfirmationModal>` to simplify confirmation modals
 
 ## `2.10.0` -> `2.11.0`
 
