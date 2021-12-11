@@ -23,7 +23,7 @@ Once the module is declared, Front-Commerce will automatically add your custom s
 
 ## Register additional routes
 
-In the case of the WYSIWYG preview, let's say that when a user visits the `wysiwyg-preview` URL, we want to display static files that will let anyone preview how an html string will be transformed by [Front-Commerce's Wysiwyg component](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/modules/Wysiwyg).
+In the case of the WYSIWYG preview, let's say that when a user visits the `wysiwyg-preview` URL, we want to display static files that will let anyone preview how an html string will be transformed by [Front-Commerce's Wysiwyg component](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/modules/Wysiwyg).
 
 To do so, we need to create our server config file `my-module/server/module.config.js`, and configure its `entrypoint` key.
 

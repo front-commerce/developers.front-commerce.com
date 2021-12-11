@@ -11,7 +11,7 @@ Please refer to the [related gitlab issue (#106)](https://gitlab.com/front-comme
 
 ## How to set your configurations
 
-Each file described below exist in [`node_modules/front-commerce/src/config`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/config) in Front-Commerce. If you want to override some, duplicate those in `my-module/config`.
+Each file described below exist in [`node_modules/front-commerce/src/config`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/config) in Front-Commerce. If you want to override some, duplicate those in `my-module/config`.
 
 <blockquote class="feature--new">
 _New in version `1.0.0-beta.3`:_ configurations are inherited across themes declared in your `.front-commerce.js` in a similar fashion than [theme overrides](/docs/essentials/extend-the-theme.html#Understanding-theme-overrides).
