@@ -91,7 +91,7 @@ export default {
 <blockquote class="info">
   **In depth:** modules are sorted using the
   [toposort](https://www.npmjs.com/package/toposort) library. See
-  [`flattenAndReorderModulesUsingDependencies`](https://gitlab.com/front-commerce/front-commerce/blob/develop/src/server/core/graphql/__tests__/flattenAndReorderModulesUsingDependencies.js)
+  [`flattenAndReorderModulesUsingDependencies`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/server/core/graphql/__tests__/flattenAndReorderModulesUsingDependencies.js)
   code and tests for further details.
 </blockquote>
 

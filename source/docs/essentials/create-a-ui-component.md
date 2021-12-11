@@ -19,7 +19,7 @@ usual workflow when creating a UI Component. But if you don't need it or prefer 
 add your stories later, feel free to leave the parts mentioning Storybook for later.
 
 Front-Commerce’s core UI components follow the same principles
-and you could dive into the [`node_modules/front-commerce/src/web/theme/components`](https://gitlab.com/front-commerce/front-commerce/tree/develop/src/web/theme/components)
+and you could dive into the [`node_modules/front-commerce/src/web/theme/components`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/components)
 folder to find examples into our source code.
 
 But first, let's define what is an ideal UI Component.
