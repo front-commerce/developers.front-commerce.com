@@ -61,7 +61,7 @@ This new `Password` component requires a stylesheet to add in the `_components.s
 ...
 ```
 
-If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
+If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon.
 
 ```diff
 // theme/components/atoms/Form/Input/_Input.scss
@@ -96,7 +96,7 @@ export {
 };
 ```
 
-You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected: 
+You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected:
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -107,22 +107,22 @@ Here is an example of the changes involved to use this component (usually added 
 ```diff
 +import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
 
-<Password 
+<Password
   name="password"
   ...
 />
 + <PasswordStrengthHint
-+  formValuePath="password" // must equal the password name value 
++  formValuePath="password" // must equal the password name value
 +/>
 ```
 
-### `passwordValidation` deprecation 
+### `passwordValidation` deprecation
 
 The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
 
 See [the password field's documentation](docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
 
-If you overrode some of the following components: 
+If you overrode some of the following components:
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -144,7 +144,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 
 ...
 
-<Password 
+<Password
   name="password"
 - validations={{
 -   magentoPasswordRule: (_, value) => isPasswordValid(value),
