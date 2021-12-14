@@ -57,8 +57,6 @@ module.exports = {
     },
     large: { width: 1100, height: 1100, bgColors: [] }
   },
-  // allowed medias
-  extensions: [".jpg", ".jpeg", ".png"]
 };
 ```
 

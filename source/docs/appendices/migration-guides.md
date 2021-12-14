@@ -9,6 +9,18 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### Smarter image resizing mechanism
+
+In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration. The `extensions` setting from `config/images.js` becomes useless and is now deprecated. You should remove it from your application:
+
+```diff
+// src/config/images.js
+    large: { width: 1100, height: 1100, bgColors: [] }
+  },
+-  extensions: [".jpg", ".jpeg", ".png"]
+};
+```
+
 ### Cookies max age configuration
 
 The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
@@ -57,7 +69,7 @@ This new `Password` component requires a stylesheet to add in the `_components.s
 ...
 ```
 
-If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon. 
+If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon.
 
 ```diff
 // theme/components/atoms/Form/Input/_Input.scss
@@ -92,7 +104,7 @@ export {
 };
 ```
 
-You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected: 
+You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected:
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -103,22 +115,22 @@ Here is an example of the changes involved to use this component (usually added 
 ```diff
 +import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
 
-<Password 
+<Password
   name="password"
   ...
 />
 + <PasswordStrengthHint
-+  formValuePath="password" // must equal the password name value 
++  formValuePath="password" // must equal the password name value
 +/>
 ```
 
-### `passwordValidation` deprecation 
+### `passwordValidation` deprecation
 
 The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
 
 See [the password field's documentation](docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
 
-If you overrode some of the following components: 
+If you overrode some of the following components:
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -140,7 +152,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 
 ...
 
-<Password 
+<Password
   name="password"
 - validations={{
 -   magentoPasswordRule: (_, value) => isPasswordValid(value),
