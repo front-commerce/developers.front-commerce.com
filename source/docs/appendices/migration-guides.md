@@ -9,6 +9,10 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### Smarter image resizing mechanism
+
+In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration and the `extensions` setting in the `config/images.js` becomes useless and is now deprecated. You should then remove the `extensions` configuration from `src/config/images.js`.
+
 ### Cookies max age configuration
 
 The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
