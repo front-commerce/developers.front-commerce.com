@@ -11,7 +11,15 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Smarter image resizing mechanism
 
-In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration and the `extensions` setting in the `config/images.js` becomes useless and is now deprecated. You should then remove the `extensions` configuration from `src/config/images.js`.
+In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration. The `extensions` setting from `config/images.js` becomes useless and is now deprecated. You should remove it from your application:
+
+```diff
+// src/config/images.js
+    large: { width: 1100, height: 1100, bgColors: [] }
+  },
+-  extensions: [".jpg", ".jpeg", ".png"]
+};
+```
 
 ### Cookies max age configuration
 
