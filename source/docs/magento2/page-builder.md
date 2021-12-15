@@ -45,6 +45,17 @@ We currently support these content types in a basic way:
 - Divider (`divider`)
 - Heading (`heading`)
 - Row (`row`)
+<blockquote class="wip">
+ **Work In Progress:** Currently we only partially support the `row` content type. 
+ <br />Here are the unsupported settings : 
+  <ul style="list-style:none;">
+    <li>✖ Mobile Image</li>
+    <li>✖ Fluid Width</li>
+    <li>✖ Full Bleed</li>
+    <li>✖ Video Background</li>
+    <li>✖ Parallax Background</li>
+  </ul>
+</blockquote>
 - Text (`text`)
 
 We'll support more options in the next few weeks.
