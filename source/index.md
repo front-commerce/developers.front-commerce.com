@@ -14,7 +14,7 @@ layout: index
     <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
     <li><a class="link button"  href="/blog">Changelog</a></li>
     <li><a class="link button"  href="https://demo.front-commerce.app/">Demo store</a></li>
-    <li><a class="link button"  href="https://demo.front-commerce.app/styleguide">Styleguide</a></li>
+    <li><a class="link button"  href="https://front-commerce.app/styleguide">Styleguide</a></li>
     <li><a class="link button"  href="https://twitter.com/Front_Commerce?ref_src=twsrc%5Etfw">@Front_Commerce</a></li>
   </ul>
 </section>
