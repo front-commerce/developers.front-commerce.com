@@ -72,6 +72,6 @@ If an `ecosystem.config.js` file is versioned at the root of your project, you c
 pm2 reload ecosystem.config.js
 ```
 
-It might allow to deploy the new version of your application with zero downtime!
+It will allow you to deploy the new version of your application with zero downtime!
 
 For other questions about using PM2, we recommend that you read [their official documentation](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/).

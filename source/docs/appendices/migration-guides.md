@@ -233,8 +233,13 @@ const keyToComponent = {
 
 ### Dependencies updates
 
+**We recommend to reformat your source code using the latest Prettier version** (see below).
+
 Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
 - `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
+- `prettier` has been updated [from 2.2.1 to 2.4.1](https://github.com/prettier/prettier/blob/main/CHANGELOG.md) ([MR!742](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/742)). We've reformatted our code with this version, so it may lead to style differences with your overrides. To update your application code, you can run `npx prettier -w ./path/to/your/directories` and commit the changes.
+
+> ProTip™: we've discovered the [git `ignoreRevsFile` option](https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt) it could be useful [in your project too](https://www.moxio.com/blog/43/ignoring-bulk-change-commits-with-git-blame) 😎
 
 ### Unnecessary safeHtml in product overviews
 
@@ -250,12 +255,19 @@ If you did override any of the following components, you can safely [remove `saf
 + {name}
 ```
 
+### New Magento `<WysiwygV2>` transforms may conflict with yours
+
+In order to support Magento Page Builder's default content types, we have added new components to the [default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg).
+
+See [the Page Builder ones](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js) and ensure there is no collision with your custom WYSIWYG components. While very unlikely, it could be possible. For instance, if you may have overridden the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwyg.js` to add a custom `heading` component to the `componentsMap`.
+
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
 - [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Customer can now zoom in on product images in the product page
+- [Magento Page Builder content](/docs/magento2/page-builder.html) is now supported for `MagentoWysiwyg` data. You can register new content types and extend our default ones.
 - Front-Commerce dependencies are now regularly (and automatically) updated using [Depfu](https://depfu.com/). Patches are automatically applied if the CI is green, minor versions are manually approved. We always review changelogs provided by Depfu. **You can review updates any time [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
 ## `2.9.0` -> `2.10.0`
@@ -507,7 +519,7 @@ We've finished to update all of our internal tests to this latest version and ha
 
 ### `root_categories_path` configuration removed
 
-The `root_categories_path` configuration key from `website.js` is not used anymore. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
+The `root_categories_path` configuration key from `website.js` is not used any more. **You can remove it from your codebase** after ensuring you didn't use it for application specific code.
 
 It was first introduced for the navigation menu in Magento GraphQL modules (then unused), but used for breadcrumbs. We've reworked how breadcrumbs are generated from the category "path" value returned by magento to make it useless. We now always remove the first two category levels of the path, no matter their values. It prevent userland errors due to a misconfiguration of their app.
 
@@ -745,6 +757,7 @@ some attention though:
 * [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
     5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
     compared to 4.x.
+* [`helmet`](https://www.npmjs.com/package/helmet) has been updated to 4.5.0. As a result, [some middlewares previously included by default are not called anymore](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-removed) while [several middlewares are now enabled by default](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-added-by-default). Those HTTP headers [can be customized if needed](/docs/advanced/server/customize-response-http-headers.html).
 
 ## `2.4.0` -> `2.5.0`
 
@@ -1182,7 +1195,7 @@ You may have to rebuild it by removing your `node_modules` folder or run `npm re
 
 Further details available on https://sharp.pixelplumbing.com/changelog.
 
-### `date-fns` isn't a Front-Commerce dependency anymore
+### `date-fns` isn't a Front-Commerce dependency any more
 
 [`date-fns`](https://www.npmjs.com/package/date-fns) has been removed from dependencies in favor of a native `winston` plugin that timestamps log entries, and custom functions elsewhere.
 
@@ -1273,7 +1286,7 @@ const ids = [1, 2, 3];
 
 `graphql-tools` has been migrated to its latest version (v6). This is a huge improvement for the library: after years of slow developments, the project has been taken over from Apollo by the Guild team. Front-Commerce now uses modules from the `@graphql-tools` monorepo, a new and fresh version of this library. See https://the-guild.dev/blog/graphql-tools-v6 for more context.
 
-**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](https://developers.front-commerce.com/docs/advanced/graphql/remote-schemas.html) for an updated guide.
+**You shouldn't worry if you are using Front-Commerce's GraphQL modules.** However, if you are using remote schema stitching features, you will have to update your code according to our latest documentation: see [GraphQL Remote schemas](/docs/advanced/graphql/remote-schemas.html) for an updated guide.
 
 **<abbr title="Too Long; Didn't Read">TL;DR</abbr>:**
 
@@ -1347,7 +1360,7 @@ You must also ensure that your app doesn't use `<FormattedHTMLMessage>` or `intl
 renamed and subtle low-level behavior changes were introduced (required errors by default in errors
 etc…).
 
-**If you were using [Front-Commerce's wrappers introduced in 2.0.0-rc.0](https://developers.front-commerce.com/docs/appendices/migration-guides.html#Abstract-Formsy) you might not encounter any issues**.
+**If you were using [Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/appendices/migration-guides.html#Abstract-Formsy) you might not encounter any issues**.
 Otherwise, we recommend to refactor your code to use them!
 
 See [Formsy's upgrade guide](https://github.com/formsy/formsy-react#1x-to-2x-upgrade-guide) for exhaustive details about low-level changes.
@@ -1374,11 +1387,11 @@ Some minor changes were introduced in dependencies or while removing deprecated 
 - webpack's `url-loader` updated from 3.x to 4.x. It may cause different mimetypes for rare types (see
   [their CHANGELOG](https://github.com/webpack-contrib/url-loader/blob/master/CHANGELOG.md#400-2020-03-17))
 - `graphql` has been upgraded from 14.6.0 to 15.1.0. It is very likely backwards compatible for your app, even though backward incompatible changes were introduced for subtle use cases: see [v15.0.0 release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) if curious
-- `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](https://developers.front-commerce.com/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
+- `SitemapLoader` (and `makeMagentoPaginationWalker` helper) were removed from `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They were unused in the core. If your application used them, please refactor it to use the loader from Front-Commerce's core. See [our documentation about Sitemap](/docs/advanced/production-ready/sitemap.html#Add-dynamic-pages) to learn about the feature.
 - The `ProductStockLoader` no longer takes the `FeatureFlag` loader as parameter. Please remove this parameter if you were instantiating it manually.
 - `loaders.Url.matchBy` has been removed from Magento2's module. It was only used for the deprecated `Query.matchUrls` field and might not impact your codebase, but **it's worth mentioning in case your relied on it since it wasn't issuing deprecation warnings itself.**
 - Convict has been upgraded to 6.0.0. You may have to install additional packages if your application uses custom configuration providers with one of the following format in their schema: `"email"`, `"ipaddress"`, `"url"`, `"duration"` or `"timestamp"`. See [their migration documentation](https://github.com/mozilla/node-convict/blob/master/packages/convict/MIGRATING_FROM_CONVICT_5_TO_6.md) for further information
-- `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used anymore
+- `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV` can be removed from your `.env` file, it is not used any more
 - The Wishlist feature is now always enabled for Magento 2
 - The Sitemap generation script has been revamped to use the latest version of the underlying library that contained heavy changes (it would be safe to double check that no regression was introduced in your context and we'd appreciate an issue if you find something ;))
 
@@ -1392,7 +1405,7 @@ If your store was running on `2.0.0-rc.1`, you should empty the application cach
 
 ### More flexible store URLs
 
-It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain an URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
+It is now possible to use a base url for your stores that contain a base path. This means that in `config/stores`, the url key can now contain a URL looking like `https://www.example.com/fr`. In previous versions you could only use subdomains like `https://fr.example.com`.
 
 Please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html) for more details.
 
@@ -1595,7 +1608,7 @@ This led to several issues:
 
 - developers needed to handle code splitting themselves, which could led to bigger initial javascript load
 - it was hard to have a global vision of the existing routes in a Front-Commerce application
-- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped an URL to a route
+- Front-Commerce couldn't optimize page loads by preloading components or data since nothing mapped a URL to a route
 
 This is why we've decided to implement the solution available in many Javascript Frameworks: [Next.js](https://nextjs.org/docs#routing), [Gatsby](https://www.gatsbyjs.org/docs/routing/), [NuxtJS](https://nuxtjs.org/guide/routing/), [Sapper](https://sapper.svelte.dev/docs#Pages), etc.
 
@@ -1799,7 +1812,7 @@ Please update your PHP dependencies by using the latest beta in your Magento pro
 
 ### Translations
 
-We have introduced the mechanism of [Translation Fallback](https://developers.front-commerce.com/docs/advanced/theme/translations.html#Translations-fallback). This is means that you will have fewer conflicts during next upgrades.
+We have introduced the mechanism of [Translation Fallback](/docs/advanced/theme/translations.html#Translations-fallback). This is means that you will have fewer conflicts during next upgrades.
 
 ### Improved search experience
 

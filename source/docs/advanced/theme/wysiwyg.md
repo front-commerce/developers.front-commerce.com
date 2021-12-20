@@ -11,12 +11,12 @@ It is named <code>WysiwygV2</code> because it has performance improvements over 
 </blockquote>
 
 <blockquote class="important">
-**Note:** The WysiwygV2 is not used in the default theme yet because of backward compatibility issues. It will come in next releases, but you can already use it today in your own theme by overriding the components that should use it.
+**Note:** The WysiwygV2 is not used in the default theme yet because of backward compatibility issues. It will arrive in a future release, but you can already use it today in your own theme by overriding the components that should use it.
 </blockquote>
 
 ## `<WysiwygV2 />` usage
 
-You can use this component by using the following code:
+Here is an example of using this component:
 
 ```jsx
 import React from "react";
@@ -99,7 +99,7 @@ Each service is likely to have their own set of rules and constraints when it co
 
 We are solving this by creating a new Wysiwyg Type for each service. In the previous section, we've mentioned the type `MagentoWysiwyg`. It uses the exact same mechanisms as the one we will describe below.
 
-If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](#MagentoWysiwyg).
+If you want to customize `MagentoWysiwyg` instead, please refer to [the next section](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg).
 
 **Steps to create a new Wysiwyg Type (`CustomWysiwyg`)**
 
@@ -246,7 +246,7 @@ const defaultComponentsMap = {
     <b>Note:</b> Please keep in mind that for simplicity's sake, the product name component is not code split, but if it grows in complexity, please make sure to code split it using <code>@loadable/component</code> to avoid too large bundles.
     </blockquote>
 
-**Nested Wysiwyg components**
+### Nested Wysiwyg components
 
 In some cases, you will need to render a Wysiwyg component inside another Wysiwyg component. For instance, this can be the case if you implement a Product Preview feature in your Wysiwyg and want to display the description of the product. It is likely to have formatted text that can be defined directly in the administration panel.
 
@@ -254,6 +254,50 @@ Please be advised that we won't support infinite nested Wysiwyg component since 
 
 If you need more information about implementing this, please contact us.
 
-**That's it!**
+### Dynamic styles
+
+<blockquote class="feature--new">
+_Since version 2.11_
+</blockquote>
+
+You may want to render inline styles dynamically when displaying WYSIWYG components. It can be required if content managers customizes how a given element is displayed for instance (e.g: alignment, border color etc…).
+
+Each `<WysiwygV2>` component is wrapped into a unique id. The Front-Commerce WYSIWYG mechanism provides a `<Style>` component that allows you to render styles that could be restricted to the current WYSIWYG context only (and prevent side effects on other parts of the page)
+
+Here is how you could use it from a WYSIWYG component:
+
+```diff
+import React from "react";
++ import Style from "theme/modules/WysiwygV2/Style";
+
+const MyComponent = ({ children, data }) => {
+  const { id, align, content } = data;
+  return <>
++    <Style rootSelector="#html-body">{`
++       #html-body [data-my-component-id=${id}] .my-component__content {
++         text-align: "${align}";
++       }
++    `}</Style>;
+    <div class="my-component" data-my-component-id={id}>
+      <p class="my-component__introduction">Lorem ipsum…</p>
+      <p class="my-component__content">{content}</p>
+    </div>
+  </>;
+};
+
+export default MyComponent;
+```
+
+It will generate an inline `<style>` HTML tag with the following content (`#html-body` being replaced with the automatically generated wysiwyg element id):
+
+```html
+<style>
+  #wysiwyg-styles-xxxxxxxx-yyyy [data-my-component-id=42] .my-component__content {
+    text-align: "center";
+  }
+</style>
+```
+
+## That's it!
 
 Everything explained previously is the core behavior of the Wysiwyg implemented in Front-Commerce. It is *very* flexible as it was implemented over a lot of iterations and feedbacks from our integrators. However, with this flexibility comes a bit of a complexity. Please keep in mind that you don't need to fully understand all of it to get started. However, if you've understood most of it, you will be able to dive into our code and understand how we have implemented platform specific Wysiwyg components. You could even use those components as an inspiration to develop your own specific behaviors.

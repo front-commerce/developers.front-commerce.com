@@ -24,7 +24,7 @@ src/
 
 ## src/config/
 
-It contains all the files that allow you to configure the behavior of Front-Commerce.
+The config contains all the files that allow you to configure the behavior of Front-Commerce.
 
 See more details within the [Reference documentation](/docs/reference/configurations.html).
 
@@ -41,7 +41,7 @@ The server contains… the server code! There are two parts:
 
 ## src/web/
 
-It contains the client part of the application. As a developer that uses
+the web contains the client part of the application. As a developer that uses
 Front-Commerce, only one folder is interesting inside of `src/web/`. It is the
 `theme` folder which defines what your site will look like. This folder is
 composed of three subfolders:

@@ -5,9 +5,9 @@ title: Server Side Rendering (SSR)
 
 Front-Commerce uses <abbr title="Server Side Rendering">SSR</abbr> (opposed to <abbr title="Client Side Rendering">CSR</abbr>) to improve <abbr title="Search Engine Optimization">SEO</abbr> and <abbr title="User experience">UX</abbr> by serving <abbr title="Hypertext Markup Language">HTML</abbr> pages to users on their first hit to the server. You can read [A typical request in Front-Commerce](/docs/concepts/architecture-overview.html#A-typical-request-in-Front-Commerce) to get a better understanding of this process.
 
-To generate this HTML page, Front-Commerce will render the React application as a string. During this process, your React components will trigger Apollo queries that will "fetch" data from the GraphQL layer. It may hit remote APIs and finally generate the HTML content of your page from these data.
+To generate this HTML page, Front-Commerce will render the React application as a string. Your React components will trigger Apollo queries that will “fetch” data from the GraphQL layer during this process. It may hit remote APIs and finally generate the HTML content of your page from the data.
 
-**While we try to make this process as smooth as possible for developers so you don't have to worry about the technical details, there are some things that you should be aware of while creating your theme.**
+**While we try to make this process as smooth as possible for developers, so you don’t have to worry about the technical details, there are some things that you should be aware of while creating your theme.**
 
 This section details everything frontend developers must keep in mind when authoring components in a <abbr title="Server Side Rendering">SSR</abbr> context
 
@@ -40,7 +40,7 @@ const initializePosition = setPosition => {
 }
 ```
 
-## `branchServerClient` at the rescue!
+## `branchServerClient` to the rescue!
 
 There may be situations were displaying a totally different component during the server rendering might be relevant.
 
@@ -109,7 +109,7 @@ This behavior is leveraging [Front-Commerce's configuration system](/docs/advanc
 }
 ```
 
-If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/express/ssr/deviceConfigProvider.js) for implementation details and [contact us](mailto:contact@front-commerce.com) if you think of improvements.
+If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/express/ssr/deviceConfigProvider.js) for implementation details and [contact us](mailto:contact@front-commerce.com) if you think of any improvements.
 
 ## SSR Fallback when things go wrong
 
@@ -135,7 +135,7 @@ Pages are server-rendered when accessed with the following URL patterns:
 - without extension (e.g: `/contact`, `/faq/our-return-policy`…)
 - with an `.html` extension (e.g: `/contact.html`, `/wooden-table-with-chairs.html`…)
 
-**If your application contains pages whose URL have extensions other than `.html`, please contact us.**
+**If your application contains pages whose URL have extensions other than `.html`, please [contact us](mailto:contact@front-commerce.com).**
 
 ## Learn more
 

@@ -9,7 +9,7 @@ As an example, we will change the way the Product `meta_description` field value
 
 ## Create dedicated GraphQL module
 
-First, you have to create a GraphQL module. For that, you can follow the process detailed in the [Create a new GraphQL module](/docs/essentials/extend-the-graphql-schema.html#Create-a-new-GraphQL-module). Don't forget to also [register the module in Front-Commerce](/docs/essentials/extend-the-graphql-schema.html#Register-the-module-in-the-application).
+First, you have to create a GraphQL module. For that, you can follow the process detailed in the [Create a new GraphQL module](/docs/essentials/extend-the-graphql-schema.html#Create-a-new-GraphQL-module). Don't forget to also to [register the module in Front-Commerce](/docs/essentials/extend-the-graphql-schema.html#Register-the-module-in-the-application).
 
 For this example, this results in `src/server/modules/productmetadescription/index.js` containing:
 

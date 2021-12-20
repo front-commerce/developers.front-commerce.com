@@ -62,25 +62,27 @@ through:
 ### Installing the dependencies
 
 To create the map, we are going to use the
-[**react-leaflet**](https://react-leaflet.js.org/en/) package. It provides a
+[**react-leaflet**](https://react-leaflet.js.org/) package. It provides a
 component that uses leaflet under the hood. It will allow us to display the
 position of our store within [OpenStreetMap](https://www.openstreetmap.org/search?query=Toulouse#map=12/43.6007/1.4329).
 
 This is one of the biggest advantages of using React to build our front-end, we
 have access to this huge ecosystem.
 
-Let's install the two required packages:
+Let's install the required packages ([versions are important](/docs/advanced/features/display-a-map.html#Open-Street-Map-OSM-with-Leaflet)):
 
 ```sh
-npm install react-leaflet leaflet
+npm install leaflet@^1.7 react-leaflet@3.1.0 @react-leaflet/core@1.0.2
 ```
+
+> **Note:** Front-Commerce also [provides a `<Map>` component](/docs/advanced/features/display-a-map.html) that would be a better candidate for a real project. In order to learn Front-Commerce we prefer to document how to do things yourself. As a stretch goal, you can try to replace your components with the `<Map>` one.
 
 ### Our new Homepage
 
 #### Override the default Home page
 
 Before starting to edit the Home page, you first need to extend the theme.
-If you don't have any module yet, please refer to
+If you don't have a module yet, please refer to
 [Extend the theme](./extend-the-theme.html#Configure-your-custom-theme-and-use-it-in-your-application).
 Once you have one, the goal will be to override the Home component from [`node_modules/front-commerce/src/web/theme/pages/Home/Home.js`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/pages/Home/Home.js)
 to `my-module/web/theme/pages/Home/Home.js`.
@@ -112,7 +114,7 @@ The first working version will look like:
 // my-module/theme/pages/Home/Home.js;
 
 // ... Existing imports
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
@@ -120,7 +122,7 @@ import "leaflet/dist/images/marker-shadow.png";
 const Home = ({ store }) => (
   <div className="page page--home">
     {/* ... The rest of the homepage */}
-    <Map
+    <MapContainer
       center={[43.584296, 1.44182]}
       zoom={14}
       style={{ height: "600px", width: "800px" }}
@@ -134,7 +136,7 @@ const Home = ({ store }) => (
           <span>My awesome store is HERE!</span>
         </Popup>
       </Marker>
-    </Map>
+    </MapContainer>
   </div>
 );
 // ...
@@ -143,7 +145,7 @@ const Home = ({ store }) => (
 With that, you should see the map appear in your homepage.
 
 <blockquote class="important">
-  **Important:** if you detect issues with remote assets (images, CSS…) not being loaded, you may have to update your <abbr title="Content Security Policy">CSP</abbr> headers to allow new domains. You could achieve this by modifying your [`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/configurations.html#config-website-js).
+  **Important:** you will detect issues with remote assets (images, CSS…) not being loaded. It is related to the default <abbr title="Content Security Policy">CSP</abbr> headers sent by Front-Commerce. To allow new domains, you should modify your [`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/configurations.html#config-website-js) (i.e: define `imgSrc: ["*.openstreetmap.org"]`).
 </blockquote>
 
 ### Extracting our new component
@@ -160,14 +162,14 @@ in `my-module/theme/modules`.
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
 
 const StoreLocator = props => {
   return (
-    <Map
+    <MapContainer
       center={[43.584296, 1.44182]}
       zoom={14}
       style={{ height: "600px", width: "800px" }}
@@ -181,7 +183,7 @@ const StoreLocator = props => {
           <span>My awesome store is HERE!</span>
         </Popup>
       </Marker>
-    </Map>
+    </MapContainer>
   );
 };
 
@@ -206,9 +208,9 @@ export default StoreLocator;
 ```
 
 - `my-module/web/theme/modules/StoreLocator/StoreLocator.story.js`:
-  will add a story to the Storybook of your application. This will serve as living
-  documentation and will allow anyone to understand what is StoreLocator used for and how
-  to use it.
+  will add a story to the Storybook of your application. The story will serve as living
+  documentation that will allow anyone to understand what the StoreLocator is used for
+  and how to use it.
 
 ```jsx
 // my-module/web/theme/modules/StoreLocator/StoreLocator.story.js
@@ -311,9 +313,8 @@ It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL.
 <p>You may think that some queries are already launched in our `EnhanceHome`
 and that splitting the StoreLocatorQuery from them is inefficient. But
 `react-apollo` will handle that for you. It will batch the requests to avoid too
-many network rountrips. This allows us to only think about what a component needs.
-The responsibility for the retrieval of its data lies with it and it allows us
-to use it anywhere.</p>
+many network roundtrips. This allows us to only think about what a component needs. 
+The responsibility for retrieving its data lies with it and allows us to use it anywhere.</p>
 
 <p>However, if it is important in your case to fuse your queries, you may be
 interested by the concept of
@@ -323,8 +324,8 @@ It allows you to split part of your queries without splitting the end query.</p>
 
 ### Making it dynamic
 
-Now that we have our Enhancer ready, we are going to use it in our store
-locator. The major change here is that your data come from your Enhancer and
+Now that we have our Enhancer ready, we are going to use it in our store locator. 
+The significant change here is that your data comes from your Enhancer and
 is passed down to your component by `props`.
 
 But when dealing with asynchronous resources like fetching data from the backend,
@@ -344,7 +345,7 @@ For error handling, you could take a look at
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
@@ -367,7 +368,7 @@ const StoreLocator = props => {
 
   return (
     <div>
-      <Map
+      <MapContainer
         center={coordinates}
         zoom={defaultZoom}
         style={{ height: "600px", width: "800px" }}
@@ -385,7 +386,7 @@ const StoreLocator = props => {
             </div>
           </Popup>
         </Marker>
-      </Map>
+      </MapContainer>
     </div>
   );
 };

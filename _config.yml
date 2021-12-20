@@ -38,6 +38,7 @@ sidebar_categories:
   Server:
     - docs/advanced/server/overview
     - docs/advanced/server/add-http-endpoint
+    - docs/advanced/server/customize-response-http-headers
     - docs/advanced/server/configurations
   Performance:
     - docs/advanced/performance/overview
@@ -76,6 +77,7 @@ sidebar_categories:
     - docs/magento2/detect-admin-users
     - docs/magento2/log-as-customer
     - docs/magento2/headless-payments
+    - docs/magento2/page-builder
     - docs/magento2/b2b
     - docs/magento2/advanced
   Magento1:
@@ -122,7 +124,6 @@ sidebar_categories:
     - docs/reference/graphql-module-definition
     - docs/reference/remote-schema-helpers
     - docs/reference/graphql-context
-    - docs/reference/api
     - docs/reference/routing
     - docs/reference/analytics-components
     - docs/reference/scripts

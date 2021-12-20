@@ -14,5 +14,5 @@ The code though is under [MIT License](https://github.com/front-commerce/develop
 ## Setup
 
 Run `npm install` to install the app.
-You can add a new page by created a `.md` file in `source/docs/yourfolder/`. Do not forget to index your newly created page to the `_config.yml` file at the root of the repository.
+You can add a new page by creating a `.md` file in `source/docs/yourfolder/`. Do not forget to index your newly created page to the `_config.yml` file at the root of the repository.
 Run `npm run start` to start your Front-Commerce local version of the documentation (default port should be `4444` on `localhost`).

@@ -74,7 +74,7 @@ Technically speaking, a reverse-proxy or a CDN is needed to benefit from this fe
 - improved typography and fix mistakes in the french translations
 - sitemap generation is now using the search datasources for more efficiency
 - guest orders are now tracked as other orders in eCommerce analytics integrations
-- not shippable orders (with virtual products only) don't have a "Delivered to" area on the recap page anymore
+- not shippable orders (with virtual products only) don't have a "Delivered to" area on the recap page any more
 - improved the `perCurrency` cache strategy (Magento 1) to prevent creating sessions for anonymous visitors
 - fixed several component PropTypes and other warnings in our Storybook stories
 - fixed incorrect Guest detection in Cart that could lead to some embedded payments sending incorrect customer details

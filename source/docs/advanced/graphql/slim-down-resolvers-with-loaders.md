@@ -76,7 +76,7 @@ according to the GraphQL schema.
 
 <blockquote class="info">
   **Prototype.** When prototyping or designing your GraphQL module, we have
-  found convenient to start with fake implementations of loaders returning
+  found it convenient to start with fake implementations of loaders returning
   hardcoded static data. It allows to have an executable schema earlier, that
   could serve as a starting point for both frontend and backend developers.
 </blockquote>
@@ -287,7 +287,7 @@ export default {
 
 ## Supporting advanced use cases
 
-The refactoring explained above enable a wide range of use cases. We encourage
+The refactoring explained above enables a wide range of use cases. We encourage
 you to get used to this pattern and explore the following documentation pages to
 see how you could combine them to achieve your goals.
 
@@ -353,4 +353,4 @@ export default {
 As you can see, the `contextEnhancer` is a bridge between the infrastructure
 layer (request, caching strategies, configuration) and loaders. It creates
 loader instances that could then be reused in resolvers, hiding Magento’s
-specific concerns from them… leading to code easier to understand and maintain!
+specific concerns from them… leading to code that is easier to understand and maintain!
