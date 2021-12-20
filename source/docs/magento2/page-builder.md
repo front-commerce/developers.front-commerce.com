@@ -35,17 +35,43 @@ Page Builder content types have 2 integration points:
 
 ## Supported content types
 
-### Currently supported
-
 We currently support these content types in a basic way:
-- ButtonItem (`button-item`)
-- Buttons (`buttons`)
-- Column (`column`)
-- ColumnGroup (`column-group`)
-- Divider (`divider`)
-- Heading (`heading`)
-- Row (`row`)
-- Text (`text`)
+### Layout
+| Type         	| Name      	| Description                                 	|
+|--------------	|-----------	|---------------------------------------------	|
+| Row          	| `row`     	| Adds a row container to the stage.          	|
+| ColumnGroups 	| `heading` 	| Adds a column group container to the stage. 	|
+| Column       	| `column`  	| Adds a column  to the stage.                	|
+
+<blockquote class="wip">
+ **Work In Progress:** We only have partial support for the `row` content type. <br />
+ Here are the unsupported props: 
+  <ul style="list-style:none;margin-bottom:0;opacity:0.75;">
+    <li>✖ Mobile Image</li>
+    <li>✖ Fluid Width</li>
+    <li>✖ Full Bleed</li>
+    <li>✖ Video Background</li>
+    <li style="margin-bottom:0;">✖ Parallax Background</li>
+  </ul>
+</blockquote> 
+
+### Elements
+| Type       	| Name          	| Description                                          	|
+|------------	|---------------	|------------------------------------------------------	|
+| Text       	| `text`        	| Adds a text container and editor to the stage.       	|
+| Heading    	| `heading`     	| Adds a heading container to the stage.               	|
+| Buttons    	| `buttons`     	| Adds a set of buttons to the stage.                  	|
+| ButtonItem 	| `button-item` 	| Adds a individual button container to the stage.     	|
+| Divider    	| `divider`     	| Adds a divider container to the stage.               	|
+| HTML Code  	| `html`        	| Adds a HTML code container to the stage.             	|
+
+### Media
+| Type   	| Name     	| Description                               	|
+|--------	|----------	|-------------------------------------------	|
+| Image  	| `image`  	| Adds a image container to the stage.      	|
+| Slider 	| `slider` 	| Adds a slider to the stage.               	|
+| Slide  	| `slide`  	| Adds a slide for the slider to the stage. 	|
+| Map    	| `map`    	| Adds map with locations to the stage.     	|
 
 We'll support more options in the next few weeks.
 
