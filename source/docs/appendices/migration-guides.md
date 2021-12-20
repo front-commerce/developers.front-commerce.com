@@ -25,17 +25,39 @@ In this release, we have improved the image resizing mechanism to be bit smarter
 
 The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
 
-### New icon required
+#### New link added to `<AccountNavigation>`
 
-In this release, a new `eye-off` was added to [the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+The company structure link is added to the `<AccountNavigation>` component. This link is part of the B2B features so if you need it and overrode the `<AccountNavigation>` component you need to apply [the same changes in this diff to your overridden `<AccountNavigation>`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/802/diffs#diff-content-e7af65f5100c0e8b1d5bda98a735eb5744a44386)
 
-If you have overridden the `<Icon>` component, you need to the icon as follows to the list of icons to avoid any error messages at page loading:
+#### New style sheets
+
+If you have overriden `theme/components/_components.scss` you need to add the following line to it
+
+```scss
+@import "~theme/components/molecules/LoadingOverlay/LoadingOverlay";
+```
+
+If you are using the B2B module and have overriden `theme/_b2b.scss` you need to add the following lines to it
+
+```scss
+@import "~theme/modules/Company/CompanyStructure/CompanyStructure";
+@import "~theme/components/organisms/Tree/Tree";
+```
+
+### New icons required
+
+In this release, these new icons were added `eye-off`, `user-circle`, `organigram` and `gripper` to the `<Icon>` component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as follows to the list of icons to avoid any error messages at page loading:
 
 ```diff
 import {
   ...
 + IoIosEyeOff,
 } from "react-icons/io";
++import { FaUserCircle } from "react-icons/fa";
++import { GiOrganigram } from "react-icons/gi";
++import { VscGripper } from "react-icons/vsc";
 
 const keyToComponent = {
   ...
@@ -43,6 +65,9 @@ const keyToComponent = {
 + "eye-off": IoIosEyeOff,
   pencil: IoMdCreate,
   ...
++  "user-circle": FaUserCircle,
++  organigram: GiOrganigram,
++  gripper: VscGripper,
 };
 ```
 
