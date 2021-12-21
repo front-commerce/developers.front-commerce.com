@@ -183,7 +183,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
-- Page builder: Slider and Slide support
+- Page builder: Slider content type and Slide support
 - the `<Password>` component now allows the user to reveal the password
 - New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
 - New component: `<ProgressStatus>` to show a progressbar with a label
