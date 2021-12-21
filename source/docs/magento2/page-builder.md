@@ -48,8 +48,8 @@ We currently support these content types in a basic way:
  Here are the unsupported props: 
   <ul style="list-style:none;margin-bottom:0;opacity:0.75;">
     <li>✖ Mobile Image</li>
-    <li>✖ Fluid Width</li>
-    <li>✖ Full Bleed</li>
+    <li>✖ Fluid Width (requires compatible layout)</li>
+    <li>✖ Full Bleed (requires compatible layout)</li>
     <li>✖ Video Background</li>
     <li style="margin-bottom:0;">✖ Parallax Background</li>
   </ul>
