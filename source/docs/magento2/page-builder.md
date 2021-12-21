@@ -45,6 +45,7 @@ We currently support these content types in a basic way:
 - Divider (`divider`)
 - Heading (`heading`)
 - Row (`row`)
+- Slider and Slide (`slider` and `slide`)
 - Text (`text`)
 
 We'll support more options in the next few weeks.

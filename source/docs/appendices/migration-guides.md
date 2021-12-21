@@ -9,6 +9,20 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### `carousel` image format
+
+To support [the Slider and Slider Magento2 page builder content types](/docs/magento2/page-builder.html), we have moved the `<Carousel />` component from theme chocolatine to the default theme. If you plan to use this component directly or through the page builder Slider, you must add a `carousel` image format to your `src/config/images.js`:
+
+```
+// sr/config/images.js
+@@ -6,6 +6,7 @@ module.exports = {
+     large: { width: 1100, height: 1100, bgColors: [] },
++    carousel: { width: 1280, height: 600, bgColors: [] },
+     zoomable: { width: 1100, height: 1100, bgColors: [], sizes: [2] },
+   },
+ };
+```
+
 ### Smarter image resizing mechanism
 
 In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration. The `extensions` setting from `config/images.js` becomes useless and is now deprecated. You should remove it from your application:
@@ -206,6 +220,7 @@ If you overrode the `theme/components/organisms/Modal/index.js` file please add 
 ### New features in `2.12.0`
 
 These new features may be relevant for your existing application:
+- Page builder: Slider content type and Slide support
 - the `<Password>` component now allows the user to reveal the password
 - New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
 - New component: `<ProgressStatus>` to show a progressbar with a label
