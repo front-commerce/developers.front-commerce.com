@@ -35,8 +35,16 @@ Page Builder content types have 2 integration points:
 
 ## Supported content types
 
-We currently support these content types in a basic way:
+We currently support these content types in a basic way.
+
+<blockquote class="info">
+Additional data is exposed via the GraphQL for more more advanced [Customized UI components](#Customize-UI-components) implementations.
+</blockquote>
+
 ### Layout
+
+[Magento Page Builder Layout](https://docs.magento.com/user-guide/cms/page-builder-layout.html)
+
 | Type         	| Name      	| Description                                 	|
 |--------------	|-----------	|---------------------------------------------	|
 | Row          	| `row`     	| Adds a row container to the stage.          	|
@@ -48,24 +56,31 @@ We currently support these content types in a basic way:
  Here are the unsupported props: 
   <ul style="list-style:none;margin-bottom:0;opacity:0.75;">
     <li>✖ Mobile Image</li>
-    <li>✖ Fluid Width</li>
-    <li>✖ Full Bleed</li>
-    <li>✖ Video Background</li>
-    <li style="margin-bottom:0;">✖ Parallax Background</li>
+    <li>✖ Fluid Width <i>- requires a supported layout</i></li>
+    <li>✖ Full Bleed <i>- requires a supported layout</i></li>
+    <li>✖ Video Background <i>- data exposed with `video`</i></li>
+    <li style="margin-bottom:0;">✖ Parallax Background <i>- data exposed with `parallax`</i></li>
   </ul>
 </blockquote> 
 
 ### Elements
+
+[Magento Page Builder Elements](https://docs.magento.com/user-guide/cms/page-builder-elements.html)
+
 | Type       	| Name          	| Description                                          	|
 |------------	|---------------	|------------------------------------------------------	|
-| Text       	| `text`        	| Adds a text container and editor to the stage.       	|
+| Text        | `text`        	| Adds a text container and editor to the stage.       	|
 | Heading    	| `heading`     	| Adds a heading container to the stage.               	|
 | Buttons    	| `buttons`     	| Adds a set of buttons to the stage.                  	|
 | ButtonItem 	| `button-item` 	| Adds a individual button container to the stage.     	|
 | Divider    	| `divider`     	| Adds a divider container to the stage.               	|
 | HTML Code  	| `html`        	| Adds a HTML code container to the stage.             	|
 
+
 ### Media
+
+[Magento Page Builder Media](https://docs.magento.com/user-guide/cms/page-builder-media.html)
+
 | Type   	| Name     	| Description                               	|
 |--------	|----------	|-------------------------------------------	|
 | Image  	| `image`  	| Adds a image container to the stage.      	|
@@ -73,15 +88,16 @@ We currently support these content types in a basic way:
 | Slide  	| `slide`  	| Adds a slide for the slider to the stage. 	|
 | Map    	| `map`    	| Adds map with locations to the stage.     	|
 
-We'll support more options in the next few weeks.
+
+
+<blockquote class="wip">
+ **Work In Progress:** Support for internal `product`, `page` and `category` links for `button-item` and `image`
+</blockquote> 
 
 ### Upcoming
 
-Our 2.12 focus will be to:
-- expose all possible data in GraphQL for supported content types
-- honor the most common used content type options and content types
-
-It should allow merchants to build advanced page layouts using native Magento features.
+- Internal links.
+- Native Magento widgets.
 
 Let us know if you have specific needs.
 
