@@ -56,10 +56,17 @@ Additional data is exposed via the GraphQL for more more advanced [Customized UI
  Here are the unsupported props: 
   <ul style="list-style:none;margin-bottom:0;opacity:0.75;">
     <li>✖ Mobile Image</li>
+<<<<<<< HEAD
     <li>✖ Fluid Width <i>- requires a supported layout</i></li>
     <li>✖ Full Bleed <i>- requires a supported layout</i></li>
     <li>✖ Video Background <i>- data exposed with `video`</i></li>
     <li style="margin-bottom:0;">✖ Parallax Background <i>- data exposed with `parallax`</i></li>
+=======
+    <li>✖ Fluid Width (requires compatible layout)</li>
+    <li>✖ Full Bleed (requires compatible layout)</li>
+    <li>✖ Video Background</li>
+    <li style="margin-bottom:0;">✖ Parallax Background</li>
+>>>>>>> 5c9179c54f055a6930c82c32457c4fd318624ce7
   </ul>
 </blockquote> 
 
