@@ -20,6 +20,16 @@ Those features are only available with [Adobe Commerce and its B2B module](https
 
 ## Enable B2B support
 
+### Magento2 Commerce module installation
+
+You need to install the [`front-commerce/magento2-commerce-module` module](https://gitlab.com/front-commerce/magento2-commerce-module-front-commerce/):
+
+```sh
+composer require front-commerce/magento2-commerce-module
+```
+
+### Front-Commerce configuration
+
 To leverage those features, you need to enable and integrate the Magento2 B2B module. Here is how to do it:
 
 1. You need to enable the module in your `.front-commerce.js`:
