@@ -80,13 +80,13 @@ cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/Additio
 ```
 2. Register Adyen
 ```diff
-+import Magento2AdyenCheckout from "./Magento2AdyenCheckout";
++import AdyenCheckout from "./AdyenCheckout";
 
 const ComponentMap = {};
 
 const getAdditionalDataComponent = (method) => {
 +  if (method.code.startsWith("adyen_")) {
-+    return Magento2AdyenCheckout;
++    return AdyenCheckout;
 +  }
   return ComponentMap[method.code];
 };
@@ -99,13 +99,13 @@ cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getA
 4. Register the Adyen action
 ```diff
 import None from "./AdditionalAction/None";
-+import Magento2Adyen from "./AdditionalAction/Magento2Adyen";
++import Adyen from "./AdditionalAction/Adyen";
 
 const ComponentMap = {};
 
 const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
 +  if (paymentCode.startsWith("adyen")) {
-+    return Magento2Adyen;
++    return Adyen;
 +  }
   return ComponentMap?.[paymentCode] ?? None;
 };
