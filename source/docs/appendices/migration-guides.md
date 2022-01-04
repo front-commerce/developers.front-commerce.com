@@ -123,7 +123,7 @@ select {
 
 We've included a `<PasswordStrengthHint>` to provide a better feedback to users about the expected password complexity.
 
-> If you don't want to use this feature in your application, please follow the [Disable password strength hints](/#TODONOW) guide
+> If you don't want to use this feature in your application, please follow the [Disable password strength hints](/docs/advanced/features/password-fields.html#disable-password-strength-hints) guide
 
 Please update the files below, to ensure that your application displays user forms consistently:
 
@@ -167,7 +167,7 @@ Here is an example of the changes involved to use this component (usually added 
 
 The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
 
-See [the password field's documentation](docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
+See [the password field's documentation](/docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
 
 If you overrode some of the following components:
 - `theme/modules/User/RegisterForm/RegisterForm.js`
