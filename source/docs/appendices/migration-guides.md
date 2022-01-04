@@ -39,11 +39,11 @@ In this release, we have improved the image resizing mechanism to be bit smarter
 
 The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
 
-#### New link added to `<AccountNavigation>`
+### New link added to `<AccountNavigation>`
 
 The company structure link is added to the `<AccountNavigation>` component. This link is part of the B2B features so if you need it and overrode the `<AccountNavigation>` component you need to apply [the same changes in this diff to your overridden `<AccountNavigation>`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/802/diffs#diff-content-e7af65f5100c0e8b1d5bda98a735eb5744a44386)
 
-#### New style sheets
+### New style sheets
 
 If you have overriden `theme/components/_components.scss` you need to add the following line to it
 
