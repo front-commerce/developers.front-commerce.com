@@ -20,11 +20,11 @@ We have homogenize the props of the map components to make sure that they are co
 
 | Property        | Description                              | Type                   |
 |-----------------|------------------------------------------|------------------------|
-| locations       | A list of locations used for the markers | [`LocationInputShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L22-31) |
+| locations       | A list of locations used for the markers | [`LocationInputShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L65-74) |
 | getMarker       | The marker node for locations            | `(location) => ReactNode` |
 | zoom            | Default zoom level                       | `number`               |
-| defaultBounds   | The default map bounds                   | [`CoordinatesShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L17-20)   |
-| defaultCenter   | The default center for the map.          | [`CoordinatesShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L17-20)    |
+| defaultBounds   | The default map bounds                   | [`CoordinatesShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L59-62)   |
+| defaultCenter   | The default center for the map.          | [`CoordinatesShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L59-62)    |
 | onBoundsChanged | Event handler for bound changes          | `(event) => void`      |
 
 
@@ -32,7 +32,7 @@ We have homogenize the props of the map components to make sure that they are co
 
 | Property      | Description                            | Type                 |
 |---------------|----------------------------------------|----------------------|
-| location      | Location for the marker                | [`LocationInputShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L22-31)|
+| location      | Location for the marker                | [`LocationInputShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L65-74)|
 | icon          | Allows you to override the marker icon | [`object`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/index.js#L25-31)            |
 | isPopupOpened | Controlled method for marker popup     | `boolean`            |
 | onClick       | Event handler on marker click          | `(event) => void`    |
