@@ -9,6 +9,16 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### Homogenize the `Map` components
+
+To ensure a more consistent usage we have homogenize the props of the map components and we added a few fixes.
+
+- The `LocationInternalShape` has been deprecated in favor of `LocationInputShape`.
+- The `CoordinatesShape` now accepts either {`latitude`,`longitude`} or {`lat`,`lng`}.
+- Included the `onBoundsChanged` prop in the `Map` components
+
+> For a list of available props for the map and marker components see: [Display a map](/docs/advanced/features/display-a-map.html#component-props)
+
 ### `carousel` image format
 
 To support [the Slider and Slider Magento2 page builder content types](/docs/magento2/page-builder.html), we have moved the `<Carousel />` component from theme chocolatine to the default theme. If you plan to use this component directly or through the page builder Slider, you must add a `carousel` image format to your `src/config/images.js`:
