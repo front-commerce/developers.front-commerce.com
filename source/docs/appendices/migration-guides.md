@@ -23,6 +23,23 @@ To support [the Slider and Slider Magento2 page builder content types](/docs/mag
  };
 ```
 
+### `swatch` image format in base theme
+
+We backported the `swatch` image format from theme chocolatine to base theme. This image format is used to display product images of a requisition list. If you are using the base theme and want to use the requisition list feature of the B2B module you have to add the swatch image format to your `src/config/images.js` as follows:
+
+```
+// sr/config/images.js
+module.exports = {
+  defaultBgColor: "FFFFFF",
+  presets: {
+...
++    swatch: { width: 26, height: 26, bgColors: [] },
+...
+  },
+};
+
+```
+
 ### Smarter image resizing mechanism
 
 In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration. The `extensions` setting from `config/images.js` becomes useless and is now deprecated. You should remove it from your application:
@@ -35,13 +52,193 @@ In this release, we have improved the image resizing mechanism to be bit smarter
 };
 ```
 
+### Added requisition list features to B2B module (only theme chocolatine suported)
+
+If you are using base theme and wish to use the B2B module you have to override `theme/modules/ProductView/Synthesis/AddProductToCart.js` from the base theme and provide a way to add to requisition list from the product page (see [AddProductToRequisitionList](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.js) and [B2B's AddProductToCart](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/ProductView/Synthesis/AddProductToCart.js) for inspiration). You also need to override `theme/modules/AddToCart/_AddToCart.scss` if you have not already and just copy the styles from the base theme to it (`src/web/theme/modules/AddToCart/_AddToCart.scss`).
+
+If you are using theme chocolatine and have overridden `theme/modules/ProductView/Synthesis/AddProductToCart.js` and want to use the B2B module you need to apply the following change to it:
+
+```diff
+...
++import AddProductToRequisitionList from "theme/modules/RequisitionList/AddProductToRequisitionList";
+...
+      <AddToCart
+        appearance={appearance}
+        selectedOptions={selectedOptions}
+        selectedCustomOptions={selectedCustomOptions}
+        selectedBundleOptions={selectedBundleOptions}
+        onProductAdded={onProductAdded}
+        product={withComputedPrice(product)}
+        label={intl.formatMessage(messages.addToCartLabel)}
+        unavailableLabel={intl.formatMessage(messages.unavailableLabel)}
+        actions={
+-          withWishlist !== false && (
++          <>
++            {withWishlist !== false && (
+              <AddProductToWishlist
+                sku={product.sku}
+                selectedOptions={selectedOptions}
+                selectedCustomOptions={selectedCustomOptions}
+                selectedBundleOptions={selectedBundleOptions}
+                size="big"
+              />
+-            )
++            )}
++            <AddProductToRequisitionList
++              product={product}
++              selectedConfigurableOptions={selectedOptions}
++              size="big"
++            />
++          </>
+        }
+      />
+...
+```
+
+If you overrode `theme/modules/Cart/CartTitle/CartTitle.js` you need to apply the following diff to it:
+
+```diff
+...
++import AddCartToRequisitionList from "../../RequisitionList/AddCartToRequisitionList";
+...
+        <FormActions appearance="center">
++          <AddCartToRequisitionList cart={props.cart} size="big" />
+          {hasCartError ? (
+            <Button onDisableClick={() => {}} state="disabled">
+              <ProceedToCheckout />
+            </Button>
+          ) : (
+            <Link to="/checkout" buttonAppearance="primary">
+              <ProceedToCheckout />
+            </Link>
+          )}
+        </FormActions>
+...
+```
+
 ### Cookies max age configuration
 
 The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
 
-### New link added to `<AccountNavigation>`
+#### New links added to `<AccountNavigation>`
 
-The company structure link is added to the `<AccountNavigation>` component. This link is part of the B2B features so if you need it and overrode the `<AccountNavigation>` component you need to apply [the same changes in this diff to your overridden `<AccountNavigation>`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/802/diffs#diff-content-e7af65f5100c0e8b1d5bda98a735eb5744a44386)
+The company structure and requisition list links are added to the `<AccountNavigation>` component. Those links are part of the B2B features so if you need them and overrode the `<AccountNavigation>` component you need to apply the below diff to your overridden `<AccountNavigation>`:
+
+<details>
+<summary><strong>"AccountNavigation" diff (click to expand diff)</strong></summary>
+
+```diff
+import React from "react";
+...
+
+const messages = defineMessages({
+...
++  companyStructureLink: {
++    id: "pages.Account.Navigation.companyStructure",
++    defaultMessage: "Company structure",
++  },
+...
++  requisitionListsLink: {
++    id: "pages.Account.Navigation.requisitionLists",
++    defaultMessage: "Your requisition lists",
++  },
+...
+});
+
+...
+
+export const MobileSelector = injectIntl(
+  ({
+    intl,
+    location,
+    ordersCount,
+    storeCredit,
+    wishlist,
++    requisitionList,
+    user,
+    returnMerchandiseAuthorization,
+  }) => {
+    const companyRoutes = isCompanyUser(user)
+      ? [
+...
++          {
++            value: "/user/company/structure",
++            label: intl.formatMessage(messages.companyStructureLink),
++          },
+        ]
+      : [];
+
+    const routes = [
+...
++      requisitionList?.isFeatureActive && {
++        value: "/user/requisition-lists",
++        label: intl.formatMessage(messages.requisitionListsLink),
++      },
+...
+    ].filter(Boolean);
+...
+  }
+);
+
+...
+
+export const DesktopLeftMenu = injectIntl(
+  ({
+    intl,
+    basePath,
+    ordersCount,
+    storeCredit,
+    wishlist,
+    user,
++    requisitionList,
+    returnMerchandiseAuthorization,
+  }) => {
+    return (
+      <nav className="account-navigation">
+...
+        {isCompanyUser(user) ? (
+          <>
+...
++            <Route
++              exact
++              path={`${basePath}/company/structure`}
++              children={({ match }) => (
++                <Link
++                  to="/user/company/structure"
++                  className={makeClassName(match)}
++                >
++                  {intl.formatMessage(messages.companyStructureLink)}
++                  <Icon icon="organigram" title="" />
++                </Link>
++              )}
++            />
+          </>
+        ) : null}
+
+...
+
++        {requisitionList?.isFeatureActive && (
++          <Route
++            path={`${basePath}/requisition-lists`}
++            children={({ match }) => (
++              <Link
++                to="/user/requisition-lists"
++                className={makeClassName(match, ordersCount === 0)}
++              >
++                {intl.formatMessage(messages.requisitionListsLink)}
++                <Icon icon="list" title="" />
++              </Link>
++            )}
++          />
++        )}
+...
+      </nav>
+    );
+  }
+);
+```
+</details>
+<br/>
 
 ### New style sheets
 
@@ -49,13 +246,128 @@ If you have overriden `theme/components/_components.scss` you need to add the fo
 
 ```scss
 @import "~theme/components/molecules/LoadingOverlay/LoadingOverlay";
+@import "~theme/components/molecules/SelectMenu/SelectMenu";
 ```
 
 If you are using the B2B module and have overriden `theme/_b2b.scss` you need to add the following lines to it
 
 ```scss
-@import "~theme/modules/Company/CompanyStructure/CompanyStructure";
 @import "~theme/components/organisms/Tree/Tree";
+@import "~theme/modules/Company/CompanyStructure/CompanyStructure";
+@import "~theme/modules/RequisitionList/RequisitionList";
+@import "~theme/modules/RequisitionList/RequisitionListTable/RequisitionListTable";
+```
+
+If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the following diff to it:
+
+<details>
+<summary><strong>Diff for base theme</strong></summary>
+
+```diff
+...
++.button--disabled {
++  &:hover,
++  &:focus {
++    background: $white;
++  }
++}
+...
+.button--disabled {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    background: $white;
++    text-decoration: none;
+    cursor: not-allowed;
+    border-color: $shade04;
+    background: $white;
+    color: $shade04;
+    &.button--primary {
+      border-color: $shade04;
+      background: $shade04;
+      color: $white;
+    }
+    &.button--icon {
+      background: transparent;
+      color: $shade04;
+    }
++  }
+}
+```
+
+</details>
+<br/>
+
+<details>
+<summary><strong>Diff for theme chocolatine</strong></summary>
+
+```diff
+...
+.button--disabled {
+  border-color: $shade03;
+  &:hover,
+- &:focus {
++ &:focus,
++ &:active {
+    background: $white;
+  }
+}
+...
+.button--disabled {
+-  cursor: not-allowed;
+-
+-  &,
+-  &:hover {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    text-decoration: none;
++    cursor: not-allowed;
+    border-color: $shade03;
+    background: $white;
+    color: $shade03;
+    &.button--primary {
+      border-color: $shade03;
+      background: $shade03;
+      color: $fontColor;
+    }
+  }
+}
+```
+
+</details>
+<br/>
+
+if you overrode `theme/modules/AddToCart/_AddToCart.scss` and are using theme chocolatine apply the following diff to it:
+
+```diff
+...
+  &__actions {
+    display: none;
+    padding: math.div($boxSizeMargin, 2);
+
+    @media screen and (min-width: $menuBreakpoint) {
+      display: block;
+    }
+  }
+
+  &__actions {
+-    display: none;
++    display: flex;
+    padding: math.div($boxSizeMargin, 2);
+
+-    @media screen and (min-width: $menuBreakpoint) {
+-      display: block;
+-    }
++    > * {
++      margin-left: math.div($boxSizeMargin, 2);
++    }
++    :first-child {
++      margin-left: 0;
++    }
+  }...
 ```
 
 ### New icons required
