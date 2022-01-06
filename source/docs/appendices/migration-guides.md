@@ -248,7 +248,6 @@ export const DesktopLeftMenu = injectIntl(
 );
 ```
 </details>
-<br/>
 
 ### New style sheets
 
@@ -307,7 +306,6 @@ If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the f
 ```
 
 </details>
-<br/>
 
 <details>
 <summary><strong>Diff for theme chocolatine</strong></summary>
@@ -348,7 +346,6 @@ If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the f
 ```
 
 </details>
-<br/>
 
 if you overrode `theme/modules/AddToCart/_AddToCart.scss` and are using theme chocolatine apply the following diff to it:
 
