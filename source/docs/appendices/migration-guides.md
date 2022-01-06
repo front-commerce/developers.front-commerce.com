@@ -7,6 +7,550 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.11.0` -> `2.12.0`
+
+### Homogenize the `Map` components
+
+To ensure a more consistent usage we have homogenize the props of the map components and we added a few fixes.
+
+- The `LocationInternalShape` has been deprecated in favor of `LocationInputShape`.
+- The `CoordinatesShape` now accepts either {`latitude`,`longitude`} or {`lat`,`lng`}.
+- Included the `onBoundsChanged` prop in the `Map` components
+
+> For a list of available props for the map and marker components see: [Display a map](/docs/advanced/features/display-a-map.html#component-props)
+
+### `carousel` image format
+
+To support [the Slider and Slider Magento2 page builder content types](/docs/magento2/page-builder.html), we have moved the `<Carousel />` component from theme chocolatine to the default theme. If you plan to use this component directly or through the page builder Slider, you must add a `carousel` image format to your `src/config/images.js`:
+
+```
+// sr/config/images.js
+@@ -6,6 +6,7 @@ module.exports = {
+     large: { width: 1100, height: 1100, bgColors: [] },
++    carousel: { width: 1280, height: 600, bgColors: [] },
+     zoomable: { width: 1100, height: 1100, bgColors: [], sizes: [2] },
+   },
+ };
+```
+
+### `swatch` image format in base theme
+
+We backported the `swatch` image format from theme chocolatine to base theme. This image format is used to display product images of a requisition list. If you are using the base theme and want to use the requisition list feature of the B2B module you have to add the swatch image format to your `src/config/images.js` as follows:
+
+```
+// sr/config/images.js
+module.exports = {
+  defaultBgColor: "FFFFFF",
+  presets: {
+...
++    swatch: { width: 26, height: 26, bgColors: [] },
+...
+  },
+};
+
+```
+
+### Smarter image resizing mechanism
+
+In this release, we have improved the image resizing mechanism to be bit smarter. Before this release, a check on the requested file extension was done before trying to resize an image. As of this release, this check has been removed and it's now up to the underlying image processing library to check if this file is a image or not. As a result, out of the box, more image file formats can be processed without any configuration. The `extensions` setting from `config/images.js` becomes useless and is now deprecated. You should remove it from your application:
+
+```diff
+// src/config/images.js
+    large: { width: 1100, height: 1100, bgColors: [] }
+  },
+-  extensions: [".jpg", ".jpeg", ".png"]
+};
+```
+
+### Added requisition list features to B2B module (only theme chocolatine suported)
+
+If you are using base theme and wish to use the B2B module you have to override `theme/modules/ProductView/Synthesis/AddProductToCart.js` from the base theme and provide a way to add to requisition list from the product page (see [AddProductToRequisitionList](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.js) and [B2B's AddProductToCart](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/ProductView/Synthesis/AddProductToCart.js) for inspiration). You also need to override `theme/modules/AddToCart/_AddToCart.scss` if you have not already and just copy the styles from the base theme to it (`src/web/theme/modules/AddToCart/_AddToCart.scss`).
+
+If you are using theme chocolatine and have overridden `theme/modules/ProductView/Synthesis/AddProductToCart.js` and want to use the B2B module you need to apply the following change to it:
+
+```diff
+...
++import AddProductToRequisitionList from "theme/modules/RequisitionList/AddProductToRequisitionList";
+...
+      <AddToCart
+        appearance={appearance}
+        selectedOptions={selectedOptions}
+        selectedCustomOptions={selectedCustomOptions}
+        selectedBundleOptions={selectedBundleOptions}
+        onProductAdded={onProductAdded}
+        product={withComputedPrice(product)}
+        label={intl.formatMessage(messages.addToCartLabel)}
+        unavailableLabel={intl.formatMessage(messages.unavailableLabel)}
+        actions={
+-          withWishlist !== false && (
++          <>
++            {withWishlist !== false && (
+              <AddProductToWishlist
+                sku={product.sku}
+                selectedOptions={selectedOptions}
+                selectedCustomOptions={selectedCustomOptions}
+                selectedBundleOptions={selectedBundleOptions}
+                size="big"
+              />
+-            )
++            )}
++            <AddProductToRequisitionList
++              product={product}
++              selectedConfigurableOptions={selectedOptions}
++              size="big"
++            />
++          </>
+        }
+      />
+...
+```
+
+If you overrode `theme/modules/Cart/CartTitle/CartTitle.js` you need to apply the following diff to it:
+
+```diff
+...
++import AddCartToRequisitionList from "../../RequisitionList/AddCartToRequisitionList";
+...
+        <FormActions appearance="center">
++          <AddCartToRequisitionList cart={props.cart} size="big" />
+          {hasCartError ? (
+            <Button onDisableClick={() => {}} state="disabled">
+              <ProceedToCheckout />
+            </Button>
+          ) : (
+            <Link to="/checkout" buttonAppearance="primary">
+              <ProceedToCheckout />
+            </Link>
+          )}
+        </FormActions>
+...
+```
+
+### Cookies max age configuration
+
+The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents the consent cookie's maxage in months. It now has a default value of **12 months**. Previously if left unconfigured the cookie banner will appear to users every time they visit the site.
+
+#### New links added to `<AccountNavigation>`
+
+The company structure and requisition list links are added to the `<AccountNavigation>` component. Those links are part of the B2B features so if you need them and overrode the `<AccountNavigation>` component you need to apply the below diff to your overridden `<AccountNavigation>`:
+
+<details>
+<summary><strong>"AccountNavigation" diff (click to expand diff)</strong></summary>
+
+```diff
+import React from "react";
+...
+
+const messages = defineMessages({
+...
++  companyStructureLink: {
++    id: "pages.Account.Navigation.companyStructure",
++    defaultMessage: "Company structure",
++  },
+...
++  requisitionListsLink: {
++    id: "pages.Account.Navigation.requisitionLists",
++    defaultMessage: "Your requisition lists",
++  },
+...
+});
+
+...
+
+export const MobileSelector = injectIntl(
+  ({
+    intl,
+    location,
+    ordersCount,
+    storeCredit,
+    wishlist,
++    requisitionList,
+    user,
+    returnMerchandiseAuthorization,
+  }) => {
+    const companyRoutes = isCompanyUser(user)
+      ? [
+...
++          {
++            value: "/user/company/structure",
++            label: intl.formatMessage(messages.companyStructureLink),
++          },
+        ]
+      : [];
+
+    const routes = [
+...
++      requisitionList?.isFeatureActive && {
++        value: "/user/requisition-lists",
++        label: intl.formatMessage(messages.requisitionListsLink),
++      },
+...
+    ].filter(Boolean);
+...
+  }
+);
+
+...
+
+export const DesktopLeftMenu = injectIntl(
+  ({
+    intl,
+    basePath,
+    ordersCount,
+    storeCredit,
+    wishlist,
+    user,
++    requisitionList,
+    returnMerchandiseAuthorization,
+  }) => {
+    return (
+      <nav className="account-navigation">
+...
+        {isCompanyUser(user) ? (
+          <>
+...
++            <Route
++              exact
++              path={`${basePath}/company/structure`}
++              children={({ match }) => (
++                <Link
++                  to="/user/company/structure"
++                  className={makeClassName(match)}
++                >
++                  {intl.formatMessage(messages.companyStructureLink)}
++                  <Icon icon="organigram" title="" />
++                </Link>
++              )}
++            />
+          </>
+        ) : null}
+
+...
+
++        {requisitionList?.isFeatureActive && (
++          <Route
++            path={`${basePath}/requisition-lists`}
++            children={({ match }) => (
++              <Link
++                to="/user/requisition-lists"
++                className={makeClassName(match, ordersCount === 0)}
++              >
++                {intl.formatMessage(messages.requisitionListsLink)}
++                <Icon icon="list" title="" />
++              </Link>
++            )}
++          />
++        )}
+...
+      </nav>
+    );
+  }
+);
+```
+</details>
+
+### New style sheets
+
+If you overrode `theme/components/_components.scss` you need to add the following line to it
+
+```scss
+@import "~theme/components/molecules/LoadingOverlay/LoadingOverlay";
+@import "~theme/components/molecules/SelectMenu/SelectMenu";
+```
+
+If you overrode `theme/components/_modules.scss` you need to add the following line to it to use the `<ProductPicker>` component (used by [the QuickOrder feature](/docs/advanced/features/quickorder.html))
+
+```scss
+@import "~theme/modules/ProductPicker/ProductPicker";
+```
+
+If you are using the B2B module and overrode `theme/_b2b.scss` you need to add the following lines to it
+
+```scss
+@import "~theme/components/organisms/Tree/Tree";
+@import "~theme/modules/Company/CompanyStructure/CompanyStructure";
+@import "~theme/modules/RequisitionList/RequisitionList";
+@import "~theme/modules/RequisitionList/RequisitionListTable/RequisitionListTable";
+```
+
+If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the following diff to it:
+
+<details>
+<summary><strong>Diff for base theme</strong></summary>
+
+```diff
+...
++.button--disabled {
++  &:hover,
++  &:focus {
++    background: $white;
++  }
++}
+...
+.button--disabled {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    background: $white;
++    text-decoration: none;
+    cursor: not-allowed;
+    border-color: $shade04;
+    background: $white;
+    color: $shade04;
+    &.button--primary {
+      border-color: $shade04;
+      background: $shade04;
+      color: $white;
+    }
+    &.button--icon {
+      background: transparent;
+      color: $shade04;
+    }
++  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>Diff for theme chocolatine</strong></summary>
+
+```diff
+...
+.button--disabled {
+  border-color: $shade03;
+  &:hover,
+- &:focus {
++ &:focus,
++ &:active {
+    background: $white;
+  }
+}
+...
+.button--disabled {
+-  cursor: not-allowed;
+-
+-  &,
+-  &:hover {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    text-decoration: none;
++    cursor: not-allowed;
+    border-color: $shade03;
+    background: $white;
+    color: $shade03;
+    &.button--primary {
+      border-color: $shade03;
+      background: $shade03;
+      color: $fontColor;
+    }
+  }
+}
+```
+
+</details>
+
+if you overrode `theme/modules/AddToCart/_AddToCart.scss` and are using theme chocolatine apply the following diff to it:
+
+```diff
+...
+  &__actions {
+    display: none;
+    padding: math.div($boxSizeMargin, 2);
+
+    @media screen and (min-width: $menuBreakpoint) {
+      display: block;
+    }
+  }
+
+  &__actions {
+-    display: none;
++    display: flex;
+    padding: math.div($boxSizeMargin, 2);
+
+-    @media screen and (min-width: $menuBreakpoint) {
+-      display: block;
+-    }
++    > * {
++      margin-left: math.div($boxSizeMargin, 2);
++    }
++    :first-child {
++      margin-left: 0;
++    }
+  }...
+```
+
+### New icons required
+
+In this release, these new icons were added `eye-off`, `user-circle`, `organigram` and `gripper` to the `<Icon>` component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+import {
+  ...
++ IoIosEyeOff,
+} from "react-icons/io";
++import { FaUserCircle } from "react-icons/fa";
++import { GiOrganigram } from "react-icons/gi";
++import { VscGripper } from "react-icons/vsc";
+
+const keyToComponent = {
+  ...
+  eye: IoIosEye,
++ "eye-off": IoIosEyeOff,
+  pencil: IoMdCreate,
+  ...
++  "user-circle": FaUserCircle,
++  organigram: GiOrganigram,
++  gripper: VscGripper,
+};
+```
+
+### Password field updated with a show/hide feature
+
+The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword
+/>
+```
+
+This new `Password` component requires a stylesheet to add in the `_components.scss` file if you overrode it.
+
+```diff
+// theme/components/_components.scss
+...
+@import "~theme/components/atoms/Form/Label/Label";
++@import "~theme/components/atoms/Form/Input/Password/Password";
+@import "~theme/components/atoms/Form/Input/Select/Select";
+...
+```
+
+If you overrode the `_Input.scss` file, you may need to indicate the inputs height by adding an `input-height` class to correct the vertical alignment of the icon.
+
+```diff
+// theme/components/atoms/Form/Input/_Input.scss
+input,
++.input-height,
+select {
+  height: 3.4rem;
+}
+```
+
+### New `<PasswordStrengthHint>` component in default forms
+
+We've included a `<PasswordStrengthHint>` to provide a better feedback to users about the expected password complexity.
+
+> If you don't want to use this feature in your application, please follow the [Disable password strength hints](/docs/advanced/features/password-fields.html#disable-password-strength-hints) guide
+
+Please update the files below, to ensure that your application displays user forms consistently:
+
+```diff
+// theme/components/_components.scss
++@import "~theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
++@import "~theme/components/atoms/ProgressStatus/ProgressStatus";
+```
+
+```diff
+// theme/components/atoms/Form/Input/index.js
++import PasswordStrengthHint from "./PasswordStrengthHint";
+
+export {
+  ...
++ PasswordStrengthHint,
+};
+```
+
+You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected:
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+Here is an example of the changes involved to use this component (usually added after the `<Password>` field):
+
+```diff
++import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
+
+<Password
+  name="password"
+  ...
+/>
++ <PasswordStrengthHint
++  formValuePath="password" // must equal the password name value
++/>
+```
+
+### `passwordValidation` deprecation
+
+The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is now deprecated. If you overrode it, you must also override the password validity configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js` (introduced in this release).
+
+See [the password field's documentation](/docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
+
+If you overrode some of the following components:
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwordFieldValidator.js` instead of the deprecated `passwordValidation` as follow:
+
+```diff
+-import {
+-  isPasswordValid,
+-  errorMessage,
+-  MIN_PASSWORD_LENGTH,
+-  MIN_CHAR_CLASSES,
+-} from "theme/components/atoms/Form/Input/Password/passwordValidation";
++import {
++  passwordValidationRules,
++  passwordValidationErrors,
++} from "theme/components/atoms/Form/Input/Password/passwordFieldValidator";
+
+...
+
+<Password
+  name="password"
+- validations={{
+-   magentoPasswordRule: (_, value) => isPasswordValid(value),
+- }}
++ validations={passwordValidationRules}
+- validationError={intl.formatMessage(errorMessage, {
+-   minLength: MIN_PASSWORD_LENGTH,
+-   minClasses: MIN_CHAR_CLASSES,
+- })}
++ validationError={passwordValidationErrors}
+/>
+```
+
+## New Confirmation Modal
+
+We added a new `<ConfirmationModal>` in `theme/components/organisms/Modal`.
+If you overrode the `theme/components/organisms/Modal/index.js` file please add the following lines to ensure that the confirmation modal works :
+
+```diff
++import ConfirmationModal from "./ConfirmationModal/ConfirmationModal";
+
+-export { CloseModal };
++export { CloseModal, ConfirmationModal };
+```
+
+### New features in `2.12.0`
+
+These new features may be relevant for your existing application:
+- Page builder: Slider content type and Slide support
+- the `<Password>` component now allows the user to reveal the password
+- New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
+- New component: `<ProgressStatus>` to show a progressbar with a label
+- New component: `<ConfirmationModal>` to simplify confirmation modals
+
 ## `2.10.0` -> `2.11.0`
 
 ### Zoom-in on product images

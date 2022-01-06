@@ -13,12 +13,19 @@ Front-Commerce supports several Magento2 B2B features:
 * Company users handling (list, create, modify and deactivate company users)
 * [_Payment on account_](/docs/advanced/payments/payment-on-account.html) payment method
 * Display company credit history
+* Requisition list
 
 <blockquote class="info">
 Those features are only available with [Adobe Commerce and its B2B module](https://docs.magento.com/user-guide/getting-started.html#b2b-features) and requires at least Adobe Commerce 2.4.3.
 </blockquote>
 
 ## Enable B2B support
+
+### Requirements
+
+On Magento2 side, you need to [install the Front-Commerce Magento2 Commerce module](/docs/magento2/commerce.html#Magento2-Commerce-module-installation).
+
+### Front-Commerce configuration
 
 To leverage those features, you need to enable and integrate the Magento2 B2B module. Here is how to do it:
 
