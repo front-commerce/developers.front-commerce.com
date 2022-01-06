@@ -9,7 +9,7 @@ This page contains all information about how to adapt the default Front-Commerce
 ## Configure password validity
 
 <blockquote class="feature--new">
-_Since version 2.12.0
+_Since version 2.12.0_
 </blockquote>
 
 Front-Commerce expects a certain level of complexity for the password entered by a user.
