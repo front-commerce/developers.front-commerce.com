@@ -7,15 +7,28 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.11.0`](#2-11-0-2021-11-25)**
+**Front-Commerce [`2.12.0`](#2-12-0-2022-01-06)**
 
 Compatible with:
 
 - **Node.js:** 12.22+
-- **Magento2**: 2.3.2 -> 2.4.3-p1 (Open Source & Commerce)
+- **Magento2**: 2.3.2 -> 2.4.3-p1 (Open Source & Commerce & B2B)
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.12.0 (2022-01-06)
+
+> At Front-Commerce, we started 2022 by providing you with new features available in B2B for Adobe Commerce. Requisition Lists are now available, allowing you to save items in a way that is far more efficient than with wishlists, and you can now manage your teams and users using a nice drag and drop tool!
+>
+> We’ve stepped up our cloud game with our brand new partner Akamai!
+>
+> You’ll also discover the password strength display feature, to enhance the password experience of your user, as well as new components available for the Page Builder for Front-Commerce.
+>
+> We have also included various changes and bug corrections, to always improve your Front-Commerce experience!
+
+- [Announcement](https://developers.front-commerce.com/blog/2022/01/06/front-commerce-2.12/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.0)
 
 ## 2.11.0 (2021-11-25)
 
