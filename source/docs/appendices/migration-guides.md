@@ -530,7 +530,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 />
 ```
 
-## New Confirmation Modal
+### New Confirmation Modal
 
 We added a new `<ConfirmationModal>` in `theme/components/organisms/Modal`.
 If you overrode the `theme/components/organisms/Modal/index.js` file please add the following lines to ensure that the confirmation modal works :
