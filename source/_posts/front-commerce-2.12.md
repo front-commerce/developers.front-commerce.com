@@ -31,8 +31,6 @@ The requisition list feature is similar to wish lists but they can be used multi
 
 <div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/1ec2c4e2fc6b4f7d944400f6a0b29e8f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-Fixes from the 2.12 version have also been backported into previous minor versions. The following patch versions were released: [2.4.9](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.9), [2.5.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.5), [2.6.3](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.3), [2.7.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.4), [2.8.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.5), [2.9.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.4), [2.10.2](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.2) and [2.11.2](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.2).
-
 ### Company Structure
 
 With the company structure page, account management remains easy for big company administrators: starting from the Company Administrator, the tree structure can be expanded to include teams of users. The users can be associated with teams or organised within a hierarchy of divisions and subdivisions within the company!
