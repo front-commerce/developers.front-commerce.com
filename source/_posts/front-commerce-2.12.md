@@ -103,7 +103,17 @@ Your feedback is precious, do not hesitate to contact us to share your needs and
     - **graphql:** fixed GraphQL directives so that `@magentoConfig` works with recent `graphql` dependencies versions
     - **types:** we’ve fixed several propTypes and JSDoc types across the codebase
     - **ui:** disabled buttons are now consistent no matter their status (i.e: active)
-    -
+
+Fixes from the 2.12 version have also been backported into previous minor versions. The following patch versions were released:
+[2.4.10](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.10),
+[2.5.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.6),
+[2.6.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.4),
+[2.7.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.5),
+[2.8.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.6),
+[2.9.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.5)
+[2.10.3](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.3).
+and [2.11.1](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.1).
+
 <hr />
 <div class="center">
   <p>
