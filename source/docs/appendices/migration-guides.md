@@ -248,18 +248,23 @@ export const DesktopLeftMenu = injectIntl(
 );
 ```
 </details>
-<br/>
 
 ### New style sheets
 
-If you have overriden `theme/components/_components.scss` you need to add the following line to it
+If you overrode `theme/components/_components.scss` you need to add the following line to it
 
 ```scss
 @import "~theme/components/molecules/LoadingOverlay/LoadingOverlay";
 @import "~theme/components/molecules/SelectMenu/SelectMenu";
 ```
 
-If you are using the B2B module and have overriden `theme/_b2b.scss` you need to add the following lines to it
+If you overrode `theme/components/_modules.scss` you need to add the following line to it to use the `<ProductPicker>` component (used by [the QuickOrder feature](/docs/advanced/features/quickorder.html))
+
+```scss
+@import "~theme/modules/ProductPicker/ProductPicker";
+```
+
+If you are using the B2B module and overrode `theme/_b2b.scss` you need to add the following lines to it
 
 ```scss
 @import "~theme/components/organisms/Tree/Tree";
@@ -307,7 +312,6 @@ If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the f
 ```
 
 </details>
-<br/>
 
 <details>
 <summary><strong>Diff for theme chocolatine</strong></summary>
@@ -348,7 +352,6 @@ If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the f
 ```
 
 </details>
-<br/>
 
 if you overrode `theme/modules/AddToCart/_AddToCart.scss` and are using theme chocolatine apply the following diff to it:
 
@@ -530,7 +533,7 @@ You must use the new `src/web/theme/components/atoms/Form/Input/Password/passwor
 ## New Confirmation Modal
 
 We added a new `<ConfirmationModal>` in `theme/components/organisms/Modal`.
-If you overrode the `theme/components/organisms/Modal/index.js` file please add the following lines to ensure that the confirmation modal works : 
+If you overrode the `theme/components/organisms/Modal/index.js` file please add the following lines to ensure that the confirmation modal works :
 
 ```diff
 +import ConfirmationModal from "./ConfirmationModal/ConfirmationModal";
