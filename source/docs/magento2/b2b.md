@@ -21,13 +21,9 @@ Those features are only available with [Adobe Commerce and its B2B module](https
 
 ## Enable B2B support
 
-### Magento2 Commerce module installation
+### Requirements
 
-You need to install the [`front-commerce/magento2-commerce-module` module](https://gitlab.com/front-commerce/magento2-commerce-module-front-commerce/):
-
-```sh
-composer require front-commerce/magento2-commerce-module
-```
+On Magento2 side, you need to [install the Front-Commerce Magento2 Commerce module](/docs/magento2/commerce.html#Magento2-Commerce-module-installation).
 
 ### Front-Commerce configuration
 
