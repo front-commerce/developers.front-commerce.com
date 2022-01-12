@@ -273,7 +273,7 @@ Let's assume you have created a Custom Repeatable Type _ARTICLE_ which identifie
 
 #### Implement the schema
 
-We can model the corresponding GraphQL schema after the Custom Type by creating the following .gql file : 
+We can model the corresponding GraphQL schema as follows: 
 
 ```graphql
 type Article {
