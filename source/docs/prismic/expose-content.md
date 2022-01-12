@@ -265,7 +265,7 @@ export default {
 
 ### Expose an article and retrieve it by its uid
 
-Let's assume you have created a Custom Repeatable Type _ARTICLE_ which identifier is `article`. This Custom Repeatable Type has three fields:
+Let's assume you have created a Custom Repeatable Type _Article_ which identifier is `article`. This Custom Repeatable Type has three fields:
 
 * `uid` of type UID (this field is mandatory to retrieve the article by its identifier)
 * `title` of type Rich Text
