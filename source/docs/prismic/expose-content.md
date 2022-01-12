@@ -301,7 +301,7 @@ const pageSize = 10;
 
 export default {
   Query: {
-    faqList: (root, { params }, { loaders }) => {
+    faqList: async (root, { params }, { loaders }) => {
       const { search, page } = params;
       const { LinkTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
       const ListQuery = loaders.Prismic.queries.ListQuery;
@@ -312,7 +312,7 @@ export default {
         query.search(search);
       }
 
-      const faqList loaders.Prismic.loadList(query, {
+      const faqList = await loaders.Prismic.loadList(query, {
         fieldTransformers: {
           // no transformer needed for `question` field as it's a key text field
           answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
