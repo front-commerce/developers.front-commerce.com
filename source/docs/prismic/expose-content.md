@@ -320,20 +320,22 @@ export default {
 We can handle the error by wrapping our promise in the `withDefault404Result(promise, defaultResult)` utility function :
 
 ```js
-import { withDefault404Result } from "server/core/graphql/queryResponseBuilders";
-
 export default {
   Query: {
-    article: (_, { slug }, { loaders }) => {
+    article: async (_, { slug }, { loaders }) => {
       const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
     
-      return withDefault404Result(loaders.Prismic.loadByUID("article", slug, {
-        fieldTransformers: {
-          // no transformer needed for `uid` field
-          title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-          content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      }), null)
+      try {
+        return await loaders.Prismic.loadByUID("article", slug, {
+          fieldTransformers: {
+            // no transformer needed for `uid` field
+            title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+            content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          },
+        });
+      } catch (e) {
+        return null;
+      }
     },
   },
 };
