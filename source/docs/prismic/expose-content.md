@@ -311,7 +311,7 @@ export default {
 };
 ```
 
-#### loadByUID error handling
+#### `loadByUID` error handling
 
 > Reminder : loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having an UID field with the given value. If such Content does not exist, it throws an error. 
 
