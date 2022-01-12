@@ -263,6 +263,78 @@ export default {
 };
 ```
 
+### Expose an article and retrieve it by its uid
+
+Let's assume you have created a Custom Repeatable Type _ARTICLE_ which identifier is `article`. This Custom Repeatable Type has three fields:
+
+* `uid` of type UID (this field is mandatory to retrieve the article by its identifier)
+* `title` of type Rich Text
+* `content` of type Rich Text
+
+#### Implement the schema
+
+We can model the corresponding GraphQL schema after the Custom Type by creating the following .gql file : 
+
+```graphql
+type Article {
+  uid: String
+  title: DefaultWysiwyg
+  content: DefaultWysiwyg
+}
+
+extend type Query {
+  article(slug: String!): Article
+}
+```
+
+Note : The slug argument represent the value of the uid field.
+
+#### Implement the resolver
+
+```js
+export default {
+  Query: {
+    article: (_, { slug }, { loaders }) => {
+      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+    
+      return loaders.Prismic.loadByUID("article", slug, {
+        fieldTransformers: {
+          // no transformer needed for `uid` field
+          title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+    },
+  },
+};
+```
+
+#### loadByUID error handling
+
+> Reminder : loadByUID returns a `Content` representing a Prismic Content of [the corresponding type] and having [an UID field] with the given value. If such Content does not exist, it throws an error. 
+
+We can handle the error by wrapping our promise in the 'withDefault404Result(promise, defaultResult)' utility function :
+
+```js
+import { withDefault404Result } from "server/core/graphql/queryResponseBuilders";
+
+export default {
+  Query: {
+    article: (_, { slug }, { loaders }) => {
+      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+    
+      return withDefault404Result(loaders.Prismic.loadByUID("article", slug, {
+        fieldTransformers: {
+          // no transformer needed for `uid` field
+          title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      }), null)
+    },
+  },
+};
+```
+
 ### Expose a list of FAQs
 
 #### Define the schema
