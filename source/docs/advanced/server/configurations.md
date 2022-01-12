@@ -56,7 +56,7 @@ This can be illustrated by starting your Front-Commerce server with the environm
 
 ## Configuration provider definition
 
-In practice, a configuration provider is an object that have four parts: a name, a schema, static values (available independently from the request) and values depending on the request.
+In practice, a configuration provider is an object with five properties: a name, a schema, static values (available independently from the request), a function to resolve values depending on the request and a function to fetch values remotely.
 
 ```js
 const serviceConfigurationProvider = {
@@ -145,7 +145,7 @@ const values = fetch("https://api.example.com/my-service-key")
 
 Please note that this promise is launched only once on server bootstrap. If the configuration changes over time on your API, the `req.config.service.key` value will still be the same.
 
-If it needs to change over time, please use `slowValuesOnEachRequest` instead.
+If it needs to change over time, please use `slowValuesOnEachRequest` or `fetchRemoteConfiguration` instead.
 
 ### Values depending on the request (key `slowValuesOnEachRequest`, optional)
 
