@@ -71,6 +71,7 @@ sidebar_categories:
   Magento2:
     - docs/magento2/overview
     - docs/magento2/graphql
+    - docs/magento2/search-engine
     - docs/magento2/i18n
     - docs/magento2/add-new-attribute
     - docs/magento2/using-magento-configuration
