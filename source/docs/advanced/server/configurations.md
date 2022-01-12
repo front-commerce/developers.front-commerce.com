@@ -87,9 +87,9 @@ The schema definition is based on [convict](https://github.com/mozilla/node-conv
 - `doc` (string): A description of the field and pointers to learn how to get its value if it requires a manual operation
 - `format` (string, array or function): The formatter used for this field's value. See [how validation works in convict](https://github.com/mozilla/node-convict#validation).
 - `default` (any): A default value. If you don't have a default value, you still have to set one by using the `null`. If there is no default value, it won't be considered as a field definition.
-- `env` (string, optional): The name of the environment variable that should be used as the value config. If none is given, the configuration won't be configurable by environment. Please keep in mind that environment variables should still match [Front-Commerce's naming convention](/docs/reference/environment-variables.html#Add-your-own-environment-variables).
+- `env` (string, optional): The name of the environment variable that should be used as the value. If none is given, the configuration won't be configurable by environment. Please keep in mind that environment variables should still match [Front-Commerce's naming convention](/docs/reference/environment-variables.html#Add-your-own-environment-variables).
 
-Thus, if we want to define a config named `serviceKey` available in `req.config.serviceKey` that would take its value from the environment variable `FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
+Thus, if we want to define a configuration named `serviceKey` available in `req.config.serviceKey` that would take its value from the environment variable `FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
 
 ```js
 const schema = () => ({
