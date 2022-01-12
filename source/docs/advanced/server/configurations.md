@@ -80,7 +80,7 @@ const name = "serviceProvider"
 
 ### Schema (key `schema`, optional)
 
-It represents the definition of the fields that will appear in the global configuration object if the configuration provider is registered. It can define things like field formats, default values or environment variables.
+It's a function returning an object representing the definition of the fields that will appear in the global configuration object if the configuration provider is registered. It can define things like field formats, default values or environment variables.
 
 The schema definition is based on [convict](https://github.com/mozilla/node-convict), a library developed by Mozilla to validate configurations. For a single field, the schema will have these keys:
 
@@ -92,20 +92,20 @@ The schema definition is based on [convict](https://github.com/mozilla/node-conv
 Thus, if we want to define a config named `serviceKey` available in `req.config.serviceKey` that would take its value from the environment variable `FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
 
 ```js
-const schema = {
+const schema = () => ({
   serviceKey: {
     doc: "The key to get access to our remote service",
     format: String,
     default: null,
     env: "FRONT_COMMERCE_SERVICE_KEY"
   }
-};
+});
 ```
 
 A configuration provider's schema is not limited to a single field though. You can set multiple configuration keys but also nest deeper objects. For instance, if we want to group a `key` and a `secret` into a single `service` key, we would write the following schema:
 
 ```js
-const schema = {
+const schema = () => ({
   service: {
     key: {
       doc: "The key to get access to our remote service",
@@ -120,7 +120,7 @@ const schema = {
       env: "FRONT_COMMERCE_SERVICE_SECRET"
     }
   }
-};
+});
 ```
 
 You could then access the values with `req.config.service.key` or `req.config.service.secret`.
