@@ -287,7 +287,9 @@ extend type Query {
 }
 ```
 
-Note : The slug argument represent the value of the uid field.
+<blockquote class="note">
+  **Note** The slug argument represent the value of the `uid` field.
+</blockquote>
 
 #### Implement the resolver
 
