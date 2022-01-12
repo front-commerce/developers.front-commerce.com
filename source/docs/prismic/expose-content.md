@@ -315,7 +315,7 @@ export default {
 
 > Reminder : loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having an UID field with the given value. If such Content does not exist, it throws an error. 
 
-We can handle the error by wrapping our promise in the 'withDefault404Result(promise, defaultResult)' utility function :
+We can handle the error by wrapping our promise in the `withDefault404Result(promise, defaultResult)` utility function :
 
 ```js
 import { withDefault404Result } from "server/core/graphql/queryResponseBuilders";
