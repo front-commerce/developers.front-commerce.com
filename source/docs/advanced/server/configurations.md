@@ -237,6 +237,8 @@ export default {
 };
 ```
 
+It is also common to register a configuration provider from [an express middleware](/docs/advanced/server/add-http-endpoint.html#Add-a-global-server-middleware) for cases where the corresponding configuration is used in several places in the application.
+
 ### Override an existing configuration
 
 If your configuration provider relies on another one, you should use the following method `configService.insertAfter(otherConfigurationProviderName, serviceConfigurationProvider)`.
