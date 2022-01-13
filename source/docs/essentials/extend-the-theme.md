@@ -49,8 +49,8 @@ Then, we need to tell Front-Commerce that this module exists in your [`.front-co
 module.exports = {
   name: "Front Commerce",
   url: "http://www.front-commerce.test",
--  modules: ["./src"],
-+  modules: ["./src", "./my-module"],
+- modules: ["./src"],
++ modules: ["./src", "./my-module"],
   serverModules: [
     // ...
   ]
