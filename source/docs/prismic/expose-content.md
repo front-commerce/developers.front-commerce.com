@@ -263,6 +263,85 @@ export default {
 };
 ```
 
+### Expose an article and retrieve it by its uid
+
+Let's assume you have created a Custom Repeatable Type _Article_ which identifier is `article`. This Custom Repeatable Type has three fields:
+
+* `uid` of type UID (this field is mandatory to retrieve the article by its identifier)
+* `title` of type Rich Text
+* `content` of type Rich Text
+
+#### Implement the schema
+
+We can model the corresponding GraphQL schema as follows: 
+
+```graphql
+type Article {
+  uid: String
+  title: DefaultWysiwyg
+  content: DefaultWysiwyg
+}
+
+extend type Query {
+  article(slug: String!): Article
+}
+```
+
+<blockquote class="note">
+  **Note** The slug argument represent the value of the `uid` field.
+</blockquote>
+
+#### Implement the resolver
+
+```js
+export default {
+  Query: {
+    article: (_, { slug }, { loaders }) => {
+      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+    
+      return loaders.Prismic.loadByUID("article", slug, {
+        fieldTransformers: {
+          // no transformer needed for `uid` field
+          title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        },
+      });
+    },
+  },
+};
+```
+
+#### `loadByUID` error handling
+
+<blockquote class="important">
+  **Reminder** loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having an UID field with the given value. If such Content does not exist, it throws an error.
+</blockquote>
+
+We can handle the error by wrapping our promise in a try / catch :
+
+```js
+export default {
+  Query: {
+    article: async (_, { slug }, { loaders }) => {
+      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+    
+      try {
+        return await loaders.Prismic.loadByUID("article", slug, {
+          fieldTransformers: {
+            // no transformer needed for `uid` field
+            title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+            content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+          },
+        });
+      } catch (e) {
+        // return whatever default value
+        return null;
+      }
+    },
+  },
+};
+```
+
 ### Expose a list of FAQs
 
 #### Define the schema
