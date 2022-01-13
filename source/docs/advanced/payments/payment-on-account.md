@@ -28,7 +28,7 @@ First, you need to [enable and integrate the Front-Commerce B2B module for Magen
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
   ```
-  1. Register the component `PaymentOnAccount` to be used for `companycredit` payments in `getAdditionalDataComponent.js`
+1. Register the component `PaymentOnAccount` to be used for `companycredit` payments in `getAdditionalDataComponent.js`
   ```diff
 +import PaymentOnAccount from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/PaymentOnAccount";
 
