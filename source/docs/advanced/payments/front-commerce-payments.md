@@ -68,5 +68,5 @@ export default {
 ```
 
 <blockquote class="note">
-We encourage you to investigate `payment-` modules' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/front-commerce/-/tree/master/src/server/modules) to learn about advanced patterns.
+We encourage you to investigate `payment-` modules' source code from [Front-Commerce's core](https://gitlab.com/front-commerce/front-commerce/-/tree/main/src/server/modules) to learn about advanced patterns.
 </blockquote>
