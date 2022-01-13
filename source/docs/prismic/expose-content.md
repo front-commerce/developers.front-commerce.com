@@ -317,7 +317,7 @@ export default {
   **Reminder** loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having an UID field with the given value. If such Content does not exist, it throws an error.
 </blockquote>
 
-We can handle the error by wrapping our promise in the `withDefault404Result(promise, defaultResult)` utility function :
+We can handle the error by wrapping our promise in a try / catch :
 
 ```js
 export default {
@@ -334,6 +334,7 @@ export default {
           },
         });
       } catch (e) {
+        // return whatever default value
         return null;
       }
     },
