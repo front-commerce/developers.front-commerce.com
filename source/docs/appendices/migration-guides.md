@@ -9,6 +9,14 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.11.0` -> `2.12.0`
 
+### Upgrade the Magento2 module
+
+If you are using Magento2, version 2.5.0 of `front-commerce/magento2-module` is now the minimum required version. To update it to the last version, from Magento2 root, you can run:
+
+```sh
+composer update front-commerce/magento2-module
+```
+
 ### Homogenize the `Map` components
 
 To ensure a more consistent usage we have homogenize the props of the map components and we added a few fixes.
