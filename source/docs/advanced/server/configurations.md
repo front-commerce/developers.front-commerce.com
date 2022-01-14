@@ -56,7 +56,7 @@ This can be illustrated by starting your Front-Commerce server with the environm
 
 ## Configuration provider definition
 
-In practice, a configuration provider is an object that have four parts: a name, a schema, static values (available independently from the request) and values depending on the request.
+In practice, a configuration provider is an object with five properties: a name, a schema, static values (available independently from the request), a function to resolve values depending on the request and a function to fetch values remotely.
 
 ```js
 const serviceConfigurationProvider = {
@@ -80,32 +80,32 @@ const name = "serviceProvider"
 
 ### Schema (key `schema`, optional)
 
-It represents the definition of the fields that will appear in the global configuration object if the configuration provider is registered. It can define things like field formats, default values or environment variables.
+It's a function returning an object representing the definition of the fields that will appear in the global configuration object if the configuration provider is registered. It can define things like field formats, default values or environment variables.
 
 The schema definition is based on [convict](https://github.com/mozilla/node-convict), a library developed by Mozilla to validate configurations. For a single field, the schema will have these keys:
 
 - `doc` (string): A description of the field and pointers to learn how to get its value if it requires a manual operation
 - `format` (string, array or function): The formatter used for this field's value. See [how validation works in convict](https://github.com/mozilla/node-convict#validation).
 - `default` (any): A default value. If you don't have a default value, you still have to set one by using the `null`. If there is no default value, it won't be considered as a field definition.
-- `env` (string, optional): The name of the environment variable that should be used as the value config. If none is given, the configuration won't be configurable by environment. Please keep in mind that environment variables should still match [Front-Commerce's naming convention](/docs/reference/environment-variables.html#Add-your-own-environment-variables).
+- `env` (string, optional): The name of the environment variable that should be used as the value. If none is given, the configuration won't be configurable by environment. Please keep in mind that environment variables should still match [Front-Commerce's naming convention](/docs/reference/environment-variables.html#Add-your-own-environment-variables).
 
-Thus, if we want to define a config named `serviceKey` available in `req.config.serviceKey` that would take its value from the environment variable `FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
+Thus, if we want to define a configuration named `serviceKey` available in `req.config.serviceKey` that would take its value from the environment variable `FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
 
 ```js
-const schema = {
+const schema = () => ({
   serviceKey: {
     doc: "The key to get access to our remote service",
     format: String,
     default: null,
     env: "FRONT_COMMERCE_SERVICE_KEY"
   }
-};
+});
 ```
 
 A configuration provider's schema is not limited to a single field though. You can set multiple configuration keys but also nest deeper objects. For instance, if we want to group a `key` and a `secret` into a single `service` key, we would write the following schema:
 
 ```js
-const schema = {
+const schema = () => ({
   service: {
     key: {
       doc: "The key to get access to our remote service",
@@ -120,7 +120,7 @@ const schema = {
       env: "FRONT_COMMERCE_SERVICE_SECRET"
     }
   }
-};
+});
 ```
 
 You could then access the values with `req.config.service.key` or `req.config.service.secret`.
@@ -145,7 +145,7 @@ const values = fetch("https://api.example.com/my-service-key")
 
 Please note that this promise is launched only once on server bootstrap. If the configuration changes over time on your API, the `req.config.service.key` value will still be the same.
 
-If it needs to change over time, please use `slowValuesOnEachRequest` instead.
+If it needs to change over time, please use `slowValuesOnEachRequest` or `fetchRemoteConfiguration` instead.
 
 ### Values depending on the request (key `slowValuesOnEachRequest`, optional)
 
@@ -236,6 +236,8 @@ export default {
   }
 };
 ```
+
+It is also common to register a configuration provider from [an express middleware](/docs/advanced/server/add-http-endpoint.html#Add-a-global-server-middleware) for cases where the corresponding configuration is used in several places in the application.
 
 ### Override an existing configuration
 
