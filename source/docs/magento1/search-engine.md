@@ -124,7 +124,7 @@ making the changes in your `.front-commerce.js` file similar to:
    serverModules: [
      { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
 +    {
-+      name: "Magento1Elasticsearch",
++      name: "Magento1Algolia",
 +      path: "datasource-algolia/server/modules/magento1-algolia",
 +    },
      { name: "Magento1", path: "server/modules/magento1" },
