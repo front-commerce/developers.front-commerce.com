@@ -111,7 +111,7 @@ index.
 First, you need to make sure the Algolia's search client is installed:
 
 ```
-npm i algoliasearch
+npm i algoliasearch@4.8
 ```
 
 On Front-Commerce side, you need to enable the Algolia datasource by
