@@ -156,7 +156,7 @@ a result, after changing a parameter in the backoffice, the new parameter will
 be taken into account after at most one minute by Front-Commerce.
 </blockquote>
 
-After restarting Front-Commerce, you should be able run a GraphQL query to
+After restarting Front-Commerce, you should be able to run a GraphQL query to
 search for products, for instance:
 
 ```graphql
@@ -174,7 +174,7 @@ query Search {
 }
 ```
 
-If you are using the default theme or the theme Chocolatine, the search bar
+If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
 
