@@ -49,8 +49,8 @@ Then, we need to tell Front-Commerce that this module exists in your [`.front-co
 module.exports = {
   name: "Front Commerce",
   url: "http://www.front-commerce.test",
--  modules: ["./src"],
-+  modules: ["./src", "./my-module"],
+- modules: ["./src"],
++ modules: ["./src", "./my-module"],
   serverModules: [
     // ...
   ]
@@ -81,9 +81,8 @@ You will thus need to update the fragment related to `ProductItem`.
 The original fragment file is collocated with the original component at: [`node_modules/front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql)
 
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
-2. add the field `description` to the fragment.
-
-```diff
+1. add the field `description` to the fragment.
+  ```diff
 // my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql
  fragment ProductItemFragment on Product {
    path
@@ -92,9 +91,8 @@ The original fragment file is collocated with the original component at: [`node_
    ...ProductPriceFragment
    imageUrl
    sku
-```
-
-3. restart the application
+  ```
+1. restart the application
 
 The data will now be fetched from GraphQL every time the `ProductItem` is used (product listings, upsells…) and will be available for you to render it as wanted.
 

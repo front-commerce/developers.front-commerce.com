@@ -70,9 +70,8 @@ module.exports = {
   modules: [],
   serverModules: [
     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
--    { name: "Magento2", path: "server/modules/magento2" }
-+    { name: "Magento2", path: "server/modules/magento2" },
-+    { name: "ClicksCounters", path: "./my-module/server/modules/clicks-counters" }
+    { name: "Magento2", path: "server/modules/magento2" },
++   { name: "ClicksCounters", path: "./my-module/server/modules/clicks-counters" }
   ]
 };
 ```
