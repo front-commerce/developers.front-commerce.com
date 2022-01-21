@@ -149,8 +149,3 @@ query Search {
 ```
 
 If you are using the default theme or the Chocolatine theme, the search bar should now be visible.
-
-
-<blockquote class="warning">
-⚠️ For now Front-Commerce Algolia implementation is only able to provide Product search. If you need to search through Categories or CMS pages, please [contact us](mailto:contact@front-commerce.com).
-</blockquote>
