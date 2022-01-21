@@ -21,7 +21,8 @@ composer update front-commerce/magento2-module
 
 These new features may be relevant for your existing application:
 
-- [Search for products with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
+- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
 
 
 ## `2.11.0` -> `2.12.0`

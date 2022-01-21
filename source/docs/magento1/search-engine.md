@@ -157,7 +157,7 @@ be taken into account after at most one minute by Front-Commerce.
 </blockquote>
 
 After restarting Front-Commerce, you should be able to run a GraphQL query to
-search for products, for instance:
+search for products, categories or pages, for instance:
 
 ```graphql
 query Search {
@@ -170,14 +170,19 @@ query Search {
         name
       }
     }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
   }
 }
 ```
 
+<blockquote class="info">
+Support for category or page search with Algolia has been added in Front-Commerce 2.13.
+</blockquote>
+
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
-
-
-<blockquote class="warning">
-⚠️ For now Front-Commerce Algolia implementation is only able to provide Product search. If you need to search through Categories or CMS pages, please [contact us](mailto:contact@front-commerce.com).
-</blockquote>
