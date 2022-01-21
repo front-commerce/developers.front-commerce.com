@@ -7,23 +7,6 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
-## `2.12.0` -> `2.13.0`
-
-### Upgrade the Magento2 module
-
-If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is now the minimum required version. To update it to the lastest version, from Magento2 root, you can run:
-
-```sh
-composer update front-commerce/magento2-module
-```
-
-### New features in `2.13.0`
-
-These new features may be relevant for your existing application:
-
-- [Search for products with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
-
-
 ## `2.11.0` -> `2.12.0`
 
 ### Upgrade the Magento2 module
