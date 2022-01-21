@@ -131,7 +131,7 @@ On the configured facets, only the attribute name is taken into account (_Facet 
 ⚠️ For performance reason, the configuration retrieved from Magento is cached. As a result, after changing a parameter in the backoffice, the new parameter will be taken into account after at most one minute by Front-Commerce.
 </blockquote>
 
-After restarting Front-Commerce, you should be able to run a GraphQL query to search for products, for instance:
+After restarting Front-Commerce, you should be able to run a GraphQL query to search for products, categories or pages, for instance:
 
 ```graphql
 query Search {
@@ -143,6 +143,12 @@ query Search {
         sku
         name
       }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
     }
   }
 }
