@@ -111,7 +111,7 @@ index.
 First, you need to make sure the Algolia's search client is installed:
 
 ```
-npm i algoliasearch
+npm i algoliasearch@4.8
 ```
 
 On Front-Commerce side, you need to enable the Algolia datasource by
@@ -124,7 +124,7 @@ making the changes in your `.front-commerce.js` file similar to:
    serverModules: [
      { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
 +    {
-+      name: "Magento1Elasticsearch",
++      name: "Magento1Algolia",
 +      path: "datasource-algolia/server/modules/magento1-algolia",
 +    },
      { name: "Magento1", path: "server/modules/magento1" },
@@ -156,7 +156,7 @@ a result, after changing a parameter in the backoffice, the new parameter will
 be taken into account after at most one minute by Front-Commerce.
 </blockquote>
 
-After restarting Front-Commerce, you should be able run a GraphQL query to
+After restarting Front-Commerce, you should be able to run a GraphQL query to
 search for products, for instance:
 
 ```graphql
@@ -174,7 +174,7 @@ query Search {
 }
 ```
 
-If you are using the default theme or the theme Chocolatine, the search bar
+If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
 
