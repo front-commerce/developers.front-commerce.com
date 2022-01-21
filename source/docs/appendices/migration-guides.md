@@ -17,12 +17,35 @@ If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is 
 composer update front-commerce/magento2-module
 ```
 
+### New hook for additional login actions
+
+A new `AdditionalLoginFormActions` component has been added to the `LoginForm` to allow some modules to add login actions.
+This change will be needed for the [Social login](/docs/advanced/features/social-login.html) feature.
+
+If you overrode the `LoginForm` add the following lines :
+```diff
++ import AdditionalLoginFormActions from "theme/modules/User/LoginForm/AdditionalLoginFormActions";
+
+...
+
+<FormActions appearance="full">
+  <SubmitButton
+    state={props.commandPending ? "pending" : undefined}
+    appearance="primary"
+  >
+    {formatMessage(messages.submit)}
+  </SubmitButton>
++ <AdditionalLoginFormActions />
+</FormActions>
+```
+
 ### New features in `2.13.0`
 
 These new features may be relevant for your existing application:
 
 - [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
+- [Social login](/docs/advanced/features/social-login.html)
 
 
 ## `2.11.0` -> `2.12.0`
