@@ -10,5 +10,6 @@ The Front-Commerce Prismic module brings support for the headless CMS [Prismic](
 - [Content Slices](/docs/prismic/content-slices.html)
 - [Prismic Routable Types](/docs/prismic/routable-types.html)
 - [Integration Fields](/docs/prismic/integration-fields.html)
+- [Prismic Preview](/docs/prismic/preview.html)
 
 If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
