@@ -17,13 +17,66 @@ If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is 
 composer update front-commerce/magento2-module
 ```
 
+### Prismic client migrated to v6
+
+The `front-commerce-prismic` module is now using the latest version of prismic.
+
+> You can refer to the `front-commerce-prismic` module [changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md) for more details.
+#### `FRONT_COMMERCE_PRISMIC_URL` has been removed
+
+The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please use `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` instead.
+
+```diff
+# .env
+- FRONT_COMMERCE_PRISMIC_URL=https://my-repo.prismic.io
++ FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME=my-repo
+```
+
+#### `@prismicio/client` has been updated to v6
+
+See https://prismic.io/docs/technologies/prismic-client-v6-migration-guide for the complete migration guide
+
+The new predicate object contains the same predicate functions as Predicates with new names to better match the API's predicate names.
+
+```diff
+- import { Predicates } from "@prismicio/client";
++ import * as prismic from "@prismicio/client";
+const query = new ListQuery(10)
+- query.addPredicate(prismic.Predicates.gt('my.movie.rating', 3))
++ query.addPredicate(prismic.predicate.numberGreaterThan('my.movie.rating', 3))
+```
+
+The following `predicates` have been renamed:
+
+- `dayOfMonth` → `dateDayOfMonth`
+- `dayOfMonthAfter` → `dateDayOfMonthAfter`
+- `dayOfMonthBefore` → `dateDayOfMonthBefore`
+- `dayOfWeek` → `dateDayOfWeek`
+- `dayOfWeekAfter` → `dateDayOfWeekAfter`
+- `dayOfWeekBefore` → `dateDayOfWeekBefore`
+- `month` → `dateMonth`
+- `monthBefore` → `dateMonthBefore`
+- `monthAfter` → `dateMonthAfter`
+- `year` → `dateYear`
+- `hour` → `dateHour`
+- `hourBefore` → `dateHourBefore`
+- `hourAfter` → `dateHourAfter`
+- `gt` → `numberGreaterThan`
+- `lt` → `numberLessThan`
+- `inRange` → `numberInRange`
+- `near` → `geopointNear`
+
+#### `prismic-dom` replaced with `@prismicio/helpers`
+
+See https://prismic.io/docs/technologies/prismic-helpers-v2-migration-guide for the complete migration guide
+
 ### New features in `2.13.0`
 
 These new features may be relevant for your existing application:
 
 - [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
-
+- [Prismic Preview](/docs/prismic/preview.html)
 
 ## `2.11.0` -> `2.12.0`
 
@@ -747,7 +800,6 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 In this release, we've reworked the internals of SmartForm fields to better support browser autocomplete.
 
 The public API remains unchanged but if you've overriden internal components, please check your overrides against their original. See these Merge Requests: [#641](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/641) and [#645](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/645)
-
 
 ### New features in `2.10.0`
 

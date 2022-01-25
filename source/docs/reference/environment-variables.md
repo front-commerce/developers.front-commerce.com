@@ -174,6 +174,15 @@ See [our related documentation](/docs/advanced/features/smart-forms.html#Capency
 - `FRONT_COMMERCE_CAPENCY_URL_CAP_ADDRESS`
 - `FRONT_COMMERCE_CAPENCY_URL_CAP_PHONE`
 
+### Prismic
+
+See [our related documentation](/docs/prismic) for details.
+
+- `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME`
+- `FRONT_COMMERCE_PRISMIC_ACCESS_TOKEN`
+- `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET`
+- `#FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS`
+
 ## Build related variables
 
 - `NODE_ENV`: `"development"` or `"production"` a variable heavily used in the javascript ecosystem to let you add checks only on the development environment (warnings, guards, etc.)
