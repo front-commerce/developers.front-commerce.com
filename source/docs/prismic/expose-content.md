@@ -16,6 +16,7 @@ To benefit from this API, you first need to [install the Prismic module](/docs/p
 The Prismic loader has the following API to request Content from Prismic:
 
 * `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+* `loadByID(id[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
 * `loadByUID(typeIdentifier, uid[, options])` returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
 * `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
 
@@ -31,7 +32,7 @@ const homepage = await loaders.Prismic.loadSingle("homepage");
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
 
-For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. Instances of the transformers can be passed to `loadSingle`, `loadByUID` and `loadList` to transform the loaded Prismic Content. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
+For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. Instances of the transformers can be passed to `loadSingle`, `loadByID`, `loadByUID` and `loadList` to transform the loaded Prismic Content. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
 
 ```js
 const { DateTransformer } = loaders.Prismic.transformers;
