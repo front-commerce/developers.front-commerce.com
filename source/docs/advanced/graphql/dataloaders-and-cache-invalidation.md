@@ -79,6 +79,10 @@ The second one is more specific to GraphQL. To understand its gain, we should co
 
 If the product `PANT-01` was an upsell of all other products in the `pants` category, the inventory API would be requested again when resolving the `upsells.qty` field. Query-level caching prevents those extra-calls, by reusing the response from `products.qty` that has already been fetched previously to resolve data.
 
+### Clearing the cache
+
+Clearing the cache depends on which magento is used. For Magento1 please refer to [Magento 1 advanced section](/docs/magento1/advanced.html#Clearing-Front-Commerce-cache), and for Magento2 please refer to [Magento 2 advanced section](/docs/magento2/advanced.html#Clearing-Front-Commerce-cache)
+
 ## What are DataLoaders?
 
 DataLoader is a pattern promoted by Facebook, from their internal implementations, to solve problems with data fetching. We use this name because it is the name of the reference implementation in Javascript: [graphql/dataloader](https://github.com/graphql/dataloader).
