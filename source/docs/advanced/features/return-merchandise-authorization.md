@@ -13,7 +13,7 @@ Return Merchandise Authorization (RMA) provides a customer with the means to req
 
 ## Front Commerce base RMA module
 
-The base RMA module is located at `src/server/modules/front-commerce/rma` it contains the basic GraphQL schema and empty resolver implementation. This module is all you need to know what is required to do to implement an RMA module that supports your platform.
+The base RMA module is located at `src/server/modules/front-commerce/rma` it contains the basic GraphQL schema and empty resolver implementation. This module is all you need to know what is required to implement an RMA module that supports your platform.
 
 ## The frontend implementation
 
