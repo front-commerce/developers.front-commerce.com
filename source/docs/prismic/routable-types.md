@@ -69,7 +69,9 @@ Now you need to add your type to the GraphQL dispatcher query. For more info on 
 
 ## Register the Prismic custom type as a routable type
 
-To make a custom Prismic type routable it must be registered with the Prismic module. First ensure that the `Prismic/Core` is added as a module's dependency then use `loaders.Prismic.registerRoutableType` to add the custom type as a routable type:
+To make a custom Prismic type routable it must be registered with the Prismic module. First ensure that the `Prismic/Core` is added as a module's dependency then;
+- use `loaders.Prismic.registerRoutableType` to add the custom type as a routable type
+- use `loaders.Prismic.registerPrismicRoute` to add allow the custom type to be handled by Prismic, see [Route Resolver](https://prismic.io/docs/core-concepts/link-resolver-route-resolver#route-resolver) for more information
 
 ```diff
 import typeDefs from "./schema.gql";
@@ -95,6 +97,7 @@ export default {
 +      typeIdentifier: "album", // <-- Prismic custom type
 +      urlFieldName: "url",     // <-- Prismic API ID mentioned above
 +      graphQLType: "Album",    // <-- GraphQL type created above
++      prefixPath: "/albums",   // <-- Prefix path for the routable type
 +      contentTransformOptions,
 +      isSitemapable: false,
 +      postTransformer: (url, document) => { // optional function postTransformer
@@ -104,12 +107,19 @@ export default {
 +      }
 +    });
 
++    loaders.Prismic.registerPrismicRoute({
++      type: "album",           // <-- Prismic custom type
++      path: "/albums/:uid",    // <-- The path of the routable type with the field name
++    });
+
     return {};
   },
 };
 ```
 
+
 Note the `postTransformer` above is optional. It is a function that will be called after [the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content.html#Field-Transformers). It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
+
 
 ## Map GraphQL type to a component
 
