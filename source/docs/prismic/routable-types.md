@@ -95,8 +95,10 @@ export default {
 +      typeIdentifier: "album", // <-- Prismic custom type
 +      urlFieldName: "url",     // <-- Prismic API ID mentioned above
 +      graphQLType: "Album",    // <-- GraphQL type created above
++      path: "/albums/:url",    // <-- The dynamic route. Examples: '/:uid', '/:lang/:uid', '/:section/:category?/:uid'.
 +      contentTransformOptions,
 +      isSitemapable: false,
++      withPrismicRoutes:false,
 +      postTransformer: (url, document) => { // optional function postTransformer
 +        if(document.isPublished) {  // possible usecase
 +          return document;
@@ -109,8 +111,21 @@ export default {
 };
 ```
 
-Note the `postTransformer` above is optional. It is a function that will be called after [the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content.html#Field-Transformers). It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
+**Note:** the `postTransformer` above is optional. It is a function that will be called after [the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content.html#Field-Transformers). It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
 
+**Note:**
+If you have a nested route e.g. `/albums/:category/:uid` then you need add an object that lists the API IDs of the Content Relationships in the route, in this case `category`. You can do this by passing the resolvers in the `withPrismicRoutes` option.
+
+  ```diff
+-    withPrismicRoutes:false,
++    withPrismicRoutes: {
++        resolvers: {
++            category: "album.category"
++        }
++    }
+  ```
+see the [Prismic Route Resolver](https://prismic.io/docs/core-concepts/link-resolver-route-resolver#route-resolver) documentation for more information.
+      
 ## Map GraphQL type to a component
 
 To map a GraphQL type to React component, create a file called `moduleRoutes.js` at the root of the `web` directory and add the following to it:
