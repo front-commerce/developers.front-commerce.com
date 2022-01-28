@@ -81,7 +81,9 @@ If the product `PANT-01` was an upsell of all other products in the `pants` cate
 
 ### Clearing the cache
 
-Clearing the cache depends on which magento is used. For Magento1 please refer to [Magento 1 advanced section](/docs/magento1/advanced.html#Clearing-Front-Commerce-cache), and for Magento2 please refer to [Magento 2 advanced section](/docs/magento2/advanced.html#Clearing-Front-Commerce-cache)
+Clearing the cache manually is possible on some of the supported platforms. Read dedicated pages for details:
+- [Magento 1](/docs/magento1/advanced.html#Clearing-Front-Commerce-cache)
+- [Magento 2](/docs/magento2/advanced.html#Clearing-Front-Commerce-cache)
 
 ## What are DataLoaders?
 
