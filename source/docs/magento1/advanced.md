@@ -21,5 +21,5 @@ To clear the front commerce cache, it suffices to flush cache storage from the a
 
 <details>
   <summary>Click to reveal screenshot</summary>
-  <p>![Clear front commerce cache](./clear-fc-cache.jpg)</p>
+  <p><img src="./clear-fc-cache.jpg" alt="Clear front commerce cache" /></p>
 </details>
