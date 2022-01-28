@@ -79,7 +79,7 @@ The second one is more specific to GraphQL. To understand its gain, we should co
 
 If the product `PANT-01` was an upsell of all other products in the `pants` category, the inventory API would be requested again when resolving the `upsells.qty` field. Query-level caching prevents those extra-calls, by reusing the response from `products.qty` that has already been fetched previously to resolve data.
 
-### Clearing the cache
+### Manually clearing the cache
 
 Clearing the cache manually is possible on some of the supported platforms. Read dedicated pages for details:
 - [Magento 1](/docs/magento1/advanced.html#Clearing-Front-Commerce-cache)
