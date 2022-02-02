@@ -21,11 +21,11 @@ The frontend implementation of the RMA is shipped with the Front Commerce themes
 
 ## Implementing an RMA that suits you
 
-To implement a RMA for a new platfom, you have to provide the server implementation of the Graph. Having a look at Front-Commerce's implementation for Magento1 Enterprise RMA (`src/server/modules/magento1ee/rma`) should help give you some guidance. Here is a short summary of what is needed:
+To implement an RMA for a new platfom, you have to provide the server implementation of the Graph. Having a look at Front-Commerce's implementation for Magento1 Enterprise RMA (`src/server/modules/magento1ee/rma`) should help give you some guidance. Here is a short summary of what is needed:
 
 ### Extending necessary GraphQL enums
 
-1. Extend the `ReturnMerchandiseAuthorizationStatus` enum with all the possible statuses that a RMA could have.
+1. Extend the `ReturnMerchandiseAuthorizationStatus` enum with all the possible statuses that an RMA could have.
 2. Extend the `ReturnedItemStatus` enum with all the possible statuses a returned item can have.
 
 ### Providing necessary resolver functions
@@ -39,4 +39,4 @@ To implement a RMA for a new platfom, you have to provide the server implementat
 
 ## The create RMA page
 
-We ship a page that is used to create a RMA. The link to this page will show up in the order details page after you have implemented resolvers related to RMA.
+We ship a page that is used to create an RMA. The link to this page will show up in the order details page after you have implemented resolvers related to RMA.
