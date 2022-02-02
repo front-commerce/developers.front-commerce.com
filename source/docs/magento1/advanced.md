@@ -17,6 +17,5 @@ These additional headers could be useful if you want to add additional context t
 
 ## Clearing Front-Commerce cache
 
-To clear the front commerce cache, it suffices to flush cache storage from the admin interface. To do this go to System > Cache Management then click on Flush Cache Storage button on the top right corner. (see below screenshot for more details).
-
-<img src="./clear-fc-cache.jpg" alt="Clear front commerce cache" />
+To clear the Front-Commerce cache, you can flush cache storage from the admin interface. To do this go to System > Cache Management then click on Flush Cache Storage button on the top right corner. (see below screenshot for more details).
+<img src="./clear-fc-cache.jpg" alt="Clear Front-Commerce cache" />
