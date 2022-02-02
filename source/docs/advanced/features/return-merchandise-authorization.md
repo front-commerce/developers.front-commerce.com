@@ -25,7 +25,7 @@ To implement a RMA for a new platfom, you have to provide the server implementat
 
 ### Extending necessary GraphQL enums
 
-1. Extend the `ReturnMerchandiseAuthorizationStatus` enum with all the possible statuses that an RMA could have.
+1. Extend the `ReturnMerchandiseAuthorizationStatus` enum with all the possible statuses that a RMA could have.
 2. Extend the `ReturnedItemStatus` enum with all the possible statuses an returned item can have.
 
 ### Providing necessary resolver functions
