@@ -21,7 +21,7 @@ The frontend implementation of the RMA is shipped with the Front Commerce themes
 
 ## Implementing an RMA that suits you
 
-All you need to do to implement an RMA that suits you is provide the server implementation needed for your specific platform/case. Having a look at Front Commerce's implementation of the Magento1 Enterprise RMA (`src/server/modules/magento1ee/rma`) should help give you some guidance. Here is a short summary of what is needed:
+To implement a RMA for a new platfom, you have to provide the server implementation of the Graph. Having a look at Front-Commerce's implementation for Magento1 Enterprise RMA (`src/server/modules/magento1ee/rma`) should help give you some guidance. Here is a short summary of what is needed:
 
 ### Extending necessary GraphQL enums
 
