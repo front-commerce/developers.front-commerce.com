@@ -24,4 +24,5 @@ There are two ways to clear the magento cache:
 bin/magento cache:clean -- front-commerce
 ```
 2. From the admin interface go to System > Cache Management then select Front-Commerce, make sure that refresh is selected and then click the Submit button. (see below screenshot for more details).
+
 <img src="./clear-fc-cache.jpg" alt="Clear front commerce cache" />
