@@ -39,4 +39,4 @@ To implement a RMA for a new platfom, you have to provide the server implementat
 
 ## The create RMA page
 
-We ship a page that is used to create a RMA. This page is located on `/user/orders/{orderId}/returns/create` you can link to this page to make the user create an RMA for a specific order. This page its used by default by the order details page provided by Front Commerce themes. This means out of the box -after you have implemented the necessary requirements for an RMA- you should have a return action on orders that supports it.
+We ship a page that is used to create a RMA. The link to this page will show up in the order details page after you have implemented resolvers related to RMA.
