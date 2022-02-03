@@ -13,10 +13,10 @@ In your repository, go to Settings > Previews > Manage your Previews and select 
 
 - **Site Name:** The display name to identify the website in the preview.
 - **Domain for Your Application:** The URL of your site, such as https://example.com/ or http://localhost:3000/
-- **Link Resolver:** A route in your app that provides a Link Resolver. Some of Prismic's app development kits create this route for you at /preview.
+- **Link Resolver:** The route where prismic resolves the preview url. In Front-Commerce we handle this route at `/prismic/previews`.
 
 <div style="text-align:center;">
-![Screenshot of a repository's preview configuration](./assets/previews/create-new-preview.jpg)
+  <img src="./assets/previews/create-new-preview.jpg" alt="Screenshot of a repository's preview configuration" style="border-radius:5px;">
 </div>
 
 ## Configure previews in your app
