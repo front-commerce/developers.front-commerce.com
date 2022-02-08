@@ -23,25 +23,27 @@ import React from "react";
 import WysiwygV2 from "theme/modules/WysiwygV2";
 
 export default props => (
-  <WysiwygV2 content={props.contentWysiwyg} />
+  <WysiwygV2 content={props.cms.contentWysiwyg} />
 );
 ```
 
-The `contentWysiwyg` property must come from a GraphQL field of type `Wysiwyg`. This means that if you had the following GraphQL query, you should add the `WysiwygFragment` available at `theme/modules/WysiwygV2/WysiwygFragment.gql`.
+The `contentWysiwyg` property must come from a GraphQL field of type `Wysiwyg`, you should add the `WysiwygFragment` available at [`theme/modules/WysiwygV2/WysiwygFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/modules/WysiwygV2/WysiwygFragment.gql), to the `CmsPageFragment` available at [`theme/pages/CmsPage/CmsPageFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/pages/CmsPage/CmsPageFragment.gql).
 
 ```diff
+#import "theme/modules/CmsPage/CmsPageSeo/CmsPageSeoFragment.gql"
 +#import "theme/modules/WysiwygV2/WysiwygFragment.gql"
 
-query CmsPageQuery(identifiers: [String]!) {
-    cmsPageList(identifiers: $identifiers) {
-    identifier
-    title
--    content
-+    contentWysiwyg {
-+      ...WysiwygFragment
-+    }
-  }
+fragment CmsPageFragment on CmsPage {
+  identifier
+  title
+- content
++ contentWysiwyg {
++   ...WysiwygFragment
++ }
+  content_heading
+  ...CmsPageSeoFragment
 }
+
 ```
 
 ### What if the `Wysiwyg` field does not exist in your schema?
