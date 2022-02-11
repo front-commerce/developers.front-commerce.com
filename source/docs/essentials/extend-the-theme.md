@@ -84,13 +84,12 @@ The original fragment file is collocated with the original component at: [`node_
 1. add the field `description` to the fragment.
   ```diff
 // my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql
- fragment ProductItemFragment on Product {
-   path
-   name
-+  description
-   ...ProductPriceFragment
-   imageUrl
-   sku
+  fragment ProductItemFragment on Product {
+    imageUrl
++ description
+    ...ProductOverviewFragment
+    ...ProductItemActionsFragment
+  }
   ```
 1. restart the application
 
