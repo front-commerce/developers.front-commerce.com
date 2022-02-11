@@ -12,6 +12,7 @@ In this section, you will learn how payments can be added to an application. It 
 - [Adyen](/docs/advanced/payments/adyen.html)
 - [Affirm](/docs/advanced/payments/affirm.html)
 - [BuyBox](/docs/advanced/payments/buybox.html)
+- [HiPay](/docs/advanced/payments/hipay.html)
 - [Ingenico](/docs/advanced/payments/ingenico.html)
 - [Monext Online (Payline)](/docs/advanced/payments/payline.html)
 - [Paypal](/docs/advanced/payments/paypal.html)

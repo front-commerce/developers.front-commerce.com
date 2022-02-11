@@ -70,6 +70,25 @@ The following `predicates` have been renamed:
 
 See https://prismic.io/docs/technologies/prismic-helpers-v2-migration-guide for the complete migration guide
 
+### Added FlashMessages to the Order Details
+
+For the HiPay payment method, FlashMessages may be shown at the order detail level for errors.
+
+If you overrode `<OrderDetailsLayout>` add the following lines to it
+
+```diff
++ import FlashMessages from "theme/modules/FlashMessages";
+...
+  return (
+    <div
+      className={classNames("order-details-layout", {
+        "account-orders-details--no-actions": !showOrderActions,
+      })}
+    >
++  <FlashMessages />
+...
+```
+
 ### New features in `2.13.0`
 
 These new features may be relevant for your existing application:
@@ -77,6 +96,7 @@ These new features may be relevant for your existing application:
 - [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
 - [Prismic Preview](/docs/prismic/preview.html)
+- [HiPay payment method](/docs/advanced/payments/hipay)
 
 ## `2.11.0` -> `2.12.0`
 
