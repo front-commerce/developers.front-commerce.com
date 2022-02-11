@@ -58,7 +58,7 @@ query Search {
         name
       }
     }
-    category {
+    categories {
       name
     }
     pages {
