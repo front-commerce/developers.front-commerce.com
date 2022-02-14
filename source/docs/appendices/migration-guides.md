@@ -17,11 +17,16 @@ If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is 
 composer update front-commerce/magento2-module
 ```
 
-### Prismic client migrated to v6
+### Upgrade the Prismic module
 
 The `front-commerce-prismic` module is now using the latest version of prismic.
 
-> You can refer to the `front-commerce-prismic` module [changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md) for more details.
+The most notable breaking changes is the removal of the `FRONT_COMMERCE_PRISMIC_URL` and the inclusion of the `path` option in the `registerRoutableType` method.
+
+<blockquote class="info">
+You can refer to the `front-commerce-prismic` module [changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md) for the full details.
+</blockquote>
+
 #### `FRONT_COMMERCE_PRISMIC_URL` has been removed
 
 The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please use `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` instead.
@@ -31,6 +36,35 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 - FRONT_COMMERCE_PRISMIC_URL=https://my-repo.prismic.io
 + FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME=my-repo
 ```
+
+#### Improved the `registerRoutableType` method
+- A new required property has been added for dynamic routes: `path` <br /> Examples: `/:uid`, `/:lang/:uid`, `/:category*/:uid`, `/:section/:category?/:uid`.
+<blockquote class="info">
+**ProTip :** You can use the online [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester) to test your paths.
+</blockquote>
+- The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow prismic to redirect previews for document types to the correct path, and it will also allow the url property to be resolved in the documents.
+```js
+  // Skip prismic route registration
+  PrismicLoader.registerRoutableType({
+    ...
+    path: "/my-route/:uid",
+    withPrismicRoutes: false // defaults to true
+  })
+
+  // Register a prismic route with resolvers
+  PrismicLoader.registerRoutableType({
+    ...
+    path: "/:category/:uid",
+    withPrismicRoutes: {
+      resolvers:{
+        category: "category" // The field name for the content relationship in your Prismic Document
+      }
+    }
+  })
+```
+<blockquote class="warning">
+Prismic only supports a depth of 3 levels for the content relationship on route resolvers, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information. This issue is also being [tracked](https://community.prismic.io/t/linkresolver-and-nested-paths/96/2) for better support.
+</blockquote>
 
 #### `@prismicio/client` has been updated to v6
 
