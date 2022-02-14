@@ -250,19 +250,20 @@ import { storiesOf } from "@storybook/react";
 import Icon from "theme/components/atoms/Icon";
 import { H3 } from "theme/components/atoms/Typography/Heading";
 import { BodyParagraph } from "theme/components/atoms/Typography/Body";
+import Image from "theme/components/atoms/Image";
 
 
 storiesOf("molecules.IllustratedContent", module)
   .add("default", () => {
     return (
-      <IllustratedContent media={<Icon icon="truck" />}>
+      <IllustratedContent media={<Icon icon="calendar-full" />}>
         <H3>Shipping within 48h</H3>
       </IllustratedContent>
     );
   })
   .add("with a lot of content", () => {
     return (
-      <IllustratedContent media={<Icon icon="truck" />}>
+      <IllustratedContent media={<Icon icon="calendar-full" />}>
         <H3>Shipping within 48h</H3>
         <BodyParagraph>
           We are using many delivery services to let you choose what is best for
@@ -311,7 +312,7 @@ import { H3 } from "theme/components/atoms/Typography/Heading";
 
 const ReinsuranceBanner = () => (
   <InlineCards>
-    <IllustratedContent media={<Icon icon="truck" />}>
+    <IllustratedContent media={<Icon icon="calendar-full" />}>
       <H3>Shipping within 48h</H3>
     </IllustratedContent>
     <IllustratedContent media={<Icon icon="thumbsup" />}>
