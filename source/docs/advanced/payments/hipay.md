@@ -76,11 +76,14 @@ Note that you must register your backend application (Magento1, Magento2, etc) b
 </blockquote>
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register HiPay
+
 ```diff
 +import HiPayCheckout from "theme/hipay/HiPayCheckout";
 
@@ -93,12 +96,16 @@ const getAdditionalDataComponent = (method) => {
   return ComponentMap[method.code];
 };
 ```
+
 3. Override the file that lets you register additional payments actions in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
 ```
+
 4. Register the Hipay action
+
 ```diff
 import None from "./AdditionalAction/None";
 +import HiPayActions from "theme/modules/Checkout/PlaceOrder/AdditionalAction/HiPay/HiPayActions";
@@ -112,12 +119,16 @@ const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
   return ComponentMap?.[paymentCode] ?? None;
 };
 ```
+
 5. register [custom Flash message components](/docs/advanced/features/flash-messages.html#Create-custom-flash-message-components) to display payment messages in an optimized way (**recommended**)
+
 ```
 mkdir -p my-module/web/theme/modules/FlashMessages
 cp -u node_modules/front-commerce/src/web/theme/modules/FlashMessages/getFlashMessageComponent.js my-module/web/theme/modules/FlashMessages/getFlashMessageComponent.js
 ```
-  and
+
+and
+
 ```diff
 import React from "react";
 import {
@@ -141,7 +152,9 @@ const ComponentMap = {
 +  hipayError: HiPayPaymentError,
 };
 ```
+
 6. register the HiPay payment methods labels
+
 ```
 mkdir -p my-module/web/theme/modules/User/Order/OrderMethod/
 cp -u node_modules/front-commerce/src/web/theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js my-module/web/theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js
@@ -183,4 +196,30 @@ To allow loading HiPay related remote resources:
 
 <blockquote class="note">
 Please keep in mind that HiPay payment methods depends on the Customer country and the Store currency. Different contexts could display different payment methods in the checkout.
+</blockquote>
+
+### Advanced: customize data sent to HiPay
+
+The HiPay payment module is extensible. It leverages Front-Commerce's "data transform" pattern to allow developers to customize payment data sent to HiPay.
+
+You need to create a backend loader to register the transformation.
+
+```
+export default {
+  namespace: "HiPay/Custom",
+  dependencies: ["HiPay/Core"],
+  contextEnhancer: ({ loaders }) => {
+    this.loaders.HiPay.registerPaymentDataTransform((customer, order) => ({
+      custom_data: JSON.stringify({
+        <xxx>: customer.<xxx>
+      })
+    }))
+  },
+};
+```
+
+<blockquote class="warning">
+
+**Warning:** root attributes like `custom_data` indicated here are directly added to the HiPay `/order` form-data ([see the webservice documentation](https://developer.hipay.com/api-explorer/api-online-payments#/payments/requestNewOrder)). Add other attributes cautiously.
+
 </blockquote>
