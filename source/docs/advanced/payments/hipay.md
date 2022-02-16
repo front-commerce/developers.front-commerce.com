@@ -209,7 +209,7 @@ export default {
   namespace: "HiPay/Custom",
   dependencies: ["HiPay/Core"],
   contextEnhancer: ({ loaders }) => {
-    this.loaders.HiPay.registerPaymentDataTransform((customer, order) => ({
+    loaders.HiPay.registerPaymentDataTransform((customer, order) => ({
       custom_data: JSON.stringify({
         <xxx>: customer.<xxx>
       })
