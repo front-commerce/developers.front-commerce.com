@@ -137,6 +137,46 @@ If you overrode `<OrderDetailsLayout>` add the following lines to it
 ...
 ```
 
+### Login Form Update
+
+For the external logins feature `<AdditionalLoginFormActions>` and `<FlashMessages>` have been added to the `<LoginForm>`.
+
+If you overrode `<LoginForm>` please add the following lines to it
+
+```diff
+...
++import AdditionalLoginFormActions from "theme/modules/User/LoginForm/AdditionalLoginFormActions";
++import FlashMessages from "theme/modules/FlashMessages";
+...
+          {props.errorMessage && <ErrorAlert>{props.errorMessage}</ErrorAlert>}
++          <FlashMessages />
+...
+            </SubmitButton>
++            <AdditionalLoginFormActions />
+          </FormActions>
+...
+```
+
+### New icons required
+
+In this release, these new icons were added `google`, `facebook` to the `<Icon>` component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+
+-import { FaUserCircle } from "react-icons/fa";
++import { FaUserCircle, FaFacebook, FaGoogle } from "react-icons/fa";
+
+const keyToComponent = {
+  ...
+  organigram: GiOrganigram,
+  gripper: VscGripper,
++  facebook: FaFacebook,
++  google: FaGoogle,
+};
+```
+
 ### New features in `2.13.0`
 
 These new features may be relevant for your existing application:
@@ -145,6 +185,7 @@ These new features may be relevant for your existing application:
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
 - [Prismic Preview](/docs/prismic/preview.html)
 - [HiPay payment method](/docs/advanced/payments/hipay)
+- [Facebook and Google external logins](/docs/advanced/features/external-logins)
 
 ## `2.11.0` -> `2.12.0`
 
