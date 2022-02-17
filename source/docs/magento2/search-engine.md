@@ -70,3 +70,87 @@ query Search {
 ```
 
 If you are using the default theme or the theme Chocolatine, the search bar should now be visible.
+
+## Algolia
+
+<blockquote class="feature--new">
+  _This feature has been added in Front-Commerce `2.13.0`_
+</blockquote>
+
+### Requirements
+
+On Magento's side, you need to [install and configure the Algolia module for Magento2](https://www.algolia.com/doc/integration/magento-2/getting-started/quick-start/?client=php#installation).
+
+In addition, the attribute `category_ids` must be configured as both an indexed attribute and as a facet:
+
+1. under _Stores > Configuration > Algolia Search > Products_, add `category_ids` as _Searchable_ in the _Attributes_ parameter
+1. under _Stores > Configuration > Algolia Search > Instant Search Result Page_, add `category_ids` in the _Facets_ parameter
+
+You can then run the indexer so that the products are indexed in Algolia's index.
+
+### Front-Commerce configuration
+
+First, you need to make sure the Algolia's search client is installed:
+
+```
+npm i algoliasearch@4.8
+```
+
+On Front-Commerce side, you need to enable the Algolia datasource by making the changes in your `.front-commerce.js` file similar to:
+
+```diff
+// .front-commerce.js
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/datasource-algolia"],
+   serverModules: [
+     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
++    {
++      name: "Magento2Algolia",
++      path: "datasource-algolia/server/modules/magento2-algolia",
++    },
+     { name: "Magento2", path: "server/modules/magento2" },
+   ]
+```
+
+<blockquote class="warning">
+⚠️ Known issue: the Algolia server module needs to be enabled **before** the Magento's module.
+</blockquote>
+
+Front-Commerce retrieves the following parameters from Magento:
+
+* [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+* [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+* the index name prefix
+* the number of values per facet
+* the configured facet attributes
+
+On the configured facets, only the attribute name is taken into account (_Facet type_, _Label_, _Searchable_ and _Create Query rule_ are ignored for now).
+
+<blockquote class="warning">
+⚠️ For performance reason, the configuration retrieved from Magento is cached. As a result, after changing a parameter in the backoffice, the new parameter will be taken into account after at most one minute by Front-Commerce.
+</blockquote>
+
+After restarting Front-Commerce, you should be able to run a GraphQL query to search for products, categories or pages, for instance:
+
+```graphql
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
+
+If you are using the default theme or the Chocolatine theme, the search bar should now be visible.

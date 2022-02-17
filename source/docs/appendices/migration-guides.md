@@ -7,6 +7,186 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.12.0` -> `2.13.0`
+
+### Upgrade the Magento2 module
+
+If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is now the minimum required version. To update it to the latest version, from Magento2 root, you can run:
+
+```sh
+composer update front-commerce/magento2-module
+```
+
+<blockquote class="info">
+You can refer to the `Magento2` module [changelog](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/CHANGELOG.md) for the full details.
+</blockquote>
+
+### Upgrade the Prismic module
+
+The `front-commerce-prismic` module is now using the latest version of prismic.
+
+```sh
+npm install git+ssh://git@gitlab.com/front-commerce/front-commerce-prismic.git#1.0.0
+```
+
+The most notable breaking changes is the removal of the `FRONT_COMMERCE_PRISMIC_URL` and the inclusion of the `path` option for the `registerRoutableType` method.
+
+<blockquote class="info">
+You can refer to the `front-commerce-prismic` module [changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md) for the full details.
+</blockquote>
+
+#### `FRONT_COMMERCE_PRISMIC_URL` has been removed
+
+The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please use `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` instead.
+
+```diff
+# .env
+- FRONT_COMMERCE_PRISMIC_URL=https://my-repo.prismic.io
++ FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME=my-repo
+```
+
+#### Improved the `registerRoutableType` method
+- A new required property has been added for dynamic routes: `path` <br /> Examples: `/:uid`, `/:lang/:uid`, `/:category*/:uid`, `/:section/:category?/:uid`.
+
+<blockquote class="info">
+**ProTip :** You can use the online [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester) to test your paths.
+</blockquote>
+
+- The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow the Prismic client to resolve the url property for defined documents, and it enables redirection for prismic previews.
+```js
+  // Skip prismic route registration
+  PrismicLoader.registerRoutableType({
+    ...
+    typeIdentifier: "album", // document type `album` will resolve to path `/albums/:uid`
+    path: "/album/:uid",     // e.g. `/album/queen`
+    withPrismicRoutes: false // defaults to true
+  })
+
+  // Register a prismic route with resolvers
+  PrismicLoader.registerRoutableType({
+    ...
+    typeIdentifier: "album", // document type `album` will resolve to path `/:category/:uid`
+    path: "/:category/:uid", // e.g. `/rock-and-roll/queen`
+    withPrismicRoutes: {
+      resolvers:{
+        category: "category" // The field name for the content relationship in your Prismic Document
+      }
+    }
+  })
+```
+<blockquote class="warning">
+Prismic only supports a depth of 3 levels for the content relationship on route resolvers, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information. This issue is also being [tracked](https://community.prismic.io/t/linkresolver-and-nested-paths/96/2) for better support.
+</blockquote>
+
+#### `@prismicio/client` has been updated to v6
+
+See https://prismic.io/docs/technologies/prismic-client-v6-migration-guide for the complete migration guide
+
+The new predicate object contains the same predicate functions as Predicates with new names to better match the API's predicate names.
+
+```diff
+- import { Predicates } from "@prismicio/client";
++ import * as prismic from "@prismicio/client";
+
+const query = new ListQuery(10)
+
+- query.addPredicate(prismic.Predicates.gt('my.movie.rating', 3))
++ query.addPredicate(prismic.predicate.numberGreaterThan('my.movie.rating', 3))
+```
+
+The following `predicates` have been renamed:
+
+- `dayOfMonth` → `dateDayOfMonth`
+- `dayOfMonthAfter` → `dateDayOfMonthAfter`
+- `dayOfMonthBefore` → `dateDayOfMonthBefore`
+- `dayOfWeek` → `dateDayOfWeek`
+- `dayOfWeekAfter` → `dateDayOfWeekAfter`
+- `dayOfWeekBefore` → `dateDayOfWeekBefore`
+- `month` → `dateMonth`
+- `monthBefore` → `dateMonthBefore`
+- `monthAfter` → `dateMonthAfter`
+- `year` → `dateYear`
+- `hour` → `dateHour`
+- `hourBefore` → `dateHourBefore`
+- `hourAfter` → `dateHourAfter`
+- `gt` → `numberGreaterThan`
+- `lt` → `numberLessThan`
+- `inRange` → `numberInRange`
+- `near` → `geopointNear`
+
+#### `prismic-dom` replaced with `@prismicio/helpers`
+
+See https://prismic.io/docs/technologies/prismic-helpers-v2-migration-guide for the complete migration guide
+
+### Added FlashMessages to the Order Details
+
+For the HiPay payment method, FlashMessages may be shown at the order detail level for errors.
+
+If you overrode `<OrderDetailsLayout>` add the following lines to it
+
+```diff
++ import FlashMessages from "theme/modules/FlashMessages";
+...
+  return (
+    <div
+      className={classNames("order-details-layout", {
+        "account-orders-details--no-actions": !showOrderActions,
+      })}
+    >
++  <FlashMessages />
+...
+```
+
+### Login Form Update
+
+For the external logins feature `<AdditionalLoginFormActions>` and `<FlashMessages>` have been added to the `<LoginForm>`.
+
+If you overrode `<LoginForm>` please add the following lines to it
+
+```diff
+...
++import AdditionalLoginFormActions from "theme/modules/User/LoginForm/AdditionalLoginFormActions";
++import FlashMessages from "theme/modules/FlashMessages";
+...
+          {props.errorMessage && <ErrorAlert>{props.errorMessage}</ErrorAlert>}
++          <FlashMessages />
+...
+            </SubmitButton>
++            <AdditionalLoginFormActions />
+          </FormActions>
+...
+```
+
+### New icons required
+
+In this release, these new icons were added `google`, `facebook` to the `<Icon>` component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+
+-import { FaUserCircle } from "react-icons/fa";
++import { FaUserCircle, FaFacebook, FaGoogle } from "react-icons/fa";
+
+const keyToComponent = {
+  ...
+  organigram: GiOrganigram,
+  gripper: VscGripper,
++  facebook: FaFacebook,
++  google: FaGoogle,
+};
+```
+
+### New features in `2.13.0`
+
+These new features may be relevant for your existing application:
+
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine.html#Algolia)
+- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
+- [Prismic Preview](/docs/prismic/preview.html)
+- [HiPay payment method](/docs/advanced/payments/hipay)
+- [Facebook and Google external logins](/docs/advanced/features/external-logins)
+
 ## `2.11.0` -> `2.12.0`
 
 ### Upgrade the Magento2 module
@@ -729,7 +909,6 @@ We refactored `hasCartItemOptions` from `theme/modules/Cart/CartItem/CartItemOpt
 In this release, we've reworked the internals of SmartForm fields to better support browser autocomplete.
 
 The public API remains unchanged but if you've overriden internal components, please check your overrides against their original. See these Merge Requests: [#641](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/641) and [#645](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/645)
-
 
 ### New features in `2.10.0`
 
