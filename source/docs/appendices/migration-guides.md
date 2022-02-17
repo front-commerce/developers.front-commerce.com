@@ -165,7 +165,7 @@ These new features may be relevant for your existing application:
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine.html#Algolia)
 - [Prismic Preview](/docs/prismic/preview.html)
 - [HiPay payment method](/docs/advanced/payments/hipay)
-- [Facebook and google external logins](/docs/advanced/features/external-logins)
+- [Facebook and Google external logins](/docs/advanced/features/external-logins)
 
 ## `2.11.0` -> `2.12.0`
 
