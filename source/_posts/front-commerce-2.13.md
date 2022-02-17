@@ -1,0 +1,115 @@
+---
+title: "2.13: Pushing Prismic to the next level: previews and improvements, Algolia available for Magento2 and a new PSP at hand for Front-Commerce (spoiler: it’s HiPay)"
+date: 2022-02-17
+---
+
+What a way to start the year! It's when we look back at the past 6 weeks that we realize how much we can accomplish. Read on to discover version 2.13 and the Front-Commerce news.
+
+To begin, we would like to give a warm welcome to Gaëtan 👋, who joined the team in February! We now have a team of 6 wizard developers working to help you create seamless headless experiences.
+
+This first part of the year was also the opportunity to start laying the bricks for major projects. With the development of a new BigCommerce connector on one hand, and the acceleration of our cloud offering with the implementation of Akamai on the other. Our goal is to help you follow your site's activity and help us follow your growth.
+
+Concerning the release:
+
+- You will now be able to use the HiPay PSP for Front-Commerce with first payment methods
+- Benefit from the functionalities of the Algolia search tool for Magento 2!
+- We also worked on the social login and registering feature with Google and Facebook, to allow your users to create their account and to connect more quickly (beta version)
+- Finally, we have made our Prismic module evolve with new features that will certainly interest you ...
+
+You’ll find all the details below 👀
+
+Should you have any requests regarding the product roadmap, do not hesitate to contact Josquin 👋
+
+<p class="center">
+  <a class="link primary button" href="https://calendly.com/josquin-front-commerce/30min">Schedule a 30min meeting in Josquin's agenda: coffee is on us ☕</a>
+</p>
+
+<!-- more -->
+
+## Prismic: we are now on v6 and previews are available!
+
+During this release, we have worked on our existing [Prismic](https://prismic.io/) module to make it even more powerful and performant!
+
+The [Prismic Previews](https://www.youtube.com/watch?v=v0zt9mzaF_g) feature is now available for Front-Commerce, allowing you to view draft documents live on your website without publishing them publicly: it is a huge step for creative teams using Prismic for Front-Commerce and we’re thrilled to launch this highly demanded feature.
+
+[Migrating Prismic from v4 to v6](https://prismic.io/docs/technologies/prismic-client-v6-migration-guide) offers many advantages: more intuitive API names and options, new `queryByType()` and `queryByTag()` methods, fetch all documents with `getAll*` queries, first-class TypeScript support. It was normal for us to help you get all the power from this migration!
+
+With our new developments regarding Prismic, you will be able to have articles containing multiple relative content and retrieve all articles related to this content: useful when you have a substantial content strategy 🤙
+
+## Beta: Social login and registering: try it out and give us your feedback!
+
+This is a feature that is becoming more and more standard on websites that require account creation. With the 2.13 release, you will be able to offer your users the possibility to create their account and log in using their Facebook or Google credentials, allowing them to save time and not have to create and remind a new password.
+
+The social login module is currently flagged as beta. It works and is production ready, but we want to tackle some technical refactoring that may change the way it is used in a project (minor breaking changes).
+
+We are also opened to feedbacks from the first users of this feature. You can integrate it right now and give us your feedback on how it works for your use case and ideas of improvements!
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/b52c8896d6f842aeab459d6c6a8a6e88" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+## Algolia and Magento2 for Front-Commerce: pushing your search capabilities to the next level!
+
+Algolia, which has [become a unicorn in 2021](https://www.usine-digitale.fr/article/algolia-le-google-des-entreprises-leve-150-millions-de-dollars.N1129259), has become a key player regarding website search. We have been convinced of this for a long time, having developed an Algolia connector for Magento 1 [from our version 2.5](/blog/2021/03/11/front-commerce-2.5/).
+
+Now, Algolia is also available on Front-Commerce for Magento 2! You will be able to use it to search categories, CMS pages and products of your e-commerce site, or use Algolia datasource to fetch all CMS pages.
+
+We will continue to enrich the Front-Commerce functionalities linked to Algolia, especially by exploring the [Algolia recommend](https://www.algolia.com/products/recommendations/) features, which should allow to considerably improve the personalization of the user experience.
+
+## HiPay: a brand new PSP available for Front-Commerce
+
+HiPay has become a must as part of the decision making process when a PSP (Payment Service Provider) has to be chosen by a web-merchant or an integrator, along with [Adyen](/docs/advanced/payments/adyen.html), [Paypal](/docs/advanced/payments/paypal.html) or [Stripe](/docs/advanced/payments/stripe.html).
+
+It is now available in Front-Commerce, with the first payment methods enabled: MasterCard, VISA, American Express and Bancontact. We will enable Apple Pay in the next version. What other payment methods would you like to activate for HiPay? Feel free to contact our Product Manager Josquin to discuss this ☕
+
+To learn more about payments with Front-Commerce, visit our [documentation](/docs/advanced/payments/stripe.html#Front-Commerce-Payment) or read [our latest article on Embedded Payments for e-Commerce storefronts](https://www.front-commerce.com/embedded-payments-for-e-commerce/).
+
+## Our B2B demo is online: check it out!
+
+Along our existing demos, we have put online our B2B demo, following the work of our [2.12](/blog/2022/01/06/front-commerce-2.12/) and [2.11](/blog/2021/11/24/front-commerce-2.11/) versions, during which we have explored and developed most of the B2B dedicated features for Adobe Commerce B2B
+
+You can check it out here: [**magento2-b2b**.front-commerce.app](https://magento2-b2b.front-commerce.app/)
+
+## Other changes
+
+### Bug fixes
+
+- **magento1:** improve url matcher resilience for not found products or categories
+- **sitemap:** fixed a regression from 2.12 preventing to generate the sitemap for Magento2 stores with CMS pages
+- **search:** it is now possible to have no search datasource enabled at all in the project without errors. It now returns empty results.
+- **orders:** the guest orders page (visible using the order id and email) is now restricted to the store the order has been placed on in Magento2 multi-store contexts
+- **styleguide:** the ProductGallery story can now be displayed again in theme chocolatine
+
+Fixes from the 2.13 version have also been backported into previous minor versions. The following patch versions were released:
+[2.5.7](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.7),
+[**2.5.8**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.8),
+[2.6.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.5),
+[**2.6.6**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.6),
+[2.7.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.6),
+[**2.7.7**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.7),
+[2.8.7](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.7),
+[**2.8.8**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.8),
+[2.9.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.6),
+[**2.9.7**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.7),
+[2.10.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.4),
+[**2.10.5**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.5),
+[**2.11.2**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.2)
+and [**2.12.1**](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.1).
+
+### Performance Improvements
+
+- **cache:** the Product gallery query now has same cache policy than the product page
+- **cache:** we ensured that the MiniCart was never loaded during SSR to prevent `no-store` headers being sent in some contexts
+
+### Features
+
+- **dx:** the reason preventing to send Cache-Control headers is now displayed when using `DEBUG=front-commerce:cache`
+- **bigcommerce:** we’ve kickstarted the versioning of the module adding BigCommerce support in Front-Commerce. Details coming in the next releases.
+
+<hr />
+<div class="center">
+  <p>
+    <a class="link primary button intercom-launcher" href="https://www.front-commerce.com/contact/">💌 Ask your questions about Front-Commerce</a>
+  </p>
+  <p>
+    [Upgrade to Front-Commerce 2.13.0](/docs/appendices/migration-guides.html#2-12-0-gt-2-13-0) or [read the full changelog (Customers only)](https://gitlab.com/front-commerce/front-commerce/-/releases/2.13.0)
+  </p>
+</div>
