@@ -72,7 +72,9 @@ For the external logins to work with the Magento2 module in addition to [Adding 
 
 ## Ensuring the login buttons show
 
-The `auth-external-login` registered above comes with an override to the `AdditionalLoginFormActions` component. The `AdditionalLoginFormActions` component was added to the `LoginForm` in 2.13.0 so if you overrode `LoginForm` please refer to the [migration guides](/docs/appendices/migration-guides#Login-Form-Update) for more details of how to add it to your `LoginForm`. You might also want to add the `FlashMessages` component to your `LoginForm` so that authentication errors show to the user ([migration guides](/docs/appendices/migration-guides#Login-Form-Update)).
+The `auth-external-login` registered above added two components to the `LoginForm` component :  `AdditionalLoginFormActions` and `FlashMessages` in 2.13.0. 
+
+If you overrode `LoginForm` please refer to the [migration guides](/docs/appendices/migration-guides#Login-Form-Update) for more details 
 
 After ensuring that `AdditionalLoginFormActions` and `FlashMessages` are in your `LoginForm` the "Sign in with Facebook" and "Sign in with Google" buttons should now appear in your login page/modal.
 
