@@ -33,7 +33,7 @@ The function will be called with 3 arguments:
 * The externalLoginHandler
 * The redirectUrl
 
-The provider returned by the registered function should have 2 middlewares `requestLoginMiddleware` and `loginCallbackMiddleware`.
+The provider returned by the registered function should implement the `LoginProviderInterface` i.e. it should have 2 middlewares `requestLoginMiddleware` and `loginCallbackMiddleware`.
 
 The `requestLoginMiddleware` will be called both when the user clicks on the "Login with Provider" button and when the provider redirects back to the site. The role of `requestLoginMiddleware` is to first redirect the user to the external site to authenticate and later when the user is redirected back to the site (from the external system) to extract the user information.
 
@@ -62,10 +62,6 @@ const makeCustomProvider = (request, externalLoginHandler, callbackUrl) => {
 
 registerExternalLoginProvider("custom", makeCustomProvider);
 ```
-
-### The LoginProviderInterface
-
-To make creating a provider easier, `LoginProviderInerface` can be implemented. By implementing `LoginProviderInerface` you have to implement the 2 aforementioned middleware and you can pick what inputs your constructor takes. You will then register the maker function mentioned above to extract the data needed by your provider and return an instance of it.
 
 ### The LoginProviderBase
 
@@ -127,7 +123,7 @@ requestLoginMiddleware(req, res, next) {
 
 The `ExternalLoginHandler` is responsible of actually logging the user into your platform. It should first create the user if he does not exist. Next it should log in the user (old or new) into the system.
 
-The external loging handler should have a method called `login` (see signature below) that when called will ensure the user exist or otherwise create him and finally log him/her in.
+The external loging handler should implement the `ExternalLoginHandlerInterface` interface which means that it must have a method called `login` (see signature below) that when called will ensure the user exist or otherwise create him and finally log him/her in.
 
 ```js
 class CustomExternalLoginHander extends ExternalLoginHandlerInterface {
