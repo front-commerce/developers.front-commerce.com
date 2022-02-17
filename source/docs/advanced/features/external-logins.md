@@ -183,7 +183,7 @@ const makeCustomProvider = (request, externalLoginHandler, callbackUrl) => {
 registerExternalLoginProvider("custom", makeCustomProvider);
 ```
 
-#### The LoginProviderInerface
+#### The LoginProviderInterface
 
 To make creating a provider easier, `LoginProviderInerface` can be implemented. By implementing `LoginProviderInerface` you have to implement the 2 aforementioned middleware and you can pick what inputs your constructor takes. You will then register the maker function mentioned above to extract the data needed by your provider and return an instance of it.
 
