@@ -131,7 +131,7 @@ You need to add all authorized domains on the [google developer console OAuth Co
 
 ### Working with the Google provider in development mode
 
-Please refer to [Working with the Google provider in development mode](#Working-with-the-Facebook-provider-in-development-mode) above for more details. The only difference is that the environment variable you need to set its `FRONT_COMMERCE_GOOGLE_DEVELOPMENT_BASE_CALLBACK_URL`.
+Please refer to [Working with the Facebook provider in development mode](#Working-with-the-Facebook-provider-in-development-mode) above for more details. The only difference is that the environment variable you need to set its `FRONT_COMMERCE_GOOGLE_DEVELOPMENT_BASE_CALLBACK_URL`.
 
 ## Customizing external logins
 
