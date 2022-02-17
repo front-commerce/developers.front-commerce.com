@@ -43,7 +43,7 @@ Compatible with:
 >
 > We have also included various changes and bug corrections, to always improve your Front-Commerce experience!
 
-- [Announcement](https://developers.front-commerce.com/blog/2022/01/06/front-commerce-2.12/)
+- [Announcement](/blog/2022/01/06/front-commerce-2.12/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.0)
 
 ## 2.11.0 (2021-11-25)
@@ -52,7 +52,7 @@ Compatible with:
 >
 > You will also discover various changes and bug corrections, to make your Front-Commerce instances even more efficient!
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/11/24/front-commerce-2.11/)
+- [Announcement](/blog/2021/11/24/front-commerce-2.11/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.0)
 
 ## 2.10.0 (2021-10-14)
@@ -61,11 +61,11 @@ Compatible with:
 >
 > We’ve improved our Front-Commerce modules offer too, with a shipping and a payment provider that solve B2C merchants needs.
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/10/14/front-commerce-2.10/)
+- [Announcement](/blog/2021/10/14/front-commerce-2.10/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.0)
 
-
 Requirement changes:
+
 - Magento2: 2.3.2+ -> 2.4.3-p1 - (Open Source & Commerce)
 
 Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
@@ -74,17 +74,18 @@ Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/h
 
 > We focused on delivering incremental improvements to existing features.
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/09/02/front-commerce-2.9/)
+- [Announcement](/blog/2021/09/02/front-commerce-2.9/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.0)
 
 ## 2.8.0 (2021-07-22)
 
 > This new version contains advanced Prismic features for Content Driven storefronts, an alpha version of our new Proximis connector and several “Summer backlog cleaning” items (bugfixes, improvements from performance profilings, technical debt removal).
 
-- [Announcement](https://developers.front-commerce.com/blog/2021/07/22/front-commerce-2.8/)
+- [Announcement](/blog/2021/07/22/front-commerce-2.8/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.0)
 
 Requirement changes:
+
 - Proximis: latest version
 
 ## 2.7.0 (2021-06-10)
@@ -101,6 +102,7 @@ Requirement changes:
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.0)
 
 Requirement changes:
+
 - Magento2: 2.3.2+ -> 2.4.2-p1 - requires [magento module version 2.4.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.4.0) - (Open Source & Commerce)
 
 ## 2.6.0 (2021-04-29)
@@ -115,6 +117,7 @@ Requirement changes:
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.0)
 
 Requirements:
+
 - Magento2: 2.3.2+ -> 2.4.1 - requires [magento module version 2.2.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.2.0) - (Open Source & Commerce)
 - or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - Reverse Proxy : Nginx 1.16 or more
@@ -135,6 +138,7 @@ Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 ## 2.5.0 (2021-03-11)
 
 > This release contains product improvements that increase its flexibility:
+>
 > - search datasources allows you to choose between Algolia or ElasticSearch to power your search
 > - new Shipping modules and Map implementations will reduce your integration costs
 > - allow your Customers to return products with RMA
@@ -213,6 +217,7 @@ Requirements: same as [2.4.0](#2-4-0-2021-01-22)
 > It also contains a new feature: invoices. **Magento 2 invoices** are now displayed in the Customer account. Customers can print them from the web, and developers can customize the print layout to match their needs.
 
 Requirements:
+
 - Magento2: 2.3.2+ -> 2.4.1 - requires [magento module version 2.2.0+](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.2.0) - (Open Source & Commerce)
 - or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - Reverse Proxy : Nginx 1.10 or more
@@ -225,33 +230,38 @@ Requirements:
 ## 2.3.0 (2021-01-12)
 
 > **Magento 2:**
->   - Product reviews support
->   - Bundle and virtual products support
->   - Textual product custom options support
->   - Guest checkout support. Customers can register after placing an order as guests
->   - New payment methods available:
->       - Adyen
->       - BuyBox
->   - Log as a customer from Magento admin area
+>
+> - Product reviews support
+> - Bundle and virtual products support
+> - Textual product custom options support
+> - Guest checkout support. Customers can register after placing an order as guests
+> - New payment methods available:
+>   - Adyen
+>   - BuyBox
+> - Log as a customer from Magento admin area
 >
 > **Magento (all versions):**
 > New Magento configurations supported for Customer addresses:
->   - optional zip code support,
->   - configurable number of lines for street inputs
+>
+> - optional zip code support,
+> - configurable number of lines for street inputs
 >
 > **Front-Commerce payments:**
->   - all existing Front-Commerce payment methods are now compatible with Guest checkout
+>
+> - all existing Front-Commerce payment methods are now compatible with Guest checkout
 >
 > **Technical improvements:**
->   - ElasticSearch 7.x and ElasticSuite 2.10 support
->   - Support for always enabled analytics scripts
->   - Checkout and Front-Commerce payment improvements: more scenarii are now possible, edge cases better supported in payment form interactions
->   - Allow to link to external invoice files
->   - Performance improvements
+>
+> - ElasticSearch 7.x and ElasticSuite 2.10 support
+> - Support for always enabled analytics scripts
+> - Checkout and Front-Commerce payment improvements: more scenarii are now possible, edge cases better supported in payment form interactions
+> - Allow to link to external invoice files
+> - Performance improvements
 
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.3.0)
 
 Requirements:
+
 - Magento2: 2.3.2+ -> 2.4.0 (Open Source & Commerce)
 - or Magento1: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - Reverse Proxy : Nginx 1.10 or more
