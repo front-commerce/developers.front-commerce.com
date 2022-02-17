@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.12.0`](#2-12-0-2022-01-06)**
+**Front-Commerce [`2.13.0`](#2-13-0-2022-02-17)**
 
 Compatible with:
 
@@ -16,6 +16,22 @@ Compatible with:
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.13.0 (2022-02-17)
+
+> What a way to start the year! It’s when we look back at the past 6 weeks that we realize how much we can accomplish. Read on to discover version 2.13 and the Front-Commerce news.
+>
+> This first part of the year was also the opportunity to start laying the bricks for major projects. With the development of a new BigCommerce connector on one hand, and the acceleration of our cloud offering with the implementation of Akamai on the other. Our goal is to help you follow your site’s activity and help us follow your growth.
+>
+> Concerning the release:
+>
+> - You will now be able to use the HiPay PSP for Front-Commerce with first payment methods
+> - Benefit from the functionalities of the Algolia search tool for Magento 2!
+> - We also worked on the social login and registering feature with Google and Facebook, to allow your users to create their account and to connect more quickly (beta version)
+> - Finally, we have made our Prismic module evolve with new features that will certainly interest you …
+
+- [Announcement](/blog/2022/02/17/front-commerce-2.13/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.13.0)
 
 ## 2.12.0 (2022-01-06)
 
