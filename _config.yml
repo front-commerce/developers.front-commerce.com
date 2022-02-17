@@ -64,6 +64,7 @@ sidebar_categories:
     - docs/advanced/features/display-a-map
     - docs/advanced/features/smart-forms
     - docs/advanced/features/quickorder
+    - docs/advanced/features/external-logins
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
