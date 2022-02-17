@@ -91,7 +91,10 @@ To configure the `clientId` and the `clientSecret` you need to define the folowi
 
 ### Configuring Redirect URIs
 
-You need to configure the allowed redirect URIs on your [facebook developer console](https://developers.facebook.com/apps/). To do so go you need to select your app and then go to `Facebook Login > Settings` section on the left menu. There you will find a field called `Valid OAuth Redirect URIs`. You need to fill this field with your stores URLs folowed by `/external-login/facebook/callback`. For example if you have 2 stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/facebook/callback` and `https://example.com/fr/external-login/facebook/callback` in the `Valid OAuth Redirect URIs` field.
+You need to configure the allowed redirect URIs on your [facebook developer console](https://developers.facebook.com/apps/). 
+Note that the `Valid OAuth Redirect URIs` should contain all your stores URLs followed by `/external-login/facebook/callback`. 
+ 
+For example if you have two stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/facebook/callback` and `https://example.com/fr/external-login/facebook/callback` in the `Valid OAuth Redirect URIs` field.
 
 ### Working with the Facebook provider in development mode (localhost)
 
