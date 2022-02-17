@@ -144,7 +144,7 @@ The external logins is made of three parts:
 
 Front-Commerce uses passport internally for the Facebook and Google providers though this makes things easier it is neither a requirement nor a recommendation. 
 
-To create  a provider  you need to register a key and a function with the `auth-external-login` module.
+To create a provider you need to register a key and a function with the `auth-external-login` module.
 
 The key will be used in the redirect url (like "google" in `/external-login/google` and `/external-login/google/callback`) and the function will be called to create the provider.
 
