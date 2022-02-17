@@ -139,7 +139,7 @@ If you overrode `<OrderDetailsLayout>` add the following lines to it
 
 ### Login Form Update
 
-For the external/social logins feature `<AdditionalLoginFormActions>` and `<FlashMessages>` have been added to the `<LoginForm>`.
+For the external logins feature `<AdditionalLoginFormActions>` and `<FlashMessages>` have been added to the `<LoginForm>`.
 
 If you overrode `<LoginForm>` please add the following lines to it
 
