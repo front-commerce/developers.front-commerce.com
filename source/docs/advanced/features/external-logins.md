@@ -35,20 +35,7 @@ We recommend the use of the class `./modules/auth-external-login/server/domain/E
 
 ## Adding the necessary modules
 
-To enable external logins you need to add the `auth-external-login` module to your modules in the `.front-commerce.js` file:
-
-```diff
-module.exports = {
-  name: "Front Commerce DEV",
-  url: "http://www.front-commerce.test",
-  modules: [
-    "./node_modules/front-commerce/theme-chocolatine",
-+    "./node_modules/front-commerce/modules/auth-external-login",
-  ],
-...
-```
-
-and you need to add the external login handler for your platform (example below adds `Magento2ExternalLoginHandler`):
+To enable external logins you need to add the `auth-external-login` and the external login handler for your platform (example below adds `Magento2ExternalLoginHandler`) to your modules in the `.front-commerce.js` file:
 
 ```diff
 module.exports = {
@@ -294,7 +281,11 @@ import makeExternalLoginEndpoint from "auth-external-login/server/makeExternalLo
 import CustomExternalLoginHandler from "you_external_login_handler/CustomExternalLoginHandler";
 
 export default {
-  endpoint: makeExternalLoginEndpoint((config, staticConfigFromProviders) => new CustomExternalLoginHandler(/** some parameters you extract from the configs */)),
+  endpoint: makeExternalLoginEndpoint(
+    (config, staticConfigFromProviders) => (
+      new CustomExternalLoginHandler(/** some parameters you extract from the configs */)
+    )
+  )
 };
 ```
 
