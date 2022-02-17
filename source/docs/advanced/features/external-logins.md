@@ -106,7 +106,7 @@ To configure the `clientId` and the `clientSecret` you need to define the folowi
 
 You need to configure the allowed redirect URIs on your [facebook developer console](https://developers.facebook.com/apps/). To do so go you need to select your app and then go to `Facebook Login > Settings` section on the left menu. There you will find a field called `Valid OAuth Redirect URIs`. You need to fill this field with your stores URLs folowed by `/external-login/facebook/callback`. For example if you have 2 stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/facebook/callback` and `https://example.com/fr/external-login/facebook/callback` in the `Valid OAuth Redirect URIs` field.
 
-### Working with the Facebook provider in development mode
+### Working with the Facebook provider in development mode (localhost)
 
 External login rely on redirections, and in devlopment your server is usally at `http://localhost` i.e. not reachable to Facebook. So to circumvent this in development mode you can use a proxying service such as [ngrok](https://ngrok.com/) to proxy requests to your local machine. A proxying service will provide a publically accessible URL to your local server. So to work with Facebook external logins on your local machine you need to set the `FRONT_COMMERCE_FACEBOOK_DEVELOPMENT_BASE_CALLBACK_URL` environment variable to the URL given to you by your proxying service. (p.s. use just the origin part of the url without any trailing slashes `/`).
 
