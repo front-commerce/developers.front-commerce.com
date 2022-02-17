@@ -11,17 +11,25 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### Upgrade the Magento2 module
 
-If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is now the minimum required version. To update it to the lastest version, from Magento2 root, you can run:
+If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is now the minimum required version. To update it to the latest version, from Magento2 root, you can run:
 
 ```sh
 composer update front-commerce/magento2-module
 ```
 
+<blockquote class="info">
+You can refer to the `Magento2` module [changelog](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/CHANGELOG.md) for the full details.
+</blockquote>
+
 ### Upgrade the Prismic module
 
 The `front-commerce-prismic` module is now using the latest version of prismic.
 
-The most notable breaking changes is the removal of the `FRONT_COMMERCE_PRISMIC_URL` and the inclusion of the `path` option in the `registerRoutableType` method.
+```sh
+npm install git+ssh://git@gitlab.com/front-commerce/front-commerce-prismic.git#1.0.0
+```
+
+The most notable breaking changes is the removal of the `FRONT_COMMERCE_PRISMIC_URL` and the inclusion of the `path` option for the `registerRoutableType` method.
 
 <blockquote class="info">
 You can refer to the `front-commerce-prismic` module [changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md) for the full details.
@@ -39,22 +47,26 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 
 #### Improved the `registerRoutableType` method
 - A new required property has been added for dynamic routes: `path` <br /> Examples: `/:uid`, `/:lang/:uid`, `/:category*/:uid`, `/:section/:category?/:uid`.
+
 <blockquote class="info">
 **ProTip :** You can use the online [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester) to test your paths.
 </blockquote>
-- The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow prismic to redirect previews for document types to the correct path, and it will also allow the url property to be resolved in the documents.
+
+- The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow the Prismic client to resolve the url property for defined documents, and it enables redirection for prismic previews.
 ```js
   // Skip prismic route registration
   PrismicLoader.registerRoutableType({
     ...
-    path: "/my-route/:uid",
+    typeIdentifier: "album", // document type `album` will resolve to path `/albums/:uid`
+    path: "/album/:uid",     // e.g. `/album/queen`
     withPrismicRoutes: false // defaults to true
   })
 
   // Register a prismic route with resolvers
   PrismicLoader.registerRoutableType({
     ...
-    path: "/:category/:uid",
+    typeIdentifier: "album", // document type `album` will resolve to path `/:category/:uid`
+    path: "/:category/:uid", // e.g. `/rock-and-roll/queen`
     withPrismicRoutes: {
       resolvers:{
         category: "category" // The field name for the content relationship in your Prismic Document
@@ -75,7 +87,9 @@ The new predicate object contains the same predicate functions as Predicates wit
 ```diff
 - import { Predicates } from "@prismicio/client";
 + import * as prismic from "@prismicio/client";
+
 const query = new ListQuery(10)
+
 - query.addPredicate(prismic.Predicates.gt('my.movie.rating', 3))
 + query.addPredicate(prismic.predicate.numberGreaterThan('my.movie.rating', 3))
 ```
