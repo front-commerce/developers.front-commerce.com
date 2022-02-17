@@ -113,11 +113,9 @@ To configure the `clientId` and the `clientSecret` you need to define the folowi
 
 ### Configuring Redirect URIs
 
-You need to configure the allowed redirect URIs under your "OAuth2.0 Client" of your app on the [Google developer console](https://console.developers.google.com/apis/credentials). Fill the `Authorized redirect URIs` field with your stores URLs followed by `/external-login/google/callback`. For example if you have 2 stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/google/callback` and `https://example.com/fr/external-login/google/callback` in the `Authorized redirect URIs` field. Also set the `Authorized JavaScript origins` on the same page (in our example above that would be just `https://example.com`).
+You need to configure the allowed redirect URIs under your "OAuth2.0 Client" of your app on the [Google developer console](https://console.developers.google.com/apis/credentials). Note that the `Authorized redirect URIs` should contain all your stores URLs followed by `/external-login/google/callback`.
 
-### Configuring Authorized domains
-
-You need to add all authorized domains on the [google developer console OAuth Consent Screen](https://console.developers.google.com/apis/credentials/consent/edit). Fill the `Authorized domains` field with your domains (in our example [above](#Configuring-Redirect-URIs) that would be just `example.com`).
+For example if you have two stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/google/callback` and `https://example.com/fr/external-login/google/callback` in the `Valid OAuth Redirect URIs` field.
 
 ### Working with the Google provider in development mode
 
