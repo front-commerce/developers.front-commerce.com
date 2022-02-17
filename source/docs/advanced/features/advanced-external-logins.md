@@ -72,7 +72,7 @@ By implementing the Google and Facebook providers using passport these patterns 
   * The provider's own config
   * The shop and the callback URLs
 
-`LoginProviderBase` is a simple implementation of the `LoginProviderInerface` that has the constructor (see below for signature) and the `loginCallbackMiddleware` implemented.
+`LoginProviderBase` is a simple implementation of the `LoginProviderInterface` that has the constructor (see below for signature) and the `loginCallbackMiddleware` implemented.
 
 ```
   constructor(externalLoginHandler, providerConfig, { shopUrl, callbackUrl }) {
