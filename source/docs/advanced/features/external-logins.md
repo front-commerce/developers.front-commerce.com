@@ -8,7 +8,7 @@ _Since version 2.13_
 </blockquote>
 
 <blockquote class="feature--new">
-_Beta feature (api may change)_
+_Beta feature (API may change)_
 </blockquote>
 
 # External Logins
