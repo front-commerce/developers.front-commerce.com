@@ -157,6 +157,26 @@ If you overrode `<LoginForm>` please add the following lines to it
 ...
 ```
 
+### New icons required
+
+In this release, these new icons were added `google`, `facebook` to the `<Icon>` component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+
+-import { FaUserCircle } from "react-icons/fa";
++import { FaUserCircle, FaFacebook, FaGoogle } from "react-icons/fa";
+
+const keyToComponent = {
+  ...
+  organigram: GiOrganigram,
+  gripper: VscGripper,
++  facebook: FaFacebook,
++  google: FaGoogle,
+};
+```
+
 ### New features in `2.13.0`
 
 These new features may be relevant for your existing application:
