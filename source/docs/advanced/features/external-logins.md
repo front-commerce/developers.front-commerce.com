@@ -14,7 +14,7 @@ _Beta feature (api may change)_
 # External Logins
 
 Front Commerce supports external logins. The API for supporting external logins comes in 2 parts:
-* The `LoginProvider`s which implements the login with the external systems (such as Facebook or Google)
+* The `LoginProvider` which implements the login with the external systems (such as Facebook or Google)
 * The `ExternalLoginHandler` which implement the login with your platform (such as Magento1, Magento2, Proximis or BigCommerce).
 
 Out of the box we ship two `LoginProvider`s -the `FacebookProvider` and the `GoogleProvider`- and two `ExternalLoginHandler`s -the `Magento1ExternalLoginHandler` and the `Magento2ExternalLoginHandler`.
