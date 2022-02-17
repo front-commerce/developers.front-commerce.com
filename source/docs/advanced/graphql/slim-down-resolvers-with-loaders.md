@@ -293,7 +293,7 @@ see how you could combine them to achieve your goals.
 
 <blockquote class="wip">
   The content below is currently being written. If you need more detailed
-  information, please [contact us](mailto:contact@front-commerce.com). We will
+  information, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will
   make sure to answer you in a timely manner.
 
 <ul>

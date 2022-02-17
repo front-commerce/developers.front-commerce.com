@@ -13,4 +13,4 @@ Moreover, the following guides should help you implement custom integrations by 
 - [Custom Shipping Information](/docs/advanced/shipping/custom-shipping-information.html)
 - [Add a shipping method with pickup points](/docs/advanced/shipping/add-new-shipping-data-in-graphql.html)
 
-If you are looking for detailed information about an existing shipping method or if you're curious about a new integration, please [contact us](mailto:contact@front-commerce.com). **We are always looking to support more shipping methods.**
+If you are looking for detailed information about an existing shipping method or if you're curious about a new integration, please <span class="intercom-launcher">[contact us](mailto:hello@front-commerce.com)</span>. **We are always looking to support more shipping methods.**

@@ -12,7 +12,7 @@ This page contains information about the different ways you can accept payments 
 </blockquote>
 
 <blockquote class="note">
-**Note** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Note** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 Front-Commerce for Magento 1 requires a [`FrontCommerce_Payline` module](https://github.com/front-commerce/magento1-module-payline-front-commerce) that turns the [Monext Payline official Magento 1 extension](https://docs.monext.fr/display/DT/Plugin+Magento+1) into a headless payment method for Front-Commerce. It is aimed at being transparent for Magento administrators and developers while allowing for a better Customer experience in a Front-Commerce application.

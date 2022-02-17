@@ -2391,7 +2391,7 @@ During this change, we needed to update some parts of the GraphQL schema. If you
   `DynamicFacet.buckets` (plural).
 - `SearchResult.layer` was renamed to `SearchResult.products`
 
-Please check your front-end queries to ensure to update them accordingly. If you need any help about these, feel free to [contact us](mailto:contact@front-commerce.com).
+Please check your front-end queries to ensure to update them accordingly. If you need any help about these, feel free to <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
 
 ### Wishlist
 

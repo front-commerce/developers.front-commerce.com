@@ -111,9 +111,3 @@ Widget.propTypes = {
 
 export default Widget;
 ```
-
-## Customize your Wysiwyg component
-
-<blockquote class="wip">
-We are still working on writing this guide. However, if you need help customizing your Wysiwyg components, please feel free to [contact us](mailto:contact@front-commerce.com).
-</blockquote>

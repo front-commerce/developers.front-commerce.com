@@ -339,7 +339,7 @@ const loader = makeDataLoader("CatalogCategory")(ids =>
 
 By default, all dataLoaders are using a **per-request in-memory caching strategy**. It means that during the same GraphQL query, the same data will only be requested once.
 
-Front-Commerce is also shipped with a persistent cache implementation, using a Redis strategy (see [Caching strategies](#Caching-strategies)). You can implement new strategies to support more services (we also can help and support more strategies, please [contact us](mailto:contact@front-commerce.com)).
+Front-Commerce is also shipped with a persistent cache implementation, using a Redis strategy (see [Caching strategies](#Caching-strategies)). You can implement new strategies to support more services (we also can help and support more strategies, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>).
 
 The DataLoader cache must be configured in the [`config/caching.js` configuration file](/docs/reference/configurations.html#config-caching-js). Please refer to the reference documentation for further details or read the following section to choose the most relevant strategies for your context.
 
@@ -487,7 +487,7 @@ export default {
 
 ### Advanced usage
 
-If you need additional implementations or want to leverage strategies for a specific use case, please [contact us](mailto:contact@front-commerce.com) so we can discuss it and guide you!
+If you need additional implementations or want to leverage strategies for a specific use case, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> so we can discuss it and guide you!
 
 ## Invalidating the cache
 

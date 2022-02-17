@@ -469,4 +469,4 @@ Indeed, if we're doing this, it's likely to be because the tracking service want
 - Look inside the script itself. The script you've been given may be a shortcut and the solution might live in the script itself. If this is the case, this means that you can try to duplicate the scripts content and adapt it to your integration.
 - If none of the solutions above work, you can always try to load the script several times by adding a `?random=${new Date().getTime()}` at the end of the URL. This will trick the browser into thinking they are different scripts and allow you to load it multiple times.
 
-Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.
+Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We'll be happy to answer them.

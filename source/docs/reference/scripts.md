@@ -9,7 +9,7 @@ Front-Commerce contains scripts aimed at being used on your server when your app
 <blockquote class="warning">
 We plan to improve the way scripts are created and used in the future, and allow developers to register custom scripts from their applications.
 If interested for more context, please see [#169](https://gitlab.com/front-commerce/front-commerce/issues/169) for further details and do note hesitate to send us feedback about this feature.
-You can also [contact us](mailto:contact@front-commerce.com) directly if you have any question.
+You can also <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> directly if you have any question.
 </blockquote>
 
 ## `imageWarmUp.js`

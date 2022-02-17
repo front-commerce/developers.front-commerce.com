@@ -218,6 +218,6 @@ See [#196](https://gitlab.com/front-commerce/front-commerce/issues/196) for more
 ---
 
 <blockquote class="wip">
-  This remote schema stitching feature is still being explored, and we are actively looking for feedback to make it better.
-  Please [get in touch](mailto:contact@front-commerce.com) if you want to share your thoughts with us or ask any question!
+  This remote schema stitching feature is still being explored, and we are looking for feedback to make it better.
+  Please <span class="intercom-launcher">[get in touch](mailto:support@front-commerce.com)</span> if you want to share your thoughts with us or ask any question!
 </blockquote>

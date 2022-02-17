@@ -22,7 +22,7 @@ Our Magento2 integration currently provides native adapters for the platforms be
 - [Payment on account](/docs/advanced/payments/payment-on-account.html)
 
 <blockquote class="info">
-  If you want to use a Payment module not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.
+  If you want to use a Payment module not yet listed above, please [`contact us`](mailto:hello@front-commerce.com) so we can provide information about a potential upcoming native support for it.
 </blockquote>
 
 ## Implement a new Magento2 Payment method Adapter
