@@ -252,15 +252,15 @@ const serviceOverrideProvider = {
   name: "serviceOverride",
   values: Promise.resolve({
     service: {
-      key: "new value"
-    }
-  })
-}
+      key: "new value",
+    },
+  }),
+};
 
-configService.insertAfter("serviceProvider", serviceOverrideProvider)
+configService.insertAfter("serviceProvider", serviceOverrideProvider);
 ```
 
 ## Core configuration providers
 
 Our goal is to use these configuration providers for any configuration that could exist in Front-Commerce. However, this is still a work in progress and there are still some configurations that are not associated with a schema yet. Most configurations are still based on files in the [`config` folder of your project's module](/docs/reference/configurations.html).
-If you have specific needs, please [contact us](mailto:contact@front-commerce.com).
+If you have specific needs, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.

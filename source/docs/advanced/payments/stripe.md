@@ -90,7 +90,7 @@ To allow loading stripe related remote resources:
 ### Advanced: customize data sent to Stripe
 
 <blockquote class="wip">
-**Work In Progress** This advanced pattern must be documented with further details. While we are working on it, please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Documentation In Progress** This advanced pattern must be documented with further details. While we are working on it, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 The Stripe payment module is extensible. It leverages Front-Commerce's "data transform" pattern to allow developers to customize payloads sent to Stripe for Customer and Cart content.

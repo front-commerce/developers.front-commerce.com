@@ -35,7 +35,7 @@ Thus, if we want to add our own step, we need to duplicate the `stepsDefinitions
 In order to illustrate this concept, we will add a new step which will enable the user to leave a comment with their command.
 
 <blockquote class="wip">
-**Work In Progress:** we didn't add the example yet. If you need it right away, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+**Work In Progress:** we didn't add the example yet. If you need it right away, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.
 </blockquote>
 
 ## Changing the whole checkout system

@@ -10,6 +10,7 @@ Payment platforms integrated as a Front-Commerce Payment are compatible with eve
 ## Supported Payment platforms
 
 Front-Commerce Payments are currently available for the platforms below, learn how to install each one of them from the related documentation page:
+
 - [Stripe](/docs/advanced/payments/stripe.html#Front-Commerce-Payment)
 - [Paypal](/docs/advanced/payments/paypal.html#Front-Commerce-Payment)
 - [PayZen](/docs/advanced/payments/payzen.html#Front-Commerce-Payment)
@@ -17,7 +18,7 @@ Front-Commerce Payments are currently available for the platforms below, learn h
 - [BuyBox](/docs/advanced/payments/buybox.html#Front-Commerce-Payment)
 
 <blockquote class="info">
-  If you want to use a Payment platform not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.
+  If you want to use a Payment platform not yet listed above, please <span class="intercom-launcher">[`contact us`](mailto:hello@front-commerce.com)</span> so we can provide information about a potential upcoming native support for it.
 </blockquote>
 
 ## How is a Front-Commerce Payment method integrated with eCommerce platforms

@@ -56,10 +56,6 @@ layout: index
       <p>Our goal is not to provide tools for the sake of tooling. However we strongly believe that a good set of tools will make your life easier and will enable you to do what is best for your users.</p>
 
       <p>Because each brand communicates differently with its customers, our goal is to let you adapt quickly and efficiently, by avoiding technical considerations that will slow you down. We stay up to date and you stay in touch with your users.</p>
-
-      <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=I’m interested!">
-        Learn more about our vision <span class="icon-arrow-right-alt"></span>
-      </a>
     </div>
 
   </div>
@@ -98,7 +94,7 @@ layout: index
   <p>We're driving our next integrations depending on our future clients needs. So feel free to contact us if you have any specific needs. We're willing to take advantage of our flexibility to adapt to our client's roadmaps.</p>
 
   <p>
-    <a class="link learn-more button" href="mailto:contact@front-commerce.com?subject=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20roadmap&body=Hi%2C%0D%0A%0D%0AI%20am%20interested%20in%20your%20product%2C%20and%20would%20love%20to%20know%20if%20you%20considered%20...">
+    <a class="link learn-more button intercom-launcher" href="mailto:hello@front-commerce.com?subject=Hi!%20I'd%20like%20to%20know%20more%20about%20your%20roadmap&body=Hi%2C%0D%0A%0D%0AI%20am%20interested%20in%20your%20product%2C%20and%20would%20love%20to%20know%20if%20you%20considered%20...">
       Ask us about our roadmap <span class="icon-arrow-right-alt"></span>
     </a>
   </p>
@@ -156,6 +152,6 @@ layout: index
   <p>If you are interested with what you’ve read or things are still not clear, do not hesitate to reach us! We could schedule a call or a demo so you could evaluate the product in a more concrete way.</p>
 
   <div class="center">
-    <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’m interested!">Contact the team</a>
+    <a class="link primary button intercom-launcher" href="mailto:contact@front-commerce.com?subject=I’m interested!">Contact the team</a>
   </div>
 </section>

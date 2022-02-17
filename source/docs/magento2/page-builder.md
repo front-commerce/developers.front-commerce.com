@@ -5,7 +5,7 @@ title: Page Builder
 
 Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using [Page Builder](https://magento.com/products/magento-commerce/page-builder). Front-Commerce supports Page Builder managed content out-of-the-box.
 
-In this section, you will learn how to use this feature and extend it. Create new *content types* and refine UI components so that merchants can create the rich shopping experiences that was designed for *their* customers.
+In this section, you will learn how to use this feature and extend it. Create new _content types_ and refine UI components so that merchants can create the rich shopping experiences that was designed for _their_ customers.
 
 <blockquote class="feature--new">
 _Since version 2.11.0 (early preview)_
@@ -18,6 +18,7 @@ _Since version 2.11.0 (early preview)_
 ## Prerequisites
 
 Page Builder is only available for content that:
+
 - are displayed using [the `<WysiwygV2>` component and its related `WysiwygFragment` GraphQL fragment](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage)
 - get data from GraphQL fields resolved using [the `MagentoWysiwyg` type](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg) **(which is the case of all default Magento rich content fields)**
 
@@ -26,12 +27,9 @@ Please check these prerequisites first if your content does not appear properly.
 ## Concepts
 
 Page Builder content types have 2 integration points:
+
 - **server side data conversion** will parse Magento HTML response to extract rich structured data exposed in GraphQL
 - **client side React components** will display the content using existing components, from data fetched from GraphQL
-
-<blockquote class="wip">
-**Work In Progress:** if you need details right now, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
-</blockquote>
 
 ## Supported content types
 
@@ -114,7 +112,7 @@ You can extend existing Page Builder content types, or register new ones specifi
 ### Customize UI components
 
 <blockquote class="wip">
-**Work In Progress:** if you need details right now, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+**Work In Progress:** if you need details right now, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.
 </blockquote>
 
 - override `theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/_appComponents.scss` to register your custom styles
@@ -125,7 +123,7 @@ You can extend existing Page Builder content types, or register new ones specifi
 ### Expose content types data in GraphQL
 
 <blockquote class="wip">
-**Work In Progress:** if you need details right now, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+**Documentation In Progress:** if you need details right now, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.
 </blockquote>
 
 The `PageBuilder` loader allows you to register new content types.

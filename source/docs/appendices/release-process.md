@@ -5,7 +5,7 @@ title: Release process
 
 Front-Commerce is built around the motto "Make it work, then make it better". This means that it is possible **today** to develop and deploy your website to production.
 
-Our mission of making your life easier, and your customers happier is an ongoing process. Front-Commerce will thus regularly evolve. Our main strength is our flexibility. We do take into account our clients needs and adapt our Roadmap to match theirs. If you have any particular needs, feel free to <span class="intercom-launcher">[contact us](mailto:contact@front-commerce.com)</span> and we will see what we can do to help you :)
+Our mission of making your life easier, and your customers happier is an ongoing process. Front-Commerce will thus regularly evolve. Our main strength is our flexibility. We do take into account our clients needs and adapt our Roadmap to match theirs. If you have any particular needs, feel free to <span class="intercom-launcher">[contact us](mailto:hello@front-commerce.com)</span> and we will see what we can do to help you :)
 
 This page explains our release philosophy.
 
@@ -16,6 +16,7 @@ We aim at releasing often and follow [Semantic Versioning](https://semver.org) t
 **TL;DR:** (from the [Semantic Versioning](https://semver.org) documentation)
 
 > Given a version number MAJOR.MINOR.PATCH, increment the:
+>
 > 1. MAJOR version when you make incompatible API changes,
 > 2. MINOR version when you add functionality in a backwards compatible manner, and
 > 3. PATCH version when you make backwards compatible bug fixes.
