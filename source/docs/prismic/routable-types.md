@@ -82,7 +82,6 @@ export default {
   typeDefs,
   resolvers,
   contextEnhancer: ({ req, loaders }) => {
-
 +    const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
 +    const contentTransformOptions = {
 +      fieldTransformers: {
@@ -166,24 +165,23 @@ Now an instance of the custom Prismic type with the `url` field set to `my-custo
 Optionally to add the custom Prismic type to the sitemap use the following steps:
 
 1. implement the Sitemapable interface on the GraphQL type, and resolver.
-
-```diff
+  ```diff
 // schema.gql
 -type Album implements Routable {
 +type Album implements Routable & Sitemapable {
-url: String # the newly added field
-artist: String
-title: String
-release_date: Date
-path: String # for the routable interface
-+  priority: Float
-+  seoImages: [SitemapImage]
-+  lastmod: String
-+  changefreq: String
+  url: String # the newly added field
+  artist: String
+  title: String
+  release_date: Date
+  path: String # for the routable interface
++ priority: Float
++ seoImages: [SitemapImage]
++ lastmod: String
++ changefreq: String
 }
-```
-
-```diff
+  ```
+  and
+  ```diff
 // resolvers.js
 export default {
 Query: {
@@ -194,51 +192,48 @@ Album: {
     const baseUrl = (await loaders.Shop.getCurrentShop()).baseUrl,
     return `{baseUrl}/${content.url}`;
   },
-+    priority: () => 1,
-+    seoImages: (content) => [],
-+    lastmod: () => "2020-01-01T12:00:00.000Z",
-+    changefreq: () => "daily",
++ priority: () => 1,
++ seoImages: (content) => [],
++ lastmod: () => "2020-01-01T12:00:00.000Z",
++ changefreq: () => "daily",
 },
 };
-```
-
-2. Enable sitemap in the module definition file:
-
-```diff
+  ```
+1. Enable sitemap in the module definition file:
+  ```diff
 // index.js
 import typeDefs from "./schema.gql";
 import resolvers from "./resolvers";
 
 export default {
-namespace: "<module_name_space>",
-dependencies: ["Prismic/Core"],
-typeDefs,
-resolvers,
-contextEnhancer: ({ req, loaders }) => {
+  namespace: "<module_name_space>",
+  dependencies: ["Prismic/Core"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ req, loaders }) => {
+    const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
+    const contentTransformOptions = {
+      fieldTransformers: {
+        title: new TitleTransformer(),
+        release_date: new DateTransformer(),
+      },
+    };
 
-  const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
-  const contentTransformOptions = {
-    fieldTransformers: {
-      title: new TitleTransformer(),
-      release_date: new DateTransformer(),
-    },
-  };
-
-  loaders.Prismic.registerRoutableType({
-    typeIdentifier: "album", // <-- the Prismic custom type
-    urlFieldName: "url",     // <-- Prismic API ID mentioned above
-    graphQLType: "Album",    // <-- GraphQL type created above
-    contentTransformOptions,
--      isSitemapable: false,
-+      isSitemapable: true,
-    postTransformer: (url, document) => { // optional function postTransformer
-      if(document.isPublished) {  // possible usecase
-        return document;
+    loaders.Prismic.registerRoutableType({
+      typeIdentifier: "album", // <-- the Prismic custom type
+      urlFieldName: "url",     // <-- Prismic API ID mentioned above
+      graphQLType: "Album",    // <-- GraphQL type created above
+      contentTransformOptions,
+  -   isSitemapable: false,
+  +   isSitemapable: true,
+      postTransformer: (url, document) => { // optional function postTransformer
+        if(document.isPublished) {  // possible usecase
+          return document;
+        }
       }
-    }
-  });
+    });
 
-  return {};
-},
+    return {};
+  },
 };
-```
+  ```

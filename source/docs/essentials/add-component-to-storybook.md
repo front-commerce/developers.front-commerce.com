@@ -60,7 +60,7 @@ import { H3 } from "theme/ui/atoms/Typography/Heading";
 storiesOf("components.molecules.IllustratedContent", module)
   .add("default", () => {
     return (
-      <IllustratedContent media={<Icon icon="truck" />}>
+      <IllustratedContent media={<Icon icon="calendar-full" />}>
         <H3>Shipping within 48h</H3>
       </IllustratedContent>
     );
@@ -98,14 +98,14 @@ import { H3 } from "theme/ui/atoms/Typography/Heading";
 
 storiesOf("components.molecules.IllustratedContent", module)
   .add("default", () => {
-    <IllustratedContent media={<Icon icon="truck" />}>
+    <IllustratedContent media={<Icon icon="calendar-full" />}>
       <H3>Shipping within 48h</H3>
     </IllustratedContent>
 - });
 +  })
 +  .add("with long content", () => {
 +    return (
-+      <IllustratedContent media={<Icon icon="truck" />}>
++      <IllustratedContent media={<Icon icon="calendar-full" />}>
 +        <H3>Shipping within 48h</H3>
 +        <Paragraph>
 +          We are using many delivery services to let you choose what is best for
