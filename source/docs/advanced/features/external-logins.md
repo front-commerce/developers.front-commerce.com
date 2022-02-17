@@ -112,7 +112,6 @@ External login rely on redirections, and in devlopment your server is usally at 
 
 _Note: do not forget to [reconfigure your app](#Configuring-Redirect-URIs) with this new URL_
 
-After starting the proxying service and configuring your app and `FRONT_COMMERCE_FACEBOOK_DEVELOPMENT_BASE_CALLBACK_URL` accordingly, the "Login with Facebook" button should work properly.
 
 ## Configuring the Google provider
 
