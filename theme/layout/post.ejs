@@ -18,9 +18,18 @@
 
 <div class="content content--full">
   <section class="content-wrapper blog-section">
-    <div class="document-formatting">
-      <%- page.content %>
-    </div>
+    <div class="document-formatting"><%- page.content %></div>
+  </section>
+
+  <section class="content-wrapper">
+    <header>
+      <h2>Subscribe to changelog updates</h2>
+      <p>
+        Don't miss new features ever again: receive an email in your inbox every
+        time we publish an update.
+      </p>
+    </header>
+    <%- partial('partials/blog/newsletter_form') %>
   </section>
 
   <div class="content-wrapper">
