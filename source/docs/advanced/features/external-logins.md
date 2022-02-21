@@ -55,7 +55,7 @@ For the external logins to work with the Magento1 module in addition to [Adding 
 
 ## Magento2 Requirements
 
-For the external logins to work with the Magento2 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento1 connector on 2.6.0 or later. 
+For the external logins to work with the Magento2 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento2 connector on 2.6.0 or later. 
 
 ## Ensuring the login buttons show
 
