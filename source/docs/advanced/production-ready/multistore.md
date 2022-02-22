@@ -106,7 +106,7 @@ It will return in `translatedUrl` the correct URL in the other store.
 
 <blockquote class="warning">
 
-**Warning:** Front-Commerce will currently only return the root URL of the targeted shop. We will provide the exact URL translation soon.
+**Warning:** Front-Commerce will currently only return the root URL of the targeted shop. We will provide the exact URL translation as part of each platform module (Magento1, Magento2, …) in future versions.
 
 </blockquote>
 
