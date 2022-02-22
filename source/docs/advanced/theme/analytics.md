@@ -268,26 +268,7 @@ module.exports = {
 }
 ```
 
-- Allow requests to www.google-analytics.com in `src/config/website.js::contentSecurityPolicy`:
-
-```diff
-// src/config/website.js
-module.exports = {
-  // ...
-  contentSecurityPolicy: {
-    directives: {
-      scriptSrc: [],
-      frameSrc: [],
-      styleSrc: [],
--       imgSrc: [],
-+       imgSrc: ["www.google-analytics.com"],
-      connectSrc: [],
-      baseUri: [],
-    },
-  },
-// ...
-}
-```
+- Update your `CSPs` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
 
 In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
 
