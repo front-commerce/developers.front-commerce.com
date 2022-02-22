@@ -106,7 +106,7 @@ To allow loading PayZen related remote resources:
 ```
 
 <blockquote class="important">
-**Lyra Collect:** when using the Lyra Collect integration, use the `api.lyra.com` and `secure.lyra.com` value instead of `static.payzen.eu` and `secure.payzen.eu` in the example above.
+**Lyra Collect:** when using the Lyra Collect integration, use the `api.lyra.com` and `secure.lyra.com` values instead of `static.payzen.eu` and `secure.payzen.eu` in the example above.
 </blockquote>
 
 ### Advanced: customize data sent to PayZen
