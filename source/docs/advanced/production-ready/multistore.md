@@ -104,6 +104,12 @@ query StoreViewUrlQuery($url: String!, $otherShop: StoreView!) {
 
 It will return in `translatedUrl` the correct URL in the other store.
 
+<blockquote class="warning">
+
+**Warning:** Front-Commerce will currently only return the root URL of the targeted shop. We will provide the exact URL translation soon.
+
+</blockquote>
+
 ## Multiple currencies
 
 <blockquote class="feature--new">
