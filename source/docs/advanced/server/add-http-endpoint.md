@@ -59,7 +59,7 @@ Now, if we want to display our WYSIWYG preview iframe, it could look like this:
 ```js
 import path from "path";
 import cors from "cors";
-import { Router } from "express";
+import express, { Router } from "express";
 import config from "config/website";
 
 const ONE_HOUR = 60 * 60;
