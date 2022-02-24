@@ -5,9 +5,9 @@ title: Paypal integration
 
 This page contains information about the different ways you can accept payments with [Paypal](https://paypal.com/) in your Front-Commerce application.
 
-- [Front-Commerce Payment](#Front-Commerce-Payment)
-- [Magento2 module](#Magento2-module)
-- [Magento1 module](#Magento1-module)
+* [Front-Commerce Payment](#Front-Commerce-Payment)
+* [Magento2 module](#Magento2-module)
+* [Magento1 module](#Magento1-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 
@@ -85,16 +85,14 @@ const ComponentMap = {
   contentSecurityPolicy: {
     directives: {
 -     scriptSrc: [],
-+     scriptSrc: ["www.paypalobjects.com", "*.paypal.com"],
--     frameSrc: [],
-+     frameSrc: ["www.paypalobjects.com", "*.paypal.com"],
++     scriptSrc: ["www.paypalobjects.com"],
+      frameSrc: [],
       styleSrc: [],
 -     imgSrc: [],
-+     imgSrc: ["www.paypalobjects.com", "*.paypal.com"],
++     imgSrc: ["*.paypal.com"],
       styleSrc: [],
       imgSrc: [],
--     connectSrc: [],
-+     connectSrc: ["www.paypalobjects.com", "*.paypal.com"],
+      connectSrc: [],
       baseUri: []
     }
   },
