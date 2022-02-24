@@ -19,7 +19,7 @@ In this release, we have removed most of the module-related CSPs from Front-Comm
 
 ### Removed deprecations in `Button` component
 
-The properties that were tagged as deprecated in `theme/components/atoms/Button/Button.js` have been removed in this release:
+The properties that were tagged as deprecated in `theme/components/atoms/Button/Button.js` before version 2.0 have been removed in this release:
 
 - `appearance` should now be used instead of `primary`, `icon`, `link` and `warning`.
 - `state` should now be used instead of `disabled` and `pending`.
