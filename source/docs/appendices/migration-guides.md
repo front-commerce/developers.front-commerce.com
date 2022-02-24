@@ -17,6 +17,15 @@ In this release, we have removed most of the module-related CSPs from Front-Comm
 - `Paypal` (see [Paypal configuration](/docs/advanced/payments/paypal.html#Update-your-CSPs))
 - `Payzen` (see [Payzen configuration](/docs/advanced/payments/payzen.html#Update-your-CSPs))
 
+### Removed deprecations in `Button` component
+
+The properties that were tagged as deprecated in `theme/components/atoms/Button/Button.js` before version 2.0 have been removed in this release:
+
+- `appearance` should now be used instead of `primary`, `icon`, `link` and `warning`.
+- `state` should now be used instead of `disabled` and `pending`.
+
+Please update your code to fit the new behavior.
+
 ## `2.12.0` -> `2.13.0`
 
 ### Upgrade the Magento2 module
