@@ -25,12 +25,11 @@ Let’s say that you have implemented an `incrementProductCounter` Mutation that
 export default {
   Mutation: {
     incrementProductCounter: (_, { sku, incrementValue = 1 }, { loaders }) => {
-      return loaders.Counter.incrementBySku(sku, incrementValue)
-        .then(() => ({
-          success: true
-        }));
-    }
-  }
+      return loaders.Counter.incrementBySku(sku, incrementValue).then(() => ({
+        success: true,
+      }));
+    },
+  },
 };
 ```
 
@@ -89,10 +88,8 @@ export default {
   store: () => {
     // Return your GraphQLRateLimit compatible store implementation here
     // see https://www.npmjs.com/package/graphql-rate-limit#redis-store-usage
-    return new RedisStore(
-      redis.createClient({ host: "127.0.0.1" })
-    );
-  }
+    return new RedisStore(redis.createClient({ host: "127.0.0.1" }));
+  },
 };
 ```
 

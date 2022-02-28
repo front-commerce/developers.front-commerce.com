@@ -2,6 +2,7 @@
 id: wysiwyg
 title: Display WYSIWYG content
 ---
+
 WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It means that your back office users write their content without needing any HTML or React knowledge. This is the case in most CMS tools nowadays. The output though is usually HTML which does not necessarly match the React components you've built in your Front-Commerce application.
 
 This is why we've built a `theme/modules/Wysiwyg` component in Front-Commerce. By default it takes a `content` property which contains the HTML that needs to be parsed, and transforms it in React components.
@@ -9,8 +10,9 @@ This is why we've built a `theme/modules/Wysiwyg` component in Front-Commerce. B
 ## The `<Wysiwyg />` component
 
 The `<Wysiwyg />` component applies two types of transformations to your HTML :
-* shortcodes
-* transforms
+
+- shortcodes
+- transforms
 
 ### Shortcodes
 
@@ -64,16 +66,16 @@ See [EnhanceWysiwyg's reference](/docs/reference/wysiwyg.html) for more details.
 
 Supported shortcodes:
 
-* `{% raw %}{{media url="*"}}{% endraw %}`
-* `{% raw %}{{store url="*"}}{% endraw %}`
-* `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
+- `{% raw %}{{media url="*"}}{% endraw %}`
+- `{% raw %}{{store url="*"}}{% endraw %}`
+- `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
 
 Any other shortcode will be removed from your final content.
 
 #### Transforms
 
-* `<a>` tags are transformed to the `theme/components/atoms/Typography/Link` component when the `href` attribute does not contain a domain.
-* `<widget>` tags are transformed `theme/modules/Wysiwyg/MagentoWysiwyg/Widget` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+- `<a>` tags are transformed to the `theme/components/atoms/Typography/Link` component when the `href` attribute does not contain a domain.
+- `<widget>` tags are transformed `theme/modules/Wysiwyg/MagentoWysiwyg/Widget` components. However, you shouldn't write a `<widget>` tag manually. It is in fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
 
 #### Add a custom Magento Widget
 
@@ -111,9 +113,3 @@ Widget.propTypes = {
 
 export default Widget;
 ```
-
-## Customize your Wysiwyg component
-
-<blockquote class="wip">
-We are still working on writing this guide. However, if you need help customizing your Wysiwyg components, please feel free to [contact us](mailto:contact@front-commerce.com).
-</blockquote>

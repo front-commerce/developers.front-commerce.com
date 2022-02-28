@@ -63,8 +63,8 @@ import Cart from "./cart";
 export default {
   namespace: "Magento2",
   modules: [
-    Cart
+    Cart,
     // […]
-  ]
+  ],
 };
 ```

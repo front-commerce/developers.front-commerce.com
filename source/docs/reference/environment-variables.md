@@ -6,25 +6,22 @@ title: Environment variables
 The environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging and local.
 
 These environment variables can be defined in two different ways:
-* on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
-* in the `.env` file in your root folder
+
+- on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
+- in the `.env` file in your root folder
 
 You can then access them by using the `process.env` object in your javascript files no matter if it is a server-side or client-side file.
 However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*` which were defined during `front-commerce build`. See [Add your own environment variables](/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
 
 ## How to update environment variables
 
-<blockquote class="wip">
-    **Work In Progress:** we plan to add a more exhaustive flowchart to cover all edge cases. By then, if you have any issues to understand why/when a build or restart is necessary, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
-</blockquote>
-
 You can't update these variables only by updating your server's variable. This comes from how node works. But there are also some specificities due to Front-Commerce.
 
-* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
-    * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to do a new `front-commerce build`
-    * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
-* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
-    * 🚫 You need to do a new `front-commerce build` and restart your server
+- If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
+  - 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to do a new `front-commerce build`
+  - ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
+- If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
+  - 🚫 You need to do a new `front-commerce build` and restart your server
 
 The reason behind these rules is because some variables are defined and bundled within your code during the `build` of your application. For this reason, if you are are in a case where you can't update the variable, you will need to trigger a new build with the new environment variables defined and restart your server.
 
@@ -38,7 +35,7 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_HOST` (default: `0.0.0.0`): The host of the launched server. It might be useful to set it to `127.0.0.1` if you want to only listen local requests.
 - `FRONT_COMMERCE_URL`: The URL available to access to your Front-Commerce application (http://localhost:4000 in your local environment, and your website URL on the production environment)
 - `FRONT_COMMERCE_ENV`: `dev` or `production` in order to remove debugging options on the server side (ex: we disable GraphQL playground in production mode)
-- `FRONT_COMMERCE_COOKIE_DOMAIN` *(deprecated)*: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
+- `FRONT_COMMERCE_COOKIE_DOMAIN` _(deprecated)_: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
 - `FRONT_COMMERCE_UNSAFE_INSECURE_MODE`: you set this environment variable to `true` to disable Front-Commerce behaviors restricting HTTP usage in production, even though we strongly recommend you to expose your application through HTTPS.
 
@@ -88,10 +85,10 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 **WARNING:** due to the way [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158), using a URL containing basic authentication credentials (such as http://user:password@magento2.local) is not possible yet. It would prevent users to login.
 </blockquote>
 - Integration tokens configured in Magento’s « System > Extensions > Integrations » admin page:
-    - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
-    - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
-    - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
-    - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
 - `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to [detect admin users](/docs/magento2/detect-admin-users.html) in Front-Commerce configured in « Stores > Configurations > General > General > Front-Commerce > Magento Admin Token »
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: The key
   configured here must be identical to Magento’s `fc_cache_api_token` custom variable
@@ -124,21 +121,22 @@ Front-Commerce 2.5 with Magento1.
 - `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`: a prefix to use to build index names
 
 You can find these credentials on the [Algolia Dashboard](https://www.algolia.com/dashboard/api-keys), on the **API keys** page from the menu.
+
 ### Paypal
 
 <blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
+More documentation about this module will be available soon. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> directly if you need this information quickly.
 </blockquote>
 
 - `FRONT_COMMERCE_WEB_PAYPAL_ENV`: `production` or `sandbox`
 - Paypal credentials (See [How do I request API Signature or Certificate credentials for my PayPal account?](https://www.paypal.com/uk/smarthelp/article/how-do-i-request-api-signature-or-certificate-credentials-for-my-paypal-account-faq3196))
-    - `FRONT_COMMERCE_PAYPAL_USERNAME`
-    - `FRONT_COMMERCE_PAYPAL_PASSWORD`
+  - `FRONT_COMMERCE_PAYPAL_USERNAME`
+  - `FRONT_COMMERCE_PAYPAL_PASSWORD`
 
 ### Ogone
 
 <blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
+More documentation about this module will be available soon. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> directly if you need this information quickly.
 </blockquote>
 
 - `FRONT_COMMERCE_OGONE_ENV`
@@ -231,7 +229,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
-- `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:payment:buybox`: debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:performance`: allow to debug server performance in production by enabling [server timings](/docs/advanced/performance/server-timings.html)
 - `front-commerce:prismic`: turns [the Prismic module](/docs/prismic/) debug on
 - `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically. Can be targetted directly, or included with the previous namespace using `DEBUG=front-commerce:prismic*`
@@ -263,6 +261,7 @@ A meaningful module name is used to scope `depd` messages, and appears at the be
 One can leverage [`depd`'s `TRACE_DEPRECATION` environment variable](https://www.npmjs.com/package/depd#processenvtrace_deprecation) to display a stack trace for each deprecation. It will help you to find the line of code in your codebase that calls deprecated code.
 
 Example:
+
 ```shell
 TRACE_DEPRECATION=*
 ```
@@ -271,5 +270,5 @@ TRACE_DEPRECATION=*
 
 Depending on the amount of customization you add to your Front-Commerce application, you may need to add new environment variables. This is possible and don't need any particular steps. However, please keep in mind that the ones that are safely available in your bundles are:
 
-* in your client bundle: all the variables starting with `FRONT_COMMERCE_WEB_`
-* in your server bundle: all the variables starting with `FRONT_COMMERCE_`, including `FRONT_COMMERCE_WEB_`
+- in your client bundle: all the variables starting with `FRONT_COMMERCE_WEB_`
+- in your server bundle: all the variables starting with `FRONT_COMMERCE_`, including `FRONT_COMMERCE_WEB_`

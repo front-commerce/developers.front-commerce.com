@@ -22,9 +22,10 @@ This method has two advantages:
 </blockquote>
 
 First you need to decide where the proxy can fetch the original images. There are two env variables to set:
-* `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the url of your magento endpoint (`http://magento2.local/`)
-  This will be updated in the future to support media that are uploaded on a different server. Please [contact us](mailto:contact@front-commerce.com) if you need this feature.
-* `FRONT_COMMERCE_BACKEND_IMAGES_PATH`: the base path of your media on the backend (`/media`)
+
+- `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the url of your magento endpoint (`http://magento2.local/`)
+  We don't yet support media that are uploaded on a different server. Please <span class="intercom-launcher">[contact us](mailto:hello@front-commerce.com)</span> if you need this feature.
+- `FRONT_COMMERCE_BACKEND_IMAGES_PATH`: the base path of your media on the backend (`/media`)
   For instance, if you want to retrieve the media `http://magento2.local/upload/toto.jpg` when querying `http://localhost:4000/media/toto.jpg`, you need to use `FRONT_COMMERCE_BACKEND_IMAGES_PATH=/upload`.
     <blockquote class="note">
     Note that you don't need to set `FRONT_COMMERCE_BACKEND_IMAGES_PATH` if you are using Magento as a backend for the API and the images because the default is already `/media`.
@@ -43,7 +44,7 @@ module.exports = {
     thumbnail: {
       width: 50, // size of the resized image
       height: 50, // size of the resized image
-      bgColors: [] // allowed background colors
+      bgColors: [], // allowed background colors
     },
     small: { width: 200, height: 200, bgColors: [] },
     medium: { width: 474, height: 474, bgColors: [] },
@@ -53,9 +54,9 @@ module.exports = {
       // when you have a list of images but don't actually know the ratio of the final image
       // you can replace the height with placeholderHeight in the preset
       placeholderHeight: 474,
-      bgColors: []
+      bgColors: [],
     },
-    large: { width: 1100, height: 1100, bgColors: [] }
+    large: { width: 1100, height: 1100, bgColors: [] },
   },
 };
 ```
@@ -75,9 +76,9 @@ With actual values, it would look like this:
 http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cover=true
 ```
 
-* `format`: must be one of the keys available in your `presets` configuration or `original` to request the image without any transformation
-* `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the `defaultBgColor`
-* `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hiding any of its content. The space left in your image will be filled with the `bgColor` attribute.
+- `format`: must be one of the keys available in your `presets` configuration or `original` to request the image without any transformation
+- `bgColor` (optional): must have one of the values in the array `bgColors` of your preset. If you don't set it, it will be the `defaultBgColor`
+- `cover` (optional): crops the image so that both dimensions are covered, making parts of the image hidden if necessary. If this option is not set, the image will fit in the dimensions without hiding any of its content. The space left in your image will be filled with the `bgColor` attribute.
 
 ### `<Image>` component
 
@@ -91,7 +92,7 @@ import Image from "theme/components/atoms/Image";
   alt="a suited description of the image"
   format="small"
   cover={true}
-/>
+/>;
 ```
 
 <blockquote class="important">
@@ -230,6 +231,7 @@ We have used the method explained above to set default `sizes` across the theme.
 The example above leveraged the built-in Magento media proxy. However, one could add a new media proxy for virtually any remote source thanks to Front-Commerce core libraries.
 
 Implementing the media proxy is possible by combining the following mechanisms:
+
 - [adding custom endpoints to the Node.js server](/docs/advanced/server/add-http-endpoint.html) (with express Router)
 - [the `express-http-proxy` middleware](https://www.npmjs.com/package/express-http-proxy)
 - Front-Commerce's `makeImageProxyRouter` library
@@ -255,21 +257,22 @@ export const mediaProxyRouter = () => {
   router.use(
     "/",
     // Here is where the core library has to be used
-    makeImageProxyRouter(transformImageBuffer => {
+    makeImageProxyRouter((transformImageBuffer) => {
       // please refer to the available options in the `express-http-proxy`
       // module documentation: https://www.npmjs.com/package/express-http-proxy#options
       //
       // `req.config` contains the app configurations
       // this example supposes that `myRemoteApp` configurations were defined
       // see https://developers.front-commerce.com/docs/advanced/server/configurations.html for further details
-      return proxy(req => req.config.myRemoteApp.endpoint, {
+      return proxy((req) => req.config.myRemoteApp.endpoint, {
         timeout: 5000,
-        proxyReqPathResolver: req => {
+        proxyReqPathResolver: (req) => {
           // transform the url to target the correct image url on the remote system
-          const remoteImagesBasePath = req.config.myRemoteApp.imagesEndpoint.replace(
-            req.config.myRemoteApp.endpoint,
-            ""
-          );
+          const remoteImagesBasePath =
+            req.config.myRemoteApp.imagesEndpoint.replace(
+              req.config.myRemoteApp.endpoint,
+              ""
+            );
           return `${remoteImagesBasePath}${req.url}`;
         },
         userResDecorator: (proxyRes, resBuffer, req, res) => {
@@ -288,7 +291,7 @@ export const mediaProxyRouter = () => {
           // Pass `true` as the last parameter to skip filesystem caching
           // and directly sends the response.
           return transformImageBuffer(resBuffer, req, res, false);
-        }
+        },
       });
     })
   );

@@ -24,6 +24,7 @@
     "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate && cp -r source/_static/* public",
     "clean": "hexo clean",
     "test": "npm run clean; npm run build",
+    "lint": "prettier --check .",
     "blc:prod": "blc --exclude 4000 --exclude 9001 --filter-level 2 https://developers.front-commerce.com -ro",
     "blc:local": "blc --exclude 4000 --exclude 9001 --filter-level 2 http://localhost:4444 -ro",
     "prepare": "husky install",

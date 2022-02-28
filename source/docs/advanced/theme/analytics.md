@@ -412,7 +412,7 @@ PixelIntegration.prototype.event = function (track) {
     img.setAttribute("src", pixelUrl);
     img.setAttribute(
       "style",
-      "position: absolute; left: -5000px; top: -4000px;",
+      "position: absolute; left: -5000px; top: -4000px;"
     );
     document.body.appendChild(img);
   }

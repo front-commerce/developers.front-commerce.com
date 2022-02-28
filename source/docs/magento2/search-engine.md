@@ -118,11 +118,11 @@ On Front-Commerce side, you need to enable the Algolia datasource by making the 
 
 Front-Commerce retrieves the following parameters from Magento:
 
-* [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
-* [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
-* the index name prefix
-* the number of values per facet
-* the configured facet attributes
+- [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+- [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+- the index name prefix
+- the number of values per facet
+- the configured facet attributes
 
 On the configured facets, only the attribute name is taken into account (_Facet type_, _Label_, _Searchable_ and _Create Query rule_ are ignored for now).
 

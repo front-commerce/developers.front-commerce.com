@@ -11,7 +11,7 @@ _Since version 2.11_
 
 You may want to allow your customers to directly order an item based on its <abbr title="Stock Keeping Unit">SKU</abbr>
 
-The `<QuickOrder />` component  allows customers to add products to the cart by entering a SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts.
+The `<QuickOrder />` component allows customers to add products to the cart by entering a SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts.
 
 ![Example with the component added to the default's theme minicart](/docs/advanced/features/quickorder_images/Quickorder-sample.png)
 

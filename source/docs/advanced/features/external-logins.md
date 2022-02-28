@@ -14,8 +14,9 @@ _Beta feature (API may change)_
 # External Logins
 
 Front Commerce supports external logins. The API for supporting external logins comes in 2 parts:
-* The `LoginProvider` which implements the login with the external systems (such as Facebook or Google)
-* The `ExternalLoginHandler` which implements the login with your platform (such as Magento1, Magento2, Proximis or BigCommerce).
+
+- The `LoginProvider` which implements the login with the external systems (such as Facebook or Google)
+- The `ExternalLoginHandler` which implements the login with your platform (such as Magento1, Magento2, Proximis or BigCommerce).
 
 Out of the box we ship two `LoginProvider`s -the `FacebookProvider` and the `GoogleProvider`- and two `ExternalLoginHandler`s -the `Magento1ExternalLoginHandler` and the `Magento2ExternalLoginHandler`.
 
@@ -31,7 +32,7 @@ The user object in the context of external logins is an object with the followin
 }
 ```
 
-We recommend the use of the class `./modules/auth-external-login/server/domain/ExternalLoginUser.js` while customizing external logins. 
+We recommend the use of the class `./modules/auth-external-login/server/domain/ExternalLoginUser.js` while customizing external logins.
 
 ## Adding the necessary modules
 
@@ -51,17 +52,17 @@ module.exports = {
 
 ## Magento1 Requirements
 
-For the external logins to work with the Magento1 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento1 connector on 1.4.2 or later. 
+For the external logins to work with the Magento1 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento1 connector on 1.4.2 or later.
 
 ## Magento2 Requirements
 
-For the external logins to work with the Magento2 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento1 connector on 2.5.2 or later. 
+For the external logins to work with the Magento2 module in addition to [Adding the necessary modules](#Adding-the-necessary-modules) you need to ensure you are have the magento2 connector on 2.6.0 or later.
 
 ## Ensuring the login buttons show
 
-The `auth-external-login` registered above added two components to the `LoginForm` component :  `AdditionalLoginFormActions` and `FlashMessages` in 2.13.0. 
+The `auth-external-login` registered above added two components to the `LoginForm` component : `AdditionalLoginFormActions` and `FlashMessages` in 2.13.0.
 
-If you overrode `LoginForm` please refer to the [migration guides](/docs/appendices/migration-guides#Login-Form-Update) for more details 
+If you overrode `LoginForm` please refer to the [migration guides](/docs/appendices/migration-guides#Login-Form-Update) for more details
 
 After ensuring that `AdditionalLoginFormActions` and `FlashMessages` are in your `LoginForm` the "Sign in with Facebook" and "Sign in with Google" buttons should now appear in your login page/modal.
 
@@ -86,14 +87,15 @@ To configure the buttons shown for external logins you can override the `theme/m
 The `FacebookProvider` needs the `clientId` and the `clientSecret` to work. You can get these from your app on the [facebook developer console](https://developers.facebook.com/apps/).
 
 To configure the `clientId` and the `clientSecret` you need to define the folowing environment variables:
-* `FRONT_COMMERCE_FACEBOOK_CLIENT_ID` for the `clientId`
-* `FRONT_COMMERCE_FACEBOOK_CLIENT_SECRET` for the `clientSecret`
+
+- `FRONT_COMMERCE_FACEBOOK_CLIENT_ID` for the `clientId`
+- `FRONT_COMMERCE_FACEBOOK_CLIENT_SECRET` for the `clientSecret`
 
 ### Configuring Redirect URIs
 
-You need to configure the allowed redirect URIs on your [facebook developer console](https://developers.facebook.com/apps/). 
-Note that the `Valid OAuth Redirect URIs` should contain all your stores URLs followed by `/external-login/facebook/callback`. 
- 
+You need to configure the allowed redirect URIs on your [facebook developer console](https://developers.facebook.com/apps/).
+Note that the `Valid OAuth Redirect URIs` should contain all your stores URLs followed by `/external-login/facebook/callback`.
+
 For example if you have two stores `https://example.com/en` and `https://example.com/fr`, you need to put `https://example.com/en/external-login/facebook/callback` and `https://example.com/fr/external-login/facebook/callback` in the `Valid OAuth Redirect URIs` field.
 
 ### Working with the Facebook provider in development mode (localhost)
@@ -102,14 +104,14 @@ External login rely on redirections, and in devlopment your server is usally at 
 
 _Note: do not forget to [reconfigure your app](#Configuring-Redirect-URIs) with this new URL_
 
-
 ## Configuring the Google provider
 
 The `GoogleProvider` needs the `clientId` and the `clientSecret` to work. You can get these from your "OAuth2.0 Client" of your app on the [google developer console](https://console.developers.google.com/apis/credentials). P.S. you need to create one if you have not already.
 
 To configure the `clientId` and the `clientSecret` you need to define the folowing environment variables:
-* `FRONT_COMMERCE_GOOGLE_CLIENT_ID` for the `clientId`
-* `FRONT_COMMERCE_GOOGLE_CLIENT_SECRET` for the `clientSecret`
+
+- `FRONT_COMMERCE_GOOGLE_CLIENT_ID` for the `clientId`
+- `FRONT_COMMERCE_GOOGLE_CLIENT_SECRET` for the `clientSecret`
 
 ### Configuring Redirect URIs
 

@@ -56,7 +56,7 @@ We will continue to enrich the Front-Commerce functionalities linked to Algolia,
 
 ## HiPay: a brand new PSP available for Front-Commerce
 
-HiPay has become a must as part of the decision making process when a PSP (Payment Service Provider) has to be chosen by a web-merchant or an integrator, along with [Adyen](/docs/advanced/payments/adyen.html), [Paypal](/docs/advanced/payments/paypal.html) or [Stripe](/docs/advanced/payments/stripe.html).
+HiPay has become a must as part of the decision making process when a PSP (Payment Service Provider) has to be chosen by a web-merchant or an integrator, along with [Adyen](/docs/advanced/payments/adyen.html), [Paypal](/docs/advanced/payments/paypal.html), [Stripe](/docs/advanced/payments/stripe.html) or [Lyra](/docs/advanced/payments/payzen.html).
 
 It is now available in Front-Commerce, with the first payment methods enabled: MasterCard, VISA, American Express and Bancontact. We will enable Apple Pay in the next version. What other payment methods would you like to activate for HiPay? Feel free to contact our Product Manager Josquin to discuss this ☕
 

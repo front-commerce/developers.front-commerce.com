@@ -63,4 +63,4 @@ As detailed earlier, Front-Commerce already supports a wide range of Magento fea
 We believe that — to date — **most of the features from Front-Commerce schema are more stable, performant and complete than Magento’s GraphQL counterpart** (even if the schema is slightly different).
 
 However, our goal is to reduce this gap (and our codebase!) and your feedback is welcome.
-If you think something is missing in Front-Commerce, or stable enough in Magento to be used in production [send us an email](mailto:contact@front-commerce.com) and we could add it to our roadmap!
+If you think something is missing in Front-Commerce, or stable enough in Magento to be used in production <span class="intercom-launcher">[send us an email](mailto:hello@front-commerce.com)</span> and we could add it to our roadmap!

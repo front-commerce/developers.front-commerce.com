@@ -2,11 +2,13 @@
 //@import "Textarea.less";
 
 input {
-  &.hidden { display: none; }
+  &.hidden {
+    display: none;
+  }
 }
 
 // Input's look like text fields
-input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type=submit]):not([type=file]),
+input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type="submit"]):not([type="file"]),
 input[type="number"] {
   &:extend(textarea all);
   overflow: inherit;
@@ -18,8 +20,8 @@ input[type="number"] {
 }
 
 /* Remove controls from Safari and Chrome */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0; /* Removes leftover margin */
 }
@@ -30,52 +32,60 @@ input.secondary {
 
 // Inputs with icons inside of them
 .input-symbol {
-	.font-s2;
-	display: inline-block;
+  .font-s2;
+  display: inline-block;
   overflow: hidden;
   position: relative;
 
-	> [class*="icon-"] {
+  > [class*="icon-"] {
     .transition( all 150ms ease-out );
-		.position(absolute, 50%, auto, auto, auto, 1em, 1em);
-		font-size: 1em;
-		margin-top: -.5em; //don't use transforms here, we animate this for alerts
-		z-index: 1;
+    .position(absolute, 50%, auto, auto, auto, 1em, 1em);
+    font-size: 1em;
+    margin-top: -0.5em; //don't use transforms here, we animate this for alerts
+    z-index: 1;
 
     background: transparent;
     color: @color-mediumdark;
 
-    &.inverse { color: @color-mediumlight; }
+    &.inverse {
+      color: @color-mediumlight;
+    }
   }
 
-	input:focus + [class*="icon-"] {
+  input:focus + [class*="icon-"] {
     color: @color-darker;
   }
 
-  > [class*="icon-"] { left: .8em; }
-  > input { padding-left: 2.5em  !important; }
+  > [class*="icon-"] {
+    left: 0.8em;
+  }
+  > input {
+    padding-left: 2.5em !important;
+  }
 
   &.right {
-		// Often used in conjunction with a button
-		// e.g., Clearing a search field, submitting a single input form (mailing list)
-		> [class*="icon-"] {
-      right: .8em;
+    // Often used in conjunction with a button
+    // e.g., Clearing a search field, submitting a single input form (mailing list)
+    > [class*="icon-"] {
+      right: 0.8em;
       left: auto;
     }
 
     > input {
-      padding-right: 2.5em  !important;
+      padding-right: 2.5em !important;
       padding-left: 1em !important;
     }
 
-    &:before { right: 2.5rem; }
+    &:before {
+      right: 2.5rem;
+    }
   }
 
   &.round {
-    input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type=submit]):not([type=file]),
+    input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type="submit"]):not([type="file"]),
     input[type="number"] {
       border-radius: 3rem;
-      padding-left: 2.75em  !important;
+      padding-left: 2.75em !important;
     }
 
     > [class*="icon-"] {
@@ -86,8 +96,10 @@ input.secondary {
 
   &.small {
     font-size: 13px;
-    input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type=submit]):not([type=file]),
-    input[type="number"] { &:extend(textarea.small); }
+    input:not([type="checkbox"]):not([type="number"]):not([type="radio"]):not([type="submit"]):not([type="file"]),
+    input[type="number"] {
+      &:extend(textarea.small);
+    }
   }
 
   > input,
@@ -101,16 +113,16 @@ input.secondary {
     .position(absolute, 50%, 1.25rem);
     .transform(translate3d(100%, -50%, 0));
     .transition(all 200ms ease-out);
-		.font-s1;
-		.type-italic;
-		content: attr(data-error);
-		line-height: 1em;
+    .font-s1;
+    .type-italic;
+    content: attr(data-error);
+    line-height: 1em;
     opacity: 0;
-    padding: .25em 0 .25em .5em;
-		pointer-events: none;
+    padding: 0.25em 0 0.25em 0.5em;
+    pointer-events: none;
     z-index: 1;
 
-		background: rgba(255,255,255,.9);
+    background: rgba(255, 255, 255, 0.9);
     color: @color-negative;
   }
 

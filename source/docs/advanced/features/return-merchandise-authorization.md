@@ -33,7 +33,7 @@ To implement an RMA for a new platfom, you have to provide the server implementa
 1. implement the `createReturnMerchandizeAuthorizationRequest` mutation. The `createReturnMerchandizeAuthorizationRequest` mutation will receive a variable called `input` of type `CreateReturnMerchandizeAuthorizationRequestInput` and returns a `CreateReturnMerchandizeAuthorizationOutput` which is a `MutationSuccessInterface` with an extra `order` field representing the current order.
 1. implement the field `returns` of the type `Order`. This field should return all returned items belonging to this order. (please note that a `return` object has `items` fields this is due to the fact that some products have bundled items and it is sometimes possible to return some of those items).
 1. implement `isReturnable` field of the type `Order`. This should return true in case the order has returnable items.
-1. implement `isReturnable` field of the type `OrderItem`. This should return true in case the item is  returnable.
+1. implement `isReturnable` field of the type `OrderItem`. This should return true in case the item is returnable.
 1. implement `returnAttributes` field of the type `OrderItem`. Note: a `returnAttribute`'s type is the interface `ReturnAttribute` it is up to the integrator to resolve the `returnAttribute`'s type.
 1. implement `returns` field of the type `Customer` this should return all returns belonging to the parent customer.
 

@@ -54,11 +54,14 @@ In your Front-Commerce application:
 ### Register your Stripe payment component
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register Stripe
+
 ```diff
 +import StripeCheckout from "./StripeCheckout";
 
@@ -90,7 +93,7 @@ To allow loading stripe related remote resources:
 ### Advanced: customize data sent to Stripe
 
 <blockquote class="wip">
-**Work In Progress** This advanced pattern must be documented with further details. While we are working on it, please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Documentation In Progress** This advanced pattern must be documented with further details. While we are working on it, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 The Stripe payment module is extensible. It leverages Front-Commerce's "data transform" pattern to allow developers to customize payloads sent to Stripe for Customer and Cart content.
@@ -98,5 +101,6 @@ The Stripe payment module is extensible. It leverages Front-Commerce's "data tra
 Both the `Customer` and `PaymentIntent` Stripe objects can be customized at application level. It allows to add additional metadata depending on your own logic. For this, you can use the `registerCustomerDataTransform` and `registerPaymentIntentDataTransform` methods of the Stripe loader to add your custom transformers.
 
 See the tests for an example (while a detailed documentation is being written):
-* https://gitlab.com/front-commerce/front-commerce/blob/3c550dfa0142dde7da3761011379118612841de7/src/server/modules/payment-stripe/__tests__/loader.js#L77
-* https://gitlab.com/front-commerce/front-commerce/blob/3c550dfa0142dde7da3761011379118612841de7/src/server/modules/payment-stripe/__tests__/loader.js#L147
+
+- https://gitlab.com/front-commerce/front-commerce/blob/3c550dfa0142dde7da3761011379118612841de7/src/server/modules/payment-stripe/__tests__/loader.js#L77
+- https://gitlab.com/front-commerce/front-commerce/blob/3c550dfa0142dde7da3761011379118612841de7/src/server/modules/payment-stripe/__tests__/loader.js#L147

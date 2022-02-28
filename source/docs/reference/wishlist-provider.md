@@ -51,9 +51,8 @@ This is achieved by the use of the `useLoadWishlistItem` hook. The hook will ret
 
 ```jsx
 const MyComponent = ({ sku }) => {
-  const { loading, error, isInWishlist, wishlistItem } = useLoadWishlistItem(
-    sku
-  );
+  const { loading, error, isInWishlist, wishlistItem } =
+    useLoadWishlistItem(sku);
   if (loading) {
     return <div>Loading...</div>;
   }

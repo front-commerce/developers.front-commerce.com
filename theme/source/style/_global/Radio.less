@@ -2,8 +2,10 @@
 @import "Checkbox.less";
 
 label.radio {
-	&:extend(label.checkbox all);
+  &:extend(label.checkbox all);
 
-	input[type="radio"] + span:before,
-  input[type="radio"] + span:after { border-radius: 1em; }
+  input[type="radio"] + span:before,
+  input[type="radio"] + span:after {
+    border-radius: 1em;
+  }
 }

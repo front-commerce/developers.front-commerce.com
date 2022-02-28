@@ -10,6 +10,7 @@ Payment platforms integrated as a Front-Commerce Payment are compatible with eve
 ## Supported Payment platforms
 
 Front-Commerce Payments are currently available for the platforms below, learn how to install each one of them from the related documentation page:
+
 - [Stripe](/docs/advanced/payments/stripe.html#Front-Commerce-Payment)
 - [Paypal](/docs/advanced/payments/paypal.html#Front-Commerce-Payment)
 - [PayZen](/docs/advanced/payments/payzen.html#Front-Commerce-Payment)
@@ -17,7 +18,7 @@ Front-Commerce Payments are currently available for the platforms below, learn h
 - [BuyBox](/docs/advanced/payments/buybox.html#Front-Commerce-Payment)
 
 <blockquote class="info">
-  If you want to use a Payment platform not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.
+  If you want to use a Payment platform not yet listed above, please <span class="intercom-launcher">[`contact us`](mailto:hello@front-commerce.com)</span> so we can provide information about a potential upcoming native support for it.
 </blockquote>
 
 ## How is a Front-Commerce Payment method integrated with eCommerce platforms
@@ -36,13 +37,16 @@ Front-Commerce allows you to implement your own payment method. New embedded pay
 
 1. [create a new GraphQL module](/docs/essentials/extend-the-graphql-schema.html#Create-a-new-GraphQL-module)
 2. add a depency upon `"Magento2/Checkout"`
+
 ```js
 export default {
   namespace: "Payments/PWAy",
-  dependencies: ["Magento2/Checkout"]
+  dependencies: ["Magento2/Checkout"],
 };
 ```
+
 3. register the payment method from the module’s [`contextEnhancer`](/docs/reference/graphql-module-definition.html#contextEnhancer-optional)
+
 ```js
 export default {
   namespace: "Payments/PWAy",
@@ -51,7 +55,7 @@ export default {
     // [...] initialization here
 
     const chargeTransactionForOrder = (paymentData, orderId) => {
-       /* … the actual code that will charge the transaction (might delegate to a loader) … */
+      /* … the actual code that will charge the transaction (might delegate to a loader) … */
     };
 
     const METHOD_CODE = "pway_awesomecheckout";
@@ -63,7 +67,7 @@ export default {
     );
 
     return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
-  }
+  },
 };
 ```
 

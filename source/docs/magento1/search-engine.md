@@ -102,7 +102,6 @@ After the installation, you need to configure it, at least:
    Dashboard](https://www.algolia.com/dashboard/api-keys)
 1. The attribute `category_ids` must be listed in both the facets configuration and in the indexed product attributes (and there it must be set as _Searchable_) as Front-Commerce relies on it to list the products in categories.
 
-
 You can then run the indexer so that the products are indexed in Algolia's
 index.
 
@@ -142,11 +141,11 @@ your `.env` file.
 
 Front-Commerce 2.6 takes the following parameters from Magento:
 
-* [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
-* [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
-* the index name prefix
-* the number of values per facet
-* the configured facet attributes
+- [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+- [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+- the index name prefix
+- the number of values per facet
+- the configured facet attributes
 
 On the configured facets, only the attribute name is taken into account (Facet type, Label, Searchable and Create Query rule are ignored for now).
 

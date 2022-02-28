@@ -183,7 +183,7 @@
       &.next {
         margin-right: 0;
         margin-left: 1rem;
-        margin-top: .75rem;
+        margin-top: 0.75rem;
         @media screen and (min-width: @breakpoint) {
           align-self: flex-end;
           margin-top: 0;
@@ -204,7 +204,7 @@
 
       &:hover {
         color: #fff;
-        background: @color-complementary
+        background: @color-complementary;
       }
 
       &:hover .subtitle-pagination {
@@ -233,7 +233,6 @@
       padding: 20px 50px;
       border-radius: 5px;
       //box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
-    
 
       &:hover {
         color: #fff;
@@ -301,17 +300,17 @@
     height: 19px;
   }
 
-	.line {
-		// Hack to fix https://github.com/meteor/hexo-theme-meteor/issues/41
+  .line {
+    // Hack to fix https://github.com/meteor/hexo-theme-meteor/issues/41
     height: 19px;
-	}
-
-	.objdesc > dt {
-  	.term-code;
   }
 
-	.line {
-		// Hack to fix https://github.com/meteor/hexo-theme-meteor/issues/41
+  .objdesc > dt {
+    .term-code;
+  }
+
+  .line {
+    // Hack to fix https://github.com/meteor/hexo-theme-meteor/issues/41
     height: 19px;
-	}
+  }
 }

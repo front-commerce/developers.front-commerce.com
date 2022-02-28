@@ -10,7 +10,7 @@ supposes that you have access to our private repositories.
 
 Access is granted to teams that have signed the relevant legal contracts, either
 as a **Partner** or a **Customer**. Please
-[contact us](mailto:contact@front-commerce.com) if you need help or further
+<span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need help or further
 information.
 
 Front-Commerce is a Node.js server that will serve a GraphQL endpoint and a
@@ -30,7 +30,6 @@ node -v
 
 If you don't have the minimum requirements,
 [please follow the instructions on Node.js website](https://nodejs.org/).
-
 
 ## Installation using the skeleton
 
@@ -94,9 +93,9 @@ module.exports = {
     currency: "EUR",
     default_country_id: "GB",
     url: process.env.FRONT_COMMERCE_URL,
-    countries: IsoCountries =>
-      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
-  }
+    countries: (IsoCountries) =>
+      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json")),
+  },
 };
 ```
 

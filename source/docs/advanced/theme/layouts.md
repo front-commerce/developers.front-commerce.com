@@ -37,9 +37,9 @@ We call this an **Inner layout** because it does not get rid of the layout above
 
 <abbr title="Too Long; Didn't Read">TL;DR</abbr>
 
-* a Layout should be implemented by creating a component in a `_layout.js` file
-* an Inner Layout should be implemented by creating a component in a `_inner-layout.js` file
-* Restart on each new file creation in the `web/theme/routes` folder
+- a Layout should be implemented by creating a component in a `_layout.js` file
+- an Inner Layout should be implemented by creating a component in a `_inner-layout.js` file
+- Restart on each new file creation in the `web/theme/routes` folder
 
 ### Define a new layout for a list of routes
 
@@ -66,12 +66,10 @@ However you don't want users to feel like they are still in the shop. You want t
 // web/theme/routes/blog/_layout.js
 import React from "react";
 
-const BlogLayout = ({children}) => (
+const BlogLayout = ({ children }) => (
   <div>
     <header>Welcome to our blog!</header>
-    <main>
-      {children}
-    </main>
+    <main>{children}</main>
   </div>
 );
 
@@ -103,18 +101,22 @@ For instance, in the case of the account, we've got an Inner Layout similar to t
 import React from "react";
 import Link from "theme/components/atoms/Typography/Link";
 
-const AccountLayout = ({children}) => (
+const AccountLayout = ({ children }) => (
   <div>
     <nav>
       <ul>
-        <li><Link to="/">Dashboard</Link></li>
-        <li><Link to="/orders">Orders</Link></li>
-        <li><Link to="/address-book">Address Book</Link></li>
+        <li>
+          <Link to="/">Dashboard</Link>
+        </li>
+        <li>
+          <Link to="/orders">Orders</Link>
+        </li>
+        <li>
+          <Link to="/address-book">Address Book</Link>
+        </li>
       </ul>
     </nav>
-    <div>
-      {children}
-    </div>
+    <div>{children}</div>
   </div>
 );
 

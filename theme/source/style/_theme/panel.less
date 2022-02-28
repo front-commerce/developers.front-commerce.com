@@ -1,37 +1,41 @@
 .panel {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
-	@media screen and (min-width: @breakpoint) { display: none; }
+  @media screen and (min-width: @breakpoint) {
+    display: none;
+  }
 
-	.panel-item {
-		.std-xpadding;
-		.font-s2;
-		.type-semibold;
-		display: block;
-		padding-top: .5rem;
-		padding-bottom: .5rem;
-		padding-left: .75rem;
-		padding-right: .75rem;
-		position: relative;
+  .panel-item {
+    .std-xpadding;
+    .font-s2;
+    .type-semibold;
+    display: block;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    position: relative;
 
-		&.active,
-		&:hover {
-			background: @color-primary;
+    &.active,
+    &:hover {
+      background: @color-primary;
 
-			a { .link(@color-lightest); }
+      a {
+        .link(@color-lightest);
+      }
 
-			&:before {
-				.transform(scale3d(1,1,1));
-				background: @color-primary;
-			}
-		}
+      &:before {
+        .transform(scale3d(1,1,1));
+        background: @color-primary;
+      }
+    }
 
-		a {
-			.link(@color-dark);
-			.type-semibold;
-			display: block;
-		}
-	}
+    a {
+      .link(@color-dark);
+      .type-semibold;
+      display: block;
+    }
+  }
 }

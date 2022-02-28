@@ -1,46 +1,50 @@
 // This `nav` tag is from the apollographql.com site. https://git.io/vAO3k
 nav {
-	padding: 0 !important;
-	margin: 0 !important;
-	max-width: 100% !important;
-	position: relative !important;
-	.nav-header {
-		display: none;
-	}
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  position: relative !important;
+  .nav-header {
+    display: none;
+  }
 }
 
 .panel {
-	#sidebar-panel-nav {
-		.nav-menu {
-			display: block;
-		}
+  #sidebar-panel-nav {
+    .nav-menu {
+      display: block;
+    }
 
-		.nav-header {
-			display: none;
-		}
-	}
+    .nav-header {
+      display: none;
+    }
+  }
 }
 
 .nav-group.left {
-	.nav-item {
-		display: inline-block;
+  .nav-item {
+    display: inline-block;
     line-height: 3rem;
   }
 }
 
 .nav {
-	.std-xpadding;
-	.transform(translate3d(0,0,0));
-	.position(relative, 0, 0, auto, 0, auto, 4rem);
-	text-align: center;
-	z-index: 3;
+  .std-xpadding;
+  .transform(translate3d(0,0,0));
+  .position(relative, 0, 0, auto, 0, auto, 4rem);
+  text-align: center;
+  z-index: 3;
 
   &.dark {
     color: @color-darker;
-		border-bottom: 1px solid @color-mediumlight;
+    border-bottom: 1px solid @color-mediumlight;
 
-		a { .link(@color-darker); }
-    svg { fill: @color-darkest; }
+    a {
+      .link(@color-darker);
+    }
+    svg {
+      fill: @color-darkest;
+    }
 
     .nav-item {
       cursor: pointer;
@@ -51,8 +55,10 @@ nav {
       position: relative;
 
       & + .nav-item {
-        margin-left: .75rem;
-        @media screen and (min-width: @breakpoint) { margin-left: 1.875rem;  }
+        margin-left: 0.75rem;
+        @media screen and (min-width: @breakpoint) {
+          margin-left: 1.875rem;
+        }
       }
 
       &.show-mobile + .nav-item {
@@ -60,7 +66,6 @@ nav {
           margin-left: 0;
         }
       }
-
 
       .link {
         .font-s2;
@@ -83,10 +88,14 @@ nav {
 
   &.light {
     color: @color-lightest;
-		border-bottom: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-		a { .link(@color-lightest); }
-    svg { fill: @color-lightest; }
+    a {
+      .link(@color-lightest);
+    }
+    svg {
+      fill: @color-lightest;
+    }
   }
 
   .nav-group {
@@ -94,7 +103,7 @@ nav {
     top: 50%;
     transform: translateY(-50%);
 
-		.std-xpadding;
+    .std-xpadding;
     z-index: 1;
 
     .nav-item.mobile-button {
@@ -105,7 +114,7 @@ nav {
         display: flex;
         align-items: center;
         .icon-menu {
-          margin-right: .5rem;
+          margin-right: 0.5rem;
         }
       }
     }
@@ -147,16 +156,16 @@ nav {
       }
     }
 
-		.logo {
-			display: inline-block;
-			height: 40px;
-			width: 145px;
-			vertical-align: top;
-			margin: 4px 0 0 0;
-		}
+    .logo {
+      display: inline-block;
+      height: 40px;
+      width: 145px;
+      vertical-align: top;
+      margin: 4px 0 0 0;
+    }
 
-		.logo-subbrand {
-			display: none;
-		}
+    .logo-subbrand {
+      display: none;
+    }
   }
 }

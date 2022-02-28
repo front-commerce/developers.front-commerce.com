@@ -1,187 +1,200 @@
 .sidebar {
-	.font-s2;
+  .font-s2;
 
-	.topcap {
-		.std-xpadding;
-		padding-top: .5rem;
-		padding-bottom: .5rem;
+  .topcap {
+    .std-xpadding;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 
-		.title-sidebar {
-			.font-s3;
-			.type-bold;
-		}
+    .title-sidebar {
+      .font-s3;
+      .type-bold;
+    }
 
-		.version-sidebar {
-			.type-semibold;
-			float: right;
-			margin-right: -.75rem;
-			margin-top: -.5rem;
-		}
-	}
+    .version-sidebar {
+      .type-semibold;
+      float: right;
+      margin-right: -0.75rem;
+      margin-top: -0.5rem;
+    }
+  }
 
-	.wrapper-search {
-		display: block;
-		margin-bottom: .75rem;
+  .wrapper-search {
+    display: block;
+    margin-bottom: 0.75rem;
 
-		.input-area {
-			padding-left: 1.25rem;
-			padding-right: 1.25rem;
+    .input-area {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
 
-			.input-symbol {
-				width: 100%;
+      .input-symbol {
+        width: 100%;
 
-				input {
-					box-shadow: @color-light 0 0 0 1px inset;
-				}
-			}
-		}
-	}
+        input {
+          box-shadow: @color-light 0 0 0 1px inset;
+        }
+      }
+    }
+  }
 
-	.heading-toc {
-		.subheading-caps;
-		color: @color-darker;
-		padding: .25em 1.4em .25em;
-	}
+  .heading-toc {
+    .subheading-caps;
+    color: @color-darker;
+    padding: 0.25em 1.4em 0.25em;
+  }
 
-	.toc > li:first-child > .heading-toc {
-		padding-top: 0;
-	}
+  .toc > li:first-child > .heading-toc {
+    padding-top: 0;
+  }
 
-	ul.toc {
-		//reset
-		list-style: none;
-		padding-left: 0;
-		margin: 0;
+  ul.toc {
+    //reset
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
 
-		padding-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
 
-		ul {
-			list-style: none;
-			padding-left: 0;
-		}
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
 
-		li { vertical-align: top; }
+    li {
+      vertical-align: top;
+    }
+  }
 
-	}
+  ul.list-toc {
+    @indent: 15px;
 
-	ul.list-toc {
-		@indent: 15px;
-
-		/*
+    /*
 			This ensures that each tier of the headings is properly offset,
 			but ensures that the background color can still go all the way to
 			the left margin of the viewport.
 		*/
-		li {
-			a { padding-left: (@indent + 7); }
-			li {
-				a { padding-left: (@indent * 2); }
-				li {
-					a { padding-left: (@indent * 3); }
-					li {
-						a { padding-left: (@indent * 4); }
-						li {
-							a { padding-left: (@indent * 5); }
-						}
-					}
-				}
-			}
-		}
+    li {
+      a {
+        padding-left: (@indent + 7);
+      }
+      li {
+        a {
+          padding-left: (@indent * 2);
+        }
+        li {
+          a {
+            padding-left: (@indent * 3);
+          }
+          li {
+            a {
+              padding-left: (@indent * 4);
+            }
+            li {
+              a {
+                padding-left: (@indent * 5);
+              }
+            }
+          }
+        }
+      }
+    }
 
-		a {
-			.link(@color-dark);
-			.type-normal;
-			.type-secondary;
-			cursor: pointer;
-			display: block;
-			line-height: 1rem;
-			position: relative;
-			font-weight: 600;
-			padding-left: 1.5rem;
-			text-decoration: none;
+    a {
+      .link(@color-dark);
+      .type-normal;
+      .type-secondary;
+      cursor: pointer;
+      display: block;
+      line-height: 1rem;
+      position: relative;
+      font-weight: 600;
+      padding-left: 1.5rem;
+      text-decoration: none;
 
-			&:hover, &:focus {
-				text-decoration: underline;
-			}
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
 
-			&.current {
-				&:extend(.link.primary all);
-				.type-bold;
-				color: @color-primary;
-			}
+      &.current {
+        &:extend(.link.primary all);
+        .type-bold;
+        color: @color-primary;
+      }
 
-			&:before {
-				.font-s1;
-				.position(absolute, 50%, auto, auto, -1rem);
-				.transition( all 250ms ease-out );
-				color: @color-primary;
-				margin-top: -.5em;
-				opacity: 0;
+      &:before {
+        .font-s1;
+        .position(absolute, 50%, auto, auto, -1rem);
+        .transition( all 250ms ease-out );
+        color: @color-primary;
+        margin-top: -0.5em;
+        opacity: 0;
 
-				// Taken from package percolate:icons/edited-style.less
-				font-family: 'percolate';
-				speak: none;
-				font-style: normal;
-				font-weight: normal;
-				font-variant: normal;
-				text-transform: none;
-				line-height: 1;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
+        // Taken from package percolate:icons/edited-style.less
+        font-family: "percolate";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
 
-				// Show right arrow icon
-				//&:extend(.icon-arrow-right-alt:before);
-			}
+        // Show right arrow icon
+        //&:extend(.icon-arrow-right-alt:before);
+      }
 
-			&.active,
-			&:hover {
-				&:before { opacity: 1; }
-			}
+      &.active,
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
 
-			&.active {
-				color: @color-primary;
-			}
+      &.active {
+        color: @color-primary;
+      }
 
-			&.h3 { .link(@color-dark); }
+      &.h3 {
+        .link(@color-dark);
+      }
 
-			em {
-				// For code styling in tandem with .api-box
-				// Used on Meteor Docs
-				.type-italic;
-				.type-normal;
-			}
-		}
+      em {
+        // For code styling in tandem with .api-box
+        // Used on Meteor Docs
+        .type-italic;
+        .type-normal;
+      }
+    }
 
-		.sub-menu {
-			margin-top: .375rem;
+    .sub-menu {
+      margin-top: 0.375rem;
 
-			a {
-				
-				font-weight: 400;
+      a {
+        font-weight: 400;
 
-				&.active {
-					.link(@color-lightest);
-					background: @color-sidebar-wide;
-					color: @color-primary;
-					width: 100%;
-					padding-top: 10px;
-					padding-bottom: 10px;
-				}
-				
-			}
+        &.active {
+          .link(@color-lightest);
+          background: @color-sidebar-wide;
+          color: @color-primary;
+          width: 100%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
 
+      &:empty {
+        margin: 0;
+        max-height: 0;
+        overflow: hidden;
+      }
+    }
 
-			&:empty {
-				margin: 0;
-				max-height: 0;
-				overflow: hidden;
-			}
-		}
-
-		li {
-			position: relative;
-			padding-top: .375rem;
-			padding-bottom: .375rem;
-		}
-	}
+    li {
+      position: relative;
+      padding-top: 0.375rem;
+      padding-bottom: 0.375rem;
+    }
+  }
 }

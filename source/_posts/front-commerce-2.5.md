@@ -1,9 +1,10 @@
 ---
-title: '2.5: RMA feature, search datasources and shipping modules'
+title: "2.5: RMA feature, search datasources and shipping modules"
 date: 2021-03-11
 ---
 
 Front-Commerce 2.5 is one of the most productive releases we had so far. Our team worked hard to improve the product and increase its flexibility:
+
 - search datasources allows you to choose between Algolia or ElasticSearch to power your search
 - new Shipping modules and Map implementations will reduce your integration costs
 - allow your Customers to return products with <abbr title="Return Merchandise Authorization">RMA</abbr>
@@ -50,6 +51,7 @@ Core Web Vitals (introduced in 2020) are signals **measuring how users perceive 
 More and more people are starting to care about these metrics, which is **a great opportunity to double-down on optimizing your storefront** to meet the expectations.
 
 Our value proposition has always been to help you deliver smooth buying experiences using the best practices and frontend technologies. That's why **Front-Commerce 2.5 contains new tools and sensible defaults to build an optimized and performant theme**:
+
 - preload critical fonts automatically,
 - display above the fold images right away,
 - use accessible components,

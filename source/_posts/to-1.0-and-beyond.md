@@ -75,7 +75,7 @@ We have been happy to deliver our first training a few weeks ago! It is one the 
 
 Magento1 support is on the way: the first Magento1 / Front-Commerce PWA project is being designed as we speak and **we aim to have a public Front-Commerce demo and stable code for June 1st**. It will be a fully-featured integration (not a <abbr title="Proof Of Concept">POC</abbr>) that will allow you to go live quickly, leveraging Front-Commerce’s maturity with Magento2 stores in production for over more than a year.
 
-[Remote schemas stitching](https://www.apollographql.com/docs/graphql-tools/remote-schemas.html)  with Magento2’s GraphQL implementation will land in Front-Commerce soon. The first use case is fetching Magento’s store configurations.
+[Remote schemas stitching](https://www.apollographql.com/docs/graphql-tools/remote-schemas.html) with Magento2’s GraphQL implementation will land in Front-Commerce soon. The first use case is fetching Magento’s store configurations.
 
 And several theme improvements.
 

@@ -53,7 +53,8 @@ query CmsPage {
   cmsPageList(identifiers: ["customer-service"]) {
     identifier
     title
-    children { # <- only available with magento2-commerce module
+    children {
+      # <- only available with magento2-commerce module
       identifier
       title
     }
@@ -64,7 +65,7 @@ query CmsPage {
 Depending the actual page hierarchy in Magento2, it could return something like:
 
 ```json
- {
+{
   "data": {
     "cmsPageList": [
       {

@@ -115,16 +115,17 @@ export default {
 **Note:**
 If you have a nested route e.g. `/albums/:category/:uid` then you need add an object that lists the API IDs of the Content Relationships in the route, in this case `category`. You can do this by passing the resolvers in the `withPrismicRoutes` option.
 
-  ```diff
+```diff
 -    withPrismicRoutes:false,
 +    withPrismicRoutes: {
 +        resolvers: {
 +            category: "album.category"
 +        }
 +    }
-  ```
+```
+
 see the [Prismic Route Resolver](https://prismic.io/docs/core-concepts/link-resolver-route-resolver#route-resolver) documentation for more information.
-      
+
 ## Map GraphQL type to a component
 
 To map a GraphQL type to React component, create a file called `moduleRoutes.js` at the root of the `web` directory and add the following to it:
@@ -165,75 +166,80 @@ Now an instance of the custom Prismic type with the `url` field set to `my-custo
 Optionally to add the custom Prismic type to the sitemap use the following steps:
 
 1. implement the Sitemapable interface on the GraphQL type, and resolver.
-  ```diff
+
+```diff
 // schema.gql
 -type Album implements Routable {
 +type Album implements Routable & Sitemapable {
-  url: String # the newly added field
-  artist: String
-  title: String
-  release_date: Date
-  path: String # for the routable interface
+url: String # the newly added field
+artist: String
+title: String
+release_date: Date
+path: String # for the routable interface
 + priority: Float
 + seoImages: [SitemapImage]
 + lastmod: String
 + changefreq: String
 }
-  ```
-  and
-  ```diff
+```
+
+and
+
+```diff
 // resolvers.js
 export default {
 Query: {
-  ...
+...
 },
 Album: {
-  path: async (content, _, { loaders }) => {
-    const baseUrl = (await loaders.Shop.getCurrentShop()).baseUrl,
-    return `{baseUrl}/${content.url}`;
-  },
+path: async (content, _, { loaders }) => {
+  const baseUrl = (await loaders.Shop.getCurrentShop()).baseUrl,
+  return `{baseUrl}/${content.url}`;
+},
 + priority: () => 1,
 + seoImages: (content) => [],
 + lastmod: () => "2020-01-01T12:00:00.000Z",
 + changefreq: () => "daily",
 },
 };
-  ```
+```
+
 1. Enable sitemap in the module definition file:
-  ```diff
+
+```diff
 // index.js
 import typeDefs from "./schema.gql";
 import resolvers from "./resolvers";
 
 export default {
-  namespace: "<module_name_space>",
-  dependencies: ["Prismic/Core"],
-  typeDefs,
-  resolvers,
-  contextEnhancer: ({ req, loaders }) => {
-    const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
-    const contentTransformOptions = {
-      fieldTransformers: {
-        title: new TitleTransformer(),
-        release_date: new DateTransformer(),
-      },
-    };
+namespace: "<module_name_space>",
+dependencies: ["Prismic/Core"],
+typeDefs,
+resolvers,
+contextEnhancer: ({ req, loaders }) => {
+  const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
+  const contentTransformOptions = {
+    fieldTransformers: {
+      title: new TitleTransformer(),
+      release_date: new DateTransformer(),
+    },
+  };
 
-    loaders.Prismic.registerRoutableType({
-      typeIdentifier: "album", // <-- the Prismic custom type
-      urlFieldName: "url",     // <-- Prismic API ID mentioned above
-      graphQLType: "Album",    // <-- GraphQL type created above
-      contentTransformOptions,
-  -   isSitemapable: false,
-  +   isSitemapable: true,
-      postTransformer: (url, document) => { // optional function postTransformer
-        if(document.isPublished) {  // possible usecase
-          return document;
-        }
+  loaders.Prismic.registerRoutableType({
+    typeIdentifier: "album", // <-- the Prismic custom type
+    urlFieldName: "url",     // <-- Prismic API ID mentioned above
+    graphQLType: "Album",    // <-- GraphQL type created above
+    contentTransformOptions,
+-   isSitemapable: false,
++   isSitemapable: true,
+    postTransformer: (url, document) => { // optional function postTransformer
+      if(document.isPublished) {  // possible usecase
+        return document;
       }
-    });
+    }
+  });
 
-    return {};
-  },
+  return {};
+},
 };
-  ```
+```

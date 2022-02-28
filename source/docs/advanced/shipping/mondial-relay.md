@@ -20,36 +20,41 @@ The integration of MondialRelay in Magento2 & Front-Commerce relies on [Magentix
 Then, within your Front-Commerce project, you have to:
 
 - Use the module in your `.front-commerce.js`
-  ```diff
-// .front-commerce.js
-module.exports = {
+
+```diff
+  // .front-commerce.js
+  module.exports = {
   name: "Front Commerce DEV",
   url: "http://www.front-commerce.test",
   modules: [
-+   "./node_modules/front-commerce/modules/shipping-mondialrelay"
-    "./src"
++ "./node_modules/front-commerce/modules/shipping-mondialrelay"
+  "./src"
   ],
   serverModules: [
-    { name: "FrontCommerce", path: "server/modules/front-commerce" },
-    { name: "Magento2", path: "server/modules/magento2" },
-+   {
+  { name: "FrontCommerce", path: "server/modules/front-commerce" },
+  { name: "Magento2", path: "server/modules/magento2" },
++ {
 +     name: "MondialRelay",
 +     path: "shipping-mondialrelay/server/modules/magento2-mondialrelay",
-+   },
++ },
   ],
   webModules: [
-    { name: "FrontCommerce", path: "./src/web" },
+  { name: "FrontCommerce", path: "./src/web" },
   ],
-};
+  };
 ```
+
 - Import styles of MondialRelay related components by overriding the `_modules.scss`
-  ```diff
+
+```diff
 // src/web/theme/modules/_modules.scss
 
 +@import "~theme/modules/MondialRelay/MondialRelay";
 ```
+
 - Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
-  ```diff
+
+```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
 +import MondialRelay from "theme/modules/MondialRelay";
 
@@ -73,7 +78,8 @@ So you first need to install and configure those modules.
 Then, within your Front-Commerce project, you have to:
 
 - Use the module in your `.front-commerce.js`
-  ```diff
+
+```diff
 // .front-commerce.js
 module.exports = {
   name: "Front Commerce DEV",
@@ -95,14 +101,17 @@ module.exports = {
   ],
 };
 ```
-- Import styles of Mondial Relay by overriding the `_modules.scss`
-  ```diff
-// src/web/theme/modules/_modules.scss
 
+- Import styles of Mondial Relay by overriding the `_modules.scss`
+
+```diff
+// src/web/theme/modules/_modules.scss
 +@import "~theme/modules/MondialRelay/MondialRelay";
 ```
+
 - Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
-  ```diff
+
+```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
 
 +import MondialRelay from "theme/modules/MondialRelay";

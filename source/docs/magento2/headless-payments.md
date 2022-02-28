@@ -22,7 +22,7 @@ Our Magento2 integration currently provides native adapters for the platforms be
 - [Payment on account](/docs/advanced/payments/payment-on-account.html)
 
 <blockquote class="info">
-  If you want to use a Payment module not yet listed above, please [`contact us`](mailto:contact@front-commerce.com) so we can provide information about a potential upcoming native support for it.
+  If you want to use a Payment module not yet listed above, please <span class="intercom-launcher">[`contact us`](mailto:hello@front-commerce.com)</span> so we can provide information about a potential upcoming native support for it.
 </blockquote>
 
 ## Implement a new Magento2 Payment method Adapter
@@ -203,6 +203,7 @@ Front-Commerce Headless Payment support relies on Magento low-level internal cod
 ### How does it work?
 
 It is important to understand how Headless Payment works to understand the limitations and reasons of the issues:
+
 1. Front-Commerce calls REST endpoints provided by the Front-Commerce Magento module (headless payments API)
 2. the REST endpoint will load the relevant headless payment adapter
 3. it then bootstraps [a Magento internal Request](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/64784f627064d0068ca04842317eb69f3fd143b7/app/code/FrontCommerce/Integration/Model/HeadlessPayments.php#L148) object, and initializes it with session information (user, order, quote…) by delegating some initialization to the payment adapter
@@ -227,6 +228,7 @@ No known issues! 😎
 This error is due to event handlers being merged and not reset upon Magento area switch. `Magento_Csp` event handlers (for `frontend` area) are incorrectly executed when sending back the `webapi_rest` HTTP response.
 
 Possible workarounds:
+
 - disable `Magento_Csp` module: for an admin-only store, it could make sense!
 - patch the `Magento\Framework\Config\Data\Scoped` class with the patch attached in the related issue
 
@@ -239,6 +241,7 @@ Possible workarounds:
 This error is due to the `$this->_pluginInstances` attribute is not reset properly when we switch between Magento areas.
 
 Possible workarounds:
+
 - call `$pluginList->getNext($type, $method, $code);` in the interceptor to reinitialize internal state properly
 - patch the `PluginList` class to handle this edge case (undefined index)
 

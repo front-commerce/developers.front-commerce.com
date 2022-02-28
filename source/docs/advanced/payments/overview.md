@@ -21,7 +21,8 @@ In this section, you will learn how payments can be added to an application. It 
 - [Payment on account (B2B)](/docs/advanced/payments/payment-on-account.html)
 
 If you are looking for details about a specific eCommerce platform, please visit their dedicated page:
+
 - [Magento2 headless payments](/docs/magento2/headless-payments.html)
 - [Magento1 headless payments](/docs/magento1/headless-payments.html)
 
-Payments are a sensitive part of any eCommerce store. Our team is dedicated to make projects a success and we recommend you to [get in touch with us](mailto:contact@front-commerce.com) so we can provide recommendations about payment integration. **We are always looking to support more payment methods.**
+Payments are a sensitive part of any eCommerce store. Our team is dedicated to make projects a success and we recommend you to <span class="intercom-launcher">[get in touch with us](mailto:hello@front-commerce.com)</span> so we can provide recommendations about payment integration. **We are always looking to support more payment methods.**

@@ -15,10 +15,10 @@ To benefit from this API, you first need to [install the Prismic module](/docs/p
 
 The Prismic loader has the following API to request Content from Prismic:
 
-* `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
-* `loadByID(id[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
-* `loadByUID(typeIdentifier, uid[, options])` returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
-* `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
+- `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+- `loadByID(id[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+- `loadByUID(typeIdentifier, uid[, options])` returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
+- `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
 
 ### Field Transformers
 
@@ -39,7 +39,7 @@ const { DateTransformer } = loaders.Prismic.transformers;
 const homepage = await loaders.Prismic.loadSingle("homepage", {
   fieldTransformers: {
     lastUpdate: new DateTransformer(),
-  }
+  },
 });
 // homepage.lastUpdate is now a Date object
 console.log("Last update of my homepage", homepage.lastUpdate);
@@ -70,9 +70,9 @@ export default {
 
 Let's assume you have created a Single Custom Type _Homepage_ whose identifier is `homepage`. This Custom Type has three fields:
 
-* `title` of type Title
-* `image` of type Image
-* `text` of type Rich Text
+- `title` of type Title
+- `image` of type Image
+- `text` of type Rich Text
 
 While not mandatory, the best way to expose the Homepage in the Graph is to model the GraphQL type after the Custom Type. So in `schema.gql`, you can add:
 
@@ -96,7 +96,11 @@ Once you have defined the type in the Graph, you need to implement the correspon
 export default {
   Query: {
     homepage: async (root, args, { loaders }) => {
-      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+      const {
+        TitleTransformer,
+        RichtextToWysiwygTransformer,
+        ImageTransformer,
+      } = loaders.Prismic.transformers;
       const homepage = await loaders.Prismic.loadSingle("homepage", {
         fieldTransformers: {
           title: new TitleTransformer(),
@@ -268,13 +272,13 @@ export default {
 
 Let's assume you have created a Custom Repeatable Type _Article_ which identifier is `article`. This Custom Repeatable Type has three fields:
 
-* `uid` of type UID (this field is mandatory to retrieve the article by its identifier)
-* `title` of type Rich Text
-* `content` of type Rich Text
+- `uid` of type UID (this field is mandatory to retrieve the article by its identifier)
+- `title` of type Rich Text
+- `content` of type Rich Text
 
 #### Implement the schema
 
-We can model the corresponding GraphQL schema as follows: 
+We can model the corresponding GraphQL schema as follows:
 
 ```graphql
 type Article {
@@ -299,7 +303,7 @@ export default {
   Query: {
     article: (_, { slug }, { loaders }) => {
       const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
-    
+
       return loaders.Prismic.loadByUID("article", slug, {
         fieldTransformers: {
           // no transformer needed for `uid` field
@@ -325,7 +329,7 @@ export default {
   Query: {
     article: async (_, { slug }, { loaders }) => {
       const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
-    
+
       try {
         return await loaders.Prismic.loadByUID("article", slug, {
           fieldTransformers: {
@@ -349,9 +353,9 @@ export default {
 
 Let's assume you have created a Custom Type _FAQ_ which identifier is `faq`. This Custom Type has three fields:
 
-* `question` of type Key Text
-* `answer` of type Rich Text
-* `link` of type Link
+- `question` of type Key Text
+- `answer` of type Rich Text
+- `link` of type Link
 
 Like in the previous example, we can model the corresponding GraphQL type after the Custom Type and in this case we add a root query to retrieve a list of FAQ with a basic pagination and search capabilities:
 
@@ -383,7 +387,8 @@ export default {
   Query: {
     faqList: async (root, { params }, { loaders }) => {
       const { search, page } = params;
-      const { LinkTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+      const { LinkTransformer, RichtextToWysiwygTransformer } =
+        loaders.Prismic.transformers;
       const ListQuery = loaders.Prismic.queries.ListQuery;
       const query = new ListQuery(pageSize, page ? page : 1);
 

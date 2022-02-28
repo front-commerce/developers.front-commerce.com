@@ -75,7 +75,7 @@ See the sections below to understand what each key stands for.
 The identifier of the configuration provider. This is needed for configuration providers' registration. See [Register a configuration provider](#Register-a-configuration-provider) for more details.
 
 ```js
-const name = "serviceProvider"
+const name = "serviceProvider";
 ```
 
 ### Schema (key `schema`, optional)
@@ -97,8 +97,8 @@ const schema = () => ({
     doc: "The key to get access to our remote service",
     format: String,
     default: null,
-    env: "FRONT_COMMERCE_SERVICE_KEY"
-  }
+    env: "FRONT_COMMERCE_SERVICE_KEY",
+  },
 });
 ```
 
@@ -111,15 +111,15 @@ const schema = () => ({
       doc: "The key to get access to our remote service",
       format: String,
       default: null,
-      env: "FRONT_COMMERCE_SERVICE_KEY"
+      env: "FRONT_COMMERCE_SERVICE_KEY",
     },
     secret: {
       doc: "The secret to get access to our remote service",
       format: String,
       default: null,
-      env: "FRONT_COMMERCE_SERVICE_SECRET"
-    }
-  }
+      env: "FRONT_COMMERCE_SERVICE_SECRET",
+    },
+  },
 });
 ```
 
@@ -135,11 +135,11 @@ It is an optional promise that should return the missing values in your schema. 
 
 ```js
 const values = fetch("https://api.example.com/my-service-key")
-  .then(response => response.json())
-  .then(key => ({
+  .then((response) => response.json())
+  .then((key) => ({
     service: {
-      key: key
-    }
+      key: key,
+    },
   }));
 ```
 
@@ -154,11 +154,11 @@ If it needs to change over time, please use `slowValuesOnEachRequest` or `fetchR
 `slowValuesOnEachRequest` is a function that extracts configuration values from the current request. For instance, depending on the URL, the configuration `currentShopId` will get a different id and thus display different information.
 
 ```js
-const slowValuesOnEachRequest = req => {
+const slowValuesOnEachRequest = (req) => {
   const url = req.originalUrl;
   const shopId = getShopIdFromUrl(url);
   return {
-    currentShopId: shopId
+    currentShopId: shopId,
   };
 };
 ```
@@ -170,14 +170,14 @@ const slowValuesOnEachRequest = req => {
 ```js
 import memoize from "lodash/memoize";
 
-const getShopIdFromHostname = memoize(hostname => {
+const getShopIdFromHostname = memoize((hostname) => {
   /* The definition of the `currentShopId` variable should live here */
   return {
-    currentShopId: currentShopId
+    currentShopId: currentShopId,
   };
 });
 
-const slowValuesOnEachRequest = req => {
+const slowValuesOnEachRequest = (req) => {
   const hostname = req.hostname;
   return getShopIdFromHostname(req.hostname);
 };
@@ -252,15 +252,15 @@ const serviceOverrideProvider = {
   name: "serviceOverride",
   values: Promise.resolve({
     service: {
-      key: "new value"
-    }
-  })
-}
+      key: "new value",
+    },
+  }),
+};
 
-configService.insertAfter("serviceProvider", serviceOverrideProvider)
+configService.insertAfter("serviceProvider", serviceOverrideProvider);
 ```
 
 ## Core configuration providers
 
 Our goal is to use these configuration providers for any configuration that could exist in Front-Commerce. However, this is still a work in progress and there are still some configurations that are not associated with a schema yet. Most configurations are still based on files in the [`config` folder of your project's module](/docs/reference/configurations.html).
-If you have specific needs, please [contact us](mailto:contact@front-commerce.com).
+If you have specific needs, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.

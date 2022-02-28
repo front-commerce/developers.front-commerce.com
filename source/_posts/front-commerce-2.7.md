@@ -1,5 +1,5 @@
 ---
-title: '2.7: SmartForms, Prismic, Magento 2.4.2 compatibility'
+title: "2.7: SmartForms, Prismic, Magento 2.4.2 compatibility"
 date: 2021-06-15
 ---
 
@@ -13,7 +13,6 @@ With [SmartForms](/docs/advanced/features/smart-forms.html) completing a form is
 
 Our first integration uses CapAddress (by Capency) but SmartForms has been conceived with an agnostic design to connect to other systems later on.
 
-
 ## You can also benefit from Prismic!
 
 With the addition of [Prismic](/docs/prismic/), content management will be simplified for the entire team. Rich content modeling (reusable slices, page specific templates) for dynamic content, all whilst maintaining the coherence and the separation of concerns between developers and content publishers. 😅
@@ -25,12 +24,14 @@ Prismic [recently announced an exciting vision for content creation with Slices]
 This version was successfully tested with the latest Magento 2.4.2-p1 version so you can upgrade your backend.
 
 New features were also introduced for Magento 2 store owners:
+
 - allow visitors to follow their order status from an order id and the related email address
 - leverage Wishlist send by email features, and save product option (see [2.6 release notes](https://developers.front-commerce.com/blog/2021/04/29/front-commerce-2.6/#Wishlist-improvements-send-by-email-and-save-product-options))
 
 ## Other changes
 
 Version 2.7 includes a lot of practical improvements across different product areas:
+
 - EXIF: images orientation now respects EXIF metadata for resized images
 - Canonical URLs: main pages now have canonical links (home, category, product…)
 - Accept payments with Lyra Collect

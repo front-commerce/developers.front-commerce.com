@@ -112,7 +112,7 @@ To allow loading PayZen related remote resources:
 ### Advanced: customize data sent to PayZen
 
 <blockquote class="wip">
-**Work In Progress** This advanced pattern must be documented with further details. While we are working on it, please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Documentation In Progress** This advanced pattern must be documented with further details. While we are working on it, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 The PayZen payment module is extensible. It leverages Front-Commerce's "data transform" pattern to allow developers to customize payloads sent to PayZen for a [Payment Request creation](https://payzen.io/en-EN/rest/V4.0/api/playground/?ws=Charge/CreatePayment#vMGdf).
@@ -126,7 +126,7 @@ See the test for an example (while a detailed documentation is being written):
 ## Magento2 module
 
 <blockquote class="wip">
-**Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+**Documentation In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 Front-Commerce Magento2 module contains [headless payment adapters](/docs/magento2/headless-payments.html) for the [**PayZen Standard** method](https://github.com/lyra/plugin-magento) (Lyra's official Magento module).

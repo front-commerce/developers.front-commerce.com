@@ -13,7 +13,7 @@ If **you** want to build a <abbr title="Proof of Concept">PoC</abbr> and create 
 
 ## What was Front-Commerce Lite?
 
-Front-Commerce Lite (*a.k.a* "FCL") was a minimalist React/GraphQL eCommerce application (Home page, product page and Cart). It allowed developers to start experimenting with the code within minutes.
+Front-Commerce Lite (_a.k.a_ "FCL") was a minimalist React/GraphQL eCommerce application (Home page, product page and Cart). It allowed developers to start experimenting with the code within minutes.
 
 It demonstrated how a single React application could leverage GraphQL schema and work no matter the headless eCommerce platform behind it. With examples and prototypes built for Magento 2, Moltin, OroCommerce and several others we could illustrate how GraphQL as a unified storefront API made sense way before it became adopted by other solutions.
 
@@ -52,12 +52,12 @@ By shutting down Front-Commerce Lite, we want to prevent this lack of understand
 For those who even started to experiment by themselves with eCommerce PWA, we are sure that they will see the benefits.
 Here are a few examples:
 
-* do you struggle to see how you could keep your theme up-to-date across releases? Front-Commerce [React theme overrides and fallbacks](/docs/essentials/extend-the-theme.html) allows you to keep duplication to its simplest (and also reuse code across projects)
-* are you tired of ever-changing architectural choices in other solutions? Front-Commerce has been designed since day 1 around a GraphQL API as the only way for the application to interact with the different backend services. Our [GraphQL implementation is thus extremely modular and extensible](/docs/essentials/extend-the-graphql-schema.html).
-* wondering about [how to configure analytics tracking in a React application?](/docs/advanced/theme/analytics.html) Documented too!
-* struggling with [integrating rich content from a CMS with a rich WYSIWYG or Page Builder?](/docs/advanced/theme/wysiwyg.html) Many Front-Commerce projects in production are already doing it!
-* is security your thing? [We have docs for you!](/docs/advanced/graphql/rate-limiting.html)
-* are you worried about our backward-compatibility policy? We hope that [our migration guides](/docs/appendices/migration-guides.html) will make you feel how committed we are to make your upgrades as seamless as possible.
+- do you struggle to see how you could keep your theme up-to-date across releases? Front-Commerce [React theme overrides and fallbacks](/docs/essentials/extend-the-theme.html) allows you to keep duplication to its simplest (and also reuse code across projects)
+- are you tired of ever-changing architectural choices in other solutions? Front-Commerce has been designed since day 1 around a GraphQL API as the only way for the application to interact with the different backend services. Our [GraphQL implementation is thus extremely modular and extensible](/docs/essentials/extend-the-graphql-schema.html).
+- wondering about [how to configure analytics tracking in a React application?](/docs/advanced/theme/analytics.html) Documented too!
+- struggling with [integrating rich content from a CMS with a rich WYSIWYG or Page Builder?](/docs/advanced/theme/wysiwyg.html) Many Front-Commerce projects in production are already doing it!
+- is security your thing? [We have docs for you!](/docs/advanced/graphql/rate-limiting.html)
+- are you worried about our backward-compatibility policy? We hope that [our migration guides](/docs/appendices/migration-guides.html) will make you feel how committed we are to make your upgrades as seamless as possible.
 
 These are just a few examples! We are [continuously improving our documentation](https://github.com/front-commerce/developers.front-commerce.com/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) so power users could be autonomous and craft the best storefront possible, given their own context.
 
@@ -87,4 +87,3 @@ We could help you with pre-sales, and assist your technical team to build their 
 <div class="center">
   <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to know more about how Front-Commerce could help our team!">I'd love to leverage Front-Commerce to build better storefronts!</a>
 </div>
-
