@@ -34,17 +34,21 @@ import Input from "theme/components/atoms/Form/Input/Input";
 import { Email, Textarea } from "theme/components/atoms/Form/Input";
 import SubmitButton from "theme/components/atoms/Button/SubmitButton";
 
-<Form>
-  <FormItem label="Email">
-    <Email id="email" name="email" />
-  </FormItem>
+const MyForm = () => {
+  return (
+    <Form>
+      <FormItem label="Email">
+        <Email id="email" name="email" />
+      </FormItem>
 
-  <FormItem label="Content">
-    <Textarea id="content" name="content" />
-  </FormItem>
+      <FormItem label="Content">
+        <Textarea id="content" name="content" />
+      </FormItem>
 
-  <SubmitButton>Send</SubmitButton>
-</Form>;
+      <SubmitButton>Send</SubmitButton>
+    </Form>
+  );
+};
 ```
 
 By using Front-Commerce's components you will ensure that all fields look the same way across your application. They will also add validations and accessibility features by default.
