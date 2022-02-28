@@ -77,20 +77,20 @@ Specifically in this version you can :
 - **Alert component:** we now have a component way to display warning alert messages to users
 - New: add a mailto link with the new `<MailToLink>` component
 
-    `<MailToLink email="user@example.com" />` or `<MailToLink email="user@example.com">Contact us</MailToLink>`
+  `<MailToLink email="user@example.com" />` or `<MailToLink email="user@example.com">Contact us</MailToLink>`
 
 - **Wysiwyg:** add a `<Style>` component to include scoped styles
 - **[Prismic](/docs/prismic/)**: improve resilience on remote Prismic errors in case of HTTP errors or timeouts
 - **[Adyen](/docs/advanced/payments/adyen.html#Install-and-configure-the-Adyen-Payment-Magento2-extension-7-2):** payment with Adyen can now be used in a multi server architecture
 - The Magento1 module ([version 1.4.1](https://gitlab.com/front-commerce/magento1-module-front-commerce/-/compare/master...1.4.1)) now supports batch cache invalidation for better performance
 - Bug fixes:
-    - The *estimate shipping* block was not updated on cart change on chocolatine theme
-    - We fixed an issue in the Magento2 module ([version 2.4.2](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.4.2)) leading to some GraphQL errors on Magento Cloud and other read only file systems
-    - Products name in carts and minicarts did not display special characters well in Magento2
-    - Clicking on a related product sometimes caused an error
-    - allowed more than 10 related products to be retrieved for Magento1
-    - made product attributes more resilient to invalid remote product data
-    - ensured that the mobile menu at the bottom of user account area is the same as in the top
+  - The _estimate shipping_ block was not updated on cart change on chocolatine theme
+  - We fixed an issue in the Magento2 module ([version 2.4.2](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.4.2)) leading to some GraphQL errors on Magento Cloud and other read only file systems
+  - Products name in carts and minicarts did not display special characters well in Magento2
+  - Clicking on a related product sometimes caused an error
+  - allowed more than 10 related products to be retrieved for Magento1
+  - made product attributes more resilient to invalid remote product data
+  - ensured that the mobile menu at the bottom of user account area is the same as in the top
 
 Fixes from the 2.11 version have also been backported into previous minor versions. The following patch versions were released: [2.4.9](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.9), [2.5.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.5.5), [2.6.3](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.3), [2.7.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.4), [2.8.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.5), [2.9.4](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.4) and [2.10.2](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.2).
 

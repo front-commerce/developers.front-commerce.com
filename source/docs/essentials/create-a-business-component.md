@@ -167,7 +167,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
 
-const StoreLocator = props => {
+const StoreLocator = (props) => {
   return (
     <MapContainer
       center={[43.584296, 1.44182]}
@@ -266,8 +266,8 @@ export default ({ StoreLocatorQuery }) =>
     props: ({ data }) => ({
       loading: data.loading,
       error: data.error,
-      store: data.loading ? null : data.store
-    })
+      store: data.loading ? null : data.store,
+    }),
   });
 ```
 
@@ -324,7 +324,7 @@ It allows you to split part of your queries without splitting the end query.</p>
 
 ### Making it dynamic
 
-Now that we have our Enhancer ready, we are going to use it in our store locator. 
+Now that we have our Enhancer ready, we are going to use it in our store locator.
 The significant change here is that your data comes from your Enhancer and
 is passed down to your component by `props`.
 
@@ -352,7 +352,7 @@ import "leaflet/dist/images/marker-shadow.png";
 import StoreLocatorQuery from "./StoreLocatorQuery.gql";
 import EnhanceStoreLocator from "./EnhanceStoreLocator";
 
-const StoreLocator = props => {
+const StoreLocator = (props) => {
   if (props.loading) {
     return <div>Loading...</div>;
   }
@@ -362,7 +362,7 @@ const StoreLocator = props => {
 
   const coordinates = [
     props.store.coordinates.longitude,
-    props.store.coordinates.latitude
+    props.store.coordinates.latitude,
   ];
   const defaultZoom = 14;
 
@@ -397,13 +397,13 @@ StoreLocator.propTypes = {
     name: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
     owner: PropTypes.shape({
-      email: PropTypes.string.isRequired
+      email: PropTypes.string.isRequired,
     }).isRequired,
     coordinates: PropTypes.shape({
       longitude: PropTypes.number.isRequired,
-      latitude: PropTypes.number.isRequired
-    }).isRequired
-  })
+      latitude: PropTypes.number.isRequired,
+    }).isRequired,
+  }),
 };
 
 // Let's not forget to use the Enhancer

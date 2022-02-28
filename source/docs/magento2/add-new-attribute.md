@@ -68,8 +68,8 @@ Create a file named `resolvers.js` and type the following code. It implements th
 // mymodule/server/modules/ratings/resolvers.js
 export default {
   Product: {
-    rate: ({ rate }) => parseFloat(rate)
-  }
+    rate: ({ rate }) => parseFloat(rate),
+  },
 };
 ```
 
@@ -87,7 +87,7 @@ import resolvers from "./resolvers";
 export default {
   namespace: "Ratings",
   typeDefs: typeDefs,
-  resolvers: resolvers
+  resolvers: resolvers,
 };
 ```
 

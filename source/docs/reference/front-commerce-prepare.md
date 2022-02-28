@@ -36,7 +36,7 @@ If no route is returned, the route is ignored.
 ### Example:
 
 ```js
-module.exports.onCreateRoute = route => {
+module.exports.onCreateRoute = (route) => {
   // Remove all the `/contact/` pages
   if (route.path === "/contact/") {
     return null;

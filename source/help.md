@@ -9,17 +9,16 @@ This developer area is being improved every day based on your feedbacks and
 contributions (issues, PR). Our team is available to answer you in a timely
 manner. Here are a few ways to contact us:
 
-* Join the discussion in our
-[Slack channel](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU)
-* [Reach us by email](mailto:contact@front-commerce.com) for
-questions about this documentation and the project
-* Find out what's new by following
-[@Front_Commerce](https://twitter.com/Front_Commerce) on Twitter
+- Join the discussion in our
+  [Slack channel](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU)
+- [Reach us by email](mailto:contact@front-commerce.com) for
+  questions about this documentation and the project
+- Find out what's new by following
+  [@Front_Commerce](https://twitter.com/Front_Commerce) on Twitter
 
 We also invite you to read our [Troubleshooting documentation page](/docs/appendices/troubleshooting.html) to see if it does not contain relevant information for your current problem.
 
 ## Frequently Asked Questions
-
 
 ### Do you provide an open source license?
 

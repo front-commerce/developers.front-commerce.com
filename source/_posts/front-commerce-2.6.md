@@ -1,5 +1,5 @@
 ---
-title: '2.6: HTTP Caching, Store credits, Wishlist sharing and remote configurations'
+title: "2.6: HTTP Caching, Store credits, Wishlist sharing and remote configurations"
 date: 2021-04-29
 ---
 
@@ -26,6 +26,7 @@ While the UI is platform agnostic, we implemented the supporting server implemen
 Wishlists are now also **supported for Magento 1**. They were only available for Magento 2 so far.
 
 We've also added several new features to make wishlists even more useful for Customers:
+
 - product options are now saved to the wishlist. It reduces the friction (selecting the size or color of a product) when customers are ready to purchase a product
 - customers can share their wishlist by email using the native Magento feature
 - recipients can then browse the wishlist content and add some items or the whole list to their cart
@@ -49,6 +50,7 @@ Since [Node.js 10.x reaches its end of life tomorrow](https://nodejs.org/en/abou
 Front-Commerce 2.6 brings new primitives and low-level improvements to help you leverage underrated HTTP Caching standards. Developers now have a fine-grained control for **two important Cache-Control values: `s-maxage` and `stale-while-revalidate`** sent by Front-Commerce.
 
 Basically, it means that **store owners can now scale their storefront for huge traffic peaks by sacrificing freshness of data**:
+
 - is it a big deal to have a change on your homepage visible at most 30 seconds later, if it allows to display it in less than 100ms to thousands of users visiting your store after a TV advertising?
 - will you allow a customer to view a product page with information up to 30 minutes old if nobody browsed the page since that time? 10 minutes? 10 seconds only?
 - what about a CMS page, your contact form or login page?

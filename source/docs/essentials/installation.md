@@ -31,7 +31,6 @@ node -v
 If you don't have the minimum requirements,
 [please follow the instructions on Node.js website](https://nodejs.org/).
 
-
 ## Installation using the skeleton
 
 **This is the recommended way to start a new Front-Commerce project.**
@@ -94,9 +93,9 @@ module.exports = {
     currency: "EUR",
     default_country_id: "GB",
     url: process.env.FRONT_COMMERCE_URL,
-    countries: IsoCountries =>
-      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"))
-  }
+    countries: (IsoCountries) =>
+      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json")),
+  },
 };
 ```
 

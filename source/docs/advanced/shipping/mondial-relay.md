@@ -21,44 +21,51 @@ Then, within your Front-Commerce project, you have to:
 
 - Use the module in your `.front-commerce.js`
   ```diff
-// .front-commerce.js
-module.exports = {
+  // .front-commerce.js
+  module.exports = {
   name: "Front Commerce DEV",
   url: "http://www.front-commerce.test",
   modules: [
-+   "./node_modules/front-commerce/modules/shipping-mondialrelay"
-    "./src"
+  ```
+
+* "./node_modules/front-commerce/modules/shipping-mondialrelay"
+  "./src"
   ],
   serverModules: [
-    { name: "FrontCommerce", path: "server/modules/front-commerce" },
-    { name: "Magento2", path: "server/modules/magento2" },
-+   {
-+     name: "MondialRelay",
-+     path: "shipping-mondialrelay/server/modules/magento2-mondialrelay",
-+   },
+  { name: "FrontCommerce", path: "server/modules/front-commerce" },
+  { name: "Magento2", path: "server/modules/magento2" },
+* {
+*     name: "MondialRelay",
+*     path: "shipping-mondialrelay/server/modules/magento2-mondialrelay",
+* },
   ],
   webModules: [
-    { name: "FrontCommerce", path: "./src/web" },
+  { name: "FrontCommerce", path: "./src/web" },
   ],
-};
-```
+  };
+
+````
 - Import styles of MondialRelay related components by overriding the `_modules.scss`
   ```diff
 // src/web/theme/modules/_modules.scss
 
 +@import "~theme/modules/MondialRelay/MondialRelay";
-```
+````
+
 - Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
   ```diff
-// src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
-+import MondialRelay from "theme/modules/MondialRelay";
+  // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
+  +import MondialRelay from "theme/modules/MondialRelay";
+  ```
 
 const ComponentMap = {
-+ mondialrelay: {
-+   pickup: MondialRelay,
-+ }
-};
-```
+
+- mondialrelay: {
+- pickup: MondialRelay,
+- }
+  };
+
+````
 
 ## Magento1 based application
 
@@ -94,13 +101,16 @@ module.exports = {
     { name: "FrontCommerce", path: "./src/web" },
   ],
 };
-```
+````
+
 - Import styles of Mondial Relay by overriding the `_modules.scss`
   ```diff
-// src/web/theme/modules/_modules.scss
+  // src/web/theme/modules/_modules.scss
+  ```
 
 +@import "~theme/modules/MondialRelay/MondialRelay";
-```
+
+````
 - Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
   ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -112,7 +122,7 @@ const ComponentMap = {
 +    mondialrelaypickup: MondialRelay,
 +  },
 };
-```
+````
 
 ## That's it
 

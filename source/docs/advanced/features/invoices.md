@@ -10,6 +10,7 @@ In a project, you may want to change the default source to retrieve invoices or 
 ## Front-Commerce Invoice
 
 The `front-commerce/invoice` GraphQL module defines shared interfaces to represent Invoices:
+
 - `FcInvoice`: a generic invoice entity
 - `FcDownloadableInvoice`: invoices that can be downloaded by the Customer (implements `FcInvoice`)
 - `FcDisplayableInvoice`: invoices that can be displayed on the web by the Customer (implements `FcInvoice`)
@@ -19,13 +20,14 @@ The `front-commerce/invoice` GraphQL module defines shared interfaces to represe
 We will illustrate how one can replace the default Front-Commerce implementation to provide PDF files for invoices. It will highlight the existing extension points that might be useful to implement any other specific use cases you may face.
 
 Customizing how invoices are resolved in your application consists in 3 steps:
+
 - adding a new Invoice type to the graphql schema
 - overriding the `Order.invoices` resolver to fetch invoices from your endpoint
 - making the file downloadable for the Customer
 
 ### Add your new Invoice type to the graphql schema
 
-*This section assumes that you know how to [Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html)*
+_This section assumes that you know how to [Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema.html)_
 
 Since the invoice is aimed at being downloadable, the new invoice type will have to implement the `FcDownloadableInvoice` interface.
 

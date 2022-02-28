@@ -89,18 +89,18 @@ Your feedback is precious, do not hesitate to contact us to share your needs and
 - **Server:** the protocol (http/https) is now displayed in the server start log
 - **UI:** custom components are now supported for `<Heading>` `as` prop
 - **Image proxy**: several improvements and fixes were brought during this release
-    - the image proxy now always send the remote response content in case of error
-    - images with decimal dimensions are now always resized properly
-    - sharp was updated to better support some recent source formats
-    - binary file content-types are now used instead of file extensions to validate supported images
-    - improved DX by logging an error when image resizing fails
+  - the image proxy now always send the remote response content in case of error
+  - images with decimal dimensions are now always resized properly
+  - sharp was updated to better support some recent source formats
+  - binary file content-types are now used instead of file extensions to validate supported images
+  - improved DX by logging an error when image resizing fails
 - **Bug fixes:**
-    - **a11y:** the autocomplete now has a correct `aria-owns` attribute usage
-    - **address:** the country field is now correctly initialized in an empty state so users see the placeholder
-    - **analytics:** the “Product View List” event is now triggered properly when revisiting a category page within the same navigation scenario
-    - **graphql:** fixed GraphQL directives so that `@magentoConfig` works with recent `graphql` dependencies versions
-    - **types:** we’ve fixed several propTypes and JSDoc types across the codebase
-    - **ui:** disabled buttons are now consistent no matter their status (i.e: active)
+  - **a11y:** the autocomplete now has a correct `aria-owns` attribute usage
+  - **address:** the country field is now correctly initialized in an empty state so users see the placeholder
+  - **analytics:** the “Product View List” event is now triggered properly when revisiting a category page within the same navigation scenario
+  - **graphql:** fixed GraphQL directives so that `@magentoConfig` works with recent `graphql` dependencies versions
+  - **types:** we’ve fixed several propTypes and JSDoc types across the codebase
+  - **ui:** disabled buttons are now consistent no matter their status (i.e: active)
 
 Fixes from the 2.12 version have also been backported into previous minor versions. The following patch versions were released:
 [2.4.10](https://gitlab.com/front-commerce/front-commerce/-/releases/2.4.10),

@@ -22,33 +22,36 @@ To customize other headers send by default, you have to write a custom express m
 For instance, here is how you can to set [the `Referer-Policy` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) to `origin-when-cross-origin`:
 
 1. [create module and add a `server/module.config.js` to declare a global server middleware](/docs/advanced/server/add-http-endpoint.html#Add-a-global-server-middleware). This file would look like:
-  ```js
-  // server/module.config.js into one of your module
-  import setReferrerPolicy from "./express/setReferrerPolicy";
 
-  export default {
-    endpoint: {
-      __dangerouslyOverrideBasePathChecks: true,
-      path: "/",
-      router: setReferrerPolicy,
-    },
-  };
-  ```
+```js
+// server/module.config.js into one of your module
+import setReferrerPolicy from "./express/setReferrerPolicy";
+
+export default {
+  endpoint: {
+    __dangerouslyOverrideBasePathChecks: true,
+    path: "/",
+    router: setReferrerPolicy,
+  },
+};
+```
+
 2. write the middleware that will set the header. In this middleware, you can use any of the function [exposed by helmet](https://helmetjs.github.io/#reference).
-  ```js
-  // server/express/setReferrerPolicy.js imported in the previous snippet
-  import { Router } from "express";
-  import { referrerPolicy } from "helmet";
 
-  const setReferrerPolicy = () => {
-    const router = new Router();
+```js
+// server/express/setReferrerPolicy.js imported in the previous snippet
+import { Router } from "express";
+import { referrerPolicy } from "helmet";
 
-    router.use(referrerPolicy({ policy: "origin-when-cross-origin" }));
+const setReferrerPolicy = () => {
+  const router = new Router();
 
-    return router;
-  };
+  router.use(referrerPolicy({ policy: "origin-when-cross-origin" }));
 
-  export default setReferrerPolicy;
-  ```
+  return router;
+};
+
+export default setReferrerPolicy;
+```
 
 And that's it. When the module having the `server/module.config.js` and `server/express/setReferrerPolicy.js` files will be enabled in `.front-commerce.js`, Front-Commerce will set the `Referrer-Policy` header to `origin-when-cross-origin`.

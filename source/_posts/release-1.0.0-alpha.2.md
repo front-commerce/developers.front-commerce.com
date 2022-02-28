@@ -68,7 +68,6 @@ See our [Magento2 GraphQL documentation page](/docs/magento2/graphql.html) for m
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Here is the whole codebase of a module exposing Magento’s GraphQL queries in a <a href="https://twitter.com/Front_Commerce?ref_src=twsrc%5Etfw">@Front_Commerce</a> application.<br>This is why you can (should?) start an M2 shop right now with FC and adopt GraphQL/PWA Studio features when they’ll be stable. <a href="https://t.co/5kQNcj6yaX">pic.twitter.com/5kQNcj6yaX</a></p>&mdash; Pierre Martin (@pierremartin) <a href="https://twitter.com/pierremartin/status/1108157053732835329?ref_src=twsrc%5Etfw">20 mars 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
 ## Sitemap generation and image cache warmup scripts are back!
 
 During our first alpha releases, we had not taken the time to migrate existing scripts to the new architecture.
@@ -79,12 +78,14 @@ Read more about them in our documentation: [Front-Commerce’s scripts reference
 ## And more
 
 There are a few other things that were included in this release:
+
 - bug fixes
 - `graphql-js` update to its latest version
 - removed unused methods from the core
 - resolve relative paths from the current file in `*.scss`
 
 To know more about this release, we recommend you to check the following pages:
+
 - [Migration guide from 1.0.0-alpha.1 to 1.0.0-alpha.2](/docs/appendices/migration-guides.html#1-0-0-alpha-1-gt-1-0-0-alpha-2)
 - [Full changelog from release notes](https://gitlab.com/front-commerce/front-commerce/releases) (Partners and Customers only)
 

@@ -18,7 +18,7 @@ First, you need to make sure that you've configured the tokens that will enable 
 
 You can then restart your environment and the admin role should now be enabled for all the users that have logged into Magento's administration panel in the previous 30 minutes.
 
-*If you think it didn't work correctly, you can **manually force a new authentication from the "Reload storefront session" link** in the admin footer. It is added by the Front-Commerce Magento module:*
+_If you think it didn't work correctly, you can **manually force a new authentication from the "Reload storefront session" link** in the admin footer. It is added by the Front-Commerce Magento module:_
 
 ![Reload storefront session link in Magento admin area footer](./assets/admin-reload-storefront-session.png)
 
@@ -71,19 +71,19 @@ export const AdminDataLoader = (axiosInstance) => {
 ```graphql
 # server/modules/admin-data/schema.gql
 extend type Query {
-    adminData: String
+  adminData: String
 }
 ```
 
 ```js
 // server/modules/admin-data/resolvers.js
 export default {
-    Query: {
-        adminData: (parent, params, { loaders }) => {
-            return loaders.AdminData.loadData()
-        }
-    }
-}
+  Query: {
+    adminData: (parent, params, { loaders }) => {
+      return loaders.AdminData.loadData();
+    },
+  },
+};
 ```
 
 ### Change your loader's request with admin role
@@ -154,11 +154,14 @@ This can be done in Front-Commerce by customizing the data available in `loaders
 
 To do so, in a custom Magento module, you must:
 
-* Add a new preference in your `etc/di.xml`:
+- Add a new preference in your `etc/di.xml`:
+
 ```xml
 <preference for="FrontCommerce\AdminBar\Api\AuthenticatedAdminDataInterface" type="Acme\ModuleName\Model\AuthenticatedAdminData" />
 ```
-* Create the new class that will implement `AuthenticatedAdminDataInterface` and fetch the addition admin data. Since you are in a Magento context, feel free to inject any class you may need to fetch the relevant data. To keep it simple here, we've just set a hardcoded id.
+
+- Create the new class that will implement `AuthenticatedAdminDataInterface` and fetch the addition admin data. Since you are in a Magento context, feel free to inject any class you may need to fetch the relevant data. To keep it simple here, we've just set a hardcoded id.
+
 ```php
 <?php
 namespace Acme\ModuleName\Model;
@@ -175,8 +178,10 @@ class AuthenticatedAdminData implements AuthenticatedAdminDataInterface
     }
 }
 ```
-* If you are not in `developer` mode in magento, please make sure to rerun `bin/magento setup:di:compile` command.
-* You will then be able to use the following in Front-Commerce's server code for any authenticated admin users.
+
+- If you are not in `developer` mode in magento, please make sure to rerun `bin/magento setup:di:compile` command.
+- You will then be able to use the following in Front-Commerce's server code for any authenticated admin users.
+
 ```js
 const adminData = await loaders.MagentoAdmin.getAdminData();
 console.log(adminData.adminId);

@@ -24,7 +24,7 @@ The simplest (but useless) GraphQL module definition only requires an unique
 ```js
 // A minimal Front-Commerce GraphQL module that basically does nothing
 export default {
-  namespace: "Acme/HelloWorld"
+  namespace: "Acme/HelloWorld",
 };
 ```
 
@@ -50,7 +50,7 @@ import FeatureB from "./feature-b";
 
 export default {
   namespace: "Acme/All",
-  modules: [Core, FeatureA, FeatureB]
+  modules: [Core, FeatureA, FeatureB],
 };
 ```
 
@@ -83,7 +83,7 @@ Example:
 ```js
 export default {
   namespace: "Acme/HelloWorld",
-  dependencies: ["Acme/Core"]
+  dependencies: ["Acme/Core"],
   // …
 };
 ```
@@ -123,7 +123,7 @@ type Message {
 
 export default {
   namespace: "Acme/HelloWorld",
-  typeDefs: typeDefs
+  typeDefs: typeDefs,
 };
 ```
 
@@ -148,16 +148,16 @@ const resolvers = {
       const message = `Hello ${name}`;
       return {
         message: message,
-        audio: `https://tts.service.com/q=${message}`
+        audio: `https://tts.service.com/q=${message}`,
       };
-    }
-  }
+    },
+  },
 };
 
 export default {
   namespace: "Acme/HelloWorld",
   // …
-  resolvers: resolvers
+  resolvers: resolvers,
 };
 ```
 
@@ -203,15 +203,15 @@ export default {
     Query: {
       sayHello: (_, { name }, { loaders }) => {
         return loaders.Message.load(`Hello ${name}`);
-      }
-    }
+      },
+    },
   },
   contextEnhancer: ({ req, loaders, makeDataLoader, config }) => {
     return {
-      Message: MessageLoader(makeDataLoader)(config.apiBaseUrl)
-    }
-  }
-}
+      Message: MessageLoader(makeDataLoader)(config.apiBaseUrl),
+    };
+  },
+};
 ```
 
 ## `remoteSchema` (optional)
@@ -230,8 +230,8 @@ Example:
 export default {
   namespace: "Acme/RemoteFeature",
   remoteSchema: {
-    uri: "https://remote-feature.acme.org/graphql"
-  }
+    uri: "https://remote-feature.acme.org/graphql",
+  },
 };
 ```
 
@@ -302,10 +302,10 @@ export default {
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql",
     // […]
-      executor: makeExecutor(uri, {
-        fetchOptionsAdapter: authenticateRequest,
-      }),
-  }
+    executor: makeExecutor(uri, {
+      fetchOptionsAdapter: authenticateRequest,
+    }),
+  },
 };
 ```
 
@@ -329,13 +329,13 @@ Example:
 
 ```js
 // […]
-const authenticateRequest = context => {
+const authenticateRequest = (context) => {
   const authService = makeAuthServiceFromRequest(context.req || {});
   if (authService.isAuthenticated()) {
     return {
       headers: {
-        Authorization: `Bearer ${authService.getAuthToken()}`
-      }
+        Authorization: `Bearer ${authService.getAuthToken()}`,
+      },
     };
   }
   return {};
@@ -347,8 +347,8 @@ export default {
   remoteSchema: {
     uri: "https://remote-feature.acme.org/graphql",
     // […]
-    linkContextBuilders: [authenticateRequest]
-  }
+    linkContextBuilders: [authenticateRequest],
+  },
 };
 ```
 
@@ -364,7 +364,6 @@ The `apolloLinkHttpOptions` key allows you to customize options passed to the [a
 
 This is especially useful if the remote GraphQL schema is using the GET method for GraphQL queries.
 
-
 Example:
 
 ```js
@@ -375,8 +374,8 @@ export default {
     uri: "https://remote-feature.acme.org/graphql",
     // […]
     apolloLinkHttpOptions: {
-      useGETForQueries: true
-    }
-  }
+      useGETForQueries: true,
+    },
+  },
 };
 ```

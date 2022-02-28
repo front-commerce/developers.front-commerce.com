@@ -24,10 +24,10 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
 #FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS=60
 ```
 
-* `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` is the Prismic repository name
-* `FRONT_COMMERCE_PRISMIC_ACCESS_TOKEN` is the access token for the repository, go to _Settings > API & Security_ and create an application and copy the _Permanent access token_ generated for this application
-* `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` is a secret key used to clear caches in Front-Commerce and to secure [Integration Fields API endpoints](/docs/prismic/integration-fields.html). To define it, go to _Settings > Webhook_ and create a webhook pointing to your Front-Commerce URL `https://my-shop.example.com/prismic/webhook`. In the webhook form, you can configure a _Secret_. This is the one you should use in this environment variable.
-* `FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS` is an optional configuration that allows to customize the TTL of Prismic API cache. Shortening it allows to prioritize data freshness in environments not targeted by a Prismic webhook over performance. **It defaults to 23h in production environments and 1min in staging and dev environments.**
+- `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` is the Prismic repository name
+- `FRONT_COMMERCE_PRISMIC_ACCESS_TOKEN` is the access token for the repository, go to _Settings > API & Security_ and create an application and copy the _Permanent access token_ generated for this application
+- `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` is a secret key used to clear caches in Front-Commerce and to secure [Integration Fields API endpoints](/docs/prismic/integration-fields.html). To define it, go to _Settings > Webhook_ and create a webhook pointing to your Front-Commerce URL `https://my-shop.example.com/prismic/webhook`. In the webhook form, you can configure a _Secret_. This is the one you should use in this environment variable.
+- `FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS` is an optional configuration that allows to customize the TTL of Prismic API cache. Shortening it allows to prioritize data freshness in environments not targeted by a Prismic webhook over performance. **It defaults to 23h in production environments and 1min in staging and dev environments.**
 
 <blockquote class="tip">
 In case of trouble, `front-commerce:prismic` (or `front-commerce:prismic*` to include more specific namespaces) can be added to the `DEBUG` environment variable value, this value turns the debug on for Prismic module and make it verbose.

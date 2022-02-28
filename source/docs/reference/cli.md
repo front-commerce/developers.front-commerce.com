@@ -103,9 +103,9 @@ This command allows to launch tests using [Jest](https://jestjs.io/) already con
 
 By default this command will launch all the tests available. These tests can be categorized in three scopes (which are jest projects internally):
 
-* `server`: it runs all the unit tests in `server/**/__tests__` folders.
-* `pact`: it runs all the [Pact](https://docs.pact.io/) tests in `server/**/__pacts__` folders. Its specificity is that it boots a pact server that will allow you to mock interactions with external APIs. Its main usage is for testing loaders in GraphQL modules.
-* `client`: it runs all the tests in `web/**/__tests__` folders. Its specificity is that it boots under a jsdom environment allowing you to use a mocked DOM environment. It is necessary to use when testing React components.
+- `server`: it runs all the unit tests in `server/**/__tests__` folders.
+- `pact`: it runs all the [Pact](https://docs.pact.io/) tests in `server/**/__pacts__` folders. Its specificity is that it boots a pact server that will allow you to mock interactions with external APIs. Its main usage is for testing loaders in GraphQL modules.
+- `client`: it runs all the tests in `web/**/__tests__` folders. Its specificity is that it boots under a jsdom environment allowing you to use a mocked DOM environment. It is necessary to use when testing React components.
 
 You can only parts of the tests by setting the scope when executing the command: `front-commerce test <scope>`. If no scope is defined all the scopes will be executed.
 

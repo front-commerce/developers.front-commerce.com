@@ -20,9 +20,11 @@ These additional headers could be useful if you want to add additional context t
 There are two ways to clear the magento cache:
 
 1. Run the below command from the command line on the magento server:
+
 ```sh
 bin/magento cache:clean -- front-commerce
 ```
+
 2. From the admin interface go to System > Cache Management then select Front-Commerce, make sure that refresh is selected and then click the Submit button. (see below screenshot for more details).
 
 <img src="./clear-fc-cache.jpg" alt="Clear front commerce cache" />

@@ -46,6 +46,7 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 ```
 
 #### Improved the `registerRoutableType` method
+
 - A new required property has been added for dynamic routes: `path` <br /> Examples: `/:uid`, `/:lang/:uid`, `/:category*/:uid`, `/:section/:category?/:uid`.
 
 <blockquote class="info">
@@ -53,6 +54,7 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 </blockquote>
 
 - The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow the Prismic client to resolve the url property for defined documents, and it enables redirection for prismic previews.
+
 ```js
   // Skip prismic route registration
   PrismicLoader.registerRoutableType({
@@ -74,6 +76,7 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
     }
   })
 ```
+
 <blockquote class="warning">
 Prismic only supports a depth of 3 levels for the content relationship on route resolvers, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information. This issue is also being [tracked](https://community.prismic.io/t/linkresolver-and-nested-paths/96/2) for better support.
 </blockquote>
@@ -435,6 +438,7 @@ export const DesktopLeftMenu = injectIntl(
   }
 );
 ```
+
 </details>
 
 ### New style sheets
@@ -601,6 +605,7 @@ const keyToComponent = {
 ### Password field updated with a show/hide feature
 
 The `<Password>` input now displays a show/hide icon allowing users to reveal their password. It is enabled by default. You can opt-out this feature using the `disableShowPassword` prop:
+
 ```diff
 <Password
   id="password"
@@ -657,6 +662,7 @@ export {
 ```
 
 You should add the `<PasswordStrengthHint>` component in every override using the `<Password>` input. In the default theme, the following components were affected:
+
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -683,6 +689,7 @@ The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is n
 See [the password field's documentation](/docs/advanced/features/password-fields.html#configure-password-validity) for more details on the password field validation configuration.
 
 If you overrode some of the following components:
+
 - `theme/modules/User/RegisterForm/RegisterForm.js`
 - `theme/pages/Account/Information/ChangeUserPasswordForm.js`
 - `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
@@ -733,6 +740,7 @@ If you overrode the `theme/components/organisms/Modal/index.js` file please add 
 ### New features in `2.12.0`
 
 These new features may be relevant for your existing application:
+
 - Page builder: Slider content type and Slide support
 - the `<Password>` component now allows the user to reveal the password
 - New component: `<PasswordStrengthHint>` to show hints of password's strength criterias to the user
@@ -767,6 +775,7 @@ If you want to add that feature to your project you have to define an image form
 </blockquote>
 
 Then, depending on the amount of customization, you might also have to bring changes similar to what we have done in the merge requests for that feature:
+
 - https://gitlab.com/front-commerce/front-commerce/-/merge_requests/699/diffs
 - https://gitlab.com/front-commerce/front-commerce/-/merge_requests/717/diffs
 - https://gitlab.com/front-commerce/front-commerce/-/merge_requests/719/diffs
@@ -801,7 +810,8 @@ const keyToComponent = {
 
 **We recommend to reformat your source code using the latest Prettier version** (see below).
 
-Here are some highlights of the main changes in upstream libraries that *unlikely may* impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
+Here are some highlights of the main changes in upstream libraries that _unlikely may_ impact your application. We have tested them and haven't found any regression, but we prefer to mention these changes in case you detect a weird issue after upgrading:
+
 - `axios` does not append the `charset=utf-8` anymore for requests with `Content-Type:application/json`. See [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434), [#4016](https://github.com/axios/axios/issues/4016) and [#2154](https://github.com/axios/axios/issues/2154) and for details.
 - `prettier` has been updated [from 2.2.1 to 2.4.1](https://github.com/prettier/prettier/blob/main/CHANGELOG.md) ([MR!742](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/742)). We've reformatted our code with this version, so it may lead to style differences with your overrides. To update your application code, you can run `npx prettier -w ./path/to/your/directories` and commit the changes.
 
@@ -830,6 +840,7 @@ See [the Page Builder ones](https://gitlab.com/front-commerce/front-commerce/-/b
 ### New features in `2.11.0`
 
 These new features may be relevant for your existing application:
+
 - [Magento2 B2B initial support](/docs/magento2/b2b.html) and [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account.html)
 - [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder.html)
 - Customer can now zoom in on product images in the product page
@@ -859,6 +870,7 @@ Payline will use the `HOMO` or `PRODUCTION` environment based on what is configu
 
 If using Payline, you should update the Magento module to version [1.3.0](https://github.com/front-commerce/magento1-module-payline-front-commerce/releases/tag/1.3.0).
 If you don't, you will see the error below in your logs (and the `PRODUCTION` environment will be used):
+
 > ERROR on reorderForIds, the id payment/payline_common/environment has no associated result
 
 ### Configurable options HOC refactoring
@@ -948,6 +960,7 @@ We highly recommend you to test your product and cart pages for products with cu
 ### Prismic legacy features removed
 
 In order to make code more maintainable, we've removed two legacy features from the Prismic module:
+
 - Default CMS module
 - Default GraphQL remote schema stitching
 
@@ -973,6 +986,7 @@ Migration will depends on what you've implemented. Please contact us if you have
 In this release, we've split payment related logs from other server logs. The goal is to allow integrators to have different logging strategies to investigate and audit payment interactions more easily.
 
 By default, a new `logs/payment.log` file will be used, but you will see a warning:
+
 > You do not have any logging configuration or your configuration is invalid for the "payment" log context. […]
 
 To remove this warning please update your `src/config/logging.js` configuration file with a new `payment` entry:
@@ -1030,9 +1044,9 @@ To allow [serving assets from a custom domain (e.g. a CDN)](/docs/advanced/perfo
 
 1. in `index.html`, make sure there's a `script` tag defining `window.__ASSETS_BASE_URL__` for instance right after the one defining `window.__BASE_URL__`:
    ```html
-    <script>
-      window.__ASSETS_BASE_URL__ = "%%__ASSETS_BASE_URL__%%";
-    </script>
+   <script>
+     window.__ASSETS_BASE_URL__ = "%%__ASSETS_BASE_URL__%%";
+   </script>
    ```
 1. in both `error.html` and `index.html`, make sure `<link>`s reference external assets with `%%__ASSETS_BASE_URL__%%` instead of `%%__BASE_URL__%%`
 1. in `ShopQuery.gql`, add `imageBaseUrl` to the list of requested fields
@@ -1068,9 +1082,11 @@ As of the 2.7 version, Front-Commerce fetches the attributes on which facets can
 ### `pact` 4.x dependency removed
 
 If your application contains Pact tests and you saw the following deprecation message in your current version, you will have an action to do during this migration:
-> server/model/__fixtures__/provider/makeDescribeWithProvider deprecated Will be removed in 3.0.0. Please update your tests by moving them in a `__pacts__` directory and setup interactions in each test. Front-Commerce will setup everything for you, using the latest @pact-foundation/pact library.
+
+> server/model/**fixtures**/provider/makeDescribeWithProvider deprecated Will be removed in 3.0.0. Please update your tests by moving them in a `__pacts__` directory and setup interactions in each test. Front-Commerce will setup everything for you, using the latest @pact-foundation/pact library.
 
 The warning warns about usage of a deprecated `makeDescribeWithProvider` helper used by Front-Commerce when you import `describeWithProvider` directly in a test from a `__tests__` server directory.
+
 ```
 // DEPRECATED
 import { describeWithProvider } from "server/model/__fixtures__/provider/magento2";
@@ -1079,6 +1095,7 @@ import { describeWithProvider } from "server/model/__fixtures__/provider/magento
 Since [Front-Commerce 2.0.0](https://gitlab.com/front-commerce/front-commerce/commit/f69fd72717e99040e7e613705752f1175f589509), we use the latest `@pact-foundation/pact` library. Front-Commerce's [`test` CLI command](/docs/reference/cli.html#front-commerce-test) will automatically provide a `describeWithProvider` function in your tests from the `__pacts__` directory. It runs Pact tests in a more stable way and is the recommended way to use Pact in your application.
 
 We've finished to update all of our internal tests to this latest version and have removed the direct dependency to the old Pact version to prevents downloading the Pact binary twice during an `npm install`. Your tests using the deprecated `describeWithProvider` will now fail unless you:
+
 - add the dependency back to your project
 - or (**RECOMMENDED**) you move your tests to a `__pacts__` directory and update them a bit. See [commits from our own migration](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/commits) (especially [this one](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/520/diffs?commit_id=f195479395a51f62664ca5522e0915f345ff22b4)) for examples and details.
 
@@ -1093,6 +1110,7 @@ It was first introduced for the navigation menu in Magento GraphQL modules (then
 We've consolidated the Payzen module to support Lyra Collect. Both products are based on the same APIs and client libraries, but loaded from different sources. It appeared that we were using a mix of both URLs, and we've cleaned this a bit.
 
 If you use Payzen as Front-Commerce embedded payment method you must:
+
 - update your `config/website.js` CSP configurations
 - ensure that the `PayzenEmbeddedQuery` query contains the `assetsBaseUrl` field
 
@@ -1105,6 +1123,7 @@ If you are using Lyra Collect, use the `api.lyra.com` value as per [our document
 #### `PayzenEmbeddedQuery` query update
 
 If you have overridden `modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm/PayzenEmbeddedQuery.gql`, please update it as follow:
+
 ```diff
 query PayzenEmbeddedQuery {
   shop {
@@ -1183,6 +1202,7 @@ In case you are using theme chocolatine and have overridden `_components.scss` y
 ```
 
 ## `2.5.0` -> `2.6.0`
+
 ### Minimum Node.js version
 
 Node.js 10.x [reaches its end of life at the end of April 2021](https://nodejs.org/en/about/releases/). As a result, the minimum supported Node.js version in Front-Commerce is **12.22.1**.
@@ -1303,26 +1323,26 @@ In this release we have updated [several dependencies](https://gitlab.com/front-
 upgrade will be transparent. However, the following dependency updates require
 some attention though:
 
-* [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
-    not used at all by Front-Commerce. If you use it, you have to make sure it's
-    installed on your environment by running `npm i base-64`.
-* [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
-    has been updated to 6.0.0. In this new release, there's [a new rule we don't
-    follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
-    If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
-    need to do the same change. In addition, depending on your code, eslint
-    might also warn you about new errors.
-* [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
-    Among other changes, it contains a fix that makes sure [the `@` character is
-    correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
-    As a result, remote APIs now receive `%40` instead of a plain `@` when this
-    character is used in a query string parameter.
-* [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
-    used. It now adds a `rel` attribute on previous/next buttons.
-* [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
-    5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
-    compared to 4.x.
-* [`helmet`](https://www.npmjs.com/package/helmet) has been updated to 4.5.0. As a result, [some middlewares previously included by default are not called anymore](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-removed) while [several middlewares are now enabled by default](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-added-by-default). Those HTTP headers [can be customized if needed](/docs/advanced/server/customize-response-http-headers.html).
+- [`base-64`](https://www.npmjs.com/package/base-64) has been removed. It was
+  not used at all by Front-Commerce. If you use it, you have to make sure it's
+  installed on your environment by running `npm i base-64`.
+- [`eslint-config-react-app`](https://www.npmjs.com/package/eslint-config-react-app)
+  has been updated to 6.0.0. In this new release, there's [a new rule we don't
+  follow and we had to override](https://gitlab.com/front-commerce/front-commerce/-/commit/576554fd32057e33f7b4f8b05d9b322e5c3dd54a#dbc0c31823b8f2e4ed04a397722fed33a67f123f_79_80).
+  If your `.eslintrc.js` doesn't include Front-Commerce one, you'll probably
+  need to do the same change. In addition, depending on your code, eslint
+  might also warn you about new errors.
+- [`axios`](https://www.npmjs.com/package/axios) has been updated to 0.21.1.
+  Among other changes, it contains a fix that makes sure [the `@` character is
+  correctly URL encoded in URLs](https://github.com/axios/axios/issues/1212).
+  As a result, remote APIs now receive `%40` instead of a plain `@` when this
+  character is used in a query string parameter.
+- [`react-paginate`](https://www.npmjs.com/package/react-paginate) 7.1.2 is now
+  used. It now adds a `rel` attribute on previous/next buttons.
+- [`react-intl`](https://www.npmjs.com/package/react-intl) has been updated to
+  5.15.8. [The 5.x release has a minor backward incompatible](https://formatjs.io/docs/react-intl/upgrade-guide-5x)
+  compared to 4.x.
+- [`helmet`](https://www.npmjs.com/package/helmet) has been updated to 4.5.0. As a result, [some middlewares previously included by default are not called anymore](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-removed) while [several middlewares are now enabled by default](https://github.com/helmetjs/helmet/wiki/Helmet-4-upgrade-guide#which-middlewares-were-added-by-default). Those HTTP headers [can be customized if needed](/docs/advanced/server/customize-response-http-headers.html).
 
 ## `2.4.0` -> `2.5.0`
 

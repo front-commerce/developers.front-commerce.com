@@ -27,7 +27,7 @@ We aim at releasing often and follow [Semantic Versioning](https://semver.org) t
 
 ### When to expect a new release?
 
-At Front-Commerce, the team has been growing a lot! *(as part of [our fundraising](https://www.usine-digitale.fr/article/front-commerce-leve-1-5-million-d-euros-pour-sa-solution-d-optimisation-des-boutiques-en-ligne.N1163477) notably* 👀*)*
+At Front-Commerce, the team has been growing a lot! _(as part of [our fundraising](https://www.usine-digitale.fr/article/front-commerce-leve-1-5-million-d-euros-pour-sa-solution-d-optimisation-des-boutiques-en-ligne.N1163477) notably_ 👀*)*
 
 We are now able to implement a lot of new elements between two minor releases, **every 6 weeks** (new features, tech improvements, bug fixes ...)
 
@@ -42,30 +42,30 @@ Therefore, here is the theoretical rhythm of a cycle (Front-Commerce is currentl
 - **[2.12.0](/docs/appendices/release-notes.html#2-12-0-2022-01-06)**: 6 january
 - **2.13.0**: 18 february
 - 2.14:
-  - 4 march: *2.14.0-beta.0*
-  - 18 march: *2.14.0-beta.1*
+  - 4 march: _2.14.0-beta.0_
+  - 18 march: _2.14.0-beta.1_
   - **1 april: 2.14.0**
 - 2.15:
-  - 15 april: *2.15.0-beta.0*
-  - 29 april: *2.15.0-beta.1*
+  - 15 april: _2.15.0-beta.0_
+  - 29 april: _2.15.0-beta.1_
   - **13 may: 2.15.0**
 - 2.16:
-  - 27 may: *2.16.0-beta.0*
-  - 10 june: *2.16.0-beta.1*
+  - 27 may: _2.16.0-beta.0_
+  - 10 june: _2.16.0-beta.1_
   - **24 june: 2.16.0**
 - 2.17:
-  - 8 july: *2.17.0-beta.0*
-  - 22 july: *2.17.0-beta.1: 22-07-2022*
+  - 8 july: _2.17.0-beta.0_
+  - 22 july: _2.17.0-beta.1: 22-07-2022_
   - **5 august: 2.17.0**
 - 2.18:
-  - 19 august: *2.18.0-beta.0*
-  - 2 september: *2.18.0-beta.1*
+  - 19 august: _2.18.0-beta.0_
+  - 2 september: _2.18.0-beta.1_
   - **16 september: 2.18.0**
 - 2.19:
-  - 30 september: *2.19.0-beta.0*
-  - 14 october: *2.19.0-beta.1*
+  - 30 september: _2.19.0-beta.0_
+  - 14 october: _2.19.0-beta.1_
   - **28 october: 2.19.0**
 - 2.20:
-  - 11 november: *2.20.0-beta.0*
-  - 25 november: *2.20.0-beta.1*
+  - 11 november: _2.20.0-beta.0_
+  - 25 november: _2.20.0-beta.1_
   - **9 december: 2.20.0**

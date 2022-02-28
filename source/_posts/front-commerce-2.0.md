@@ -13,10 +13,10 @@ Merchants want better conversion rates on mobile. Front-Commerce is an ally to a
 
 Start with our skeleton, configure it to connect to your backend (requires installing an extension for Magento platforms) and you have a fully-functional application in minutes. This starter is similar to our [online demonstrations](https://demo.front-commerce.com/). You can then iterate from it!
 
-* convince your boss or a potential customer by building a <abbr title="Proof of Concept">PoC</abbr> in 1-day: [customize design tokens](/docs/essentials/adapt-theme-to-your-brand.html), override some key components…
-* leverage [theme overrides](/docs/essentials/extend-the-theme.html) to share components and themes across stores or for seasonal branding
-* with GraphQL modules, [combine GraphQL services](/docs/advanced/graphql/remote-schemas.html) and [extend the default schema](/docs/essentials/extend-the-graphql-schema.html) to match your unique business domain
-* deploy often (continuously?) your frontend without any impact on your backend
+- convince your boss or a potential customer by building a <abbr title="Proof of Concept">PoC</abbr> in 1-day: [customize design tokens](/docs/essentials/adapt-theme-to-your-brand.html), override some key components…
+- leverage [theme overrides](/docs/essentials/extend-the-theme.html) to share components and themes across stores or for seasonal branding
+- with GraphQL modules, [combine GraphQL services](/docs/advanced/graphql/remote-schemas.html) and [extend the default schema](/docs/essentials/extend-the-graphql-schema.html) to match your unique business domain
+- deploy often (continuously?) your frontend without any impact on your backend
 
 This is how Front-Commerce allows merchants to **go live in weeks, not months** or years!
 
@@ -86,12 +86,12 @@ We started supporting other platforms, and projects will go live in 2021 using t
   <a class="link primary button" href="mailto:contact@front-commerce.com">Tell us which solution you'd use Front-Commerce with!</a>
 </div>
 
-
 ## Batteries included
 
 Front-Commerce stores are running in production since 2018. We've refined every aspect that you'd expect from an application to make operations seamless and reduce friction with low-level implementation details.
 
 **Spend time on things that matter** and leverage Front-Commerce for the rest. Here are some of the things you'll don't have to design or maintain:
+
 - [simple yet efficient routing](/docs/essentials/add-a-page-client-side.html) inspired by the best open-source solutions out there
 - [smart predictive prefetching](/docs/advanced/performance/preloading-routes.html) for a great perceived performance
 - [performant and responsive images](/docs/advanced/production-ready/media-middleware.html) with modern formats

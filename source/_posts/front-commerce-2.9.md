@@ -1,5 +1,5 @@
 ---
-title: '2.9: Front-Commerce payments improved, platform agnostic Adyen support and Prismic enhancements'
+title: "2.9: Front-Commerce payments improved, platform agnostic Adyen support and Prismic enhancements"
 date: 2021-09-02
 ---
 
@@ -20,6 +20,7 @@ For details, please visit each version’s release page: [2.8.1](https://gitlab.
 [Front-Commerce payments](/docs/advanced/payments/front-commerce-payments.html) is a core feature used by every platform-agnostic payment method to hook into eCommerce platform’s checkout and order management systems.
 
 We reworked this area of our product to enable new exciting use-cases:
+
 - payment methods can now handle asynchronous notifications in a homogeneous way
 - it is also possible to update an Order status in a more fine-grained way. Merchants will have more insight into the payment status from their back-office, no matter the payment scenario (even the more complex ones).
 - payment logs are now very detailed and easier to analyze. Integrators can inspect any domain event that occurred and understand what customers did during their payment process

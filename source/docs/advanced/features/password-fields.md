@@ -6,6 +6,7 @@ title: Password fields
 Your application will require customers to enter their password on several pages (registration, login, password forgotten…). Front-Commerce contains some default components and mechanisms for providing a good user experience while ensuring passwords match the security criteria you may have.
 
 This page contains all information about how to adapt the default Front-Commerce behaviors.
+
 ## Configure password validity
 
 <blockquote class="feature--new">
@@ -14,6 +15,7 @@ _Since version 2.12.0_
 
 Front-Commerce expects a certain level of complexity for the password entered by a user.
 The default is:
+
 - 8 characters minimum
 - at least 3 types of characters among: lowercase letters, uppercase letters, digits and special characters
 
@@ -40,25 +42,25 @@ export default {
   rules: [
     {
       // technical ID, must be unique
-      id: "a-unique-technical-id", 
-       // optional, enforces this status if isValid returns false
+      id: "a-unique-technical-id",
+      // optional, enforces this status if isValid returns false
       invalidStatus: "TOO_SHORT",
       // optional, label to display for this rule in the hinter. If it is not defined, the rule is not displayed.
-      label: messages.invalid, 
+      label: messages.invalid,
       // validation method for this rule
-      isValid: (password) => true, 
+      isValid: (password) => true,
     },
   ],
   status: {
     // status key, used by rule.invalidStatus
-    TOO_SHORT: { 
+    TOO_SHORT: {
       // message to display for this status
       label: messages.tooShort,
       // the status to be used from the ProgressStatus component
-      status: "error", 
+      status: "error",
       // minimum number of valid criterias for this status to be display, only the first valid status sorted by minCriterias will be shown
-      minCriterias: 0, 
-       // is this status sufficient to validate the password
+      minCriterias: 0,
+      // is this status sufficient to validate the password
       isValid: false,
     },
   },

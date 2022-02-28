@@ -25,19 +25,19 @@ const doSomethingWithIntersectionObserver = () => {
     return;
   }
   // …
-}
+};
 ```
 
 ```js
-const initializePosition = setPosition => {
+const initializePosition = (setPosition) => {
   if (typeof navigator === "undefined" || !("geolocation" in navigator)) {
     setPosition(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
   } else {
-    navigator.geolocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition((position) => {
       setPosition(position.coords.latitude, position.coords.longitude);
     });
   }
-}
+};
 ```
 
 ## `branchServerClient` to the rescue!

@@ -10,6 +10,7 @@ A "payment workflow" is a model representing payment scenario from a customer st
 If your goal is to use an existing payment integration, please refer to the integrations listed in the [Payment overview](/docs/advanced/payments/overview.html).
 
 So far, 3 workflows are supported and are explained below:
+
 - Direct Order
 - Redirect After Order
 - Redirect Before Order
@@ -25,6 +26,7 @@ When Customers select the payment method and finish the checkout process, their 
 It is sometimes possible to display additional input (or external payment forms) during the payment method selection step in Front-Commerce so that Customers can Authorize the payment. When submitting the order, the Direct Order workflow could include additional data (such as account IBAN information for a SEPA payment, an authorization payment token to allow a capture…) that could be stored or used by the eCommerce system or administrators.
 
 Below, a diagram representing successive interactions (with a Magento platform as example):
+
 <figure>
 ![Schema explaining the Direct Order workflow](./assets/directOrder.svg)
 </figure>
@@ -38,6 +40,7 @@ When Customers select the payment method and finish the checkout process, their 
 **An Order exists in the commerce platform when the user is redirected to the payment page.**
 
 Below, a diagram representing successive interactions (with a Magento platform as example):
+
 <figure>
 ![Schema explaining the Redirect After Order workflow](./assets/placeAfter.svg)
 </figure>
@@ -57,6 +60,7 @@ When Customers select the payment method, they can be redirected to the payment 
 **The Order has not yet been created in the commerce platform when the user is redirected to the payment page (for authorization only).** It is created once Customers end the checkout workflow.
 
 Below, a diagram representing successive interactions (with a Magento platform as example):
+
 <figure>
 ![Schema explaining the Redirect Before Order workflow](./assets/placeBefore.svg)
 </figure>

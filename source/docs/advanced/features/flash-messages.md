@@ -12,6 +12,7 @@ For these use cases, **Front-Commerce 2.3 introduced a "flash message" mechanism
 A `req.addFlashMessage()` method is available on the Express request object. It allows you to add a flash message that will be server rendered and displayed wherever the new <FlashMessages /> component (see below) is used.
 
 Messages can be either a string or an object with the following attributes:
+
 - `message` text
 - `type` key: allows to display a specific component ([see below](#Create-custom-flash-message-components))
 - `data` object: additional data to be passed to the component displayed
@@ -44,6 +45,7 @@ const MyPage = () => {
 The previous `type` key allows you to render flash messages in custom ways. It is useful to display a specific user message by presenting different structured information.
 
 Out of the box, Front-Commerce supports the following types:
+
 - `default`
 - `info`
 - `error`

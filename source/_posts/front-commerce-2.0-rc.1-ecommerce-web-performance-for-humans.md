@@ -27,7 +27,6 @@ By then, you can browse our documentation and the [Migration guides since the la
 
 Feel free to send us [an email](mailto:contact@front-commerce.com) or a [Slack](https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU) message if you have any question.
 
-
 ## Ready for takeoff
 
 Check out our [Magento 2 demo store](https://magento2.demo.front-commerce.com/) and the same codebase connected to a [Magento 1 instance](https://magento1.demo.front-commerce.com/). We hope you'll notice how far we went over the past few months. Incredible speed is only a beginning: **Front-Commerce will keep increasing your online store performance from now on.**
@@ -47,7 +46,6 @@ Being customer-driven, led us to balance our roadmap between refactoring, improv
 Our team is also committed to make projects built by others successful and **professional services (trainings, expertise…) kept us busy!** We helped partners and customers to upgrade to this version and troubleshoot their performance issues. To date, some are in production since february, others are about to go live but **all stores in production will be using Front-Commerce 2.0+ in the next few months.**
 
 Performance will remain our core-promise, and you can expect continuous improvements over the next releases.
-
 
 <div class="center">
   <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to use Front-Commerce">Contact us to talk about your project!</a>

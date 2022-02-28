@@ -56,11 +56,13 @@ override the one defined in the core. To do so:
 
 1.  override the `theme/components/atoms/Colors/_colors.scss` theme file in your
     theme:
+
 ```bash
 mkdir -p my-module/web/theme/components/atoms/Colors/
 cp node_modules/front-commerce/src/web/theme/components/atoms/Colors/_colors.scss \
   my-module/web/theme/components/atoms/Colors/_colors.scss
 ```
+
 2. restart the application so the override is detected
 3. edit the colors as needed
 
@@ -90,6 +92,7 @@ Follow the same steps than for colors:
 1. override the `theme/components/atoms/Typography/_typography.scss` and
    `theme/components/atoms/Typography/Heading/_Heading.scss` theme files in your
    theme:
+
 ```bash
 mkdir -p my-module/web/theme/components/atoms/Typography/Heading
 cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/_typography.scss \
@@ -97,8 +100,10 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/_typogr
 cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading/_Heading.scss \
   my-module/web/theme/components/atoms/Typography/Heading/_Heading.scss
 ```
+
 2. restart the application so the override is detected
 3. edit the fonts as needed
+
 ```diff
 // my-module/web/theme/components/atoms/Typography/_typography.scss
 -$fontFamily: "Roboto", "Arial Helvetica", "Arial", sans-serif;
@@ -126,9 +131,11 @@ cp node_modules/front-commerce/src/web/theme/components/atoms/Typography/Heading
    font-weight: bold;
  }
 ```
+
 4. allow `d33wubrfki0l68.cloudfront.net` (the domain we have included fonts from) in your
    <abbr title="Content Security Policy">CSP</abbr> `font-src` header value
    configured in `src/config/website.js`
+
 ```diff
 // my-module/config/website.js
        imgSrc: [],

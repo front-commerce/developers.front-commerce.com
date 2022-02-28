@@ -13,6 +13,7 @@ Integrating a Prismic Slice Zone and its Slices into your project is a 3 steps p
 
 <!-- Workaround for https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents -->
 <!-- no toc -->
+
 1. [expose data in GraphQL](#Expose-data-in-GraphQL)
 2. [create a Slice library](#Create-a-Slice-library) related to these GraphQL types. A library is composed of pairs of React Components and GraphQL fragments.
 3. [update your static pages to retrieve the content dynamically](#Retrieve-and-display-content) and use the SliceZone component of your library to display the data appropriately
@@ -115,7 +116,7 @@ export default {
     },
   },
   // […]
-}
+};
 ```
 
 That's it! You must now be able to view data from Prismic when requesting your application's GraphQL server:

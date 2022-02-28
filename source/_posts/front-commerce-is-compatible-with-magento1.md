@@ -13,8 +13,8 @@ This means that you can finally develop your shop at your own schedule and you n
 
 Before explaining how Front-Commerce's Magento 1 support is different from other e-commerce PWA solutions, we need to explain how Front-Commerce works under the hood. There are two parts:
 
-* The React front-end which unlocks a better UX for your customers
-* The GraphQL middleware that unifies how to fetch data from your remote services.
+- The React front-end which unlocks a better UX for your customers
+- The GraphQL middleware that unifies how to fetch data from your remote services.
 
 In a simple Front-Commerce shop, this means that the GraphQL fetches all its data from a single e-commerce solution. The first supported solution was Magento 2.
 
@@ -71,4 +71,3 @@ While Magento 1 migration has been daunting for many businesses and developers, 
 <div class="center">
   <a class="link primary button" href="mailto:contact@front-commerce.com?subject=I’d like to have Front-Commerce in front of my Magento 1!">Contact us to talk about Magento 1!</a>
 </div>
-

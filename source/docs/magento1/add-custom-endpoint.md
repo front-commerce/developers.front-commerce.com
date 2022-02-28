@@ -80,13 +80,14 @@ This is a basic structure of this config file:
 - Below is an example of how such a configuration could appear in the admin area when configuring API Resources authorizations:
 
 ![Resources](./assets/resources.png)
+
 - `resource_groups` declares new resource groups.
 - `resources` declares a new custom endpoint. Every resource need to have a group (see `resource_groups`), a model and a title.
 - `privileges` defines the HTTP Method allowed for `customer`, `guest` and `admin`. ([Rest roles configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/roles_configuration.html))
-    - `create` = POST
-    - `retrieve` = GET
-    - `update` = UPDATE
-    - `delete` = DELETE
+  - `create` = POST
+  - `retrieve` = GET
+  - `update` = UPDATE
+  - `delete` = DELETE
 - `attributes` lists the attributes that can be retrieved or sent ([Rest attributes configuration Magento 1](https://devdocs.magento.com/guides/m1x/api/rest/permission_settings/attributes_configuration.html))
 - `routes` configure your URL endpoint
 
@@ -243,10 +244,10 @@ In case you need to ensure your endpoints works as expected, you can either use 
 ## Good to know
 
 - If you can, extend `FrontCommerce_Integration_Model_Api2_Abstract` in your own API class. This class adds useful helper functions such as:
-    - `public function getCustomer()`: Retrieve current customer and save it in customer session.
-    - `protected function _initStore()`: Set current store with default store view or store set in request params.
-    - `protected function _getStore()`: Rewrite Magento's base method to memoize store value. Retrieve current store according to request and API user type.
-    - `protected function _getCurrency()`: Retrieve current currency.
-    - ...
+  - `public function getCustomer()`: Retrieve current customer and save it in customer session.
+  - `protected function _initStore()`: Set current store with default store view or store set in request params.
+  - `protected function _getStore()`: Rewrite Magento's base method to memoize store value. Retrieve current store according to request and API user type.
+  - `protected function _getCurrency()`: Retrieve current currency.
+  - ...
 - If you apply `_applyCollectionModifiers($collection)` to your own `$collection` you can use dynamic API collection filter (see [Magento documentation](https://devdocs.magento.com/guides/m1x/api/rest/get_filters.html))
 - If you need to send back an API error, use `$this->_critical(ERR_CODE);`

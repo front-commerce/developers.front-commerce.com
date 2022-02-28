@@ -5,8 +5,8 @@ title: Ingenico integration
 
 This page contains information about the different ways you can accept payments with [Ingenico](https://www.ingenico.com/) (Ogone) in your Front-Commerce application.
 
-* [Front-Commerce Payment](#Front-Commerce-Payment)
-* [Magento2 module](#Magento2-module)
+- [Front-Commerce Payment](#Front-Commerce-Payment)
+- [Magento2 module](#Magento2-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 
@@ -38,11 +38,14 @@ In your Front-Commerce application:
 ### Register your Ogone payment component
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register Ogone
+
 ```diff
 +import OgoneFlexCheckoutForm from "./OgoneFlexCheckoutForm";
 

@@ -82,6 +82,7 @@ If the product `PANT-01` was an upsell of all other products in the `pants` cate
 ### Manually clearing the cache
 
 Clearing the cache manually is possible on some of the supported platforms. Read dedicated pages for details:
+
 - [Magento 1](/docs/magento1/advanced.html#Clearing-Front-Commerce-cache)
 - [Magento 2](/docs/magento2/advanced.html#Clearing-Front-Commerce-cache)
 
@@ -94,6 +95,7 @@ A DataLoader is instantiated with a **batching function**, that will allow to fe
 By default every DataLoader provides request-level caching. But this can be configured to switch to a persistent caching strategy instead. For instance, Front-Commerce provides a Redis strategy to share the cache between users and requests.
 
 In our previous example, if the `Product.qty` resolver was implemented using a DataLoader the query could have been resolved using only 2 remote API requests:
+
 - 1 request to fetch category information
 - 1 request to fetch products in the category
 - 1 batch request to fetch quantities of the products if an API was available: `https://inventory.example.com/stocks?skus=PANT-01,PANT-02,…,PANT-10`
@@ -124,14 +126,14 @@ export default {
   resolvers,
   contextEnhancer: ({ makeDataLoader, req }) => {
     const axiosInstance = axios.create({
-      baseURL: req.config.inventoryApiEndpointUrl
+      baseURL: req.config.inventoryApiEndpointUrl,
     });
 
     return {
       // create an instance of the loader, to be made available in resolvers
-      Stock: StockLoader(makeDataLoader, axiosInstance)
+      Stock: StockLoader(makeDataLoader, axiosInstance),
     };
-  }
+  },
 };
 ```
 
@@ -150,9 +152,9 @@ export default {
       // use the loader instance to fetch data
       // batching and caching is transparent in the resolver
       return loaders.Stock.loadBySku(sku);
-    }
-  }
-}
+    },
+  },
+};
 ```
 
 ```js
@@ -163,23 +165,21 @@ const StockLoader = (makeDataLoader, axiosInstance) => {
   // our batching function that will be injected in the DataLoader factory
   // it is important to return results in the same order than the passed `skus`
   // hence the use of `reorderForIds` (documented later in this page)
-  const loadStocksBatch = skus => {
-     return axiosInstance
-        .get("/stocks", { params: { skus } })
-        .then(response => response.data.items)
-        .then(reorderForIds(skus, "sku"));
-  }
+  const loadStocksBatch = (skus) => {
+    return axiosInstance
+      .get("/stocks", { params: { skus } })
+      .then((response) => response.data.items)
+      .then(reorderForIds(skus, "sku"));
+  };
 
   // The `Stock` key here must be unique across the project
   // and is used in cache configuration to determine the caching strategy to use
-  const loader = makeDataLoader("Stock")(
-    skus => loadStocksBatch(skus)
-  );
+  const loader = makeDataLoader("Stock")((skus) => loadStocksBatch(skus));
 
   return {
     // `loader` is a standard DataLoader instance, so you can use any available methods on it
-    loadBySku: sku => loader.load(sku)
-  }
+    loadBySku: (sku) => loader.load(sku),
+  };
 };
 
 export default StockLoader;
@@ -198,11 +198,11 @@ In some specific cases, you may want to force fetching data from the remote sour
 Here is an example:
 
 ```js
-const fooLoader = makeDataLoader("AcmeFoo")(
-  ids => loadFooBatch(ids).then(
-    items => items.map(item => {
+const fooLoader = makeDataLoader("AcmeFoo")((ids) =>
+  loadFooBatch(ids).then((items) =>
+    items.map((item) => {
       if (!item) {
-        return new Error('not found');
+        return new Error("not found");
       }
       return item;
     })
@@ -220,7 +220,7 @@ Here is how you could use it:
 
 ```js
 const fooLoader = makeDataLoader("AcmeFoo")(
-  ids => loadFooBatch(ids),
+  (ids) => loadFooBatch(ids),
   { expire: EXPIRE_TIME_IN_SECONDS } // see https://github.com/DubFriend/redis-dataloader
 );
 ```
@@ -230,15 +230,15 @@ const fooLoader = makeDataLoader("AcmeFoo")(
 DataLoaders mostly manipulate objects. Hence, it is safer to design your application to return objects from batching functions. This will ensure a wider range of caching strategies' compatibility (ex: Redis strategy does not support caching of scalar values).
 
 ```js
-const fooLoader = makeDataLoader("AcmeFoo")(
-  ids => loadFooBatch(ids).then(
-    results => results.map(result => ({ value: result }))
+const fooLoader = makeDataLoader("AcmeFoo")((ids) =>
+  loadFooBatch(ids).then((results) =>
+    results.map((result) => ({ value: result }))
   )
 );
 
 // …
 
-return fooLoader.load(id).then(data => data.value)
+return fooLoader.load(id).then((data) => data.value);
 ```
 
 ## Helpers available to create dataLoaders
@@ -251,8 +251,8 @@ You can find them in the [`server/core/graphql/dataloaderHelpers`](https://gitla
 
 Batch functions must satisfy two constraints to be used in a DataLoader (from the [graphql/dataloader documentation](https://github.com/graphql/dataloader#batch-function)):
 
-> * The Array of values must be the same length as the Array of keys.
-> * Each index in the Array of values must correspond to the same index in the Array of keys.
+> - The Array of values must be the same length as the Array of keys.
+> - Each index in the Array of values must correspond to the same index in the Array of keys.
 
 `reorderForIds` will ensure that these constraints are satisfied.
 
@@ -266,23 +266,25 @@ Example:
 // skus will very likely be a param of your batch loader
 const skus = ["P01", "P02", "P03"];
 
-return axiosInstance
-  .get("/frontcommerce/price", {
-    params: {
-      skus: skus.join(',')
-    }
-  })
-  .then(response => {
-    const prices = response.data
-    /* [
+return (
+  axiosInstance
+    .get("/frontcommerce/price", {
+      params: {
+        skus: skus.join(","),
+      },
+    })
+    .then((response) => {
+      const prices = response.data;
+      /* [
       {sku: "P02", price: 12},
       {sku: "P03", price: 13},
       {sku: "P01", price: 11},
     ] */
-    return prices;
-  })
-  // results will be sorted according to the initial skus passed (P01, P02, P03)
-  .then(reorderForIds(skus, "sku"));
+      return prices;
+    })
+    // results will be sorted according to the initial skus passed (P01, P02, P03)
+    .then(reorderForIds(skus, "sku"))
+);
 ```
 
 ### `reorderForIdsCaseInsensitive`
@@ -294,7 +296,7 @@ Example:
 ```js
 return axiosInstance
   .get(`/products`, { params: searchCriteria })
-  .then(response => response.data.items.map(convertMagentoProductForFront))
+  .then((response) => response.data.items.map(convertMagentoProductForFront))
   .then(reorderForIdsCaseInsensitive(skus, "sku"));
 ```
 
@@ -322,12 +324,12 @@ import { makeBatchLoaderFromSingleFetch } from "server/core/graphql/dataloaderHe
 
 // …
 const loadBatch = makeBatchLoaderFromSingleFetch(
-  id => axiosInstance.get(`/categories/${id}`),
-  response => convertCategoryMainAttributesForFront(response.data)
+  (id) => axiosInstance.get(`/categories/${id}`),
+  (response) => convertCategoryMainAttributesForFront(response.data)
 );
 
-const loader = makeDataLoader("CatalogCategory")(ids =>
-  loadBatch(ids).toPromise() // <-- note the `toPromise()` here
+const loader = makeDataLoader("CatalogCategory")(
+  (ids) => loadBatch(ids).toPromise() // <-- note the `toPromise()` here
 );
 ```
 
@@ -368,9 +370,9 @@ export default {
         port: 6379,
         db: 1,
         // defaultExpireInSeconds: 82800 // default: 23 hours
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 ```
 
@@ -396,8 +398,8 @@ export default {
       implementation: "Redis",
       supports: "*",
       config: {
-        host: "127.0.0.1"
-      }
+        host: "127.0.0.1",
+      },
     },
     {
       implementation: "PerMagentoCustomerGroup",
@@ -411,10 +413,10 @@ export default {
         "CatalogProductBundlePrice",
       ],
       config: {
-        defaultGroupId: 0
-      }
-    }
-  ]
+        defaultGroupId: 0,
+      },
+    },
+  ],
 };
 ```
 
@@ -438,8 +440,8 @@ export default {
       implementation: "Redis",
       supports: "*",
       config: {
-        host: "127.0.0.1"
-      }
+        host: "127.0.0.1",
+      },
     },
     {
       implementation: "PerCurrency",
@@ -450,7 +452,7 @@ export default {
         "CatalogProductBundle", // only for Magento 1
       ],
     },
-  ]
+  ],
 };
 ```
 
@@ -474,14 +476,14 @@ export default {
       implementation: "Redis",
       supports: "*",
       config: {
-        host: "127.0.0.1"
-      }
+        host: "127.0.0.1",
+      },
     },
     {
       implementation: "PerMagentoAdminRole",
       supports: ["CatalogProduct"],
     },
-  ]
+  ],
 };
 ```
 
@@ -504,15 +506,16 @@ _Since version 2.1.0_
 
 This is the recommended way to invalidate cache. It allows to invalidate several entries in one HTTP call which is more efficient.
 
-* Endpoint: `/_cache` invalidate all data from the scopes sent in the body
-* Body: list of cache invalidation descriptor with the following object keys
-  * `scope`: shop code (for instance one store)
-  * `key`: loader key to invalidate
-  * `id`: single id to invalidate for the `key` loader (in the given `scope`)
+- Endpoint: `/_cache` invalidate all data from the scopes sent in the body
+- Body: list of cache invalidation descriptor with the following object keys
+  - `scope`: shop code (for instance one store)
+  - `key`: loader key to invalidate
+  - `id`: single id to invalidate for the `key` loader (in the given `scope`)
 
 For each key of the invalidation descriptor, it is possible to define the value `"all"` (reserved keyword) to invalidate every defined object. See the example below.
 
 Example:
+
 ```
 [
   { scope: "default", key: "CatalogProduct", id: "VSK12" },
@@ -531,10 +534,10 @@ Example:
 
 These endpoints were the first ones implemented in Front-Commerce. They are less efficient than batching invalidations, but may be more convenient for webhooks or simple scripts.
 
-* `/_cache`: invalidate all data in persistent cache
-* `/_cache/:scope`: invalidate all data for a given scope (for instance one store)
-* `/_cache/:scope/:key`: invalidate all data of a given loader (matching `:key`) for a given store
-* `/_cache/:scope/:key/:id`: invalidate cached data for a single id of a given loader in a given store
+- `/_cache`: invalidate all data in persistent cache
+- `/_cache/:scope`: invalidate all data for a given scope (for instance one store)
+- `/_cache/:scope/:key`: invalidate all data of a given loader (matching `:key`) for a given store
+- `/_cache/:scope/:key/:id`: invalidate cached data for a single id of a given loader in a given store
 
 > **Note:** our Magento 2 and Magento 1 extensions handles cache invalidation by default, please refer to their respective documentations to learn how to add your own invalidation logic (for custom Magento entities).
 

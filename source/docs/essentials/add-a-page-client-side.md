@@ -14,16 +14,16 @@ We will take the example of a shop that is selling ingredients. It might make
 sense for such a website to also present a bunch of recipes to inspire their
 customers. Thus, we will add the needed routes to display:
 
-* a page containing the list of all the recipes
-* a page containing the details of one recipe
+- a page containing the list of all the recipes
+- a page containing the details of one recipe
 
 ## Add a page using a static URL
 
 First, let's add the page containing the list of all recipes. To do so you will
 need to:
 
-* Create the route file that will be mapped to a URL
-* Declare your module as a web module
+- Create the route file that will be mapped to a URL
+- Declare your module as a web module
 
 <blockquote class="info">
 This system is inspired by JavaScript frameworks like [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.org/), [Sapper](https://sapper.svelte.dev/), [Nuxt](https://nuxtjs.org/), etc. If you understand how these work, implementing routing within Front-Commerce will be easier. 
@@ -38,13 +38,15 @@ The url of your route will then depend on the name of the file you've created in
 
 ```jsx
 import React from "react";
-import { H1 } from "theme/components/atoms/Typography/Heading"
-import RecipesList from "theme/modules/Recipes/List"
+import { H1 } from "theme/components/atoms/Typography/Heading";
+import RecipesList from "theme/modules/Recipes/List";
 
-const Recipes = () => <div>
-  <H1>Discover our recipes</H1>
-  <RecipesList />
-</div>;
+const Recipes = () => (
+  <div>
+    <H1>Discover our recipes</H1>
+    <RecipesList />
+  </div>
+);
 
 export default Recipes;
 ```
@@ -81,7 +83,6 @@ Once you're done, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/recipes` URL. 🎉
 
-
 <blockquote class="warning">
     **Warning:** If several web modules are registered in your application and several of them define the same route, the route of the last web module in `.front-commerce.js` will be displayed. This can be useful if you want to override a default feature of Front-Commerce.
 </blockquote>
@@ -94,20 +95,25 @@ Thus, create a `RecipeDetails` component in `web/theme/routes/recipes/[slug].js`
 
 ```jsx
 import React from "react";
-import { H1 } from "theme/components/atoms/Typography/Heading"
-import Recipe from "theme/modules/Recipes/Details"
+import { H1 } from "theme/components/atoms/Typography/Heading";
+import Recipe from "theme/modules/Recipes/Details";
 
-const RecipeDetails = (props) => <div>
-  <H1>You are looking at the recipe matching the slug {props.match.params.slug}</H1>
-  <Recipe slug={props.match.params.slug} />
-</div>;
+const RecipeDetails = (props) => (
+  <div>
+    <H1>
+      You are looking at the recipe matching the slug {props.match.params.slug}
+    </H1>
+    <Recipe slug={props.match.params.slug} />
+  </div>
+);
 
 export default RecipeDetails;
 ```
 
 What's interesting to note here is that:
-* anything that is between brackets in your file path will be transformed into a parameter available in `props.match.params.slug`
-* you can create sub folders in your `web/theme/routes` folder if you want to have deeper URLs
+
+- anything that is between brackets in your file path will be transformed into a parameter available in `props.match.params.slug`
+- you can create sub folders in your `web/theme/routes` folder if you want to have deeper URLs
 
 You can now restart your application (`npm run start`) and you should see your route `RecipeDetails` displayed at `/recipe/baguette`. 🎉
 

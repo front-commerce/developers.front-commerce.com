@@ -32,7 +32,7 @@ First, let’s start by creating a new GraphQL module and register it in our app
 ```js
 // my-module/server/modules/pokemon/index.js
 export default {
-  namespace: "Pokemon"
+  namespace: "Pokemon",
 };
 ```
 
@@ -58,7 +58,6 @@ module.exports = {
 In its current state, this GraphQL module does nothing at all!
 Let’s update it to expose the remote GraphQL schema, by adding a [`remoteSchema`](/docs/reference/graphql-module-definition.html#remoteSchema-optional) key to the module definition.
 
-
 ```diff
 // my-module/server/modules/pokemon/index.js
 export default {
@@ -80,14 +79,17 @@ Try the query below for instance:
 
 ```graphql
 {
-  Pokemon_pokemon(name:"raichu"){
+  Pokemon_pokemon(name: "raichu") {
     name
-    weight { minimum maximum }
+    weight {
+      minimum
+      maximum
+    }
     image
     classification
   }
 
-  product(sku:"VD11") {
+  product(sku: "VD11") {
     name
   }
 }
@@ -181,12 +183,12 @@ export default {
     Pokemon_Pokemon: {
       relatedProducts: ({ id }, _, { loaders }) => {
         return loaders.Product.loadByPokemon(id);
-      }
-    }
+      },
+    },
   },
   remoteSchema: {
-    uri: "https://graphql-pokemon.vercel.app/"
-  }
+    uri: "https://graphql-pokemon.vercel.app/",
+  },
 };
 ```
 

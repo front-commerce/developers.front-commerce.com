@@ -1,2 +1,6 @@
 node_modules/
 public/
+
+# ignore due to an error related to specific tooling syntax
+# SyntaxError: CssSyntaxError: Unknown word (101:28)
+theme/source/style/_util/lesshat.import.less

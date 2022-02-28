@@ -252,7 +252,6 @@ import { H3 } from "theme/components/atoms/Typography/Heading";
 import { BodyParagraph } from "theme/components/atoms/Typography/Body";
 import Image from "theme/components/atoms/Image";
 
-
 storiesOf("molecules.IllustratedContent", module)
   .add("default", () => {
     return (

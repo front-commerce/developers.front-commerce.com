@@ -106,8 +106,8 @@ Here is the initial code we will refactor:
 // my-module/server/modules/clicks-counters/resolvers.js
 const counters = new Map();
 
-const currentValueOf = sku => {
-  return new Promise(resolve => {
+const currentValueOf = (sku) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const currentValue = counters.get(sku) || 0;
       resolve(currentValue);
@@ -117,18 +117,20 @@ const currentValueOf = sku => {
 
 export default {
   Product: {
-    clicksCounter: ({ sku }) => currentValueOf(sku)
+    clicksCounter: ({ sku }) => currentValueOf(sku),
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
       return currentValueOf(sku)
-        .then(currentValue => counters.set(sku, currentValue + incrementValue))
+        .then((currentValue) =>
+          counters.set(sku, currentValue + incrementValue)
+        )
         .then(() => ({
-          success: true
+          success: true,
         }));
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -140,8 +142,8 @@ Let’s start by creating a new `loader.js` file with our loader module.
 // my-module/server/modules/clicks-counters/loader.js
 const counters = new Map();
 
-const currentValueOf = sku => {
-  return new Promise(resolve => {
+const currentValueOf = (sku) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const currentValue = counters.get(sku) || 0;
       resolve(currentValue);
@@ -150,14 +152,14 @@ const currentValueOf = sku => {
 };
 
 const incrementValueOf = (sku, increment) => {
-  return currentValueOf(sku).then(currentValue =>
+  return currentValueOf(sku).then((currentValue) =>
     counters.set(sku, currentValue + increment)
   );
 };
 
 export default {
-  loadBySku: sku => currentValueOf(sku),
-  incrementBySku: (sku, increment) => incrementValueOf(sku, increment)
+  loadBySku: (sku) => currentValueOf(sku),
+  incrementBySku: (sku, increment) => incrementValueOf(sku, increment),
 };
 ```
 
@@ -321,9 +323,7 @@ see several patterns mentioned previously and get ideas about applying them in
 your application:
 
 ```js
-import {
-  makeUserClientFromRequest
-} from "server/modules/magento2/core/factories";
+import { makeUserClientFromRequest } from "server/modules/magento2/core/factories";
 
 import typeDefs from "./schema.gql";
 import resolvers from "./resolvers";
@@ -332,7 +332,7 @@ import { CmsBlockLoader, CmsPageLoader } from "./loaders";
 export default {
   namespace: "Magento2/Cms",
   dependencies: [
-    "Magento2/Store" // loaders need the store loader to get the store id
+    "Magento2/Store", // loaders need the store loader to get the store id
   ],
   typeDefs,
   resolvers,
@@ -344,9 +344,9 @@ export default {
 
     return {
       CmsPages: CmsPageLoader(makeDataLoader)(axiosInstance, loaders.Store),
-      CmsBlocks: CmsBlockLoader(makeDataLoader)(axiosInstance, loaders.Store)
+      CmsBlocks: CmsBlockLoader(makeDataLoader)(axiosInstance, loaders.Store),
     };
-  }
+  },
 };
 ```
 

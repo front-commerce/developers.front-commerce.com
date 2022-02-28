@@ -17,7 +17,8 @@ Front-Commerce manages your translations by using [`react-intl`](https://github.
 
 For instance, let's see how to transform your values in react-intl Components.
 
-* Strings
+- Strings
+
 ```diff
 - Default translation
 + import { FormattedMessage } from "react-intl";
@@ -26,7 +27,9 @@ For instance, let's see how to transform your values in react-intl Components.
 +   defaultMessage="Default translation"
 + />
 ```
-* Dates
+
+- Dates
+
 ```diff
 - import moment from "moment";
 - moment(date).format("DD/MM/YYYY");
@@ -38,7 +41,9 @@ For instance, let's see how to transform your values in react-intl Components.
 +   day="2-digit"
 + />
 ```
-* Prices
+
+- Prices
+
 ```diff
 - <span>{value.amount} €</span>
 + import { FormattedNumber } from "react-intl";
@@ -48,10 +53,12 @@ For instance, let's see how to transform your values in react-intl Components.
 +   currency={value.currency}
 + />
 ```
+
     <blockquote class="note">
     However, for this particular use case we have abstracted this in Front-Commerce with the [`theme/components/atoms/Price`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/components/atoms/Typography/Price) component (and its variants: `ProductPrice`, `PriceOrFree`). We recommend you to use it instead, so you could benefit from better integration with its related GraphQL Type.
     </blockquote>
-* [and many more](https://formatjs.io/docs/react-intl/components/)
+
+- [and many more](https://formatjs.io/docs/react-intl/components/)
 
 ### Without React Component
 
@@ -65,22 +72,37 @@ For instance, this is the case when you want to add some label attributes to you
 
 Fortunately, this is correctly handled by react-intl if you use [`defineMessages`](https://formatjs.io/docs/react-intl/api/#definemessagesdefinemessage) combined with [`injectIntl HOC`](https://formatjs.io/docs/react-intl/upgrade-guide-3x/#new-useintl-hook-as-an-alternative-of-injectintl-hoc) or the [`useIntl hook`](https://formatjs.io/docs/react-intl/api/#useintl-hook).
 
-
 ```jsx
 // injectIntl HOC
-import { injectIntl } from 'react-intl';
+import { injectIntl } from "react-intl";
 
-const MyComponentWithHOC = injectIntl(({intl, ...props}) => {
-  return (<span class="icon" aria-label={intl.formatMessage({id:"screen-reader-icon-title", defaultMessage:"Icon title displayed for screen readers"})} />)
-})
+const MyComponentWithHOC = injectIntl(({ intl, ...props }) => {
+  return (
+    <span
+      class="icon"
+      aria-label={intl.formatMessage({
+        id: "screen-reader-icon-title",
+        defaultMessage: "Icon title displayed for screen readers",
+      })}
+    />
+  );
+});
 
 // useIntl Hook
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
 
-const MyComponentWithHook = props => {
-  const intl = useIntl()
-  return <span class="icon" aria-label={intl.formatMessage({id:"screen-reader-icon-title", defaultMessage:"Icon title displayed for screen readers"})} />
-}
+const MyComponentWithHook = (props) => {
+  const intl = useIntl();
+  return (
+    <span
+      class="icon"
+      aria-label={intl.formatMessage({
+        id: "screen-reader-icon-title",
+        defaultMessage: "Icon title displayed for screen readers",
+      })}
+    />
+  );
+};
 ```
 
 ## Translate what's in your components
@@ -88,9 +110,11 @@ const MyComponentWithHook = props => {
 Now that you have defined what should be translated in your application, you actually need to translate your application. This is a two-step process:
 
 1. Run the following script that will fetch all your translatable strings in your application and gather them in a JSON file located in `translations/[locale].json`
+
 ```sh
 npm run translate
 ```
+
 2. Translate the strings available in those files, and you are good to go 🙂
 
 Note that for some translations you won't need to change anything. This usually happens for the default language and for business phrases such as "SKU", etc.
@@ -105,9 +129,9 @@ With `react-intl` translations are usually grouped into a single file. In our ca
 
 That's why Front-Commerce uses a mechanism called **translations fallbacks**. Instead of relying on a single file for translations, Front-Commerce will look out for translations in the following locations and pick the ones that exist:
 
-* Front-Commerce core: `node_modules/front-commerce/translations/[short-locale].json` or `node_modules/front-commerce/translations/[locale].json`
-* from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[short-locale].json` or `<my-module>/translations/[locale].json`
-* from your project: `translations/[short-locale].json` or `translations/[locale].json`
+- Front-Commerce core: `node_modules/front-commerce/translations/[short-locale].json` or `node_modules/front-commerce/translations/[locale].json`
+- from [your modules declared in `.front-commerce.js`](/docs/reference/front-commerce-js.html#modules): `<my-module>/translations/[short-locale].json` or `<my-module>/translations/[locale].json`
+- from your project: `translations/[short-locale].json` or `translations/[locale].json`
 
 `[short-locale]` here means that we are only taking the first particle of the `locale`. E.g. if the locale was `en-GB`, the short-locale would be `en`. That's how `en-GB` would load translations from both `en.json` and `en-GB.json` files.
 
