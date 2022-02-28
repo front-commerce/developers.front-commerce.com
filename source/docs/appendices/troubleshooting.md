@@ -101,13 +101,13 @@ export default {
   values: Promise.resolve({
     express: {
       graphQLBodyParserConfig: {
-        limit: "10mb" // default 1mb
+        limit: "10mb", // default 1mb
       },
       jsonParserConfig: {
-        limit: "10mb" // default 1mb
-      }
-    }
-  })
+        limit: "10mb", // default 1mb
+      },
+    },
+  }),
 };
 ```
 
@@ -142,10 +142,12 @@ This is because the SKU is used (for Magento 2 and Magento 1 at least) as a para
 First, enable `DEBUG=axios` to view the failing API calls so you can reproduce it outside of Front-Commerce.
 
 Then check your server documentation to see how to configure it accordingly:
+
 - in Apache, you will have to add `AllowEncodedSlashes On` to your VirtualHost.
 - in Nginx, `proxy_pass`.
 
 Sources:
+
 - https://github.com/magento/magento2/issues/13343#issuecomment-362783825 (and https://github.com/magento/magento2/issues?q=is%3Aissue+sort%3Aupdated-desc+slash+sku+api+is%3Aclosed)
 - https://stackoverflow.com/a/4443129
 
@@ -157,7 +159,7 @@ It is very likely due to a mismatch between Front-Commerce ElasticSearch queries
 
 For ElasticSuite versions < 2.9, there is nothing special to do. For ElasticSuite versions 2.9+ you have to define the `FRONT_COMMERCE_ES_ELASTICSUITE_VERSION` environment variable with your ElasticSuite version. Front-Commerce will detect it and run queries that match the way data are indexed.
 
-*Note: this setting was [introduced in Front-Commerce 2.3](/docs/appendices/migration-guides.html#ElasticSearch-7-x-and-ElasticSuite-2-9)*
+_Note: this setting was [introduced in Front-Commerce 2.3](/docs/appendices/migration-guides.html#ElasticSearch-7-x-and-ElasticSuite-2-9)_
 
 ## I have an error when using Magento 2's GraphQL
 

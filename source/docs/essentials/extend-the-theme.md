@@ -82,15 +82,17 @@ The original fragment file is collocated with the original component at: [`node_
 
 1. copy it to: `my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql`
 1. add the field `description` to the fragment.
-  ```diff
+
+```diff
 // my-module/web/theme/modules/ProductView/ProductItem/ProductItemFragment.gql
-  fragment ProductItemFragment on Product {
-    imageUrl
+fragment ProductItemFragment on Product {
+  imageUrl
 + description
-    ...ProductOverviewFragment
-    ...ProductItemActionsFragment
-  }
-  ```
+  ...ProductOverviewFragment
+  ...ProductItemActionsFragment
+}
+```
+
 1. restart the application
 
 The data will now be fetched from GraphQL every time the `ProductItem` is used (product listings, upsells…) and will be available for you to render it as wanted.
@@ -125,7 +127,7 @@ In the file that we've created in the previous section, instead of copying the o
 import React from "react";
 import BaseProductItem from "front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js";
 
-const ProductItem = props => (
+const ProductItem = (props) => (
   <div>
     {/* Add your feature here */}
     <BaseProductItem {...props} />

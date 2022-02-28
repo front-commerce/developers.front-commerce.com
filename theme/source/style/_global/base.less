@@ -1,11 +1,15 @@
 // the idea is to put base styles in here
 * {
   .box-sizing(border-box);
-  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent; /* For some Androids */
 }
 
-html, button, input, textarea, select {
+html,
+button,
+input,
+textarea,
+select {
   .type-primary;
   outline: none;
   -webkit-font-smoothing: antialiased;
@@ -13,8 +17,8 @@ html, button, input, textarea, select {
 }
 
 body {
-	.type-primary;
-	.font-s3();
+  .type-primary;
+  .font-s3();
   line-height: 26px;
   color: @color-darkest;
   background-color: @color-ancillary;
@@ -23,29 +27,53 @@ body {
 }
 
 /* Default type layout */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   .type-normal;
   margin: 0;
   padding: 0;
 }
 
-h1 { .font-m3; }
-h2 { .font-m2; }
-h3 { .font-m1; }
-h4 { .font-s3; }
-h5 {}
-h6 {}
+h1 {
+  .font-m3;
+}
+h2 {
+  .font-m2;
+}
+h3 {
+  .font-m1;
+}
+h4 {
+  .font-s3;
+}
+h5 {
+}
+h6 {
+}
 
-p {}
+p {
+}
 
 sub,
-sup { font-size: .8em; }
+sup {
+  font-size: 0.8em;
+}
 
-sub { bottom: -.2em; }
+sub {
+  bottom: -0.2em;
+}
 
-sup { top: -.2em; }
+sup {
+  top: -0.2em;
+}
 
-b { .type-bold; }
+b {
+  .type-bold;
+}
 
 em {
   .type-italic;
@@ -60,25 +88,25 @@ hr {
 
 code,
 pre {
-	.type-code;
+  .type-code;
   .font-code;
 }
 
 code {
-	&:not([class*="language-"]) {
-		background: @color-light;
-	}
-	display: inline-block;
-	padding-left: 2px;
-	padding-right: 2px;
-	vertical-align: baseline;
+  &:not([class*="language-"]) {
+    background: @color-light;
+  }
+  display: inline-block;
+  padding-left: 2px;
+  padding-right: 2px;
+  vertical-align: baseline;
 
-	color: darken(@color-complementary, 7%);
+  color: darken(@color-complementary, 7%);
 }
 
 pre {
-	padding: 1em 1.25em;
-	white-space: pre-wrap;
+  padding: 1em 1.25em;
+  white-space: pre-wrap;
   border-radius: 5px;
   background: @color-light !important;
   color: @color-darkest;

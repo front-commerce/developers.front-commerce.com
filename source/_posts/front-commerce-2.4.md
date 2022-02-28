@@ -17,22 +17,23 @@ Please read our [Front-Commerce 2.3 release announcement](/blog/2021/01/13/front
 ## Meet "Chocolatine", our new default theme
 
 [![Front-Commerce new theme](/images/blog/chocolatine.jpg)](https://magento2.front-commerce.app)
+
 <div class="center">
 *"Chocolatine" on our demo store: [magento2.front-commerce.app](https://magento2.front-commerce.app)*
 </div>
-
 
 We have been working on a new starter theme for future projects.
 Our goal was to improve our base theme so that new projects could start with a theme that was good enough to prototype and iterate.
 
 After some research, we've decided to leverage [the great UX and UI work from the ICEO team](https://www.behance.net/gallery/86012235/eCommerce-Free-UI-Kit) and use it as an starting point.
-It's name is "**Chocolatine**" *in reference to the correct way to pronounce "[Pain au chocolat](https://en.wikipedia.org/wiki/Pain_au_chocolat)" in French ;-)*
+It's name is "**Chocolatine**" _in reference to the correct way to pronounce "[Pain au chocolat](https://en.wikipedia.org/wiki/Pain_au_chocolat)" in French ;-)_
 
 This new theme provides a flexible foundation, ready to be adapted according to the merchant's brand. It allows to **deploy a new store in weeks instead of months**. It is [already used in production](https://www.lilinappy.fr/) by some of our customers.
 
 ### A ready-to-use User Interface
 
 This new theme improves the User experience, with a special focus on mobile uses:
+
 - mobile ready
 - key information displayed by default (shipping delays, payment methods, reassurance elements…),
 - clearer product pages with highlighted sales and accessible product configurator,
@@ -57,6 +58,7 @@ We used the opportunity of this new theme to improve the overall accessibility:
 Over time, we detected that Front-Commerce projects often had to reimplemented some components not available in our default theme.
 
 The Chocolatine theme contains components for common features:
+
 - carousel: scroll or swipe between several slides, products or content,
 - push blocks and feature highlights: ensure that your visitors understand what makes you stand out from your competitors, reassure visitors to increase sales,
 - featured products: from your home page, on the product page or from the cart,

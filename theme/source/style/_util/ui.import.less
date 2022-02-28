@@ -1,17 +1,28 @@
 @breakpoint: 800px;
 @page-margin: 5.55555%;
 
-
 .page-margins() {
-  @media screen and (min-width: (@breakpoint * 1)) { margin: 0 1*@page-margin; }
-  @media screen and (min-width: (@breakpoint * 1.5)) { margin: 0 1.5*@page-margin; }
-  @media screen and (min-width: (@breakpoint * 2)) { margin: 0 2*@page-margin; }
+  @media screen and (min-width: (@breakpoint * 1)) {
+    margin: 0 1 * @page-margin;
+  }
+  @media screen and (min-width: (@breakpoint * 1.5)) {
+    margin: 0 1.5 * @page-margin;
+  }
+  @media screen and (min-width: (@breakpoint * 2)) {
+    margin: 0 2 * @page-margin;
+  }
 }
 
 .page-padding() {
-  @media screen and (min-width: (@breakpoint * 1)) { padding: 0 1*@page-margin; }
-  @media screen and (min-width: (@breakpoint * 1.5)) { padding: 0 1.5*@page-margin; }
-  @media screen and (min-width: (@breakpoint * 2)) { padding: 0 2*@page-margin; }
+  @media screen and (min-width: (@breakpoint * 1)) {
+    padding: 0 1 * @page-margin;
+  }
+  @media screen and (min-width: (@breakpoint * 1.5)) {
+    padding: 0 1.5 * @page-margin;
+  }
+  @media screen and (min-width: (@breakpoint * 2)) {
+    padding: 0 2 * @page-margin;
+  }
 }
 
 .std-ypadding() {
@@ -40,7 +51,9 @@
   // Used primarily in grids
 
   font-size: 0;
-  > * { .font-s3; }
+  > * {
+    .font-s3;
+  }
 }
 
 .term-code() {
@@ -56,5 +69,7 @@
     margin-left: 10px;
   }
 
-  a { &:extend(.link.primary); }
+  a {
+    &:extend(.link.primary);
+  }
 }

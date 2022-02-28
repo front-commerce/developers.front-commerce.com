@@ -19,8 +19,8 @@ While working on our compatibility with Magento 2.3, we decided to use [ElasticS
 
 Moreover, this is the first step of greater plans we are really excited about:
 
-* an improved layered navigation on the client side with more room for customization
-* a catalog entirely fetched from Elasticsearch for greater performances (as an optional extension)
+- an improved layered navigation on the client side with more room for customization
+- a catalog entirely fetched from Elasticsearch for greater performances (as an optional extension)
 
 Stay tuned!
 
@@ -83,8 +83,8 @@ Magento in a local environment tend to be in an unstable state after commands li
 
 We also made a few bugfixes such as:
 
-* <abbr title="accessibility">a11y</abbr> improvements
-* 404 pages were a bit too loose on product and category pages. Some 500 errors were identified as 404, but this is no longer the case.
+- <abbr title="accessibility">a11y</abbr> improvements
+- 404 pages were a bit too loose on product and category pages. Some 500 errors were identified as 404, but this is no longer the case.
 
 ## See it live!
 
@@ -100,6 +100,7 @@ The online demo has been updated and will let you see how things have evolved si
 ## And more
 
 To know more about this release, we recommend you to check the following pages:
+
 - [Migration guide from 1.0.0-alpha.2 to 1.0.0-beta.0](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
 - [Full changelog from Front-Commerce release notes](https://gitlab.com/front-commerce/front-commerce/releases) and [its Magento 2 extension](https://gitlab.com/front-commerce/magento2-module-front-commerce/releases) (Partners and Customers only)
 

@@ -5,8 +5,8 @@ title: PayZen / Lyra Collect integration
 
 This page contains information about the different ways you can accept payments with [PayZen](https://payzen.eu/) or [Lyra Collect](https://www.lyra.com/lyra-collect/) in your Front-Commerce application.
 
-* [Front-Commerce Payment](#Front-Commerce-Payment)
-* [Magento2 module](#Magento2-module)
+- [Front-Commerce Payment](#Front-Commerce-Payment)
+- [Magento2 module](#Magento2-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 
@@ -17,6 +17,7 @@ This section explains how to configure and customize the PayZen Front-Commerce P
 ### Lyra Collect support
 
 Lyra Collect is a payment solution that shares the same infrastructure and API with Payzen. In Front-Commerce, it is the exact same module that is used. The only differences are:
+
 - the `FRONT_COMMERCE_PAYZEN_PRODUCT` environment variable (to be set to `lyra_collect`)
 - the URLs to use when [updating your CSPs](#Update-your-CSPs) should be `api.lyra.com` instead of `static.payzen.eu`
 
@@ -64,11 +65,14 @@ In your Front-Commerce application:
 ### Register your PayZen payment component
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register PayZen
+
 ```diff
 +import PayzenEmbeddedForm from "./PayzenEmbeddedForm";
 

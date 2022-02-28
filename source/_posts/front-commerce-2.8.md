@@ -1,5 +1,5 @@
 ---
-title: '2.8: Content-Driven Commerce with Prismic, Proximis connector in alpha and Summer backlog cleaning'
+title: "2.8: Content-Driven Commerce with Prismic, Proximis connector in alpha and Summer backlog cleaning"
 date: 2021-07-22
 ---
 
@@ -12,6 +12,7 @@ Front-Commerce 2.8 is available! This new version contains advanced Prismic feat
 eCommerce has evolved from a transactional process into a content-driven experience. Marketers work hard to create superior content because it leads to a superior Customer Experience.
 
 In this release, we've improved our Prismic connector to serve this goal. Developers can now leverage Prismic features in their Front-Commerce application in many new ways:
+
 - embrace Prismic's **"Don't Ship Pages, Ship a Page Builder"** vision with [Content Slices](/docs/prismic/content-slices.html) without sacrificing creative freedom
 - improve the Content manager experience with [Integration Fields](/docs/prismic/integration-fields.html) to create rich content referencing any Front-Commerce data without leaving the writing room (Products, Categories, …)
 - optimize SEO with [Routable types](/docs/prismic/routable-types.html). Expose custom Prismic content on any URL managed from Prismic and seamlessly include these pages in Front-Commerce's sitemap

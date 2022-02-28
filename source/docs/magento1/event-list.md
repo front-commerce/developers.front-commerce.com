@@ -3,69 +3,72 @@ id: event-list
 title: Dispatch event list
 ---
 
-## Catalog 
+## Catalog
+
 - `frontcommerce_api_prepare_category_product_collection_after`: event after retrieve products from category
-    - `collection`: products resource collection
-    - `request`: API request
-    - `store`: Current store
+  - `collection`: products resource collection
+  - `request`: API request
+  - `store`: Current store
 - `clockworkgeek_api_prepare_product_after`: event after retrieve product data
-    - `product`: product model
-    - `request`: API request
-    - `store`: Current store
-    
-## Customer 
+  - `product`: product model
+  - `request`: API request
+  - `store`: Current store
+
+## Customer
+
 - `frontcommerce_api_customer_create_before_save`: event before create new user
-    - `customer_api`: Customer API class
-    - `customer`: customer model
-    - `store`: Current store
+  - `customer_api`: Customer API class
+  - `customer`: customer model
+  - `store`: Current store
 - `frontcommerce_api_customer_create_after_save`: event after create new user
-    - `customer_api`: Customer API class
-    - `customer`: customer model
-    - `store`: Current store
+  - `customer_api`: Customer API class
+  - `customer`: customer model
+  - `store`: Current store
 - `frontcommerce_api_customer_login_create_quote_before_save`: event before set customer quote after login
-    - `oauth_server`: OAuth API class
-    - `customer`: customer model
-    - `quote`: quote model
-    - `store`: Current store
-    
+  - `oauth_server`: OAuth API class
+  - `customer`: customer model
+  - `quote`: quote model
+  - `store`: Current store
+
 ## Sales
+
 - `frontcommerce_api_retrieve_cart_data_before_render`: event before retrieve cart data
-    - `cart_api`: Cart API class
-    - `cart_data`: Varien object of cart data
-    - `request`: API request
-    - `store`: Current store
+  - `cart_api`: Cart API class
+  - `cart_data`: Varien object of cart data
+  - `request`: API request
+  - `store`: Current store
 - `frontcommerce_api_set_payment_information_before`: event before save payment information
-    - `quote`: Quote model
-    - `onepage`: Onepage model
-    - `update_data`: Payment data to set
-    - `request`: API request
-    - `store`: Current store
+  - `quote`: Quote model
+  - `onepage`: Onepage model
+  - `update_data`: Payment data to set
+  - `request`: API request
+  - `store`: Current store
 - `frontcommerce_api_set_shipping_information_before_save`: event before save shipping information
-    - `onepage`: Onepage model
-    - `shipping_data`: Shipping data to set
-    - `request`: API request
-    - `store`: Current store
+  - `onepage`: Onepage model
+  - `shipping_data`: Shipping data to set
+  - `request`: API request
+  - `store`: Current store
 - `frontcommerce_api_create_cart_before_save`: event before save cart
-    - `cart_api`: Cart API class
-    - `cart`: Cart model
-    - `quote`: Quote model
-    - `customer`: Current customer
-    - `store`: Current store
+  - `cart_api`: Cart API class
+  - `cart`: Cart model
+  - `quote`: Quote model
+  - `customer`: Current customer
+  - `store`: Current store
 - `frontcommerce_api_update_order_status_after_save`: event after update order status
-    - `order`: Current order
-    - `update_data`: Order data updated
-    - `request`: API request
-    - `store`: Current store
-    
-## URL 
+  - `order`: Current order
+  - `update_data`: Order data updated
+  - `request`: API request
+  - `store`: Current store
+
+## URL
+
 - `frontcommerce_api_prepare_url_find_collection`: event before retrieve URL from URL Rewrite URL FIND
-    - `collection`: products resource collection
-    - `request`: API request
-    - `store`: Current store
+  - `collection`: products resource collection
+  - `request`: API request
+  - `store`: Current store
 - `frontcommerce_api_prepare_url_match_collection`: event before retrieve URL from URL Rewrite URL MATCH
-    - `catalog_collection`: Catalog rewrite collection
-    - `page_collection`: CMS Page collection
-    - `filter_urls`: URL to match
-    - `request`: API request
-    - `store`: Current store
-    
+  - `catalog_collection`: Catalog rewrite collection
+  - `page_collection`: CMS Page collection
+  - `filter_urls`: URL to match
+  - `request`: API request
+  - `store`: Current store

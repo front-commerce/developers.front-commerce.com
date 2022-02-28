@@ -48,8 +48,8 @@ module.exports = {
   modules: ["./src", "./christmas"],
   serverModules: [
     { name: "FrontCommerce", path: "server/modules/front-commerce" },
-    { name: "Magento2", path: "server/modules/magento2" }
-  ]
+    { name: "Magento2", path: "server/modules/magento2" },
+  ],
 };
 ```
 
@@ -81,17 +81,17 @@ christmas
 
 And a few more features such as:
 
-* Auto redirect HTTP requests to HTTPS in production mode ([see more details](/docs/appendices/migration-guides.html#HTTPS))
-* Improved schema stitching from developers feedbacks to allow custom headers and authenticated requests ([see more details](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests))
-* Expose a product's short description in the GraphQL schema
+- Auto redirect HTTP requests to HTTPS in production mode ([see more details](/docs/appendices/migration-guides.html#HTTPS))
+- Improved schema stitching from developers feedbacks to allow custom headers and authenticated requests ([see more details](/docs/advanced/graphql/remote-schemas.html#Customize-remote-HTTP-requests))
+- Expose a product's short description in the GraphQL schema
 
 ## Bugfixes
 
 We also made a few bugfixes such as:
 
-* Fix display of order statuses in a user's account
-* Fix coupon deletion from cart
-* Fix stories detection when using multiple modules
+- Fix display of order statuses in a user's account
+- Fix coupon deletion from cart
+- Fix stories detection when using multiple modules
 
 ## Magento1 support in progress
 
@@ -107,6 +107,7 @@ An online demo will also be deployed so you could have a look at a real instance
 ## And more
 
 To know more about this release, we recommend you to check the following pages:
+
 - [Migration guide from 1.0.0-beta.0 to 1.0.0-beta.3](/docs/appendices/migration-guides.html#1-0-0-beta-0-gt-1-0-0-beta-3)
 - [Full changelog from Front-Commerce release notes](https://gitlab.com/front-commerce/front-commerce/releases) and [its Magento 2 extension](https://gitlab.com/front-commerce/magento2-module-front-commerce/releases) (Partners and Customers only)
 

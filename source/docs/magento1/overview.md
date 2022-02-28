@@ -16,4 +16,3 @@ We currently support the main features of Magento. You can consider that if it w
 - SEO: clean urls, redirections, sitemaps, meta information and rich data
 
 In this section, you will learn information about Magento 1 integration with Front-Commerce.
-

@@ -26,13 +26,12 @@ export default {
   Product: {
     clicksCounter: ({ sku }, _, context) => {
       return context.loaders.Counter.loadBySku(sku);
-    }
-  }
-}
+    },
+  },
+};
 ```
 
 See [Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders.html) to understand how to leverage this value.
-
 
 ## `req`
 

@@ -57,14 +57,16 @@ import { storiesOf } from "@storybook/react";
 import Icon from "theme/ui/atoms/Icon";
 import { H3 } from "theme/ui/atoms/Typography/Heading";
 
-storiesOf("components.molecules.IllustratedContent", module)
-  .add("default", () => {
+storiesOf("components.molecules.IllustratedContent", module).add(
+  "default",
+  () => {
     return (
       <IllustratedContent media={<Icon icon="calendar-full" />}>
         <H3>Shipping within 48h</H3>
       </IllustratedContent>
     );
-  });
+  }
+);
 ```
 
 Thanks to this file, when you will launch Storybook (`npm run styleguide`), it
@@ -165,14 +167,14 @@ These helpers are located in
 [`node_modules/front-commerce/src/web/storybook/addons`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/storybook/addons) and you can import them by
 using the alias `web/storybook/addons/...`. For now, we have four of them:
 
-* [`web/storybook/addons/apollo/ApolloDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/apollo/ApolloDecorator.js): mocks the data fetched by your
-components
-* [`web/storybook/addons/form/formDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/form/formDecorator.js): mocks a Form surounding the input
-component you are documenting
-* [`web/storybook/addons/intl/IntlDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/intl/IntlDecorator.js): allows you to switch between the
-languages of your shop
-* [`web/storybook/addons/router/routerDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/router/routerDecorator.js): mocks the routing and the URLs of
-your application
+- [`web/storybook/addons/apollo/ApolloDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/apollo/ApolloDecorator.js): mocks the data fetched by your
+  components
+- [`web/storybook/addons/form/formDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/form/formDecorator.js): mocks a Form surounding the input
+  component you are documenting
+- [`web/storybook/addons/intl/IntlDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/intl/IntlDecorator.js): allows you to switch between the
+  languages of your shop
+- [`web/storybook/addons/router/routerDecorator`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/storybook/addons/router/routerDecorator.js): mocks the routing and the URLs of
+  your application
 
 <!-- TODO document usage of each of these helpers -->
 

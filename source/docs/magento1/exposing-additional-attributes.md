@@ -75,6 +75,7 @@ It can be achieved with the following XML instructions:
 ## For attributes excluded by another module
 
 Sometimes, you will stumble upon modules that force attribute's exclusion. You can find an example in the `app/code/community/Clockworkgeek/Extrarestful/etc/api2.xml` file:
+
 ```
 ...
 <category translate="title" module="extrarestful">
@@ -112,6 +113,7 @@ Sometimes, you will stumble upon modules that force attribute's exclusion. You c
 To revert this exclude, you should retrieve the node you want to "disable" in your own `api2.xml` file and set its value to `0`.
 
 For instance, to allow Guests and Customers to access categories images you would do as below:
+
 ```
 # Your api2.xml file
 ...

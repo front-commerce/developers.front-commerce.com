@@ -3,12 +3,12 @@
 // Input's look like text fields
 textarea {
   .font-s2;
-	.placeholder(@color-mediumdark);
+  .placeholder(@color-mediumdark);
 
-  padding: .7111em 1em; //40
+  padding: 0.7111em 1em; //40
 
   background: @color-lightest;
-  border:none;
+  border: none;
   box-sizing: border-box;
   border-radius: 0;
   color: @color-darkest;
@@ -17,15 +17,19 @@ textarea {
   width: 100%;
   -webkit-appearance: none;
 
-  &[disabled] { opacity: .5; }
+  &[disabled] {
+    opacity: 0.5;
+  }
 
   &.small {
     font-size: 13px;
     line-height: 18px;
-    padding: .38em 1em; //40
+    padding: 0.38em 1em; //40
   }
 
-  &.alert { box-shadow: @color-negative 0 0 1px 0 inset; }
+  &.alert {
+    box-shadow: @color-negative 0 0 1px 0 inset;
+  }
 
   &.inverse {
     .placeholder(@color-medium);
@@ -33,20 +37,21 @@ textarea {
     color: @color-lightest;
   }
 
-	// a form input with no chrome at all (ie. appears just as text)
-	&.nochrome {
-		padding: 0;
+  // a form input with no chrome at all (ie. appears just as text)
+  &.nochrome {
+    padding: 0;
 
-		border: none;
-		box-shadow: none;
-		background: none;
+    border: none;
+    box-shadow: none;
+    background: none;
 
-		&:focus,
-		&:active,
-		&:hover {}
-	}
+    &:focus,
+    &:active,
+    &:hover {
+    }
+  }
 }
 
 textarea.secondary {
-    box-shadow: @color-mediumlight 0 0 0 1px inset;
+  box-shadow: @color-mediumlight 0 0 0 1px inset;
 }

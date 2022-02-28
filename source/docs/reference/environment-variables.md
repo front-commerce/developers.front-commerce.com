@@ -35,7 +35,7 @@ Configure the execution environment of the Front-Commerce's application:
 - `FRONT_COMMERCE_HOST` (default: `0.0.0.0`): The host of the launched server. It might be useful to set it to `127.0.0.1` if you want to only listen local requests.
 - `FRONT_COMMERCE_URL`: The URL available to access to your Front-Commerce application (http://localhost:4000 in your local environment, and your website URL on the production environment)
 - `FRONT_COMMERCE_ENV`: `dev` or `production` in order to remove debugging options on the server side (ex: we disable GraphQL playground in production mode)
-- `FRONT_COMMERCE_COOKIE_DOMAIN` *(deprecated)*: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
+- `FRONT_COMMERCE_COOKIE_DOMAIN` _(deprecated)_: the domain of your cookie, most likely the same one used in `FRONT_COMMERCE_URL` (ex: localhost or the your domain name). Deprecation reason: the cookie domain will now be defined automatically by the browser.
 - `FRONT_COMMERCE_COOKIE_PASS`: a secret to secure the cookies exchanged with the client
 - `FRONT_COMMERCE_UNSAFE_INSECURE_MODE`: you set this environment variable to `true` to disable Front-Commerce behaviors restricting HTTP usage in production, even though we strongly recommend you to expose your application through HTTPS.
 
@@ -85,10 +85,10 @@ Your Front-Commerce application is an empty shell if it's not connected to remot
 **WARNING:** due to the way [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158), using a URL containing basic authentication credentials (such as http://user:password@magento2.local) is not possible yet. It would prevent users to login.
 </blockquote>
 - Integration tokens configured in Magento’s « System > Extensions > Integrations » admin page:
-    - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
-    - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
-    - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
-    - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
+  - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
+  - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
 - `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to [detect admin users](/docs/magento2/detect-admin-users.html) in Front-Commerce configured in « Stores > Configurations > General > General > Front-Commerce > Magento Admin Token »
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: The key
   configured here must be identical to Magento’s `fc_cache_api_token` custom variable
@@ -229,7 +229,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several information are also logged in `server.log` no matter this flag)
-- `front-commerce:payment:buybox`:  debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
+- `front-commerce:payment:buybox`: debugs HTTP interactions with BuyBox API (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:performance`: allow to debug server performance in production by enabling [server timings](/docs/advanced/performance/server-timings.html)
 - `front-commerce:prismic`: turns [the Prismic module](/docs/prismic/) debug on
 - `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically. Can be targetted directly, or included with the previous namespace using `DEBUG=front-commerce:prismic*`
@@ -261,6 +261,7 @@ A meaningful module name is used to scope `depd` messages, and appears at the be
 One can leverage [`depd`'s `TRACE_DEPRECATION` environment variable](https://www.npmjs.com/package/depd#processenvtrace_deprecation) to display a stack trace for each deprecation. It will help you to find the line of code in your codebase that calls deprecated code.
 
 Example:
+
 ```shell
 TRACE_DEPRECATION=*
 ```
@@ -269,5 +270,5 @@ TRACE_DEPRECATION=*
 
 Depending on the amount of customization you add to your Front-Commerce application, you may need to add new environment variables. This is possible and don't need any particular steps. However, please keep in mind that the ones that are safely available in your bundles are:
 
-* in your client bundle: all the variables starting with `FRONT_COMMERCE_WEB_`
-* in your server bundle: all the variables starting with `FRONT_COMMERCE_`, including `FRONT_COMMERCE_WEB_`
+- in your client bundle: all the variables starting with `FRONT_COMMERCE_WEB_`
+- in your server bundle: all the variables starting with `FRONT_COMMERCE_`, including `FRONT_COMMERCE_WEB_`

@@ -24,17 +24,20 @@ First, you need to [enable and integrate the Front-Commerce B2B module for Magen
 #### Register the Payment on account payment component
 
 1. Override the file that lets you register additional payments components in Front-Commerce
-  ```bash
+
+```bash
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
-  ```
+```
+
 1. Register the component `PaymentOnAccount` to be used for `companycredit` payments in `getAdditionalDataComponent.js`
-  ```diff
+
+```diff
 +import PaymentOnAccount from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/PaymentOnAccount";
 
 const ComponentMap = {
 +  companycredit: PaymentOnAccount,
 };
-  ```
+```
 
 And that's it. After having restarted Front-Commerce, a company customer having _Payment on account_ enabled should be able to use this payment method.

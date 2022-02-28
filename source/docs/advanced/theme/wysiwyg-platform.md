@@ -7,12 +7,13 @@ In this guide you will learn the different kind of WYSIWYG that is available on 
 
 Each platform has a specific type of WYSIWYG. This allows to render your content differently depending of its origin. For instance a content from WordPress might have some specific media shortcodes while Magento will have some widgets to display a category name. In the following section you will learn about the one implemented in Front-Commerce:
 
-* [`DefaultWysiwyg`](#DefaultWysiwyg)
-* [`MagentoWysiwyg`](#MagentoWysiwyg)
+- [`DefaultWysiwyg`](#DefaultWysiwyg)
+- [`MagentoWysiwyg`](#MagentoWysiwyg)
 
 Definitions:
-* a *shortcode* is a specific string structure that is meant to be transformed into actual content
-* a *transform* is function that replaces an HTML tag with a React Component
+
+- a _shortcode_ is a specific string structure that is meant to be transformed into actual content
+- a _transform_ is function that replaces an HTML tag with a React Component
 
 ## `DefaultWysiwyg`
 
@@ -22,7 +23,7 @@ The goal of this Wysiwyg type is to remain as simple as possible. It is not mean
 
 **Default transforms**
 
-* `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
+- `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
 
 ## `MagentoWysiwyg`
 
@@ -30,15 +31,15 @@ The MagentoWyswiyg's goal is to support all the default features in Magento 1 & 
 
 **Supported shortcodes**
 
-* `{% raw %}{{media url="*"}}{% endraw %}`
-* `{% raw %}{{store url="*"}}{% endraw %}`
-* `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
+- `{% raw %}{{media url="*"}}{% endraw %}`
+- `{% raw %}{{store url="*"}}{% endraw %}`
+- `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
 
 **Default transforms**
 
-* `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
-* `<widget>` tags are transformed into `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It comes from the `{% raw %}{{widget}}{% endraw %}` shortcode.
-* `<style>` tags are transformed to support [Magento's Page Builder](/docs/magento2/page-builder.html) format. The `#html-body` selector is replaced with the `<WysiwygV2>` root selector. See [WYSIWYG dynamic styles](/docs/advanced/theme/wysiwyg.html#Dynamic-styles) for details.
+- `<a>` tags are transformed into `theme/components/atoms/Typography/Link` components when the `href` attribute does not contain a domain.
+- `<widget>` tags are transformed into `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However, you shouldn't write a `<widget>` tag manually. It comes from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+- `<style>` tags are transformed to support [Magento's Page Builder](/docs/magento2/page-builder.html) format. The `#html-body` selector is replaced with the `<WysiwygV2>` root selector. See [WYSIWYG dynamic styles](/docs/advanced/theme/wysiwyg.html#Dynamic-styles) for details.
 
 ### Add a custom Magento Widget
 
@@ -68,7 +69,8 @@ If you restart your application, you will notice that the new widget component i
 However, in most cases, you will need to fetch data to display all the needed information in your widget. For instance, if the widget is `{% raw %}{{ widget type="acme/product-preview" sku="VSK12" }}{% endraw %}` you will want to fetch the product associated with the given SKU.
 
 1. (Server side) Register your widget type at the GraphQL level
-    1. Make sure that your dependencies are up to date in your GraphQL module
+   1. Make sure that your dependencies are up to date in your GraphQL module
+
 ```diff
 // my-module/server/modules/wysiwyg/index.js
 export default {
@@ -78,7 +80,9 @@ export default {
 +    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
 +  ],
 ```
+
     2. Register a new WidgetData type in your schema
+
 ```graphql
 # my-module/server/modules/wysiwyg/schema.gql
 type WidgetProductPreviewData implements WidgetData {
@@ -86,7 +90,9 @@ type WidgetProductPreviewData implements WidgetData {
   product: Product
 }
 ```
+
     3. Setup the resolvers to tell GraphQL how to fetch the `product` field
+
 ```diff
 // my-module/server/modules/wysiwyg/resolvers.js
 export default {
@@ -101,7 +107,9 @@ export default {
 +  },
 }
 ```
+
     4. Register the widget type coming from Magento and associate it with the GraphQL type
+
 ```diff
 // my-module/server/modules/wysiwyg/index.js
 contextEnhancer: ({ loaders }) => {
@@ -113,8 +121,10 @@ contextEnhancer: ({ loaders }) => {
 +  );
 }
 ```
+
 2. (Client side) Get the data in your component
-    1. Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
+   1. Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
+
 ```diff
 fragment MagentoWysiwygFragment on MagentoWysiwyg {
   childNodes
@@ -136,4 +146,5 @@ fragment MagentoWysiwygFragment on MagentoWysiwyg {
   }
 }
 ```
+
     2. Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)

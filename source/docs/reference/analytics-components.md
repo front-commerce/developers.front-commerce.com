@@ -35,22 +35,25 @@ import React, { Fragment } from "react";
 import { TrackOnMount } from "theme/modules/Analytics/withTrackOnMount";
 
 const Component = (props) => {
-  return <Fragment>
-    <TrackOnMount
-        shouldMountEvent={props => true || false}
+  return (
+    <Fragment>
+      <TrackOnMount
+        shouldMountEvent={(props) => true || false}
         shouldUpdateEvent={(prevProps, nextProps) => true || false}
         event={event}
         properties={eventProperties}
         isResolvedFromProps={true || false}
-    />
-    {/* ... your actual component code here */}
-  </Fragment>;
-}
+      />
+      {/* ... your actual component code here */}
+    </Fragment>
+  );
+};
 ```
 
 ## `withTrackPage`
 
 `withTrackPage` is an enhancer that lets you track a page each time a component is rendered and when the location has changed
+
 ```jsx
 import withTrackPage from "theme/modules/Analytics/withTrackPage";
 
@@ -66,9 +69,11 @@ import React, { Fragment } from "react";
 import { TrackPage } from "theme/modules/Analytics/withTrackPage";
 
 const Component = (props) => {
-  return <Fragment>
-    <TrackPage title="My Page" />
-    {/* ... your actual component code here */}
-  </Fragment>;
-}
+  return (
+    <Fragment>
+      <TrackPage title="My Page" />
+      {/* ... your actual component code here */}
+    </Fragment>
+  );
+};
 ```

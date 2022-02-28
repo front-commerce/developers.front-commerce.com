@@ -80,7 +80,7 @@ This is a very contrived example. However, you could imagine doing this on whate
 <blockquote class="warning" id="preloading-hoist-static">
   **Warning:** if you have some HOC that you are using before `graphqlWithPreload`, you won't have any `preload` static property on your final component. You will need to hoist the static properties at the top level.
 
-  ```diff
+```diff
 -import { withProps } from "recompose";
 +import { compose, hoistStatics, withProps } from "recompose";
 const EnhancedComponent = compose(
@@ -92,9 +92,10 @@ const EnhancedComponent = compose(
 +      withProps(() => /* ... */)
 +    )
 +  )
-  graphqlWithPreload(Query)
+graphqlWithPreload(Query)
 )(BaseComponent)
-  ```
+```
+
 </blockquote>
 
 ## How to preload routes?
@@ -139,12 +140,12 @@ You can now preload static pages such as `/contact` or `/home`. But what about `
 
 The `usePreload` hook will take care of this for you by calling the `preload` static property of your component with an object containing:
 
-* `match`: a [React Router object](https://reacttraining.com/react-router/web/api/match) that describes the currently matched route.
-    * `params` (object): Key/value pairs parsed from the URL corresponding to the dynamic segments of the path
-    * `isExact` (boolean): true if the entire URL was matched (no trailing characters)
-    * `path` (string): The path pattern used to match. Useful for building nested `<Route>`s
-    * `url` (string): The matched portion of the URL. Useful for building nested `<Link>`s
-* `location`: a [React Router object](https://reacttraining.com/react-router/web/api/location) that describes the url that you passed to the `preload` function (`/venia-dresses` in the example above)
+- `match`: a [React Router object](https://reacttraining.com/react-router/web/api/match) that describes the currently matched route.
+  - `params` (object): Key/value pairs parsed from the URL corresponding to the dynamic segments of the path
+  - `isExact` (boolean): true if the entire URL was matched (no trailing characters)
+  - `path` (string): The path pattern used to match. Useful for building nested `<Route>`s
+  - `url` (string): The matched portion of the URL. Useful for building nested `<Link>`s
+- `location`: a [React Router object](https://reacttraining.com/react-router/web/api/location) that describes the url that you passed to the `preload` function (`/venia-dresses` in the example above)
 
 These two parameters allow you to almost expect to have the same properties between the `options` and `preloadOptions` functions of `graphqlWithPreload`.
 
@@ -154,24 +155,22 @@ For instance, let's consider that the URL `/product/:sku` should display the fol
 import React from "react";
 import graphqlWithPreload from "web/core/apollo/graphqlWithPreload";
 
-const Product = props => {
+const Product = (props) => {
   return <div>{props.product.name}</div>;
 };
 
-const EnhancedProduct = (
-  graphqlWithPreload(ProductQuery, {
-    options: props => ({
-      variables: {
-        sku: props.match.params.sku
-      }
-    }),
-    preloadOptions: params => ({
-      variables: {
-        sku: params.match.params.sku
-      }
-    })
-  })
-)(Product);
+const EnhancedProduct = graphqlWithPreload(ProductQuery, {
+  options: (props) => ({
+    variables: {
+      sku: props.match.params.sku,
+    },
+  }),
+  preloadOptions: (params) => ({
+    variables: {
+      sku: params.match.params.sku,
+    },
+  }),
+})(Product);
 ```
 
 Then this means that if you call `preload("/product/VD12")`, in `params.match.params.sku` (line 17) you will have the value `VD12`.
@@ -181,8 +180,8 @@ If you need search parameters in the URL (e.g. `?param=value`), it will be avail
 ## Front-Commerce Fast Mode
 
 To conclude, if you want your application to feel even faster to your users, you need to:
-* add a `preload` static property to your routes thanks to `graphqlWithPreload`
-* use `usePreload` hook through the default Link component in Front-Commerce or manually in your own events.
+
+- add a `preload` static property to your routes thanks to `graphqlWithPreload`
+- use `usePreload` hook through the default Link component in Front-Commerce or manually in your own events.
 
 You can tweak how the `usePreload` works in links by adding a [`preload` property in your `config/website.js`](/docs/reference/configurations.html#config-website-js).
-

@@ -5,38 +5,37 @@ title: Display a map
 
 Front-Commerce has a generic map component that can be used by modules to display maps. Since we are well aware that different shops come with different needs, we provide several implementations out of the box:
 
-
-
 - [Open Street Map (OSM) with Leaflet](#open-street-map-osm-with-leaflet)
 - [Google Maps](#google-maps)
 
 The goal is to choose one to make sure that all maps across the website look the same.
 
-
-### Component Props  <!-- omit in toc -->
+### Component Props <!-- omit in toc -->
 
 We have homogenize the props of the map components to make sure that they are consistent across different components.
+
 #### Map Component
 
-| Property        | Description                              | Type                   |
-|-----------------|------------------------------------------|------------------------|
+| Property        | Description                              | Type                                                                                                                                             |
+| --------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | locations       | A list of locations used for the markers | [`LocationInputShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L65-74) |
-| getMarker       | The marker node for locations            | `(location) => ReactNode` |
-| zoom            | Default zoom level                       | `number`               |
+| getMarker       | The marker node for locations            | `(location) => ReactNode`                                                                                                                        |
+| zoom            | Default zoom level                       | `number`                                                                                                                                         |
 | defaultBounds   | The default map bounds                   | [`CoordinatesShape[]`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L59-62)   |
 | defaultCenter   | The default center for the map.          | [`CoordinatesShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L59-62)    |
-| onBoundsChanged | Event handler for bound changes          | `(event) => void`      |
-
+| onBoundsChanged | Event handler for bound changes          | `(event) => void`                                                                                                                                |
 
 #### Marker Component
 
-| Property      | Description                            | Type                 |
-|---------------|----------------------------------------|----------------------|
-| location      | Location for the marker                | [`LocationInputShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L65-74)|
-| icon          | Allows you to override the marker icon | [`object`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/index.js#L25-31)            |
-| isPopupOpened | Controlled method for marker popup     | `boolean`            |
-| onClick       | Event handler on marker click          | `(event) => void`    |
+| Property      | Description                            | Type                                                                                                                                            |
+| ------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| location      | Location for the marker                | [`LocationInputShape` ](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/location.js#L65-74) |
+| icon          | Allows you to override the marker icon | [`object`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/organisms/Map/index.js#L25-31)                 |
+| isPopupOpened | Controlled method for marker popup     | `boolean`                                                                                                                                       |
+| onClick       | Event handler on marker click          | `(event) => void`                                                                                                                               |
+
  <!-- omit in toc -->
+
 ### Open Street Map (OSM) with Leaflet
 
 <blockquote class="important">

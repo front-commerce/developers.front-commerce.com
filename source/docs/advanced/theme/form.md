@@ -34,17 +34,21 @@ import Input from "theme/components/atoms/Form/Input/Input";
 import { Email, Textarea } from "theme/components/atoms/Form/Input";
 import SubmitButton from "theme/components/atoms/Button/SubmitButton";
 
-<Form>
-  <FormItem label="Email">
-    <Email id="email" name="email" />
-  </FormItem>
+const MyForm = () => {
+  return (
+    <Form>
+      <FormItem label="Email">
+        <Email id="email" name="email" />
+      </FormItem>
 
-  <FormItem label="Content">
-    <Textarea id="content" name="content" />
-  </FormItem>
+      <FormItem label="Content">
+        <Textarea id="content" name="content" />
+      </FormItem>
 
-  <SubmitButton>Send</SubmitButton>
-</Form>
+      <SubmitButton>Send</SubmitButton>
+    </Form>
+  );
+};
 ```
 
 By using Front-Commerce's components you will ensure that all fields look the same way across your application. They will also add validations and accessibility features by default.
@@ -152,7 +156,7 @@ To do so, you will need to pass an `onChange` property to your input. This works
   id="email"
   name="email"
   value={currentValue}
-  onChange={newValue => {
+  onChange={(newValue) => {
     console.log("new value", newValue);
   }}
 />
@@ -172,12 +176,12 @@ Thus, to reset a form after its submission and avoid issues with form states and
 
 ```jsx
 const MyResettableForm = () => {
-  const [formKey, setFormKey] = useState(new Date().valueOf())
+  const [formKey, setFormKey] = useState(new Date().valueOf());
 
   const handleResetForm = (e) => {
-    e?.preventDefault()
+    e?.preventDefault();
     setFormKey(new Date().valueOf());
-  }
+  };
 
   return (
     <Form key={formKey}>
@@ -191,10 +195,10 @@ const MyResettableForm = () => {
       <Button onClick={handleResetForm}>Reset</Button>
       <SubmitButton>Send</SubmitButton>
     </Form>
-  )
-}
+  );
+};
 
-export default MyResettableForm
+export default MyResettableForm;
 ```
 
 ### New input types
@@ -214,8 +218,8 @@ const Input = ({ name, id, value, onChange, onBlur }) => {
       name={name}
       id={id}
       value={value}
-      onBlur={event => onBlur(event)}
-      onChange={event => onChange(event)}
+      onBlur={(event) => onBlur(event)}
+      onChange={(event) => onChange(event)}
     />
   );
 };

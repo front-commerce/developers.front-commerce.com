@@ -43,11 +43,11 @@ Additional data is exposed via the GraphQL for more more advanced [Customized UI
 
 [Magento Page Builder Layout](https://docs.magento.com/user-guide/cms/page-builder-layout.html)
 
-| Type         	| Name      	| Description                                 	|
-|--------------	|-----------	|---------------------------------------------	|
-| Row          	| `row`     	| Adds a row container to the stage.          	|
-| ColumnGroups 	| `heading` 	| Adds a column group container to the stage. 	|
-| Column       	| `column`  	| Adds a column  to the stage.                	|
+| Type         | Name      | Description                                 |
+| ------------ | --------- | ------------------------------------------- |
+| Row          | `row`     | Adds a row container to the stage.          |
+| ColumnGroups | `heading` | Adds a column group container to the stage. |
+| Column       | `column`  | Adds a column to the stage.                 |
 
 <blockquote class="wip">
  **Work In Progress:** We only have partial support for the `row` content type. <br />
@@ -59,38 +59,35 @@ Additional data is exposed via the GraphQL for more more advanced [Customized UI
     <li>✖ Video Background <i>- data exposed with `video`</i></li>
     <li style="margin-bottom:0;">✖ Parallax Background <i>- data exposed with `parallax`</i></li>
   </ul>
-</blockquote> 
+</blockquote>
 
 ### Elements
 
 [Magento Page Builder Elements](https://docs.magento.com/user-guide/cms/page-builder-elements.html)
 
-| Type       	| Name          	| Description                                          	|
-|------------	|---------------	|------------------------------------------------------	|
-| Text        | `text`        	| Adds a text container and editor to the stage.       	|
-| Heading    	| `heading`     	| Adds a heading container to the stage.               	|
-| Buttons    	| `buttons`     	| Adds a set of buttons to the stage.                  	|
-| ButtonItem 	| `button-item` 	| Adds a individual button container to the stage.     	|
-| Divider    	| `divider`     	| Adds a divider container to the stage.               	|
-| HTML Code  	| `html`        	| Adds a HTML code container to the stage.             	|
-
+| Type       | Name          | Description                                      |
+| ---------- | ------------- | ------------------------------------------------ |
+| Text       | `text`        | Adds a text container and editor to the stage.   |
+| Heading    | `heading`     | Adds a heading container to the stage.           |
+| Buttons    | `buttons`     | Adds a set of buttons to the stage.              |
+| ButtonItem | `button-item` | Adds a individual button container to the stage. |
+| Divider    | `divider`     | Adds a divider container to the stage.           |
+| HTML Code  | `html`        | Adds a HTML code container to the stage.         |
 
 ### Media
 
 [Magento Page Builder Media](https://docs.magento.com/user-guide/cms/page-builder-media.html)
 
-| Type   	| Name     	| Description                               	|
-|--------	|----------	|-------------------------------------------	|
-| Image  	| `image`  	| Adds a image container to the stage.      	|
-| Slider 	| `slider` 	| Adds a slider to the stage.               	|
-| Slide  	| `slide`  	| Adds a slide for the slider to the stage. 	|
-| Map    	| `map`    	| Adds map with locations to the stage.     	|
-
-
+| Type   | Name     | Description                               |
+| ------ | -------- | ----------------------------------------- |
+| Image  | `image`  | Adds a image container to the stage.      |
+| Slider | `slider` | Adds a slider to the stage.               |
+| Slide  | `slide`  | Adds a slide for the slider to the stage. |
+| Map    | `map`    | Adds map with locations to the stage.     |
 
 <blockquote class="wip">
  **Work In Progress:** Support for internal `product`, `page` and `category` links for `button-item` and `image`
-</blockquote> 
+</blockquote>
 
 ### Upcoming
 
@@ -101,7 +98,7 @@ Let us know if you have specific needs.
 
 ## Styles
 
-Front-Commerce supports custom styles from the *Advanced* Magento settings of all content types:
+Front-Commerce supports custom styles from the _Advanced_ Magento settings of all content types:
 
 ![Advanced styles Magento settings](./assets/page-builder-advanced-styles.jpg)
 
@@ -138,7 +135,7 @@ export default class Foo extends ContentType {
   extractData(node) {
     return {
       // custom data. Can also be extracted from the passed `node` information
-      bar: "baz"
+      bar: "baz",
     };
   }
 }

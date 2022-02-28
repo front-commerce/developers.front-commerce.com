@@ -275,10 +275,10 @@ import { Email } from "theme/components/atoms/Form/Input";
 
 With this code, when the user submits the form, the hook will call the GraphQL API to validate the email. The GraphQL email validation API is designed [to return different validation statuses](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L22) (not only valid/invalid) and by default, the `onSubmit` handler returned by `useEmailServerValidation` has the following behaviour:
 
-* with a `disabled` validation status, the `submit` function is directly called
-* with a `valid` validation status, the `submit` function is directly called
-* with a `warn` validation status, the `submit` function is not called, instead the email field is updated with the warning message returned by the server
-* with a `error` validation status, the `submit` function is not called, instead the email field is updated with the error message returned by the server.
+- with a `disabled` validation status, the `submit` function is directly called
+- with a `valid` validation status, the `submit` function is directly called
+- with a `warn` validation status, the `submit` function is not called, instead the email field is updated with the warning message returned by the server
+- with a `error` validation status, the `submit` function is not called, instead the email field is updated with the error message returned by the server.
 
 In addition, the `onSubmit` handler will directly call the `submit` function if the application was unable to reach the validation API (network error, server error,…).
 
@@ -329,9 +329,9 @@ import { Email } from "theme/components/atoms/Form/Input";
 
 As shown in the previous example, custom status handlers are indexed by validation status (`disabled`, `valid`, `warn` or `error`). They all receive a context object that contains the following properties:
 
- * `formModel`: an object with the value of fields in the form
- * `emailField`: the name of the email field passed to `useEmailServerValidation`
- * `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L29) returned by the server
- * `updateInputsWithError`: a function to [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)
- * `submit`: the submit handler passed to `useEmailServerValidation`
- * `defaultImplementation`: the default status handler implementation.
+- `formModel`: an object with the value of fields in the form
+- `emailField`: the name of the email field passed to `useEmailServerValidation`
+- `validationResult`: [the validation result](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L29) returned by the server
+- `updateInputsWithError`: a function to [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)
+- `submit`: the submit handler passed to `useEmailServerValidation`
+- `defaultImplementation`: the default status handler implementation.

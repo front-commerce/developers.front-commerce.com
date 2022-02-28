@@ -45,7 +45,7 @@ module should behave within your Schema:
 ```js
 // my-module/server/modules/clicks-counters/index.js
 export default {
-  namespace: "ClicksCounters"
+  namespace: "ClicksCounters",
 };
 ```
 
@@ -262,21 +262,21 @@ seconds):
 // my-module/server/modules/clicks-counters/resolvers.js
 const counters = new Map();
 
-const currentValueOf = sku => counters.get(sku) || 0;
+const currentValueOf = (sku) => counters.get(sku) || 0;
 
 export default {
   Product: {
-    clicksCounter: ({ sku }) => currentValueOf(sku)
+    clicksCounter: ({ sku }) => currentValueOf(sku),
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
       counters.set(sku, currentValueOf(sku) + incrementValue);
       return {
-        success: true
+        success: true,
       };
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -291,8 +291,8 @@ The first part of the export defines a resolver for the
 // …
 export default {
   Product: {
-    clicksCounter: ({ sku }) => currentValueOf(sku)
-  }
+    clicksCounter: ({ sku }) => currentValueOf(sku),
+  },
   // …
 };
 ```
@@ -333,10 +333,10 @@ export default {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
       counters.set(sku, currentValueOf(sku) + incrementValue);
       return {
-        success: true
+        success: true,
       };
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -360,7 +360,7 @@ The resolver will:
    request, it defaults to `1`.
 3. set this new incremented value for the counter
 4. finally, return a value matching the `MutationSuccess` Front-Commerce type
-   which in this example is always successful (` { success: true } `).
+   which in this example is always successful (`{ success: true }`).
    <!-- TODO Add a reference page (and link it from here) for the MutationSuccess type -->
 
 <blockquote class="info">
@@ -434,8 +434,8 @@ example of turning the previous resolvers to asynchronous ones:
 // my-module/server/modules/clicks-counters/resolvers.js
 const counters = new Map();
 
-const currentValueOf = sku => {
-  return new Promise(resolve => {
+const currentValueOf = (sku) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const currentValue = counters.get(sku) || 0;
       resolve(currentValue);
@@ -445,18 +445,20 @@ const currentValueOf = sku => {
 
 export default {
   Product: {
-    clicksCounter: ({ sku }) => currentValueOf(sku)
+    clicksCounter: ({ sku }) => currentValueOf(sku),
   },
 
   Mutation: {
     incrementProductCounter(_, { sku, incrementValue = 1 }) {
       return currentValueOf(sku)
-        .then(currentValue => counters.set(sku, currentValue + incrementValue))
+        .then((currentValue) =>
+          counters.set(sku, currentValue + incrementValue)
+        )
         .then(() => ({
-          success: true
+          success: true,
         }));
-    }
-  }
+    },
+  },
 };
 ```
 

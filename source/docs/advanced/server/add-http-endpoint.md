@@ -35,8 +35,8 @@ export default {
     // The path added to your Front-Commerce server
     path: "/wysiwyg-preview",
     // The router used for this path
-    router: router
-  }
+    router: router,
+  },
 };
 ```
 
@@ -71,7 +71,7 @@ export default () => {
   // our administration interface
   router.use(
     cors({
-      origin: config.admin
+      origin: config.admin,
     })
   );
 
@@ -79,9 +79,9 @@ export default () => {
   // preview some wysiwyg content
   router.use(
     express.static(path.join(process.cwd(), "build/wysiwyg"), {
-      setHeaders: function(res, url, stat) {
+      setHeaders: function (res, url, stat) {
         res.setHeader("Cache-Control", `public, max-age=${ONE_HOUR}`);
-      }
+      },
     })
   );
 
@@ -96,14 +96,14 @@ We've added our middleware that is now available under the `/wysiwyg-preview` pa
 To do so, you will need to add the option `__dangerouslyOverrideBasePathChecks` to your endpoint configuration.
 
 ```js
-import router from './express'
+import router from "./express";
 
 export default {
   endpoint: {
     __dangerouslyOverrideBasePathChecks: true,
     path: "/",
-    router: router
-  }
+    router: router,
+  },
 };
 ```
 
@@ -120,13 +120,13 @@ Using `endpoint.__dangerouslyOverrideBasePathChecks` as illustrated in the previ
 In this case, you must use the `rootEndpoint` key. It has the exact same signature than `endpoint` but will mount the returned router at the global level.
 
 ```js
-import router from './express'
+import router from "./express";
 
 export default {
   rootEndpoint: {
     __dangerouslyOverrideBasePathChecks: true,
     path: "/",
-    router: router
-  }
+    router: router,
+  },
 };
 ```

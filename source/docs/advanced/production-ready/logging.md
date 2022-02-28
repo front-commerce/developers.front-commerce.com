@@ -10,22 +10,27 @@ To avoid this, we're using a custom logging interface based on [`winston`](https
 # Use the base loggers
 
 There are three default loggers coming with Front-Commerce:
-* **the `server` logger**  
+
+- **the `server` logger**  
   Reports any message sent through the default `winston` import in express routes
+
 ```js
 winston.info({
-    message: `Customer returned from ${methodCode} (${actionName})`,
-    date: format(new Date())
+  message: `Customer returned from ${methodCode} (${actionName})`,
+  date: format(new Date()),
 });
 ```
-* **the `client` logger**  
+
+- **the `client` logger**  
   reports any log message from the client side
+
 ```js
 import logHandler from "utils/logHandler";
 
 logHandler.getLogger().error(e);
 ```
-* **the `access` logger**  
+
+- **the `access` logger**  
   Logs automatically any request incoming on your server
 
 # Configure the loggers
@@ -38,8 +43,8 @@ module.exports = {
   server: [
     {
       type: "file",
-      filename: "server.log"
-    }
+      filename: "server.log",
+    },
   ],
   payment: [
     {
@@ -50,15 +55,15 @@ module.exports = {
   client: [
     {
       type: "file",
-      filename: "client.log"
-    }
+      filename: "client.log",
+    },
   ],
   access: [
     {
       type: "file",
-      filename: "access.log"
-    }
-  ]
+      filename: "access.log",
+    },
+  ],
 };
 ```
 
@@ -69,11 +74,12 @@ But how does this work?
 In fact, the object that we exports tells the logging system that for each logger (identified by the keys of the object), we will add an array of [transports](https://github.com/winstonjs/winston#transports).
 
 This means that for each logger, each message will be sent using these transports. Currently, there are two types of logger transports implemented in Front-Commerce:
-* `type: "file"`: it will append the message to a file in your server's filesystem.  
+
+- `type: "file"`: it will append the message to a file in your server's filesystem.  
   The only option available is `filename` which is the name of the file that will be put in the `logs` folder of your project.
-* `type: "sentry"`: it will send the message to a sentry instance. Sentry is a tool that will make it easier to triage errors and assign some of your team members to their resolution.  
+- `type: "sentry"`: it will send the message to a sentry instance. Sentry is a tool that will make it easier to triage errors and assign some of your team members to their resolution.  
   The only option available is `options` which is the object given to the transport lib [winston-sentry-log](https://github.com/franciscofsales/winston-sentry-log#readme)
-* `type: "console"`: it will send the message to stdout/stderr. This is intended for customers that already have a log collection system (centralized logging for kubernetes or a cloud platform).
+- `type: "console"`: it will send the message to stdout/stderr. This is intended for customers that already have a log collection system (centralized logging for kubernetes or a cloud platform).
 
 There will be most likely more transport configurations in the future, but more likely [we will add a feature to add your own custom transport (#104)](https://gitlab.com/front-commerce/front-commerce/issues/104).
 

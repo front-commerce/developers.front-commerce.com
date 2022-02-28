@@ -67,6 +67,7 @@ In your Front-Commerce application:
 +    }
    ]
 ```
+
 ### Register your Adyen payment components
 
 <blockquote class="note">
@@ -74,11 +75,14 @@ In your Front-Commerce application:
 </blockquote>
 
 1. Override the file that lets you register additional payments forms in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
 ```
+
 2. Register Adyen
+
 ```diff
 +import AdyenCheckout from "./AdyenCheckout";
 
@@ -91,12 +95,16 @@ const getAdditionalDataComponent = (method) => {
   return ComponentMap[method.code];
 };
 ```
+
 3. Override the file that lets you register additional payments actions in Front-Commerce
+
 ```
 mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
 cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
 ```
+
 4. Register the Adyen action
+
 ```diff
 import None from "./AdditionalAction/None";
 +import Adyen from "./AdditionalAction/Adyen";
@@ -110,12 +118,16 @@ const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
   return ComponentMap?.[paymentCode] ?? None;
 };
 ```
+
 5. register [custom Flash message components](/docs/advanced/features/flash-messages.html#Create-custom-flash-message-components) to display payment messages in an optimized way (**recommended**)
+
 ```
 mkdir -p my-module/web/theme/modules/FlashMessages
 cp -u node_modules/front-commerce/src/web/theme/modules/FlashMessages/getFlashMessageComponent.js my-module/web/theme/modules/FlashMessages/getFlashMessageComponent.js
 ```
-  and
+
+and
+
 ```diff
 import React from "react";
 import {
@@ -172,6 +184,7 @@ Developers can [customize Adyen drop-in UI styles using CSS](https://docs.adyen.
 You can add an optional stylesheet from Front-Commerce in your application to customize styles. The provided stylesheet reuses existing styles from the theme as much as possible for a good integration by default. You can override it if needed to adapt the UI as wanted.
 
 Add the following line to your `web/theme/modules/_modules.scss` file to load these styles:
+
 ```scss
 @import "~theme/modules/Adyen/dropinCustomizations";
 ```

@@ -1,5 +1,5 @@
 ---
-title: '2.10: first version of the Proximis connector, Mondial Relay & Adyen module updates, Magento 2.4.3 compatibility'
+title: "2.10: first version of the Proximis connector, Mondial Relay & Adyen module updates, Magento 2.4.3 compatibility"
 date: 2021-10-14
 ---
 

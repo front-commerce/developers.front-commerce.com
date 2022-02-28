@@ -14,5 +14,6 @@ This page contains a list of features that can be deactivated when not relevant 
 You can deactivate response compression (e.g: `gzip`) from the Front-Commerce server. It allows to reduce your server CPU usage in contexts where a frontend CDN or proxy can handle compression more efficiently.
 
 If your application is deployed in such context, you might consider deactivating it. There are two ways to achieve this:
+
 - globally: set the `FRONT_COMMERCE_EXPRESS_COMPRESSION_ENABLED=false` environment variable and no response will be compressed
 - per request: add the `x-no-compression` request header to prevent compressing specific requests

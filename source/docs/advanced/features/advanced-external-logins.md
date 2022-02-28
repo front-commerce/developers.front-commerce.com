@@ -16,22 +16,24 @@ _Beta feature (API may change)_
 Before extending external logins please refer to [the External Logins docs](/docs/advanced/features/external-logins#External-Logins) to see what Front-Commerce has out of the box.
 
 The external logins is made of three parts:
-* The login providers. Responsible for handling authenticating the user with the external systems.
-* The external login handlers responsible to logging authorized user into our platform (Magento, Proximis, BigCommerce...).
-* A module to link the providers and the external login handler.
+
+- The login providers. Responsible for handling authenticating the user with the external systems.
+- The external login handlers responsible to logging authorized user into our platform (Magento, Proximis, BigCommerce...).
+- A module to link the providers and the external login handler.
 
 ## Creating your own provider
 
-Front-Commerce uses passport internally for the Facebook and Google providers though this makes things easier it is neither a requirement nor a recommendation. 
+Front-Commerce uses passport internally for the Facebook and Google providers though this makes things easier it is neither a requirement nor a recommendation.
 
 To create a provider you need to register a key and a function with the `auth-external-login` module.
 
 The key will be used in the redirect url (like "google" in `/external-login/google` and `/external-login/google/callback`) and the function will be called to create the provider.
 
 The function will be called with 3 arguments:
-* The current request
-* The externalLoginHandler
-* The redirectUrl
+
+- The current request
+- The externalLoginHandler
+- The redirectUrl
 
 The provider returned by the registered function should implement the `LoginProviderInterface` i.e. it should have 2 middlewares `requestLoginMiddleware` and `loginCallbackMiddleware`.
 
@@ -50,8 +52,10 @@ configService.append(customConfigProvider);
 
 const makeCustomProvider = (request, externalLoginHandler, callbackUrl) => {
   const providerConfig = request.config.customProviderConfig;
-  if(!providerConfig.clientId || !providerConfig.clientSecret) {
-    throw new Error(`Custom provider is not properly configured. clientId and clientSecret are required!`);
+  if (!providerConfig.clientId || !providerConfig.clientSecret) {
+    throw new Error(
+      `Custom provider is not properly configured. clientId and clientSecret are required!`
+    );
   }
   const shopUrl = getCurrentShopConfig(req.config).url; // frequently needed to keep current store selected upon redirection
   return new CustomProvider(externalLoginHandler, providerConfig, {
@@ -66,11 +70,12 @@ registerExternalLoginProvider("custom", makeCustomProvider);
 ### The LoginProviderBase
 
 By implementing the Google and Facebook providers using passport these patterns emerged:
-* The `loginCallbackMiddleware` is just a call to the external login handler's `login` function.
-* The provider commonly needs:
-  * The login handler
-  * The provider's own config
-  * The shop and the callback URLs
+
+- The `loginCallbackMiddleware` is just a call to the external login handler's `login` function.
+- The provider commonly needs:
+  - The login handler
+  - The provider's own config
+  - The shop and the callback URLs
 
 `LoginProviderBase` is a simple implementation of the `LoginProviderInterface` that has the constructor (see below for signature) and the `loginCallbackMiddleware` implemented.
 
@@ -152,7 +157,6 @@ export default class CustomLoginHandler extends ExternalLoginHandlerBase {
     // you have access to all your loaders!!! like loaders.Product, loaders.Customer...
   }
 }
-
 ```
 
 ## Putting it all together
@@ -171,10 +175,9 @@ import CustomExternalLoginHandler from "you_external_login_handler/CustomExterna
 
 export default {
   endpoint: makeExternalLoginEndpoint(
-    (config, staticConfigFromProviders) => (
+    (config, staticConfigFromProviders) =>
       new CustomExternalLoginHandler(/** some parameters you extract from the configs */)
-    )
-  )
+  ),
 };
 ```
 

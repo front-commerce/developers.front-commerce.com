@@ -51,8 +51,8 @@ module.exports = [
     path: "/",
     priority: 1,
     changefreq: "daily",
-    lastmod: new Date("2017-06-01").toISOString()
-  }
+    lastmod: new Date("2017-06-01").toISOString(),
+  },
 ];
 ```
 
@@ -88,9 +88,9 @@ Let's say that we have a FAQ with a single page (`/faq/:slug`) for each question
     return {
       allFaq: () => {
         return fetch("https://my-faq-service.example.org/all").then(
-          response => response.data
+          (response) => response.data
         );
-      }
+      },
     };
   };
   ```
