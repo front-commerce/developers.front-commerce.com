@@ -73,7 +73,7 @@ To allow loading Ogone related remote resources:
 ## Magento2 module
 
 <blockquote class="wip">
-**Work In Progress** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please [contact us](mailto:contact@front-commerce.com) if you need further assistance.
+  This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 Front-Commerce Magento2 module contains [headless payment adapters](/docs/magento2/headless-payments.html) for the [Ingenico ePayments **OpsCCRedirect** method](https://epayments.developer-ingenico.com/documentation/ecommerce-extensions/) (Ingenicos's official Magento module).

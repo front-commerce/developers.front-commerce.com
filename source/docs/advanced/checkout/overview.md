@@ -18,4 +18,4 @@ We are currently writing documentation about:
     * Payzen
     * Magento2 supported payment methods
 
-If you need more detailed information, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
+If you need more detailed information, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.

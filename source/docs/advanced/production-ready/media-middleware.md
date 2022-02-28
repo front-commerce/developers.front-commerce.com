@@ -22,9 +22,10 @@ This method has two advantages:
 </blockquote>
 
 First you need to decide where the proxy can fetch the original images. There are two env variables to set:
-* `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the url of your magento endpoint (`http://magento2.local/`)
-  This will be updated in the future to support media that are uploaded on a different server. Please [contact us](mailto:contact@front-commerce.com) if you need this feature.
-* `FRONT_COMMERCE_BACKEND_IMAGES_PATH`: the base path of your media on the backend (`/media`)
+
+- `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the url of your magento endpoint (`http://magento2.local/`)
+  We don't yet support media that are uploaded on a different server. Please <span class="intercom-launcher">[contact us](mailto:hello@front-commerce.com)</span> if you need this feature.
+- `FRONT_COMMERCE_BACKEND_IMAGES_PATH`: the base path of your media on the backend (`/media`)
   For instance, if you want to retrieve the media `http://magento2.local/upload/toto.jpg` when querying `http://localhost:4000/media/toto.jpg`, you need to use `FRONT_COMMERCE_BACKEND_IMAGES_PATH=/upload`.
     <blockquote class="note">
     Note that you don't need to set `FRONT_COMMERCE_BACKEND_IMAGES_PATH` if you are using Magento as a backend for the API and the images because the default is already `/media`.

@@ -6,25 +6,22 @@ title: Environment variables
 The environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging and local.
 
 These environment variables can be defined in two different ways:
-* on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
-* in the `.env` file in your root folder
+
+- on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
+- in the `.env` file in your root folder
 
 You can then access them by using the `process.env` object in your javascript files no matter if it is a server-side or client-side file.
 However, not all variables are exposed in your client code. Client code only have access to variables such as `FRONT_COMMERCE_WEB_*` which were defined during `front-commerce build`. See [Add your own environment variables](/docs/reference/environment-variables.html#Add-your-own-environment-variables) for more details.
 
 ## How to update environment variables
 
-<blockquote class="wip">
-    **Work In Progress:** we plan to add a more exhaustive flowchart to cover all edge cases. By then, if you have any issues to understand why/when a build or restart is necessary, please [contact us](mailto:contact@front-commerce.com). We will make sure to answer you in a timely manner.
-</blockquote>
-
 You can't update these variables only by updating your server's variable. This comes from how node works. But there are also some specificities due to Front-Commerce.
 
-* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
-    * 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to do a new `front-commerce build`
-    * ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
-* If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
-    * 🚫 You need to do a new `front-commerce build` and restart your server
+- If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true` during build time:
+  - 🚫 if the variable is used on the client side (`FRONT_COMMERCE_WEB_*`) you need to do a new `front-commerce build`
+  - ✅ if the variable is only used on the server side (`FRONT_COMMERCE_*` but not `FRONT_COMMERCE_WEB_*`) you only need to restart your server
+- If `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false` during build time (default behavior until 1.0.0):
+  - 🚫 You need to do a new `front-commerce build` and restart your server
 
 The reason behind these rules is because some variables are defined and bundled within your code during the `build` of your application. For this reason, if you are are in a case where you can't update the variable, you will need to trigger a new build with the new environment variables defined and restart your server.
 
@@ -124,21 +121,22 @@ Front-Commerce 2.5 with Magento1.
 - `FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX`: a prefix to use to build index names
 
 You can find these credentials on the [Algolia Dashboard](https://www.algolia.com/dashboard/api-keys), on the **API keys** page from the menu.
+
 ### Paypal
 
 <blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
+More documentation about this module will be available soon. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> directly if you need this information quickly.
 </blockquote>
 
 - `FRONT_COMMERCE_WEB_PAYPAL_ENV`: `production` or `sandbox`
 - Paypal credentials (See [How do I request API Signature or Certificate credentials for my PayPal account?](https://www.paypal.com/uk/smarthelp/article/how-do-i-request-api-signature-or-certificate-credentials-for-my-paypal-account-faq3196))
-    - `FRONT_COMMERCE_PAYPAL_USERNAME`
-    - `FRONT_COMMERCE_PAYPAL_PASSWORD`
+  - `FRONT_COMMERCE_PAYPAL_USERNAME`
+  - `FRONT_COMMERCE_PAYPAL_PASSWORD`
 
 ### Ogone
 
 <blockquote class="wip">
-More documentation about this module will be available soon. Please [contact us](mailto:contact@front-commerce.com) directly if you need this information quickly.
+More documentation about this module will be available soon. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> directly if you need this information quickly.
 </blockquote>
 
 - `FRONT_COMMERCE_OGONE_ENV`

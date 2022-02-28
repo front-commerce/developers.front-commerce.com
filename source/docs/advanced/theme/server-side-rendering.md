@@ -109,7 +109,7 @@ This behavior is leveraging [Front-Commerce's configuration system](/docs/advanc
 }
 ```
 
-If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/express/ssr/deviceConfigProvider.js) for implementation details and [contact us](mailto:contact@front-commerce.com) if you think of any improvements.
+If you want to tweak this behavior, we invite you to browse the [`deviceConfigProvider`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/express/ssr/deviceConfigProvider.js) for implementation details and <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you think of any improvements.
 
 ## SSR Fallback when things go wrong
 
@@ -132,10 +132,11 @@ If you still want to display the `theme/pages/SsrFallback` page in dev mode, [ad
 Front-Commerce avoids to unnecessary render a full 404 page server-side for URLs that don't need it. When bots access random URLs (e.g: `dump.sql.gz`, `password.txt` etc…) or outdated static assets, Front-Commerce will return a simpler 404 error.
 
 Pages are server-rendered when accessed with the following URL patterns:
+
 - without extension (e.g: `/contact`, `/faq/our-return-policy`…)
 - with an `.html` extension (e.g: `/contact.html`, `/wooden-table-with-chairs.html`…)
 
-**If your application contains pages whose URL have extensions other than `.html`, please [contact us](mailto:contact@front-commerce.com).**
+**If your application contains pages whose URL have extensions other than `.html`, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.**
 
 ## Learn more
 

@@ -9,7 +9,7 @@ A store in Front-Commerce has the same meaning as [in Magento](https://devdocs.m
 A same instance of Front-Commerce can handle several stores at the same time. This is configurable in `my-module/config/stores.js`.
 
 <blockquote class="note">
-However, if you need multiple websites, you will need to deploy as many Front-Commerce instances as there are websites. Feel free to [contact us](mailto:contact@front-commerce.com) if you need more informations about this.
+However, if you need multiple websites, you will need to deploy as many Front-Commerce instances as there are websites. Feel free to <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need more information about this.
 </blockquote>
 
 # How to define the different stores

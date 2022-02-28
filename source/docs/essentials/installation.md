@@ -10,7 +10,7 @@ supposes that you have access to our private repositories.
 
 Access is granted to teams that have signed the relevant legal contracts, either
 as a **Partner** or a **Customer**. Please
-[contact us](mailto:contact@front-commerce.com) if you need help or further
+<span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need help or further
 information.
 
 Front-Commerce is a Node.js server that will serve a GraphQL endpoint and a

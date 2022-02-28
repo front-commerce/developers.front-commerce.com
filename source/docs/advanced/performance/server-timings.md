@@ -9,21 +9,19 @@ You can see a representation in your network panel of your devtools by clicking 
 
 The Server Timings are enabled when one of the following condition is satisfied:
 
-* `FRONT_COMMERCE_ENV !== "production"`
-* `DEBUG=front-commerce:performance`
+- `FRONT_COMMERCE_ENV !== "production"`
+- `DEBUG=front-commerce:performance`
 
 ## List of Server Timings registered in the core
 
 The different timings available for an HTML page are:
 
-* **Compute config for request**: how long it took to compute `req.config`
-* **Resolve initial template**: how long it took to retrieve the `index.html` template needed for SSR
-* **Initialize GraphQL loaders**: how long it took to initialize the GraphQL loaders needed for executing GraphQL queries during SSR
-* **React App initialization**: how long it took to create the base React component that will be rendered during SSR
-* **Resolve Apollo queries**: how long it took to retrieve all the data needed to render the page
-* **Render final HTML**: how long it took to render the final HTML page
-
-We plan to add finer server timings in the future. If you believe that there should be another, please [contact us](mailto:contact@front-commerce.com) and we will look into it.
+- **Compute config for request**: how long it took to compute `req.config`
+- **Resolve initial template**: how long it took to retrieve the `index.html` template needed for SSR
+- **Initialize GraphQL loaders**: how long it took to initialize the GraphQL loaders needed for executing GraphQL queries during SSR
+- **React App initialization**: how long it took to create the base React component that will be rendered during SSR
+- **Resolve Apollo queries**: how long it took to retrieve all the data needed to render the page
+- **Render final HTML**: how long it took to render the final HTML page
 
 For further information about SSR, you can read [the Server Side Rendering documentation page](/docs/advanced/theme/server-side-rendering.html),
 
