@@ -65,6 +65,7 @@ sidebar_categories:
     - docs/advanced/features/smart-forms
     - docs/advanced/features/quickorder
     - docs/advanced/features/external-logins
+    - docs/advanced/features/return-merchandise-authorization
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
