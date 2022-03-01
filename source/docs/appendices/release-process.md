@@ -40,32 +40,32 @@ Therefore, here is the theoretical rhythm of a cycle (Front-Commerce is currentl
 ### The 2022 release calendar
 
 - **[2.12.0](/docs/appendices/release-notes.html#2-12-0-2022-01-06)**: 6 january
-- **2.13.0**: 18 february
+- **[2.13.0](/docs/appendices/migration-guides.html#2-12-0-gt-2-13-0)**: 17 february
 - 2.14:
   - 4 march: _2.14.0-beta.0_
   - 18 march: _2.14.0-beta.1_
-  - **1 april: 2.14.0**
+  - **31 march: 2.14.0**
 - 2.15:
   - 15 april: _2.15.0-beta.0_
   - 29 april: _2.15.0-beta.1_
-  - **13 may: 2.15.0**
+  - **12 may: 2.15.0**
 - 2.16:
   - 27 may: _2.16.0-beta.0_
   - 10 june: _2.16.0-beta.1_
-  - **24 june: 2.16.0**
+  - **23 june: 2.16.0**
 - 2.17:
   - 8 july: _2.17.0-beta.0_
   - 22 july: _2.17.0-beta.1: 22-07-2022_
-  - **5 august: 2.17.0**
+  - **4 august: 2.17.0**
 - 2.18:
   - 19 august: _2.18.0-beta.0_
   - 2 september: _2.18.0-beta.1_
-  - **16 september: 2.18.0**
+  - **15 september: 2.18.0**
 - 2.19:
   - 30 september: _2.19.0-beta.0_
   - 14 october: _2.19.0-beta.1_
-  - **28 october: 2.19.0**
+  - **27 october: 2.19.0**
 - 2.20:
-  - 11 november: _2.20.0-beta.0_
+  - 10 november: _2.20.0-beta.0_
   - 25 november: _2.20.0-beta.1_
-  - **9 december: 2.20.0**
+  - **8 december: 2.20.0**
