@@ -9,9 +9,9 @@ layout: index
   <p>Craft delightful e-commerce experiences<br />using modern web technologies</p>
   <div class="center getting-started"><a class="link primary button" href="/docs/">Getting Started</a></div>
   <ul class="button-list">
-    <li><a class="link button"  href="/docs/">Documentation</a></li>
-    <li class="show-mobile"><a class="link button"  href="/help.html">Help</a></li>
-    <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
+    <li><a class="link button"  href="/docs/">Documentation </a></li>
+    <li class="show-mobile"><a class="link button"  href="/docs/">Documentation</a></li>
+    <li class="show-mobile"><a class="link button"  href="https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team">Support <span class="icon-request-change"></span></a></li>
     <li><a class="link button"  href="/blog">Changelog</a></li>
     <li><a class="link button"  href="https://demo.front-commerce.app/">Demo store</a></li>
     <li><a class="link button"  href="https://front-commerce.app/styleguide">Styleguide</a></li>
