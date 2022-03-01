@@ -24,7 +24,7 @@ suggest a change or fix typo/grammar mistakes while reading it.
 ## Getting Help
 
 If you need help or more information about a topic, there are different ways
-[you can get help](/help.html).
+[you can get help](https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team).
 
 ## First Steps
 
@@ -34,15 +34,14 @@ way that you could quickly find the information you need depending on your
 context.
 
 This documentation lives in a more global website for developers, so you might
-be able to find more information in our [blog posts](/blog) or content pages.
+be able to find more information in our [changelog](/blog) or content pages.
 
 Whether you want to understand our vision or get an
 [architectural overview of Front-Commerce](/docs/concepts/architecture-overview.html) as a system
 and its internals you can start here.
 
 In case you have made your choice and want to start your project, you might be
-interested by information on [our licensing process](/license.html) and then all
-the documentation to [get your project started](/docs/essentials/installation.html).
+interested by browsing all the documentation to [get your project started](/docs/essentials/installation.html).
 
 If your project is running and you are developing new features, we have some
 practical recipes in the "Essentials" part of this documentation to help you getting things done.
@@ -52,5 +51,4 @@ Last but not least, if you are upgrading a project to the latest Front-Commerce
 version, we have documented some [Migration guides](/docs/appendices/migration-guides.html) to make
 the process as seamless as possible.
 
-As always, if you do not find what you need do not hesitate to
-[ask for help](/help.html) and tell us what is missing.
+As always, if you do not find what you need do not hesitate to <span class="intercom-launcher">[ask for help and tell us what is missing](mailto:support@front-commerce.com)</span>.

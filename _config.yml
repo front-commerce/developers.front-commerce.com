@@ -147,12 +147,10 @@ nav_links:
     url: /
   "Docs":
     url: /docs/
-  "Help":
-    url: /help.html
-  "License":
-    url: /license.html
   "Changelog":
     url: /blog/
+  'Support <span class="icon-request-change"></span>':
+    url: https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team
 
 community_links:
   "Slack":
