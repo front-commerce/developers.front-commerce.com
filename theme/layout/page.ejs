@@ -63,22 +63,22 @@
             }
           %>
           <% if (prev) { %>
-         
+
               <a class="link primary prev" href="<%- relative_url(page.path, prev.path) %>">
                 <span class="icon-arrow-left-alt"></span>
                 <span class="subtitle-pagination">Previous</span>
                 <%- prev.title %>
               </a>
-         
+
           <% } %>
           <% if (next) { %>
-           
+
               <a class="link primary next" href="<%- relative_url(page.path, next.path) %>">
                 <span class="subtitle-pagination">Next</span>
                 <%- next.title %>
                   <span class="icon-arrow-right-alt"></span>
               </a>
-           
+
           <% } %>
         </div>
       </div>
@@ -149,6 +149,9 @@
             },
             algoliaOptions: {
               hitsPerPage: 20
+            },
+            transformData: function(hits) {
+              return hits.map(hit => ({ ...hit, url: new URL(hit.url).pathname }));
             }
           }).autocomplete;
 
