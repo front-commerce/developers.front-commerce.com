@@ -18,7 +18,12 @@ As of version 2.12, Front-Commerce comes with a Magento2 Commerce module to leve
 You need to install the [`front-commerce/magento2-commerce-module` module](https://gitlab.com/front-commerce/magento2-commerce-module-front-commerce/):
 
 ```sh
+composer config repositories.front-commerce-magento2-commerce git \
+    git@gitlab.com:front-commerce/magento2-commerce-module-front-commerce.git
+
 composer require front-commerce/magento2-commerce-module
+
+php bin/magento setup:upgrade
 ```
 
 ### Front-Commerce configuration
