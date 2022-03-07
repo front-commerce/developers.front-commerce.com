@@ -1,42 +1,6 @@
 .sidebar {
   .font-s2;
 
-  .topcap {
-    .std-xpadding;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-
-    .title-sidebar {
-      .font-s3;
-      .type-bold;
-    }
-
-    .version-sidebar {
-      .type-semibold;
-      float: right;
-      margin-right: -0.75rem;
-      margin-top: -0.5rem;
-    }
-  }
-
-  .wrapper-search {
-    display: block;
-    margin-bottom: 0.75rem;
-
-    .input-area {
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-
-      .input-symbol {
-        width: 100%;
-
-        input {
-          box-shadow: @color-light 0 0 0 1px inset;
-        }
-      }
-    }
-  }
-
   .heading-toc {
     .subheading-caps;
     color: @color-darker;
@@ -107,13 +71,15 @@
       display: block;
       line-height: 1rem;
       position: relative;
-      font-weight: 600;
       padding-left: 1.5rem;
       text-decoration: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
       &:hover,
       &:focus {
-        text-decoration: underline;
+        color: @color-primary;
       }
 
       &.current {
@@ -172,7 +138,7 @@
       margin-top: 0.375rem;
 
       a {
-        font-weight: 400;
+        .type-bold;
 
         &.active {
           .link(@color-lightest);

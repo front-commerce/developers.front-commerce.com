@@ -116,7 +116,7 @@
     <script src="<%= url_for('script/main.js', { relative: true }) %>"></script>
 
     <% if (config.apis && config.apis.docsearch) { %>
-      <script type="text/javascript" src="//cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
     <% } %>
     <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
 
@@ -132,36 +132,19 @@
     <% } else if (config.apis && config.apis.docsearch) { %>
       <script>
         ['desktop'].forEach(function(type) {
-          var search = docsearch({
+          docsearch({
             apiKey: '<%- config.apis.docsearch.apiKey %>',
-            <%#
-              A custom deployment, directly through Algolia, requires the 'appId'.  This is useful
-              for testing, but is not necessary when using their free Docsearch service.
-            %>
-            <% if (config.apis.docsearch.appId) { %>
-              appId: '<%- config.apis.docsearch.appId %>',
-            <% } %>
+            appId: '<%- config.apis.docsearch.appId %>',
             indexName: '<%- config.apis.docsearch.indexName %>',
-            inputSelector: '#' + type + '-search-input',
-            autocompleteOptions: {
-              dropdownMenuContainer: '.wrapper-' + type + '-search-results',
-              debug: true
-            },
-            algoliaOptions: {
+            container: '#docsearch',
+            searchParameters: {
               hitsPerPage: 20
-            }
-          }).autocomplete;
-
-          var sidebar = document.querySelector('.sidebar-content');
-          search.on('autocomplete:opened', function() {
-            sidebar.classList.add('searching');
-          });
-          search.on('autocomplete:closed', function() {
-            sidebar.classList.remove('searching');
-          });
-          search.on('autocomplete:updated', function() {
-            if (search.val() === '') {
-              search.autocomplete.close();
+            },
+            transformItems: function(hits) {
+              return hits.map(hit => {
+                const url = new URL(hit.url)
+                return { ...hit, url: url.pathname + url.hash }
+              });
             }
           });
         });
