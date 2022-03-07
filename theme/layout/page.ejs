@@ -156,7 +156,10 @@
               hitsPerPage: 20
             },
             transformData: function(hits) {
-              return hits.map(hit => ({ ...hit, url: new URL(hit.url).pathname }));
+              return hits.map(hit => {
+                const url = new URL(hit.url)
+                return { ...hit, url: url.pathname + url.hash }
+              });
             }
           }).autocomplete;
 
