@@ -5,7 +5,8 @@ timezone:
 # API keys
 apis:
   docsearch:
-    apiKey: b5a7bf2be3c2b1c682e5c84d562d15d2
+    apiKey: 79a6baff7cbdd96f9db8aeb1828c63a3
+    appId: 5GW5VSP0PU
     indexName: front-commerce
   ga: UA-154725716-1
 
