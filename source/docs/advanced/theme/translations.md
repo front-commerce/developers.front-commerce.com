@@ -74,33 +74,35 @@ Fortunately, this is correctly handled by react-intl if you use [`defineMessages
 
 ```jsx
 // injectIntl HOC
-import { injectIntl } from "react-intl";
+import { defineMessages, injectIntl } from "react-intl";
+
+const messages = defineMessages({
+  ariaLabel: {
+    id: "screen-reader-icon-title",
+    defaultMessage: "Icon title displayed for screen readers",
+  },
+});
 
 const MyComponentWithHOC = injectIntl(({ intl, ...props }) => {
   return (
-    <span
-      class="icon"
-      aria-label={intl.formatMessage({
-        id: "screen-reader-icon-title",
-        defaultMessage: "Icon title displayed for screen readers",
-      })}
-    />
+    <span class="icon" aria-label={intl.formatMessage(messages.ariaLabel)} />
   );
 });
 
 // useIntl Hook
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  ariaLabel: {
+    id: "screen-reader-icon-title",
+    defaultMessage: "Icon title displayed for screen readers",
+  },
+});
 
 const MyComponentWithHook = (props) => {
   const intl = useIntl();
   return (
-    <span
-      class="icon"
-      aria-label={intl.formatMessage({
-        id: "screen-reader-icon-title",
-        defaultMessage: "Icon title displayed for screen readers",
-      })}
-    />
+    <span class="icon" aria-label={intl.formatMessage(messages.ariaLabel)} />
   );
 };
 ```
