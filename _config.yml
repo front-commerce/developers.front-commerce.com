@@ -109,6 +109,7 @@ sidebar_categories:
     - docs/advanced/payments/adyen
     - docs/advanced/payments/affirm
     - docs/advanced/payments/buybox
+    - docs/advanced/payments/hipay
     - docs/advanced/payments/ingenico
     - docs/advanced/payments/payline
     - docs/advanced/payments/paypal
