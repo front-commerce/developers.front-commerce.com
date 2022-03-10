@@ -15,7 +15,7 @@ Front-Commerce manages your translations by using [`react-intl`](https://github.
 
 ## Declare translations in your application
 
-For instance, let's see how to transform your values in react-intl Components.
+For instance, let's see how to transform your values in `react-intl` Components.
 
 - Strings
 
@@ -70,7 +70,7 @@ For instance, this is the case when you want to add some label attributes to you
 <span class="icon" aria-label="Icon title displayed for screen readers" />
 ```
 
-Fortunately, this is correctly handled by react-intl if you use [`defineMessages`](https://formatjs.io/docs/react-intl/api/#definemessagesdefinemessage) combined with [`injectIntl HOC`](https://formatjs.io/docs/react-intl/upgrade-guide-3x/#new-useintl-hook-as-an-alternative-of-injectintl-hoc) or the [`useIntl hook`](https://formatjs.io/docs/react-intl/api/#useintl-hook).
+Fortunately, this is correctly handled by `react-intl` if you use [`defineMessages`](https://formatjs.io/docs/react-intl/api/#definemessagesdefinemessage) combined with [`injectIntl HOC`](https://formatjs.io/docs/react-intl/upgrade-guide-3x/#new-useintl-hook-as-an-alternative-of-injectintl-hoc) or the [`useIntl hook`](https://formatjs.io/docs/react-intl/api/#useintl-hook).
 
 ```jsx
 // injectIntl HOC
