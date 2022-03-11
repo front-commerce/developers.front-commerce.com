@@ -76,7 +76,7 @@ For magento2:
 +    { name: "Magento2", path: "server/modules/magento2" },
 +    {
 +      name: "Magento2Adyen",
-+      path: "payment-adyen/server/modules/payment-adyen/index-magento2.js",
++      path: "payment-adyen/server/modules/payment-adyen/index.magento2.js",
 +    }
    ],
    webModules: [
@@ -282,10 +282,6 @@ FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
 ### Register custom styles (optional)
 
 [Same as above](#Register-custom-styles-optional)
-
-### Add webhook
-
-[Same as above](#Add-webhook)
 
 ### That's it!
 
