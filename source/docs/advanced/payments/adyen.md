@@ -13,16 +13,14 @@ This page contains information about the different ways you can accept payments 
 
 ### Add the required environment variables
 
-You need to define the following environment variables:
-
-- `FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT` your merchant account name. You can find it in your adyen Customer Area in the top left corner next to your company name.
-- `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable so that it contains [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication) for the domains of your Front-Commerce stores. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > Client Key > Client Key`.
-- `FRONT_COMMERCE_ADYEN_API_KEY` you api key. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > API Key > API Key`.
-- `FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX` only needed in production environment. Should be configured to contain [the adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix).
-- `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` (more on webhooks below) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > User Name`.
-- `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on webhooks below) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`.
-- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on webhooks below) create it from the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`.
-- `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on webhooks below) when you regenerate your HMAC key configure this to be the old one.
+- `FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT` The merchant account name. You can find it in your adyen Customer Area in the top left corner next to your company name
+- `FRONT_COMMERCE_ADYEN_CLIENT_KEY` The environment variable which contains [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication) for the domains of your Front-Commerce stores. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > Client Key > Client Key`
+- `FRONT_COMMERCE_ADYEN_API_KEY` The API key. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > API Key > API Key`
+- `FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX` only needed in production environment. Should be configured to contain [the adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix)
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` (more on [webhooks below](#Add-webhook)) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > User Name`
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on [webhooks below)](#Add-webhook) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`
+- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#Add-webhook)) create it from the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`
+- `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on [webhooks below](#Add-webhook)) when you regenerate your HMAC key configure this to be the old one
 
 ```sh
 # In .env
@@ -227,7 +225,7 @@ From your adyen Customer Area under `Developers > Webhooks` click on `+ Webkook`
 
 ### That's it!
 
-You can now configure the Magento extension to use a Test mode and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
+You can now configure the your adyen payment methods from Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
 
 <blockquote class="note">
 Please keep in mind that Adyen payment methods depends on the Customer country, the Cart amount and the Store currency. Different contexts could display different payment methods in the checkout.
@@ -269,25 +267,25 @@ FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
 # the Adyen client key is prefixed with live_ or test_
 ```
 
-### Register the Adyen for Magento2 payment module in Front-Commerce
+### Register the Adyen payment module in Front-Commerce
 
-Same as above
+[Same as above](#Register-the-Adyen-payment-module-in-Front-Commerce)
 
 ### Register your Adyen payment components
 
-Same as above
+(Same as above)[#Register-your-Adyen-payment-components]
 
 ### Update your CSPs
 
-Same as above
+[Same as above](#Update-your-CSPs)
 
 ### Register custom styles (optional)
 
-Same as above
+[Same as above](#Register-custom-styles-optional)
 
 ### Add webhook
 
-Same as above
+[Same as above](#Add-webhook)
 
 ### That's it!
 
