@@ -66,6 +66,9 @@
       type="text/css"
       href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"
     />
+    <% if (config.apis && config.apis.docsearch) { %>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+    <% } %>
   </head>
   <body class="">
     <% if (config.apis && config.apis.gtm) { %>
