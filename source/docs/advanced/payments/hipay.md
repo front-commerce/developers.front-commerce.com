@@ -17,14 +17,14 @@ For Front-Commerce to use the HiPay API you will need to create technical users 
 - Get the "Secret Passphrase" as `FRONT_COMMERCE_HIPAY_SECRET_PASSPHRASE`
 - Ensure the "Hashing Algorithm" is SHA-256
 - Create the public user
-  - Clik on "Generate new credentials"
+  - Click on "Generate new credentials"
   - Set "Credentials accessibility" to "Public"
   - Check "Tokenize a card"
   - Click on "save"
   - Get the "username" as `FRONT_COMMERCE_HIPAY_PUBLIC_USERNAME`
   - Get the "password" as `FRONT_COMMERCE_HIPAY_PUBLIC_PASSWORD`
 - Create the private user
-  - Clik on "Generate new credentials"
+  - Click on "Generate new credentials"
   - Set "Credentials accessibility" to "Private"
   - Check all in "Order" and "Maintenance"
   - Click on "save"
