@@ -26,6 +26,15 @@ The properties that were tagged as deprecated in `theme/components/atoms/Button/
 
 Please update your code to fit the new behavior.
 
+### Code clean up
+
+In this release, we have removed some dead and unused code ([see corresponding MR](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/967)):
+
+- `src/theme/pages/Account/Account.js` that despites its name is not used at all and very unlikely to be used by any project
+- some loadable routes from `src/web/LoadableRoutes.js` there were useless since the addition of file based routing in `2.0.0-rc.0`.
+
+If you have trouble about those removals while upgrading, <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
+
 ## `2.12.0` -> `2.13.0`
 
 ### Upgrade the Magento2 module
