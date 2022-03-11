@@ -53,32 +53,22 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 **ProTip :** You can use the online [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester) to test your paths.
 </blockquote>
 
-- The method now allows you to register a new route with the prismic client using the `withPrismicRoutes` property. This will allow the Prismic client to resolve the url property for defined documents, and it enables redirection for prismic previews.
+- A new `resolvers` property to allow the nested routes content relationship resolution.
 
-```js
-  // Skip prismic route registration
+```diff
   PrismicLoader.registerRoutableType({
+    typeIdentifier: "album", // document type "album" will resolve to path `/albums/:uid`
+-   path: "/album/:uid",     // "/album/queen"
++   path: "/:category/:uid", // "/rock-and-roll/queen"
++   resolvers: {
++     category: "category"   // identifier of the Content Relationship in the album Custom Type
++   },
     ...
-    typeIdentifier: "album", // document type `album` will resolve to path `/albums/:uid`
-    path: "/album/:uid",     // e.g. `/album/queen`
-    withPrismicRoutes: false // defaults to true
-  })
-
-  // Register a prismic route with resolvers
-  PrismicLoader.registerRoutableType({
-    ...
-    typeIdentifier: "album", // document type `album` will resolve to path `/:category/:uid`
-    path: "/:category/:uid", // e.g. `/rock-and-roll/queen`
-    withPrismicRoutes: {
-      resolvers:{
-        category: "category" // The field name for the content relationship in your Prismic Document
-      }
-    }
   })
 ```
 
 <blockquote class="warning">
-Prismic only supports a depth of 3 levels for the content relationship on route resolvers, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information. This issue is also being [tracked](https://community.prismic.io/t/linkresolver-and-nested-paths/96/2) for better support.
+**Depth Limit** The Route Resolver is limited to retrieving data from 3 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
 </blockquote>
 
 #### `@prismicio/client` has been updated to v6
