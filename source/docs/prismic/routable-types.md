@@ -97,9 +97,8 @@ export default {
 +      path: "/albums/:url",    // <-- The dynamic route. Examples: '/:uid', '/:lang/:uid', '/:section/:category?/:uid'.
 +      contentTransformOptions,
 +      isSitemapable: false,
-+      withPrismicRoutes:false,
 +      postTransformer: (url, document) => { // optional function postTransformer
-+        if(document.isPublished) {  // possible usecase
++        if(document.isPublished) {  // possible use case.
 +          return document;
 +        }
 +      }
@@ -113,19 +112,22 @@ export default {
 **Note:** the `postTransformer` above is optional. It is a function that will be called after [the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content.html#Field-Transformers). It is given the current URL being resolved and the transformed document. It can be used if you have some custom logic to apply to the document or if you want to prevent the document from showing using some custom logic (returning a _falsy_ value).
 
 **Note:**
-If you have a nested route e.g. `/albums/:category/:uid` then you need add an object that lists the API IDs of the Content Relationships in the route, in this case `category`. You can do this by passing the resolvers in the `withPrismicRoutes` option.
+If you have a nested route e.g. `/albums/:category/:uid` then you need add the `resolvers` that list the Content Relationships identifiers in the route, in this example the `album` has a content relationship to `category`.
 
 ```diff
--    withPrismicRoutes:false,
-+    withPrismicRoutes: {
-+        resolvers: {
-+            category: "album.category"
-+        }
-+    }
+      loaders.Prismic.registerRoutableType({
+          typeIdentifier: "album",
+-         path: "/albums/:url",
++         path: "/:category/:url",
++         resolvers : {
++           category: "category",
++         }
+      });
 ```
 
-see the [Prismic Route Resolver](https://prismic.io/docs/core-concepts/link-resolver-route-resolver#route-resolver) documentation for more information.
-
+<blockquote class="warning">
+**Depth Limit** The Route Resolver is limited to retrieving data from 3 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
+</blockquote>
 ## Map GraphQL type to a component
 
 To map a GraphQL type to React component, create a file called `moduleRoutes.js` at the root of the `web` directory and add the following to it:
@@ -243,3 +245,105 @@ contextEnhancer: ({ req, loaders }) => {
 },
 };
 ```
+
+## Methods
+
+### `registerRoutableType(options)`
+
+Registers a routable type within Front-Commerce and adds the route the the Prismic Route Resolver, it can also create a sitemapable route.
+
+**Options:**
+
+- `typeIdentifier` (string): the Prismic custom type identifier
+- `urlFieldName` (string): the Prismic field name that contains the URL
+- `graphQLType` (string): the GraphQL type to map to the custom type
+- `path` (string): the dynamic route. Examples: `/:uid`, `/:lang/:uid`, `/:section/:category?/:uid`.
+- `rewrites` (string[]) : the rewrite paths to apply on a url, they will be redirected the base path.
+- `contentTransformOptions` ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/blob/ede4a8c7d55bdad718c38e3ddc7ad6232d57cd1f/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): the options to use for the content transformation
+- `isSitemapable` (boolean): whether the type should be included in the sitemap
+- `postTransformer` ([PostTransformerCallback](https://gitlab.com/front-commerce/front-commerce-prismic/blob/084cbb54049614259cf31045bf03de636c08c201/prismic/server/modules/prismic/core/makeRoutableTypeRegisterer.js#L114-120)): a function that will be called after the transformation is done using `contentTransformOptions`
+
+**Path Resolution**
+
+| path     | url     | type       |
+| -------- | ------- | ---------- |
+| `/:uid`  | `/foo`  | `match`    |
+| `/:uid`  | `/foo/` | `redirect` |
+| `/:uid/` | `/foo`  | `redirect` |
+| `/:uid/` | `/foo/` | `match`    |
+
+To enforce a trailing slash in your url, you can simply add a trailing slash to the `path` on the `registerRoutableType` method. This will redirect a non-trailing url to a trailing url to ensure consistency. The same behavior is also applied for paths without a trailing slash.
+
+**Example:**
+
+```js
+loaders.Prismic.registerRoutableType({
+  typeIdentifier: "foo",
+  graphQLType: "Foo",
+  urlFieldName: "uid",
+  path: "/foo/bar/:uid",
+  rewrites: ["/baz/bar/:uid"],
+  resolvers: {
+    category: "category",
+  },
+  contentTransformOptions: {
+    fieldTransformers: {
+      title: new TitleTransformer(),
+    },
+  },
+  isSitemapable: true,
+  postTransformer: (url, document, params) => {
+    if (document.isPublished) {
+      return document;
+    }
+  },
+});
+```
+
+### `registerPrismicRoute(options)`
+
+To leverage the [Prismic Route Resolver](https://prismic.io/docs/core-concepts/link-resolver-route-resolver#route-resolver), you add a route to the Route Resolver using the `registerPrismicRoute` method.
+
+**Options:**
+
+- `typeIdentifier` (string): the Prismic custom type identifier
+- `path` (string): the dynamic route. Examples: `/:uid`, `/:lang/:uid`, `/:section/:category?/:uid`.
+
+**Example:**
+
+You might have a document type `foo` with a field `bar` and `baz`, but only `foo` is a routable type.
+
+This method will allow you to add a route to the Route Resolver and the Prismic client which will in turn be able to resolve a `url` for the document type. e.g.
+
+```js
+  loaders.Prismic.registerRoutableType({ // This method registers a routable type
+    type: "foo",
+    path: "/foo-path/:uid",
+    ...
+  });
+  loaders.Prismic.registerPrismicRoute({ // This method registers a route to the Route Resolver
+    type: "bar",
+    path: "/foo-path/:url" // this is a property in bar
+  });
+  loaders.Prismic.registerPrismicRoute({
+    type: "baz",
+    path: "/foo-path/:url" // this is a property in baz
+  });
+```
+
+It's also important to note that only one route for a document type can be added to the route resolver, the last registered route will override the previous route e.g.
+
+```js
+loaders.Prismic.registerPrismicRoute({
+  type: "foo",
+  path: "/foo/:uid",
+});
+loaders.Prismic.registerPrismicRoute({
+  type: "foo",
+  path: "/bar/:uid",
+});
+
+// output for foo type is /bar/:uid
+```
+
+> This method will not create a resolvable route in Front-Commerce. If you need a routable type please use the `registerRoutableType` method instead, it also registers a prismic route.
