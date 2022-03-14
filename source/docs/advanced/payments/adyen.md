@@ -58,7 +58,7 @@ For Magento1:
 -    { name: "FrontCommerce", path: "front-commerce/src/web" }
 +    { name: "FrontCommerce", path: "front-commerce/src/web" },
 +    {
-+      name: "Magento1Adyen",
++      name: "Adyen",
 +      path: "front-commerce/modules/payment-adyen/web",
 +    }
    ]
@@ -83,7 +83,7 @@ For Magento2:
 -    { name: "FrontCommerce", path: "front-commerce/src/web" }
 +    { name: "FrontCommerce", path: "front-commerce/src/web" },
 +    {
-+      name: "Magento2Adyen",
++      name: "Adyen",
 +      path: "front-commerce/modules/payment-adyen/web",
 +    }
    ]
