@@ -64,7 +64,7 @@ For Magento1:
    ]
 ```
 
-For magento2:
+For Magento2:
 
 ```diff
 // .front-commerce.js
