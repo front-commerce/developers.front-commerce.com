@@ -269,11 +269,32 @@ FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
 
 ### Register the Adyen payment module in Front-Commerce
 
-[Same as above](#Register-the-Adyen-payment-module-in-Front-Commerce)
+```diff
+// .front-commerce.js
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/payment-adyen"],
+   serverModules: [
+     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+-    { name: "Magento2", path: "server/modules/magento2" }
++    { name: "Magento2", path: "server/modules/magento2" },
++    {
++      name: "Magento2Adyen",
++      path: "payment-adyen/server/modules/magento2-payment-adyen",
++    }
+   ],
+   webModules: [
+-    { name: "FrontCommerce", path: "front-commerce/src/web" }
++    { name: "FrontCommerce", path: "front-commerce/src/web" },
++    {
++      name: "Magento2Adyen",
++      path: "front-commerce/modules/payment-adyen/web",
++    }
+   ]
+```
 
 ### Register your Adyen payment components
 
-(Same as above)[#Register-your-Adyen-payment-components]
+[Same as above](#Register-your-Adyen-payment-components)
 
 ### Update your CSPs
 
