@@ -218,10 +218,10 @@ From your adyen Customer Area under `Developers > Webhooks` click on `+ Webkook`
   - URL: the full url of your site followed by `/webhooks/payment/notification/adyen` e.g. `https://www.example.com/webhooks/payment/notification/adyen`
   - Method: JSON
 - Authentication:
-  - User Name: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` environement variable defined above
-  - Password: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` environement variable defined above
+  - User Name: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` environment variable defined above
+  - Password: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` environment variable defined above
 - Additional Settings
-  - HMAC Key (HEX Encoded): click generate and copy it to `FRONT_COMMERCE_ADYEN_HMAC_KEY` environement variable defined above
+  - HMAC Key (HEX Encoded): click generate and copy it to `FRONT_COMMERCE_ADYEN_HMAC_KEY` environment variable defined above
 
 ### That's it!
 
