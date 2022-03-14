@@ -5,7 +5,7 @@ title: Adyen integration
 
 This page contains information about the different ways you can accept payments with [Adyen](https://www.adyen.com/) in your Front-Commerce application.
 
-## Headless integration (no magento modules needed)
+## As a Front-Commerce payment (no Magento modules needed)
 
 <blockquote class="feature--new">
   _Since version 2.10.0_
