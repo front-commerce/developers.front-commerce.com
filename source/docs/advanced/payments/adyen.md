@@ -39,7 +39,7 @@ FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY=the_previous_hmac_key
 
 In your Front-Commerce application:
 
-For magento1:
+For Magento1:
 
 ```diff
 // .front-commerce.js
