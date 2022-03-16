@@ -34,9 +34,13 @@ You need to add these domains to enable the scripts and the iframe to be loaded 
   contentSecurityPolicy: {
     directives: {
 -      scriptSrc: [],
-+      scriptSrc: ['static.cdn.prismic.io', 'prismic.io', 'https://html2canvas.hertzen.com/dist/html2canvas.min.js'],
++      scriptSrc: [
++        "static.cdn.prismic.io",
++        "prismic.io",
++        "https://html2canvas.hertzen.com/dist/html2canvas.min.js",
++      ],
 -      frameSrc: [],
-+      frameSrc: ['*.prismic.io'],
++      frameSrc: ["*.prismic.io"],
     },
   },
 }
@@ -62,10 +66,8 @@ You can include the toolbar by adding it to your app's layout. You can read the 
 
 ```js
 // src/theme/routes/_layout.js
-import PrismicPreview from "theme/modules/Prismic/PrismicPreview
-
-import React from 'react';
-import PrismicPreview from 'theme/modules/Prismic/PrismicPreview';
+import React from "react";
+import PrismicPreview from "theme/modules/Prismic/PrismicPreview";
 
 const Layout = ({ children }) => {
   return (
