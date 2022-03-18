@@ -126,8 +126,9 @@ If you have a nested route e.g. `/albums/:category/:uid` then you need add the `
 ```
 
 <blockquote class="warning">
-**Depth Limit** The Route Resolver is limited to retrieving data from 3 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
+**Depth Limit:** The Route Resolver is limited to retrieving data from 2 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
 </blockquote>
+
 ## Map GraphQL type to a component
 
 To map a GraphQL type to React component, create a file called `moduleRoutes.js` at the root of the `web` directory and add the following to it:
@@ -352,6 +353,8 @@ To achieve this you can add a trailing slash to the `path` on the `registerRouta
     ...
   })
 ```
+
+> ProTip : You can use the online [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester) to test your paths.
 
 | path     | url     | result     |
 | -------- | ------- | ---------- |
