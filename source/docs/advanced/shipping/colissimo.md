@@ -5,7 +5,11 @@ title: Colissimo integration
 
 This page contains information about the different ways you can accept shippings with [Colissimo](https://www.laposte.fr/colissimo) in your Front-Commerce application.
 
-## Magento2 module
+## Prerequisites
+
+No matter the backend solution, the Colissimo Front-Commerce modules requires a Map component to display pickup points. Thus, before proceeding, please make sure that you've chosen a Map implementation from [Display a map](/docs/advanced/features/display-a-map.html).
+
+## Integrate with Magento2
 
 <blockquote class="feature--new">
 _Since version 2.5.0_
@@ -13,11 +17,7 @@ _Since version 2.5.0_
 
 The integration of Colissimo in Magento 2 & Front-Commerce relies on [Magentix's module](https://colissimo.magentix.fr/magento-2/) for pickup points. If you don't need pickup points, any module should be supported by default.
 
-## Install a map module
-
-This module uses the Front-Commerce Map's component to display pickup points. Thus, before proceeding, please make sure that you've chose a Map implementation from [Display a map](/docs/advanced/features/display-a-map.html).
-
-### Installation
+Then, within your Front-Commerce project, you have to:
 
 - Use the module in your .front-commerce.js
 
@@ -53,7 +53,7 @@ module.exports = {
 +@import "~theme/modules/Colissimo/Colissimo";
 ```
 
-- Import Colissimo component in by overriding the getAdditionalDataComponent used for Shipping methods
+- Import Colissimo component in by overriding the [`getAdditionalDataComponent`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js) used for Shipping methods
 
 ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -67,3 +67,5 @@ const ComponentMap = {
 };
 
 ```
+
+After following this guide, customers will be able to choose Colissimo as a shipping method and will be able to choose a pickup point on a map.
