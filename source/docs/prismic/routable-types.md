@@ -263,17 +263,6 @@ Registers a routable type within Front-Commerce and adds the route the the Prism
 - `isSitemapable` (boolean): whether the type should be included in the sitemap
 - `postTransformer` ([PostTransformerCallback](https://gitlab.com/front-commerce/front-commerce-prismic/blob/084cbb54049614259cf31045bf03de636c08c201/prismic/server/modules/prismic/core/makeRoutableTypeRegisterer.js#L114-120)): a function that will be called after the transformation is done using `contentTransformOptions`
 
-**Path Resolution**
-
-| path     | url     | type       |
-| -------- | ------- | ---------- |
-| `/:uid`  | `/foo`  | `match`    |
-| `/:uid`  | `/foo/` | `redirect` |
-| `/:uid/` | `/foo`  | `redirect` |
-| `/:uid/` | `/foo/` | `match`    |
-
-To enforce a trailing slash in your url, you can simply add a trailing slash to the `path` on the `registerRoutableType` method. This will redirect a non-trailing url to a trailing url to ensure consistency. The same behavior is also applied for paths without a trailing slash.
-
 **Example:**
 
 ```js
@@ -347,3 +336,40 @@ loaders.Prismic.registerPrismicRoute({
 ```
 
 > This method will not create a resolvable route in Front-Commerce. If you need a routable type please use the `registerRoutableType` method instead, it also registers a prismic route.
+
+## Advanced usage
+
+### Trailing Slash
+
+By default Front-Commerce will redirect urls with trailing slashes to their counterpart without a trailing slash. For example `/album/` will redirect to `/album`. You can configure this behavior to act the opposite way, where urls without trailing slashes are redirected to their counterparts with trailing slashes.
+
+To achieve this you can add a trailing slash to the `path` on the `registerRoutableType` method:
+
+```diff
+  PrismicLoader.registerRoutableType({
+-   path: "/album/:uid",
++   path: "/album/:uid/",   // this will enforce redirects to trailing slash
+    ...
+  })
+```
+
+| path     | url     | result     |
+| -------- | ------- | ---------- |
+| `/:uid`  | `/foo`  | `match`    |
+| `/:uid`  | `/foo/` | `redirect` |
+| `/:uid/` | `/foo`  | `redirect` |
+| `/:uid/` | `/foo/` | `match`    |
+
+### Path Rewrites
+
+Rewrites allow you to map an incoming request path to a different destination path.
+Rewrites act as a URL proxy and mask the destination path, making it appear the user hasn't changed their location on the site. In contrast, redirects will reroute to a new page and show the URL changes.
+To use rewrites you can use the `rewrites` key in the `registerRoutableType` method:
+
+```js
+PrismicLoader.registerRoutableType({
+  typeIdentifier: "foo",
+  path: "/baz/:uid",
+  rewrites: ["/foo/:uid", "/bar/:uid"],
+});
+```
