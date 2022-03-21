@@ -13,7 +13,7 @@ In your repository, go to Settings > Previews > Manage your Previews and select 
 
 - **Site Name:** The display name to identify the website in the preview.
 - **Domain for Your Application:** The URL of your site, such as https://example.com/ or http://localhost:3000/
-- **Link Resolver:** The route where prismic resolves the preview url. In Front-Commerce we handle this route at `/prismic/previews`.
+- **Link Resolver:** The route where prismic resolves the preview url. In Front-Commerce we handle this route at `/prismic/preview`.
 
 <div style="text-align:center;">
   <img src="./assets/previews/create-new-preview.jpg" alt="Screenshot of a repository's preview configuration" style="border-radius:5px;">
@@ -72,7 +72,7 @@ import PrismicPreview from "theme/modules/Prismic/PrismicPreview";
 const Layout = ({ children }) => {
   return (
     <>
-      <PrismicPreview  />
+      <PrismicPreview />
       {children}
     </>
   );
