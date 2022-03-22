@@ -13,7 +13,7 @@ In your repository, go to Settings > Previews > Manage your Previews and select 
 
 - **Site Name:** The display name to identify the website in the preview.
 - **Domain for Your Application:** The URL of your site, such as https://example.com/ or http://localhost:3000/
-- **Link Resolver:** The route where prismic resolves the preview url. In Front-Commerce we handle this route at `/prismic/previews`.
+- **Link Resolver:** The route where prismic resolves the preview url. In Front-Commerce we handle this route at `/prismic/preview`.
 
 <div style="text-align:center;">
   <img src="./assets/previews/create-new-preview.jpg" alt="Screenshot of a repository's preview configuration" style="border-radius:5px;">
@@ -34,9 +34,13 @@ You need to add these domains to enable the scripts and the iframe to be loaded 
   contentSecurityPolicy: {
     directives: {
 -      scriptSrc: [],
-+      scriptSrc: ['static.cdn.prismic.io', 'prismic.io', 'https://html2canvas.hertzen.com/dist/html2canvas.min.js'],
++      scriptSrc: [
++        "static.cdn.prismic.io",
++        "prismic.io",
++        "https://html2canvas.hertzen.com/dist/html2canvas.min.js",
++      ],
 -      frameSrc: [],
-+      frameSrc: ['*.prismic.io'],
++      frameSrc: ["*.prismic.io"],
     },
   },
 }
@@ -62,15 +66,13 @@ You can include the toolbar by adding it to your app's layout. You can read the 
 
 ```js
 // src/theme/routes/_layout.js
-import PrismicPreview from "theme/modules/Prismic/PrismicPreview
-
-import React from 'react';
-import PrismicPreview from 'theme/modules/Prismic/PrismicPreview';
+import React from "react";
+import PrismicPreview from "theme/modules/Prismic/PrismicPreview";
 
 const Layout = ({ children }) => {
   return (
     <>
-      <PrismicPreview  />
+      <PrismicPreview />
       {children}
     </>
   );
