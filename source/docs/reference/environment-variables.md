@@ -225,6 +225,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:config`: dumps the configuration for a typical request at the `/__front-commerce/debug` URL
 - `front-commerce:dispatcher`: debugs information about routes dispatching for registered page types
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:graphql`: debugs GraphQL related code
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow
