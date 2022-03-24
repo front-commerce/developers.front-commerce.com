@@ -9,6 +9,26 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.13.0` -> `2.14.0`
 
+### PaymentMethodLabel relocated
+
+The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overrided `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
+
+As a consequence of relocating `<PaymentMethodLabel>` we had to rename all the translation keys it uses. As such the following translation keys have been updated
+
+| Old Key                                                        | New Key                                                       |
+| -------------------------------------------------------------- | ------------------------------------------------------------- |
+| modules.User.Order.OrderMethod.PaymentMethod.checkmo           | modules.Checkout.Payment.PaymentMethodLabel.checkmo           |
+| modules.User.Order.OrderMethod.PaymentMethod.ogoneFlexcheckout | modules.Checkout.Payment.PaymentMethodLabel.ogoneFlexcheckout |
+| modules.User.Order.OrderMethod.PaymentMethod.paymentOnAccount  | modules.Checkout.Payment.PaymentMethodLabel.paymentOnAccount  |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalButton      | modules.Checkout.Payment.PaymentMethodLabel.paypalButton      |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalExpress     | modules.Checkout.Payment.PaymentMethodLabel.paypalExpress     |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalStandard    | modules.Checkout.Payment.PaymentMethodLabel.paypalStandard    |
+| modules.User.Order.OrderMethod.PaymentMethod.payzenEmbedded    | modules.Checkout.Payment.PaymentMethodLabel.payzenEmbedded    |
+| modules.User.Order.OrderMethod.PaymentMethod.stripe            | modules.Checkout.Payment.PaymentMethodLabel.stripe            |
+| modules.User.Order.OrderMethod.PaymentMethod.hipay             | modules.Checkout.Payment.PaymentMethodLabel.hipay             |
+
+All translation keys that start with `modules.User.Order.OrderMethod.PaymentMethod` now starts with `modules.Checkout.Payment.PaymentMethodLabel`. You need to update any use of the old keys (if any) in your project to the respective new key.
+
 ### Update your CSPs
 
 In this release, we have removed most of the module-related CSPs from Front-Commerce default configuration file. If you are using one or more of the following modules, please do update your CSPs accordingly in your `config/website.js` configuration:
