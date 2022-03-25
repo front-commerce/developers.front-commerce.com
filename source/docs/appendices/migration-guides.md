@@ -11,7 +11,7 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ### PaymentMethodLabel relocated
 
-The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overrided `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
+The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overriden `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
 
 As a consequence of relocating `<PaymentMethodLabel>` we had to rename all the translation keys it uses. As such the following translation keys have been updated
 
