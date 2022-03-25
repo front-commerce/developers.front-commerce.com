@@ -10,6 +10,7 @@ In this section, you will learn advanced information about the different things 
 - [Setup and use logging](./logging.html)
 - [Before going to production](./checklist-before-production.html)
 - [Sitemap generation](./sitemap.html)
+- [Server's metrics](./metrics.html)
 
 We are currently writing documentation about:
 
