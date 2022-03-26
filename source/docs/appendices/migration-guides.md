@@ -55,6 +55,10 @@ In this release, we have removed some dead and unused code ([see corresponding M
 
 If you have trouble about those removals while upgrading, <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
 
+### New features in `2.14.0`
+
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher.html#Advanced-queries)
+
 ## `2.12.0` -> `2.13.0`
 
 ### Upgrade the Magento2 module

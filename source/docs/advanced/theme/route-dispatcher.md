@@ -200,6 +200,34 @@ export const dispatchedRoutes = {
 
 In the props passed to a render function (L6), you will have access to a `matched` property which is the object returned by your `matchUrl` function.
 
+### Advanced queries
+
+If your route contains parameters for the GraphQL query (e.g: `?page=2`), you should declare a `variables` property in your custom `dispatchedRoutes` component.
+
+This `variables` function will be called by Front-Commerce when configuring the GraphQL query. It allows you to provide custom variables for the `MatchUrls` GraphQL query defined in `DispatcherQuery.gql`.
+
+Here is an example of a custom type providing a `$page: Int` variable to the `MatchUrls` query:
+
+```js
+// my-module/web/moduleRoutes.js
+import React from "react";
+import MyCustomPage from "theme/pages/MyCustomPage";
+
+export const dispatchedRoutes = {
+  MyCustomPaginatedType: {
+    render: (props) => <MyCustomPage dataPropName={props.matched} />,
+    variables: (params) => {
+      const searchParams = new URLSearchParams(params.location.search);
+      return {
+        page: searchParams.get("page"),
+      };
+    },
+  },
+};
+```
+
+## Restart the application
+
 Once you've created your file, you can refresh your application
 (`npm run start`), and you should see your new route if you go
 to the `/some-dynamic-custom-url` URL. It will display `MyCustomPage` component.
