@@ -373,3 +373,98 @@ PrismicLoader.registerRoutableType({
   rewrites: ["/foo/:uid", "/bar/:uid"],
 });
 ```
+
+### Content Relationship Resolvers
+
+When using nested paths `/:section/:category/:uid` you should use the `resolvers` to map the `:category` and `:section` relationships to the Prismic document fields.
+
+> The nesting is currently limited at 2 levels deep.
+
+```
+// Level 1 (The document being queried via the uid)
+{
+   type : "album"
+   title: "Gates of Thorns",
+   uid: "gates-of-thorns",
+   parent_category: "hard-rock",  <- Relationship Field
+}
+
+// Level 2 (Relationship to album)
+{
+    type: "category",
+    title: "Hard Rock",
+    uid: "hard-rock"
+    parent: "rock" <- Relationship Field
+}
+
+// level 3 (Relationship to category)
+{
+   type: "category",
+   title: "Rock",
+   uid: "rock",
+   parent: "music" <- Relationship Field
+}
+```
+
+As you may notice the relationships fields can continue infinitely deep, but as mentioned they are limited to the second level.
+
+```
+    loaders.Prismic.registerRoutableType({
+      typeIdentifier: "album",
+      urlFieldName: "uid",
+      graphQLType: "Album",
+      path: "/:level1?/:level2?/:level3?/:uid",
+      resolvers: {
+        level1: "parent_category",
+        level2: "parent_category.parent",
+        level3: "parent_category.parent.parent", ❌ this will fail as it's trying to access the 3rd nested level
+      },
+    });
+
+    loaders.Prismic.registerRoutableType({
+      typeIdentifier: "album",
+      urlFieldName: "uid",
+      graphQLType: "Album",
+      path: "/:level1?/:level2?/:uid",
+      resolvers: {
+        level1: "parent_category",
+        level2: "parent_category.parent",
+      },
+    });
+```
+
+Here are some examples of how the paths would be resolved for this registered route.
+
+**Example 1:** with existing relationships
+
+```js
+
+// Level 1
+{
+   uid: "gates-of-thorns",
+   parent_category: "hard-rock",  <- Relationship Field
+}
+
+// Level 2
+{
+    uid: "hard-rock"
+    parent: "rock" <- Relationship Field
+}
+
+path: `/:level1?/level2?/:uid`
+url: `/rock/hard-rock/gates-of-thorns`
+```
+
+**Example 2:** without existing relationships
+
+```js
+
+// Level 1
+{
+   uid: "gates-of-thorns",
+}
+
+
+path: `/:level1?/level2?/:uid`
+url: `/gates-of-thorns`
+```
