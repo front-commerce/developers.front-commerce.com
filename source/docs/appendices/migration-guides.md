@@ -9,6 +9,14 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.13.0` -> `2.14.0`
 
+### New style sheet for B2B
+
+In this release we updated the RequisitionList configurable options modal. In case you are using the B2B module and have overridden `modules/front-commerce-b2b/web/theme/modules/RequisitionList/_RequisitionList.scss` please add the following line to it:
+
+```scss
+@import "~theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModal";
+```
+
 ### PaymentMethodLabel relocated
 
 The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overriden `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
