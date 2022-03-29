@@ -212,7 +212,7 @@ Add the following line to your `web/theme/modules/_modules.scss` file to load th
 
 ### Add webhook
 
-From your adyen Customer Area under `Developers > Webhooks` click on `+ Webkook` button on the right top corner then click on `Add` for the `Standard Notification` type. Fill the fields as follows:
+From your Adyen Customer Area under `Developers > Webhooks` click on `+ Webkook` button on the right top corner then click on `Add` for the `Standard Notification` type. Fill the fields as follows:
 
 - Transport:
   - URL: the full url of your site followed by `/webhooks/payment/notification/adyen` e.g. `https://www.example.com/webhooks/payment/notification/adyen`
