@@ -238,7 +238,7 @@ Please keep in mind that Adyen payment methods depend on the Customer's country,
 </blockquote>
 
 <blockquote class="note">
-**Note** This integration is aimed at being transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
+**Note** This integration aims to be transparent for administrators and developers. That is why we haven't duplicated documentation from existing Magento resources. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need further assistance.
 </blockquote>
 
 Front-Commerce is compatible with [Adyen's official Magento headless integration](https://docs.adyen.com/plugins/magento-2/magento-headless-integration) in its native version.
