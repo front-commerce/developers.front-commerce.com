@@ -254,7 +254,7 @@ Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to inst
 You must configure the "Payment Origin URL" in the "Advanced: PWA" with your Front-Commerce URL **for each of your stores**.
 
 <blockquote class="important">
-**IMPORTANT** please note that enabling or disabling payments in Magento's admin area has no effect on payment methods visible on the storefront. This is a *feature* from the module: every active payment methods in Adyen will be available. **You either have to filter them in the frontend or from your Adyen account.**
+**IMPORTANT** please note that enabling or disabling payments in Magento's admin area has no effect on payment methods visible on the storefront. This is a *feature* of the module: every active payment method in Adyen will be available. **You either have to filter them in the frontend or from your Adyen account.**
 </blockquote>
 
 ### Add the Adyen client key in the environment
