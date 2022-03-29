@@ -55,11 +55,13 @@ In this release, we have removed some dead and unused code ([see corresponding M
 
 If you have trouble about those removals while upgrading, <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
 
-### Added Prismic module features
+### New features in `2.14.0`
 
-- Support for [trailing slashes](/docs/prismic/routable-types.html#Trailing-Slash)
-- Support for [path rewrites](/docs/prismic/routable-types.html#Path-Rewrites)
-- Exposed the `url` to the [Content type](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher.html#Advanced-queries)
+- New Prismic module features:
+  - Support for [trailing slashes](/docs/prismic/routable-types.html#Trailing-Slash)
+  - Support for [path rewrites](/docs/prismic/routable-types.html#Path-Rewrites)
+  - Exposed the `url` to the [Content type](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
 
 > When a Prismic document has been registered using the [`registerRoutableType`](/docs/prismic/routable-types.html#registerRoutableType-options) method or the [`registerPrismicRoute`](/docs/prismic/routable-types.html#registerPrismicRoute-options) method, A `url` property is exposed in the [Content type object](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js). This property contains the resolved url of the document.
 
