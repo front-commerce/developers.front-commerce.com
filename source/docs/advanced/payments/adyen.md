@@ -5,11 +5,13 @@ title: Adyen integration
 
 This page contains information about the different ways you can accept payments with [Adyen](https://www.adyen.com/) in your Front-Commerce application.
 
-## As a Front-Commerce payment (no Magento modules needed)
+## As a Front-Commerce payment method
 
 <blockquote class="feature--new">
   _Since version 2.10.0_
 </blockquote>
+
+P.S. No Magento modules are needed if you use this method. If you however want to integrate with the adyen Magento module please refer to [Magento2 Integration section](#As-a-Magento2-Integration).
 
 ### Add the required environment variables
 
@@ -212,7 +214,7 @@ Add the following line to your `web/theme/modules/_modules.scss` file to load th
 
 ### Add webhook
 
-From your Adyen Customer Area under `Developers > Webhooks` click on `+ Webkook` button on the right top corner then click on `Add` for the `Standard Notification` type. Fill the fields as follows:
+In your Adyen Customer Area under `Developers > Webhooks` click on the `+ Webkook` button on the right top corner then click on `Add` for the `Standard Notification` type. Fill the fields as follows:
 
 - Transport:
   - URL: the full url of your site followed by `/webhooks/payment/notification/adyen` e.g. `https://www.example.com/webhooks/payment/notification/adyen`
@@ -225,13 +227,13 @@ From your Adyen Customer Area under `Developers > Webhooks` click on `+ Webkook`
 
 ### That's it!
 
-You can now configure the your Adyen payment methods from Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
+You can now configure your Adyen payment methods from the Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
 
 <blockquote class="note">
 Please keep in mind that Adyen payment methods depend on the Customer's country, the Cart amount, and the Store currency. Different contexts could display different payment methods in the checkout.
 </blockquote>
 
-## Magento2 module
+## As a Magento2 Integration
 
 <blockquote class="feature--new">
   _Since version 2.3.0 (developer preview since 2.1.0)_
@@ -243,7 +245,7 @@ Please keep in mind that Adyen payment methods depend on the Customer's country,
 
 Front-Commerce is compatible with [Adyen's official Magento headless integration](https://docs.adyen.com/plugins/magento-2/magento-headless-integration) in its native version.
 
-This integration is slightly different from [traditional Magento2 headless payments](/docs/magento2/headless-payments.html) in that sense that it contains a "companion component" in Front-Commerce. The component allows to display and Authorize payments from the checkout page, using [Adyen's Web Drop-in integration](https://docs.adyen.com/online-payments/drop-in-web) on the front-end. No redirection to other payment platform is involved unless its absolutely necessary, the Customer remains on the Front-Commerce store.
+This integration is slightly different from [traditional Magento2 headless payments](/docs/magento2/headless-payments.html) in the sense that it contains a "companion component" in Front-Commerce. The component allows to display and Authorize payments from the checkout page, using [Adyen's Web Drop-in integration](https://docs.adyen.com/online-payments/drop-in-web) on the front-end. No redirection to other payment platforms is involved unless it is absolutely necessary, the customer remains on the Front-Commerce store.
 
 Here is how to set this payment method up.
 
