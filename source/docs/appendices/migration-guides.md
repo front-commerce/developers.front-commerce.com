@@ -93,6 +93,63 @@ In this release, we have removed some dead and unused code ([see corresponding M
 
 If you have trouble about those removals while upgrading, <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
 
+### Fixed the Front-Commerce B2B module's company credit display
+
+In the account menu we displayed the company credit menu even for companies not allowed to pay on account.
+
+If you overrode `modules/front-commerce-b2b/web/theme/pages/Account/FirstnameQuery.gql` add the following code
+
+```diff
+query Firstname {
+  me {
+    ...
+    company {
+      name
++      credit {
++        availableCredit {
++          amount
++        }
++      }
+    }
+  }
+}
+```
+
+If you overrode `theme/modules/User/AccountNavigation/AccountNavigation.js` perform the following changes
+
+```diff
+...
+
+const isCompanyUser = (user) => {
+  return Boolean(user?.company);
+};
+
++const isCompanyCreditsAllowed = (user) => {
++  return Boolean(user?.company?.credit);
++};
+
+...
+-     isCompanyUser(user) && {
++     isCompanyCreditsAllowed(user) && {
+        value: "/user/company/credit",
+        label: intl.formatMessage(messages.companyCredit),
+      },
+...
+-       {isCompanyUser(user) && (
++       {isCompanyCreditsAllowed(user) && (
+          <Route
+            exact
+            path={`${basePath}/company/credit`}
+            children={({ match }) => (
+              <Link to="/user/company/credit" className={makeClassName(match)}>
+                {intl.formatMessage(messages.companyCredit)}
+                <Icon icon="cash" title="" />
+              </Link>
+            )}
+          />
+...
+```
+
 ### New features in `2.14.0`
 
 - [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher.html#Advanced-queries)
