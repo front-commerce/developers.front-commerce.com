@@ -11,7 +11,7 @@ This page contains information about the different ways you can accept payments 
   _Since version 2.10.0_
 </blockquote>
 
-P.S. No Magento modules are needed if you use this method. If you however want to integrate with the adyen Magento module please refer to [Magento2 Integration section](#As-a-Magento2-Integration).
+P.S. No Magento modules are needed if you use this method. If you however want to integrate with the Adyen Magento module please refer to [Magento2 Integration section](#As-a-Magento2-Integration).
 
 ### Add the required environment variables
 
