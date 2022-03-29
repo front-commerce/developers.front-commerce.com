@@ -16,6 +16,7 @@ Front-Commerce Payments are currently available for the platforms below, learn h
 - [PayZen](/docs/advanced/payments/payzen.html#Front-Commerce-Payment)
 - [Ingenico](/docs/advanced/payments/ingenico.html#Front-Commerce-Payment)
 - [BuyBox](/docs/advanced/payments/buybox.html#Front-Commerce-Payment)
+- [Adyen](/docs/advanced/payments/adyen.html)
 
 <blockquote class="info">
   If you want to use a Payment platform not yet listed above, please <span class="intercom-launcher">[`contact us`](mailto:hello@front-commerce.com)</span> so we can provide information about a potential upcoming native support for it.
