@@ -17,6 +17,36 @@ In this release we updated the RequisitionList configurable options modal. In ca
 @import "~theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModal";
 ```
 
+### `withFlashMessages` now exports hooks
+
+The logic of `withFlashMessages` is now also exported as a hook `useFlashMessages`. If you have overridden `withFlashMessages` please apply the changes in [this diff](https://gitlab.com/front-commerce/front-commerce/-/commit/11e7d55bc68d22b422ea5bc9c8357551cd2412ea) to it.
+
+### Added downloadable products support for Magento2
+
+<blockquote>
+_Minimum required magento 2 module version 2.6.1_
+</blockquote>
+
+Support for shareable downloadable products was added. There is now a new page under the user account `/user/downloadable-products` that lists all the downloadable products of the current user.
+
+P.S. The [withFlashMessage](#withFlashMessages-now-exports-hooks) update is required for the downloadable product page.
+
+To add a link to the downloadable products in the account navigation please apply the following diffs to your project:
+
+If you are using the base theme:
+
+- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?view=parallel#9f4b70799a5d0472977d4a6992b5f751d4c7b2a3)
+- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#a85a9f3a6d6111152efe2fc74320dfab7295d39d)
+- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#92527070b393735c35c5825b3174987e566962e6)
+- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f9a39a6723f4100486c2658dff702698421eae41)
+
+If you are using theme chocolatine:
+
+- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#e7af65f5100c0e8b1d5bda98a735eb5744a44386)
+- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f7e1de354176dd6902903dc889133f0c5f2733e3)
+- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=3#899be9e8de73bf492922cdfdd67ff14b859454a0)
+- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#ec9462e7d49a82bcb8c759d1fb734ce39160140b)
+
 ### PaymentMethodLabel relocated
 
 The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overriden `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
