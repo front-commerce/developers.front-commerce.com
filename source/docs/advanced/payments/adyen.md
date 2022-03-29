@@ -225,7 +225,7 @@ From your adyen Customer Area under `Developers > Webhooks` click on `+ Webkook`
 
 ### That's it!
 
-You can now configure the your adyen payment methods from Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
+You can now configure the your Adyen payment methods from Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
 
 <blockquote class="note">
 Please keep in mind that Adyen payment methods depends on the Customer country, the Cart amount and the Store currency. Different contexts could display different payment methods in the checkout.
