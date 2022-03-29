@@ -238,6 +238,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:scripts:routes`: debugs routing generation during the `prepare` command
 - `front-commerce:shipping:mondialrelay`: debugs MondialRelay related operations
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
+- `front-commerce:store-credits`: debugs responses and errors related to store credit (Magento 1 EE / Magento 2 Commerce)
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
 
