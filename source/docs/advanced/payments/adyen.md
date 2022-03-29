@@ -14,12 +14,12 @@ This page contains information about the different ways you can accept payments 
 ### Add the required environment variables
 
 - `FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT` The merchant account name. You can find it in your Adyen Customer Area in the top left corner next to your company name
-- `FRONT_COMMERCE_ADYEN_CLIENT_KEY` The environment variable which contains [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication) for the domains of your Front-Commerce stores. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > Client Key > Client Key`
-- `FRONT_COMMERCE_ADYEN_API_KEY` The API key. You can find it in your adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > API Key > API Key`
-- `FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX` only needed in production environment. Should be configured to contain [the adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix)
-- `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` (more on [webhooks below](#Add-webhook)) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > User Name`
-- `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on [webhooks below)](#Add-webhook) you create it. You then have to copy it to the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`
-- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#Add-webhook)) create it from the webhook section in your adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`
+- `FRONT_COMMERCE_ADYEN_CLIENT_KEY` The environment variable which contains [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication) for the domains of your Front-Commerce stores. You can find it in your Adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > Client Key > Client Key`
+- `FRONT_COMMERCE_ADYEN_API_KEY` The API key. You can find it in your Adyen Customer Area under `Developers > API Credential > [your_prefered_credential] > API Key > API Key`
+- `FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX` only needed in production environment. Should be configured to contain [the Adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix)
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` (more on [webhooks below](#Add-webhook)) you create it. You then have to copy it to the webhook section in your Adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > User Name`
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on [webhooks below)](#Add-webhook) you create it. You then have to copy it to the webhook section in your Adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`
+- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#Add-webhook)) create it from the webhook section in your Adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`
 - `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on [webhooks below](#Add-webhook)) when you regenerate your HMAC key configure this to be the old one
 
 ```sh
