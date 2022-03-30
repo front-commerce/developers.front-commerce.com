@@ -153,6 +153,7 @@ const isCompanyUser = (user) => {
 ### New features in `2.14.0`
 
 - [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher.html#Advanced-queries)
+- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables.html#Server)
 - New Prismic module features:
   - Support for [trailing slashes](/docs/prismic/routable-types.html#Trailing-Slash)
   - Support for [path rewrites](/docs/prismic/routable-types.html#Path-Rewrites)
