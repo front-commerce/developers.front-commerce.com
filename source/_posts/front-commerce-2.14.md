@@ -8,7 +8,7 @@ Spring is here! With it come the sunny days and our Front-Commerce 2.14 release 
 Here are the highlights of the past 6 weeks at Front-Commerce:
 
 - We continued the projects initiated at the beginning of the year, with our new BigCommerce connector and services around our Front-Commerce Cloud offer
-- We have continued to enrich the features available for Front-Commerce with store credits and downloadable products
+- We have continued to enrich the features available for Front-Commerce with store credit and downloadable products
 - In parallel, we had the opportunity to train and onboard new users! Welcome to the headless commerce family 👋
 - Finally, we helped prepare the launch of several new sites on Front-Commerce: this implicates the realization of stress tests, an important step to verify that your website will be able to hold the load in the event of a peak in traffic.
 
