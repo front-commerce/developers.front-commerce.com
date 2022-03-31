@@ -9,9 +9,9 @@ layout: index
   <p>Craft delightful e-commerce experiences<br />using modern web technologies</p>
   <div class="center getting-started"><a class="link primary button" href="/docs/">Getting Started</a></div>
   <ul class="button-list">
-    <li><a class="link button"  href="/docs/">Documentation</a></li>
-    <li class="show-mobile"><a class="link button"  href="/help.html">Help</a></li>
-    <li class="show-mobile"><a class="link button"  href="/license.html">License</a></li>
+    <li><a class="link button"  href="/docs/">Documentation </a></li>
+    <li class="show-mobile"><a class="link button"  href="/docs/">Documentation</a></li>
+    <li class="show-mobile"><a class="link button"  href="https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team">Support <span class="icon-request-change"></span></a></li>
     <li><a class="link button"  href="/blog">Changelog</a></li>
     <li><a class="link button"  href="https://demo.front-commerce.app/">Demo store</a></li>
     <li><a class="link button"  href="https://front-commerce.app/styleguide">Styleguide</a></li>
@@ -66,25 +66,10 @@ layout: index
 
   <p>Even though we built Front-Commerce by integrating it with Magento 2, we had a clear vision of introducing a clean separation between the frontend and your backend solution. You will be able to use the backend that best fits your needs without rebuilding your frontend from scratch.</p>
 
-  <p>However, we now are focused on supporting Magento 2 and 1, and plan to add new e-commerce backends integrations later this year.</p>
-
-  <div class="card-grid">
-    <div class="card card--large">
-      <img src="/images/magento-logo.svg">
-      <h3><a href="https://magento1.demo.front-commerce.com">Magento 1</a> & <a href="https://magento2.demo.front-commerce.com">Magento 2</a></h3>
-    </div>
-    <div class="card card--large">
-      <img src="/images/wordpress-logo.svg">
-      <h3><a href="https://wordpress.demo.front-commerce.com">WordPress</a></h3>
-    </div>
-    <div class="card card--large">
-      <img src="/images/prismic-logo.svg">
-      <h3><a href="https://prismic.demo.front-commerce.com">Prismic</a></h3>
-    </div>
-  </div>
+  <p>**Magento 2 and 1 storefronts are currently running in production** (with Wordpress and / or Prismic modues). **BigCommerce is the next** one to go-live.</p>
 
   <p class="center">
-    <a class="link primary button" href="https://demo.front-commerce.com">Browse all demos</a>
+    <a class="link primary button" href="https://demo.front-commerce.app">Browse our online demos</a>
   </p>
 </section>
 

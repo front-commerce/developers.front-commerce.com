@@ -5,7 +5,7 @@ title: Installation
 
 ## Requirements
 
-Front-Commerce is a [closed source product](/license.html). This documentation
+Front-Commerce is a **closed source product**. This documentation
 supposes that you have access to our private repositories.
 
 Access is granted to teams that have signed the relevant legal contracts, either

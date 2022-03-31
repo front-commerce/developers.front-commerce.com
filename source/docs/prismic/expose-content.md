@@ -15,10 +15,42 @@ To benefit from this API, you first need to [install the Prismic module](/docs/p
 
 The Prismic loader has the following API to request Content from Prismic:
 
-- `loadSingle(typeIdentifier[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
-- `loadByID(id[, options])` returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
-- `loadByUID(typeIdentifier, uid[, options])` returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
-- `loadList(query[, options])` returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
+#### `loadSingle(typeIdentifier[, options])`
+
+Returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+
+**Arguments:**
+
+- typeIdentifier (string): The type of document.
+- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+
+#### `loadByID(id[, options])`
+
+Returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+
+**Arguments:**
+
+- `id (string)`: The ID of the document .
+- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+
+#### `loadByUID(typeIdentifier, uid[, options])`
+
+Returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
+
+**Arguments:**
+
+- `typeIdentifier (string)`: The type of document.
+- uid (string): The Unique ID of the document.
+- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+
+#### `loadList(query[, options])`
+
+Returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
+
+**Arguments:**
+
+- query ([ListQuery](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js)): A query for a list of documents
+- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
 
 ### Field Transformers
 
@@ -438,7 +470,7 @@ export default {
 +       "staging.example.com",
 +       "production.example.com"
 +     ]);
-      const faqList loaders.Prismic.loadList(query, {
+      const faqList = await loaders.Prismic.loadList(query, {
         fieldTransformers: {
           // no transformer needed for `question` field as it's a key text field
 -         answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
