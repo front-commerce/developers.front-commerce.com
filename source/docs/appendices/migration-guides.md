@@ -7,6 +7,160 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.13.0` -> `2.14.0`
+
+### New style sheet for B2B
+
+In this release we updated the RequisitionList configurable options modal. In case you are using the B2B module and have overridden `modules/front-commerce-b2b/web/theme/modules/RequisitionList/_RequisitionList.scss` please add the following line to it:
+
+```scss
+@import "~theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModal";
+```
+
+### `withFlashMessages` now exports hooks
+
+The logic of `withFlashMessages` is now also exported as a hook `useFlashMessages`. If you have overridden `withFlashMessages` please apply the changes in [this diff](https://gitlab.com/front-commerce/front-commerce/-/commit/11e7d55bc68d22b422ea5bc9c8357551cd2412ea) to it.
+
+### Added downloadable products support for Magento2
+
+<blockquote>
+_Minimum required magento 2 module version 2.6.1_
+</blockquote>
+
+Support for shareable downloadable products was added. There is now a new page under the user account `/user/downloadable-products` that lists all the downloadable products of the current user.
+
+P.S. The [withFlashMessage](#withFlashMessages-now-exports-hooks) update is required for the downloadable product page.
+
+To add a link to the downloadable products in the account navigation please apply the following diffs to your project:
+
+If you are using the base theme:
+
+- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?view=parallel#9f4b70799a5d0472977d4a6992b5f751d4c7b2a3)
+- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#a85a9f3a6d6111152efe2fc74320dfab7295d39d)
+- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#92527070b393735c35c5825b3174987e566962e6)
+- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f9a39a6723f4100486c2658dff702698421eae41)
+
+If you are using theme chocolatine:
+
+- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#e7af65f5100c0e8b1d5bda98a735eb5744a44386)
+- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f7e1de354176dd6902903dc889133f0c5f2733e3)
+- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=3#899be9e8de73bf492922cdfdd67ff14b859454a0)
+- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#ec9462e7d49a82bcb8c759d1fb734ce39160140b)
+
+### PaymentMethodLabel relocated
+
+The `<PaymentMethodLabel>` component was moved from `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will still work but will output deprecation messages when used. If you have overriden `<PaymentMethodLabel>` you should also relocate your override to the same path and update all references to point to it.
+
+As a consequence of relocating `<PaymentMethodLabel>` we had to rename all the translation keys it uses. As such the following translation keys have been updated
+
+| Old Key                                                        | New Key                                                       |
+| -------------------------------------------------------------- | ------------------------------------------------------------- |
+| modules.User.Order.OrderMethod.PaymentMethod.checkmo           | modules.Checkout.Payment.PaymentMethodLabel.checkmo           |
+| modules.User.Order.OrderMethod.PaymentMethod.ogoneFlexcheckout | modules.Checkout.Payment.PaymentMethodLabel.ogoneFlexcheckout |
+| modules.User.Order.OrderMethod.PaymentMethod.paymentOnAccount  | modules.Checkout.Payment.PaymentMethodLabel.paymentOnAccount  |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalButton      | modules.Checkout.Payment.PaymentMethodLabel.paypalButton      |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalExpress     | modules.Checkout.Payment.PaymentMethodLabel.paypalExpress     |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalStandard    | modules.Checkout.Payment.PaymentMethodLabel.paypalStandard    |
+| modules.User.Order.OrderMethod.PaymentMethod.payzenEmbedded    | modules.Checkout.Payment.PaymentMethodLabel.payzenEmbedded    |
+| modules.User.Order.OrderMethod.PaymentMethod.stripe            | modules.Checkout.Payment.PaymentMethodLabel.stripe            |
+| modules.User.Order.OrderMethod.PaymentMethod.hipay             | modules.Checkout.Payment.PaymentMethodLabel.hipay             |
+
+All translation keys that start with `modules.User.Order.OrderMethod.PaymentMethod` now starts with `modules.Checkout.Payment.PaymentMethodLabel`. You need to update any use of the old keys (if any) in your project to the respective new key.
+
+### Update your CSPs
+
+In this release, we have removed most of the module-related CSPs from Front-Commerce default configuration file. If you are using one or more of the following modules, please do update your CSPs accordingly in your `config/website.js` configuration:
+
+- `Google Analytics` or `Google Tag Manager` (see [analytics configuration](/docs/advanced/theme/analytics.html#Google-Analytics))
+- `Paypal` (see [Paypal configuration](/docs/advanced/payments/paypal.html#Update-your-CSPs))
+- `Payzen` (see [Payzen configuration](/docs/advanced/payments/payzen.html#Update-your-CSPs))
+
+### Removed deprecations in `Button` component
+
+The properties that were tagged as deprecated in `theme/components/atoms/Button/Button.js` before version 2.0 have been removed in this release:
+
+- `appearance` should now be used instead of `primary`, `icon`, `link` and `warning`.
+- `state` should now be used instead of `disabled` and `pending`.
+
+Please update your code to fit the new behavior.
+
+### Code clean up
+
+In this release, we have removed some dead and unused code ([see corresponding MR](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/967)):
+
+- `src/theme/pages/Account/Account.js` that despites its name is not used at all and very unlikely to be used by any project
+- some loadable routes from `src/web/LoadableRoutes.js` there were useless since the addition of file based routing in `2.0.0-rc.0`.
+
+If you have trouble about those removals while upgrading, <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>.
+
+### Fixed the Front-Commerce B2B module's company credit display
+
+In the account menu we displayed the company credit menu even for companies not allowed to pay on account.
+
+If you overrode `modules/front-commerce-b2b/web/theme/pages/Account/FirstnameQuery.gql` add the following code
+
+```diff
+query Firstname {
+  me {
+    ...
+    company {
+      name
++      credit {
++        availableCredit {
++          amount
++        }
++      }
+    }
+  }
+}
+```
+
+If you overrode `theme/modules/User/AccountNavigation/AccountNavigation.js` perform the following changes
+
+```diff
+...
+
+const isCompanyUser = (user) => {
+  return Boolean(user?.company);
+};
+
++const isCompanyCreditsAllowed = (user) => {
++  return Boolean(user?.company?.credit);
++};
+
+...
+-     isCompanyUser(user) && {
++     isCompanyCreditsAllowed(user) && {
+        value: "/user/company/credit",
+        label: intl.formatMessage(messages.companyCredit),
+      },
+...
+-       {isCompanyUser(user) && (
++       {isCompanyCreditsAllowed(user) && (
+          <Route
+            exact
+            path={`${basePath}/company/credit`}
+            children={({ match }) => (
+              <Link to="/user/company/credit" className={makeClassName(match)}>
+                {intl.formatMessage(messages.companyCredit)}
+                <Icon icon="cash" title="" />
+              </Link>
+            )}
+          />
+...
+```
+
+### New features in `2.14.0`
+
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher.html#Advanced-queries)
+- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables.html#Server)
+- New Prismic module features:
+  - Support for [trailing slashes](/docs/prismic/routable-types.html#Trailing-Slash)
+  - Support for [path rewrites](/docs/prismic/routable-types.html#Path-Rewrites)
+  - Exposed the `url` to the [Content type](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
+
+> When a Prismic document has been registered using the [`registerRoutableType`](/docs/prismic/routable-types.html#registerRoutableType-options) method or the [`registerPrismicRoute`](/docs/prismic/routable-types.html#registerPrismicRoute-options) method, A `url` property is exposed in the [Content type object](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js). This property contains the resolved url of the document.
+
 ## `2.12.0` -> `2.13.0`
 
 ### Upgrade the Magento2 module
@@ -68,7 +222,7 @@ The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please u
 ```
 
 <blockquote class="warning">
-**Depth Limit** The Route Resolver is limited to retrieving data from 3 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
+**Depth Limit** The Route Resolver is limited to retrieving data from 2 levels deep, please see the [Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples) for more information.
 </blockquote>
 
 #### `@prismicio/client` has been updated to v6

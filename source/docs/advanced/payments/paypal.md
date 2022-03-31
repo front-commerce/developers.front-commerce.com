@@ -85,14 +85,16 @@ const ComponentMap = {
   contentSecurityPolicy: {
     directives: {
 -     scriptSrc: [],
-+     scriptSrc: ["www.paypalobjects.com"],
-      frameSrc: [],
++     scriptSrc: ["www.paypalobjects.com", "*.paypal.com"],
+-     frameSrc: [],
++     frameSrc: ["www.paypalobjects.com", "*.paypal.com"],
       styleSrc: [],
 -     imgSrc: [],
-+     imgSrc: ["*.paypal.com"],
++     imgSrc: ["www.paypalobjects.com", "*.paypal.com"],
       styleSrc: [],
       imgSrc: [],
-      connectSrc: [],
+-     connectSrc: [],
++     connectSrc: ["www.paypalobjects.com", "*.paypal.com"],
       baseUri: []
     }
   },

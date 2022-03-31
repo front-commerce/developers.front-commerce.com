@@ -54,6 +54,7 @@ sidebar_categories:
     - docs/advanced/production-ready/media-middleware
     - docs/advanced/production-ready/multistore
     - docs/advanced/production-ready/logging
+    - docs/advanced/production-ready/sessions
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
     - docs/advanced/production-ready/front-commerce-and-pm2

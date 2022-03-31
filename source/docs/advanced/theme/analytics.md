@@ -205,45 +205,70 @@ Here is a list of integrations frequently used across e-commerce shops:
 
 - `npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics`
 - Configuration example in `src/config/analytics.js`
-  ```js
-  {
-    name: "google-analytics",
-    needConsent: true,
-    settings: (authorization) => {
-      return {
-        "Google Analytics": {
-          trackingId: "UA-123-1",
-          anonymizeIp: !authorization,
-          // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
-        },
-      };
+
+```js
+{
+  name: "google-analytics",
+  needConsent: true,
+  settings: (authorization) => {
+    return {
+      "Google Analytics": {
+        trackingId: "UA-123-1",
+        anonymizeIp: !authorization,
+        // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
+      },
+    };
+  },
+  script: () =>
+    import("@segment/analytics.js-integration-google-analytics"),
+}
+```
+
+- Allow requests to www.google-analytics.com in `src/config/website.js::contentSecurityPolicy`:
+
+```diff
+// src/config/website.js
+module.exports = {
+  // ...
+  contentSecurityPolicy: {
+    directives: {
+      scriptSrc: [],
+      frameSrc: [],
+      styleSrc: [],
+-      imgSrc: [],
++      imgSrc: ["www.google-analytics.com"],
+      connectSrc: [],
+      baseUri: [],
     },
-    script: () =>
-      import("@segment/analytics.js-integration-google-analytics"),
-  }
-  ```
+  },
+// ...
+}
+```
 
 #### Google Tag Manager
 
 - `npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager`
 - Configuration example in `src/config/analytics.js`
-  ```js
-  {
-    name: "google-tag-manager",
-    needConsent: true,
-    settings: (authorization, otherAuthorizations) => {
-      return {
-        "Google Tag Manager": {
-          containerId: "GW-123",
-          // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
-          userConsents: otherAuthorizations
-        },
-      };
-    },
-    script: () =>
-      import("@segment/analytics.js-integration-google-tag-manager"),
-  }
-  ```
+
+```js
+{
+  name: "google-tag-manager",
+  needConsent: true,
+  settings: (authorization, otherAuthorizations) => {
+    return {
+      "Google Tag Manager": {
+        containerId: "GW-123",
+        // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
+        userConsents: otherAuthorizations
+      },
+    };
+  },
+  script: () =>
+    import("@segment/analytics.js-integration-google-tag-manager"),
+}
+```
+
+- Update your `CSPs` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
 
 In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
 
@@ -471,4 +496,4 @@ Indeed, if we're doing this, it's likely to be because the tracking service want
 - Look inside the script itself. The script you've been given may be a shortcut and the solution might live in the script itself. If this is the case, this means that you can try to duplicate the scripts content and adapt it to your integration.
 - If none of the solutions above work, you can always try to load the script several times by adding a `?random=${new Date().getTime()}` at the end of the URL. This will trick the browser into thinking they are different scripts and allow you to load it multiple times.
 
-Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We'll be happy to answer them.
+Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.

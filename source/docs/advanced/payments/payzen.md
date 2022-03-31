@@ -93,10 +93,10 @@ To allow loading PayZen related remote resources:
 -      frameSrc: [],
 -      styleSrc: [],
 -      imgSrc: [],
-+      scriptSrc: ["static.payzen.eu"],
-+      frameSrc: ["static.payzen.eu"],
-+      styleSrc: ["static.payzen.eu"],
-+      imgSrc: ["static.payzen.eu"],
++      scriptSrc: ["static.payzen.eu", "secure.payzen.eu"],
++      frameSrc: ["static.payzen.eu", "secure.payzen.eu"],
++      styleSrc: ["static.payzen.eu", "secure.payzen.eu"],
++      imgSrc: ["static.payzen.eu", "secure.payzen.eu"],
       styleSrc: [],
       imgSrc: [],
       connectSrc: [],
@@ -106,7 +106,7 @@ To allow loading PayZen related remote resources:
 ```
 
 <blockquote class="important">
-**Lyra Collect:** when using the Lyra Collect integration, use the `api.lyra.com` value instead of `static.payzen.eu` in the example above.
+**Lyra Collect:** when using the Lyra Collect integration, use the `api.lyra.com` and `secure.lyra.com` values instead of `static.payzen.eu` and `secure.payzen.eu` in the example above.
 </blockquote>
 
 ### Advanced: customize data sent to PayZen

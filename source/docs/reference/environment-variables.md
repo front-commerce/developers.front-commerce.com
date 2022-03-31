@@ -59,6 +59,7 @@ Configure the execution environment of the Front-Commerce's application:
 
 - `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED`: in some contexts, the proxy already has access logs and it is not useful to have a duplication. Logs grow unnecessarily and it adds an overhead. You can set `FRONT_COMMERCE_EXPRESS_LOG_ACCESS_ENABLED=false` to disable Front-Commerce access logs (in logs/access.log).
 - `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: set it to `true` to turn on an experimental logging of GraphQL resolvers metrics in New Relic. It uses the [New Relic Apollo Server plugin](https://www.npmjs.com/package/@newrelic/apollo-server-plugin)
+- `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE`: in some contexts [GraphQL persisted queries](https://www.apollographql.com/docs/apollo-server/performance/apq/) can be a blocker for a task. For instance, when recording a stress test scenario you might want fully reproducible HTTP traffic: persisted queries may lead to unreproducible recordings. In this case, you can set `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE=true` to disable the GraphQL server persisted queries feature (upon restart). Don't forget to turn it on again afterwards: **it is recommended for production use cases!**
 
 ### Sitemap
 
@@ -225,6 +226,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:config`: dumps the configuration for a typical request at the `/__front-commerce/debug` URL
 - `front-commerce:dispatcher`: debugs information about routes dispatching for registered page types
 - `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:graphql`: debugs GraphQL related code
 - `front-commerce:httpauth`: debugs how [basic authorization](/docs/reference/configurations.html#config-httpAuth-js) is enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot interactions with remote media servers)
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting a payment workflow

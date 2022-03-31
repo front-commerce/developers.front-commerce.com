@@ -116,6 +116,33 @@ module.exports = {
   serverModules: [
 ```
 
+- Allow images coming from maps.googleapis.com in `src/config/website.js::contentSecurityPolicy`
+
+```diff
+// src/config/website.js
+module.exports = {
+  // ...
+  contentSecurityPolicy: {
+    directives: {
+-      scriptSrc: [],
+-      frameSrc: [],
+-      styleSrc: [],
+-      imgSrc: [],
+-      fontSrc: [],
+-      connectSrc: [],
++      scriptSrc: ["maps.googleapis.com"],
++      frameSrc: ["maps.googleapis.com"],
++      styleSrc: ["fonts.googleapis.com"],
++      imgSrc: ["maps.googleapis.com", "maps.gstatic.com"],
++      fontSrc: ["fonts.googleapis.com"],
++      connectSrc: ["maps.googleapis.com"],
+      baseUri: [],
+    },
+  },
+  // ...
+}
+```
+
 - Configure your [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key) in the `mapsKey` of your applications `config/website.js`.
   If you don't do this step, you will see an error overlay as shown below and the map will be for development use only:
   ![The interface of Google Maps with an alert explaining Google Maps couldn't load properly](/images/google-maps-no-api-key.png)

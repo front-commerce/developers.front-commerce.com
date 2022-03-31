@@ -115,3 +115,32 @@ const logger = loggingService.createLogger("myLoggerName");
 ```
 
 This will then be used just like the [`winston` API](https://github.com/winstonjs/winston#using-logging-levels): `logger.log(type, message, data)`.
+
+# Log to the console
+
+You can redirect all your logs to the console with the following code
+
+```js
+module.exports = {
+  server: [
+    {
+      type: "console",
+    },
+  ],
+  payment: [
+    {
+      type: "console",
+    },
+  ],
+  client: [
+    {
+      type: "console",
+    },
+  ],
+  access: [
+    {
+      type: "console",
+    },
+  ],
+};
+```
