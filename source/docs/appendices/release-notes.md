@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.13.0`](#2-13-0-2022-02-17)**
+**Front-Commerce [`2.14.0`](#2-14-0-2022-03-31)**
 
 Compatible with:
 
@@ -16,6 +16,23 @@ Compatible with:
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.14.0 (2022-03-31)
+
+> Spring is here! With it come the sunny days and our Front-Commerce 2.14 release 🎉
+>
+> We continued with our new BigCommerce connector and our new Front-Commerce Cloud offer
+>
+> Store credits available for Magento2 Commerce
+>
+> Downloadable products available for Magento2
+>
+> More training and onboarding! Welcome to the headless commerce family 👋
+>
+> Stress tests for sites to launch soon on Front-Commerce!
+
+- [Announcement](/blog/2022/03/31/front-commerce-2.14/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.14.0)
 
 ## 2.13.0 (2022-02-17)
 
