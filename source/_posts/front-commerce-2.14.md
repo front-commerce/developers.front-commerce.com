@@ -14,7 +14,9 @@ Here are the highlights of the past 6 weeks at Front-Commerce:
 
 Next week, the team will be fully reunited for our Spring session, an opportunity to spend quality time altogether, under the sun 🤞🏼 in southern France ☀️
 
-Until then, enjoy reading, and as always, should you have any requests regarding the product roadmap, do not hesitate to contact Josquin 👋
+Until then, enjoy reading, and as always, should you have any requests regarding the product roadmap, do not hesitate [to contact Josquin](https://calendly.com/josquin-front-commerce/30min) 👋
+
+<!-- more -->
 
 ## BigCommerce: our first MVP will be live soon!
 
