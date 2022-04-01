@@ -7,6 +7,14 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.14.0` -> `2.15.0`
+
+Nothing yet!
+
+### New features in `2.15.0`
+
+- None yet!
+
 ## `2.13.0` -> `2.14.0`
 
 ### New style sheet for B2B
