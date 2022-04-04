@@ -1,0 +1,93 @@
+---
+id: debugging
+title: Debugging
+description: Debug your Front-Commerce app.
+---
+
+# Debugging
+
+Debugging your code is an important part of the development process. This documentation explains how you can debug your Front-Commerce frontend and backend code using either the [VS Code debugger](https://code.visualstudio.com/docs/editor/debugging) or [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools).
+
+Any debugger that can attach to Node.js can also be used to debug a Front-Commerce application. You can find more details in the Node.js [Debugging Guide](https://nodejs.org/en/docs/guides/debugging-getting-started/).
+
+## Debugging with VS Code
+
+Create a file named `.vscode/launch.json` at the root of your project with the following content:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FC: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run start -- --inspect"
+    },
+    {
+      "name": "FC: debug client-side",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:4000"
+    },
+    {
+      "name": "FC: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run start -- --inspect",
+      "console": "integratedTerminal",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
+```
+
+If you're [changing the port number](/docs/reference/environment-variables.html#Host) your application starts on, replace the `4000` in `http://localhost:4000` with the port you're using instead. You can use the same url defined in your `FRONT_COMMERCE_URL`.
+
+Now in VS Code go to the Debug panel (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> on Windows/Linux, <kbd>⇧</kbd>+<kbd>⌘</kbd>+<kbd>D</kbd> on macOS), select a launch configuration, then press <kbd>F5</kbd> or select **Debug: Start Debugging** from the Command Palette to start your debugging session. See [Debugging in Visual Studio Code (official documentation)](https://code.visualstudio.com/docs/editor/debugging) for more details.
+
+## Debugging with Chrome DevTools
+
+Several browsers support Client Side Debugging, which allows you to debug your Front-Commerce application in the browser. If your browser does not support Node.js debugging, you can refer to the [Inspect Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients) docs to find a server-side code debugging client which suits your environment.
+
+### Client-side code
+
+Start your development server as usual by running `npm run start`. Once the server starts, open `http://localhost:4000` (or your alternate URL) in Chrome. Next, open Chrome's Developer Tools (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> on Windows/Linux, <kbd>⌥</kbd>+<kbd>⌘</kbd>+<kbd>I</kbd> on macOS), then go to the **Sources** tab.
+
+Now, any time your client-side code reaches a [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statement, code execution will pause and that file will appear in the debug area. You can also press <kbd>Ctrl</kbd>+<kbd>P</kbd> on Windows/Linux or <kbd>⌘</kbd>+<kbd>P</kbd> on macOS to search for a file and set breakpoints manually.
+
+### Server-side code
+
+To debug server-side Front-Commerce code with Chrome DevTools, you need to pass the [`--inspect`](https://nodejs.org/api/cli.html#cli_inspect_host_port) flag to the underlying Node.js process:
+
+```bash
+npm run start -- --inspect
+```
+
+Launching the Front-Commerce dev server with the `--inspect` flag will look something like this:
+
+```bash
+> front-commerce-skeleton@1.0.0-rc start
+> cross-env NODE_ENV=development front-commerce start "--inspect"
+
+Debugger listening on ws://127.0.0.1:9229/d00f8057-d9ce-4aeb-bcf2-805f7b681110
+For help, see: https://nodejs.org/en/docs/inspector
+   WEBPACK  Compiling client...
+   WEBPACK  Compiling server...
+```
+
+Once the server starts, open a new tab in Chrome and visit [`chrome://inspect`](chrome://inspect), where you should see your Front-Commerce application inside the **Remote Target** section. Click **inspect** under your application to open a separate DevTools window, then go to the **Sources** tab.
+
+## More information
+
+To learn more about how to use a JavaScript debugger, take a look at the following documentation:
+
+- [Node.js debugging in VS Code: Breakpoints](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_breakpoints) (Server & Client)
+- [Chrome DevTools: Debug JavaScript](https://developers.google.com/web/tools/chrome-devtools/javascript) (Server & Client)
+- [The Firefox JavaScript Debugger](https://firefox-source-docs.mozilla.org/devtools-user/debugger/index.html) (Client Only)
+- [Node.js Inspector Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients)
+- [Debug with log output](/docs/reference/environment-variables.html#Debugging)
