@@ -67,7 +67,9 @@ Let’s add a `ClicksCounters` GraphQL module by adding it to the existing list:
 module.exports = {
   name: "Front-Commerce",
   url: "https://www.front-commerce.test",
-  modules: [],
+  modules: [
++   "./my-module"
+  ],
   serverModules: [
     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
     { name: "Magento2", path: "server/modules/magento2" },
@@ -151,10 +153,10 @@ extend type Query {
   clicksCounterByProductSKU(sku: String!): Int
 }
 ```
-However, we feel it would have been less intuitive for front-end developers. On 
-the other hand, it may seem more natural for developers familiar with designing 
-relational databases or REST APIs. Still, we recommend limiting as much 
-as possible the number of top-level queries in your projects to learn _thinking 
+However, we feel it would have been less intuitive for front-end developers. On
+the other hand, it may seem more natural for developers familiar with designing
+relational databases or REST APIs. Still, we recommend limiting as much
+as possible the number of top-level queries in your projects to learn _thinking
 in GraphQL_.
 
 </blockquote>
