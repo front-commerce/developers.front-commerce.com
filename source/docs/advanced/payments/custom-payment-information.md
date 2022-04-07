@@ -1,0 +1,138 @@
+---
+id: custom-payment-information
+title: Custom Payment Information
+---
+
+Implemented payment methods don't need any additional information. The user only need to select them and he will be prompted to enter all needed information. When implementing a payment method however you may require more information (Like you may want to let users enter a comment related to the payment method/checkout).
+
+All the code that will be created in this page should live in your own module. You can either put it in your client code or create a specific module for the payment method(s). If you create a specific one, please keep in mind that you need to register it in `.front-commerce.js`.
+
+## Display a custom input for a payment method
+
+You should register a new component in `theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js` by following this template:
+
+```js
+import CustomComponent from "theme/modules/CustomComponent/CustomComponent";
+
+const ComponentMap = {
+  "<method_code>": CustomComponent,
+};
+
+// ... the rest of the code should be kept intact
+```
+
+The Custom component referenced here should be created in your own module, and display the additional information of your payment method to the user.
+
+```js
+// theme/modules/CustomComponent/CustomComponent.js
+import React from "react";
+import SubmitPayment from "theme/modules/Checkout/Payment/SubmitPayment";
+
+const CustomComponent = ({
+  onAuthorize,
+  value,
+  gscAccepted,
+  error,
+  method,
+}) => {
+  const [comments, setComments] = useState(value?.comments ?? "");
+
+  return (
+    <div className="custom-component">
+      <input
+        onChange={(event) => setComments(event.target.value)}
+        value={comments}
+        type="text"
+      />
+      <SubmitPayment
+        gscAccepted={gscAccepted}
+        onSubmit={() => {
+          onAuthorize(gscAccepted ? { comments } : null);
+        }}
+        error={this.props.error}
+      />
+    </div>
+  );
+};
+
+export default CustomComponent;
+```
+
+Things to understand here:
+
+- The `SubmitPayment` component is a common component across all payment methods to ensure consistency in how methods are managed.
+- `method` the current selected method.
+- `value` contains initial additional data (usually it is always null).
+- `onAuthorize` should be called with the additional data on `<SubmitPayment>`'s on submit method.
+- `gscAccepted` whether or not the user have accepted the general sales conditions (checkbox above the "Place my order" button). Just forward this to the `<SubmitPayment>` component.
+- `error` an error object if there is an error. Just forward this to the `<SubmitPayment>` component.
+
+In this example we're only setting a comments additional text input, but you can do fancier things like fetching a list for the user to pick from GraphQL and displaying them here.
+
+## Updating an existing method Additional Data
+
+Sometimes you may need to add an extra field to additional data of an existing payment method. To do so you need to first find if this payment method already has an `AdditionalDataComponent` registered. In case it does not have an `AdditionalDataComponent` registered what was in [Display a custom input for a payment method](#Display-a-custom-input-for-a-payment-method) will work fine. On the other hand if it has `AdditionalDataComponent` defined you can override the `AdditionalDataComponent` for that method and add your custom modifications there.
+
+## Adding a field to all payment methods
+
+You should enhance the `AdditionalDataComponent` in `theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js` by following this template:
+
+```js
+import CustomEnhancer from 'theme/modules/CustomModule/CustomEnhancer'
+
+const ComponentMap = {
+  ..., // registered additional data
+};
+
+const getAdditionalDataComponent = (method) => {
+  const Component = ComponentMap[method.code];
+  return CustomEnhancer(Component);
+};
+
+export default getAdditionalDataComponent;
+```
+
+The CustomEnhancer referenced here should be created in your own module. It should display the base component sent to it and add additional data fields and override the `onAuthorize` method.
+
+```js
+// theme/modules/CustomModule/CustomEnhancer.js
+import React from "react";
+import SubmitPayment from "theme/modules/Checkout/Payment/SubmitPayment";
+
+const CustomEnhancer =
+  (BaseComponent) =>
+  ({ onAuthorize, value, gscAccepted, error, method }) => {
+    const [comments, setComments] = useState(value?.comments ?? "");
+
+    return (
+      <div className="custom-enhancer">
+        <input
+          onChange={(event) => setComments(event.target.value)}
+          value={comments}
+          type="text"
+        />
+        {BaseComponent ? (
+          <BaseComponent
+            onAuthorize={(additionalData) => {
+              onAuthorize({ ...additionalData, comments });
+            }}
+            value={value}
+            gscAccepted={gscAccepted}
+            error={error}
+            method={method}
+          />
+        ) : (
+          <SubmitPayment
+            gscAccepted={gscAccepted}
+            onSubmit={() => {
+              onAuthorize(gscAccepted ? { comments } : null);
+            }}
+            error={this.props.error}
+          />
+        )}
+      </div>
+    );
+  };
+
+export default CustomEnhancer;
+```
