@@ -13,13 +13,14 @@ src/
 |   └── modules/
 └── web/
     └── theme/
-        ├── components/
-        |   ├── atoms/
-        |   ├── molecules/
-        |   ├── organisms/
-        |   └── templates/
-        ├── modules/
-        └── pages/
+    |   ├── components/
+    |   |   ├── atoms/
+    |   |   ├── molecules/
+    |   |   ├── organisms/
+    |   |   └── templates/
+    |   ├── modules/
+    |   └── pages/
+    └── service-worker.js
 ```
 
 ## src/config/
@@ -57,3 +58,7 @@ composed of three subfolders:
 
 In order to learn more about it, please refer to
 [React components structure](react-components-structure.html).
+
+## src/web/service-worker.js
+
+A ready service worker to handle pre-caching. You can override this file to add more functionality to your service worker such as push notification. However please note that this file is not part of the build process (i.e. it would be copied as is). As such in order to import scripts using the [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) you need to make sure that the path given to `importScripts` is browseable. The easiest way to do so is to create a folder called `public` at the root of your module and add the files you want to import using `importScripts` directly in it. Now you can import them by using `import("/a_store_base_url/path_to_file_to_import")` e.g. `import("/en/service-worker-push-notifications.js")`. P.S. the `/a_store_base_url` is needed since the `public` folder is exposed on the store level. You can use any of your stores' base URLs as all will expose the same file.
