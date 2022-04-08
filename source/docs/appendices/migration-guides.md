@@ -928,7 +928,7 @@ In a nutshell, when the feature is enabled, we place a transparent button on top
 
 ### MondialRelay shipping in a Magento2 based project
 
-In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
+In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento2).
 
 ### New icons required
 
@@ -997,7 +997,7 @@ These new features may be relevant for your existing application:
 
 In this release we have added support for MondialRelay as a shipping method in Magento2 based Front-Commerce implementation. As a result, we have changed the way files are organized on the disk.
 
-In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Magento1-based-application). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
+In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento1). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
 
 ### Magento2 Adyen module update
 
@@ -1071,7 +1071,7 @@ The public API remains unchanged but if you've overriden internal components, pl
 These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
-- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento2)
 - [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options.html)
 
 ## `2.8.0` -> `2.9.0`

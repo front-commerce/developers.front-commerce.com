@@ -9,7 +9,7 @@ This page contains information about the different ways you can ship orders with
 
 No matter the backend solution, the MondialRelay Front-Commerce modules requires a Map component to display pickup points. Thus, before proceeding, please make sure that you've chosen a Map implementation from [Display a map](/docs/advanced/features/display-a-map.html).
 
-## Magento2 based application
+## Integrate with Magento2
 
 <blockquote class="feature--new">
 _Since version 2.10.0_
@@ -52,7 +52,7 @@ Then, within your Front-Commerce project, you have to:
 +@import "~theme/modules/MondialRelay/MondialRelay";
 ```
 
-- Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
+- Import MondialRelay component in by overriding the [`getAdditionalDataComponent`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js) used for Shipping methods
 
 ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -65,7 +65,7 @@ const ComponentMap = {
 };
 ```
 
-## Magento1 based application
+## Integrate with Magento1
 
 <blockquote class="feature--new">
 _Since version 2.5.0_
@@ -109,7 +109,7 @@ module.exports = {
 +@import "~theme/modules/MondialRelay/MondialRelay";
 ```
 
-- Import MondialRelay component in by overriding the `getAdditionalDataComponent` used for Shipping methods
+- Import MondialRelay component in by overriding the [`getAdditionalDataComponent`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js) used for Shipping methods
 
 ```diff
 // src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
@@ -122,7 +122,5 @@ const ComponentMap = {
 +  },
 };
 ```
-
-## That's it
 
 After following this guide, customers will be able to choose MondialRelay as a shipping method and will be able to choose a pickup point on a map.
