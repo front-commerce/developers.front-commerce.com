@@ -71,7 +71,9 @@ In this example we're only setting a comments additional text input, but you can
 
 ## Updating an existing method Additional Data
 
-Sometimes you may need to add an extra field to additional data of an existing payment method. To do so you need to first find if this payment method already has an `AdditionalDataComponent` registered. In case it does not have an `AdditionalDataComponent` registered what was in [Display a custom input for a payment method](#Display-a-custom-input-for-a-payment-method) will work fine. On the other hand if it has `AdditionalDataComponent` defined you can override the `AdditionalDataComponent` for that method and add your custom modifications there.
+Sometimes you may need to add an extra field to the additional data of an existing payment method. You first need to check if this payment method already has an `AdditionalDataComponent` registered.
+- [x] If `AdditionalDataComponent` has been registered, you should then override the `AdditionalDataComponent` and add your custom modifications.
+- [ ] If no `AdditionalDataComponent` is registered, you can then follow the [Display a custom input for a payment method](#Display-a-custom-input-for-a-payment-method) docs.
 
 ## Adding a field to all payment methods
 
