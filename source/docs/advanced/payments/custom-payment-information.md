@@ -3,7 +3,7 @@ id: custom-payment-information
 title: Custom Payment Information
 ---
 
-Implemented payment methods don't need any additional information. The user only needs to select them and he will be prompted to enter all the required information. However, you may require more information, for example, if you want to let users enter a comment related to the payment method/checkout.
+Implemented payment methods don't need any additional information. The user only needs to select one of the implemented payment methods and then will be prompted to enter all the required information. However, you may require more information, for example, if you want to let users enter a comment related to the payment method/checkout.
 
 All the code that will be created in this page should live in your own module. You can either put it in your client code or create a specific module for the payment method(s). If you create a specific one, please keep in mind that you need to register it in `.front-commerce.js`.
 
@@ -72,6 +72,7 @@ In this example we're only setting a comments additional text input, but you can
 ## Updating an existing method Additional Data
 
 Sometimes you may need to add an extra field to the additional data of an existing payment method. You first need to check if this payment method already has an `AdditionalDataComponent` registered.
+
 - [x] If `AdditionalDataComponent` has been registered, you should then override the `AdditionalDataComponent` and add your custom modifications.
 - [ ] If no `AdditionalDataComponent` is registered, you can then follow the [Display a custom input for a payment method](#Display-a-custom-input-for-a-payment-method) docs.
 
