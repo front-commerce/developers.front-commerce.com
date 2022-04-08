@@ -3,7 +3,7 @@ id: custom-payment-information
 title: Custom Payment Information
 ---
 
-Implemented payment methods don't need any additional information. The user only need to select them and he will be prompted to enter all needed information. When implementing a payment method however you may require more information (Like you may want to let users enter a comment related to the payment method/checkout).
+Implemented payment methods don't need any additional information. The user only needs to select them and he will be prompted to enter all the required information. However, you may require more information, for example, if you want to let users enter a comment related to the payment method/checkout.
 
 All the code that will be created in this page should live in your own module. You can either put it in your client code or create a specific module for the payment method(s). If you create a specific one, please keep in mind that you need to register it in `.front-commerce.js`.
 
