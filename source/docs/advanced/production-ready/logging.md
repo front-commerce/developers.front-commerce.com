@@ -147,7 +147,7 @@ module.exports = {
 
 ## Automatic logging configuration
 
-You can also automate the logging configuration based on wether the application is deployed on our cloud offer (V2) or not using the following `my-module/config/logging.js`
+You can also automate the logging configuration based on whether the application is deployed on our cloud offer (V2) or not using the following `my-module/config/logging.js`
 
 ```js
 const makeLogAccordingToEnv = (filename) =>
