@@ -36,3 +36,41 @@ module.exports = {
 ```
 
 You will also need to execute `npm install connect-redis` to install the dependency.
+
+## Automatic session configuration
+
+In case you want your session to be handled by Redis only if it is configured and on files otherwise, you can use the following `my-module/config/sessions.js` file.
+
+```js
+const session = require("express-session");
+const RedisStore = require("connect-redis")(session);
+const { createClient } = require("redis");
+const FileStore = require("session-file-store")(session);
+const path = require("path");
+
+if (process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_HOST) {
+  const redisClient = createClient({
+    // see https://www.npmjs.com/package/redis#options-object-properties
+    host: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_HOST,
+    port: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_PORT || 6379,
+    db: process.env.FRONT_COMMERCE_REDIS_SESSIONS_DB || 2,
+  });
+
+  module.exports = {
+    // see https://developers.front-commerce.com/docs/advanced/production-ready/sessions.html
+    store: () => {
+      return new RedisStore({ client: redisClient });
+    },
+  };
+} else {
+  module.exports = {
+    // Return your session store implementation here
+    store: () => {
+      const sessionsPath = path.join(process.cwd(), ".front-commerce/sessions");
+      return new FileStore({
+        path: sessionsPath,
+      });
+    },
+  };
+}
+```
