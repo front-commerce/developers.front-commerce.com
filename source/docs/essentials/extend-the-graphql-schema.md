@@ -309,7 +309,7 @@ extend type Product {
 ```
 
 The resolver function will use the `sku` key from its parent data and will
-return the the current counter value from its local state (defaulting to `0` if
+return the current counter value from its local state (defaulting to `0` if
 no clicks occurred).
 
 It is important to understand that the `sku` is not a parameter provided by

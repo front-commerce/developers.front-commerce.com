@@ -23,7 +23,7 @@ In Front-Commerce we support the `s-maxage` and the `stale-while-revalidate` cac
 
 - The `s-maxage` header is used to instruct the CDN or reverse-proxy the time it can serve the cached response directly from cache without revalidating.
 
-- The `stale-while-revalidate` header is used to instruct the CDN or reverse-proxy that after the the `s-maxage` have passed how long can it still serve from the cache while at the same time revalidating its cache.
+- The `stale-while-revalidate` header is used to instruct the CDN or reverse-proxy that after the `s-maxage` have passed how long can it still serve from the cache while at the same time revalidating its cache.
 
 For example if `s-maxage` is 60 seconds and `stale-while-revalidate` is 10 minutes, it means that once a resource is cached, the CDN/reverse-proxy can serve it from cache for one minute without even validating with the server, and after 60 seconds and before 10 minutes any request to the resource will:
 
