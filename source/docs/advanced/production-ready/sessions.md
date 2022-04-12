@@ -39,7 +39,7 @@ You will also need to execute `npm install connect-redis` to install the depende
 
 ## Automatic session configuration
 
-In case you want your session to be handled by Redis only if it is configured and on files otherwise, you can use the following `my-module/config/sessions.js` file.
+Used in the case when you want your session to be handled by Redis only when it has been configured and is on files otherwise, you can use the following `my-module/config/sessions.js` file.
 
 ```js
 const session = require("express-session");
