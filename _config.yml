@@ -117,6 +117,7 @@ sidebar_categories:
     - docs/advanced/payments/payzen
     - docs/advanced/payments/stripe
     - docs/advanced/payments/payment-on-account
+    - docs/advanced/payments/custom-payment-information
   Shipping:
     - docs/advanced/shipping/overview
     - docs/advanced/shipping/custom-shipping-information
