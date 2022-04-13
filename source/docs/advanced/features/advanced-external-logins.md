@@ -39,7 +39,7 @@ The provider returned by the registered function should implement the `LoginProv
 
 The `requestLoginMiddleware` will be called both when the user clicks on the "Login with Provider" button and when the provider redirects back to the site. The role of `requestLoginMiddleware` is to first redirect the user to the external site to authenticate and later when the user is redirected back to the site (from the external system) to extract the user information.
 
-The `loginCallbackMiddleware` is called after the user is redirected back to the site (from the external system) and also after `requestLoginMiddleware`'s second call by this time `requestLoginMiddleware` would have hopefully extracted all needed user fields and made them available for `loginCallbackMiddleware`. (We/passort does it by exposing a field called `user` on the request object itself). Here is where the external login handler is used to log the the user in.
+The `loginCallbackMiddleware` is called after the user is redirected back to the site (from the external system) and also after `requestLoginMiddleware`'s second call by this time `requestLoginMiddleware` would have hopefully extracted all needed user fields and made them available for `loginCallbackMiddleware`. (We/passort does it by exposing a field called `user` on the request object itself). Here is where the external login handler is used to log the user in.
 
 ```js
 import configService from "server/core/config/configService";
