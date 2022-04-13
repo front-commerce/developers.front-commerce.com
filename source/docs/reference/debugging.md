@@ -50,6 +50,13 @@ If you're [changing the port number](/docs/reference/environment-variables.html#
 
 Now in VS Code go to the Debug panel (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> on Windows/Linux, <kbd>⇧</kbd>+<kbd>⌘</kbd>+<kbd>D</kbd> on macOS), select a launch configuration, then press <kbd>F5</kbd> or select **Debug: Start Debugging** from the Command Palette to start your debugging session. See [Debugging in Visual Studio Code (official documentation)](https://code.visualstudio.com/docs/editor/debugging) for more details.
 
+#### Example using VSCode
+
+<video width="100%" height="400" controls class="video video-cover">
+  <source src="./assets/debugging/vscode.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
 ## Debugging with Chrome DevTools
 
 Several browsers support Client Side Debugging, which allows you to debug your Front-Commerce application in the browser. If your browser does not support Node.js debugging, you can refer to the [Inspect Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients) docs to find a server-side code debugging client which suits your environment.
@@ -81,6 +88,13 @@ For help, see: https://nodejs.org/en/docs/inspector
 ```
 
 Once the server starts, open a new tab in Chrome and visit [`chrome://inspect`](chrome://inspect), where you should see your Front-Commerce application inside the **Remote Target** section. Click **inspect** under your application to open a separate DevTools window, then go to the **Sources** tab.
+
+#### Example using Chrome DevTools
+
+<video width="100%" height="400" controls class="video video-cover">
+  <source src="./assets/debugging/chrome-devtools.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 ## More information
 
