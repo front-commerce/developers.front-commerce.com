@@ -2426,7 +2426,7 @@ Please note that if in your code, you relied on some int types, there might be c
 
 First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
 
-Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/theme/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
+Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/production-ready/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
 
 ### Caching update
 
@@ -2545,7 +2545,7 @@ We have introduced the mechanism of [Translation Fallback](/docs/advanced/theme/
 
 ### Improved search experience
 
-While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](/blog/2019/05/07/release-1.0.0-beta.0/#Improved-search-experience).
+While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](/blog/2019/05/13/release-1.0.0-beta.0/#Improved-search-experience).
 
 During this change, we needed to update some parts of the GraphQL schema. If you don't use our implementation, this won't impact you. However, if you do, here is what changed in the schema:
 
