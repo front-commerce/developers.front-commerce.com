@@ -443,7 +443,7 @@ Requirements:
 > - Wishlist
 > - Performance
 
-- [Announcement](/blog/2019/05/07/release-1.0.0-beta.0/)
+- [Announcement](/blog/2019/05/13/release-1.0.0-beta.0/)
 - [Migration guide](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-beta.0)
 

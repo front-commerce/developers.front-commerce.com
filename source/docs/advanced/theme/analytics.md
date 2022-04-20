@@ -77,7 +77,7 @@ Additionally, you may wonder what name and properties you should give to your ev
 
 ### Track an event as a React Component
 
-If you don't have an actual callback to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](<(http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)>).
+If you don't have an actual callback to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
 
 For instance, in Front-Commerce's core, we are using `withTrackOnMount` to track when a user sees their cart.
 
@@ -107,7 +107,7 @@ export default withTrackOnMount({
 <blockquote class="note">
 Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackOnMount) to have a detailed explanation of the API of `withTrackOnMount`.
 
-Note that if you prefer to use render props you can refer to [`TrackOnMount`](docs/reference/analytics-components.html#TrackOnMount).
+Note that if you prefer to use render props you can refer to [`TrackOnMount`](/docs/reference/analytics-components.html#TrackOnMount).
 
 </blockquote>
 
@@ -130,7 +130,7 @@ withTrackPage("Home")(Cart);
 <blockquote class="note">
 Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackPage) to have a detailed explanation of the API of `withTrackPage`.
 
-Note that if you prefer to use render props you can refer to [`TrackPage`](docs/reference/analytics-components.html#TrackPage).
+Note that if you prefer to use render props you can refer to [`TrackPage`](/docs/reference/analytics-components.html#TrackPage).
 
 Moreover, we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
 
