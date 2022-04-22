@@ -146,7 +146,7 @@ If the OAuth Zend Patch is not valid in the installer checker, please follow the
 - Copy the [`fix-sort-params-core.patch`](https://gitlab.com/front-commerce/magento1-module-front-commerce/blob/master/fix-sort-params-core.patch) file in your root directory
 - Past it on your root Magento directory
 - Apply them
-  - Whit GIT: `git apply fix-sort-params-core.patch`
+  - With GIT: `git apply fix-sort-params-core.patch`
   - Without GIT: `patch -p1 < fix-sort-params-core.patch`
 
 ### **URLs settings**
