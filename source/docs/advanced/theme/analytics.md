@@ -197,93 +197,6 @@ Here we have used the Google Analytics integration. You can find the [list of ex
 However, please note that some integrations are not up to date. Even if you find one that matches your need, it might not work. However, looking into its code will let you know how to make it work, and you could eventually fork it to fix it.
 </blockquote>
 
-### Main integrations
-
-Here is a list of integrations frequently used across e-commerce shops:
-
-#### Google Analytics
-
-- `npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics`
-- Configuration example in `src/config/analytics.js`
-
-```js
-{
-  name: "google-analytics",
-  needConsent: true,
-  settings: (authorization) => {
-    return {
-      "Google Analytics": {
-        trackingId: "UA-123-1",
-        anonymizeIp: !authorization,
-        // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
-      },
-    };
-  },
-  script: () =>
-    import("@segment/analytics.js-integration-google-analytics"),
-}
-```
-
-- Allow requests to www.google-analytics.com in `src/config/website.js::contentSecurityPolicy`:
-
-```diff
-// src/config/website.js
-module.exports = {
-  // ...
-  contentSecurityPolicy: {
-    directives: {
-      scriptSrc: [],
-      frameSrc: [],
-      styleSrc: [],
--      imgSrc: [],
-+      imgSrc: ["www.google-analytics.com"],
-      connectSrc: [],
-      baseUri: [],
-    },
-  },
-// ...
-}
-```
-
-#### Google Tag Manager
-
-- `npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager`
-- Configuration example in `src/config/analytics.js`
-
-```js
-{
-  name: "google-tag-manager",
-  needConsent: true,
-  settings: (authorization, otherAuthorizations) => {
-    return {
-      "Google Tag Manager": {
-        containerId: "GW-123",
-        // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
-        userConsents: otherAuthorizations
-      },
-    };
-  },
-  script: () =>
-    import("@segment/analytics.js-integration-google-tag-manager"),
-}
-```
-
-- Update your `CSPs` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
-
-In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
-
-First, the `userConsents` configuration option will be pushed to your dataLayer as the `userConsents` value. You can reference it from a Variable in GTM. Here is an example:
-
-<figure>
-![Screenshot of a GTM Variable configured to expose the user consents](./assets/gtm-datalayer-variable.png)
-</figure>
-
-Then, you can leverage the `UserConsentUpdated` event tracked whenever users update their consent preferences. You could create triggers to enable scripts to load / remove (depending on the `userConsents` value). Here is an example:
-
-<figure>
-![Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration](./assets/gtm-trigger-example.png)
-</figure>
-
 ### GDPR consent
 
 If your integrations need consent of the user before running, you need to setup the `config/cookieServices.js` file. This file will let you define which cookies and trackings services are used within your application and will let the user chose which tracking service to allow.
@@ -497,3 +410,96 @@ Indeed, if we're doing this, it's likely to be because the tracking service want
 - If none of the solutions above work, you can always try to load the script several times by adding a `?random=${new Date().getTime()}` at the end of the URL. This will trick the browser into thinking they are different scripts and allow you to load it multiple times.
 
 Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.
+
+## Integrations
+
+Here is a list of integrations frequently used across e-commerce shops
+
+### Google Analytics
+
+Install our custom segment integration for Google Analytics
+
+```bash
+npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics
+```
+
+Configuration example in `src/config/analytics.js`
+
+```js
+{
+  name: "google-analytics",
+  needConsent: true,
+  settings: (authorization) => {
+    return {
+      "Google Analytics": {
+        trackingId: "UA-123-1",
+        anonymizeIp: !authorization,
+        // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
+      },
+    };
+  },
+  script: () => import("@segment/analytics.js-integration-google-analytics"),
+}
+```
+
+Allow requests to www.google-analytics.com in `src/config/website.js`:
+
+```diff
+// src/config/website.js
+module.exports = {
+  contentSecurityPolicy: {
+    directives: {
+      scriptSrc: [],
+      frameSrc: [],
+      styleSrc: [],
+-      imgSrc: [],
++      imgSrc: ["www.google-analytics.com"],
+      connectSrc: [],
+      baseUri: [],
+    },
+  },
+}
+```
+
+### Google Tag Manager
+
+Install our custom segment integration for Google Tag Manager
+
+```bash
+npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager
+```
+
+Configuration example in `src/config/analytics.js`
+
+```js
+{
+  name: "google-tag-manager",
+  needConsent: true,
+  settings: (authorization, otherAuthorizations) => {
+    return {
+      "Google Tag Manager": {
+        containerId: "GW-123",
+        // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
+        userConsents: otherAuthorizations
+      },
+    };
+  },
+  script: () => import("@segment/analytics.js-integration-google-tag-manager"),
+}
+```
+
+Update your `CSPs` in `src/config/website.js` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
+
+In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
+
+First, the `userConsents` configuration option will be pushed to your dataLayer as the `userConsents` value. You can reference it from a Variable in GTM. Here is an example:
+
+<figure>
+![Screenshot of a GTM Variable configured to expose the user consents](./assets/gtm-datalayer-variable.png)
+</figure>
+
+Then, you can leverage the `UserConsentUpdated` event tracked whenever users update their consent preferences. You could create triggers to enable scripts to load / remove (depending on the `userConsents` value). Here is an example:
+
+<figure>
+![Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration](./assets/gtm-trigger-example.png)
+</figure>
