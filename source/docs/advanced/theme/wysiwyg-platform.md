@@ -68,83 +68,76 @@ If you restart your application, you will notice that the new widget component i
 
 However, in most cases, you will need to fetch data to display all the needed information in your widget. For instance, if the widget is `{% raw %}{{ widget type="acme/product-preview" sku="VSK12" }}{% endraw %}` you will want to fetch the product associated with the given SKU.
 
-1. (Server side) Register your widget type at the GraphQL level
-   1. Make sure that your dependencies are up to date in your GraphQL module
+#### Register your widget type at the GraphQL level (**server-side**)
 
-```diff
-// my-module/server/modules/wysiwyg/index.js
-export default {
-  namespace: "Magento1/Cms",
-+  dependencies: [
-+    "Magento2/Wysiwyg", // to make sure that Widget related features are available
-+    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
-+  ],
-```
+1.  First make sure that your dependencies are up to date in your GraphQL module
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    export default {
+    namespace: "Magento1/Cms",
+    +  dependencies: [
+    +    "Magento2/Wysiwyg", // to make sure that Widget related features are available
+    +    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
+    +  ],
+    ```
+1.  Then you need to register a new WidgetData type in your schema
+    ```graphql
+    # my-module/server/modules/wysiwyg/schema.gql
+    type WidgetProductPreviewData implements WidgetData {
+      dataId: ID
+      product: Product
+    }
+    ```
+1.  After that you can setup the resolvers to tell GraphQL how to fetch the `product` field
+    ```diff
+    // my-module/server/modules/wysiwyg/resolvers.js
+    export default {
+    +  WidgetProductPreviewData: {
+    +    product: ({ node }, _, { loaders }) => {
+    +      const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
+    +      if (!productSkuAttribute) {
+    +        return null;
+    +      }
+    +      return loaders.Product.load(productSkuAttribute.value)
+    +    }
+    +  },
+    }
+    ```
+1.  Finally register the widget type from Magento and associate it with the GraphQL type
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    contextEnhancer: ({ loaders }) => {
+    +  loaders.MagentoWidget.registerWidgetType(
+    +    // the tag name in your HTML
+    +    "acme/product-preview",
+    +    // The associated GraphQL type name
+    +    "WidgetProductPreviewData"
+    +  );
+    }
+    ```
 
-    2. Register a new WidgetData type in your schema
+#### Get the data in your component (**client-side**)
 
-```graphql
-# my-module/server/modules/wysiwyg/schema.gql
-type WidgetProductPreviewData implements WidgetData {
-  dataId: ID
-  product: Product
-}
-```
-
-    3. Setup the resolvers to tell GraphQL how to fetch the `product` field
-
-```diff
-// my-module/server/modules/wysiwyg/resolvers.js
-export default {
-+  WidgetProductPreviewData: {
-+    product: ({ node }, _, { loaders }) => {
-+      const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
-+      if (!productSkuAttribute) {
-+        return null;
-+      }
-+      return loaders.Product.load(productSkuAttribute.value)
-+    }
-+  },
-}
-```
-
-    4. Register the widget type coming from Magento and associate it with the GraphQL type
-
-```diff
-// my-module/server/modules/wysiwyg/index.js
-contextEnhancer: ({ loaders }) => {
-+  loaders.MagentoWidget.registerWidgetType(
-+    // the tag name in your HTML
-+    "acme/product-preview",
-+    // The associated GraphQL type name
-+    "WidgetProductPreviewData"
-+  );
-}
-```
-
-2. (Client side) Get the data in your component
-   1. Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
-
-```diff
-fragment MagentoWysiwygFragment on MagentoWysiwyg {
-  childNodes
-  data {
-    dataId
-    ... on WysiwygWidgetData {
+1.  Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
+    ```diff
+    fragment MagentoWysiwygFragment on MagentoWysiwyg {
+      childNodes
       data {
-        ... on WidgetInvalidData {
-          dataId
+        dataId
+        ... on WysiwygWidgetData {
+          data {
+            ... on WidgetInvalidData {
+              dataId
+            }
+    +       ... on WidgetProductPreviewData {
+    +         product {
+    +           sku
+    +           name
+    +         }
+    +       }
+          }
         }
-+       ... on WidgetProductPreviewData {
-+         product {
-+           sku
-+           name
-+         }
-+       }
       }
     }
-  }
-}
-```
-
-    2. Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
+    ```
+1.  Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
