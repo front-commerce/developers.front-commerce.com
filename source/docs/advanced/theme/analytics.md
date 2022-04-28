@@ -415,9 +415,17 @@ Implementing a great tagging plan for an e-commerce application is a tough journ
 
 Here is a list of integrations frequently used across e-commerce shops
 
-### Google Analytics
+### Google Analytics 4
 
-Install our custom segment integration for Google Analytics
+Coming soon, [contact us](mailto:contact@front-commerce.com) for more details.
+
+### Universal Analytics (Google Analytics)
+
+<blockquote class="warning">
+  Universal Analytics will no longer process new data in standard properties beginning 1 July 2023.
+</blockquote>
+
+Install [Front-Commerce's custom segment integration for Google Analytics](https://github.com/front-commerce/analytics.js-integration-google-analytics)
 
 ```bash
 npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics
@@ -431,7 +439,7 @@ Configuration example in `src/config/analytics.js`
   needConsent: true,
   settings: (authorization) => {
     return {
-      "Google Analytics": {
+      "Universal Analytics": {
         trackingId: "UA-123-1",
         anonymizeIp: !authorization,
         // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
@@ -442,19 +450,21 @@ Configuration example in `src/config/analytics.js`
 }
 ```
 
-Allow requests to www.google-analytics.com in `src/config/website.js`:
+Update your `CSPs` in `src/config/website.js` to support the [Universal Analytics](https://developers.google.com/tag-platform/tag-manager/web/csp#universal_analytics_google_analytics)
 
 ```diff
 // src/config/website.js
 module.exports = {
   contentSecurityPolicy: {
     directives: {
-      scriptSrc: [],
+-     scriptSrc: [],
++     scriptSrc: ["*.google-analytics.com"],
       frameSrc: [],
       styleSrc: [],
--      imgSrc: [],
-+      imgSrc: ["www.google-analytics.com"],
-      connectSrc: [],
+-     imgSrc: [],
++     imgSrc: ["www.google-analytics.com"],
+-     connectSrc: [],
++     connectSrc: ["www.google-analytics.com"],
       baseUri: [],
     },
   },
@@ -463,7 +473,7 @@ module.exports = {
 
 ### Google Tag Manager
 
-Install our custom segment integration for Google Tag Manager
+Install [Front-Commerce's custom segment integration for Google Tag Manager](https://github.com/front-commerce/analytics.js-integration-google-tag-manager)
 
 ```bash
 npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager

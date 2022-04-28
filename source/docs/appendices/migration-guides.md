@@ -71,7 +71,7 @@ All translation keys that start with `modules.User.Order.OrderMethod.PaymentMeth
 
 In this release, we have removed most of the module-related CSPs from Front-Commerce default configuration file. If you are using one or more of the following modules, please do update your CSPs accordingly in your `config/website.js` configuration:
 
-- `Google Analytics` or `Google Tag Manager` (see [analytics configuration](/docs/advanced/theme/analytics.html#Google-Analytics))
+- `Google Analytics` or `Google Tag Manager` (see [analytics configuration](/docs/advanced/theme/analytics.html#Universal-Analytics-Google-Analytics))
 - `Paypal` (see [Paypal configuration](/docs/advanced/payments/paypal.html#Update-your-CSPs))
 - `Payzen` (see [Payzen configuration](/docs/advanced/payments/payzen.html#Update-your-CSPs))
 
