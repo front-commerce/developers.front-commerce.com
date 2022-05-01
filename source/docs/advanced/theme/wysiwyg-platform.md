@@ -9,6 +9,7 @@ Each platform has a specific type of WYSIWYG. This allows to render your content
 
 - [`DefaultWysiwyg`](#DefaultWysiwyg)
 - [`MagentoWysiwyg`](#MagentoWysiwyg)
+- [`PrismicWysiwyg`](#PrismicWysiwyg)
 
 Definitions:
 
@@ -28,6 +29,18 @@ The goal of this Wysiwyg type is to remain as simple as possible. It is not mean
 ## `MagentoWysiwyg`
 
 The MagentoWyswiyg's goal is to support all the default features in Magento 1 & 2. If you notice that some features are missing, please contact us and we'll look into implementing it.
+
+<blockquote class="info">
+If you are using the Prismic module, then you need to override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map both of the Wysiwyg customizations
+
+```js
+const typenameMap = {
+  MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg")),
+  PrismicWysiwyg: loadable(() => import("./PrismicWysiwyg")),
+};
+```
+
+</blockquote>
 
 **Supported shortcodes**
 
@@ -141,3 +154,48 @@ However, in most cases, you will need to fetch data to display all the needed in
     }
     ```
 1.  Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
+
+## `PrismicWysiwyg`
+
+The goal of this Wysiwyg type is to remain as simple as possible. It is not meant to fetch data from additional services.
+
+<blockquote class="info">
+If you are using the Magento module, then you need to override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map both of the Wysiwyg customizations
+
+```js
+const typenameMap = {
+  MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg")),
+  PrismicWysiwyg: loadable(() => import("./PrismicWysiwyg")),
+};
+```
+
+</blockquote>
+
+**No shortcodes**
+
+**Default transforms**
+
+- `<script>` tags with a [supported embed script](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/23d1a9a5360732d6a2cf15a326c5717db97896f3/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js) are transformed into [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/23d1a9a5360732d6a2cf15a326c5717db97896f3/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js) components.
+
+### Add a custom embed script
+
+You can append your own scripts by add `theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js` in your own theme.
+
+```js
+const appEmbeds = {
+  MyCustomEmbed: {
+    // The key is the Provider name (see https://oembed.com/providers.json)
+    src: "https://example.com/my-custom-embed.js",
+    load: (ref) => {
+      // the ref is the actual script element in the dom
+      if (typeof window !== "undefined" && window.myCustomScript) {
+        window.myCustomScript.load(ref);
+      }
+    },
+  },
+};
+
+export default appEmbeds;
+```
+
+The load function will be called when the script has been mounted in the DOM.
