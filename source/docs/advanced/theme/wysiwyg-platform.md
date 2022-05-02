@@ -175,7 +175,7 @@ const typenameMap = {
 
 **Default transforms**
 
-- `<script>` tags with a [supported embed script](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/23d1a9a5360732d6a2cf15a326c5717db97896f3/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js) are transformed into [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/23d1a9a5360732d6a2cf15a326c5717db97896f3/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js) components.
+- `<script>` tags with a [supported embed script](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js) are transformed into [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js) components.
 
 ### Add a custom embed script
 
