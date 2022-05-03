@@ -16,7 +16,7 @@ In this section we will cover how to implement both of these methods, and how to
 
 You can learn how to [configure an embed field](https://prismic.io/docs/core-concepts/embed) in the prismic documentation.
 
-For these example let's say we want to create an album cover from an embed field.
+For this example let's say we want to create an album cover from an embed field.
 
 ### Adding an Embed Field in your server-side
 
@@ -69,7 +69,7 @@ fragment AlbumFragment on Album {
 }
 ```
 
-The fragment will expose the `html`, `provider` and `type` fields in the [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
+The fragment will expose several fields from the [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
 
 ```jsx
 import PrismicEmbed from "theme/modules/prismic/PrismicEmbed";
@@ -78,11 +78,7 @@ const Album = (props) => {
   return (
     <div>
       <h1>{props.title}</h1>
-      <PrismicEmbed
-        html={props.cover.html}
-        type={props.cover.type}
-        provider={props.cover.provider}
-      />
+      <PrismicEmbed content={props.cover} />
     </div>
   );
 };
@@ -101,23 +97,9 @@ As mentioned above, the fragment only exposes the minimum required fields for th
 
 ## Wysiwyg Embed Fields
 
-The [PrismicWysiwyg](/docs/advanced/theme/wysiwyg-platform.html#PrismicWysiwyg) type allows you to add embed fields to your Wysiwyg.
-
 ### Prerequisites
 
-To get started with the PrismicWysiwyg, please ensure that you have applied the override to `theme/modules/WysiwygV2/getWysiwygComponent.js`, you can follow the documentation from [Wysiwyg](/docs/advanced/theme/wysiwyg.html), to understand how implement Wysiwyg.
-
-If you are using Magento your override would look something like this:
-
-```js
-// theme/modules/WysiwygV2/getWysiwygComponent.js
-
-const typenameMap = {
-  MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg"))
-  PrismicWysiwyg: loadable(() => import("./PrismicWysiwyg"))
-};
-
-```
+To benefit from this API, you first need to [Configure the PrismicWysiwyg](/docs/prismic/installation.html#Optional-Configure-the-PrismicWysiwyg).
 
 ### Example with PrismicWysiwyg
 
@@ -156,21 +138,23 @@ const AlbumLoader = (PrismicLoader, WysiwygLoader) => {
 };
 ```
 
-You should then be able to follow the same steps form [`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) to implement the Wysiwyg in your client-side.
+You can then follow the same steps form [`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) to implement the Wysiwyg in your client-side.
 
 ### Adding additional Embed loading scripts
 
-We have added loader functions for the following embed scripts
+We have added loader functions for the following embed scripts:
 
 - `Twitter`
 - `Facebook`
 - `Instagram`
 
-You can update these loading functions or add your own by overriding the `theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js` file.
+You can update these loading functions or add your own by overriding the [`theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js) file.
 
-This file accepts a Record with the key as the embed [`Provider`](https://oembed.com/providers.json) (case sensitive), and the value containing the load function, the `src` is optional if you would like to use a custom script.
+- This file accepts a record with the key as the embed [provider](https://oembed.com/providers.json) (case sensitive).
+- The value contains a `load` function and optionally an `src` if you would like to use a custom script.
 
 ```js
+// `theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js`
 const appEmbeds = {
   // Add you custom embed script here eg:
   Facebook: {
@@ -212,7 +196,7 @@ const Pre = (props) => {
 export default Pre;
 ```
 
-Then you will need to register this component by overriding the `theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js` file.
+Then you will need to register this component by overriding the [`theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js) file.
 
 ```js
 import Pre from "./Components/Pre";
@@ -224,8 +208,8 @@ const appComponentsMap = {
 export default appComponentsMap;
 ```
 
-To improve the loading of scripts you can implement your own `useEffect` to lazy load the specific script by detecting the provider in the HTML raw text, you might also be interested in implementing a helper like [`dangerously-set-html-content`](https://github.com/christo-pr/dangerously-set-html-content) which can better handle to loading if injected scripts.
+To improve the loading of scripts you can implement your own `useEffect` to lazy load the specific script by detecting the provider in the HTML raw text, you might also be interested in implementing a helper like [`dangerously-set-html-content`](https://github.com/christo-pr/dangerously-set-html-content) which can better handle to loading of injected scripts.
 
-<blockquote class="info">
+<blockquote class="tip">
 This can also be done in slices, see the [Add Custom Embed or HTML code](https://community.prismic.io/t/add-custom-embed-or-html-code/5455) article for more information.
 </blockquote>
