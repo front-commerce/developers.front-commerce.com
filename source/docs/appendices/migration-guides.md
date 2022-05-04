@@ -9,7 +9,28 @@ Our goal is to make migrations as smooth as possible. This is why we try to make
 
 ## `2.14.0` -> `2.15.0`
 
-Nothing yet!
+### Environment variables: quote values containing `#` or ``` characters
+
+As part of our continuous dependencies upgrade process, we've upgraded the `dotenv` dependency to its latest version.
+We've updated it from version `8.2.0` (october 2019) to version `16.0.0` (february 2022).
+
+Technically, **it contains 2 Breaking Changes** that we've decided to be pragmatic about. [We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
+
+Please check that your environment variables are not impacted by these breaking changes:
+
+1. [**15.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1500-2022-01-31): `#` marks the beginning of a comment (UNLESS the value is wrapped in quotes. Please update your `.env` files to wrap in quotes any values containing `#`:
+1. [**16.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1600-2022-02-02): If you had values containing the backtick character, please quote those values with either single or double quotes.
+
+```diff
+- SECRET_WITH_HASH=something-with-a-#-hash
+- SECRET_WITH_BACKTICK=something-with-a-`-backtick
++ SECRET_WITH_HASH="something-with-a-#-hash"
++ SECRET_WITH_BACKTICK="something-with-a-`-backtick"
+```
+
+<blockquote class="note">
+**Note:** you can change your environment variables **right away**. Quoted values also work with previous Front-Commerce versions.
+</blockquote>
 
 ### New features in `2.15.0`
 
