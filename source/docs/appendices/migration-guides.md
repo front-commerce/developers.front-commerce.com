@@ -36,6 +36,12 @@ Please check that your environment variables are not impacted by these breaking 
 
 In this release, we introduced the In-Stock Alert feature. When this feature is enabled on your backend (Magento 1 and 2), it will by default render a new component `SubscribeToInStockAlert` inside the existing `OutOfStock` component.
 
+### Paginated orders
+
+In this release we added pagination for orders. In the process, the `orders` GraphQL field used to retrieve orders has been deprecated and will eventually be removed in FC version 3.0.0. `orderList` should now be used instead.
+
+If you had overriden the `Orders` (`theme/pages/Account/Orders/Orders.js`) component, you might want to update it to use the new GraphQL field and add a pagination component.
+
 ### New features in `2.15.0`
 
 - [In-Stock Alerts](/docs/advanced/features/in-stock-alert.html)
