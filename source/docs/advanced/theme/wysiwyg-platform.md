@@ -9,6 +9,7 @@ Each platform has a specific type of WYSIWYG. This allows to render your content
 
 - [`DefaultWysiwyg`](#DefaultWysiwyg)
 - [`MagentoWysiwyg`](#MagentoWysiwyg)
+- [`PrismicWysiwyg`](#PrismicWysiwyg)
 
 Definitions:
 
@@ -141,3 +142,7 @@ However, in most cases, you will need to fetch data to display all the needed in
     }
     ```
 1.  Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
+
+## `PrismicWysiwyg`
+
+The PrismicWysiwyg allows you to display [Rich Text](https://prismic.io/docs/core-concepts/edit-rich-text) content from Prismic in your front-end, it handles addition fields like Embed fields and media links. To learn more of the PrismicWysiwyg usage, please refer to the [Configure the PrismicWysiwyg](/docs/prismic/installation.html#Optional-Configure-the-PrismicWysiwyg) installation guide.

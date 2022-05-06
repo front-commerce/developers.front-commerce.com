@@ -103,6 +103,7 @@ sidebar_categories:
     - docs/prismic/routable-types
     - docs/prismic/integration-fields
     - docs/prismic/preview
+    - docs/prismic/embed-fields
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
