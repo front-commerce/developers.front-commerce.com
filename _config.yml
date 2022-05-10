@@ -67,6 +67,7 @@ sidebar_categories:
     - docs/advanced/features/quickorder
     - docs/advanced/features/external-logins
     - docs/advanced/features/return-merchandise-authorization
+    - docs/advanced/features/in-stock-alert
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure

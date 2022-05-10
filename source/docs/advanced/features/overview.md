@@ -13,5 +13,6 @@ Front-Commerce has several extension points that allow to override default imple
 - [SmartForms](./smart-forms.html)
 - [Quick order](./quickorder.html)
 - [Password fields](./password-fields.html)
+- [In-stock alert](./in-stock-alert.html)
 
 If you need more detailed information, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.

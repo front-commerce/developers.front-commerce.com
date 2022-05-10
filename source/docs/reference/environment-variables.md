@@ -241,6 +241,7 @@ Here is a list of available debug namespaces:
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and errors related to Capency's webservice
 - `front-commerce:remote-schemas`: debugs [remote schema stitching](/docs/advanced/graphql/remote-schemas.html) related internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack client's bundle
+- `front-commerce:in-stock-alert`: debugs responses and errors related to in-stock alerts
 
 **Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
 

@@ -32,9 +32,13 @@ Please check that your environment variables are not impacted by these breaking 
 **Note:** you can change your environment variables **right away**. Quoted values also work with previous Front-Commerce versions.
 </blockquote>
 
+### In-Stock Alerts
+
+In this release, we introduced the In-Stock Alert feature. When this feature is enabled on your backend (Magento 1 and 2), it will by default render a new component `SubscribeToInStockAlert` inside the existing `OutOfStock` component.
+
 ### New features in `2.15.0`
 
-- None yet!
+- [In-Stock Alerts](/docs/advanced/features/in-stock-alert.html)
 
 ## `2.13.0` -> `2.14.0`
 
