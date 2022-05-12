@@ -185,6 +185,39 @@ rm -rf generated/{code,metadata}
 
 In `production` mode, the error won't occur.
 
+## I have an error `Cannot read property 'label' of null` with Magento 2 native categories listing
+
+If you're using Magento2 without [an external Search Engine](/docs/magento2/search-engine.html), and with [the ElasticSuite module](https://github.com/Smile-SA/elasticsuite) is installed in Magento you can face the following GraphQL error when browsing a category:
+
+```
+[
+  TypeError: Cannot read property 'label' of null
+      at /front-commerce/build/server/webpack:/src/server/modules/magento2/catalog/layers/resolvers.js:136:1
+      at processTicksAndRejections (internal/process/task_queues.js:95:5)
+      at async Promise.all (index 1)
+      at async Promise.all (index 2)
+      at async Promise.all (index 3)
+      at async Promise.all (index 9)
+      at async Promise.all (index 0) {
+    path: [ 'route', 'layer', 'dynamicFacets', 2, 'label' ]
+  },
+  TypeError: Cannot read property 'values' of null
+      at /front-commerce/build/server/webpack:/src/server/modules/magento2/catalog/layers/resolvers.js:149:1
+      at processTicksAndRejections (internal/process/task_queues.js:95:5)
+      at async Promise.all (index 2)
+      at async Promise.all (index 2)
+      at async Promise.all (index 3)
+      at async Promise.all (index 9)
+      at async Promise.all (index 0) {
+    path: [ 'route', 'layer', 'dynamicFacets', 2, 'buckets' ]
+  }
+]
+```
+
+This is due to a known issue in ElasticSuite that [has been fixed](https://github.com/Smile-SA/elasticsuite/pull/2197) in [version 2.10.6](https://github.com/Smile-SA/elasticsuite/releases/tag/2.10.6).
+
+**The solution is to update ElasticSuite to its latest version.** For a workaround in FC (not recommended!), see [this diff](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1264/diffs).
+
 ## Another issue?
 
 Please contact our support or open an issue describing the encountered problem along with your environment using `npx envinfo --system --binaries`
