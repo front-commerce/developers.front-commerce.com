@@ -44,9 +44,9 @@ If you had overriden the `Orders` (`theme/pages/Account/Orders/Orders.js`) compo
 
 ### Node Version Support Change
 
-We now support node versions 14, 16, 17. If you are using node 12 ([which reached its end of life](https://nodejs.org/en/about/releases/)), you must update your node version (we recommend node 16).
+We now support Node versions 14, 16 and 17 (Node 17 is supported on a best effort basis). If you are using Node 12 ([which reached its end of life](https://nodejs.org/en/about/releases/)), you must update your Node version (we recommend Node 16).
 
-To support these latest node versions, we had to upgrade some dependencies. These upgrades imply changes that could impact your codebase:
+To support these latest Node versions, we had to upgrade some dependencies. These upgrades imply changes that could impact your codebase:
 
 - You need to update to the latest version of your `front-commerce-skeleton`
 
@@ -366,7 +366,7 @@ To support these latest node versions, we had to upgrade some dependencies. Thes
 - Resolvers for fields that are not in the `schema` now throw errors. To avoid this remove all unneeded `field`/`Type` resolvers that do not have a representation in the GraphQL `schema`. Check our [cleaning commit](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238) regarding this issue.
 - `makeApolloClientStub` now expects resolvers as an argument instead of mocks. This is in tandem with the [`graphql-tools` upgrade notes](https://www.graphql-tools.com/docs/mocking#migration-from-v7-and-below). Note that we provided an adapter that converts `mocks` to `resolvers` so that old tests are not affected. However it is recommended to make the change. To disable the adapter's warning set `FRONT_COMMERCE_WEB_PRINT_MAKEAPOLLOCLIENTSTUB_MOCKS_DEPRECATION_WARNING` environment variable to `"false"`.
 - The use of `SchemaVisitor`/`SchemaDirectiveVisitor` to implement GraphQL directive is deprecated and it is replaced by the use of the [new API](https://www.graphql-tools.com/docs/schema-directives). We implemented an adapter so that uses of `SchemaVisitor`/`SchemaDirectiveVisitor` will not break, however it is recommended to make the change. Please note that the adapter only supports the use of `visitFieldDefinition` function of the `SchemaVisitor`/`SchemaDirectiveVisitor` class. If you have use for other functions and cannot make the change to the new API please contact us for help.
-- When using node 17 you need to prefix your npm commands by `NODE_OPTIONS=--openssl-legacy-provider` e.g. `NODE_OPTIONS=--openssl-legacy-provider npm start`, `NODE_OPTIONS=--openssl-legacy-provider npm run build`.
+- When using Node 17 you need to prefix your npm commands by `NODE_OPTIONS=--openssl-legacy-provider` e.g. `NODE_OPTIONS=--openssl-legacy-provider npm start`, `NODE_OPTIONS=--openssl-legacy-provider npm run build`.
 - When using npm >= 7 you need to add `--legacy-peer-deps` to npm install commands. e.g. `npm install --legacy-peer-deps`, `npm i some_dependency --legacy-peer-deps`.
 
 <ul>
