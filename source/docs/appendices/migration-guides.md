@@ -394,6 +394,10 @@ To support these latest Node versions, we had to upgrade some dependencies. Thes
 ### New features in `2.15.0`
 
 - [In-Stock Alerts](/docs/advanced/features/in-stock-alert.html)
+- [Prismic: embed fields](/docs/prismic/embed-fields.html)
+- Magento2: use the native search capabilities of Magento for PLP
+- npm 7 / NodeJS 16 / NodeJS 17 compatibility
+- [Integrate Paypal w. Adyen for a seamless checkout experience](/docs/advanced/payments/adyen.html)
 
 ## `2.13.0` -> `2.14.0`
 
