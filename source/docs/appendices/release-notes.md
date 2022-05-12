@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.15.0`](#2-14-0-2022-05-12)**
+**Front-Commerce [`2.15.0`](#2-15-0-2022-05-12)**
 
 Compatible with:
 
