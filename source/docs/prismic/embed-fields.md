@@ -59,7 +59,7 @@ We have added a `PrismicEmbed` component to handle the embed response in you cli
 To simplify the usage between the component and the backend data we created a `PrismicEmbedFragment` which contains the minimum required data for the component, for example:
 
 ```graphql
-#import "theme/modules/prismic/PrismicEmbed/PrismicEmbedFragment"
+#import "theme/modules/Prismic/PrismicEmbed/PrismicEmbedFragment.gql"
 
 fragment AlbumFragment on Album {
   title
@@ -88,10 +88,10 @@ You can override the default components for each embed type in your own theme
 
 | Type    | Component                                                |
 | ------- | -------------------------------------------------------- |
-| `photo` | `theme/modules/prismic/PrismicEmbed/Components/Photo.js` |
-| `video` | `theme/modules/prismic/PrismicEmbed/Components/Video.js` |
-| `link`  | `theme/modules/prismic/PrismicEmbed/Components/Link.js`  |
-| `rich`  | `theme/modules/prismic/PrismicEmbed/Components/Rich.js`  |
+| `photo` | `theme/modules/Prismic/PrismicEmbed/Components/Photo.js` |
+| `video` | `theme/modules/Prismic/PrismicEmbed/Components/Video.js` |
+| `link`  | `theme/modules/Prismic/PrismicEmbed/Components/Link.js`  |
+| `rich`  | `theme/modules/Prismic/PrismicEmbed/Components/Rich.js`  |
 
 As mentioned above, the fragment only exposes the minimum required fields for the PrismicEmbed component, if you would like to create your own custom embed component you can refer to all the available fields on the [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
 
