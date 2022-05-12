@@ -36,7 +36,7 @@ export default {
 };
 ```
 
-2. write the middleware that will set the header. In this middleware, you can use any of the function [exposed by helmet](https://helmetjs.github.io/#reference).
+1. write the middleware that will set the header. In this middleware, you can use any of the function [exposed by helmet](https://helmetjs.github.io/#reference).
 
 ```js
 // server/express/setReferrerPolicy.js imported in the previous snippet
