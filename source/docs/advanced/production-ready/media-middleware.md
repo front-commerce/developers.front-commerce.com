@@ -132,7 +132,7 @@ To simplify this process we devised a smart method to determine these numbers in
 
 1. First open the page you want to setup the `sizes` property of.
 2. Open the developers tools and paste the below snippet in the `console` tab.
-3. Before you hit the enter key edit the condition indicated in the snippet to match the image you want.
+3. Before you hit the enter key edit the condition(s) indicated in the snippet to match the image you want.
 4. Hit the enter key.
 5. Now you have 4 new global functions you can use `getImage`, `resetIsMyImage`, `getSizesStats`, `clearSizesStats`.
    - Use the `getImage` function to test the condition you set if it returns the correct image.
@@ -147,18 +147,18 @@ To simplify this process we devised a smart method to determine these numbers in
 11. Using the above information and the different sizes available for your image, you can build a `sizes` value that matches your scenario. Check [example below](#image-sizes-example) for a hands-on exercise.
 
 ```js
-var { getSizesStats, getImage, resetIsMyImage, clearSizesStats } = ((
+let { getSizesStats, getImage, resetIsMyImage, clearSizesStats } = ((
   isMyImage = (img) => {
     return (
       // IMPORTANT UPDATE THE CONDITION BELOW TO MATCH THE IMAGE YOU WANT TO TRACK
       (img.alt || "").trim().toLowerCase() ===
-        "your-image-alt".trim().toLowerCase() &&
+        "your-image-alt".trim().toLowerCase() ||
       (img.src || "")
         .trim()
         .toLowerCase()
-        .indexOf("your-image-src".trim().toLowerCase()) >= 0 &&
+        .indexOf("your-image-src".trim().toLowerCase()) >= 0 ||
       (img?.attributes?.some_custom_prop?.value || "").trim().toLowerCase() ===
-        "your-custom-image-prop-value".trim().toLowerCase() &&
+        "your-custom-image-prop-value".trim().toLowerCase() ||
       (img.className || "").toLowerCase().indexOf("your-class-name") >= 0
     );
   }
@@ -181,7 +181,7 @@ var { getSizesStats, getImage, resetIsMyImage, clearSizesStats } = ((
   return {
     getSizesStats: () => {
       stats.sort(([winSize1], [winSize2]) => winSize1 - winSize2);
-      return stats.map((itm) => itm.join("\t")).join("\n");
+      return console.log(stats.map((itm) => itm.join("\t")).join("\n"));
     },
     getImage,
     clearSizesStats: () => {
