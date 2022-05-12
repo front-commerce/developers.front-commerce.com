@@ -42,7 +42,7 @@ Front-Commerce with sane default configurations.
 
 In order to install the skeleton, you need to follow these instructions:
 
-- For npm < 8.5
+- For npm < 7
 
   ```bash
   git clone --depth=1 git@gitlab.com:front-commerce/front-commerce-skeleton.git
@@ -50,7 +50,7 @@ In order to install the skeleton, you need to follow these instructions:
   npm install
   ```
 
-- For npm >= 8.5
+- For npm >= 7
   ```bash
   git clone --depth=1 git@gitlab.com:front-commerce/front-commerce-skeleton.git
   cd front-commerce-skeleton

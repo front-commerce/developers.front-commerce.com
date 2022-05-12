@@ -516,21 +516,21 @@ To support these latest node versions, we had to ugrade some dependencies. These
 - `makeApolloClientStub` now expects resolvers as an argument instead of mocks. This in in tandem with the [`graphql-tools` upgrade notes](https://www.graphql-tools.com/docs/mocking#migration-from-v7-and-below). Note that we provided an adapter that converts `mocks` to `resolvers` so that old tests are not affected. However it is recommended to make the change. To disable the adapter's warning set `FRONT_COMMERCE_WEB_PRINT_MAKEAPOLLOCLIENTSTUB_MOCKS_DEPRECATION_WARNING` environment variable to `"false"`.
 - The use of `SchemaVisitor`/`SchemaDirectiveVisitor` to implement GraphQL directive is deprecated and it is replaced by the use of the [new API](https://www.graphql-tools.com/docs/schema-directives). We implemented an adapter so that uses of `SchemaVisitor`/`SchemaDirectiveVisitor` will not break, however it is recommended to make the change. Please note that the adapter only supports the use of `visitFieldDefinition` function of the `SchemaVisitor`/`SchemaDirectiveVisitor` class. If you have use for other functions and cannot make the change to the new API please contact us for help.
 - When using node 17 you need to prefix your npm commands by `NODE_OPTIONS=--openssl-legacy-provider` e.g. `NODE_OPTIONS=--openssl-legacy-provider npm start`, `NODE_OPTIONS=--openssl-legacy-provider npm run build`.
-- When using npm >= 8.5 you need to add `--legacy-peer-deps` to npm install commands. e.g. `npm install --legacy-peer-deps`, `npm i some_dependency --legacy-peer-deps`.
+- When using npm >= 7 you need to add `--legacy-peer-deps` to npm install commands. e.g. `npm install --legacy-peer-deps`, `npm i some_dependency --legacy-peer-deps`.
 
 <ul>
   <li>
     For good measures reinstall your dependencies after the update:
     <ul>
       <li>
-        With npm < 8.5
+        With npm < 7
           ```sh
           rm -rf ./node_modules/
           npm install
           ```
       </li>
       <li>
-        With npm >= 8.5
+        With npm >= 7
           ```sh
           rm -rf ./node_modules/
           npm install --legacy-peer-deps
