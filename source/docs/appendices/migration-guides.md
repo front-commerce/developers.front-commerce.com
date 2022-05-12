@@ -55,46 +55,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 <details>
 <summary><strong>CLICK HERE to check if you overrode any file that you need to apply the changes to</strong></summary>
 
-<table>
-<tr>
-<td>
-
-`cypress/support/addToCart.js`
-
-```diff
--import { gql } from "@apollo/client";
-+import gql from "graphql-tag";
-```
-
-</td>
-</tr>
-<tr>
-<td>
-
-`cypress/support/emptyCart.js`
-
-```diff
--import { gql } from "@apollo/client";
-+import gql from "graphql-tag";
-```
-
-</td>
-</tr>
-<tr>
-<td>
-
-`cypress/support/login.js`
-
-```diff
--import { gql } from "@apollo/client";
-+import gql from "graphql-tag";
-```
-
-</td>
-</tr>
-
-<tr>
-<td>
+<br/>
 
 `modules/front-commerce-b2b/web/core/permissions/CompanyPermissionsContext.js`
 
@@ -103,11 +64,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 + * @property {import('react-apollo').DataValue<{ me: Object }, {}>} data
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/Company/CompanyStructure/CompanyStructure/withCompanyStructureMutations.js`
 
@@ -128,11 +85,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 + */
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserDeactivate/CompanyUserDeactivate.js`
 
@@ -141,11 +94,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserModal/CompanyUserModal.js`
 
@@ -154,11 +103,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.js`
 
@@ -166,11 +111,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.js`
 
@@ -195,11 +136,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
  */
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withProductConfigurationModal.js`
 
@@ -207,11 +144,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListDelete/RequisitionListDelete.js`
 
@@ -220,11 +153,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListItemsGrid/RequisitionListItem/RequisitionListItem.js`
 
@@ -233,11 +162,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.js`
 
@@ -246,11 +171,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListUpdateModal/RequisitionListUpdateModal.js`
 
@@ -259,11 +180,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListToolbar/RequisitionListToolbarAddToCart/RequisitionListToolbarAddToCart.js`
 
@@ -272,11 +189,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/pages/Account/CompanyStructure/EnhanceCompanyStructure.js`
 
@@ -285,11 +198,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/front-commerce-b2b/web/theme/pages/Account/RequisitionListDetails/EnhanceRequisitionListDetails.js`
 
@@ -298,11 +207,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/payment-adyen/web/theme/modules/Adyen/PaypalCheckout/EnhancePaypalCheckout.js`
 
@@ -311,11 +216,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/payment-adyen/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/Adyen/Adyen.js`
 
@@ -324,11 +225,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `modules/payment-hipay/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/HiPay/HiPayActions.js`
 
@@ -337,11 +234,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/core/apollo/graphqlWithPreload.js`
 
@@ -355,11 +248,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/core/shop/ShopContext.js`
 
@@ -368,11 +257,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 + * @property {import('react-apollo').DataValue<{ shop: Shop, loading: boolean, error: import('apollo-client').ApolloError }, {}>} data
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/modules/SmartForms/Field/Email/useEmailServerValidation.js`
 
@@ -381,11 +266,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useApolloClient } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/modules/SmartForms/Field/PhoneNumber/usePhoneNumberValidation.js`
 
@@ -394,11 +275,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useLazyQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/modules/SmartForms/Field/helpers/useLazyQueryAlwaysTriggeredOnComplete.js`
 
@@ -438,11 +315,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/modules/Wishlist/AddAllWishlistToCartModal/useAddAllWishlistToCartModalInternal.js`
 
@@ -451,11 +324,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useMutation } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/modules/Wishlist/WishlistProvider/WishlistProvider.js`
 
@@ -464,11 +333,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useLazyQuery, useQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/pages/Account/DownloadableProduct/EnhanceDownloadableProduct.js`
 
@@ -477,11 +342,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/pages/Orders/Orders.js`
 
@@ -490,11 +351,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useLazyQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-<tr>
-<td>
+<hr/>
 
 `src/web/theme/pages/Product/useProductBySkuLoader.js`
 
@@ -503,15 +360,9 @@ To support these latest node versions, we had to ugrade some dependencies. These
 +import { useQuery } from "react-apollo";
 ```
 
-</td>
-</tr>
-
-</table>
-
 </details>
 
 - If after the above fixes there is still `@apollo/*` dependencies and you are not sure how to resolve please contact us for support. You can also check [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=8fae8438d46200cbd310b16c30b3078da28b7d42) and [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=418a291f917660b18672b6be2eb2778cb51dfef9) for the changes we did to our codebase.
-
 - Resolvers for fields that are not in the `schema` now throw errors. To avoid this remove all unneeded `field`/`Type` resolvers that do not have a representation in the GraphQL `schema`. Check our [cleaning commit](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238) regarding this issue.
 - `makeApolloClientStub` now expects resolvers as an argument instead of mocks. This is in tandem with the [`graphql-tools` upgrade notes](https://www.graphql-tools.com/docs/mocking#migration-from-v7-and-below). Note that we provided an adapter that converts `mocks` to `resolvers` so that old tests are not affected. However it is recommended to make the change. To disable the adapter's warning set `FRONT_COMMERCE_WEB_PRINT_MAKEAPOLLOCLIENTSTUB_MOCKS_DEPRECATION_WARNING` environment variable to `"false"`.
 - The use of `SchemaVisitor`/`SchemaDirectiveVisitor` to implement GraphQL directive is deprecated and it is replaced by the use of the [new API](https://www.graphql-tools.com/docs/schema-directives). We implemented an adapter so that uses of `SchemaVisitor`/`SchemaDirectiveVisitor` will not break, however it is recommended to make the change. Please note that the adapter only supports the use of `visitFieldDefinition` function of the `SchemaVisitor`/`SchemaDirectiveVisitor` class. If you have use for other functions and cannot make the change to the new API please contact us for help.
@@ -520,7 +371,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 
 <ul>
   <li>
-    For good measures reinstall your dependencies after the update:
+    Reinstall your dependencies after the update:
     <ul>
       <li>
         With npm < 7
