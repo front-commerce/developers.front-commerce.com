@@ -46,7 +46,7 @@ If you had overriden the `Orders` (`theme/pages/Account/Orders/Orders.js`) compo
 
 We now support node versions 14, 16, 17. If you are using node 12 ([which reached its end of life](https://nodejs.org/en/about/releases/)), you must update your node version (we recommend node 16).
 
-To support these latest node versions, we had to ugrade some dependencies. These upgrades imply changes that could impact your codebase:
+To support these latest node versions, we had to upgrade some dependencies. These upgrades imply changes that could impact your codebase:
 
 - You need to update to the latest version of your `front-commerce-skeleton`
 
