@@ -50,7 +50,7 @@ To support these latest node versions, we had to ugrade some dependencies. These
 
 - You need to update to the latest version of your `front-commerce-skeleton`
 
-- ``@apollo/*` are only installed as sub-dependencies and therefore **should not be used directly**. In `2.15.0` you need to replace all uses of `@apollo/*` in your codebase with `react-apollo`, or `graphql-tag` imports where applicable.
+- `@apollo/*` are only installed as sub-dependencies and therefore **should not be used directly**. In `2.15.0` you need to replace all uses of `@apollo/*` in your codebase with `react-apollo`, or `graphql-tag` imports where applicable.
 
 <details>
 <summary><strong>CLICK HERE to check if you overrode any file that you need to apply the changes to</strong></summary>
