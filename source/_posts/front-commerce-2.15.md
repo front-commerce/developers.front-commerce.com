@@ -32,7 +32,7 @@ Thus, the _[in-stock alerts](https://docs.magento.com/user-guide/catalog/invento
 
 Get an overview of the workflow with this quick demo ⬇️
 
-[https://www.loom.com/share/e3bc12d196ee425593a86a724fc4d53f](https://www.loom.com/share/e3bc12d196ee425593a86a724fc4d53f)
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/e3bc12d196ee425593a86a724fc4d53f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## BigCommerce: place your first order on [Big x Front]Commerce
 
