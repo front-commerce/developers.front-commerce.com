@@ -7,6 +7,394 @@ This area will contain the Migration steps to follow for upgrading your store to
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.14.0` -> `2.15.0`
+
+### Environment variables: quote values containing `#` or ``` characters
+
+As part of our continuous dependencies upgrade process, we've upgraded the `dotenv` dependency to its latest version.
+We've updated it from version `8.2.0` (october 2019) to version `16.0.0` (february 2022).
+
+Technically, **it contains 2 Breaking Changes** that we've decided to be pragmatic about. [We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
+
+Please check that your environment variables are not impacted by these breaking changes:
+
+1. [**15.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1500-2022-01-31): `#` marks the beginning of a comment (UNLESS the value is wrapped in quotes. Please update your `.env` files to wrap in quotes any values containing `#`:
+1. [**16.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1600-2022-02-02): If you had values containing the backtick character, please quote those values with either single or double quotes.
+
+```diff
+- SECRET_WITH_HASH=something-with-a-#-hash
+- SECRET_WITH_BACKTICK=something-with-a-`-backtick
++ SECRET_WITH_HASH="something-with-a-#-hash"
++ SECRET_WITH_BACKTICK="something-with-a-`-backtick"
+```
+
+<blockquote class="note">
+**Note:** you can change your environment variables **right away**. Quoted values also work with previous Front-Commerce versions.
+</blockquote>
+
+### In-Stock Alerts
+
+In this release, we introduced the In-Stock Alert feature. When this feature is enabled on your backend (Magento 1 and 2), it will by default render a new component `SubscribeToInStockAlert` inside the existing `OutOfStock` component.
+
+### Paginated orders
+
+In this release we added pagination for orders. In the process, the `orders` GraphQL field used to retrieve orders has been deprecated and will eventually be removed in FC version 3.0.0. `orderList` should now be used instead.
+
+If you had overriden the `Orders` (`theme/pages/Account/Orders/Orders.js`) component, you might want to update it to use the new GraphQL field and add a pagination component.
+
+### Node Version Support Change
+
+We now support Node versions 14, 16 and 17 (Node 17 is supported on a best effort basis). If you are using Node 12 ([which reached its end of life](https://nodejs.org/en/about/releases/)), you must update your Node version (we recommend Node 16).
+
+To support these latest Node versions, we had to upgrade some dependencies. These upgrades imply changes that could impact your codebase:
+
+- You need to update to the latest version of your `front-commerce-skeleton`
+
+- `@apollo/*` are only installed as sub-dependencies and therefore **should not be used directly**. In `2.15.0` you need to replace all uses of `@apollo/*` in your codebase with `react-apollo`, or `graphql-tag` imports where applicable.
+
+<details>
+<summary><strong>CLICK HERE to check if you overrode any file that you need to apply the changes to</strong></summary>
+
+<br/>
+
+`modules/front-commerce-b2b/web/core/permissions/CompanyPermissionsContext.js`
+
+```diff
+- * @property {import('@apollo/react-hoc').DataValue<{ me: Object }, {}>} data
++ * @property {import('react-apollo').DataValue<{ me: Object }, {}>} data
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/Company/CompanyStructure/CompanyStructure/withCompanyStructureMutations.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
+-
+-/**
+- * @callback MutationFunction
+- * @param {import('@apollo/react-common/lib/types/types').MutationFunctionOptions} options
+- * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+- */
++import { useMutation } from "react-apollo";
++
++/**
++ * @typedef {typeof useMutation} UseMutation
++ * @typedef {ReturnType<useMutation>} UseMutationReturn
++ * @typedef {UseMutationReturn[0]} MutationFunction
++ */
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserDeactivate/CompanyUserDeactivate.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserModal/CompanyUserModal.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.js`
+
+```diff
+- * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.js`
+
+```diff
++/**
++ * @typedef {typeof useMutation} UseMutation
++ * @typedef {ReturnType<useMutation>} UseMutationReturn
++ * @typedef {UseMutationReturn[0]} MutationFunction
++ * @typedef {ReturnType<MutationFunction>} MutationFunctionReturn
++ */
+
+/**
+ * @typedef {object} AddToRequisitionListFunctionProps
+ * @param {string} requisitionListId
+ * @param {any[]} selectedItems
+ */
+/**
+ * @callback AddToRequisitionListFunction
+ * @param {AddToRequisitionListFunctionProps} props
+- * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
++ * @returns {MutationFunctionReturn}
+ */
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withProductConfigurationModal.js`
+
+```diff
+- * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListDelete/RequisitionListDelete.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListItemsGrid/RequisitionListItem/RequisitionListItem.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListUpdateModal/RequisitionListUpdateModal.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListToolbar/RequisitionListToolbarAddToCart/RequisitionListToolbarAddToCart.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/pages/Account/CompanyStructure/EnhanceCompanyStructure.js`
+
+```diff
+-         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
++         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+```
+
+<hr/>
+
+`modules/front-commerce-b2b/web/theme/pages/Account/RequisitionListDetails/EnhanceRequisitionListDetails.js`
+
+```diff
+-         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
++         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+```
+
+<hr/>
+
+`modules/payment-adyen/web/theme/modules/Adyen/PaypalCheckout/EnhancePaypalCheckout.js`
+
+```diff
+-         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
++         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+```
+
+<hr/>
+
+`modules/payment-adyen/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/Adyen/Adyen.js`
+
+```diff
+-import { useQuery } from "@apollo/react-hooks";
++import { useQuery } from "react-apollo";
+```
+
+<hr/>
+
+`modules/payment-hipay/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/HiPay/HiPayActions.js`
+
+```diff
+-import { useQuery } from "@apollo/react-hooks";
++import { useQuery } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/core/apollo/graphqlWithPreload.js`
+
+```diff
+- * @param {import('@apollo/react-hoc/lib/types').OperationOption & PreloadOperationOptions} options
++ * @param {import('react-apollo').OperationOption & PreloadOperationOptions} options
+...
+-    /** @type {import('@apollo/client').ApolloClient | null} */
++    /** @type {import('apollo-client').ApolloClient | null} */
+...
+
+```
+
+<hr/>
+
+`src/web/core/shop/ShopContext.js`
+
+```diff
+- * @property {import('@apollo/react-hoc').DataValue<{ shop: Shop, loading: boolean, error: import('apollo-client').ApolloError }, {}>} data
++ * @property {import('react-apollo').DataValue<{ shop: Shop, loading: boolean, error: import('apollo-client').ApolloError }, {}>} data
+```
+
+<hr/>
+
+`src/web/theme/modules/SmartForms/Field/Email/useEmailServerValidation.js`
+
+```diff
+-import { useApolloClient } from "@apollo/react-hooks";
++import { useApolloClient } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/theme/modules/SmartForms/Field/PhoneNumber/usePhoneNumberValidation.js`
+
+```diff
+-import { useLazyQuery } from "@apollo/react-hooks";
++import { useLazyQuery } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/theme/modules/SmartForms/Field/helpers/useLazyQueryAlwaysTriggeredOnComplete.js`
+
+```diff
+-import { useLazyQuery } from "@apollo/react-hooks";
++import { useLazyQuery } from "react-apollo";
++
++/**
++ * @typedef {typeof useLazyQuery} UseLazyQuery
++ * @typedef {Parameters<UseLazyQuery>} UseLazyQueryParams
++ * @typedef {ReturnType<UseLazyQuery>} UseLazyQueryReturn
++ */
+
+/**
+ * @callback OnCompletedCallback
+ * @param {any} data
+ */
+
+/**
+ * @typedef {Object} QueryResultsRef
+ * @property {OnCompletedCallback} onCompleted
+ * @property {boolean} loading
+ * @property {import('apollo-client/errors/ApolloError').ApolloError} error
+ * @property {any} data
+- * @property {import('@apollo/react-common').OperationVariables} variables
++ * @property {UseLazyQueryReturn[1]["variables"]} variables
+ */
+
+/**
+- * @param {import('graphql').DocumentNode} Query
+- * @param {import('@apollo/react-hooks/lib/types').LazyQueryHookOptions} options
+- * @returns {import('@apollo/react-hooks/lib/types').QueryTuple<any,import('@apollo/react-common').OperationVariables>}
++ * @param {UseLazyQueryParams[0]} Query
++ * @param {UseLazyQueryParams[1]} options
++ * @returns {UseLazyQueryReturn}
+ */
+
+```
+
+<hr/>
+
+`src/web/theme/modules/Wishlist/AddAllWishlistToCartModal/useAddAllWishlistToCartModalInternal.js`
+
+```diff
+-import { useMutation } from "@apollo/react-hooks";
++import { useMutation } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/theme/modules/Wishlist/WishlistProvider/WishlistProvider.js`
+
+```diff
+-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
++import { useLazyQuery, useQuery } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/theme/pages/Account/DownloadableProduct/EnhanceDownloadableProduct.js`
+
+```diff
+-         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
++         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+```
+
+<hr/>
+
+`src/web/theme/pages/Orders/Orders.js`
+
+```diff
+-import { useLazyQuery } from "@apollo/react-hooks";
++import { useLazyQuery } from "react-apollo";
+```
+
+<hr/>
+
+`src/web/theme/pages/Product/useProductBySkuLoader.js`
+
+```diff
+-import { useQuery } from "@apollo/react-hooks";
++import { useQuery } from "react-apollo";
+```
+
+</details>
+
+- If after the above fixes there is still `@apollo/*` dependencies and you are not sure how to resolve please contact us for support. You can also check [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=8fae8438d46200cbd310b16c30b3078da28b7d42) and [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=418a291f917660b18672b6be2eb2778cb51dfef9) for the changes we did to our codebase.
+- Resolvers for fields that are not in the `schema` now throw errors. To avoid this remove all unneeded `field`/`Type` resolvers that do not have a representation in the GraphQL `schema`. Check our [cleaning commit](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238) regarding this issue.
+- `makeApolloClientStub` now expects resolvers as an argument instead of mocks. This is in tandem with the [`graphql-tools` upgrade notes](https://www.graphql-tools.com/docs/mocking#migration-from-v7-and-below). Note that we provided an adapter that converts `mocks` to `resolvers` so that old tests are not affected. However it is recommended to make the change. To disable the adapter's warning set `FRONT_COMMERCE_WEB_PRINT_MAKEAPOLLOCLIENTSTUB_MOCKS_DEPRECATION_WARNING` environment variable to `"false"`.
+- The use of `SchemaVisitor`/`SchemaDirectiveVisitor` to implement GraphQL directive is deprecated and it is replaced by the use of the [new API](https://www.graphql-tools.com/docs/schema-directives). We implemented an adapter so that uses of `SchemaVisitor`/`SchemaDirectiveVisitor` will not break, however it is recommended to make the change. Please note that the adapter only supports the use of `visitFieldDefinition` function of the `SchemaVisitor`/`SchemaDirectiveVisitor` class. If you have use for other functions and cannot make the change to the new API please contact us for help.
+- When using Node 17 you need to prefix your npm commands by `NODE_OPTIONS=--openssl-legacy-provider` e.g. `NODE_OPTIONS=--openssl-legacy-provider npm start`, `NODE_OPTIONS=--openssl-legacy-provider npm run build`.
+- When using npm >= 7 you need to add `--legacy-peer-deps` to npm install commands. e.g. `npm install --legacy-peer-deps`, `npm i some_dependency --legacy-peer-deps`.
+
+<ul>
+  <li>
+    Reinstall your dependencies after the update:
+    <ul>
+      <li>
+        With npm < 7
+          ```sh
+          rm -rf ./node_modules/
+          npm install
+          ```
+      </li>
+      <li>
+        With npm >= 7
+          ```sh
+          rm -rf ./node_modules/
+          npm install --legacy-peer-deps
+          ```
+      </li>
+    </ul>
+  </li>
+</ul>
+
+### New features in `2.15.0`
+
+- [In-Stock Alerts](/docs/advanced/features/in-stock-alert.html)
+
 ## `2.13.0` -> `2.14.0`
 
 ### New style sheet for B2B
