@@ -42,11 +42,20 @@ Front-Commerce with sane default configurations.
 
 In order to install the skeleton, you need to follow these instructions:
 
-```bash
-git clone --depth=1 git@gitlab.com:front-commerce/front-commerce-skeleton.git
-cd front-commerce-skeleton
-npm install
-```
+- For npm < 8.5
+
+  ```bash
+  git clone --depth=1 git@gitlab.com:front-commerce/front-commerce-skeleton.git
+  cd front-commerce-skeleton
+  npm install
+  ```
+
+- For npm >= 8.5
+  ```bash
+  git clone --depth=1 git@gitlab.com:front-commerce/front-commerce-skeleton.git
+  cd front-commerce-skeleton
+  npm install --legacy-peer-deps
+  ```
 
 Depending on your internet connection, feel free to grab some tea and a cookie…
 
@@ -117,9 +126,16 @@ See [our caching section](/docs/advanced/graphql/dataloaders-and-cache-invalidat
 
 Launch your Front-Commerce project in development mode by running:
 
-```sh
-npm run start
-```
+- For node < 17
+
+  ```sh
+  npm run start
+  ```
+
+- For node >= 17
+  ```sh
+  NODE_OPTIONS=--openssl-legacy-provider npm run start
+  ```
 
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 You can also open
@@ -142,9 +158,16 @@ Storybook is a separate application that will render all
 [the _stories_ written in your codebase](https://storybook.js.org/basics/writing-stories/)
 so you can browse them. To launch it run the following command:
 
-```bash
-npm run styleguide
-```
+- For node < 17
+
+  ```bash
+  npm run styleguide
+  ```
+
+- For node >= 17
+  ```bash
+  NODE_OPTIONS=--openssl-legacy-provider npm run styleguide
+  ```
 
 You can now open [http://localhost:9001/](http://localhost:9001/) and explore
 the existing components.
