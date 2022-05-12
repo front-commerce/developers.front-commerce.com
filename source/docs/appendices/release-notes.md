@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.15.0`](#2-14-0-2022-03-31)**
+**Front-Commerce [`2.15.0`](#2-14-0-2022-05-12)**
 
 Compatible with:
 
@@ -17,7 +17,7 @@ Compatible with:
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
 
-## 2.14.0 (2022-05-12)
+## 2.15.0 (2022-05-12)
 
 > We’ve made a lot of progress during this release, which is quite packed! Without further delay here's the Front-Commerce 2.15 menu 🧑‍🍳
 >
