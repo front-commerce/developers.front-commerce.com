@@ -108,7 +108,7 @@ const typenameMap = {
 };
 ```
 
-Refer to the [Wysiwyg Customization](http://localhost:4444/docs/advanced/theme/wysiwyg-platform.html) to learn more.
+Refer to the [Wysiwyg Customization](/docs/advanced/theme/wysiwyg-platform.html) to learn more.
 
 **Default transforms**
 
