@@ -60,7 +60,7 @@ To check the maintenance mode use the following rest request:
 curl --location --request GET 'http(s)://www.example.com/:storeBaseUrl/maintenance-mode'
 ```
 
-## Bypassing maintenance mode
+## Bypassing the maintenance mode
 
 To bypass the maintenance mode for certain IPs you can configure the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS` environment variable. Please note that you can have multiple IPs separated by a comma like:
 
