@@ -19,7 +19,7 @@ Front-Commerce comes with an API that allows you to put/remove a store in mainte
 +FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN=a-secret-token
 ```
 
-Once you have setup the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable the maintenance mode API will be installed and can be used. P.S. For development the server will need to be restarted.
+Once you have setup the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable the maintenance mode API will be available after restarting the server
 
 ## The Maintenance Mode API
 
