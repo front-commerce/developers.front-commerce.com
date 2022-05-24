@@ -62,7 +62,7 @@ curl --location --request GET 'http(s)://www.example.com/:storeBaseUrl/maintenan
 
 ## Bypassing maintenance mode
 
-To bypass maintenance mode for certain IPs you can configure the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS` environment variable. Please note that you can have multiple IPs separated by a comma like:
+To bypass the maintenance mode for certain IPs you can configure the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS` environment variable. Please note that you can have multiple IPs separated by a comma like:
 
 ```diff
 // .env file
