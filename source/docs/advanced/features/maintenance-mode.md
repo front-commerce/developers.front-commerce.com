@@ -11,7 +11,7 @@ _Since version 2.16_
 
 You may want to put one or more of your stores in maintenance mode while you do some maintenance work/deployment tasks on your store(s).
 
-Front-Commerce comes with an API that allows you to put/remove a store in maintenance mode. To enable the maintenance mode API the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable should be set.
+Front-Commerce comes with an API that allows you to put/remove a store in maintenance mode. To enable the maintenance mode API you need to set the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable.
 
 ```diff
 // .env file
