@@ -23,7 +23,7 @@ Once you have setup the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` en
 
 ## The Maintenance Mode API
 
-### Enabling the maintenance mode
+### Activating the maintenance mode
 
 To activate the maintenance mode use the following rest request:
 
