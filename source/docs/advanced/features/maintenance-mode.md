@@ -25,7 +25,7 @@ Once you have setup the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` en
 
 ### Enabling the maintenance mode
 
-To enable the maintenance mode use the following rest request:
+To activate the maintenance mode use the following rest request:
 
 ```sh
 curl --location --request POST 'http(s)://www.example.com/:storeBaseUrl/maintenance-mode' \
