@@ -42,7 +42,7 @@ As noted above the `duration` is optional. If used it will reset the maintenance
 
 ### Deactivating the maintenance mode
 
-To disable the maintenance mode use the following rest request:
+To deactivate the maintenance mode use the following rest request:
 
 ```sh
 curl --location --request DELETE 'http(s)://www.example.com/:storeBaseUrl/maintenance-mode' \
