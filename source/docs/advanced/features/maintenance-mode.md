@@ -40,7 +40,7 @@ So if your store base url is `/en` the URL would be `http(s)://www.example.com/e
 
 As noted above the `duration` is optional. If used it will reset the maintenance mode after the duration has passed. Use this if you have a rough idea of how much time the maintenance task would take. This would be to avert an issue where the user forgets to bring the site back on after the maintenance mode is done of if an automated CI that puts a site in maintenance would exit before putting the site back on.
 
-### Disabling the maintenance mode
+### Deactivating the maintenance mode
 
 To disable the maintenance mode use the following rest request:
 
