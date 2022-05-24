@@ -38,7 +38,7 @@ curl --location --request POST 'http(s)://www.example.com/:storeBaseUrl/maintena
 
 So if your store base url is `/en` the URL would be `http(s)://www.example.com/en/maintenance-mode`.
 
-As noted above the `duration` is optional. If used it will reset the maintenance mode after the duration has passed. Use this if you have a rough idea of how much time the maintenance task would take. This would be to avert an issue where the user forgets to bring the site back on after the maintenance mode is done of if an automated CI that puts a site in maintenance would exit before putting the site back on.
+As noted above the `duration` is optional. If used it will reset the maintenance mode after the duration has passed. Use this if you have a rough idea of how much time the maintenance task would take or to prevent a user or automated process to forget to deactivate the maintenance mode.
 
 ### Deactivating the maintenance mode
 
