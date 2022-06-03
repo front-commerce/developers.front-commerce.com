@@ -1,14 +1,10 @@
 ---
 id: add-a-page-client-side
 title: Add a new page
+description:
+  Front-Commerce comes with a classic set of pages for an e-commerce application. It has URLs for Catalog routes (Categories, Product, Search…), Checkout routes, Account routes, Cms pages…
+  When building your own e-commerce experience you will most likely need to add your own pages/routes. That's what we will focus on in this guide.
 ---
-
-Front-Commerce comes with a classic set of pages for an e-commerce application.
-It has URLs for Catalog routes (Categories, Product, Search…), Checkout routes,
-Account routes, Cms pages…
-
-But when building your own e-commerce experience you will most likely need
-to add your own pages/routes. And that's what we will focus on in this guide.
 
 We will take the example of a shop that is selling ingredients. It might make
 sense for such a website to also present a bunch of recipes to inspire their
@@ -26,7 +22,7 @@ need to:
 - Declare your module as a web module
 
 <blockquote class="info">
-This system is inspired by JavaScript frameworks like [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.org/), [Sapper](https://sapper.svelte.dev/), [Nuxt](https://nuxtjs.org/), etc. If you understand how these work, implementing routing within Front-Commerce will be easier. 
+This system is inspired by JavaScript frameworks like [Next.js](https://nextjs.org/), [Gatsby](https://www.gatsbyjs.org/), [Sapper](https://sapper.svelte.dev/), [Nuxt](https://nuxtjs.org/), etc. If you understand how these work, implementing routing within Front-Commerce will be easier.
 See [Routing reference](/docs/reference/routing.html#How-routes-are-loaded) for more advanced information.
 </blockquote>
 
