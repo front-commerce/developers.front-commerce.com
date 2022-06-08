@@ -1,11 +1,12 @@
 ---
 id: create-a-ui-component
 title: Create a UI Component
+description: In this documentation, you will learn how to build a UI Component. We will do so by creating our own. We will use Storybook in the process because we think it is a good way to be productive for this task.
 ---
 
 In Front-Commerce components are classified under two categories: the **UI**
-components available in the `theme/components` folder, and the business
-components available in the `theme/modules` and `theme/pages` folders.
+components available in the `theme/components` folder, and the [**Business**
+components](create-a-business-component.html) available in the `theme/modules` and `theme/pages` folders.
 
 <blockquote class="info">
 If you feel the need to understand why we went for this organization, feel
@@ -13,10 +14,7 @@ free to refer to [React components structure](/docs/concepts/react-components-st
 first.
 </blockquote>
 
-In this documentation, you will learn how to build a UI Component. We will do so by
-creating our own. We will use [Storybook](add-component-to-storybook.html) in the process because it is our
-usual workflow when creating a UI Component. But if you don't need it or prefer to
-add your stories later, feel free to leave the parts mentioning Storybook for later.
+As mentioned in the introduction, we will use [Storybook](add-component-to-storybook.html) in the process because it is our usual workflow when creating a UI Component. But if you don't need it or prefer to add your stories later, feel free to leave the parts mentioning Storybook later.
 
 Front-Commerce’s core UI components follow the same principles
 and you could dive into the [`node_modules/front-commerce/src/web/theme/components`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/components)

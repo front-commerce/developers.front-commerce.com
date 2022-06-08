@@ -1,16 +1,14 @@
 ---
 id: rate-limiting
 title: Rate Limiting
+description: You may want to prevent abuses of your application, for instance, to prevent malicious users from sending many contact form requests or scanning some information with bots. Therefore, Front-Commerce’s core contains tooling that allows you to add basic rate-limiting in a very granular way to any field (Query or Mutation).
 ---
+
+This page explains how to add rate limiting to your resolvers, and how to tweak the configuration.
 
 <blockquote class="feature--new">
   _Available since version `1.0.0-beta.5`_
 </blockquote>
-
-You may want to prevent abuses of your application, for instance to prevent malicious users to send many contact form requests or scan some information with bots.
-Front-Commerce’s core contains tooling that allows you to add basic rate limiting in a very granular way to any field (Query or Mutation).
-
-This page explains how to add rate limiting to your resolvers, and how to tweak the configuration.
 
 <blockquote class="info">
   This feature is a lightweight wrapper around the [`graphql-rate-limit`](https://www.npmjs.com/package/graphql-rate-limit) package.

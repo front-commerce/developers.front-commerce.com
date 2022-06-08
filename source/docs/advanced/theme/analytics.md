@@ -1,11 +1,10 @@
 ---
 id: analytics
 title: Analytics
+description: Most e-commerce websites need advanced analytics to understand their users better and adapt their shops to their customers' needs. But it can often be tedious to maintain when you have many trackings to manage. So here is how we integrated analytics services in Front-Commerce.
 ---
 
-Most e-commerce website need advanced analytics to better understand their users and adapt their shops to their customers needs. But it can often be tedious to maintain when you have many trackings to manage.
-
-In Front-Commerce, we use [`analytics.js`](https://segment.com/docs/sources/website/analytics.js/). It is a library created by [Segment.io](https://segment.com/) that aims at decoupling the tracking settings from the event.
+Front-Commerce uses [`analytics.js`](https://segment.com/docs/sources/website/analytics.js/) under the hood. It is a library created by [Segment.io](https://segment.com/) that aims to decouple the event's tracking settings.
 
 If we represent how it works, it would look like this:
 

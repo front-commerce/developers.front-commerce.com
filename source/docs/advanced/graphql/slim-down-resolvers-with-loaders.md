@@ -1,26 +1,15 @@
 ---
 id: slim-down-resolvers-with-loaders
 title: Slim down resolvers with loaders
+description: 'GraphQL modules may grow over time: resolvers will have more and more code to provide the required features. In Front-Commerce’s core and platforms integrations, we have introduced the concept of "loaders" to handle this complexity, keep code maintainable and increase testability.'
 ---
 
-GraphQL modules may grow over time depending on the features they provide, and
-remote services they interact with. GraphQL resolvers will then have more and
-more code, and very often require developers to introduce an abstraction
-**containing all the business logic to keep code maintainable and increase
-testability.**
+This page explains what loaders are and how you can create them. This will also help you better understand the Front-Commerce core code.
 
-In Front-Commerce’s core and platforms integrations (such as Magento2) we have
-introduced the concept of _« loaders »_ to achieve this.
-
-This page explains what loaders are and how you can create them. This will also
-help you better understand the Front-Commerce's core code.
+Loaders are an abstraction used in Front-Commerce to **group all the business logic of a module.**
 
 <blockquote class="info">
-  If you have used Apollo Server recently, you might already be familiar with a
-  similar pattern named [data
-  sources](https://www.apollographql.com/docs/tutorial/data-source.html). It is
-  also similar to [GrAMPS’s
-  models](https://gramps-graphql.github.io/gramps-express/data-source/tutorial-model/).
+  If you have used Apollo Server, you might already be familiar with a similar pattern named [data sources](https://www.apollographql.com/docs/apollo-server/data/data-sources).
 </blockquote>
 
 ## Why loaders?

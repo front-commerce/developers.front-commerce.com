@@ -1,9 +1,10 @@
 ---
 id: dataloaders-and-cache-invalidation
 title: DataLoaders and cache invalidation
+description: One of the main responsibility of GraphQL modules in Front-Commerce is fetching data from remote sources in resolvers. However, a naive approach may reach a few limits in a real application. That is why Front-Commerce provides helpers allowing developers to build high-performance applications.
 ---
 
-One of the main responsibility of GraphQL modules in Front-Commerce is fetching data from remote sources in resolvers. A naive approach may reach a few limits in a real application, that is why **Front-Commerce provides helpers allowing developers to build high-performance applications**.
+Performance is a key factor in Front-Commerce projects. We aim to make your GraphQL server as fast as possible while ensuring that your data is always up-to-date.
 
 This section introduces the `DataLoader` pattern and how to use it in a Front-Commerce application. It then details how to configure the caching layer to keep remote API response in cache to boost performance. Finally, it explains how to invalidate the cache from remote systems.
 
