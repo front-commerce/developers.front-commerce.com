@@ -2,6 +2,7 @@
 title: Front-Commerce · Craft delightful e-commerce experiences using modern web
   technologies
 layout: index
+description: Stay one step ahead, and always deliver the brand experience your customers expect
 ---
 
 <section class="hero">
