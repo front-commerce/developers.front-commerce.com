@@ -1,7 +1,7 @@
-description:
-author:
-language:
-timezone:
+description: null
+author: Front-Commerce <contact@front-commerce.com>
+language: en
+timezone: "Europe/Paris"
 # API keys
 apis:
   docsearch:
