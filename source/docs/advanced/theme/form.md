@@ -4,7 +4,7 @@ title: Managing forms
 description: Forms are always a tricky part in React applications. This page will guide you through the basics of forms in a Front-Commerce application.
 ---
 
-In Front-Commerce we have implemented default Form inputs that try to make things easier in your daily life as a developer.
+In Front-Commerce, we have implemented default Form inputs that try to make things easier in your daily life as a developer.
 
 ## Form declaration
 

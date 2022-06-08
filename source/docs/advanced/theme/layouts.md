@@ -1,7 +1,7 @@
 ---
 id: layouts
 title: Layouts
-description: "When you are on a website, you expect to see the same kind of information on any page: the logo, the menu, maybe a footer, etc. But in some cases you may needed finer control over which page should display what."
+description: "When you are on a website, you expect to see the same elements on similar pages: the logo, the menu, maybe a footer, etc. But sometimes, you need finer control over which page should display what. That's where layouts help out!"
 ---
 
 **How does this translate in Front-Commerce?**

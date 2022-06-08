@@ -1,13 +1,13 @@
 ---
 id: meta-modules
 title: Meta modules
-description: We recommend to keep your GraphQL modules small and focused on a single feature. But having a lot of different modules could make distribution more tedious. That is why Front-Commerce supports the concept of "meta modules", which are a way to group smaller modules together.
+description: We recommend keeping your GraphQL modules small and focused on a single feature, but having many different modules could make distribution more tedious. That is why Front-Commerce supports the concept of "meta modules", which are a way to group smaller modules.
 ---
 
 If several teams are working on a project, small modules are a way to [federate the graph implementation](https://principledgraphql.com/integrity#2-federated-implementation). It also makes it easier to change implementations and service providers later in
 the project.
 
-For instance you could replace a `Magento2/Cms` module with a `Wordpress/Cms` one without impacting the web application (as long as both schema share a common API).
+For instance, you could replace a `Magento2/Cms` module with a `Wordpress/Cms` one without impacting the web application (as long as both schemas share a common API).
 
 **Having a lot of different modules could make distribution more tedious**. That is why Front-Commerce allows you to author and consume "meta modules".
 

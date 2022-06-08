@@ -1,7 +1,7 @@
 ---
 id: wysiwyg-platform
 title: WYSIWYG customization
-description: In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them.
+description: In this guide, you will learn the different WYSIWYG implementations available on Front-Commerce and how to customize them.
 ---
 
 If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).

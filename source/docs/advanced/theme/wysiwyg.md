@@ -1,7 +1,7 @@
 ---
 id: wysiwyg
 title: Display WYSIWYG content
-description: Let your users write their content without needing any HTML or React knowledge, while still being able to deliver a qualitative UI (performant, responsive, accessible…) to customers.
+description: Let your users write their content without needing any HTML or React knowledge while still being able to deliver a qualitative UI (performant, responsive, accessible…) to customers.
 ---
 
 WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It means that your back office users write their content without needing any HTML or React knowledge. This is the case in most CMS tools nowadays. The output though is usually HTML which does not necessarily match the React components you've built in your Front-Commerce application.

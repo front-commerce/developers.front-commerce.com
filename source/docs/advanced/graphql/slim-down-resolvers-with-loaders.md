@@ -1,10 +1,10 @@
 ---
 id: slim-down-resolvers-with-loaders
 title: Slim down resolvers with loaders
-description: 'GraphQL modules may grow over time: resolvers will have more and more code to provide the required features. In Front-Commerce’s core and platforms integrations we have introduced the concept of "loaders" to handle this complexity, keep code maintainable and increase testability.'
+description: 'GraphQL modules may grow over time: resolvers will have more and more code to provide the required features. In Front-Commerce’s core and platforms integrations, we have introduced the concept of "loaders" to handle this complexity, keep code maintainable and increase testability.'
 ---
 
-This page explains what loaders are and how you can create them. This will also help you better understand the Front-Commerce's core code.
+This page explains what loaders are and how you can create them. This will also help you better understand the Front-Commerce core code.
 
 Loaders are an abstraction used in Front-Commerce to **group all the business logic of a module.**
 

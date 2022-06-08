@@ -1,7 +1,7 @@
 ---
 id: extend-the-theme
 title: Extend the theme
-description: Theme override is the mechanism allowing to extend, adapt, rewrite almost everything contained in the base theme.
+description: Theme override is the mechanism allowing to extend, adapt, and rewrite almost everything contained in the base theme.
 ---
 
 ## Understanding theme overrides

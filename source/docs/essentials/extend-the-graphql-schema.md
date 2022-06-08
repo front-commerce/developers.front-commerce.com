@@ -1,12 +1,10 @@
 ---
 id: extend-the-graphql-schema
 title: Extend the GraphQL schema
-description:
-  When developing an e-commerce store, you might at some point need to expose new data in your unified GraphQL schema to support new features and allow frontend developers to use them.
-  Front-Commerce’s GraphQL modules  is the mechanism allowing to extend and override any part of the schema defined by other modules.
+description: When developing an e-commerce store, you might at some point need to expose new data in your unified GraphQL schema to support new features and allow frontend developers to use them. Front-Commerce’s GraphQL modules  is the mechanism allowing to extend and override any part of the schema defined by other modules.
 ---
 
-Front-Commerce’s core and platforms integrations (such as Magento2) are implemented as GraphQL modules. They leverage features from the GraphQL Schema Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
+The Front-Commerce core and platform integrations (such as Magento2) are implemented as GraphQL modules. They leverage features from the GraphQL Schema Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
 
 This page will guide you through the process of exposing a new feature in your GraphQL schema. We will create a GraphQL module that allows to maintain a
 counter of clicks for a product.

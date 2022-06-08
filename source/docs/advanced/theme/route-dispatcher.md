@@ -1,7 +1,7 @@
 ---
 id: route-dispatcher
 title: Handle dynamic URLs with the Dispatcher
-description: In some cases, you will need more control over URLs formats. For instance, you may prefer to have "/my-product" instead of "/product/my-product-slug" for SEO reasons. That is what Front-Commerce’s Dispatcher is responsible for, and what we will cover in this documentation.
+description: In some cases, you will need more control over URL formats. For instance, you may prefer to have "/my-product" instead of "/product/my-product-slug" for SEO reasons. That is what Front-Commerce's Dispatcher is responsible for and what we will cover in this documentation.
 ---
 
 URLs formats introduced in the [Add a new page guide](../../essentials/add-a-page-client-side) are statically defined. Front-Commerce’s Dispatcher allows to handle dynamically defined URLs.

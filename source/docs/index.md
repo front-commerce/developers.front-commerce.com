@@ -1,7 +1,7 @@
 ---
 id: introduction
 title: Introduction
-description: Grasping all the concepts around a product such as Front-Commerce is exciting, but can be intimidating. We tried to create and organize this documentation in a way that you could quickly find the information you need depending on your context.
+description: Grasping all the concepts around a product such as Front-Commerce is exciting but can be intimidating. Therefore, we tried to create and organize this documentation so that you could quickly find the information you need depending on your context.
 ---
 
 ## Welcome to Front-Commerce’s official documentation

@@ -1,7 +1,7 @@
 ---
 id: create-a-business-component
 title: Create a Business Component
-description: In this section, we will build a Business Component. The core concept is the same than creating an UI component.
+description: In this section, we will build a Business Component. The core concept is the same as creating a UI component.
 ---
 
 In Front Commerce we have separated our components in two categories: the [**UI**

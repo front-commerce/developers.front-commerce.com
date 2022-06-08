@@ -1,10 +1,10 @@
 ---
 id: adapt-theme-to-your-brand
 title: Adapt the theme to your brand
-description: When you start a new project, one of the first things that you will need to do is to adapt the look and feel of Front-Commerce to match your brand's style.
+description: When you start a new project, one of the first things you will need to do is adapt the look and feel of Front-Commerce to match your brand's style.
 ---
 
-Obviously, it is not something that can be done in just a few minutes because your identity shines in the details. However, you can do all the heavy lifting pretty quickly by customizing what is called **Design Tokens**.
+It is not something that you can do in just a few minutes because your identity shines in the details. However, you can do all the heavy lifting pretty quickly by customizing what is called **Design Tokens**.
 
 And it's a great way to familiarize yourself with Front-Commerce!
 

@@ -14,7 +14,7 @@ free to refer to [React components structure](/docs/concepts/react-components-st
 first.
 </blockquote>
 
-As mentioned in introduction, we will use [Storybook](add-component-to-storybook.html) in the process because it is our usual workflow when creating a UI Component. But if you don't need it or prefer to add your stories later, feel free to leave the parts mentioning Storybook for later.
+As mentioned in the introduction, we will use [Storybook](add-component-to-storybook.html) in the process because it is our usual workflow when creating a UI Component. But if you don't need it or prefer to add your stories later, feel free to leave the parts mentioning Storybook later.
 
 Front-Commerce’s core UI components follow the same principles
 and you could dive into the [`node_modules/front-commerce/src/web/theme/components`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/components)
