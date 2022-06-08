@@ -11,5 +11,6 @@ The Front-Commerce Prismic module brings support for the headless CMS [Prismic](
 - [Prismic Routable Types](/docs/prismic/routable-types.html)
 - [Integration Fields](/docs/prismic/integration-fields.html)
 - [Prismic Preview](/docs/prismic/preview.html)
+- [Embed Fields](/docs/prismic/embed-fields.html)
 
 If you need more detailed information, please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span>. We will make sure to answer you in a timely manner.
