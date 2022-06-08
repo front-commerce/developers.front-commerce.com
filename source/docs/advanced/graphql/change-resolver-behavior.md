@@ -1,9 +1,8 @@
 ---
 id: change-resolver-behavior
 title: Change a resolver behavior
+description: In a project, it is quite usual to have the need to change the implementation of the resolver associated with a GraphQL field. This page explains how to do it properly so that the project remains as maintenable as possible.
 ---
-
-In a project, it is quite usual to have the need to change the implementation of the resolver associated with a GraphQL field. This page explains how to do it properly so that the project remains as maintenable as possible.
 
 As an example, we will change the way the Product `meta_description` field value is generated.
 
