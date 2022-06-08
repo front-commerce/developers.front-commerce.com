@@ -92,6 +92,7 @@ router.get(
         if (proxyRes.statusCode !== 200) {
           throw new Error("Invalid response");
         }
+        return resBuffer;
       },
       proxyErrorHandler: (err, res, next) => {
         next();
