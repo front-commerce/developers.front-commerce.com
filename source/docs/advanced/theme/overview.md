@@ -1,9 +1,8 @@
 ---
 id: theme-overview
 title: Overview
+description: In this section, you will learn advanced information about theming in Front-Commerce.
 ---
-
-In this section, you will learn advanced information about theming in Front-Commerce.
 
 You can already find documentation for:
 

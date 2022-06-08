@@ -1,15 +1,19 @@
 ---
 id: wysiwyg-platform
 title: WYSIWYG customization
+description: In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them.
 ---
 
-In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them. If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
+If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
 
 Each platform has a specific type of WYSIWYG. This allows to render your content differently depending of its origin. For instance a content from WordPress might have some specific media shortcodes while Magento will have some widgets to display a category name. In the following section you will learn about the one implemented in Front-Commerce:
 
-- [`DefaultWysiwyg`](#DefaultWysiwyg)
-- [`MagentoWysiwyg`](#MagentoWysiwyg)
-- [`PrismicWysiwyg`](#PrismicWysiwyg)
+- [`DefaultWysiwyg`](#defaultwysiwyg)
+- [`MagentoWysiwyg`](#magentowysiwyg)
+  - [Add a custom Magento Widget](#add-a-custom-magento-widget)
+    - [Register your widget type at the GraphQL level (**server-side**)](#register-your-widget-type-at-the-graphql-level-server-side)
+    - [Get the data in your component (**client-side**)](#get-the-data-in-your-component-client-side)
+- [`PrismicWysiwyg`](#prismicwysiwyg)
 
 Definitions:
 

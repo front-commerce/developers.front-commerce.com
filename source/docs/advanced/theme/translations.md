@@ -1,11 +1,10 @@
 ---
 id: translations
 title: Translate your application
+description:
+  International e-commerce websites often need to translate their UI in several languages to make sure that they reach a broader range of customers.
+  In this documentation, we will see how this works for static content in your application.
 ---
-
-International e-commerce websites often need to translate their UI in several languages to make sure that they reach a broader range of customers.
-
-In this documentation, we will see how this works for static content in your application.
 
 <blockquote class="note">
 If you want to configure your application to support multiple languages, please refer to [Configure multiple stores](/docs/advanced/production-ready/multistore.html).
