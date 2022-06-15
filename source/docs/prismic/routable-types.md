@@ -26,10 +26,10 @@ To make a custom Prismic data type routable these steps are required:
 
 To create a custom field to represent the Url of the custom type:
 
-1. Head over to the Prismic console and navigate to custom types (https://<prismic_repository_name>.prismic.io/masks/)
+1. Head over to the Prismic console and navigate to custom types (`https://<prismic_repository_name>.prismic.io/masks/`)
 1. Select the custom type to make routable
-1. Drag and drop "Key Text - Text field for exact match search" from the right to the Main tab on the left.
-1. Give the new field a "Field name", "API ID" and optionally a "Field placeholder" (note the "API ID" is an important field and will be used below)
+1. Drag and drop `Key Text - Text field for exact match search` from the right to the Main tab on the left.
+1. Give the new field a `Field name`, `API ID` and optionally a `Field placeholder` (note the API ID is an important field and will be used below)
 1. Click ok to confirm the inputs
 1. Save the changes
 
@@ -71,7 +71,7 @@ Note we added a path field resolver that appends the shop's baseUrl to the `url`
 
 ## Add GraphQL type to the dispatcher query
 
-Now you need to add your type to the GraphQL dispatcher query. For more info on the topic please refer to [Add GraphQL type to the dispatcher query section of the route dispatcher documentation](/docs/advanced/theme/route-dispatcher#Add-GraphQL-type-to-the-dispatcher-query)
+Now you need to add your type to the GraphQL dispatcher query. For more info on the topic please refer to [Add GraphQL type to the dispatcher query section of the route dispatcher documentation](/docs/advanced/theme/route-dispatcher.html#Add-GraphQL-type-to-the-dispatcher-query)
 
 ## Register the Prismic custom type as a routable type
 
@@ -89,21 +89,21 @@ export default {
   resolvers,
   contextEnhancer: ({ req, loaders }) => {
 +    const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
-+    const contentTransformOptions = {
+
++    loaders.Prismic.defineContentTransformers("album", {
 +      fieldTransformers: {
 +        title: new TitleTransformer(),
 +        release_date: new DateTransformer(),
 +      },
-+    };
-+
++    })
+
 +    loaders.Prismic.registerRoutableType({
 +      typeIdentifier: "album", // <-- Prismic custom type
 +      urlFieldName: "url",     // <-- Prismic API ID mentioned above
 +      graphQLType: "Album",    // <-- GraphQL type created above
 +      path: "/albums/:url",    // <-- The dynamic route. Examples: '/:uid', '/:lang/:uid', '/:section/:category?/:uid'.
-+      contentTransformOptions,
 +      isSitemapable: false,
-+      postTransformer: (url, document) => { // optional function postTransformer
++      postTransformer: (url, document, params) => { // optional function postTransformer
 +        if(document.isPublished) {  // possible use case.
 +          return document;
 +        }
@@ -227,18 +227,17 @@ typeDefs,
 resolvers,
 contextEnhancer: ({ req, loaders }) => {
   const { TitleTransformer, DateTransformer } = loaders.Prismic.transformers;
-  const contentTransformOptions = {
+  loaders.Prismic.defineContentTransformers("album", {
     fieldTransformers: {
       title: new TitleTransformer(),
       release_date: new DateTransformer(),
     },
-  };
+  })
 
   loaders.Prismic.registerRoutableType({
     typeIdentifier: "album", // <-- the Prismic custom type
     urlFieldName: "url",     // <-- Prismic API ID mentioned above
     graphQLType: "Album",    // <-- GraphQL type created above
-    contentTransformOptions,
 -   isSitemapable: false,
 +   isSitemapable: true,
     postTransformer: (url, document) => { // optional function postTransformer
@@ -266,7 +265,6 @@ Registers a routable type within Front-Commerce and adds the route to the Prismi
 - `graphQLType` (string): the GraphQL type to map to the custom type
 - `path` (string): the dynamic route. Examples: `/:uid`, `/:lang/:uid`, `/:section/:category?/:uid`.
 - `rewrites` (string[]) : the rewrite paths to apply on a url, they will be redirected the base path.
-- `contentTransformOptions` ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/blob/ede4a8c7d55bdad718c38e3ddc7ad6232d57cd1f/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): the options to use for the content transformation
 - `isSitemapable` (boolean): whether the type should be included in the sitemap
 - `postTransformer` ([PostTransformerCallback](https://gitlab.com/front-commerce/front-commerce-prismic/blob/084cbb54049614259cf31045bf03de636c08c201/prismic/server/modules/prismic/core/makeRoutableTypeRegisterer.js#L114-120)): a function that will be called after the transformation is done using `contentTransformOptions`
 
@@ -281,11 +279,6 @@ loaders.Prismic.registerRoutableType({
   rewrites: ["/baz/bar/:uid"],
   resolvers: {
     category: "category",
-  },
-  contentTransformOptions: {
-    fieldTransformers: {
-      title: new TitleTransformer(),
-    },
   },
   isSitemapable: true,
   postTransformer: (url, document, params) => {
