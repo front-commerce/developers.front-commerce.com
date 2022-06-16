@@ -105,6 +105,7 @@ sidebar_categories:
     - docs/prismic/integration-fields
     - docs/prismic/preview
     - docs/prismic/embed-fields
+    - docs/prismic/resolver-cache
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
