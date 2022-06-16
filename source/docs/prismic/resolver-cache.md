@@ -5,7 +5,7 @@ title: Cache Prismic Resolvers
 
 The `PrismicCachedResolver` is a decorator for a resolver that returns Prismic Content, the resolver allows us to serialize and deserialize the cached data with the [defineContentTransformers](/docs/prismic/expose-content.html#defineContentTransformers-typeIdentifier-options).
 
-In order to create references from prismic to the cached documents, we need to ensure that the `PrismicCachedResolver` recieves a [Content](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) type from your resolver. The resolver can either cache a `singleton` Content, or a `list` of Content.
+In order to create references from prismic to the cached documents, we need to ensure that the `PrismicCachedResolver` receives a [Content](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) type from your resolver. The resolver can either cache a `singleton` Content, or a `list` of Content.
 
 ## Resolver Cache API
 
