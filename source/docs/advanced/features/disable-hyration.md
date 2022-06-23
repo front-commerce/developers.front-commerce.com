@@ -19,14 +19,9 @@ To disable hydration in Front-Commerce you need to set a variable called `__HYDR
 
 ```
 <script>
-  window.__HYDRATE__ = (function() {
-    var shouldHydrate = some_logic_to_determine_if_page_should_hydrate;
-    return shouldHydrate;
-  })();
+  window.__HYDRATE__ = location.host !== "webcache.googleusercontent.com";
 </script>
 ```
-
-A typical logic to use to determine if one should hydrate or not is to inspect the `navigator.userAgent` variable to determine for example if it is the Google crawler bot.
 
 ## A Strong Warning
 
