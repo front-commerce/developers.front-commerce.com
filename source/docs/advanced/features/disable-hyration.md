@@ -1,6 +1,7 @@
 ---
 id: disable-hyration
 title: Disable Hydration
+description: In some senarios one might need to disable client side hydration. This page shows the user how this can be achieved in Front-Commerce
 ---
 
 # What is Hydration?
