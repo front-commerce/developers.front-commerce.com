@@ -1,9 +1,8 @@
 ---
 id: add-http-endpoint
 title: Add custom endpoints to your server
+description: The main entrypoints of a Front-Commerce application are frontend URLs displaying your actual website and the GraphQL schema. But in some specific cases, you may want to extend your Node.js server with additional endpoints.
 ---
-
-The main entrypoints of a Front-Commerce application are frontend URLs displaying your actual website and the GraphQL schema. But in some specific cases, you may want to extend your Node.js server (<abbr title="Backend For Frontend">BFF</abbr>) with additional endpoints.
 
 For instance, this can be the case when you send a link within an email to one of your customers. If an action should be triggered when the user clicks on it, you don't want to add failure opportunities by displaying a webpage which will then trigger a GraphQL mutation. You want to trigger the action directly, and then redirect the user to an actual page.
 

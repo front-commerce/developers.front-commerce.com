@@ -1,11 +1,10 @@
 ---
 id: setup-configurations
 title: Configurations
+description: Configuration is a part of software development that can quickly become messy. Validation, detection, performance… there is a lot to take care of. In this guide we will see how Front-Commerce configuration works and how to create new configurations or override existing ones.
 ---
 
-Configuration is a part of software development that can quickly become messy. Validation, detection, performance... There is a lot to take care of. In Front-Commerce we solved this by defining what we call **Configuration Providers**.
-
-In this guide we will see how they work and how to create new configurations or override existing ones.
+In Front-Commerce configurations are attached to each request, and can be accessed using the `req.config` key. They are gathered and validating using **Configuration Providers**. This guide details the configuration providers features.
 
 ## What is a configuration provider?
 
