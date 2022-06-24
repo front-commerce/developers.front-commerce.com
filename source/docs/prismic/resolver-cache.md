@@ -123,7 +123,7 @@ export default {
 
 What if we want to manipulate the data after it is retrieved either from the cache or the resolver?
 
-In the end the `PrismicCachedResolver` is a resolver like any other, so you can call it at any time within a resolver, but it is important though that the resolver parameters are propogated to the `PrismicCachedResolver`.
+The `PrismicCachedResolver` is a resolver like any other, so you can call it at any time within a resolver, as soon as you propagate the resolver parameters to the `PrismicCachedResolver`.
 
 ```js
 import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
