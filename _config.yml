@@ -68,6 +68,9 @@ sidebar_categories:
     - docs/advanced/features/external-logins
     - docs/advanced/features/return-merchandise-authorization
     - docs/advanced/features/in-stock-alert
+    - docs/advanced/features/maintenance-mode
+    - docs/advanced/features/disable-hyration
+
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
