@@ -55,7 +55,9 @@ export default {
 };
 ```
 
-But now the issue is, when we call **faqEntry** resolver, it will always load the same cached faq entry, to avoid this we need map the `slug` parameter to the cache key, you can pass in the `mapParamsToId` option to the `PrismicCachedResolver` to do this.
+Now the **faqEntry** resolver will always load the same cached faq entry.
+
+To avoid this issue, map the `slug` parameter to the cache key, by passing the `mapParamsToId` option to the `PrismicCachedResolver`.
 
 ```diff
 import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
