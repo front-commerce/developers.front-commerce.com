@@ -1,6 +1,7 @@
 ---
 id: media-middleware
 title: Optimize your media
+description: Images are an important part of what your users will download during a visit on your store. Delivering images in an optimized way is tough in a mobile-first application. This guide explains what Front-Commerce provides to help you in this task.
 ---
 
 One of the tough things to do when doing responsive websites is to have images that match your user's screen. Especially when content is contributed by a wide range of people that aren't fully aware of the impact their actions can have on the user's experience.

@@ -1,9 +1,10 @@
 ---
 id: sessions
 title: Setup sessions
+description: By default in Front-Commerce, user sessions are stored on disk. It can be a limitation if you want to scale the application horizontally by adding more Front-Commerce nodes or machines to serve users. This guide explains how to configure alternative session storages.
 ---
 
-By default the user sessions are stored on disk. It can be a limitation if you want to scale the application horizontally by adding more Front-Commerce nodes or machines to serve users. This page will explain how to configure alternative session storages through the [`config/sessions.js`](/docs/reference/configurations.html#config-sessions-js) configuration file.
+Sessions storage configuration occurs in the [`config/sessions.js`](/docs/reference/configurations.html#config-sessions-js) configuration file. Front-Commerce uses the `express-session` library and supports any compatible store.
 
 # Configure sessions via redis
 

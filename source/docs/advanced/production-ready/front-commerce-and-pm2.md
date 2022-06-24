@@ -1,12 +1,11 @@
 ---
 id: front-commerce-and-pm2
 title: Front-Commerce and PM2
+description: "Front-Commerce is a node.js application. You may want to run it in production with the PM2 Process Manager. This page explains how you could achieve this, and benefit from PM2 features such as: zero-downtime deployment, cluster mode, autoreload, logs aggregation…"
 ---
 
-Front-Commerce is a node.js application. You may want to run it in production with the [PM2 Process Manager](https://pm2.keymetrics.io/). This page explains how you could achieve this, and benefit from PM2 features such as: zero-downtime deployment, cluster mode, autoreload, logs aggregation…
-
 <blockquote class="note">
-  PM2 is not the only way to deploy Front-Commerce in production, however we often get asked about how PM2 should be configured for Front-Commerce. This page is here to get you started but we recommend that you discuss it with your system administrator.
+  [PM2](https://pm2.keymetrics.io/) is not the only way to deploy Front-Commerce in production, however we often get asked about how PM2 should be configured for Front-Commerce. This page is here to get you started but we recommend that you discuss it with your system administrator.
 </blockquote>
 
 ## `ecosystem.config.js`
