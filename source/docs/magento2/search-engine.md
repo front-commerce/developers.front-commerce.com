@@ -1,7 +1,7 @@
 ---
 id: m2-search-engine
 title: Search engine
-description: When configured with Magento2, Front-Commerce can leverage Elasticsearch, Algolia to bring a search engine to your website.
+description: When configured with Magento2, Front-Commerce can leverage Elasticsearch or Algolia to bring a search engine to your website.
 ---
 
 ## Elasticsearch
