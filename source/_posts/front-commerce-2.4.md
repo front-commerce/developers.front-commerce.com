@@ -12,7 +12,7 @@ Front-Commerce 2.4 brings a new base theme **to accelerate your time to market**
 Front-Commerce 2.3 & 2.4 are separate releases that were developed jointly.
 While 2.3 was focused on feature coverage, 2.4 focused on a new theme.
 
-Please read our [Front-Commerce 2.3 release announcement](/blog/2021/01/13/front-commerce-2.3/) to know about recent features.
+Please read our [Front-Commerce 2.3 release announcement](/changelog/front-commerce-2.3/) to know about recent features.
 
 ## Meet "Chocolatine", our new default theme
 
