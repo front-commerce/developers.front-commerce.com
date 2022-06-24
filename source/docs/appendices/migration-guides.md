@@ -394,6 +394,10 @@ To support these latest Node versions, we had to upgrade some dependencies. Thes
 ### New features in `2.15.0`
 
 - [In-Stock Alerts](/docs/advanced/features/in-stock-alert.html)
+- [Prismic: embed fields](/docs/prismic/embed-fields.html)
+- Magento2: use the native search capabilities of Magento for PLP
+- npm 7 / NodeJS 16 / NodeJS 17 compatibility
+- [Integrate Paypal w. Adyen for a seamless checkout experience](/docs/advanced/payments/adyen.html)
 
 ## `2.13.0` -> `2.14.0`
 
@@ -459,7 +463,7 @@ All translation keys that start with `modules.User.Order.OrderMethod.PaymentMeth
 
 In this release, we have removed most of the module-related CSPs from Front-Commerce default configuration file. If you are using one or more of the following modules, please do update your CSPs accordingly in your `config/website.js` configuration:
 
-- `Google Analytics` or `Google Tag Manager` (see [analytics configuration](/docs/advanced/theme/analytics.html#Google-Analytics))
+- `Google Analytics` or `Google Tag Manager` (see [analytics configuration](/docs/advanced/theme/analytics.html#Universal-Analytics-Google-Analytics))
 - `Paypal` (see [Paypal configuration](/docs/advanced/payments/paypal.html#Update-your-CSPs))
 - `Payzen` (see [Payzen configuration](/docs/advanced/payments/payzen.html#Update-your-CSPs))
 
@@ -1316,7 +1320,7 @@ In a nutshell, when the feature is enabled, we place a transparent button on top
 
 ### MondialRelay shipping in a Magento2 based project
 
-In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application).
+In this version, we have improved the MondialRelay shipping support with Magento2 so that a customer can only choose a pickup point suitable for the products being ordered. This improvement requires an update of Magentix's module to [install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento2).
 
 ### New icons required
 
@@ -1385,7 +1389,7 @@ These new features may be relevant for your existing application:
 
 In this release we have added support for MondialRelay as a shipping method in Magento2 based Front-Commerce implementation. As a result, we have changed the way files are organized on the disk.
 
-In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Magento1-based-application). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
+In a nutshell, the Front-Commerce module `modules/shipping-mondialrelay-magento1` has been renamed to `modules/shipping-mondialrelay` and this module was defining a GraphQL module that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you are upgrading a Magento1 based project using the MondialRelay module, you have to update your `.front-commerce.js` as documented in [the MondialRelay guide page](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento1). In addition, if you have custom code importing files from `modules/shipping-mondialrelay-magento1`, you will also have to update those imports to match the new file layout.
 
 ### Magento2 Adyen module update
 
@@ -1459,7 +1463,7 @@ The public API remains unchanged but if you've overriden internal components, pl
 These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen.html)
-- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Magento2-based-application)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay.html#Integrate-with-Magento2)
 - [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options.html)
 
 ## `2.8.0` -> `2.9.0`
@@ -2814,7 +2818,7 @@ Please note that if in your code, you relied on some int types, there might be c
 
 First things first, if you didn't customize the sitemap, you can skip this section. If you did though, you will need to change the way you customized the Sitemap loader.
 
-Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/theme/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
+Previously, in order to change the sitemap loader, you had to override the default resolver for `Query.sitemap` and add your own nodes to the default ones. From now on, you will instead need to register nodes dynamically. Please follow the [Sitemap guide](/docs/advanced/production-ready/sitemap.html#Add-your-own-routes-in-the-sitemap) for more details.
 
 ### Caching update
 
@@ -2933,7 +2937,7 @@ We have introduced the mechanism of [Translation Fallback](/docs/advanced/theme/
 
 ### Improved search experience
 
-While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](/blog/2019/05/07/release-1.0.0-beta.0/#Improved-search-experience).
+While working on our compatibility with Magento 2.3, we decided to use [ElasticSuite](https://elasticsuite.io/). Learn more about it in our [announcement](/blog/2019/05/13/release-1.0.0-beta.0/#Improved-search-experience).
 
 During this change, we needed to update some parts of the GraphQL schema. If you don't use our implementation, this won't impact you. However, if you do, here is what changed in the schema:
 

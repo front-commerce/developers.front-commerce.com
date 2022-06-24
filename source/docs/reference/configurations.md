@@ -117,6 +117,10 @@ Thus, if you are indeed behind a proxy, you must make sure that:
 
 By default most proxies are setting either `x-real-ip` or `x-forwarded-for`. So that's a sane default. But if you have some issues retrieving the client's IP, please check that those headers are correctly configured within your proxy.
 
+<blockquote class="note">
+**Note** This setting is used even without enabling basic authentication to pass the client IP to the third party servers.
+</blockquote>
+
 ### `config/hardcodedSitemap.js`
 
 Allows to define static routes within your application that aren't already fetched dynamically from your backend. Each object should match the Sitemapable interface of `src/server/model/store/schema.gql`

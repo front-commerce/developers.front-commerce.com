@@ -1,11 +1,10 @@
 ---
 id: analytics
 title: Analytics
+description: Most e-commerce websites need advanced analytics to understand their users better and adapt their shops to their customers' needs. But it can often be tedious to maintain when you have many trackings to manage. So here is how we integrated analytics services in Front-Commerce.
 ---
 
-Most e-commerce website need advanced analytics to better understand their users and adapt their shops to their customers needs. But it can often be tedious to maintain when you have many trackings to manage.
-
-In Front-Commerce, we use [`analytics.js`](https://segment.com/docs/sources/website/analytics.js/). It is a library created by [Segment.io](https://segment.com/) that aims at decoupling the tracking settings from the event.
+Front-Commerce uses [`analytics.js`](https://segment.com/docs/sources/website/analytics.js/) under the hood. It is a library created by [Segment.io](https://segment.com/) that aims to decouple the event's tracking settings.
 
 If we represent how it works, it would look like this:
 
@@ -77,7 +76,7 @@ Additionally, you may wonder what name and properties you should give to your ev
 
 ### Track an event as a React Component
 
-If you don't have an actual callback to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](<(http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)>).
+If you don't have an actual callback to put the `trackEvent` (like `onClick`), you can use the `withTrackOnMount` enhancer that will let you call the `trackEvent` using [React lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
 
 For instance, in Front-Commerce's core, we are using `withTrackOnMount` to track when a user sees their cart.
 
@@ -107,7 +106,7 @@ export default withTrackOnMount({
 <blockquote class="note">
 Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackOnMount) to have a detailed explanation of the API of `withTrackOnMount`.
 
-Note that if you prefer to use render props you can refer to [`TrackOnMount`](docs/reference/analytics-components.html#TrackOnMount).
+Note that if you prefer to use render props you can refer to [`TrackOnMount`](/docs/reference/analytics-components.html#TrackOnMount).
 
 </blockquote>
 
@@ -130,7 +129,7 @@ withTrackPage("Home")(Cart);
 <blockquote class="note">
 Please refer to [Analytics React Components](/docs/reference/analytics-components.html#withTrackPage) to have a detailed explanation of the API of `withTrackPage`.
 
-Note that if you prefer to use render props you can refer to [`TrackPage`](docs/reference/analytics-components.html#TrackPage).
+Note that if you prefer to use render props you can refer to [`TrackPage`](/docs/reference/analytics-components.html#TrackPage).
 
 Moreover, we didn't talk about a `trackPage` method here. This is because a `Page` is tightly coupled to a React Component. This is why you shouldn't need to use `trackPage` directly.
 
@@ -196,93 +195,6 @@ Here we have used the Google Analytics integration. You can find the [list of ex
 <blockquote class="warning">
 However, please note that some integrations are not up to date. Even if you find one that matches your need, it might not work. However, looking into its code will let you know how to make it work, and you could eventually fork it to fix it.
 </blockquote>
-
-### Main integrations
-
-Here is a list of integrations frequently used across e-commerce shops:
-
-#### Google Analytics
-
-- `npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics`
-- Configuration example in `src/config/analytics.js`
-
-```js
-{
-  name: "google-analytics",
-  needConsent: true,
-  settings: (authorization) => {
-    return {
-      "Google Analytics": {
-        trackingId: "UA-123-1",
-        anonymizeIp: !authorization,
-        // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
-      },
-    };
-  },
-  script: () =>
-    import("@segment/analytics.js-integration-google-analytics"),
-}
-```
-
-- Allow requests to www.google-analytics.com in `src/config/website.js::contentSecurityPolicy`:
-
-```diff
-// src/config/website.js
-module.exports = {
-  // ...
-  contentSecurityPolicy: {
-    directives: {
-      scriptSrc: [],
-      frameSrc: [],
-      styleSrc: [],
--      imgSrc: [],
-+      imgSrc: ["www.google-analytics.com"],
-      connectSrc: [],
-      baseUri: [],
-    },
-  },
-// ...
-}
-```
-
-#### Google Tag Manager
-
-- `npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager`
-- Configuration example in `src/config/analytics.js`
-
-```js
-{
-  name: "google-tag-manager",
-  needConsent: true,
-  settings: (authorization, otherAuthorizations) => {
-    return {
-      "Google Tag Manager": {
-        containerId: "GW-123",
-        // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
-        userConsents: otherAuthorizations
-      },
-    };
-  },
-  script: () =>
-    import("@segment/analytics.js-integration-google-tag-manager"),
-}
-```
-
-- Update your `CSPs` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
-
-In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
-
-First, the `userConsents` configuration option will be pushed to your dataLayer as the `userConsents` value. You can reference it from a Variable in GTM. Here is an example:
-
-<figure>
-![Screenshot of a GTM Variable configured to expose the user consents](./assets/gtm-datalayer-variable.png)
-</figure>
-
-Then, you can leverage the `UserConsentUpdated` event tracked whenever users update their consent preferences. You could create triggers to enable scripts to load / remove (depending on the `userConsents` value). Here is an example:
-
-<figure>
-![Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration](./assets/gtm-trigger-example.png)
-</figure>
 
 ### GDPR consent
 
@@ -497,3 +409,106 @@ Indeed, if we're doing this, it's likely to be because the tracking service want
 - If none of the solutions above work, you can always try to load the script several times by adding a `?random=${new Date().getTime()}` at the end of the URL. This will trick the browser into thinking they are different scripts and allow you to load it multiple times.
 
 Implementing a great tagging plan for an e-commerce application is a tough journey. If you have any further questions about how to implement them in Front-Commerce, please [contact us](mailto:contact@front-commerce.com). We'll be happy to answer them.
+
+## Integrations
+
+Here is a list of integrations frequently used across e-commerce shops
+
+### Google Analytics 4
+
+Coming soon, [contact us](mailto:contact@front-commerce.com) for more details.
+
+### Universal Analytics (Google Analytics)
+
+<blockquote class="warning">
+  Universal Analytics will no longer process new data in standard properties beginning 1 July 2023.
+</blockquote>
+
+Install [Front-Commerce's custom segment integration for Google Analytics](https://github.com/front-commerce/analytics.js-integration-google-analytics)
+
+```bash
+npm install --save https://github.com/front-commerce/analytics.js-integration-google-analytics
+```
+
+Configuration example in `src/config/analytics.js`
+
+```js
+{
+  name: "google-analytics",
+  needConsent: true,
+  settings: (authorization) => {
+    return {
+      "Universal Analytics": {
+        trackingId: "UA-123-1",
+        anonymizeIp: !authorization,
+        // enhancedEcommerce: true, // uncomment to enable enhanced ecommerce additional trackings
+      },
+    };
+  },
+  script: () => import("@segment/analytics.js-integration-google-analytics"),
+}
+```
+
+Update your `CSPs` in `src/config/website.js` to support the [Universal Analytics](https://developers.google.com/tag-platform/tag-manager/web/csp#universal_analytics_google_analytics)
+
+```diff
+// src/config/website.js
+module.exports = {
+  contentSecurityPolicy: {
+    directives: {
+-     scriptSrc: [],
++     scriptSrc: ["*.google-analytics.com"],
+      frameSrc: [],
+      styleSrc: [],
+-     imgSrc: [],
++     imgSrc: ["www.google-analytics.com"],
+-     connectSrc: [],
++     connectSrc: ["www.google-analytics.com"],
+      baseUri: [],
+    },
+  },
+}
+```
+
+### Google Tag Manager
+
+Install [Front-Commerce's custom segment integration for Google Tag Manager](https://github.com/front-commerce/analytics.js-integration-google-tag-manager)
+
+```bash
+npm install --save https://github.com/front-commerce/analytics.js-integration-google-tag-manager
+```
+
+Configuration example in `src/config/analytics.js`
+
+```js
+{
+  name: "google-tag-manager",
+  needConsent: true,
+  settings: (authorization, otherAuthorizations) => {
+    return {
+      "Google Tag Manager": {
+        containerId: "GW-123",
+        // the userConsents option is a specific key that the integration will use and expose in the GTM dataLayer
+        userConsents: otherAuthorizations
+      },
+    };
+  },
+  script: () => import("@segment/analytics.js-integration-google-tag-manager"),
+}
+```
+
+Update your `CSPs` in `src/config/website.js` according to the tags you use (see [Google Tag Manager's documentation](https://developers.google.com/tag-platform/tag-manager/web/csp) for more details)
+
+In GTM, you will then be able to leverage several specific things configured in your integrations _(since Front-Commerce 2.6)_.
+
+First, the `userConsents` configuration option will be pushed to your dataLayer as the `userConsents` value. You can reference it from a Variable in GTM. Here is an example:
+
+<figure>
+![Screenshot of a GTM Variable configured to expose the user consents](./assets/gtm-datalayer-variable.png)
+</figure>
+
+Then, you can leverage the `UserConsentUpdated` event tracked whenever users update their consent preferences. You could create triggers to enable scripts to load / remove (depending on the `userConsents` value). Here is an example:
+
+<figure>
+![Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration](./assets/gtm-trigger-example.png)
+</figure>

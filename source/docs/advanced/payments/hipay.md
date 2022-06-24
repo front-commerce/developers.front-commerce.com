@@ -160,8 +160,8 @@ const ComponentMap = {
 6. register the HiPay payment methods labels
 
 ```
-mkdir -p my-module/web/theme/modules/User/Order/OrderMethod/
-cp -u node_modules/front-commerce/src/web/theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js my-module/web/theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js
+mkdir -p my-module/web/theme/modules/Checkout/Payment/
+cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/PaymentMethodLabel.js my-module/web/theme/modules/Checkout/Payment/PaymentMethodLabel.js
 ```
 
 ```diff

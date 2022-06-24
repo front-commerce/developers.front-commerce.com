@@ -1,23 +1,12 @@
 ---
 id: extend-the-graphql-schema
 title: Extend the GraphQL schema
+description: When developing an e-commerce store, you might at some point need to expose new data in your unified GraphQL schema to support new features and allow frontend developers to use them. Front-Commerce’s GraphQL modules  is the mechanism allowing to extend and override any part of the schema defined by other modules.
 ---
 
-When developing an e-commerce store, you might at some point need to expose new
-data in your
-[unified GraphQL schema](https://principledgraphql.com/integrity#1-one-graph) to
-support new features and allow frontend developers to use them.
+The Front-Commerce core and platform integrations (such as Magento2) are implemented as GraphQL modules. They leverage features from the GraphQL Schema Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
 
-**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
-override any part of the schema defined by other modules. It leverages features
-from the GraphQL Schema Definition Language
-(<abbr title="Schema Definition Language">SDL</abbr>).
-
-Front-Commerce’s core and platforms integrations (such as Magento2) are
-implemented as GraphQL modules too.
-
-This page will guide you through the process of exposing a new feature in your
-GraphQL schema. We will create a GraphQL module that allows to maintain a
+This page will guide you through the process of exposing a new feature in your GraphQL schema. We will create a GraphQL module that allows to maintain a
 counter of clicks for a product.
 
 You will learn to:
@@ -67,7 +56,9 @@ Let’s add a `ClicksCounters` GraphQL module by adding it to the existing list:
 module.exports = {
   name: "Front-Commerce",
   url: "https://www.front-commerce.test",
-  modules: [],
+  modules: [
++   "./my-module"
+  ],
   serverModules: [
     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
     { name: "Magento2", path: "server/modules/magento2" },
@@ -151,10 +142,10 @@ extend type Query {
   clicksCounterByProductSKU(sku: String!): Int
 }
 ```
-However, we feel it would have been less intuitive for front-end developers. On 
-the other hand, it may seem more natural for developers familiar with designing 
-relational databases or REST APIs. Still, we recommend limiting as much 
-as possible the number of top-level queries in your projects to learn _thinking 
+However, we feel it would have been less intuitive for front-end developers. On
+the other hand, it may seem more natural for developers familiar with designing
+relational databases or REST APIs. Still, we recommend limiting as much
+as possible the number of top-level queries in your projects to learn _thinking
 in GraphQL_.
 
 </blockquote>
@@ -307,7 +298,7 @@ extend type Product {
 ```
 
 The resolver function will use the `sku` key from its parent data and will
-return the the current counter value from its local state (defaulting to `0` if
+return the current counter value from its local state (defaulting to `0` if
 no clicks occurred).
 
 It is important to understand that the `sku` is not a parameter provided by

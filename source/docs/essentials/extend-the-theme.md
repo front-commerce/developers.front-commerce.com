@@ -1,6 +1,7 @@
 ---
 id: extend-the-theme
 title: Extend the theme
+description: Theme override is the mechanism allowing to extend, adapt, and rewrite almost everything contained in the base theme.
 ---
 
 ## Understanding theme overrides
@@ -11,7 +12,7 @@ Even though you could reuse pages and components individually in a totally diffe
 most of the time you might find easier and faster to start with the base theme and
 iterate from there.
 
-**Theme override is the mechanism allowing to extend, adapt, rewrite almost everything contained in the base theme.** It is what allows you to:
+**Theme override is what allows you to:**
 
 - customize the base theme,
 - customize how an extension is displayed,

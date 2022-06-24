@@ -71,7 +71,7 @@ In case you want to understand step by step what is happening or if you
 encounter difficulties to install or launch the project, we are here to learn!
 Time has come to discover our official documentation for developers:
 
-[Install Front-Commerce Lite (developers.front-commerce.com)](https://developers.front-commerce.com/docs/getting-started.html)
+[Install Front-Commerce Lite (developers.front-commerce.com)](/docs/essentials/installation.html)
 
 If you still have troubles with this task, feel free to
 [get in touch with us](https://github.com/front-commerce/front-commerce-lite#get-help)

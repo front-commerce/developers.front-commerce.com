@@ -249,9 +249,9 @@ This integration is slightly different from [traditional Magento2 headless payme
 
 Here is how to set this payment method up.
 
-### Install and configure the `Adyen_Payment` Magento2 extension (7.2+)
+### Install and configure the `Adyen_Payment` Magento2 extension (7.2+ < 8.0)
 
-Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments. The minimum supported version is [7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0).
+Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to install and configure the official Magento2 extension for Adyen payments. The minimum supported version is [7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0). We don't yet support the [8.x](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0) versions due to breaking changes.
 
 You must configure the "Payment Origin URL" in the "Advanced: PWA" with your Front-Commerce URL **for each of your stores**.
 

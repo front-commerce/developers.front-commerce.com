@@ -107,6 +107,7 @@ sidebar_categories:
     - docs/prismic/routable-types
     - docs/prismic/integration-fields
     - docs/prismic/preview
+    - docs/prismic/embed-fields
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows
@@ -121,6 +122,7 @@ sidebar_categories:
     - docs/advanced/payments/payzen
     - docs/advanced/payments/stripe
     - docs/advanced/payments/payment-on-account
+    - docs/advanced/payments/custom-payment-information
   Shipping:
     - docs/advanced/shipping/overview
     - docs/advanced/shipping/custom-shipping-information
@@ -131,6 +133,7 @@ sidebar_categories:
     - docs/reference/front-commerce-js
     - docs/reference/configurations
     - docs/reference/environment-variables
+    - docs/reference/debugging
     - docs/reference/cli
     - docs/reference/graphql-module-definition
     - docs/reference/remote-schema-helpers

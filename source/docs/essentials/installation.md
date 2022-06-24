@@ -1,6 +1,7 @@
 ---
 id: installation
 title: Installation
+description: Front-Commerce is a Node.js server that will serve a GraphQL endpoint and a React application to your customers. In order to run it, you need to make sure you have `npm` and `node` installed on your machine in a supported version.
 ---
 
 ## Requirements
@@ -12,10 +13,6 @@ Access is granted to teams that have signed the relevant legal contracts, either
 as a **Partner** or a **Customer**. Please
 <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if you need help or further
 information.
-
-Front-Commerce is a Node.js server that will serve a GraphQL endpoint and a
-React application to your customers. In order to run it, you need to make sure
-you have `npm` and `node` installed on your machine in a supported version.
 
 <blockquote class="important">
 **Important:** you can find an exhaustive list of requirements and versions supported by Front-Commerce in [our release notes](/docs/appendices/release-notes.html).

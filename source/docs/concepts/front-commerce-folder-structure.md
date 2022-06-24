@@ -7,20 +7,28 @@ This documentation is a quick overview of Front-Commerce's folder structure.
 
 ```
 src/
+├── public/
 ├── config/
 ├── server/
 |   ├── express/
 |   └── modules/
 └── web/
     └── theme/
-        ├── components/
-        |   ├── atoms/
-        |   ├── molecules/
-        |   ├── organisms/
-        |   └── templates/
-        ├── modules/
-        └── pages/
+    |   ├── components/
+    |   |   ├── atoms/
+    |   |   ├── molecules/
+    |   |   ├── organisms/
+    |   |   └── templates/
+    |   ├── modules/
+    |   └── pages/
+    └── service-worker.js
 ```
+
+## src/public/
+
+The `public` folder is optional. `public` folder will be browesable on all stores of your site. You can put in it files you want to expose to the public (e.g. static assets).
+
+P.S. The `public` folder is exposed on the store level. So if you put a file called `text.txt` inside it you will be able to get `text.txt` from `/en/text.txt` or `/fr/text.txt` where `/en`, `/fr` are store base URLs.
 
 ## src/config/
 
@@ -57,3 +65,9 @@ composed of three subfolders:
 
 In order to learn more about it, please refer to
 [React components structure](react-components-structure.html).
+
+## src/web/service-worker.js
+
+You can override this file to add more functionality to your service worker such as [push notifications](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Re-engageable_Notifications_Push).
+
+Please note that this file is not part of the build process (i.e. it would be copied as is). As such in order to import scripts using the [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) you need to make sure that the path given to `importScripts` is browseable. The easiest way to do so is to add the files you want to import using `importScripts` directly inside the [`public` folder](#src-public). You should then be able to import them by using `import("/a_store_base_url/path_to_file_to_import")` e.g. `import("/en/service-worker-push-notifications.js")`. P.S. the `/a_store_base_url` is needed since the `public` folder is exposed on the store level. You can use any of your stores' base URLs as all will expose the same file.

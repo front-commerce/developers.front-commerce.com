@@ -144,3 +144,21 @@ module.exports = {
   ],
 };
 ```
+
+## Automatic logging configuration
+
+You can also automate the logging configuration based on whether the application is deployed on our cloud offer (V2) or not using the following `my-module/config/logging.js`
+
+```js
+const makeLogAccordingToEnv = (filename) =>
+  process.env.FRONT_COMMERCE_CLOUD_VERSION === "2"
+    ? { type: "console" }
+    : { type: "file", filename };
+
+module.exports = {
+  server: [makeLogAccordingToEnv("server.log")],
+  client: [makeLogAccordingToEnv("client.log")],
+  access: [makeLogAccordingToEnv("access.log")],
+  payment: [makeLogAccordingToEnv("payment.log")],
+};
+```

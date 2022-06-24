@@ -7,7 +7,7 @@ For a tangible example and explanation, please refer to [Analytics](/docs/advanc
 
 ## `withTrackOnMount`
 
-`withTrackPage` is an enhancer that lets you track an event by using [React lifecycle]((http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
+`withTrackPage` is an enhancer that lets you track an event by using [React lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
 
 ```jsx
 import withTrackOnMount from "theme/modules/Analytics/withTrackOnMount";

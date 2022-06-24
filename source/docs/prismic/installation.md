@@ -61,21 +61,32 @@ source .env ; PAYLOAD=`printf '{"secret": "%s", "type": "api-update", "masterRef
 For that, you have to apply some changes to your `.front-commerce.js`.
 
 ```diff
- modules: [
-   "./node_modules/front-commerce/modules/datasource-elasticsearch",
-   "./node_modules/front-commerce/theme-chocolatine",
-+  "./node_modules/front-commerce-prismic/prismic",
-   "./src",
- ],
- serverModules: [
-@@ -13,6 +14,7 @@ module.exports = {
-     path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
-   },
-   { name: "Magento2", path: "server/modules/magento2" },
-+  { name: "Prismic", path: "prismic/server/modules/prismic" },
- ],
- webModules: [
-   { name: "FrontCommerce", path: "front-commerce/src/web" },
+module.exports = {
+  ...
+  modules: [
+    "./node_modules/front-commerce/modules/datasource-elasticsearch",
+    "./node_modules/front-commerce/theme-chocolatine",
++   "./node_modules/front-commerce-prismic/prismic",
+    "./src",
+  ],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    {
+      name: "Magento2Elasticsearch",
+      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+    },
+    { name: "Magento2", path: "server/modules/magento2" },
++   { name: "Prismic", path: "prismic/server/modules/prismic" },
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web" },
++   {
++     name: "Prismic",
++     path: "./node_modules/front-commerce-prismic/prismic/web",
++   },
+  ],
+};
+
 ```
 
 The module is ready!
@@ -85,3 +96,20 @@ The module is ready!
 ## Optional: update your CSP
 
 If you plan to directly include images in your content, don't forget to add the domain `images.prismic.io` to `imgSrc` in [the `contentSecurityPolicy` configuration](/docs/reference/configurations.html#config-website-js).
+
+## Optional: Configure the PrismicWysiwyg
+
+If you are using any other Wysiwyg enabled modules, then you will need to override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map all of the Wysiwyg customizations, for example:
+
+```js
+const typenameMap = {
+  CustomWysiwyg: loadable(() => import("./CustomWysiwyg")),
+  PrismicWysiwyg: loadable(() => import("./PrismicWysiwyg")),
+};
+```
+
+Refer to the [Wysiwyg Customization](/docs/advanced/theme/wysiwyg-platform.html) to learn more.
+
+**Default transforms**
+
+- `<script>` tags with a [supported embed script](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js) are transformed into [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js) components.

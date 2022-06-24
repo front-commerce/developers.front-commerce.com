@@ -251,7 +251,7 @@ contextEnhancer: ({ req, loaders }) => {
 
 ### `registerRoutableType(options)`
 
-Registers a routable type within Front-Commerce and adds the route the the Prismic Route Resolver, it can also create a sitemapable route.
+Registers a routable type within Front-Commerce and adds the route to the Prismic Route Resolver, it can also create a sitemapable route.
 
 **Options:**
 
