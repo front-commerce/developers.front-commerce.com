@@ -121,7 +121,7 @@ export default {
 
 ### Advanced Usecase
 
-What if we want to manipulate the data after it is retrieved either from the cached or the resolver?
+What if we want to manipulate the data after it is retrieved either from the cache or the resolver?
 
 In the end the `PrismicCachedResolver` is a resolver like any other, so you can call it at any time within a resolver, but it is important though that the resolver parameters are propogated to the `PrismicCachedResolver`.
 
