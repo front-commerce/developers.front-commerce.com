@@ -41,7 +41,7 @@ export default {
 
 This is the most simple usecase. The `PrismicCachedResolver` will cache a singleton Content.
 
-So let's say we want to cache a resolver that loads a single Faq entry, we can simple decorate our original resolver
+So let's say we want to cache a resolver that loads a single Faq entry, we can simply decorate our original resolver
 
 ```js
 import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
