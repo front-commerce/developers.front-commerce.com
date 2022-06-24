@@ -140,4 +140,4 @@ Pages are server-rendered when accessed with the following URL patterns:
 
 ## Learn more
 
-If you want to learn more about <abbr title="Server Side Rendering">SSR</abbr> in Front-Commerce, we recommend you to understand how [Server timings](/docs/advanced/performance/server-timings.html) could help you to spot performance issues and read the [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) documentation page.
+If you want to learn more about <abbr title="Server Side Rendering">SSR</abbr> in Front-Commerce, we recommend you to understand how [Server timings](/docs/advanced/performance/server-timings.html) could help you to spot performance issues, read the [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering.html) documentation page and to have a look at [hydration](<https://en.wikipedia.org/wiki/Hydration_(web_development)>) and [how to disable it in Front-Commerce](/docs/advanced/features/disable-hyration.html).
