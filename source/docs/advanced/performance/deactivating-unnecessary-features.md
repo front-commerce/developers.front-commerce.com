@@ -1,9 +1,8 @@
 ---
 id: deactivating-unnecessary-features
 title: Deactivating unnecessary features
+description: Front-Commerce contains several features enabled by default to provide a good experience out-of-the box. Deactivating features you don't need can make your application faster.
 ---
-
-Front-Commerce contains several features enabled by default to provide a good experience out-of-the box.
 
 Each production context is different: projects may not need some features or the infrastructure may have other components that provides the same feature in a more performant way. In these contexts, we recommend that you deactivate Front-Commerce built-in features to prevent unnecessary processing and improve your application's performance.
 

@@ -1,13 +1,14 @@
 ---
 id: improve-your-core-web-vitals
 title: Improve your Core Web Vitals
+description: Core Web Vitals are metrics describing how your pages load for users. By understanding their meaning, you will be able to improve your application's perceived performance. This guide provides information to help with this process in a Front-Commerce project.
 ---
 
-Hi! You were fast…🏁 it means that you are interested in improving your application. Great!
+> We will keep improving this page over time.
 
-> We will keep improving this page in the next few days.
+## Interesting content on the web
 
-## Some reading and links to keep you busy
+Here are some links to better understand performance practices and vocabulary before applying them to Front-Commerce:
 
 - https://webperf.tools/
 - [Web Vitals (official documentation page)](https://web.dev/vitals/)
@@ -35,4 +36,4 @@ Using: `<Image src="xxxx" priority />`
 
 You must aim at One GraphQL query per Front-Commerce route. Keep additional queries for secondary content.
 
-Ensure that this query is preloadable (using the top level `graphqlWithPreload` HOC).
+Ensure that this query is preloadable (using the top level `graphqlWithPreload` HOC) and [that correct `Cache-Control` headers are sent for visitors](/docs/advanced/performance/cache-control-and-cdn.html).

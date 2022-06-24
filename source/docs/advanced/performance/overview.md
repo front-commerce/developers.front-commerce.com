@@ -1,14 +1,16 @@
 ---
 id: performance-overview
 title: Overview
+description: In this section, you will learn advanced information about Performance related features at your disposal in Front-Commerce.
 ---
 
-In this section, you will learn advanced information about Performance in Front-Commerce.
+You can already find documentation for:
 
 - [Preloading Routes' data](./preloading-routes.html)
 - [Faster Server Side Rendering](./faster-server-side-rendering.html)
 - [Server Timings](./server-timings.html)
 - [Improve your Core Web Vitals](./improve-your-core-web-vitals.html)
+- [Cache control and CDN](./cache-control-and-cdn.html)
 - [Serving assets from a CDN/custom domain](./assets-cdn-domain.html)
 - [Deactivating unnecessary features](./deactivating-unnecessary-features.html)
 
