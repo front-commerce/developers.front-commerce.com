@@ -1,6 +1,6 @@
 ---
 title: "2.16: BigCommerce connector V1, TwicPics for Front-Commerce out of beta and Prismic granular cache invalidation"
-date: 2022-06-22
+date: 2022-06-24
 ---
 
 **Heat waves and hot news at Front-Commerce** 🔥
