@@ -1,6 +1,7 @@
 ---
 id: external-logins
 title: External Logins
+description: Let your customers register and authenticate on your application using their existing 3rd-party accounts on mainstream services such as Google or Facebook. This guide explains how to configure the feature for your application and provides insights about its implementation.
 ---
 
 <blockquote class="feature--new">
@@ -11,9 +12,7 @@ _Since version 2.13_
 _Beta feature (API may change)_
 </blockquote>
 
-# External Logins
-
-Front Commerce supports external logins. The API for supporting external logins comes in 2 parts:
+Front-Commerce supports external logins. The API for supporting external logins comes in 2 parts:
 
 - The `LoginProvider` which implements the login with the external systems (such as Facebook or Google)
 - The `ExternalLoginHandler` which implements the login with your platform (such as Magento1, Magento2, Proximis or BigCommerce).

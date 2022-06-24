@@ -1,15 +1,14 @@
 ---
 id: in-stock-alert
 title: In-Stock Alert
+description: In-stock alerts allow users to subscribe to email notifications when a product is out of stock, so they can be notified as soon as it is back in stock. This guide explains how to enable the feature in your application and adapt it to your specific needs.
 ---
 
 <blockquote class="feature--new">
 _Since version 2.15_
 </blockquote>
 
-In-stock alerts allow users to subscribe to email notifications when a product is out of stock, so they can be notified as soon as it is back in stock.
-
-Currently supoported for Magento 1 and Magento 2, enabling this feature will add a button on a product's detail page for every product that is out of stock.
+Currently supported for Magento 1 and Magento 2, enabling this feature will add a button on a product's detail page for every product that is out of stock.
 
 ![Example with the default theme's component](/docs/advanced/features/in_stock_alert/in-stock-alert-sample.png)
 
