@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.15.0`](#2-15-0-2022-05-12)**
+**Front-Commerce [`2.16.0`](#2-16-0-2022-06-24)**
 
 Compatible with:
 
@@ -16,6 +16,27 @@ Compatible with:
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.16.0 (2022-06-24)
+
+> Heat waves and hot news at Front-Commerce 🔥
+>
+> We have just entered summer with our 2.16 release and thrilling news!
+> 
+> 🎉 The first version of our BigCommerce connector for Front-Commerce is now available! It is a huge step for us and we are glad to be able to deliver the power of this ever-growing and powerful solution through our product !
+> 
+> Since we’ve been taking a lot of time to work on this project, this release note will probably seem a bit shorter than usual 😇
+> 
+> However, we also made progress on many other aspects (detailed in this release note):
+>
+> - TwicPics connector out of beta
+> - Prismic: granular cache invalidation
+> - Global maintenance mode
+>
+> Take some popcorn, have a seat and watch the show 🍿
+
+- [Announcement](/blog/2022/06/23/front-commerce-2.16/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.16.0)
 
 ## 2.15.0 (2022-05-12)
 
