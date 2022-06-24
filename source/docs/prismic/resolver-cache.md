@@ -78,7 +78,7 @@ export default {
 
 ### List Content
 
-When caching a list of Content we expect to recieve an Array containing the Content.
+When caching a list of Content we expect to receive an Array containing the Content.
 
 ```js
 import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
