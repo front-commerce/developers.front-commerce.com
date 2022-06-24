@@ -1,9 +1,10 @@
 ---
 id: front-commerce-folder-structure
 title: Front-Commerce folder structure
+description: We encourage you to read Front-Commerce's codebase. This pages explains how to find your way in our codebase.
 ---
 
-This documentation is a quick overview of Front-Commerce's folder structure.
+Here is a quick overview of Front-Commerce's folder structure:
 
 ```
 src/
