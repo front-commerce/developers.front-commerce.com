@@ -59,6 +59,13 @@ With our new Global Maintenance Mode, you now have a way to set your site in and
 
 ## Other changes
 
+### Features
+
+- **dx:** debug the available payment methods ([25cb164](https://gitlab.com/front-commerce/front-commerce/commit/25cb1643010f9c31ee62b9b9f0ba1c228fb92bd6))
+- **graph:** created fc core order type ([1adba61](https://gitlab.com/front-commerce/front-commerce/commit/1adba61e76cc8be00d6118d5384f764ddbb67b83))
+- **magento2:** uses SHA256 for admin OAuth encryption for 2.4.4 compat ([4707b2b](https://gitlab.com/front-commerce/front-commerce/commit/4707b2b629528299766c081fc4c5bdc24278bd33))
+- **react:** prevent client side hydration with `window.__HYDRATE__ = false` ([d545655](https://gitlab.com/front-commerce/front-commerce/commit/d545655d9d21df4874505e185d4f8f0b02225bfa))
+
 ### Bug Fixes
 
 - **build:** fixed build following simultaneous uncompatible merges ([53620ef](https://gitlab.com/front-commerce/front-commerce/commit/53620ef1d5744ff7cba36bce4e9ea0363e758b2a))
@@ -80,12 +87,15 @@ With our new Global Maintenance Mode, you now have a way to set your site in and
 - **payments:** provide a paymentDetails loader in withPaymentApi ([aef830c](https://gitlab.com/front-commerce/front-commerce/commit/aef830c64095d14aa2b98f43270705d92c71abd0))
 - **search:** elasticsuite compatibility for version >= 2.10.6 ([7436c31](https://gitlab.com/front-commerce/front-commerce/commit/7436c3153ce1c1a6f8f37e2831894622f3410c2a))
 
-### Features
-
-- **dx:** debug the available payment methods ([25cb164](https://gitlab.com/front-commerce/front-commerce/commit/25cb1643010f9c31ee62b9b9f0ba1c228fb92bd6))
-- **graph:** created fc core order type ([1adba61](https://gitlab.com/front-commerce/front-commerce/commit/1adba61e76cc8be00d6118d5384f764ddbb67b83))
-- **magento2:** uses SHA256 for admin OAuth encryption for 2.4.4 compat ([4707b2b](https://gitlab.com/front-commerce/front-commerce/commit/4707b2b629528299766c081fc4c5bdc24278bd33))
-- **react:** prevent client side hydration with `window.__HYDRATE__ = false` ([d545655](https://gitlab.com/front-commerce/front-commerce/commit/d545655d9d21df4874505e185d4f8f0b02225bfa))
+Fixes from the [2.16](https://gitlab.com/front-commerce/front-commerce/-/releases/2.16.0) version have also been backported into previous minor versions. The following patch versions were released:
+[2.8.12](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.12),
+[2.9.11](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.11),
+[2.10.9](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.9),
+[2.11.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.6)
+[2.12.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.5)
+[2.13.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.13.6).
+[2.14.3](https://gitlab.com/front-commerce/front-commerce/-/releases/2.14.3).
+and [2.15.2](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.2).
 
 <hr />
 <div class="center">
