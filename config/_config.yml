@@ -1,7 +1,7 @@
-description:
-author:
-language:
-timezone:
+description: null
+author: Front-Commerce <contact@front-commerce.com>
+language: en
+timezone: "Europe/Paris"
 # API keys
 apis:
   docsearch:
@@ -9,6 +9,7 @@ apis:
     appId: 5GW5VSP0PU
     indexName: front-commerce
   ga: UA-154725716-1
+  gtm: GTM-WRN2WPF
 
 content_root: "source"
 

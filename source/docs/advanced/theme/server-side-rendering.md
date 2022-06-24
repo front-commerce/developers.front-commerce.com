@@ -1,6 +1,7 @@
 ---
 id: server-side-rendering
 title: Server Side Rendering (SSR)
+description: Front-Commerce uses SSR to improve SEO and UX by serving HTML pages to users on their first hit to the server. This documentation explains everything you need to know about it when working on a typical Front-Commerce application.
 ---
 
 Front-Commerce uses <abbr title="Server Side Rendering">SSR</abbr> (opposed to <abbr title="Client Side Rendering">CSR</abbr>) to improve <abbr title="Search Engine Optimization">SEO</abbr> and <abbr title="User experience">UX</abbr> by serving <abbr title="Hypertext Markup Language">HTML</abbr> pages to users on their first hit to the server. You can read [A typical request in Front-Commerce](/docs/concepts/architecture-overview.html#A-typical-request-in-Front-Commerce) to get a better understanding of this process.

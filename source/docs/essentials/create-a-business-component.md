@@ -1,10 +1,11 @@
 ---
 id: create-a-business-component
 title: Create a Business Component
+description: In this section, we will build a Business Component. The core concept is the same as creating a UI component.
 ---
 
-In Front Commerce we have separated our components in two categories: the **UI**
-components available in the `web/theme/components` folder, and the **Business**
+In Front Commerce we have separated our components in two categories: the [**UI**
+components](create-a-ui-component.html) available in the `web/theme/components` folder, and the **Business**
 components available in the `web/theme/modules` and `web/theme/pages` folders.
 
 <blockquote class="note">
@@ -12,10 +13,6 @@ If you feel the need to understand why we went for this organization, feel
 free to refer to [React components structure](/docs/concepts/react-components-structure.html)
 first.
 </blockquote>
-
-In this section, we will build a **Business Component**. If you have already
-gone through the [Create an UI component](create-a-ui-component.html), the core
-concept is the same.
 
 ## What is a Business component
 
@@ -313,7 +310,7 @@ It is a web interface for GraphQL, similar to what PhpMyAdmin is for MySQL.
 <p>You may think that some queries are already launched in our `EnhanceHome`
 and that splitting the StoreLocatorQuery from them is inefficient. But
 `react-apollo` will handle that for you. It will batch the requests to avoid too
-many network roundtrips. This allows us to only think about what a component needs. 
+many network roundtrips. This allows us to only think about what a component needs.
 The responsibility for retrieving its data lies with it and allows us to use it anywhere.</p>
 
 <p>However, if it is important in your case to fuse your queries, you may be

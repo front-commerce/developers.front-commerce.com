@@ -1,14 +1,19 @@
 ---
 id: wysiwyg-platform
 title: WYSIWYG customization
+description: In this guide, you will learn the different WYSIWYG implementations available on Front-Commerce and how to customize them.
 ---
 
-In this guide you will learn the different kind of WYSIWYG that is available on Front-Commerce and how to customize them. If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
+If you want to learn how the core WYSIWYG component works instead, please refer to [Display WYSIWYG content](./wysiwyg.html).
 
 Each platform has a specific type of WYSIWYG. This allows to render your content differently depending of its origin. For instance a content from WordPress might have some specific media shortcodes while Magento will have some widgets to display a category name. In the following section you will learn about the one implemented in Front-Commerce:
 
-- [`DefaultWysiwyg`](#DefaultWysiwyg)
-- [`MagentoWysiwyg`](#MagentoWysiwyg)
+- [`DefaultWysiwyg`](#defaultwysiwyg)
+- [`MagentoWysiwyg`](#magentowysiwyg)
+  - [Add a custom Magento Widget](#add-a-custom-magento-widget)
+    - [Register your widget type at the GraphQL level (**server-side**)](#register-your-widget-type-at-the-graphql-level-server-side)
+    - [Get the data in your component (**client-side**)](#get-the-data-in-your-component-client-side)
+- [`PrismicWysiwyg`](#prismicwysiwyg)
 
 Definitions:
 
@@ -68,83 +73,80 @@ If you restart your application, you will notice that the new widget component i
 
 However, in most cases, you will need to fetch data to display all the needed information in your widget. For instance, if the widget is `{% raw %}{{ widget type="acme/product-preview" sku="VSK12" }}{% endraw %}` you will want to fetch the product associated with the given SKU.
 
-1. (Server side) Register your widget type at the GraphQL level
-   1. Make sure that your dependencies are up to date in your GraphQL module
+#### Register your widget type at the GraphQL level (**server-side**)
 
-```diff
-// my-module/server/modules/wysiwyg/index.js
-export default {
-  namespace: "Magento1/Cms",
-+  dependencies: [
-+    "Magento2/Wysiwyg", // to make sure that Widget related features are available
-+    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
-+  ],
-```
+1.  First make sure that your dependencies are up to date in your GraphQL module
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    export default {
+    namespace: "Magento1/Cms",
+    +  dependencies: [
+    +    "Magento2/Wysiwyg", // to make sure that Widget related features are available
+    +    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
+    +  ],
+    ```
+1.  Then you need to register a new WidgetData type in your schema
+    ```graphql
+    # my-module/server/modules/wysiwyg/schema.gql
+    type WidgetProductPreviewData implements WidgetData {
+      dataId: ID
+      product: Product
+    }
+    ```
+1.  After that you can setup the resolvers to tell GraphQL how to fetch the `product` field
+    ```diff
+    // my-module/server/modules/wysiwyg/resolvers.js
+    export default {
+    +  WidgetProductPreviewData: {
+    +    product: ({ node }, _, { loaders }) => {
+    +      const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
+    +      if (!productSkuAttribute) {
+    +        return null;
+    +      }
+    +      return loaders.Product.load(productSkuAttribute.value)
+    +    }
+    +  },
+    }
+    ```
+1.  Finally register the widget type from Magento and associate it with the GraphQL type
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    contextEnhancer: ({ loaders }) => {
+    +  loaders.MagentoWidget.registerWidgetType(
+    +    // the tag name in your HTML
+    +    "acme/product-preview",
+    +    // The associated GraphQL type name
+    +    "WidgetProductPreviewData"
+    +  );
+    }
+    ```
 
-    2. Register a new WidgetData type in your schema
+#### Get the data in your component (**client-side**)
 
-```graphql
-# my-module/server/modules/wysiwyg/schema.gql
-type WidgetProductPreviewData implements WidgetData {
-  dataId: ID
-  product: Product
-}
-```
-
-    3. Setup the resolvers to tell GraphQL how to fetch the `product` field
-
-```diff
-// my-module/server/modules/wysiwyg/resolvers.js
-export default {
-+  WidgetProductPreviewData: {
-+    product: ({ node }, _, { loaders }) => {
-+      const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
-+      if (!productSkuAttribute) {
-+        return null;
-+      }
-+      return loaders.Product.load(productSkuAttribute.value)
-+    }
-+  },
-}
-```
-
-    4. Register the widget type coming from Magento and associate it with the GraphQL type
-
-```diff
-// my-module/server/modules/wysiwyg/index.js
-contextEnhancer: ({ loaders }) => {
-+  loaders.MagentoWidget.registerWidgetType(
-+    // the tag name in your HTML
-+    "acme/product-preview",
-+    // The associated GraphQL type name
-+    "WidgetProductPreviewData"
-+  );
-}
-```
-
-2. (Client side) Get the data in your component
-   1. Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
-
-```diff
-fragment MagentoWysiwygFragment on MagentoWysiwyg {
-  childNodes
-  data {
-    dataId
-    ... on WysiwygWidgetData {
+1.  Override the `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch the new data needed for your widget
+    ```diff
+    fragment MagentoWysiwygFragment on MagentoWysiwyg {
+      childNodes
       data {
-        ... on WidgetInvalidData {
-          dataId
+        dataId
+        ... on WysiwygWidgetData {
+          data {
+            ... on WidgetInvalidData {
+              dataId
+            }
+    +       ... on WidgetProductPreviewData {
+    +         product {
+    +           sku
+    +           name
+    +         }
+    +       }
+          }
         }
-+       ... on WidgetProductPreviewData {
-+         product {
-+           sku
-+           name
-+         }
-+       }
       }
     }
-  }
-}
-```
+    ```
+1.  Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
 
-    2. Use the fetched data in the `data` props in your final widget component (the `./path/to/ProductPreview.js` mentioned above)
+## `PrismicWysiwyg`
+
+The PrismicWysiwyg allows you to display [Rich Text](https://prismic.io/docs/core-concepts/edit-rich-text) content from Prismic in your front-end, it handles addition fields like Embed fields and media links. To learn more of the PrismicWysiwyg usage, please refer to the [Configure the PrismicWysiwyg](/docs/prismic/installation.html#Optional-Configure-the-PrismicWysiwyg) installation guide.

@@ -247,13 +247,8 @@ Here is a list of available debug namespaces:
 **Note:** one can run the `rg -iF '"front-commerce:'` to find these values.
 
 <blockquote class="note">
-In `development` environment, the source maps for both the server and the client sides are generated.
-That means you can easily use the step by step debugging for both, see:
-
-<ul>
-  <li>[Node.js debugging guide](https://nodejs.org/en/docs/guides/debugging-getting-started/)</li>
-  <li>[The Firefox JavaScript Debugger](https://developer.mozilla.org/en-US/docs/Tools/Debugger) or [Debugging JavaScript in Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/javascript/)</li>
-</ul>
+In `development` environment, the source maps for both the server and the client side are generated.
+That means you can follow our [Debugging Guide](/docs/reference/debugging.html) to get started with [JavaScript Debugging](https://www.w3schools.com/js/js_debugging.asp).
 </blockquote>
 
 ## Deprecation warnings

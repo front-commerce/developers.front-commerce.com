@@ -1,10 +1,10 @@
 ---
 id: layouts
 title: Layouts
+description: "When you are on a website, you expect to see the same elements on similar pages: the logo, the menu, maybe a footer, etc. But sometimes, you need finer control over which page should display what. That's where layouts help out!"
 ---
 
-When you are on a website, you expect to see the same kind of information on any page: the logo, the menu, maybe a footer, etc. But in some cases you may needed finer control over which page should display what. How does this translate in Front-Commerce?
-
+**How does this translate in Front-Commerce?**
 By creating `_layout.js` and `_inner-layout.js` files in your `web/theme/routes` folder to enable dynamic layouts. This is what we will explain in this guide.
 
 If you don't know what is the purpose of the `web/theme/routes` or how to use it, please first refer to the guide [Add a new page](/docs/essentials/add-a-page-client-side.html). Moreover, to complete this guide about layouts, you will need to have a module correctly setup in your project with a [web module preconfigured](/docs/essentials/add-a-page-client-side.html#Declare-your-module-as-a-web-module).

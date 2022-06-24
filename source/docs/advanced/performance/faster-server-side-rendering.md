@@ -25,7 +25,7 @@ And as long as the data was not fetched, it will not render anything. But as soo
 ```graphql
 {
   category(id: "10") {
-    layer({ params: { from: 0, size: 10 } }) {
+    layer(params: { from: 0, size: 10 }) {
       products {
         sku
         title
@@ -53,7 +53,7 @@ To do so, you need to merge your queries and move them as early as possible in y
   category(id: "10") {
     name
     description
-    layer({ params: { from: 0, size: 10 } }) {
+    layer(params: { from: 0, size: 10 }) {
       products {
         sku
         title

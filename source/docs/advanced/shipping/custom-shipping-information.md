@@ -32,9 +32,10 @@ If your shipping method is correctly registered in your backend, the following G
 
 ## Display a custom input in your shipping method
 
-Once you've done this request, you will be able to get the `carrier_code` and the `method_code` of your shipping method. You should use those to register a new component in `theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js` by following this template:
+Once you've done this request, you will be able to get the `carrier_code` and the `method_code` of your shipping method. You should use those to register a new component by overriding the [`getAdditionalDataComponent.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js) by following this template:
 
 ```js
+// theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js
 import CustomMethod from "theme/modules/CustomMethod/CustomMethod";
 
 const ComponentMap = {
@@ -43,22 +44,28 @@ const ComponentMap = {
   },
 };
 
-// ... the rest of the code should be kept intact
+const getAdditionalDataComponent = (method) => {
+  return (
+    ComponentMap[method.carrier_code] &&
+    ComponentMap[method.carrier_code][method.method_code]
+  );
+};
+
+export default getAdditionalDataComponent;
 ```
 
 The Custom component referenced here should be created in your own module, and display the additional information of your shipping method to the user.
 
 ```js
 // theme/modules/CustomMethod/CustomMethod.js
-import React from "react";
-import { compose, branch } from "recompose";
+import React, { useState } from "react";
 import SubmitShippingMethod from "theme/modules/Checkout/ShippingMethod/SubmitShippingMethod/SubmitShippingMethod";
 
-const CustomMethod = ({ pending, error }) => {
+const CustomMethod = ({ pending, error, submitAdditionalData }) => {
   const [customValue, setCustomValue] = useState();
 
   return (
-    <div className="colissimo">
+    <div className="custom-shipping-method">
       <input
         onChange={(event) => setCustomValue(event.target.value)}
         value={customValue}
@@ -87,6 +94,14 @@ CustomMethod.AddressRecapLine = (props) => (
 
 export default CustomMethod;
 ```
+
+<blockquote class="info">
+  **ProTip:**  You can reference one of our implementations to get you started
+  <ul>
+    <li>[`<ModialRelay />`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/modules/shipping-mondialrelay/web/theme/modules/MondialRelay/MondialRelay.js)</li>
+    <li>[`<Colissimo />`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/modules/shipping-colissimo-magento2/web/theme/modules/Colissimo/Colissimo.js)</li>
+  </ul>
+</blockquote>
 
 Things to understand here:
 

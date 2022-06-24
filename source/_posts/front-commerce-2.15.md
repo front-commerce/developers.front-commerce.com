@@ -1,0 +1,102 @@
+---
+title: "2.15: Back in stock product alerts, deploy paypal for Adyen, benefit from the power of embed fields for Prismic"
+date: 2022-05-12
+---
+
+We’ve made a lot of progress during this release, which is quite packed! Without further delay here's the Front-Commerce 2.15 menu 🧑‍🍳
+
+- Our BigCommerce connector has made good progress and we will soon be able to put our MVP demo online
+- We continued to enrich the features available for Front-Commerce and Magento with the back-in-stock alerts and the possibility to use the native Magento search feature
+- We proofed our Cloud offering with the completion of new stress tests and the migration of several existing or new websites on our new cloud infrastructure.
+- We continued to enrich our Prismic module with the availability of embed fields, allowing you to add a valid Embed URL, like YouTube, Vimeo, Soundcloud ...and deliver it via Front-Commerce
+- Discover and test an early version of the Twicpics connector: the final version will be ready for version 2.16
+- We made Front-Commerce compatible with npm 7 / NodeJS 16 (npm 8 / NodeJS 17 in beta) and will keep track on NodeJS releases starting from now on.
+
+Discover the details and demos of new features below. Should you have any requests regarding the product roadmap, do not hesitate to contact Josquin 👋
+
+<!-- more -->
+
+## Prismic: embed fields
+
+Our first version of the Prismic x Front-Commerce connector has been around since [our version 2.7](https://developers.front-commerce.com/blog/2021/06/15/front-commerce-2.7/), almost a year ago!
+
+Since then, the connector has evolved significantly, with the progressive release of new fields, performance improvements and the awaited [Preview feature (available from F-C 2.13)](https://developers.front-commerce.com/blog/2022/02/17/front-commerce-2.13/)
+
+For this release 2.15, we worked on the embed fields! With it, you’ll be able to embed content from numerous providers in no time! An overview of our whole Prismic connector will come soon, stay tuned!
+
+## Magento: notify your customers with back-in-stock alerts (M1 and M2)
+
+Magento (1 and 2) offers a variety of alerts, allowing to keep your customers posted depending on changes to your prices or stock.
+
+Thus, the _[in-stock alerts](https://docs.magento.com/user-guide/catalog/inventory-product-alerts.html#in-stock-alerts)_ feature creates _Notify me when this product is in stock_ link for every product that is out of stock. We transformed the existing features to improve the customer experience: customers can click the link to subscribe to the alert from the product page and they can also directly unsubscribe from the exact same page. When the product is back in stock, customers receive an email notification that the product is available.
+
+Get an overview of the workflow with this quick demo ⬇️
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/e3bc12d196ee425593a86a724fc4d53f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+## BigCommerce: place your first order on [Big x Front]Commerce
+
+It’s almost there! We have made great progress on our BigCommerce connector and the demo will be available soon, joining [our existing ones](https://demo.front-commerce.app/)!
+
+Stay tuned for the unveiling video demo which will come up in the coming weeks 🙂
+
+As a teaser, here is the list of things we will be able to demonstrate shortly with a [Big x Front]Commerce connector :
+
+- Navigation as a guest, product lists and paginated categories with filters
+- Product page for both simple and configurable products (variants)
+- BigCommerce native checkout redirection
+- Guest checkout
+
+With this perimeter, we will provide a MVP allowing you to experience the power of Front-Commerce and BigCommerce together!
+
+## Magento2: use the native search capabilities of Magento for PLP
+
+As part of Front-Commerce, we already offer you the search capabilities from the ElasticSuite and Algolia. The search-related features on Magento2 have progressed a lot during the past months: therefore, we decided to make Magento2 native search available for Front-Commerce, starting with PLP!
+
+## For developers: **npm 7 / NodeJS 16 / NodeJS 17 compatibility**
+
+Starting from 2.15.0, we dropped support for Node 12, and ensured compatibility **with Node 14, 16, and 17.** Our Node support strategy from this point on, will be to support:
+
+- The previous LTS version. (14 at the time of 2.15.0)
+- The active LTS version. (16 at the time of 2.15.0)
+- The current Node version, on a best effort basis. (17 is supported at the time of 2.15.0)
+
+Our support for NodeJS versions follows the [NodeJS release calendar](https://nodejs.org/en/about/releases/) with a delay of one release cycle (6 weeks at the time of writing). We believe this strategy is balanced between backwards compatibility and encouragement to use of latest NodeJS versions to avoid security pitfalls - all the while being anchored on a the stable and sensible release calendar from NodeJS.
+
+NB: If you plan to use **NodeJS 17 or npm 7+** in your environment, there might be some changes that you need to implement. Please refer to our [migration guides for the details](https://developers.front-commerce.com/docs/appendices/migration-guides.html#2-14-0-gt-2-15-0).
+
+## Adyen: integrate Paypal w. Adyen for a seamless checkout experience
+
+You’ll be able to process payments using Paypal through for Front-Commerce : this will allow you to considerably improve the user experience during checkout for customers using Paypal.
+
+## Twicpics connector: early version
+
+As mentioned on [their website](https://www.twicpics.com/), TwicPics deliver perfectly sized images and videos, in real-time, on your websites and on your apps to help you optimize your users' experience.
+
+As a vivid actor of [the MACH ecosystem](https://machalliance.org/), we could not agree more! Thanks to our connector, TwicPics for Front-Commerce, you will be able to integrate the powerful capabilities and APIs of TwicPics very easily to deliver media on your e-commerce website.
+
+<hr />
+
+## Others
+
+### Features and improvements
+
+- **improvement**: customer orders can now be paginated, improving the user experience when customers have a lot of orders
+- **metrics:** introduced an initial [opentelemetry instrumentation](https://opentelemetry.io/) to track external hosts performance
+- **routing:** RedirectEntity can now redirect to an external URL
+- **algolia:** product list pages now support [the Magento2’s Visual Category merchandising feature](https://www.algolia.com/doc/integration/magento-2/merchandising/category-merchandising/?client=php)
+
+### Bug Fixes
+
+- **magento2:** when using coupons or store credits, the correct cart total price is now always returned (VAT amount could led to incorrect amount displayed)
+- **magento2:** item options are now properly exposed on order items, and will now appear on the order detail page
+
+<hr />
+<div class="center">
+  <p>
+    <a class="link primary button intercom-launcher" href="https://www.front-commerce.com/contact/">💌 Ask your questions about Front-Commerce</a>
+  </p>
+  <p>
+    [Upgrade to Front-Commerce 2.15.0](/docs/appendices/migration-guides.html#2-14-0-gt-2-15-0) or [read the full changelog (Customers only)](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.0)
+  </p>
+</div>

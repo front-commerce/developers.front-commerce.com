@@ -1,9 +1,8 @@
 ---
 id: remote-schemas
 title: Remote schemas
+description: If you already have existing headless services exposing a GraphQL API, you might want to reuse them with the lowest possible overhead. This page will explain how you could expose remote GraphQL schemas as part of your Front-Commerce GraphQL schema.
 ---
-
-If you already have existing headless services exposing a GraphQL API, you might want to reuse them with the lowest possible overhead.
 
 Here are some use cases:
 
@@ -14,8 +13,6 @@ Here are some use cases:
 
 In Front-Commerce, GraphQL modules can declare their own local schema but they can also reuse remote schemas and make them available in the GraphQL schema.
 This is referred to as **remote schema stitching**.
-
-This page will explain how you could expose remote GraphQL schemas as part of your Front-Commerce GraphQL schema.
 
 <blockquote class="feature--new">
   _This feature has been added in version `1.0.0-alpha.2`_

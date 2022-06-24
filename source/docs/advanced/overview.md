@@ -1,10 +1,8 @@
 ---
 id: architecture-overview
 title: Overview
+description: In this section, you will learn how Front-Commerce interacts with your different platforms and its role.
 ---
-
-In this section you will learn how Front-Commerce interacts with your different
-platforms and what is its role.
 
 ## The main entrypoint for your users
 

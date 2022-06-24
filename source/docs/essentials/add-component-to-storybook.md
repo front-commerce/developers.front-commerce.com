@@ -1,11 +1,8 @@
 ---
 id: add-component-to-storybook
 title: Add a component to your Design system
+description: Our goal with Front-Commerce is to give you the tools you need to develop a delightful user experience within your e-commerce shop. One of these tools is a Design System.
 ---
-
-Our goal with Front-Commerce is to give you the tools you need to develop a
-delightful user experience within your e-commerce shop. One of these tools
-is a Design System.
 
 The concept lying behind a Design System is to document how your brand
 communicates with its users. This goes from global guides such as "Voice and

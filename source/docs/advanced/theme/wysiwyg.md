@@ -1,9 +1,10 @@
 ---
 id: wysiwyg
 title: Display WYSIWYG content
+description: Let your users write their content without needing any HTML or React knowledge while still being able to deliver a qualitative UI (performant, responsive, accessible…) to customers.
 ---
 
-WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It means that your back office users write their content without needing any HTML or React knowledge. This is the case in most CMS tools nowadays. The output though is usually HTML which does not necessarly match the React components you've built in your Front-Commerce application.
+WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It means that your back office users write their content without needing any HTML or React knowledge. This is the case in most CMS tools nowadays. The output though is usually HTML which does not necessarily match the React components you've built in your Front-Commerce application.
 
 This is why we've built a `theme/modules/WysiwygV2` component in Front-Commerce. In this guide you will learn how to use it and how to customize its display.
 
@@ -30,7 +31,7 @@ The `contentWysiwyg` property must come from a GraphQL field of type `Wysiwyg`, 
 
 ```diff
 #import "theme/modules/CmsPage/CmsPageSeo/CmsPageSeoFragment.gql"
-+#import "theme/modules/WysiwygV2/WysiwygFragment.gql"
++ #import "theme/modules/WysiwygV2/WysiwygFragment.gql"
 
 fragment CmsPageFragment on CmsPage {
   identifier
@@ -42,7 +43,6 @@ fragment CmsPageFragment on CmsPage {
   content_heading
   ...CmsPageSeoFragment
 }
-
 ```
 
 ### What if the `Wysiwyg` field does not exist in your schema?
@@ -109,51 +109,49 @@ If you want to customize `MagentoWysiwyg` instead, please refer to [the next sec
 
 **Steps to create a new Wysiwyg Type (`CustomWysiwyg`)**
 
-1. (Server side) Represent this new type of Wysiwyg in the GraphQL schema
-   1. Add `Front-Commerce/Wysiwyg` as a dependency of your GraphQL module (for instance at `my-module/server/modules/wysiwyg/`)
-   2. Define a new GraphQL type that should implement the `Wysiwyg` interface
+#### Register your widget type at the GraphQL level (**server-side**)
 
-```graphql
-# my-module/server/modules/wysiwyg/schema.gql
-type CustomWysiwyg implements Wysiwyg {
-  raw: String
-  childNodes: JSON
-  data: [WysiwygNodeData]
-}
-```
+1.  Add `Front-Commerce/Wysiwyg` as a dependency of your GraphQL module (for instance at `my-module/server/modules/wysiwyg/`)
+1.  Define a new GraphQL type that should implement the `Wysiwyg` interface
+    ```graphql
+    # my-module/server/modules/wysiwyg/schema.gql
+    type CustomWysiwyg implements Wysiwyg {
+      raw: String
+      childNodes: JSON
+      data: [WysiwygNodeData]
+    }
+    ```
+1.  Register this new type as a Wysiwyg type in your GraphQL module
+    ```js
+    // my-module/server/modules/wysiwyg/index.js
+    contextEnhancer: ({ loaders }) => {
+      loaders.Wysiwyg.registerWysiwygType(
+        // the name of the GraphQL type you have just created
+        "CustomWysiwyg",
+        // The list of shortcodes that are parsed and replaced in your wysiwyg content
+        [
+          {
+            // regex to identify the shortcode within your HTML code
+            regex: /\{\{media url="(.*?)"\}\}/gi,
+            // How to replace the given shortcode
+            replacement: (match, url) => `/media/${url}`,
+          },
+        ]
+      );
+    };
+    ```
 
-    3. Register this new type as a Wysiwyg type in your GraphQL module
+#### Map this new type to a specific React component that will apply the needed transformations before displaying the content (**client-side**)
 
-```diff
-// my-module/server/modules/wysiwyg/index.js
-contextEnhancer: ({ loaders }) => {
-+  loaders.Wysiwyg.registerWysiwygType(
-+    // the name of the GraphQL type you have just created
-+    "CustomWysiwyg",
-+    // The list of shortcodes that are parsed and replaced in your wysiwyg content
-+    [
-+      {
-+        // regex to identify the shortcode within your HTML code
-+        regex: /\{\{media url="(.*?)"\}\}/gi,
-+        // How to replace the given shortcode
-+        replacement: (match, url) => `/media/${url}`
-+      }
-+    ]
-+  );
-}
-```
-
-2. (Client side) Map this new type to a specific React component that will apply the needed transformations before displaying the content
-   1. Duplicate `theme/modules/WysiwygV2/DefaultWysiwyg` to `theme/modules/WysiwygV2/CustomWysiwyg`.
-   1. Override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map your new `CustomWysiwyg` typename (the one used in your GraphQL schema) to `theme/modules/WysiwygV2/CustomWysiwyg` (the file that tells React how to display the content)
-
-```diff
-const typenameMap = {
--  MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg"))
-+  MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg")),
-+  CustomWysiwyg: loadable(() => import("./CustomWysiwyg"))
-};
-```
+1.  Duplicate `theme/modules/WysiwygV2/DefaultWysiwyg` to `theme/modules/WysiwygV2/CustomWysiwyg`.
+1.  Override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map your new `CustomWysiwyg` typename (the one used in your GraphQL schema) to `theme/modules/WysiwygV2/CustomWysiwyg` (the file that tells React how to display the content)
+    ```diff
+    const typenameMap = {
+    -   MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg"))
+    +   MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg")),
+    +   CustomWysiwyg: loadable(() => import("./CustomWysiwyg"))
+    };
+    ```
 
 This is it, you have a new `CustomWysiwyg` type. However, the components rendered are still simple HTML tags. If you want to add interactivity, you will need to refer to the `theme/modules/WysiwygV2/CustomWysiwyg` you have created.
 
@@ -173,101 +171,97 @@ The props available represent the HTML attributes coming from your Wysiwyg conte
 <b>Note:</b> If the component is complex, please think about code splitting them to avoid too large bundles on pages that don't need them.
 </blockquote>
 
-#### Fetching data to render Wysiwyg components
+### Fetching data to render Wysiwyg components
 
 You can now transform HTML tags into React components. However, in some cases the data provided in the raw HTML you've received from your remote service won't be enough to display your component. For instance, you may have a `<product-name sku="VSK12" />` that is supposed to display the product's name. But all you have in the attributes is the SKU. This can be done by associating a `WysiwygNodeData` with your HTML node.
 
 Indeed, when you've created your GraphQL `CustomWysiwyg` type, you have declared: `childNodes` (`JSON`) and `data` (`[WysiwygNodeData]`). By default, `data` will always be empty. But you can tell the Wysiwyg loader to fetch data for some specific `childNodes` (that each represent an HTML tag). This means that for `product-name`, you will associate a new `data` element that will contain the whole product data needed to display the component. To do so, you need to follow these steps:
 
-1. (Server side) Add the product data to your GraphQL schema
-   1. Make sure that your dependencies are up to date in your GraphQL module
+#### Add the product data to your GraphQL schema (**server-side**)
 
-```diff
-// my-module/server/modules/wysiwyg/index.js
-export default {
-  namespace: "Magento1/Cms",
-+  dependencies: [
-+    "Front-Commerce/Wysiwyg", // to make sure that Wysiwyg related features are available
-+    "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
-+  ],
-```
+1.  Make sure that your dependencies are up to date in your GraphQL module
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    export default {
+      namespace: "Magento1/Cms",
+    +   dependencies: [
+    +     "Front-Commerce/Wysiwyg", // to make sure that Wysiwyg related features are available
+    +     "Magento2/Catalog/Product" // to make sure that you can fetch a product in your Wysiwyg data
+    +   ],
+    ```
+1.  Define a new `WysiwygProductNameData` type that implements `WysiwygNodeData` and expose all the data you need to display your component
+    ```graphql
+    # my-module/server/modules/wysiwyg/schema.gql
+    type WysiwygProductNameData implements WysiwygNodeData {
+      dataId: ID
+      product: Product
+    }
+    ```
+1.  Setup the resolvers to tell GraphQL how to fetch the `product` field in your new `WysiwygProductNameData` type
+    ```diff
+    // my-module/server/modules/wysiwyg/resolvers.js
+    export default {
+    +   WysiwygProductNameData: {
+    +     product: ({ node }, _, { loaders }) => {
+    +       const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
+    +       if (!productSkuAttribute) {
+    +         return null;
+    +       }
+    +       return loaders.Product.load(productSkuAttribute.value)
+    +     }
+    +   },
+    }
+    ```
+1.  Register the HTML tag and associate it with the GraphQL type
+    ```diff
+    // my-module/server/modules/wysiwyg/index.js
+    contextEnhancer: ({ loaders }) => {
+    +   loaders.Wysiwyg.registerNodeType(
+    +     "product-name", // the tag name in your HTML
+    +     "WysiwygProductNameData" // The associated GraphQL type name
+    +   );
+    }
+    ```
 
-    2. Define a new `WysiwygProductNameData` type that implements `WysiwygNodeData` and expose all the data you need to display your component
+#### Fetch the data to make it available in your custom Product Name component (**client-side**)
 
-```graphql
-# my-module/server/modules/wysiwyg/schema.gql
-type WysiwygProductNameData implements WysiwygNodeData {
-  dataId: ID
-  product: Product
-}
-```
+<ol>
+  <li>
+    Override the `theme/modules/WysiwygV2/WysiwygFragment.gql` to fetch the new `WysiwygProductNameData`
+    ```diff
+    #import "./MagentoWysiwyg/MagentoWysiwygFragment.gql"
 
-    3. Setup the resolvers to tell GraphQL how to fetch the `product` field in your new `WysiwygProductNameData` type
-
-```diff
-// my-module/server/modules/wysiwyg/resolvers.js
-export default {
-+  WysiwygProductNameData: {
-+    product: ({ node }, _, { loaders }) => {
-+      const productSkuAttribute = node.attrs.find(({ name }) => name === "sku")
-+      if (!productSkuAttribute) {
-+        return null;
-+      }
-+      return loaders.Product.load(productSkuAttribute.value)
-+    }
-+  },
-}
-```
-
-    4. Register the HTML tag and associate it with the GraphQL type
-
-```diff
-// my-module/server/modules/wysiwyg/index.js
-contextEnhancer: ({ loaders }) => {
-+  loaders.Wysiwyg.registerNodeType(
-+    // the tag name in your HTML
-+    "product-name",
-+    // The associated GraphQL type name
-+    "WysiwygProductNameData"
-+  );
-}
-```
-
-2. (Client side) Fetch the data to make it available in your custom Product Name component
-   1. Override the `theme/modules/WysiwygV2/WysiwygFragment.gql` to fetch the new `WysiwygProductNameData`
-
-```diff
-#import "./MagentoWysiwyg/MagentoWysiwygFragment.gql"
-
-fragment WysiwygFragment on Wysiwyg {
-  childNodes
-  data {
-    dataId
-+   ... on WysiwygProductNameData {
-+     product {
-+       sku
-+       name
-+     }
-+   }
-  }
-  ... on MagentoWysiwyg {
-    ...MagentoWysiwygFragment
-  }
-}
-```
-
+    fragment WysiwygFragment on Wysiwyg {
+      childNodes
+      data {
+        dataId
+    +      ... on WysiwygProductNameData {
+    +        product {
+    +          sku
+    +          name
+    +        }
+    +      }
+      }
+      ... on MagentoWysiwyg {
+        ...MagentoWysiwygFragment
+      }
+    }
+    ```
     Feel free to split this in a Fragment dedicated to your `CustomWysiwyg` just like it is done in the core for `MagentoWysiwyg`.
-    2. Reference the `product-name` tag in your componentMap and use the new `data` prop available in the mapped component.
 
-```diff
-const defaultComponentsMap = {
-+  product-name: (props) => <span>{props.data.product.name}</span>
-}
-```
-
+  </li>
+  <li>
+    Reference the `product-name` tag in your componentMap and use the new `data` prop available in the mapped component.
+    ```diff
+    const defaultComponentsMap = {
+    +   product-name: (props) => <span>{props.data.product.name}</span>
+    }
+    ```
     <blockquote className="important">
-    <b>Note:</b> Please keep in mind that for simplicity's sake, the product name component is not code split, but if it grows in complexity, please make sure to code split it using <code>@loadable/component</code> to avoid too large bundles.
+      <b>Note:</b> Please keep in mind that for simplicity's sake, the product name component is not code split, but if it grows in complexity, please make sure to code split it using <code>@loadable/component</code> to avoid too large bundles.
     </blockquote>
+  </li>
+</ol>
 
 ### Nested Wysiwyg components
 
