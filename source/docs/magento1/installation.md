@@ -1,6 +1,7 @@
 ---
 id: magento1-installation
 title: Installation
+description: Front-Commerce applications requires a Front-Commerce module to be installed on the Magento instance. This guide explains how to install it.
 ---
 
 ## Module compatibility
