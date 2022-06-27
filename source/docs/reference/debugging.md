@@ -1,7 +1,7 @@
 ---
 id: debugging
 title: Debugging
-description: Debug your Front-Commerce app.
+description: This reference documentation explains how to debug your Front-Commerce app using breakpoints.
 ---
 
 # Debugging

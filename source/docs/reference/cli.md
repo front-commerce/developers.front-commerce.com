@@ -1,9 +1,8 @@
 ---
 id: cli
 title: CLI
+description: With Front-Commerce comes a CLI tool ("front-commerce") that helps you launch the tasks needed to develop, build and launch your application. This reference documentation explains how to use it in a project.
 ---
-
-With Front-Commerce comes a CLI tool (`front-commerce`) that helps you launch the tasks needed to develop, build and launch your application.
 
 These commands should be launched from your project's root directory. This can be done by:
 
@@ -72,9 +71,9 @@ Once it is generated, you can launch the application by using `NODE_ENV=producti
 
 This command will launch the Front-Commerce application. There are two modes available:
 
-- `NODE_ENV=development front-commerce start`: launches Front-Commerce application in development mode (hot reloading, linting, etc.).  
+- `NODE_ENV=development front-commerce start`: launches Front-Commerce application in development mode (hot reloading, linting, etc.).
   Please make sure to have launched `front-commerce prepare` beforehand.
-- `NODE_ENV=production front-commerce start`: launches Front-Commerce application in production mode (using precompiled code).  
+- `NODE_ENV=production front-commerce start`: launches Front-Commerce application in production mode (using precompiled code).
   Please make sure to have launched `front-commerce build` beforehand.
 
 ## `front-commerce styleguide`

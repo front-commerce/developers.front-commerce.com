@@ -1,11 +1,8 @@
 ---
 id: routing
 title: Routing
+description: 'In Front-Commerce, the routing relies on two concepts: web modules and files in the "web/theme/routes" directory of your web module. This reference explains how to customize the routes of your application.'
 ---
-
-In Front-Commerce, the routing relies on two concepts: web modules and the files in `web/theme/routes` of your web module.
-
-In this reference, you will find an exhaustive list about how to customize the routes of your application.
 
 ## Which routes are loaded?
 

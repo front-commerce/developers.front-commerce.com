@@ -1,11 +1,10 @@
 ---
 id: front-commerce-js
 title: .front-commerce.js
+description: The .front-commerce.js configuration file at the root of a Front-Commerce project is the main entrypoint defining how an application behaves. This page documents its different configuration keys.
 ---
 
-The `.front-commerce.js` configuration file at the root of a Front-Commerce project is the main entrypoint defining how an application behaves.
-
-From this definition, Front-Commerce will initialize and register the different pieces composing your application.
+From the `.front-commerce.js` definition, Front-Commerce will initialize and register the different pieces composing your application.
 
 ## `name`
 
