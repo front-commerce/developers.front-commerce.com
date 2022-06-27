@@ -1,9 +1,10 @@
 ---
 id: mondial-relay
 title: Mondial Relay integration
+description: This guide explain how Front-Commerce allows to use Mondial Relay in a headless commerce project.
 ---
 
-This page contains information about the different ways you can ship orders with [Mondial Relay](https://www.mondialrelay.fr/) in your Front-Commerce application.
+There are different ways for you to ship orders with [Mondial Relay](https://www.mondialrelay.fr/) in your Front-Commerce application.
 
 ## Prerequisites
 
