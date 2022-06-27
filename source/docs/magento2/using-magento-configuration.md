@@ -1,11 +1,10 @@
 ---
 id: using-magento-configuration
 title: Using Magento Configuration
+description: In Magento, many features have related configurations. Each one of them will influence how your shop runs. You might want to access them from your Front-Commerce application to give merchants more autonomy. This guide explains how to achieve this.
 ---
 
-In Magento's ecosystem, for every feature there are configurations (in the Stores > Settings > Configurations page). Each one of them will influence how your shop runs and you will need to have access in your Front-Commerce application to give merchants more autonomy.
-
-As a developer this means that you will need a way to fetch them. In Front-Commerce you have two possibilities:
+Configurations usually are available under the `Stores > Settings > Configurations` page. Configurations are stored in a unified way in the Magento database and as a developer you will have a unified way to fetch them. In Front-Commerce you have two possibilities:
 
 - Reuse Magento's GraphQL schema (see [Magento2 GraphQL schema](./graphql.html))
 - Fetch configurations with a REST endpoint

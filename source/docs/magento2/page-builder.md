@@ -1,23 +1,18 @@
 ---
 id: magento2-page-builder
 title: Page Builder
+description: Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using Page Builder. Front-Commerce supports Page Builder managed content out-of-the-box. In this guide, you will learn how to use this feature and extend it.
 ---
-
-Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using [Page Builder](https://magento.com/products/magento-commerce/page-builder). Front-Commerce supports Page Builder managed content out-of-the-box.
-
-In this section, you will learn how to use this feature and extend it. Create new _content types_ and refine UI components so that merchants can create the rich shopping experiences that was designed for _their_ customers.
 
 <blockquote class="feature--new">
 _Since version 2.11.0 (early preview)_
-<br>
-**Early preview:** we're currently looking for feedbacks about this feature. The core API is stable and ready for use in your storefronts. We're improving default content types support. Please contact us if you're using this feature.
-<br>
-**Work In Progress:** this documentation page will get more details in the next few days
 </blockquote>
+
+Common tasks as a developer would consist in creating new _content types_ and refining UI components so that merchants can create the rich shopping experiences that was designed for _their_ customers.
 
 ## Prerequisites
 
-Page Builder is only available for content that:
+[Page Builder](https://magento.com/products/magento-commerce/page-builder) is only available for content that:
 
 - are displayed using [the `<WysiwygV2>` component and its related `WysiwygFragment` GraphQL fragment](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage)
 - get data from GraphQL fields resolved using [the `MagentoWysiwyg` type](/docs/advanced/theme/wysiwyg-platform.html#MagentoWysiwyg) **(which is the case of all default Magento rich content fields)**
@@ -51,7 +46,7 @@ Additional data is exposed via the GraphQL for more more advanced [Customized UI
 
 <blockquote class="wip">
  **Work In Progress:** We only have partial support for the `row` content type. <br />
- Here are the unsupported props: 
+ Here are the unsupported props:
   <ul style="list-style:none;margin-bottom:0;opacity:0.75;">
     <li>✖ Mobile Image</li>
     <li>✖ Fluid Width <i>- requires a supported layout</i></li>

@@ -1,13 +1,14 @@
 ---
 id: detect-admin-users
 title: Detect admin users
+description: In some specific use cases you may want to adapt the application when the merchant is navigating your Front-Commerce application. For instance some pages may be protected and only accessible to the e-merchants of your shop. The rest of the users won't be able to read its content. This guide explains how Front-Commerce supports these use cases.
 ---
 
-_This feature has been added in version `2.1.0`_
+<blockquote class="feature--new">
+  _Since version 2.1_
+</blockquote>
 
-In some specific use cases you may want to adapt the application when the e-merchant is navigating your Front-Commerce application. For instance some pages may be protected and only accessible to the e-merchants of your shop. The rest of the users won't be able to read its content.
-
-In Front-Commerce, we've achieved this by injecting something in the user's session when they are navigating Magento's backend. This documentation page details how it works and how you can use it.
+In Front-Commerce, we have a way to let you know whether the user is an admin or not. We've achieved this by injecting something in the user's session when they are navigating Magento's backend. This documentation page details how it works and how you can use it.
 
 ## Configuring your environment
 

@@ -1,9 +1,10 @@
 ---
 id: magento2-headless-payments
 title: Magento2 headless payments
+description: Historically, Magento2 did not support headless payments. Even though some payment providers are starting to support them, Front-Commerce provides a workaround. This guide explains how to expose an existing Magento payment method for a headless usage in Front-Commerce.
 ---
 
-Historically, Magento2 did not support headless payments. Even though some payment providers are slowly exposing REST or GraphQL APIs from their module, most of them often rely on the `CheckoutSession` or `CustomerSession` to persist meaningful information across checkout steps.
+Some payment methods expose REST or GraphQL APIs from their module, but most of them often rely on Magento `CheckoutSession` or `CustomerSession` to persist meaningful information across checkout steps. This guide covers the later.
 
 Front-Commerce’s Magento module provides a generic way to expose Magento payment modules headlessly and supports [the relevant Front-Commerce payment workflows](/docs/advanced/payments/payment-workflows.html).
 
