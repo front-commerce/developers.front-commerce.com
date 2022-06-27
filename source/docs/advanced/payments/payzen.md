@@ -1,12 +1,21 @@
 ---
 id: payzen
 title: PayZen / Lyra Collect integration
+description: This guide explain how Front-Commerce allows to use PayZen / Lyra Collect in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [PayZen](https://payzen.eu/) or [Lyra Collect](https://www.lyra.com/lyra-collect/) in your Front-Commerce application.
+There are different ways for you to accept payments with [PayZen](https://payzen.eu/) or [Lyra Collect](https://www.lyra.com/lyra-collect/) in your Front-Commerce application.
 
-- [Front-Commerce Payment](#Front-Commerce-Payment)
-- [Magento2 module](#Magento2-module)
+- [Front-Commerce Payment](#front-commerce-payment)
+  - [Lyra Collect support](#lyra-collect-support)
+  - [Configure your environment](#configure-your-environment)
+  - [Register the PayZen payment module](#register-the-payzen-payment-module)
+    - [Magento2](#magento2)
+    - [Magento1](#magento1)
+  - [Register your PayZen payment component](#register-your-payzen-payment-component)
+  - [Update your CSPs](#update-your-csps)
+  - [Advanced: customize data sent to PayZen](#advanced-customize-data-sent-to-payzen)
+- [Magento2 module](#magento2-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 

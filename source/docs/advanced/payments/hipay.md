@@ -1,15 +1,20 @@
 ---
 id: hipay
 title: HiPay integration
+description: This guide explain how Front-Commerce allows to use HiPay in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [HiPay](https://hipay.com/) in your Front-Commerce application.
+There is only one way to accept payments with [HiPay](https://hipay.com/) in your Front-Commerce application for now.
+
+## Front-Commerce Payment
 
 <blockquote class="feature--new">
   _Since version 2.13.0_
 </blockquote>
 
-## Configuring the HiPay console
+This section explains how to configure and customize the HiPay Front-Commerce Payment module into an existing Front-Commerce application.
+
+### Configuring the HiPay console
 
 For Front-Commerce to use the HiPay API you will need to create technical users and retrieve some informations for the environment variables.
 

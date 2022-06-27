@@ -1,12 +1,17 @@
 ---
 id: ingenico
 title: Ingenico integration
+description: This guide explain how Front-Commerce allows to use Ingenico in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [Ingenico](https://www.ingenico.com/) (Ogone) in your Front-Commerce application.
+There are different ways for you to accept payments with [Ingenico](https://www.ingenico.com/) (Ogone) in your Front-Commerce application.
 
-- [Front-Commerce Payment](#Front-Commerce-Payment)
-- [Magento2 module](#Magento2-module)
+- [Front-Commerce Payment](#front-commerce-payment)
+  - [Configure your environment](#configure-your-environment)
+  - [Register the Ogone payment module](#register-the-ogone-payment-module)
+  - [Register your Ogone payment component](#register-your-ogone-payment-component)
+  - [Update your CSPs](#update-your-csps)
+- [Magento2 module](#magento2-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 

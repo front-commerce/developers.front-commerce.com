@@ -1,13 +1,21 @@
 ---
 id: paypal
 title: Paypal integration
+description: This guide explain how Front-Commerce allows to use Paypal in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [Paypal](https://paypal.com/) in your Front-Commerce application.
+There are different ways for you to accept payments with [Paypal](https://paypal.com/) in your Front-Commerce application.
 
-- [Front-Commerce Payment](#Front-Commerce-Payment)
-- [Magento2 module](#Magento2-module)
-- [Magento1 module](#Magento1-module)
+- [Front-Commerce Payment](#front-commerce-payment)
+  - [Configure your environment](#configure-your-environment)
+  - [Register the Paypal payment module](#register-the-paypal-payment-module)
+    - [Magento2](#magento2)
+    - [Magento1](#magento1)
+  - [Register your Paypal payment component](#register-your-paypal-payment-component)
+  - [Update your CSPs](#update-your-csps)
+  - [Advanced: customize data sent to Paypal](#advanced-customize-data-sent-to-paypal)
+- [Magento2 module](#magento2-module)
+- [Magento1 module](#magento1-module)
 
 > **Note:** each integration method is independent from the others, meaning that you don't have to install additional modules on your eCommerce platform if using Front-Commerce payments.
 
