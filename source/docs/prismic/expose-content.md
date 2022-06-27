@@ -1,9 +1,10 @@
 ---
 id: expose-content
 title: Expose Prismic Content
+description: The Prismic Front-Commerce module provides a loader and the infrastructure to expose Prismic based Content in Front-Commerce's GraphQL API. This guide explains how to use it.
 ---
 
-The Prismic Front-Commerce module provides a loader and the infrastructure to expose Prismic based Content in Front-Commerce's GraphQL API.
+Exposing Prismic content in an existing Front-Commerce application GraphQL schema is one of the main use case Prismic projects. We tried to keep the API easy to understand and require as few code as possible (while keeping it maintainable and expressive).
 
 ## Prerequisites
 

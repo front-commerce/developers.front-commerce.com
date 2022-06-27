@@ -1,20 +1,26 @@
 ---
 id: routable-types
 title: Prismic Routable Types
+description: You might want to create new pages managed from Prismic. These pages should be accessible with a URL and may have to be included in the Sitemap with a clean URL. This guide explains everything that is supported by Front-Commerce's Prismic module.
 ---
 
-You might want to create new pages managed from Prismic. These pages should be accessible with a URL and may have to be included in the Sitemap (e.g: `/our-company`).
-
-This documentation page explain how the Prismic module allows to leverage [Front-Commerce's Dispatcher](/docs/advanced/theme/route-dispatcher.html) to make content from custom types routable.
+The Prismic module allows to leverage [Front-Commerce's Dispatcher](/docs/advanced/theme/route-dispatcher.html) to make content from custom types routable.
 
 To make a custom Prismic data type routable these steps are required:
 
-- [Create a field to represent the Url of the custom type](#Create-a-field-to-represent-the-Url-of-the-custom-type)
-- [Create a GraphQL type to represent the custom type](#Create-a-GraphQL-type-to-represent-the-custom-type)
-- [Add GraphQL type to the dispatcher query](#Add-GraphQL-type-to-the-dispatcher-query)
-- [Register the Prismic custom type as a routable type](#Register-the-Prismic-custom-type-as-a-routable-type)
-- [Map GraphQL type to a component](#Map-GraphQL-type-to-a-component)
-- [Add a routable custom type to the sitemap](#Add-a-routable-custom-type-to-the-sitemap)
+- [Create a field to represent the Url of the custom type](#create-a-field-to-represent-the-url-of-the-custom-type)
+- [Create a GraphQL type to represent the custom type](#create-a-graphql-type-to-represent-the-custom-type)
+- [Add GraphQL type to the dispatcher query](#add-graphql-type-to-the-dispatcher-query)
+- [Register the Prismic custom type as a routable type](#register-the-prismic-custom-type-as-a-routable-type)
+- [Map GraphQL type to a component](#map-graphql-type-to-a-component)
+- [Add a routable custom type to the sitemap](#add-a-routable-custom-type-to-the-sitemap)
+- [Methods](#methods)
+  - [`registerRoutableType(options)`](#registerroutabletypeoptions)
+  - [`registerPrismicRoute(options)`](#registerprismicrouteoptions)
+- [Advanced usage](#advanced-usage)
+  - [Trailing Slash](#trailing-slash)
+  - [Path Rewrites](#path-rewrites)
+  - [Content Relationship Resolvers](#content-relationship-resolvers)
 
 ## Create a field to represent the Url of the custom type
 

@@ -1,9 +1,8 @@
 ---
 id: embed-fields
 title: Embed Fields
+description: Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embed html content, or add your own custom embed content. This guide explains how the default implementation work and how to customize it.
 ---
-
-Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embed html content, or add your own custom embed content. You can read more about the oEmbed format, view a list of supported providers on the [oEmbed website](https://oembed.com/).
 
 In Front-Commerce we expose the embed fields in two ways;
 
@@ -11,6 +10,10 @@ In Front-Commerce we expose the embed fields in two ways;
 - Embed Fields in [`WysiwygV2`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) with [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform.html#PrismicWysiwyg)
 
 In this section we will cover how to implement both of these methods, and how to implement your own custom embed fields.
+
+<blockquote class="info">
+**Note:** you can read more about the oEmbed format and view a list of supported providers on the [oEmbed website](https://oembed.com/).
+</blockquote>
 
 ## Standalone Embed Fields
 
