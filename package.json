@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "npm run build && hexo --config _multiconfig.yml -p 4444 server",
-    "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate && cp -r source/_static/* public && cp _redirects public",
+    "build": "hexo --config config/_config.yml,_config.yml && hexo --config _multiconfig.yml generate && cp -r source/_static/* public",
     "clean": "hexo clean",
     "test": "npm run clean; npm run build",
     "lint": "prettier --check .",
