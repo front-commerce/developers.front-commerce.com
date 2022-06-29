@@ -36,7 +36,7 @@ Thanks to downloadable products, it is now possible! The feature is already avai
 
 As a brand, you may have to refund an in-store credit or conduct commercial operations to offer vouchers to your customers.
 
-With store credits for Magento 2 (Adobe Commerce) x Front-Commerce _(as a reminder, the feature was already available for Magento 1 Enterprise Edition since [our 2.6 version](https://developers.front-commerce.com/blog/2021/04/29/front-commerce-2.6/))_, it is now possible for your customers to keep track of their credit balance and decide whether they want to use their remaining credit or not when performing an order. Stay tuned for the upcoming demo!
+With store credits for Magento 2 (Adobe Commerce) x Front-Commerce _(as a reminder, the feature was already available for Magento 1 Enterprise Edition since [our 2.6 version](https://developers.front-commerce.com/changelog/front-commerce-2.6/))_, it is now possible for your customers to keep track of their credit balance and decide whether they want to use their remaining credit or not when performing an order. Stay tuned for the upcoming demo!
 
 ## Stress tests or how to ensure your website will bear the load
 

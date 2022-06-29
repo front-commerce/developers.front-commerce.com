@@ -1,5 +1,5 @@
 ---
-id: blog
+id: changelog
 title: Front-Commerce's product changelog
 layout: blog
 ---

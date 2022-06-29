@@ -13,7 +13,7 @@ We've chosen to bump Front-Commerce's version number to 2.0.
 
 We think that a version 1.0 mean that a solution is both stable and ready-to-use by everyone. Front-Commerce was already in this state since the first 1.0 alpha release.
 
-For more than one year we shipped both improvements and new features in a backward compatible way, for projects that were used in production. We had to do both to satisfy our customers. We even added [support for Magento 1 in a beta release!](/blog/2019/11/20/front-commerce-is-compatible-with-magento1/) Every release could in fact be considered as a minor one (1.1, 1.2…) in a semantic versioning way.
+For more than one year we shipped both improvements and new features in a backward compatible way, for projects that were used in production. We had to do both to satisfy our customers. We even added [support for Magento 1 in a beta release!](/changelog/front-commerce-is-compatible-with-magento1/) Every release could in fact be considered as a minor one (1.1, 1.2…) in a semantic versioning way.
 
 Our latest release was focused on performance improvements: new features, optimizations and tools that help developers to build shops that load under [the 3s threshold](https://www.thinkwithgoogle.com/marketing-resources/data-measurement/mobile-page-speed-new-industry-benchmarks/).
 
