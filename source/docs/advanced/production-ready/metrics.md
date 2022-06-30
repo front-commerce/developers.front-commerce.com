@@ -1,7 +1,7 @@
 ---
 id: metrics
 title: Server's metrics
-description: Observability is a good way to understand how your production application behaves under different traffic conditions. This guide explains what is available in Front-Commerce to expose these information to external tools.
+description: Observability is a good way to understand how your production application behaves under different traffic conditions. This guide explains what is available in Front-Commerce to expose this information to external tools.
 ---
 
 # Expose metrics for prometheus

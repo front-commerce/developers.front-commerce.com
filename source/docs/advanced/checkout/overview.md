@@ -1,7 +1,7 @@
 ---
 id: checkout-overview
 title: Overview
-description: In this section, you will learn advanced information about Checkout customization in Front-Commerce.
+description: In this section, you will learn advanced techniques for Checkout customization in Front-Commerce.
 ---
 
 Existing documentation:

@@ -1,7 +1,7 @@
 ---
 id: preloading-routes
 title: Preloading Routes' data
-description: No matter how fast your application is, Front-Commerce helps you to make it feel even faster. By anticipating users needs and starting long running tasks before they actually need it, you will improve how fast your users thinks your site is. This guide explains how to preload data on user intent.
+description: No matter how fast your application is, Front-Commerce helps you to make it feel even faster. By anticipating users' needs and starting long-running tasks before they actually need them, you will improve how fast your users think your site is. This guide explains how to preload data on user intent.
 ---
 
 <blockquote class="feature--new">
@@ -10,7 +10,7 @@ description: No matter how fast your application is, Front-Commerce helps you to
 
 When a website is slow, the first thing that comes to mind is to improve raw metrics like the Speed Index. And while this is definitely useful, we shouldn't overlook the [_perceived_ performances](https://blog.teamtreehouse.com/perceived-performance). The goal is not to improve the response time, but to better manage the time to make the user _think_ that the website is fast.
 
-For instance, when a user is navigating on a catalog, on desktop, they will hover the product before clicking on it. Thus, we can start loading the product page as soon as the user hovers the product element, instead of waiting for the click. This can seem like a micro-optimization, but it definitely improves how fast the user _thinks_ your site is.
+For instance, when a user is navigating a catalog, on a desktop, they will hover over the product before clicking on it. Thus, we can start loading the product page as soon as the user hovers the product element, instead of waiting for the click. This can seem like a micro-optimization, but it definitely improves how fast the user _thinks_ your site is.
 
 ## How to preload data?
 

@@ -1,7 +1,7 @@
 ---
 id: return-merchandise-authorization
 title: Return Merchandise Authorization
-description: Return Merchandise Authorization (RMA) provides a customer with the means to request a return of an order or part of an order. This guide explains how to integrate this feature in your application.
+description: Return Merchandise Authorization (RMA) provides a customer with the means to request a return of an order or part of an order. This guide explains how to integrate this feature into your application.
 ---
 
 # Return Merchandise Authorization (RMA)
@@ -10,9 +10,9 @@ description: Return Merchandise Authorization (RMA) provides a customer with the
 _Since version 2.5_
 </blockquote>
 
-Front-Commerce provides a base platform agnostic module to support RMA. We also ship some platform specific implementations for RMA (so far we have an implementation for Magento1 Enterprise).
+Front-Commerce provides a base platform-agnostic module to support RMA. We also ship some platform-specific implementations for RMA (so far we have an implementation for Magento1 Enterprise).
 
-It is up to the integrator to either use one of our provided implementations that suits his platform or extend our base RMA module to add functionality to his specific platform.
+It is up to the integrator to either use one of our provided implementations or extend our base RMA module to add functionality to the specific platform.
 
 ## Front-Commerce base RMA module
 

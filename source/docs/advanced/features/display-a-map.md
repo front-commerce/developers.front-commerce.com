@@ -1,7 +1,7 @@
 ---
 id: display-a-map
 title: Display a map
-description: Front-Commerce has a generic map component that can be used by modules to display maps. This guide explains how to use the feature in your application.
+description: Front-Commerce has a generic map component that modules can use to display maps. This guide explains how to use the feature in your application.
 ---
 
 Since we are well aware that different shops come with different needs, we provide several implementations for Front-Commerce's generic Map component. Out of the box, Front-Commerce supports:

@@ -1,7 +1,7 @@
 ---
 id: features-overview
 title: Overview
-description: In this section, you will learn how to leverage and adapt platform agnostic Front-Commerce features to your project.
+description: In this section, you will learn how to leverage and adapt platform-agnostic Front-Commerce features to your project.
 ---
 
 Front-Commerce has several extension points that allow to override default implementations to add your own. We tried to summarize the most common use cases here.

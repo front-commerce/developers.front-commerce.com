@@ -4,7 +4,7 @@ title: React components structure
 description: When working on a Front-Commerce project, you will have to override existing components from our base theme to adapt pages to your context. It is important to understand how we structured our codebase to be more efficient in your day-to-day tasks.
 ---
 
-In Front-Commerce we splitted our components in two categories: the **UI**
+In Front-Commerce we split our components into two categories: the **UI**
 components available in the `components` folder, and the **Business** components
 available in the `modules` and `pages` folders.
 

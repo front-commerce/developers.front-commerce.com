@@ -4,7 +4,7 @@ title: Flash Messages
 description: Your server actions may need to display information to the User after a redirection. This guide explains how to use Front-Commerce's flash messages to achieve this.
 ---
 
-**Front-Commerce 2.3 introduced a "flash message" mechanism to allow developers to implement ephemeral messages without boilerplate**. It can be useful on a confirmation URL or for return endpoints (for instance when a Customer comes back on your website from a third-party service).
+**Front-Commerce 2.3 introduced a "flash message" mechanism to allow developers to implement ephemeral messages without boilerplate**. It can be helpful on a confirmation URL or for return endpoints (for instance, when a customer comes back to your website from a third-party service).
 
 ## Add flash messages server side
 

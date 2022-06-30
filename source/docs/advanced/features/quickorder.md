@@ -1,7 +1,7 @@
 ---
 id: quickorder
 title: Quick orders
-description: Front-Commerce's QuickOrder component allows customers to add products to the cart by entering a SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts. This guide explains how to integrate this feature in your application.
+description: Front-Commerce's QuickOrder component allows customers to add products to the cart by entering an SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts. This guide explains how to integrate this feature into your application.
 ---
 
 <blockquote class="feature--new">
