@@ -9,7 +9,8 @@ Front-Commerce 2.9 is out! Over the past few weeks, we focused on delivering inc
 
 ## Bugfixes for all
 
-As promised [in the 2.8 announcement](/blog/2021/07/22/front-commerce-2.8/#Summer-backlog-cleaning), we’ve released patch versions for the 5 minor versions released in 2021.
+As promised [in the 2.8 announcement](/changelog/front-commerce-2.8/#Summer-backlog-cleaning), we’ve released patch versions for the 5 minor versions released in 2021.
+
 It allows customers to update their project without waiting for a minor version upgrade.
 Each release contains bugfixes fixed in later minor versions.
 

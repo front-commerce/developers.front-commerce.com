@@ -26,7 +26,7 @@ This version was successfully tested with the latest Magento 2.4.2-p1 version so
 New features were also introduced for Magento 2 store owners:
 
 - allow visitors to follow their order status from an order id and the related email address
-- leverage Wishlist send by email features, and save product option (see [2.6 release notes](https://developers.front-commerce.com/blog/2021/04/29/front-commerce-2.6/#Wishlist-improvements-send-by-email-and-save-product-options))
+- leverage Wishlist send by email features, and save product option (see [2.6 release notes](/changelog/front-commerce-2.6/#Wishlist-improvements-send-by-email-and-save-product-options))
 
 ## Other changes
 

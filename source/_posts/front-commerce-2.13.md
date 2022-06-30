@@ -48,7 +48,7 @@ We are also opened to feedbacks from the first users of this feature. You can in
 
 ## Algolia and Magento2 for Front-Commerce: pushing your search capabilities to the next level!
 
-Algolia, which has [become a unicorn in 2021](https://www.usine-digitale.fr/article/algolia-le-google-des-entreprises-leve-150-millions-de-dollars.N1129259), has become a key player regarding website search. We have been convinced of this for a long time, having developed an Algolia connector for Magento 1 [from our version 2.5](/blog/2021/03/11/front-commerce-2.5/).
+Algolia, which has [become a unicorn in 2021](https://www.usine-digitale.fr/article/algolia-le-google-des-entreprises-leve-150-millions-de-dollars.N1129259), has become a key player regarding website search. We have been convinced of this for a long time, having developed an Algolia connector for Magento 1 [from our version 2.5](/changelog/front-commerce-2.5/).
 
 Now, Algolia is also available on Front-Commerce for Magento 2! You will be able to use it to search categories, CMS pages and products of your e-commerce site, or use Algolia datasource to fetch all CMS pages.
 
@@ -64,7 +64,7 @@ To learn more about payments with Front-Commerce, visit our [documentation](/doc
 
 ## Our B2B demo is online: check it out!
 
-Along our existing demos, we have put online our B2B demo, following the work of our [2.12](/blog/2022/01/06/front-commerce-2.12/) and [2.11](/blog/2021/11/24/front-commerce-2.11/) versions, during which we have explored and developed most of the B2B dedicated features for Adobe Commerce B2B
+Along our existing demos, we have put online our B2B demo, following the work of our [2.12](/changelog/front-commerce-2.12/) and [2.11](/changelog/front-commerce-2.11/) versions, during which we have explored and developed most of the B2B dedicated features for Adobe Commerce B2B
 
 You can check it out here: [**magento2-b2b**.front-commerce.app](https://magento2-b2b.front-commerce.app/)
 
