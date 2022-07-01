@@ -1,9 +1,8 @@
 ---
 id: release-notes
 title: Release notes
+description: This page lists the public releases and will let you know what is included in each release so you could clearly define an upgrade plan for your project.
 ---
-
-This page lists the public releases and will let you know what is included in each release so you could clearly define an upgrade plan for your project.
 
 ## Latest version
 

@@ -1,9 +1,8 @@
 ---
 id: migration-guides
 title: Migration Guides
+description: This area contains the Migration steps to follow for upgrading your store to new Front-Commerce versions.
 ---
-
-This area will contain the Migration steps to follow for upgrading your store to new Front-Commerce versions.
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 

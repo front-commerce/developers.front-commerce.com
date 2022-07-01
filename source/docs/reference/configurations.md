@@ -1,13 +1,11 @@
 ---
 id: configurations
 title: Configurations
+description: This reference documentation is about existing Front-Commerce configuration files.
 ---
 
 <blockquote class="note">
-This documentation is the current state of the configurations available in Front-Commerce. However, our goal is to clean it up to make sure that it is still easily customizable, but also easier to check if your configurations are correct. We will provide a clear migration path and will integrate this change within our 1.0.0 release.
-
-Please refer to the [related gitlab issue (#106)](https://gitlab.com/front-commerce/front-commerce/issues/106) to follow its advancement.
-
+Most configurations in Front-Commerce are now using [Environment variables](/docs/reference/environment-variables.html) and [Configuration providers](/docs/advanced/server/configurations.html). We invite you to also read these related pages.
 </blockquote>
 
 ## How to set your configurations

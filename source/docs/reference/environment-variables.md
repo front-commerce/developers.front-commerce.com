@@ -1,11 +1,10 @@
 ---
 id: environment-variables
 title: Environment variables
+description: "Environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging, and local."
 ---
 
-The environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging and local.
-
-These environment variables can be defined in two different ways:
+Environment variables documented in this guide can be defined in two different ways:
 
 - on your server (See [How To Read and Set Environmental and Shell Variables on a Linux VPS](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps))
 - in the `.env` file in your root folder

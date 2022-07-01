@@ -1,11 +1,10 @@
 ---
 id: troubleshooting
 title: Troubleshooting
+description: This page contains the most common errors you may encounter, along with information that will help to solve them quickly.
 ---
 
 Over the years, many developers have used Front-Commerce. A learning curve for such a solution exist, and we have detected recurring errors that may be difficult to troubleshoot for developers new to Front-Commerce or starting a new project.
-
-This page contains the most common errors you may encounter, along with information that will help to solve them quickly.
 
 ## My server is not starting
 

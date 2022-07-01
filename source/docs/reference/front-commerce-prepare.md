@@ -1,11 +1,10 @@
 ---
 id: front-commerce-prepare
 title: front-commerce-prepare.js
+description: From the front-commerce-prepare.js file, Front-Commerce will call hooks that will let you customize some of those steps. This reference page documents the syntax of the exported module required by Front-Commerce.
 ---
 
-The `front-commerce-prepare.js` configuration file at the root of any web modules folder.
-
-From this file, Front-Commerce will call hooks that will let you customize some of those steps. Each hook should be exported using the syntax:
+The `front-commerce-prepare.js` configuration file should leave at the root of any web modules folder. Front-Commerce supports the keys detailed below:
 
 ## `onCreateRoute`
 

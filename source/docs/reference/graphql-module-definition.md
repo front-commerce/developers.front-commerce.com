@@ -1,10 +1,8 @@
 ---
 id: graphql-module-definition
 title: GraphQL module definition
+description: Front-Commerce’s GraphQL modules is the mechanism allowing to extend and override any part of the schema defined by other modules. This reference documentation explains the different configuration keys available.
 ---
-
-**Front-Commerce’s GraphQL modules** is the mechanism allowing to extend and
-override any part of the schema defined by other modules.
 
 <blockquote class="info">
   To get started with GraphQL modules, we recommend you to read the [Extend the
