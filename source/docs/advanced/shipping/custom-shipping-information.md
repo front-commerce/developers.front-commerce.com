@@ -1,7 +1,7 @@
 ---
 id: custom-shipping-information
 title: Custom Shipping Information
-description: Usually, shipping methods don't need any additional information. The user only need to select them and proceed with their order. However, some methods need more information in order to succeed. This is mostly the case for methods relying on pickup points. The user have to choose a pickup before proceeding. This documentation will show you the different step involved to add such a method on your own.
+description: Usually, shipping methods don't need any additional information. The user only needs to select them and proceed with their order. However, some methods need more information in order to succeed. This is mostly the case for methods relying on pickup points. The user has to choose a pickup before proceeding. This documentation will show you the different steps involved to add such a method on your own.
 ---
 
 Before tackling this documentation, please make sure that you've understood the [Essentials](/docs/essentials/installation.html) of Front-Commerce and that you've registered a method in your backend (Magento2…).

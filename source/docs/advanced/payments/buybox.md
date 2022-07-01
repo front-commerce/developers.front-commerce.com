@@ -1,7 +1,7 @@
 ---
 id: buybox
 title: BuyBox integration
-description: This guide explain how Front-Commerce allows to use BuyBox in a headless commerce project.
+description: This guide explains how Front-Commerce allows using BuyBox in a headless commerce project.
 ---
 
 There is only one way to accept payments with [BuyBox](https://www.buybox.net/) in your Front-Commerce application for now.

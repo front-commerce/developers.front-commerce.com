@@ -1,7 +1,7 @@
 ---
 id: payzen
 title: PayZen / Lyra Collect integration
-description: This guide explain how Front-Commerce allows to use PayZen / Lyra Collect in a headless commerce project.
+description: This guide explains how Front-Commerce allows using PayZen / Lyra Collect in a headless commerce project.
 ---
 
 There are different ways for you to accept payments with [PayZen](https://payzen.eu/) or [Lyra Collect](https://www.lyra.com/lyra-collect/) in your Front-Commerce application.

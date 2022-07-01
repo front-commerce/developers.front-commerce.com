@@ -1,10 +1,10 @@
 ---
 id: colissimo
 title: Colissimo integration
-description: This guide explain how Front-Commerce allows to use Colissimo in a headless commerce project.
+description: This guide explains how Front-Commerce allows using Colissimo in a headless commerce project.
 ---
 
-There is only one way to accept shippings with [Colissimo](https://www.laposte.fr/colissimo) in your Front-Commerce application for now.
+There is only one way to accept shipping with [Colissimo](https://www.laposte.fr/colissimo) in your Front-Commerce application for now.
 
 ## Prerequisites
 

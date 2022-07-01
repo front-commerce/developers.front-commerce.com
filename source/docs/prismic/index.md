@@ -1,10 +1,10 @@
 ---
 id: prismic-overview
 title: Overview
-description: The Front-Commerce Prismic module brings support for the headless CMS Prismic to Front-Commerce. It allows to expose content coming from a Prismic repository in your GraphQL API and create relationships with data from other systems.
+description: The Front-Commerce Prismic module brings support for the headless CMS Prismic to Front-Commerce. It allows exposing content coming from a Prismic repository in your GraphQL API and creates relationships with data from other systems.
 ---
 
-Using [Prismic](https://prismic.io/) features in a Front-Commerce project will require different type of work depending on how you plan to integrate it. We tried to summarize the most common use cases here.
+Using [Prismic](https://prismic.io/) features in a Front-Commerce project will require different types of work depending on how you plan to integrate it. We tried to summarize the most common use cases here.
 
 - [Installation](/docs/prismic/installation.html)
 - [Expose Prismic content](/docs/prismic/expose-content.html)

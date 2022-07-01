@@ -1,7 +1,7 @@
 ---
 id: content-slices
 title: Content Slices
-description: Content Slices allows developers to design autonomous and reusable UI elements that Content managers can use to build dynamic pages. Front-Commerce has first-class support of Prismic Slices. This page explains how developers can use the tool we provide to create content-driven dynamic pages.
+description: Content Slices allows developers to design autonomous and reusable UI elements that Content managers can use to build dynamic pages. Front-Commerce has first-class support for Prismic Slices. This page explains how developers can use the tool we provide to create content-driven dynamic pages.
 ---
 
 With [Content Slices](https://prismic.io/feature/dynamic-layout-content-components), Front-Commerce embraces the **"Don't Ship Pages, Ship a Page Builder"** vision brought by Prismic. See how to make slices a part of your authoring strategy.

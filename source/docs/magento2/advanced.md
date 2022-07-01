@@ -1,7 +1,7 @@
 ---
 id: magento2-advanced
 title: Advanced
-description: This guide contains several tips and tricks for advanced usages of the Magento 2 integration in a Front-Commerce project.
+description: This guide contains several tips and tricks for advanced usage of the Magento 2 integration in a Front-Commerce project.
 ---
 
 ## Additional headers in Magento API calls

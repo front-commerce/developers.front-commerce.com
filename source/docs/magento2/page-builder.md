@@ -1,14 +1,14 @@
 ---
 id: magento2-page-builder
 title: Page Builder
-description: Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using Page Builder. Front-Commerce supports Page Builder managed content out-of-the-box. In this guide, you will learn how to use this feature and extend it.
+description: Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using Page Builder. Front-Commerce supports Page Builder-managed content out of the box. In this guide, you will learn how to use this feature and extend it.
 ---
 
 <blockquote class="feature--new">
 _Since version 2.11.0 (early preview)_
 </blockquote>
 
-Common tasks as a developer would consist in creating new _content types_ and refining UI components so that merchants can create the rich shopping experiences that was designed for _their_ customers.
+Common tasks as a developer would consist in creating new _content types_ and refining UI components so that merchants can create the rich shopping experiences that were designed for _their_ customers.
 
 ## Prerequisites
 

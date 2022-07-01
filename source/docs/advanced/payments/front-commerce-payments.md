@@ -1,7 +1,7 @@
 ---
 id: front-commerce-payments
 title: Front-Commerce Payments
-description: Front-Commerce contains mechanisms that allow to process payments in a platform-agnostic way. Payment platforms integrated as a Front-Commerce Payment are compatible with every eCommerce platform that Front-Commerce supports. This guide provide insights about how they work so you can better understand how they could fit in your project.
+description: Front-Commerce contains mechanisms that allow to process of payments in a platform-agnostic way. Payment platforms integrated as a Front-Commerce Payment are compatible with every eCommerce platform that Front-Commerce supports. This guide provides insights about how they work so you can better understand how they could fit into your project.
 ---
 
 With Front-Commerce payments, interactions occur from Front-Commerce GraphQL/Node.js middleware so that remote systems (<abbr title="Order Management System">OMS</abbr>, <abbr title="Enterprise resource planning">ERP</abbr> softwares …) will only receive Orders when they are paid.

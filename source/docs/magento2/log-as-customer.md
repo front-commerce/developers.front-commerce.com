@@ -1,7 +1,7 @@
 ---
 id: log-as-customer
 title: Log as Customer
-description: Magento administrators can login as a Customer on their Front-Commerce storefront. It is a highly requested feature from merchants and customer support teams. This guide explains how Front-Commerce applications can leverage this feature in a headless context.
+description: Magento administrators can log in as a Customer on their Front-Commerce storefront. It is a highly requested feature from merchants and customer support teams. This guide explains how Front-Commerce applications can leverage this feature in a headless context.
 ---
 
 _This feature has been added in version `2.3.0`_

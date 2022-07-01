@@ -1,7 +1,7 @@
 ---
 id: embed-fields
 title: Embed Fields
-description: Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embed html content, or add your own custom embed content. This guide explains how the default implementation work and how to customize it.
+description: Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embedded HTML content, or add your own custom embed content. This guide explains how the default implementation work and how to customize it.
 ---
 
 In Front-Commerce we expose the embed fields in two ways;

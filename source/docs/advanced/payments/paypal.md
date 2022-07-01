@@ -1,7 +1,7 @@
 ---
 id: paypal
 title: Paypal integration
-description: This guide explain how Front-Commerce allows to use Paypal in a headless commerce project.
+description: This guide explains how Front-Commerce allows using Paypal in a headless commerce project.
 ---
 
 There are different ways for you to accept payments with [Paypal](https://paypal.com/) in your Front-Commerce application.

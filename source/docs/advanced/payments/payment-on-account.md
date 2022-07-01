@@ -1,7 +1,7 @@
 ---
 id: payment-on-account
 title: Payment on account
-description: This guide explain how Front-Commerce allows to use Payment on account in a headless commerce project.
+description: This guide explains how Front-Commerce allows using Payment on account in a headless commerce project.
 ---
 
 Payment on account is a payment method for B2B contexts. It allows companies to make place orders using the credit limit that is specified in their profile. There is only one way to accept such payments in your Front-Commerce application for now.

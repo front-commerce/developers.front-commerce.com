@@ -1,10 +1,10 @@
 ---
 id: event-list
 title: Dispatch event list
-description: Front-Commerce Magento1 module is shipped with additional events dispatched so you could customize its behavior and hook into the module. This page contains details about them.
+description: Front-Commerce Magento1 module is shipped with additional events dispatched so you could customize its behavior and hook it into the module. This page contains details about them.
 ---
 
-Events are grouped by the area they relate with. See sections below for details.
+Events are grouped by the area they relate to. See sections below for details.
 
 ## Catalog
 

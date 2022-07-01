@@ -4,7 +4,7 @@ title: Overview
 description: We currently support the main features of Magento. You can consider that if it works in Magento 1, it will work with Front-Commerce!
 ---
 
-Every feature you would expect from an advanced Magento store are supported in Front-Commerce:
+Every feature you would expect from an advanced Magento store is supported in Front-Commerce:
 
 - multi-stores instances
 - advanced pricing: coupon codes, promotion rules, taxes…

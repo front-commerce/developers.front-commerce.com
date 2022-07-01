@@ -4,7 +4,7 @@ title: Magento2 GraphQL schema
 description: Front-Commerce aims at making Magento developers productive by allowing them to work with what they know from Magento. This page explains how you could expose parts of the Magento GraphQL schema in your application.
 ---
 
-In order to help closing the gap between GraphQL features, our goal is to expose as much [Magento’s GraphQL schema](https://devdocs.magento.com/guides/v2.3/graphql/) as possible in Front-Commerce. We follow evolutions in Magento core very closely, and aim at including the new stable parts of this schema in Front-Commerce **as soon as they match the parts we’ve developed over the years in terms of feature, performance and stability**.
+In order to help close the gap between GraphQL features, our goal is to expose as much [Magento’s GraphQL schema](https://devdocs.magento.com/guides/v2.3/graphql/) as possible in Front-Commerce. We follow evolutions in Magento core very closely and aim at including the new stable parts of this schema in Front-Commerce **as soon as they match the parts we’ve developed over the years in terms of feature, performance, and stability**.
 
 This section details what is available so far.
 

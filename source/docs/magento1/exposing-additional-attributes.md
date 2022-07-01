@@ -1,10 +1,10 @@
 ---
 id: exposing-additional-attributes
 title: Exposing additional attributes
-description: In many shops, there are more attributes than the standard ones available in Magento. They then needs to be fetched by Front-Commerce for usage in your application. In this documentation guide, you will learn how to add these attributes to any Magento REST endpoint.
+description: In many shops, there are more attributes than the standard ones available in Magento. They then need to be fetched by Front-Commerce for usage in your application. In this documentation guide, you will learn how to add these attributes to any Magento REST endpoint.
 ---
 
-An example of what this page will show you is how to expose a newly created attributes in the endpoints already used in Front-Commerce. For instance, when retrieving products, Front-Commerce uses the `/api/rest/products` URL.
+An example of what this page will show you is how to expose newly created attributes in the endpoints already used in Front-Commerce. For instance, when retrieving products, Front-Commerce uses the `/api/rest/products` URL.
 
 ## Overview
 

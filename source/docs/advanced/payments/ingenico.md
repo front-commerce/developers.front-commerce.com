@@ -1,7 +1,7 @@
 ---
 id: ingenico
 title: Ingenico integration
-description: This guide explain how Front-Commerce allows to use Ingenico in a headless commerce project.
+description: This guide explains how Front-Commerce allows using Ingenico in a headless commerce project.
 ---
 
 There are different ways for you to accept payments with [Ingenico](https://www.ingenico.com/) (Ogone) in your Front-Commerce application.

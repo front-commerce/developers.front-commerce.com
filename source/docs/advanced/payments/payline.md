@@ -1,7 +1,7 @@
 ---
 id: payline
 title: Monext Online integration
-description: This guide explain how Front-Commerce allows to use Monext Online (Payline) in a headless commerce project.
+description: This guide explains how Front-Commerce allows using Monext Online (Payline) in a headless commerce project.
 ---
 
 There is only one way to accept payments with [Monext Online (Payline)](https://www.monext.fr/online) in your Front-Commerce application for now.
