@@ -1,6 +1,7 @@
 ---
 id: assets-cdn-domain
 title: Serving assets from a CDN/custom domain
+description: You may want to use a different domain for your assets for several reasons. This guide explains how to configure this in a Front-Commerce application.
 ---
 
 <blockquote class="feature--new">

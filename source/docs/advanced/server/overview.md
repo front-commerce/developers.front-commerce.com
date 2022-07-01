@@ -1,9 +1,10 @@
 ---
 id: server-overview
 title: Overview
+description: In this section, you will learn advanced information about the Node.js server in Front-Commerce.
 ---
 
-In this section, you will learn advanced information about the Node.js server in Front-Commerce.
+You can already find documentation for:
 
 - [Add custom endpoints to your server](./add-http-endpoint.html)
 - [Configurations](./configurations.html)

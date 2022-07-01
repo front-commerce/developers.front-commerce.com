@@ -1,10 +1,8 @@
 ---
 id: checklist-before-production
 title: Before going to production
-wip: https://github.com/front-commerce/developers.front-commerce.com/issues/63
+description: Before going to production, you should ensure that everything has been customized to provide the best possible experience to your users. Some features are not critical enough to block your developments and you may have forgotten them during the project. This page contains a checklist to help you before the go-live!
 ---
-
-Before going to production, you want to ensure that everything is in place. But some features are not critical enough to block your developments and you may have missed them. These are still a big part of any Front-Commerce application.
 
 To ensure that you are good to go, you can go through this checklist :
 

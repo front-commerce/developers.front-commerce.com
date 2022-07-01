@@ -1,6 +1,7 @@
 ---
 id: cache-control-and-cdn
 title: Cache control and CDN
+description: Enabling CDN or reverse-proxy caching improves your storefront web performance. During traffic peaks, it drastically reduces the server load too. This guide explains all the tools at your disposal to implement a totally custom, fine-grained caching strategy in Front-Commerce.
 ---
 
 <blockquote class="feature--new">
@@ -11,7 +12,7 @@ To enable CDN or reverse-proxy caching you first need to ensure that your site s
 
 In Front-Commerce we have implemented a mechanism where you can easily set up the `cache-control` headers for different parts of your site. You can also provide a custom implementation of the `cache-control` if needed (e.g. products with old last modified have longer caching duration).
 
-This page explains all the tools at your disposal to implement a totally custom, fine-grained caching strategy.
+Implementing a totally custom, fine-grained caching strategy is a matter of compromise: the freshness of data vs performance. It is **NOT** something that Front-Commerce can do by default because every context is important. We recommend that you spend time understanding this Front-Commerce feature and update your application accordingly.
 
 <blockquote class="important">
 **Important:** caching is disabled by default for user related content and for cart related content. This is done to avoid inadvertently caching sensitive user information.
