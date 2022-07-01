@@ -1,7 +1,7 @@
 ---
 id: environment-variables
 title: Environment variables
-description: "Environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging and local."
+description: "Environment variables available in Front-Commerce are the configurations that are likely to change depending on the current environment of your application. For instance, you could have three different environments: production, staging, and local."
 ---
 
 Environment variables documented in this guide can be defined in two different ways:

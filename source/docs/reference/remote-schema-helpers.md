@@ -4,7 +4,7 @@ title: Remote schema helpers
 description: This page references the helpers available when creating a Remote GraphQL module.
 ---
 
-We encourage you to learn more about [Remote GraphQL modules](/docs/reference/graphql-module-definition.html#executor-optional) before continuing reading this page.
+We encourage you to learn more about [Remote GraphQL modules](/docs/reference/graphql-module-definition.html#executor-optional) before reading this page.
 
 ## `makeExecutor`
 

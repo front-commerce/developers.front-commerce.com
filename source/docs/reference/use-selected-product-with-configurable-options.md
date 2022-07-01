@@ -4,7 +4,7 @@ title: useSelectedProductWithConfigurableOptions
 description: In the 2.10.0 release we refactored product configurable options and homogenized their use by creating useSelectedProductWithConfigurableOptions. This reference documentation explains how to use it.
 ---
 
-When working with product options, we recommend to use `useSelectedProductWithConfigurableOptions`. It accepts multiple formats for initial selected options and returns -among other things- an options update function that automatically handles relevant images selection and auto disabling. We believe this hook will be helpful when dealing with configurable product options so here is a small rundown on of it:
+When working with product options, we recommend to use `useSelectedProductWithConfigurableOptions`. It accepts multiple formats for initially selected options and returns -among other things- an options update function that automatically handles relevant image selection and auto disabling. We believe this hook will be helpful when dealing with configurable product options so here is a small rundown on it:
 
 ### Inputs
 

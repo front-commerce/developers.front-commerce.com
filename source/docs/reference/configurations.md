@@ -1,7 +1,7 @@
 ---
 id: configurations
 title: Configurations
-description: This reference documentation is about existing Front-Commerce's configuration files.
+description: This reference documentation is about existing Front-Commerce configuration files.
 ---
 
 <blockquote class="note">
