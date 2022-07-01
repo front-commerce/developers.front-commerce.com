@@ -48,6 +48,10 @@ You need to define several environment variables to enable HiPay payments:
 - `FRONT_COMMERCE_HIPAY_ENVIRONMENT`: `stage` or `production` depending on your targeted environment
 - `FRONT_COMMERCE_HIPAY_ENDPOINT`: [the API endpoint for the targeted environment](https://developer.hipay.com/api-explorer/api-online-payments)
 
+Optional environment variables:
+
+- `FRONT_COMMERCE_HIPAY_NOTIFICATION_DELAY`: Payment capture notifications can arrive in the same time as payment authorization notifications, you can set a delay (in milliseconds) to prevent the notifications to be stored in the wrong order in the backend
+
 ### Register the HiPay payment module in Front-Commerce
 
 In your Front-Commerce application:

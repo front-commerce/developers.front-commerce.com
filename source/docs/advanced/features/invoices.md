@@ -1,7 +1,7 @@
 ---
 id: invoices
 title: Invoices
-description: Customers can have access to their invoices from their account. By default, if the integration supports it, invoices can be accessed from order pages and have an online HTML version with a printable-friendly theme. This guide explains how to adapt the feature to your needs.
+description: Customers can have access to their invoices from their accounts. By default, if the integration supports it, invoices can be accessed from order pages and have an online HTML version with a printable-friendly theme. This guide explains how to adapt the feature to your needs.
 ---
 
 In a project, you may want to change the default source to retrieve invoices or prefer to provide a downloadable PDF document for them. This section documents how that could be achieved.

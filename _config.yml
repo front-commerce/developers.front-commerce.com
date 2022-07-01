@@ -70,6 +70,9 @@ sidebar_categories:
     - docs/advanced/features/return-merchandise-authorization
     - docs/advanced/features/password-fields
     - docs/advanced/features/in-stock-alert
+    - docs/advanced/features/maintenance-mode
+    - docs/advanced/features/disable-hyration
+
   Concepts:
     - docs/concepts/architecture-overview
     - docs/concepts/front-commerce-folder-structure
@@ -157,7 +160,7 @@ nav_links:
   "Docs":
     url: /docs/
   "Changelog":
-    url: /blog/
+    url: /changelog/
   'Support <span class="icon-request-change"></span>':
     url: https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team
 
@@ -171,7 +174,7 @@ community_links:
 
 url: https://developers.front-commerce.com/
 root: /
-permalink: blog/:year/:month/:day/:title/
+permalink: changelog/:title/
 
 public_dir: public/
 

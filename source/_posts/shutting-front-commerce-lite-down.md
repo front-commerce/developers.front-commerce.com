@@ -39,7 +39,7 @@ Some teams even chose to use Front-Commerce in their first PWA/headless projects
 
 Front-Commerce Lite has also been used to quickly build prototypes to illustrate the promise of such a stack to merchants who wanted to increase sales on mobile.
 
-It was even useful for ourselves: we could experiment with new ideas and explore API of headless platforms quickly, to demonstrate it could be supported by Front-Commerce. This is for instance how we could then decide to build a [Magento 1 GraphQL integration](/blog/2019/11/20/front-commerce-is-compatible-with-magento1/) and several [headless CMS integrations (Prismic, Wordpress) for Magento](/blog/2019/11/20/introducing-cms-demos/) (and future platforms too).
+It was even useful for ourselves: we could experiment with new ideas and explore API of headless platforms quickly, to demonstrate it could be supported by Front-Commerce. This is for instance how we could then decide to build a [Magento 1 GraphQL integration](/changelog/front-commerce-is-compatible-with-magento1/) and several [headless CMS integrations (Prismic, Wordpress) for Magento](/changelog/introducing-cms-demos/) (and future platforms too).
 
 ## But Front-Commerce Lite was not Front-Commerce
 

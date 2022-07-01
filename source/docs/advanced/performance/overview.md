@@ -1,7 +1,7 @@
 ---
 id: performance-overview
 title: Overview
-description: In this section, you will learn advanced information about Performance related features at your disposal in Front-Commerce.
+description: In this section, you will learn advanced information about Performance-related features at your disposal in Front-Commerce.
 ---
 
 You can already find documentation for:

@@ -32,7 +32,7 @@ You can contact us for more details and see it in action!
 
 Magento2 merchants can now use Mondial Relay shipping with Front-Commerce. We've collaborated with [Magentix](https://mondialrelay.magentix.fr/fr/magento-2/) to provide a seamless integration out-of-the box.
 
-This module leverages [the shipping modules introduced in 2.5](/blog/2021/03/11/front-commerce-2.5/#Shipping-modules-Colissimo-Mondial-Relay) and the Front-Commerce [`<Map />` component](/docs/advanced/features/display-a-map.html).
+This module leverages [the shipping modules introduced in 2.5](/changelog/front-commerce-2.5/#Shipping-modules-Colissimo-Mondial-Relay) and the Front-Commerce [`<Map />` component](/docs/advanced/features/display-a-map.html).
 
 ## Adyen update for Magento2
 

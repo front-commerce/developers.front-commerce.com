@@ -172,3 +172,13 @@ query Search {
 ```
 
 If you are using the default theme or the Chocolatine theme, the search bar should now be visible.
+
+## Fallback Search
+
+<blockquote class="feature--new">
+_Since version 2.15_
+</blockquote>
+
+If no search module is configured Front-Commerce will default to using the native Magento search API to do the search.
+
+native Magento search API uses the price without tax value to achieve its price filtering capabilities. This is not what customers typically expect. To overcome this you need to set `FRONT_COMMERCE_MAGENTO_SEARCH_TAX_RATE` to the expected tax rate on your site. Please note this may not work for all scenarios as you may have different tax rates depending on country. So we recommend you use the tax rate that most applies to your customers.

@@ -36,4 +36,4 @@ Using: `<Image src="xxxx" priority />`
 
 You must aim at One GraphQL query per Front-Commerce route. Keep additional queries for secondary content.
 
-Ensure that this query is preloadable (using the top level `graphqlWithPreload` HOC) and [that correct `Cache-Control` headers are sent for visitors](/docs/advanced/performance/cache-control-and-cdn.html).
+Ensure that this query is preloadable (using the top-level `graphqlWithPreload` HOC) and [that correct `Cache-Control` headers are sent for visitors](/docs/advanced/performance/cache-control-and-cdn.html).

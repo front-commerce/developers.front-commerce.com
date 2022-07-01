@@ -7,7 +7,7 @@ This page lists the public releases and will let you know what is included in ea
 
 ## Latest version
 
-**Front-Commerce [`2.15.0`](#2-15-0-2022-05-12)**
+**Front-Commerce [`2.16.0`](#2-16-0-2022-06-24)**
 
 Compatible with:
 
@@ -16,6 +16,27 @@ Compatible with:
   - Note: Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/hc/en-us/articles/4406893342093).
 - **Magento1**: CE 1.7+, EE 1.12+, [OpenMageLTS](https://www.openmage.org/supported-versions.html) 19.4+
 - **Proximis**: latest version
+
+## 2.16.0 (2022-06-24)
+
+> Heat waves and hot news at Front-Commerce 🔥
+>
+> We have just entered summer with our 2.16 release and thrilling news!
+>
+> 🎉 The first version of our BigCommerce connector for Front-Commerce is now available! It is a huge step for us and we are glad to be able to deliver the power of this ever-growing and powerful solution through our product !
+>
+> Since we’ve been taking a lot of time to work on this project, this release note will probably seem a bit shorter than usual 😇
+>
+> However, we also made progress on many other aspects (detailed in this release note):
+>
+> - TwicPics connector out of beta
+> - Prismic: granular cache invalidation
+> - Global maintenance mode
+>
+> Take some popcorn, have a seat and watch the show 🍿
+
+- [Announcement](/blog/2022/06/23/front-commerce-2.16/)
+- [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.16.0)
 
 ## 2.15.0 (2022-05-12)
 
@@ -28,7 +49,7 @@ Compatible with:
 > - Discover and test an early version of the Twicpics connector: the final version will be ready for version 2.16
 > - We made Front-Commerce compatible with npm 7 / NodeJS 16 (npm 8 / NodeJS 17 in beta) and will keep track on NodeJS releases starting from now on.
 
-- [Announcement](/blog/2022/05/12/front-commerce-2.15/)
+- [Announcement](/blog/2022/05/11/front-commerce-2.15/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.0)
 
 ## 2.14.0 (2022-03-31)
@@ -45,7 +66,7 @@ Compatible with:
 >
 > Stress tests for sites to launch soon on Front-Commerce!
 
-- [Announcement](/blog/2022/03/31/front-commerce-2.14/)
+- [Announcement](/changelog/front-commerce-2.14/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.14.0)
 
 ## 2.13.0 (2022-02-17)
@@ -61,7 +82,7 @@ Compatible with:
 > - We also worked on the social login and registering feature with Google and Facebook, to allow your users to create their account and to connect more quickly (beta version)
 > - Finally, we have made our Prismic module evolve with new features that will certainly interest you …
 
-- [Announcement](/blog/2022/02/17/front-commerce-2.13/)
+- [Announcement](/changelog/front-commerce-2.13/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.13.0)
 
 ## 2.12.0 (2022-01-06)
@@ -74,7 +95,7 @@ Compatible with:
 >
 > We have also included various changes and bug corrections, to always improve your Front-Commerce experience!
 
-- [Announcement](/blog/2022/01/06/front-commerce-2.12/)
+- [Announcement](/changelog/front-commerce-2.12/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.0)
 
 ## 2.11.0 (2021-11-25)
@@ -83,7 +104,7 @@ Compatible with:
 >
 > You will also discover various changes and bug corrections, to make your Front-Commerce instances even more efficient!
 
-- [Announcement](/blog/2021/11/24/front-commerce-2.11/)
+- [Announcement](/changelog/front-commerce-2.11/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.0)
 
 ## 2.10.0 (2021-10-14)
@@ -92,7 +113,7 @@ Compatible with:
 >
 > We’ve improved our Front-Commerce modules offer too, with a shipping and a payment provider that solve B2C merchants needs.
 
-- [Announcement](/blog/2021/10/14/front-commerce-2.10/)
+- [Announcement](/changelog/front-commerce-2.10/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.0)
 
 Requirement changes:
@@ -105,14 +126,14 @@ Magento 2.4.3 requires [this Adobe official patch](https://support.magento.com/h
 
 > We focused on delivering incremental improvements to existing features.
 
-- [Announcement](/blog/2021/09/02/front-commerce-2.9/)
+- [Announcement](/changelog/front-commerce-2.9/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.0)
 
 ## 2.8.0 (2021-07-22)
 
 > This new version contains advanced Prismic features for Content Driven storefronts, an alpha version of our new Proximis connector and several “Summer backlog cleaning” items (bugfixes, improvements from performance profilings, technical debt removal).
 
-- [Announcement](/blog/2021/07/22/front-commerce-2.8/)
+- [Announcement](/changelog/front-commerce-2.8/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.0)
 
 Requirement changes:
@@ -129,7 +150,7 @@ Requirement changes:
 >
 > Magento 2.4.2-p1 support, and many other miscellaneous features.
 
-- [Announcement](/blog/2021/06/15/front-commerce-2.7/)
+- [Announcement](/changelog/front-commerce-2.7/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.7.0)
 
 Requirement changes:
@@ -144,7 +165,7 @@ Requirement changes:
 >
 > We’ve also added new features (Store credits, wishlist improvements, remote configuration), updated our dependencies and fixed several issues.
 
-- [Announcement](/blog/2021/04/29/front-commerce-2.6/)
+- [Announcement](/changelog/front-commerce-2.6/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.6.0)
 
 Requirements:
@@ -457,7 +478,7 @@ Requirements:
 > - Wishlist
 > - Performance
 
-- [Announcement](/blog/2019/05/13/release-1.0.0-beta.0/)
+- [Announcement](/changelog/release-1.0.0-beta.0/)
 - [Migration guide](/docs/appendices/migration-guides.html#1-0-0-alpha-2-gt-1-0-0-beta-0)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-beta.0)
 
@@ -489,7 +510,7 @@ Requirements:
 
 > Improve the Cart and refactor styles to ease themes development
 
-- [Announcement](/blog/2019/03/25/release-1.0.0-alpha.2/)
+- [Announcement](/changelog/release-1.0.0-alpha.2/)
 - [Migration guide](/docs/appendices/migration-guides.html#1-0-0-alpha-1-gt-1-0-0-alpha-2)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/tags/1.0.0-alpha.2)
 

@@ -59,7 +59,7 @@ It marks our confidence in our current API and architecture (we did not want to 
 
 Our code is closed source, but our culture is open source! This is why we wanted to make our official documentation public (some API references may still be restricted though).
 
-**We are proud to announce our revamped version of https://developers.front-commerce.com** (this site), [almost 1 year](/blog/2018/03/15/hello-world/) after publishing its first version.
+**We are proud to announce our revamped version of https://developers.front-commerce.com** (this site), [almost 1 year](/changelog/hello-world/) after publishing its first version.
 As every documentation, this is an ongoing process.
 We are commited to spend 1 or 2 days a week to publish new pages. We also made documentation part of our [Definition Of Done](https://www.agilealliance.org/glossary/definition-of-done/) so every new feature (or change) will come with new content in our documentation.
 

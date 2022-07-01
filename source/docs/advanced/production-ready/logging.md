@@ -4,7 +4,7 @@ title: Setup and use logging
 description: Front-Commerce uses the winston library for logging. This guide explains how to configure it and use it in your own code.
 ---
 
-When you need to log something in a javascript environment, the first thing that comes to mind is `console.log`. But the issue with it is that you won't be able access it in the long term. Especially since some Node.js server environments don't keep a trace of the stdout/stderr of your application.
+When you need to log something in a javascript environment, the first thing that comes to mind is `console.log`. But the issue with it is that you won't be able to access it in the long term. Especially since some Node.js server environments don't keep a trace of the stdout/stderr of your application.
 
 To avoid this, we're using a custom logging interface based on [`winston`](https://github.com/winstonjs/winston) (a well-known logging solution in the Node.js ecosystem). It allows you to create a logger and configure it in your `my-module/config/logging.js` file to send your logs to different systems.
 

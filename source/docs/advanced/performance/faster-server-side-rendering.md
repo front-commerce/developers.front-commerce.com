@@ -1,10 +1,10 @@
 ---
 id: faster-server-side-rendering
 title: Faster Server Side Rendering
-description: Front-Commerce starts delivering server-side rendered page to users as soon as every data needed on the page has been received. The way you implement GraphQL queries client side directly impacts the "Time To First Byte" of your application. This guide contains good practice to deliver pages as fast as possible.
+description: Front-Commerce starts delivering the server-side rendered pages to users as soon as every data needed on the page has been received. The way you implement GraphQL queries client side directly impacts the "Time To First Byte" of your application. This guide contains good practices to deliver pages as fast as possible.
 ---
 
-By default Front-Commerce uses [`renderToStringWithData`](https://www.apollographql.com/docs/react/performance/server-side-rendering/#using-rendertostringwithdata) from Apollo Client. This allows to make sure that every data is fetched [before rendering on the server](/docs/advanced/theme/server-side-rendering.html). But this can become slow depending on how you have implemented your queries client side. Here is what you can do to reduce the delay.
+By default Front-Commerce uses [`renderToStringWithData`](https://www.apollographql.com/docs/react/performance/server-side-rendering/#using-rendertostringwithdata) from Apollo Client. This allows making sure that every data is fetched [before rendering on the server](/docs/advanced/theme/server-side-rendering.html). But this can become slow depending on how you have implemented your queries client side. Here is what you can do to reduce the delay.
 
 ## Avoid Query Cascade
 

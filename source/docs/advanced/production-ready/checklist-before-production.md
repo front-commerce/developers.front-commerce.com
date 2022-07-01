@@ -1,7 +1,7 @@
 ---
 id: checklist-before-production
 title: Before going to production
-description: Before going to production, you should ensure that everything has been costumized to provide the best possible experience to your users. Some features are not critical enough to block your developments and you may have forgotten them during the project. This page contains a checklist to help you before the go-live!
+description: Before going to production, you should ensure that everything has been customized to provide the best possible experience to your users. Some features are not critical enough to block your developments and you may have forgotten them during the project. This page contains a checklist to help you before the go-live!
 ---
 
 To ensure that you are good to go, you can go through this checklist :

@@ -1,7 +1,7 @@
 ---
 id: in-stock-alert
 title: In-Stock Alert
-description: In-stock alerts allow users to subscribe to email notifications when a product is out of stock, so they can be notified as soon as it is back in stock. This guide explains how to enable the feature in your application and adapt it to your specific needs.
+description: In-stock alerts allow users to subscribe to email notifications when a product is out of stock, so the customer can notify them as soon as it is back in stock. This guide explains how to enable the feature in your application and adapt it to your specific needs.
 ---
 
 <blockquote class="feature--new">
