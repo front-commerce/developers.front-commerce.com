@@ -1,11 +1,10 @@
 ---
 id: preview
 title: Prismic Preview
+description: Prismic Previews allow you to view draft documents live on your website without publishing them publicly. You can set up many preview environments to preview your content in different contexts, such as production and development. This guide explains how to configure Prismic and Front-Commerce to ensure a smooth authoring experience.
 ---
 
-Prismic Previews allow you to view draft documents live on your website without publishing them publicly. You can set up many preview environments to preview your content in different contexts, such as production and development.
-
-You will be redirected to your store's homepage when you click on the preview button, you will then have to navigate to the preview page to see the preview. We are working on a solution for configurable route resolvers.
+Prismic preview currently redirects content writers to your store's homepage when they click on the preview button, they will then have to navigate to the preview page to see the preview. **We are working on a solution for configurable route resolvers.**
 
 ## Configure previews in your Prismic repository
 

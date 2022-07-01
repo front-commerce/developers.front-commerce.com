@@ -1,11 +1,10 @@
 ---
 id: content-slices
 title: Content Slices
+description: Content Slices allows developers to design autonomous and reusable UI elements that Content managers can use to build dynamic pages. Front-Commerce has first-class support for Prismic Slices. This page explains how developers can use the tool we provide to create content-driven dynamic pages.
 ---
 
-[Content Slices](https://prismic.io/feature/dynamic-layout-content-components) allows developers to design autonomous and reusable UI elements that Content managers can use to build dynamic pages.
-
-Front-Commerce has first-class support of [Prismic Slices](https://prismic.io/docs/core-concepts/slices), and embraces the **"Don't Ship Pages, Ship a Page Builder"** vision. This page explains how developers can use the tool we provide to create content-driven dynamic pages.
+With [Content Slices](https://prismic.io/feature/dynamic-layout-content-components), Front-Commerce embraces the **"Don't Ship Pages, Ship a Page Builder"** vision brought by Prismic. See how to make slices a part of your authoring strategy.
 
 ## How to use Slices?
 
@@ -14,9 +13,12 @@ Integrating a Prismic Slice Zone and its Slices into your project is a 3 steps p
 <!-- Workaround for https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents -->
 <!-- no toc -->
 
-1. [expose data in GraphQL](#Expose-data-in-GraphQL)
-2. [create a Slice library](#Create-a-Slice-library) related to these GraphQL types. A library is composed of pairs of React Components and GraphQL fragments.
-3. [update your static pages to retrieve the content dynamically](#Retrieve-and-display-content) and use the SliceZone component of your library to display the data appropriately
+- [How to use Slices?](#how-to-use-slices)
+- [Expose data in GraphQL](#expose-data-in-graphql)
+- [Create a Slice library](#create-a-slice-library)
+  - [Independent components for each Slice type](#independent-components-for-each-slice-type)
+  - [Define the Slice library](#define-the-slice-library)
+- [Retrieve and display content](#retrieve-and-display-content)
 
 ## Expose data in GraphQL
 

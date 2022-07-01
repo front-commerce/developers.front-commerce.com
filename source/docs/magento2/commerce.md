@@ -1,17 +1,16 @@
 ---
 id: magento2-commerce
 title: Magento2 Commerce
+description: As of version 2.12, Front-Commerce comes with a Magento2 Commerce module to leverage Adobe Commerce specific features. This guide explains how to configure and use it.
 ---
 
 <blockquote class="feature--new">
 _Since version 2.12.0_
 </blockquote>
 
-<blockquote class="info">
-As of version 2.12, Front-Commerce comes with a Magento2 Commerce module to leverage [Adobe Commerce](https://docs.magento.com/user-guide/getting-started.html) specific features. For now, it only improves the Cms Page handling to partially expose [the Page Hierarchy mechanism](https://docs.magento.com/user-guide/cms/page-hierarchy.html).
-</blockquote>
+For now, the Adobe Commerce module only improves the Cms Page handling to partially expose [the Page Hierarchy mechanism](https://docs.magento.com/user-guide/cms/page-hierarchy.html).
 
-## Enable Magento Commerce support
+## Enable [Magento Commerce](https://docs.magento.com/user-guide/getting-started.html) support
 
 ### Magento2 Commerce module installation
 

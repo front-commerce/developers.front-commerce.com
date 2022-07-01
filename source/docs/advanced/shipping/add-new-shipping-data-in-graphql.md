@@ -1,9 +1,10 @@
 ---
 id: add-new-shipping-data-in-graphql
 title: Add a shipping method with pickup points
+description: In this guide, we'll go through the steps needed to retrieve pickup points from GraphQL and display them in a Map using Front-Commerce's component.
 ---
 
-In this guide we'll go through the steps needed to retrieve pickup points from GraphQL and display them in a Map using Front-Commerce's component. This method can also be useful if you are planning to setup a Store Locator in your shop.
+This method can also be useful if you are planning to set up a Store Locator in your shop.
 
 If you are willing to display these pickups in the checkout this guide will help you. However if you are willing to save the needed information in the user's quote, please have a look at [Custom Shipping Information](/docs/advanced/shipping/custom-shipping-information.html) instead.
 

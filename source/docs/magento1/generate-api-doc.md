@@ -1,11 +1,10 @@
 ---
 id: generate-api-doc
 title: Generate API doc
+description: Magento 1 doesn't have an official API Documentation, but you can generate your own API doc with a PHP open source script. This guide explains the process in detail.
 ---
 
-Magento 1 doesn't have an official API Documentation, but you can generate your own API doc with a PHP open source script.
-
-You can find this script here: https://github.com/PH2M/Magento1-Generate-Api-Doc
+You can find the script used below to generate the documentation at: https://github.com/PH2M/Magento1-Generate-Api-Doc
 
 ## Generate your API doc input files
 

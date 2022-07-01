@@ -1,10 +1,18 @@
 ---
 id: search-engine
 title: Search engine
+description: When configured with Magento1, Front-Commerce provides search capabilities for your website using different technologies. This guide shows you the different options available to you.
 ---
 
-As of Front-Commerce 2.5.0, it is possible to use Elasticsearch or Algolia to
-bring a search engine to your website.
+You can configure search and product lists with filters using the following platforms:
+
+- [Native Magento feature](#Native-search)
+- [ElasticSearch - direct access](#Elasticsearch) (using our ElasticSuite fork)
+- [Algolia](#Algolia)
+
+## Native search
+
+Front-Commerce supports searching using the native Magento API for category listing pages. Please <span class="intercom-launcher">[contact us](mailto:support@front-commerce.com)</span> if your store uses a custom Magento search implementation to see how to make it work in your Front-Commerce project.
 
 ## Elasticsearch
 

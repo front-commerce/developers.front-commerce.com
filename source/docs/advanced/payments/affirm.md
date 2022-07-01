@@ -1,9 +1,10 @@
 ---
 id: affirm
 title: Affirm integration
+description: This guide explains how Front-Commerce allows using Affirm in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [Affirm](https://www.affirm.com/) in your Front-Commerce application.
+There is only one way to accept payments with [Affirm](https://www.affirm.com/) in your Front-Commerce application for now.
 
 ## Magento2 module
 

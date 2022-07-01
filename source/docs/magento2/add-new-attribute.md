@@ -1,6 +1,7 @@
 ---
 id: add-new-attribute
 title: Add a new attribute
+description: Front-Commerce allows you to leverage Magento attributes in your application. This guide explains the different steps involved by going through a concrete example.
 ---
 
 Let's say we want to add a new element to display on a product's page (for instance, a product's rate). You will have to:
@@ -138,7 +139,7 @@ Then you can search for that keyword in your `node_modules/front-commerce/src` f
 
 ### Overriding the files
 
-In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.  
+In **this** example, the files to be overridden are `ProductSynthesisFragment.gql` and `Synthesis.js` both located at `node_modules/front-commerce/src/web/theme/modules/ProductView/Synthesis/`. Copy and paste them into `mymodule/web/theme/modules/ProductView/Synthesis`.
 See [Extend the theme](/docs/essentials/extend-the-theme.html) for more details.
 
 Once you have created the new files, **restart your application** to ensure that these are used instead of the core ones.

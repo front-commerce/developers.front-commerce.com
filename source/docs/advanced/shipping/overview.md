@@ -1,9 +1,10 @@
 ---
 id: shipping-overview
 title: Overview
+description: We support different kinds of shipping methods depending on the platform you are working on (Magento2…). The goal of this documentation is to give you a detailed list of supported shipping methods as well as explain how you can support new shipping methods.
 ---
 
-We support different kind of payments depending on the platform you are working on (Magento2…). The goal of this documentation is to give you a detailed list of supported shipping methods as well as explaining how you can support new shipping methods.
+The following shipping carriers are supported:
 
 - [Colissimo](/docs/advanced/shipping/colissimo.html)
 - [Mondial Relay](/docs/advanced/shipping/mondial-relay.html)
