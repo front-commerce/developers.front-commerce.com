@@ -6,12 +6,16 @@ description: This area contains the Migration steps to follow for upgrading your
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.15.0` -> `2.16.0`
+
+Updating Front-Commerce from 2.15.0 to 2.16.0 does not require any manual operation.
+
 ## `2.14.0` -> `2.15.0`
 
 ### Environment variables: quote values containing `#` or ``` characters
 
 As part of our continuous dependencies upgrade process, we've upgraded the `dotenv` dependency to its latest version.
-We've updated it from version `8.2.0` (october 2019) to version `16.0.0` (february 2022).
+We've updated it from version `8.2.0` (October 2019) to version `16.0.0` (February 2022).
 
 Technically, **it contains 2 Breaking Changes** that we've decided to be pragmatic about. [We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
 
@@ -39,7 +43,7 @@ In this release, we introduced the In-Stock Alert feature. When this feature is 
 
 In this release we added pagination for orders. In the process, the `orders` GraphQL field used to retrieve orders has been deprecated and will eventually be removed in FC version 3.0.0. `orderList` should now be used instead.
 
-If you had overriden the `Orders` (`theme/pages/Account/Orders/Orders.js`) component, you might want to update it to use the new GraphQL field and add a pagination component.
+If you had overridden the `Orders` (`theme/pages/Account/Orders/Orders.js`) component, you might want to update it to use the new GraphQL field and add a pagination component.
 
 ### Node Version Support Change
 
