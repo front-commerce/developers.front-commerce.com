@@ -6,6 +6,10 @@ description: This area contains the Migration steps to follow for upgrading your
 
 Our goal is to make migrations as smooth as possible. This is why we try to make many changes backward compatible by using deprecation warnings. The deprecation warnings are usually removed in the next breaking release.
 
+## `2.15.0` -> `2.16.0`
+
+Updating Front-Commerce from 2.15.0 to 2.16.0 does not require any manual operation.
+
 ## `2.14.0` -> `2.15.0`
 
 ### Environment variables: quote values containing `#` or ``` characters
