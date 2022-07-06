@@ -62,7 +62,7 @@ type Homepage {
 
 In your resolvers, load your content as usual [with the Prismic loader](/docs/prismic/expose-content.html#Methods-to-query-content).
 
-In addition to [the `fieldTransformers` parameter](/docs/prismic/expose-content.html#Field-Transformers), the loader methods accept a `supportedSlices` key. It allows to define to a data structure for the Slices available in the Custom Type.
+In addition to [the `fieldTransformers` parameter](/docs/prismic/expose-content.html#Field-Transformers) in the [defineContentTransformers](/docs/prismic/expose-content.html#defineContentTransformers-typeIdentifier-options), the definition accepts a `supportedSlices` key. It allows to define to a data structure for the Slices available in the Custom Type.
 
 For a Custom type containing a title and a Slice Zone with only one type of Slice (`featured_products` exposed under the GraphQL `FeaturedProducts` type), the change would look like this:
 
@@ -88,17 +88,14 @@ The resolved content will now contain Slices contributed for the Slice Zone in t
 Here is an example showcasing how resolvers could allow to adapt Prismic content to the schema you've designed (and overcome the technical naming constraint brought by Prismic):
 
 ```js
-// resolvers.js
+// MyModule/resolvers.js
 export default {
-  // […]
   Homepage: {
     mainContent: (content) => content.body,
   },
-
   Carousel: {
     slides: (content) => content.items,
   },
-
   Push: {
     blocks: (content) => content.items,
   },
@@ -108,7 +105,6 @@ export default {
       text: content.push_link_text,
     }),
   },
-
   FeaturedProducts: {
     sectionTitle: (content) => content.section_title,
     category: (content) => {
@@ -117,7 +113,6 @@ export default {
       return content.category?.loadValue();
     },
   },
-  // […]
 };
 ```
 
@@ -145,7 +140,7 @@ That's it! You must now be able to view data from Prismic when requesting your a
 }
 ```
 
-Let's now see how to map these data to frontend components.
+Let's now see how to map this data to frontend components.
 
 ## Create a Slice library
 

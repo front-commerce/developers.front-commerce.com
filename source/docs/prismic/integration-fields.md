@@ -142,14 +142,18 @@ const {
 +  IntegrationFieldTransformer,
 } = loaders.Prismic.transformers;
 
-const all = await loaders.Prismic.loadSingle("allfields", {
-  fieldTransformers: {
-    // […]
-+    fc_product: new IntegrationFieldTransformer(
-+      loaders.Prismic.getIntegrationField("Product")
-+    ),
+
+loaders.Prismic.defineContentTransformers("allfields", {
+    fieldTransformers: {
+      // […]
++     fc_product: new IntegrationFieldTransformer(
++       loaders.Prismic.getIntegrationField("Product")
++     ),
   },
-});
+})
+
+
+const all = await loaders.Prismic.loadSingle("allfields");
 ```
 
 ### Create resolvers for these fields

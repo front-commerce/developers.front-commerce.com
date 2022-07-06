@@ -28,31 +28,22 @@ First add an embed field in your schema using the [`oEmbedContent`](https://gitl
 ```graphql
 type MyAlbum {
   title: String
-  artist: String
-  releaseDate: Date
   cover: oEmbedContent
 }
 ```
 
-Then you can implement the [`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/transformers/Embed.js) in your loader which will parse the embed response from Prismic to a rich [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
+Then you can add the [`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/transformers/Embed.js) to your album definition which will parse the embed response from Prismic as a rich [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
 
-```js
-const AlbumLoader = (PrismicLoader) => {
-  const { EmbedTransformer } = PrismicLoader.transformers;
+```diff
+- const { TitleTransformer } = loaders.Prismic.transformers;
++ const { TitleTransformer, EmbedTransformer } = loaders.Prismic.transformers;
 
-  const contentTransformOptions = {
+loaders.Prismic.defineContentTransformers("album", {
     fieldTransformers: {
-      // ... other transformers
-      cover: new EmbedTransformer(),
+      title: new TitleTransformer()
++     cover: new EmbedTransformer(),
     },
-  };
-
-  return {
-    loadByUID: (uid) => {
-      return PrismicLoader.loadByUID("album", uid, contentTransformOptions);
-    },
-  };
-};
+})
 ```
 
 ### Adding an Embed Field in your client-side
@@ -111,8 +102,6 @@ Update your schema to use the [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-pl
 ```diff
 type MyAlbum {
   title: String
-  artist: String
-  releaseDate: Date
   cover: oEmbedContent
 -  content: DefaultWysiwyg
 +  content: PrismicWysiwyg
@@ -121,24 +110,16 @@ type MyAlbum {
 
 Then use the `RichtextToWysiwygTransformer` which will transform the Prismic Richtext to the Wysiwyg format.
 
-```js
-// server/modules/album/AlbumLoader.js
-const AlbumLoader = (PrismicLoader, WysiwygLoader) => {
-  const { RichtextToWysiwygTransformer } = PrismicLoader.transformers;
+```diff
+- const { TitleTransformer } = loaders.Prismic.transformers;
++ const { TitleTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
 
-  const contentTransformOptions = {
-    fieldTransformers: {
-      // ... other transformers
-      content: new RichtextToWysiwygTransformer(WysiwygLoader),
-    },
-  };
-
-  return {
-    loadByUID: (uid) => {
-      return PrismicLoader.loadByUID("album", uid, contentTransformOptions);
-    },
-  };
-};
+loaders.Prismic.defineContentTransformers("album", {
+  fieldTransformers: {
+    title: new TitleTransformer()
++   content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+  },
+})
 ```
 
 You can then follow the same steps form [`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) to implement the Wysiwyg in your client-side.
