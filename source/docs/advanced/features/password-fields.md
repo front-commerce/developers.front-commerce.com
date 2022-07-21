@@ -1,11 +1,10 @@
 ---
 id: password-fields
 title: Password fields
+description: Your application will require customers to enter their password on several pages (registration, login, password forgotten…). This page contains all information about how to adapt the default Front-Commerce behaviors.
 ---
 
-Your application will require customers to enter their password on several pages (registration, login, password forgotten…). Front-Commerce contains some default components and mechanisms for providing a good user experience while ensuring passwords match the security criteria you may have.
-
-This page contains all information about how to adapt the default Front-Commerce behaviors.
+Front-Commerce contains some default components and mechanisms for providing a good user experience while ensuring passwords match the security criteria you may have. Here is how to adapt them to your needs.
 
 ## Configure password validity
 

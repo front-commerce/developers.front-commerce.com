@@ -1,9 +1,8 @@
 ---
 id: embed-fields
 title: Embed Fields
+description: Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embedded HTML content, or add your own custom embed content. This guide explains how the default implementation work and how to customize it.
 ---
-
-Embed fields allows you to add a valid oEmbed URL, like YouTube, Vimeo, or Spotify, to generate embed html content, or add your own custom embed content. You can read more about the oEmbed format, view a list of supported providers on the [oEmbed website](https://oembed.com/).
 
 In Front-Commerce we expose the embed fields in two ways;
 
@@ -11,6 +10,10 @@ In Front-Commerce we expose the embed fields in two ways;
 - Embed Fields in [`WysiwygV2`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) with [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform.html#PrismicWysiwyg)
 
 In this section we will cover how to implement both of these methods, and how to implement your own custom embed fields.
+
+<blockquote class="info">
+**Note:** you can read more about the oEmbed format and view a list of supported providers on the [oEmbed website](https://oembed.com/).
+</blockquote>
 
 ## Standalone Embed Fields
 
@@ -25,31 +28,22 @@ First add an embed field in your schema using the [`oEmbedContent`](https://gitl
 ```graphql
 type MyAlbum {
   title: String
-  artist: String
-  releaseDate: Date
   cover: oEmbedContent
 }
 ```
 
-Then you can implement the [`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/transformers/Embed.js) in your loader which will parse the embed response from Prismic to a rich [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
+Then you can add the [`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/transformers/Embed.js) to your album definition which will parse the embed response from Prismic as a rich [`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql) type.
 
-```js
-const AlbumLoader = (PrismicLoader) => {
-  const { EmbedTransformer } = PrismicLoader.transformers;
+```diff
+- const { TitleTransformer } = loaders.Prismic.transformers;
++ const { TitleTransformer, EmbedTransformer } = loaders.Prismic.transformers;
 
-  const contentTransformOptions = {
+loaders.Prismic.defineContentTransformers("album", {
     fieldTransformers: {
-      // ... other transformers
-      cover: new EmbedTransformer(),
+      title: new TitleTransformer()
++     cover: new EmbedTransformer(),
     },
-  };
-
-  return {
-    loadByUID: (uid) => {
-      return PrismicLoader.loadByUID("album", uid, contentTransformOptions);
-    },
-  };
-};
+})
 ```
 
 ### Adding an Embed Field in your client-side
@@ -108,8 +102,6 @@ Update your schema to use the [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-pl
 ```diff
 type MyAlbum {
   title: String
-  artist: String
-  releaseDate: Date
   cover: oEmbedContent
 -  content: DefaultWysiwyg
 +  content: PrismicWysiwyg
@@ -118,24 +110,16 @@ type MyAlbum {
 
 Then use the `RichtextToWysiwygTransformer` which will transform the Prismic Richtext to the Wysiwyg format.
 
-```js
-// server/modules/album/AlbumLoader.js
-const AlbumLoader = (PrismicLoader, WysiwygLoader) => {
-  const { RichtextToWysiwygTransformer } = PrismicLoader.transformers;
+```diff
+- const { TitleTransformer } = loaders.Prismic.transformers;
++ const { TitleTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
 
-  const contentTransformOptions = {
-    fieldTransformers: {
-      // ... other transformers
-      content: new RichtextToWysiwygTransformer(WysiwygLoader),
-    },
-  };
-
-  return {
-    loadByUID: (uid) => {
-      return PrismicLoader.loadByUID("album", uid, contentTransformOptions);
-    },
-  };
-};
+loaders.Prismic.defineContentTransformers("album", {
+  fieldTransformers: {
+    title: new TitleTransformer()
++   content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+  },
+})
 ```
 
 You can then follow the same steps form [`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg.html#lt-WysiwygV2-gt-usage) to implement the Wysiwyg in your client-side.

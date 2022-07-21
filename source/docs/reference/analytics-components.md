@@ -1,6 +1,7 @@
 ---
 id: analytics-components
 title: Analytics React Components
+description: This reference documentation contains a detailed API interface for you to use when developing a Front-Commerce application.
 ---
 
 For a tangible example and explanation, please refer to [Analytics](/docs/advanced/theme/analytics.html) advanced documentation.

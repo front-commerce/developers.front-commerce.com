@@ -1,9 +1,8 @@
 ---
 id: release-notes
 title: Release notes
+description: This page lists the public releases and will let you know what is included in each release so you could clearly define an upgrade plan for your project.
 ---
-
-This page lists the public releases and will let you know what is included in each release so you could clearly define an upgrade plan for your project.
 
 ## Latest version
 
@@ -49,7 +48,7 @@ Compatible with:
 > - Discover and test an early version of the Twicpics connector: the final version will be ready for version 2.16
 > - We made Front-Commerce compatible with npm 7 / NodeJS 16 (npm 8 / NodeJS 17 in beta) and will keep track on NodeJS releases starting from now on.
 
-- [Announcement](/blog/2022/05/12/front-commerce-2.15/)
+- [Announcement](/blog/2022/05/11/front-commerce-2.15/)
 - [Changelog](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.0)
 
 ## 2.14.0 (2022-03-31)

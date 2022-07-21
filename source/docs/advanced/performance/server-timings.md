@@ -1,13 +1,12 @@
 ---
 id: server-timings
 title: Server Timings
+description: Server Timings are metrics sent via a header in the response of an HTTP request. They allow you to see how time is spent on the server from your browser DevTools, so you could optimize it if needed. This guide explains how to do this in Front-Commerce.
 ---
-
-[Server Timings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) are metrics that are sent via a header in the response of an HTTP request. They allow you to see how time is spent on the server from your browser DevTools, so you could optimize it if needed.
 
 You can see a representation in your network panel of your devtools by clicking on request and opening the "Timings" tab. Follow these guides for [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor/request_details#Timings)'s or [Google Chrome](https://www.smashingmagazine.com/2018/10/performance-server-timing/#the-server-timing-header)'s devtools.
 
-The Server Timings are enabled when one of the following condition is satisfied:
+The [Server Timings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) are enabled when one of the following condition is satisfied:
 
 - `FRONT_COMMERCE_ENV !== "production"`
 - `DEBUG=front-commerce:performance`

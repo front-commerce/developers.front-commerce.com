@@ -1,8 +1,27 @@
 ---
 id: m2-search-engine
 title: Search engine
-description: When configured with Magento2, Front-Commerce can leverage Elasticsearch or Algolia to bring a search engine to your website.
+description: When configured with Magento2, Front-Commerce provides search capabilities for your website using different technologies. This guide shows you the different options available to you.
 ---
+
+You can configure search and product lists with filters using the following platforms:
+
+- [Native Magento feature](#Native-search) (using its GraphQL API)
+- [ElasticSearch - direct access](#Elasticsearch) (using ElasticSuite)
+- [Algolia](#Algolia)
+
+## Native search
+
+<blockquote class="feature--new">
+_Since version 2.15_
+</blockquote>
+
+Front-Commerce supports the native Magento API for search and category listing pages. It means that any Magento search module compatible with its GraphQL API will be used in your Front-Commerce project without any specific work.
+
+<blockquote class="wip">
+  **Work In Progress:** this section is being written.
+  Please <span class="intercom-launcher">[get in touch](mailto:support@front-commerce.com)</span> if you want to ask any question!
+</blockquote>
 
 ## Elasticsearch
 

@@ -1,9 +1,10 @@
 ---
 id: adyen
 title: Adyen integration
+description: This guide explains how Front-Commerce allows using Adyen in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [Adyen](https://www.adyen.com/) in your Front-Commerce application.
+There are different ways for you to accept payments with [Adyen](https://www.adyen.com/) in your Front-Commerce application.
 
 ## As a Front-Commerce payment method
 

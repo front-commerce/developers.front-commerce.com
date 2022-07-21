@@ -1,9 +1,9 @@
 ---
 id: graphql-context
 title: GraphQL context
+description: Front-Commerce’s GraphQL modules can register GraphQL schema extensions and resolvers to actually fetch the data. This page contains the different keys available in the GraphQL context object managed by Front-Commerce.
 ---
 
-**Front-Commerce’s GraphQL modules** can register GraphQL schema extensions and resolvers to actually fetch the data.
 Front-Commerce manages a **context object** and makes it available in the GraphQL schema so resolvers can use it [using standard GraphQL mechanisms](https://graphql.org/learn/execution/#root-fields-resolvers).
 
 <blockquote class="info">
@@ -11,8 +11,6 @@ Front-Commerce manages a **context object** and makes it available in the GraphQ
   GraphQL schema](/docs/essentials/extend-the-graphql-schema.html) documentation
   page.
 </blockquote>
-
-This page contains the different keys available in the GraphQL context object managed by Front-Commerce.
 
 ## `loaders`
 

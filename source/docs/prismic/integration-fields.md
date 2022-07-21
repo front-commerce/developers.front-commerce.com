@@ -1,11 +1,10 @@
 ---
 id: integration-fields
 title: Integration fields
+description: Prismic Integration fields are custom fields for retrieving content from external systems. When using Prismic with Front-Commerce, you might want to create Integration fields for Categories, Products, or other custom entities in order to improve the Content Management experience. This guide explains how to do it.
 ---
 
-Prismic [Integration fields](https://prismic.io/feature/integration-field) are custom fields for retrieving content from external systems. When using Prismic with Front-Commerce, you might want to create Integration fields for Categories, Products or other custom entities in order to improve the Content Management experience.
-
-**Enable Content managers to build a landing page by selecting Products retrieved from your eCommerce backend without leaving the writing room**. As a developer you can seamlessly access the related Product data in GraphQL so that you can leverage and reuse existing GraphQL fragments and UI components.
+**[Integration fields](https://prismic.io/feature/integration-field) enable Content managers to build a landing page by selecting Products retrieved from your eCommerce backend without leaving the writing room**. As a developer, you can seamlessly access the related Product data in GraphQL so that you can leverage and reuse existing GraphQL fragments and UI components.
 
 If this is relevant for your project, follow instructions in this page to learn how you can create Integration fields that works with your existing Front-Commerce application and data.
 
@@ -83,7 +82,7 @@ You must see a paginated JSON description of your data matching [Prismic's Custo
 ## Configure Integration fields in Prismic
 
 <blockquote class="warning">
-  Integration fields is still a beta feature in Prismic. You must request the feature activation for your repository via the Prismic [commmunity forum](https://community.prismic.io/t/feature-activations-graphql-integration-fields-etc/847) or support.
+  Integration fields are still a beta feature in Prismic. You must request the feature activation for your repository via the Prismic [community forum](https://community.prismic.io/t/feature-activations-graphql-integration-fields-etc/847) or support.
 </blockquote>
 
 You must set up Integration fields in Prismic for each Integration field registered in Front-Commerce. To do so, create a **"Custom API"** Integration field from the **"Settings > Integration Fields"** page.
@@ -143,14 +142,18 @@ const {
 +  IntegrationFieldTransformer,
 } = loaders.Prismic.transformers;
 
-const all = await loaders.Prismic.loadSingle("allfields", {
-  fieldTransformers: {
-    // […]
-+    fc_product: new IntegrationFieldTransformer(
-+      loaders.Prismic.getIntegrationField("Product")
-+    ),
+
+loaders.Prismic.defineContentTransformers("allfields", {
+    fieldTransformers: {
+      // […]
++     fc_product: new IntegrationFieldTransformer(
++       loaders.Prismic.getIntegrationField("Product")
++     ),
   },
-});
+})
+
+
+const all = await loaders.Prismic.loadSingle("allfields");
 ```
 
 ### Create resolvers for these fields

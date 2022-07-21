@@ -58,6 +58,7 @@ sidebar_categories:
     - docs/advanced/production-ready/checklist-before-production
     - docs/advanced/production-ready/sitemap
     - docs/advanced/production-ready/front-commerce-and-pm2
+    - docs/advanced/production-ready/metrics
   Features:
     - docs/advanced/features/overview
     - docs/advanced/features/invoices
@@ -67,6 +68,7 @@ sidebar_categories:
     - docs/advanced/features/quickorder
     - docs/advanced/features/external-logins
     - docs/advanced/features/return-merchandise-authorization
+    - docs/advanced/features/password-fields
     - docs/advanced/features/in-stock-alert
     - docs/advanced/features/maintenance-mode
     - docs/advanced/features/disable-hyration
@@ -108,6 +110,7 @@ sidebar_categories:
     - docs/prismic/integration-fields
     - docs/prismic/preview
     - docs/prismic/embed-fields
+    - docs/prismic/resolver-cache
   Payments:
     - docs/advanced/payments/overview
     - docs/advanced/payments/payment-workflows

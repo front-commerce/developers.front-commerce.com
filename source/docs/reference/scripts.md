@@ -1,10 +1,8 @@
 ---
 id: scripts
 title: Scripts
+description: When in production or during deployment, there are some tasks that are better automated. Front-Commerce contains scripts aimed at being used on your server when your application is running. This reference documentation explains how to use them.
 ---
-
-When in production or during a deployment, there are some tasks that are better automated.
-Front-Commerce contains scripts aimed at being used on your server when your application is running.
 
 <blockquote class="warning">
 We plan to improve the way scripts are created and used in the future, and allow developers to register custom scripts from their applications.

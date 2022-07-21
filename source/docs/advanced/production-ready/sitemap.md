@@ -1,11 +1,10 @@
 ---
 id: sitemap
 title: Sitemap generation
+description: The sitemap is a key piece of each e-commerce website. It allows search engines to crawl and index your pages faster, driving more visitors and potential clients. This guide explains how Front-Commerce generates sitemap and how to add your custom content to it.
 ---
 
 > **Prequisite:** To follow this guide, you first need to know [how to create new pages](/docs/essentials/add-a-page-client-side.html) and [a GraphQL module](/docs/essentials/extend-the-graphql-schema.html) in Front-Commerce.
-
-The sitemap is a key piece of each e-commerce website. It allows search engines to crawl and index your pages faster, driving to more visitors and potential clients.
 
 ## Generate a Sitemap
 

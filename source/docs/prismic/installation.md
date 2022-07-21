@@ -1,9 +1,10 @@
 ---
 id: prismic-installation
 title: Installation
+description: This guide explains how to install and configure the Front-Commerce Prismic module to start interacting with an existing Prismic repository from your application.
 ---
 
-Here are the steps to install and configure the Front-Commerce Prismic module. This guide assumes that you are working in [a Front-Commerce skeleton environment](https://gitlab.com/front-commerce/front-commerce-skeleton/) and you have access to a Prismic repository.
+This guide assumes that you are working in [a Front-Commerce skeleton environment](https://gitlab.com/front-commerce/front-commerce-skeleton/) and you have access to a Prismic repository.
 
 ## Install the module with npm:
 

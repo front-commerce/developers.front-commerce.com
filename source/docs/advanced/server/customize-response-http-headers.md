@@ -1,9 +1,10 @@
 ---
 id: customize-response-http-headers
 title: Customize response HTTP headers
+description: Front-Commerce leverages helmet to send security-related HTTP headers. This guide explains how to customize those HTTP headers.
 ---
 
-Front-Commerce leverages [helmet](https://www.npmjs.com/package/helmet) to send security related HTTP headers. As mentioned in its README file, _It's not a silver bullet, but it can help_ preventing security issues. This guide explains how to customize those HTTP headers.
+As mentioned in [helmet's README file](https://www.npmjs.com/package/helmet): "_It's not a silver bullet, but it can help_" preventing security issues. Here is how to change HTTP headers sent by your application.
 
 ## `Content-Security-Policy` (_aka_ CSP)
 

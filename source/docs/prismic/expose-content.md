@@ -1,9 +1,10 @@
 ---
 id: expose-content
 title: Expose Prismic Content
+description: The Prismic Front-Commerce module provides a loader and the infrastructure to expose Prismic-based Content in Front-Commerce's GraphQL API. This guide explains how to use it.
 ---
 
-The Prismic Front-Commerce module provides a loader and the infrastructure to expose Prismic based Content in Front-Commerce's GraphQL API.
+Exposing Prismic content in an existing Front-Commerce application GraphQL schema is one of the main use case Prismic projects. We tried to keep the API easy to understand and require as little code as possible (while keeping it maintainable and expressive).
 
 ## Prerequisites
 
@@ -15,42 +16,47 @@ To benefit from this API, you first need to [install the Prismic module](/docs/p
 
 The Prismic loader has the following API to request Content from Prismic:
 
-#### `loadSingle(typeIdentifier[, options])`
+#### `loadSingle(typeIdentifier)`
 
-Returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
-
-**Arguments:**
-
-- typeIdentifier (string): The type of document.
-- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
-
-#### `loadByID(id[, options])`
-
-Returns [an object of type `Content`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) or throws an error if no such Content exists.
+Returns a [Content](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types). If such Content does not exist, it throws an error.
 
 **Arguments:**
 
-- `id (string)`: The ID of the document .
-- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+- `typeIdentifier` ([string](https://prismic.io/docs/technologies/rest-api-technical-reference#document.type)): The type of document.
 
-#### `loadByUID(typeIdentifier, uid[, options])`
+#### `loadByID(id)`
 
-Returns a `Content` representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [an UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
+Returns a [Content](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types). If such Content does not exist, it throws an error.
 
 **Arguments:**
 
-- `typeIdentifier (string)`: The type of document.
-- uid (string): The Unique ID of the document.
-- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+- `id` (string): The ID of the document .
 
-#### `loadList(query[, options])`
+#### `loadByUID(typeIdentifier, uid)`
+
+Returns a [Content](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js) representing a Prismic Content of [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and having [a UID field](https://prismic.io/docs/core-concepts/uid) with the given value. If such Content does not exist, it throws an error.
+
+**Arguments:**
+
+- `typeIdentifier` ([string](https://prismic.io/docs/technologies/rest-api-technical-reference#document.type)): The type of document.
+- `uid` (string): The Unique ID of the document.
+
+#### `loadList(query)`
 
 Returns [a `ContentList`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ContentList.js) matching the query. `query` must be an instance of [`ListQuery`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js), it provides a way to filter, sort and paginate Prismic Content.
 
 **Arguments:**
 
-- query ([ListQuery](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js)): A query for a list of documents
-- options ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L30-34)): Content transform options
+- `query` ([ListQuery](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/ListQuery.js)): A query for a list of documents
+
+#### `defineContentTransformers(typeIdentifier, options)`
+
+Defines the content transform options for a given document type.
+
+**Arguments:**
+
+- `typeIdentifier` ([string](https://prismic.io/docs/technologies/rest-api-technical-reference#document.type)): The type of document.
+- `options` ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/index.js#L35-39)): Content transform options
 
 ### Field Transformers
 
@@ -64,18 +70,24 @@ const homepage = await loaders.Prismic.loadSingle("homepage");
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
 
-For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. Instances of the transformers can be passed to `loadSingle`, `loadByID`, `loadByUID` and `loadList` to transform the loaded Prismic Content. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, you can configure `loadSingle` to transform it:
+For most Field Types, the field value can directly be used. However for some of them, the field value is not very handy to expose the data in the Graph or even requires a deep transformation. To make that operation easier, the Prismic loader also exposes some Field Transformers to transform field values. The field transformers can be registered for a given content type by using the `defineContentTransformers` method. In the previous example, if the `lastUpdate` field is [a Date Field](https://prismic.io/docs/core-concepts/date), `homepage.lastUpdate` will be a string. If instead you want to have a JavaScript `Date` instance as the field value, define the transformers for `homepage`:
 
 ```js
 const { DateTransformer } = loaders.Prismic.transformers;
-const homepage = await loaders.Prismic.loadSingle("homepage", {
+
+// this will apply to any method loading the `homepage` content type
+loaders.defineContentTransformers("homepage", {
   fieldTransformers: {
     lastUpdate: new DateTransformer(),
   },
 });
+
+const homepage = await loaders.Prismic.loadSingle("homepage");
 // homepage.lastUpdate is now a Date object
 console.log("Last update of my homepage", homepage.lastUpdate);
 ```
+
+> `defineContentTransformers` only needs to be defined once per content type, and it's usually better to defined at a higher level in your module, for example in the [contextEnhancer](/docs/reference/graphql-module-definition.html#contextEnhancer-optional)
 
 The complete list of available Transformers can be found under [the `transformers` directory in Prismic module](https://gitlab.com/front-commerce/front-commerce-prismic/-/tree/main/prismic/server/modules/prismic/core/loaders/transformers). We will use some of them in the following examples.
 
@@ -109,6 +121,7 @@ Let's assume you have created a Single Custom Type _Homepage_ whose identifier i
 While not mandatory, the best way to expose the Homepage in the Graph is to model the GraphQL type after the Custom Type. So in `schema.gql`, you can add:
 
 ```graphql
+# MyModule/schema.gql
 type Homepage {
   title: String
   image: String
@@ -125,23 +138,42 @@ extend type Query {
 Once you have defined the type in the Graph, you need to implement the corresponding resolver in `resolvers.js` to retrieve the homepage Content from Prismic:
 
 ```js
+// MyModule/resolvers.js
 export default {
   Query: {
-    homepage: async (root, args, { loaders }) => {
-      const {
-        TitleTransformer,
-        RichtextToWysiwygTransformer,
-        ImageTransformer,
-      } = loaders.Prismic.transformers;
-      const homepage = await loaders.Prismic.loadSingle("homepage", {
-        fieldTransformers: {
-          title: new TitleTransformer(),
-          image: new ImageTransformer(),
-          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
-      return homepage;
+    homepage: (root, args, { loaders }) => {
+      return loaders.Prismic.loadSingle("homepage");
     },
+  },
+};
+```
+
+#### Define the content transform options
+
+Now we want to ensure that the fields are correctly transformed for the `homepage` content type. To do that, we need to define the content transform options for `homepage`:
+
+```js
+// MyModule/index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+
+export default {
+  namespace: "MyModule",
+  dependencies: ["Prismic/Core", "Front-Commerce/Wysiwyg"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+    const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } =
+      loaders.Prismic.transformers;
+
+    loaders.defineContentTransformers("homepage", {
+      fieldTransformers: {
+        title: new TitleTransformer(),
+        image: new ImageTransformer(),
+        text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+      },
+    });
+    return {};
   },
 };
 ```
@@ -168,16 +200,8 @@ And in the resolver:
 ```diff
 export default {
   Query: {
-    homepage: async (root, args, { loaders }) => {
-      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
-      const homepage = await loaders.Prismic.loadSingle("homepage", {
-        fieldTransformers: {
-          title: new TitleTransformer(),
-          image: new ImageTransformer(),
-          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
-      return homepage;
+    homepage: (root, args, { loaders }) => {
+      return loaders.Prismic.loadSingle("homepage")
     },
   },
 + Homepage: {
@@ -212,16 +236,8 @@ In the resolver:
 ```diff
 export default {
   Query: {
-    homepage: async (root, args, { loaders }) => {
-      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
-      const homepage = await loaders.Prismic.loadSingle("homepage", {
-        fieldTransformers: {
-          title: new TitleTransformer(),
-          image: new ImageTransformer(),
-          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
-      return homepage;
+    homepage: (root, args, { loaders }) => {
+      return loaders.Prismic.loadSingle("homepage")
     },
   },
   Homepage: {
@@ -245,16 +261,8 @@ In this example, the title is exposed as a plain string in the graph. However, t
 ```diff
 export default {
   Query: {
-    homepage: async (root, args, { loaders }) => {
-      const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
-      const homepage = await loaders.Prismic.loadSingle("homepage", {
-        fieldTransformers: {
-          title: new TitleTransformer(),
-          image: new ImageTransformer(),
-          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
-      return homepage;
+    homepage: (root, args, { loaders }) => {
+      return loaders.Prismic.loadSingle("homepage")
     },
   },
 + Homepage: {
@@ -278,26 +286,33 @@ extend type Query {
 }
 ```
 
-And in the resolver:
+And in the module:
 
 ```diff
+// MyModule/index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+
 export default {
-  Query: {
-    homepage: async (root, args, { loaders }) => {
--     const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
-+     const { RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
-      const homepage = await loaders.Prismic.loadSingle("homepage", {
-        fieldTransformers: {
--         title: new TitleTransformer(),
-+         title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-          image: new ImageTransformer(),
-          text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
-      return homepage;
-    },
-  },
-};
+  namespace: "MyModule",
+  dependencies: ["Prismic/Core", "Front-Commerce/Wysiwyg"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+-   const { TitleTransformer, RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
++   const { RichtextToWysiwygTransformer, ImageTransformer } = loaders.Prismic.transformers;
+
+    loaders.defineContentTransformers("homepage", {
+      fieldTransformers: {
+-       title: new TitleTransformer(),
++       title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        image: new ImageTransformer(),
+        text: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+      },
+    })
+    return {}
+  }
+}
 ```
 
 ### Expose an article and retrieve it by its uid
@@ -313,6 +328,7 @@ Let's assume you have created a Custom Repeatable Type _Article_ which identifie
 We can model the corresponding GraphQL schema as follows:
 
 ```graphql
+# MyArticle/schema.gql
 type Article {
   uid: String
   title: DefaultWysiwyg
@@ -325,25 +341,46 @@ extend type Query {
 ```
 
 <blockquote class="note">
-  **Note** The slug argument represent the value of the `uid` field.
+  **Note** The slug argument represents the value of the `uid` field.
 </blockquote>
 
 #### Implement the resolver
 
 ```js
+// MyArticle/resolver.js
 export default {
   Query: {
     article: (_, { slug }, { loaders }) => {
-      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
-
-      return loaders.Prismic.loadByUID("article", slug, {
-        fieldTransformers: {
-          // no transformer needed for `uid` field
-          title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-          content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-        },
-      });
+      return loaders.Prismic.loadByUID("article", slug);
     },
+  },
+};
+```
+
+#### Define the content transform options
+
+```js
+// MyArticle/index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+
+export default {
+  namespace: "MyArticle",
+  dependencies: ["Prismic/Core", "Front-Commerce/Wysiwyg"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+    const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
+
+    loaders.defineContentTransformers("article", {
+      fieldTransformers: {
+        // no transformer needed for `uid` field
+        title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+      },
+    });
+
+    return {};
   },
 };
 ```
@@ -351,25 +388,18 @@ export default {
 #### `loadByUID` error handling
 
 <blockquote class="important">
-  **Reminder** loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having an UID field with the given value. If such Content does not exist, it throws an error.
+  **Reminder** loadByUID returns a `Content` representing a Prismic Content of the corresponding type and having a UID field with the given value. If such Content does not exist, it throws an error.
 </blockquote>
 
 We can handle the error by wrapping our promise in a try / catch :
 
 ```js
+// MyArticle/resolver.js
 export default {
   Query: {
     article: async (_, { slug }, { loaders }) => {
-      const { RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
-
       try {
-        return await loaders.Prismic.loadByUID("article", slug, {
-          fieldTransformers: {
-            // no transformer needed for `uid` field
-            title: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-            content: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-          },
-        });
+        return await loaders.Prismic.loadByUID("article", slug);
       } catch (e) {
         // return whatever default value
         return null;
@@ -392,6 +422,7 @@ Let's assume you have created a Custom Type _FAQ_ which identifier is `faq`. Thi
 Like in the previous example, we can model the corresponding GraphQL type after the Custom Type and in this case we add a root query to retrieve a list of FAQ with a basic pagination and search capabilities:
 
 ```graphql
+# MyFaq/schema.gql
 type Faq {
   question: String
   answer: DefaultWysiwyg
@@ -413,14 +444,14 @@ extend type Query {
 Again, we have to implement the corresponding resolver by using `loadList` and `ListQuery` described above:
 
 ```js
+// MyFaq/resolver.js
 const pageSize = 10;
 
 export default {
   Query: {
     faqList: async (root, { params }, { loaders }) => {
       const { search, page } = params;
-      const { LinkTransformer, RichtextToWysiwygTransformer } =
-        loaders.Prismic.transformers;
+
       const ListQuery = loaders.Prismic.queries.ListQuery;
       const query = new ListQuery(pageSize, page ? page : 1);
 
@@ -429,16 +460,39 @@ export default {
         query.search(search);
       }
 
-      const faqList = await loaders.Prismic.loadList(query, {
-        fieldTransformers: {
-          // no transformer needed for `question` field as it's a key text field
-          answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
-          link: new LinkTransformer(),
-        },
-      });
+      const faqList = await loaders.Prismic.loadList(query);
 
       return faqList.list;
     },
+  },
+};
+```
+
+#### Define the content transform options
+
+```js
+// MyFaq/index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
+
+export default {
+  namespace: "MyFaq",
+  dependencies: ["Prismic/Core", "Front-Commerce/Wysiwyg"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+    const { LinkTransformer, RichtextToWysiwygTransformer } =
+      loaders.Prismic.transformers;
+
+    loaders.defineContentTransformers("faq", {
+      fieldTransformers: {
+        // no transformer needed for `question` field as it's a key text field
+        answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
+        link: new LinkTransformer(),
+      },
+    });
+
+    return {};
   },
 };
 ```
@@ -447,30 +501,29 @@ export default {
 
 Both the `LinkTransformer` and `RichtextToWysiwygTransformer` can be configured to recognize local URLs and rewrite them as site relative links. That way, those links won't break the SPA navigation and contributors don't have to worry about the environment when adding a link.
 
-To benefit from that feature, the following changes have to be applied to the resolver:
+To benefit from that feature, the following changes have to be applied to the content transformers:
 
 ```diff
-const pageSize = 10;
+// MyFaq/index.js
+import typeDefs from "./schema.gql";
+import resolvers from "./resolvers";
 
 export default {
-  Query: {
-    faqList: (root, { params }, { loaders }) => {
-      const { search, page } = params;
-      const { LinkTransformer, RichtextToWysiwygTransformer } = loaders.Prismic.transformers;
-      const ListQuery = loaders.Prismic.queries.ListQuery;
-      const query = new ListQuery(pageSize, page ? page : 1);
-
-      query.type("faq").sortBy("document.last_publication_date", "asc");
-      if (search) {
-        query.search(search);
-      }
+  namespace: "MyFaq",
+  dependencies: ["Prismic/Core", "Front-Commerce/Wysiwyg"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+    const { LinkTransformer, RichtextToWysiwygTransformer } =
+      loaders.Prismic.transformers;
 
 +     const linkTransformer = new LinkTransformer([
 +       "localhost",
 +       "staging.example.com",
 +       "production.example.com"
 +     ]);
-      const faqList = await loaders.Prismic.loadList(query, {
+
+    loaders.defineContentTransformers("faq", {
         fieldTransformers: {
           // no transformer needed for `question` field as it's a key text field
 -         answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg),
@@ -478,10 +531,10 @@ export default {
 +         answer: new RichtextToWysiwygTransformer(loaders.Wysiwyg, linkTransformer),
 +         link: linkTransformer,
         },
-      });
+      }
+    )
 
-      return faqList.list;
-    },
-  },
-};
+    return {}
+  }
+}
 ```

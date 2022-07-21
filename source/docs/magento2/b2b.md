@@ -1,13 +1,14 @@
 ---
 id: magento2-b2b
 title: Magento2 B2B features
+description: Front-Commerce supports several Magento2 B2B features. This guide explains how to configure and use the B2B module.
 ---
 
 <blockquote class="feature--new">
 _Since version 2.11.0_
 </blockquote>
 
-Front-Commerce supports several Magento2 B2B features:
+Here is the list of currently supported features:
 
 - Display details of the Company a customer belongs to
 - Company users handling (list, create, modify and deactivate company users)

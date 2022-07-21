@@ -1,17 +1,14 @@
 ---
 id: quickorder
 title: Quick orders
+description: Front-Commerce's QuickOrder component allows customers to add products to the cart by entering an SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts. This guide explains how to integrate this feature into your application.
 ---
-
-# QuickOrder Component
 
 <blockquote class="feature--new">
 _Since version 2.11_
 </blockquote>
 
-You may want to allow your customers to directly order an item based on its <abbr title="Stock Keeping Unit">SKU</abbr>
-
-The `<QuickOrder />` component allows customers to add products to the cart by entering a SKU and a quantity. This component is self-contained and renders a compact form that has been designed to be integrated into different contexts.
+The `<QuickOrder />` component adds a user interface allowing your customers to directly order an item based on its <abbr title="Stock Keeping Unit">SKU</abbr>
 
 ![Example with the component added to the default's theme minicart](/docs/advanced/features/quickorder_images/Quickorder-sample.png)
 

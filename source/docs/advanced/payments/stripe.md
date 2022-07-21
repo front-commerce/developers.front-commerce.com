@@ -1,9 +1,10 @@
 ---
 id: stripe
 title: Stripe integration
+description: This guide explains how Front-Commerce allows using Stripe in a headless commerce project.
 ---
 
-This page contains information about the different ways you can accept payments with [Stripe](https://stripe.com/) in your Front-Commerce application.
+There is only one way to accept payments with [Stripe](https://stripe.com/) in your Front-Commerce application for now.
 
 ## Front-Commerce Payment
 

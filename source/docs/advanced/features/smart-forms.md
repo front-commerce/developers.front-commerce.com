@@ -1,9 +1,8 @@
 ---
 id: smart-forms
 title: Smart Forms
+description: Front-Commerce has a built-in implementation agnostic Smart Form fields/hooks feature. Smart Form helps users while they are filling out a form. They provide smart suggestions based on their input and can validate or homogeneously format the data. This guide explains how to use the feature in your application.
 ---
-
-Front-Commerce has a built-in implementation agnostic **Smart Form fields/hooks** feature. Smart Form fields/hooks help users while they are filling a form. They provide smart suggestions based on their input and can validate or homogeneously format the data.
 
 The Smart Form fields can be used as a drop in replacements for their non smart counterparts, while the hooks are to be installed on the `<Form>` level.
 
