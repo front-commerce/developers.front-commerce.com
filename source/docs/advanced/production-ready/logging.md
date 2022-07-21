@@ -73,15 +73,14 @@ But how does this work?
 
 In fact, the object that we exports tells the logging system that for each logger (identified by the keys of the object), we will add an array of [transports](https://github.com/winstonjs/winston#transports).
 
-This means that for each logger, each message will be sent using these transports. Currently, there are two types of logger transports implemented in Front-Commerce:
+This means that for each logger, each message will be sent using these transports. Currently, the following types of logger transports are supported in Front-Commerce:
 
 - `type: "file"`: it will append the message to a file in your server's filesystem.  
   The only option available is `filename` which is the name of the file that will be put in the `logs` folder of your project.
 - `type: "sentry"`: it will send the message to a sentry instance. Sentry is a tool that will make it easier to triage errors and assign some of your team members to their resolution.  
   The only option available is `options` which is the object given to the transport lib [winston-sentry-log](https://github.com/franciscofsales/winston-sentry-log#readme)
 - `type: "console"`: it will send the message to stdout/stderr. This is intended for customers that already have a log collection system (centralized logging for kubernetes or a cloud platform).
-
-There will be most likely more transport configurations in the future, but more likely [we will add a feature to add your own custom transport (#104)](https://gitlab.com/front-commerce/front-commerce/issues/104).
+- `type: "custom"`: You can provide your own `winston.transports` configuration within the `transport` attribute. This is intended for customers that need more control on the logging strategies.
 
 # Add a new logger
 
@@ -162,3 +161,25 @@ module.exports = {
   payment: [makeLogAccordingToEnv("payment.log")],
 };
 ```
+
+# Custom logger implementation
+
+You can implement a custom logger like the following example
+
+```diff
+// my-module/config/logging.js
++const winston = require("winston");
+
+module.exports = {
+  server: [
++    {
++      type: "custom",
++      transport: new winston.transports.Console({
++        format: winston.format.simple(),
++      }),
++    },
+  ],
+};
+```
+
+See available [Winston transports](https://github.com/winstonjs/winston/blob/master/docs/transports.md) for more details
