@@ -24,6 +24,7 @@ P.S. No Magento modules are needed if you use this method. If you however want t
 - `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on [webhooks below)](#Add-webhook) you create it. You then have to copy it to the webhook section in your Adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`
 - `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#Add-webhook)) create it from the webhook section in your Adyen Customer Area under `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`
 - `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on [webhooks below](#Add-webhook)) when you regenerate your HMAC key configure this to be the old one
+- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS` Boolean (more on [Adyen's Stored Payment Methods](#Enable-Adyen’s-Stored-Payment-Methods-optional-1)). If you want to enable Adyen's Stored Payment Methods (Tokenization).
 
 ```sh
 # In .env
@@ -35,6 +36,7 @@ FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME=a_username
 FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD=a_password
 FRONT_COMMERCE_ADYEN_HMAC_KEY=the_hmac_key
 FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY=the_previous_hmac_key
+FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true
 # the Adyen client key is prefixed with live_ or test_
 ```
 
@@ -226,6 +228,12 @@ In your Adyen Customer Area under `Developers > Webhooks` click on the `+ Webkoo
 - Additional Settings
   - HMAC Key (HEX Encoded): click generate and copy it to `FRONT_COMMERCE_ADYEN_HMAC_KEY` environment variable defined above
 
+### Enable Adyen's Stored Payment Methods (optional)
+
+You can opt for Adyen to store your customers' credit card information and allow a faster checkout experienceby adding `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true` in your `.env` file.
+
+If you are using the default Front-Commerce Adyen component, your customer should now be able to save their credit card information during checkout by checking the "Save for my next payment" checkbox.
+
 ### That's it!
 
 You can now configure your Adyen payment methods from the Customer Area under `Settings > Payment Methods` and [test the integration](https://docs.adyen.com/development-resources/test-cards/test-card-numbers)
@@ -306,6 +314,17 @@ FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
 ### Register custom styles (optional)
 
 [Same as above](#Register-custom-styles-optional)
+
+### Enable Adyen's Stored Payment Methods (optional)
+
+You can opt for Adyen to store your customers' credit card information to allow a faster checkout experience.
+
+In order to do so:
+
+- Add `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true` in your `.env` file
+- Follow [Adyen's guide](https://docs.adyen.com/plugins/magento-2/set-up-tokenization?tab=magento-vault-version-8-2-0_2#set-up-adyen-tokenization) on how to setup tokenization using Adyen's Magento module.
+
+If you are using the default Front-Commerce Adyen component, your customer should now be able to save their credit card information during checkout by checking the "Save for my next payment" checkbox.
 
 ### That's it!
 
