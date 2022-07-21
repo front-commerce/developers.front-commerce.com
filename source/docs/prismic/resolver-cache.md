@@ -119,6 +119,61 @@ export default {
   **ProTip:** `contentProperty` can also be used with `singleton` Content.
 </blockquote>
 
+### NullContent
+
+The `NullContent` has been introduced to allow caching of resolvers that return `null`, lets say that you return a tag based on an id, but you only want to return the tags which are in the allow list, in this case, we will return `null` for the tags that are not in the allow list.
+
+```js
+const allowList = ["tag1", "tag2"];
+
+export default {
+  Query: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.TagLoader.loadById(args.id);
+      return allowList.includes(tag.name) ? tag : null;
+    }),
+  },
+};
+```
+
+The issue we will have here is that there is no way creating a reference to the Tag document in prismic, so we won't be able to know that `tag3` or `tag4` should cache `null`, so we introduced the NullContent to handle this.
+
+The `NullContent` takes in a single parameter, `contentOrDcoumentId`, which is either the Content object that should be cached as `null`, or the direct id to the document parent document.
+
+```js
+import NullContent from "prismic/server/domain/NullContent";
+
+const allowList = ["tag1", "tag2"];
+
+export default {
+  Query: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.TagLoader.loadById(args.id);
+      return allowList.includes(tag.name) ? tag : NullContent(tag);
+    }),
+  },
+};
+```
+
+The direct id of the document is usefull when the caching is based on the parent of the document, for example when you want to cache the `tag` inside a `Faq` document.
+
+```js
+const allowList = ["tag1", "tag2"];
+
+export default {
+  Fax: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.DocumentLoader.loadTagByDocumentID(
+        source.documentMetadata.documentID
+      );
+      return allowList.includes(tag.name)
+        ? tag
+        : NullContent(source.documentMetadata.documentID);
+    }),
+  },
+};
+```
+
 ### Advanced Usecase
 
 What if we want to manipulate the data after it is retrieved either from the cache or the resolver?
