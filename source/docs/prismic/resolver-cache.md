@@ -121,7 +121,9 @@ export default {
 
 ### NullContent
 
-The `NullContent` has been introduced to allow caching of resolvers that return `null`, lets say that you return a tag based on an id, but you only want to return the tags which are in the allow list, in this case, we will return `null` for the tags that are not in the allow list.
+The `NullContent` has been introduced to allow caching of resolvers that return `null`.
+
+Lets say that you return a tag based on an id, but you only want to return the tags which are in the allow list, in this case, we will return `null` for the tags that are not in the allow list.
 
 ```js
 const allowList = ["tag1", "tag2"];
