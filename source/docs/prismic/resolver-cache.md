@@ -142,7 +142,7 @@ The issue we will have here is that there is no way creating a reference to the 
 
 The `NullContent` takes in a single parameter, `contentOrDcoumentId`, which is either the Content object that should be cached as `null`, or the direct id to the document parent document.
 
-```js
+```diff
 import NullContent from "prismic/server/domain/NullContent";
 
 const allowList = ["tag1", "tag2"];
@@ -151,11 +151,11 @@ export default {
   Query: {
     tag: PrismicCachedResolver((parent, args, { loaders }) => {
       const tag = loaders.TagLoader.loadById(args.id);
-      return allowList.includes(tag.name) ? tag : NullContent(tag);
+-      return allowList.includes(tag.name) ? tag : null;
++      return allowList.includes(tag.name) ? tag : NullContent(tag);
     }),
   },
 };
-```
 
 The direct id of the document is usefull when the caching is based on the parent of the document, for example when you want to cache the `tag` inside a `Faq` document.
 
