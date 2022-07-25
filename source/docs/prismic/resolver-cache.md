@@ -138,7 +138,9 @@ export default {
 };
 ```
 
-The issue we will have here is that there is no way creating a reference to the Tag document in prismic, so we won't be able to know that `tag3` or `tag4` should cache `null`, so we introduced the NullContent to handle this.
+The issue we have here is that there is no way to create a reference to the Tag document in prismic, so we won't be able to know that `tag3` or `tag4` should cache `null`.
+
+The NullContent handles this.
 
 The `NullContent` takes in a single parameter, `contentOrDcoumentId`, which is either the Content object that should be cached as `null`, or the direct id to the document parent document.
 
