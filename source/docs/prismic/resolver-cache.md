@@ -162,8 +162,7 @@ export default {
 The direct id of the document is usefull when the caching is based on the parent of the document, for example when you want to cache the `tag` inside a `Faq` document.
 
 ```js
-const allowList = ["tag1", "tag2"];
-
+...
 export default {
   Fax: {
     tag: PrismicCachedResolver((parent, args, { loaders }) => {
@@ -176,7 +175,6 @@ export default {
     }),
   },
 };
-```
 
 ### Advanced Usecase
 
