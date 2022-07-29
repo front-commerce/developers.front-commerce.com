@@ -52,7 +52,7 @@ We will need to create the webhook api to get an Access Token and the Store Hash
   <img src="./assets/new-webhook-accesstoken.png" alt="SBigCommerce API account access token" style="border-radius:5px;">
 </div>
 
-You are now ready to get started with your webhooks, we have created a [BigCommerce Webhook API](https://documenter.getpostman.com/view/16678499/UzQys4QZ) in postman to simplify this process, you can hit the `Run in Postman` button and simply replace all the relevant varialbles to get started [creating your webhooks](#Creating-a-webhook).
+You are now ready to get started with your webhooks, we have created a [BigCommerce Webhook API](https://documenter.getpostman.com/view/16678499/UzQys4QZ) in postman to simplify this process, you can hit the `Run in Postman` button and simply replace all the relevant variables to get started [creating your webhooks](#Creating-a-webhook).
 
 ### Creating a webhook
 
