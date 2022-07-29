@@ -1,7 +1,7 @@
 ---
 id: bigcommerce-webhooks
 title: Webhooks
-description: Create webhooks to recieve events from BigCommerce for cache invalidation and other purposes.
+description: Create webhooks to receive events from BigCommerce for cache invalidation and other purposes.
 ---
 
 ## Setting up Front-Commerce
