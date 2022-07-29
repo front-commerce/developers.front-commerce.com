@@ -10,7 +10,7 @@ You need to setup the webhook secret within your Front-Commerce app with the `FR
 
 > **ProTip:** create a random secret by running `openssl rand -hex 25` in your terminal.
 
-Thats all, you should now be ready to recieve webhooks on your application using your webhook secret.
+Thats all, you should now be ready to receive webhooks on your application using your webhook secret.
 
 ## Setting up BigCommerce
 
