@@ -6,7 +6,7 @@ description: Create webhooks to receive events from BigCommerce for cache invali
 
 ## Setting up Front-Commerce
 
-First you will need to create a webhook secret within your Front-Commerce app, to do this, you can add the `FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` environment variable to your `.env` file.
+You need to setup the webhook secret within your Front-Commerce app with the `FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` environment variable.
 
 > **ProTip:** create a random secret by running `openssl rand -hex 25` in your terminal.
 
