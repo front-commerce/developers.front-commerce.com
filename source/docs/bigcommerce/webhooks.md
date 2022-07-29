@@ -20,13 +20,18 @@ We will now create webhooks for the following scopes:
 - `products/*`
 - `sku/*`
 
-To do this we first need to setup Authentication for your BigCommerce account, you can refer to the [documentation](https://developer.bigcommerce.com/docs/ZG9jOjIyMDYxMw-v2-and-v3-rest-api-authentication).
+We first need to setup Authentication for your BigCommerce account (you can refer to the [documentation](https://developer.bigcommerce.com/docs/ZG9jOjIyMDYxMw-v2-and-v3-rest-api-authentication)).
 
 We will need to create the webhook api to get an Access Token and the Store Hash
 
 1. Navigate to your BigCommerce account and click on the `Settings` tab, scroll down and open `API > API accounts`.
 1. Click on the `+ Create API Account` button.
-1. Copy the `API path` as it contains the `Store Hash`. (see figure below)
+1. Copy the `API path` as it contains the `Store Hash`.
+
+   <div style="padding:20px 0;">
+      <img src="./assets/new-webhook-storehash.png" alt="Store Hash in BigCommerce API path" style="border-radius:5px;">
+   </div>
+
 1. Create a new webhook with `read-only` access on the following scopes
    - `Content`
    - `Products`
@@ -40,17 +45,9 @@ We will need to create the webhook api to get an Access Token and the Store Hash
    - `Sites & routes`
 1. Save the API account, and copy the `Access Token`. (see figure below)
 
-#### Store Hash
-
-<div style="text-align:left;">
-  <img src="./assets/new-webhook-storehash.png" alt="Store Hash in BigCommerce API path" style="border-radius:5px;">
-</div>
-
-#### Access Token
-
-<div style="text-align:left;">
-  <img src="./assets/new-webhook-accesstoken.png" alt="SBigCommerce API account access token" style="border-radius:5px;">
-</div>
+  <div style="padding:20px 0;">
+    <img src="./assets/new-webhook-accesstoken.png" alt="SBigCommerce API account access token" style="border-radius:5px;">
+  </div>
 
 You are now ready to get started with your webhooks, we have created a [BigCommerce Webhook API](https://documenter.getpostman.com/view/16678499/UzQys4QZ) in postman to simplify this process, you can hit the `Run in Postman` button and simply replace all the relevant variables to get started [creating your webhooks](#Creating-a-webhook).
 
