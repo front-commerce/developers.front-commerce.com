@@ -62,5 +62,5 @@ You can refer to the Create folder in the [BigCommerce Webhook API](https://docu
 
 ### Updating a webhook
 
-To update a webhook, you first need to run the `GET ALL WEBHOOKS` api, it will return an array of webhooks, you can then replace the `WEBHOOK_ID` variable with the id of the webhook that you want to remove.
+To update a webhook, you first need to run the `GET ALL WEBHOOKS` api to get an array of webhooks. You can then replace the `WEBHOOK_ID` variable with the id of the webhook that you want to remove.
 Once that has been done you can `Create a new webhook` with the new settings.
