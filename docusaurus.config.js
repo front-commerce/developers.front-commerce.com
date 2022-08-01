@@ -59,7 +59,7 @@ const config = {
         },
         // see https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-analytics
         googleAnalytics: {
-          trackingID: process.env.GOOGLE_ANALYTICS || "UA-154725716-1",
+          trackingID: process.env.GOOGLE_ANALYTICS || "266421257",
           anonymizeIP: true,
         },
         // see https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag
