@@ -1,0 +1,88 @@
+---
+title: Analytics React Components
+description:
+  This reference documentation contains a detailed API interface for you to use
+  when developing a Front-Commerce application.
+---
+
+<p>{frontMatter.description}</p>
+
+For a tangible example and explanation, please refer to
+[Analytics](/docs/advanced/theme/analytics) advanced documentation.
+
+## withTrackOnMount
+
+`withTrackPage` is an enhancer that lets you track an event by using
+[React lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
+
+```jsx
+import withTrackOnMount from "theme/modules/Analytics/withTrackOnMount";
+
+withTrackOnMount({
+  // event name
+  event,
+  // compute events props
+  mapPropsToProperties: props => ({ ...properties })
+  // is the component ready to be tracked?
+  isResolvedFromProps: props => true || false,
+  // should we listen the mount during the lifecycle?
+  shouldMountEvent: props => true || false,
+  // should we listen the update during the lifecycle?
+  shouldUpdateEvent: (prevProps, nextProps) => true || false,
+})(BaseComponent);
+```
+
+### TrackOnMount
+
+If you prefer, you can use the `TrackOnMount` component instead that works with
+render props.
+
+```jsx
+import React, { Fragment } from "react";
+import { TrackOnMount } from "theme/modules/Analytics/withTrackOnMount";
+
+const Component = (props) => {
+  return (
+    <Fragment>
+      <TrackOnMount
+        shouldMountEvent={(props) => true || false}
+        shouldUpdateEvent={(prevProps, nextProps) => true || false}
+        event={event}
+        properties={eventProperties}
+        isResolvedFromProps={true || false}
+      />
+      {/* ... your actual component code here */}
+    </Fragment>
+  );
+};
+```
+
+## withTrackPage
+
+`withTrackPage` is an enhancer that lets you track a page each time a component
+is rendered and when the location has changed
+
+```jsx
+import withTrackPage from "theme/modules/Analytics/withTrackPage";
+
+withTrackPage("My Page")(BaseComponent);
+```
+
+### TrackPage
+
+If you prefer, you can use the `TrackPage` component instead that works with
+render props.
+
+```jsx
+import React, { Fragment } from "react";
+import { TrackPage } from "theme/modules/Analytics/withTrackPage";
+
+const Component = (props) => {
+  return (
+    <Fragment>
+      <TrackPage title="My Page" />
+      {/* ... your actual component code here */}
+    </Fragment>
+  );
+};
+```

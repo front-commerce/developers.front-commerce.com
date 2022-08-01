@@ -1,0 +1,258 @@
+---
+sidebar_position: 3
+title: HiPay integration
+description:
+  This guide explains how Front-Commerce allows using HiPay in a headless
+  commerce project.
+---
+
+<p>{frontMatter.description}</p>
+
+There is only one way to accept payments with [HiPay](https://hipay.com/) in
+your Front-Commerce application for now.
+
+## Front-Commerce Payment
+
+> _Since version 2.13.0_
+
+This section explains how to configure and customize the HiPay Front-Commerce
+Payment module into an existing Front-Commerce application.
+
+### Configuring the HiPay console
+
+For Front-Commerce to use the HiPay API you will need to create technical users
+and retrieve some informations for the environment variables.
+
+- Go to Menu > Integration > Security Settings.
+- Get the "Secret Passphrase" as `FRONT_COMMERCE_HIPAY_SECRET_PASSPHRASE`
+- Ensure the "Hashing Algorithm" is SHA-256
+- Create the public user
+  - Click on "Generate new credentials"
+  - Set "Credentials accessibility" to "Public"
+  - Check "Tokenize a card"
+  - Click on "save"
+  - Get the "username" as `FRONT_COMMERCE_HIPAY_PUBLIC_USERNAME`
+  - Get the "password" as `FRONT_COMMERCE_HIPAY_PUBLIC_PASSWORD`
+- Create the private user
+  - Click on "Generate new credentials"
+  - Set "Credentials accessibility" to "Private"
+  - Check all in "Order" and "Maintenance"
+  - Click on "save"
+  - Get the "username" as `FRONT_COMMERCE_HIPAY_PRIVATE_USERNAME`
+  - Get the "password" as `FRONT_COMMERCE_HIPAY_PRIVATE_PASSWORD`
+
+### Add the HiPay settings to the environment
+
+You need to define several environment variables to enable HiPay payments:
+
+- `FRONT_COMMERCE_HIPAY_SECRET_PASSPHRASE`: from the HiPay console (see above)
+- `FRONT_COMMERCE_HIPAY_PUBLIC_USERNAME`: from the HiPay console (see above)
+- `FRONT_COMMERCE_HIPAY_PUBLIC_PASSWORD`: from the HiPay console (see above)
+- `FRONT_COMMERCE_HIPAY_PRIVATE_USERNAME`: from the HiPay console (see above)
+- `FRONT_COMMERCE_HIPAY_PRIVATE_PASSWORD`: from the HiPay console (see above)
+- `FRONT_COMMERCE_HIPAY_ENVIRONMENT`: `stage` or `production` depending on your
+  targeted environment
+- `FRONT_COMMERCE_HIPAY_ENDPOINT`:
+  [the API endpoint for the targeted environment](https://developer.hipay.com/api-explorer/api-online-payments)
+
+Optional environment variables:
+
+- `FRONT_COMMERCE_HIPAY_NOTIFICATION_DELAY`: Payment capture notifications can
+  arrive in the same time as payment authorization notifications, you can set a
+  delay (in milliseconds) to prevent the notifications to be stored in the wrong
+  order in the backend
+
+### Register the HiPay payment module in Front-Commerce
+
+In your Front-Commerce application:
+
+```diff title=".front-commerce.js"
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/payment-hipay"],
+   serverModules: [
+     ...
++    {
++      name: "HiPay",
++      path: "payment-hipay/server/modules/core",
++    }
+   ],
+   webModules: [
+     ...
++    {
++      name: "HiPay",
++      path: "front-commerce/modules/payment-hipay/web",
++    }
+   ]
+```
+
+Note that you must register your backend application (Magento1, Magento2, etc)
+before the payment modules.
+
+### Register your HiPay payment components
+
+:::note
+
+This is a temporary way to setup payment components. We are aware that it is
+tedious. It will definitely change in the future, when Front-Commerce will
+support new extension points for Payments.
+
+:::
+
+1. Override the file that lets you register additional payments forms in
+   Front-Commerce
+
+   ```shell
+   mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+2. Register HiPay
+
+   ```diff title="my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js"
+   +import HiPayCheckout from "theme/hipay/HiPayCheckout";
+
+   const ComponentMap = {};
+
+   const getAdditionalDataComponent = (method) => {
+   +  if (method.code.startsWith("hipay_")) {
+   +    return HiPayCheckout;
+   +  }
+     return ComponentMap[method.code];
+   };
+   ```
+
+3. Override the file that lets you register additional payments actions in
+   Front-Commerce
+
+   ```shell
+   mkdir -p my-module/web/theme/modules/Checkout/PlaceOrder
+   cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
+   ```
+
+4. Register the Hipay action
+
+   ```diff title="my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
+   import None from "./AdditionalAction/None";
+   +import HiPayActions from "theme/modules/Checkout/PlaceOrder/AdditionalAction/HiPay/HiPayActions";
+
+   const ComponentMap = {};
+
+   const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
+   +  if (paymentCode.startsWith("hipay_")) {
+   +    return HiPayActions;
+   +  }
+     return ComponentMap?.[paymentCode] ?? None;
+   };
+   ```
+
+5. register
+   [custom Flash message components](/docs/advanced/features/flash-messages#Create-custom-flash-message-components)
+   to display payment messages in an optimized way (**recommended**)
+
+   ```shell
+   mkdir -p my-module/web/theme/modules/FlashMessages
+   cp -u node_modules/front-commerce/src/web/theme/modules/FlashMessages/getFlashMessageComponent.js my-module/web/theme/modules/FlashMessages/getFlashMessageComponent.js
+   ```
+
+   ```diff title="my-module/web/theme/modules/FlashMessages/getFlashMessageComponent.js"
+   import React from "react";
+   import {
+     InfoAlert,
+     ErrorAlert,
+     SuccessAlert,
+   } from "theme/components/molecules/Alert";
+   import { BodyParagraph } from "theme/components/atoms/Typography/Body";
+   +import {
+   +  HiPayPaymentSuccess,
+   +  HiPayPaymentError,
+   +} from "theme/hipay/FlashMessage";
+
+   // […]
+   const ComponentMap = {
+     default: makeAlertMessageComponent(InfoAlert),
+     info: makeAlertMessageComponent(InfoAlert),
+     error: makeAlertMessageComponent(ErrorAlert),
+     success: makeAlertMessageComponent(SuccessAlert),
+   +  hipaySuccess: HiPayPaymentSuccess,
+   +  hipayError: HiPayPaymentError,
+   };
+   ```
+
+6. register the HiPay payment methods labels
+
+   ```
+   mkdir -p my-module/web/theme/modules/Checkout/Payment/
+   cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/PaymentMethodLabel.js my-module/web/theme/modules/Checkout/Payment/PaymentMethodLabel.js
+   ```
+
+   ```diff title="my-module/web/theme/modules/Checkout/Payment/PaymentMethodLabel.js"
+   + import HiPayMethodLabels from "theme/hipay/HiPayMethodLabels";
+
+   const methodsMapping = {
+     ...
+   +  ...HiPayMethodLabels,
+   };
+   ```
+
+### Update your CSPs
+
+To allow loading HiPay related remote resources:
+
+```diff
+// my-module/config/website.js
+  contentSecurityPolicy: {
+    directives: {
+-      scriptSrc: [],
++      scriptSrc: ["*.hipay.com"],
+-      frameSrc: [],
++      frameSrc: ["*.hipay.com"],
+-      styleSrc: [],
++      styleSrc: ["*.hipay.com"],
+      imgSrc: [],
+      fontSrc: [],
+-      connectSrc: [],
++      connectSrc: ["*.hipay.com"],
+      baseUri: [],
+    }
+  },
+```
+
+#### That's it!
+
+:::note
+
+Please keep in mind that HiPay payment methods depends on the Customer country
+and the Store currency. Different contexts could display different payment
+methods in the checkout.
+
+:::
+
+### Advanced: customize data sent to HiPay
+
+The HiPay payment module is extensible. It leverages Front-Commerce's "data
+transform" pattern to allow developers to customize payment data sent to HiPay.
+
+You need to create a backend loader to register the transformation.
+
+```js
+export default {
+  namespace: "HiPay/Custom",
+  dependencies: ["HiPay/Core"],
+  contextEnhancer: ({ loaders }) => {
+    loaders.HiPay.registerPaymentDataTransform((customer, order) => ({
+      custom_data: JSON.stringify({
+        <xxx>: customer.<xxx>
+      })
+    }))
+  },
+};
+```
+
+:::warning
+
+Root attributes like `custom_data` indicated here are directly added to the
+HiPay `/order` form-data
+([see the webservice documentation](https://developer.hipay.com/api-explorer/api-online-payments#/payments/requestNewOrder)).
+Add other attributes cautiously.
+
+:::

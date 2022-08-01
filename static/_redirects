@@ -1,0 +1,13 @@
+# see https://docs.netlify.com/routing/redirects/ for documentation
+# Redirects (permanent)
+/blog/:year/:month/:day/:slug/                      /changelog/:slug/   301
+/blog/                                              /changelog/         301
+/docs/welcome/                                       /docs/	            301 
+/docs/advanced/features/advanced-external-logins/   /docs/advanced/features/external-logins/advanced 301
+/docs/advanced/theme/wysiwyg-legacy/                /docs/advanced/theme/wysiwyg/legacy/    301
+
+# Rewrites
+/docs/:level1/:level2/:level3/:category/overview/	/docs/category/:category	200
+/docs/:level1/:level2/:category/overview/			/docs/category/:category	200
+/docs/:level1/:category/overview/					/docs/category/:category	200
+/docs/                                              /docs/welcome	            200

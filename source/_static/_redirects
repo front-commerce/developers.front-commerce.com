@@ -1,3 +1,0 @@
-# see https://docs.netlify.com/routing/redirects/ for documentation
-/blog/:year/:month/:day/:slug/ /changelog/:slug/ 301
-/blog/ /changelog/ 301
