@@ -1,0 +1,72 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #bb1f4e;
+  --ifm-color-primary-dark: #a81c46;
+  --ifm-color-primary-darker: #9f1a42;
+  --ifm-color-primary-darkest: #831637;
+  --ifm-color-primary-light: #ce2256;
+  --ifm-color-primary-lighter: #d7245a;
+  --ifm-color-primary-lightest: #df3d6d;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-footer-background-color:#111010;
+}
+
+/* 
+* For readability concerns, you should choose a lighter palette in dark mode. 
+* see https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima
+*/
+[data-theme='dark'] {
+  --ifm-color-primary: #ff2a6a;
+  --ifm-color-primary-dark: #ff0c55;
+  --ifm-color-primary-darker: #fc004c;
+  --ifm-color-primary-darkest: #d0003e;
+  --ifm-color-primary-light: #ff487f;
+  --ifm-color-primary-lighter: #ff5789;
+  --ifm-color-primary-lightest: #ff83a8;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.footer--dark{
+  --ifm-footer-background-color:#111010;
+}
+
+
+.code-block-error-line {
+  background-color: #ff000020;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid #ff000080;
+}
+
+video {
+  border-radius: 5px;
+}
+
+video.video-cover:not(:fullscreen) {
+  object-fit: cover;
+}
+
+.video iframe{
+  border-radius: 5px;
+}
+
+
+/* Cookie Banner */
+.cc-bottom{
+  z-index: 2147483647;
+  min-height: 80px; /* ensures it covers the intercom bar */
+  backdrop-filter: blur(10px); 
+}

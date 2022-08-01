@@ -1,5 +1,7 @@
 # Front-Commerce — Developers area
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/83adbe80-06e7-4941-97d4-db3dca7590e8/deploy-status)](https://app.netlify.com/sites/heuristic-almeida-1a1f35/deploys)
+
 This is the source code for the https://developers.front-commerce.com website.
 
 Please use Github issues and PR for feedbacks, suggestions and improvements.
@@ -11,8 +13,32 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 
 The code though is under [MIT License](https://github.com/front-commerce/developers.front-commerce.com/blob/main/LICENSE.md).
 
-## Setup
+### Installation
 
-Run `npm install` to install the app.
-You can add a new page by creating a `.md` file in `source/docs/yourfolder/`. Do not forget to index your newly created page to the `_config.yml` file at the root of the repository.
-Run `npm run start` to start your Front-Commerce local version of the documentation (default port should be `4444` on `localhost`).
+```
+$ pnpm install
+```
+
+### Local Development
+
+```
+$ pnpm start
+```
+
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+### Build
+
+```
+$ pnpm build
+```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Run
+
+```
+$ pnpm serve
+```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.

@@ -1,0 +1,9 @@
+label: Prismic
+position: 6
+link:
+  type: generated-index
+  description:
+    The Front-Commerce Prismic module brings support for the headless CMS
+    Prismic to Front-Commerce. It allows exposing content coming from a Prismic
+    repository in your GraphQL API and creates relationships with data from
+    other systems.

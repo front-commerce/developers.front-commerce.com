@@ -1,0 +1,7 @@
+label: Production Ready
+position: 5
+link:
+  type: generated-index
+  description:
+    In this section, you will learn advanced information about the different
+    things to check before deploying your Front-Commerce application.

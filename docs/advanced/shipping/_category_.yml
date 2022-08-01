@@ -1,0 +1,9 @@
+label: Shipping
+position: 8
+link:
+  type: generated-index
+  description:
+    We support different kinds of shipping methods depending on the platform you
+    are working on (Magento2…). The goal of this documentation is to give you a
+    detailed list of supported shipping methods as well as explain how you can
+    support new shipping methods.
