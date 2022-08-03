@@ -217,6 +217,14 @@ const config = {
         disableInDev: false,
       },
     ],
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        id: "universal-analytics",
+        trackingID: "UA-154725716-1",
+        anonymizeIP: true,
+      },
+    ],
   ],
   scripts: [
     "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js",
