@@ -21,6 +21,103 @@ In this release, we added support for
 for its Magento module. For more information, see
 [Adyen's Stored Payment Methods documentation](/docs/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional).
 
+### Payment workflow rework
+
+We added a new frontend payment workflow for payment means using asynchronous
+notifications. As most embedded payment methods will be migrated in the future,
+please ensure you update the following files if you overrode them
+
+```diff title="theme/modules/Checkout/PlaceOrder/PlaceOrder.js"
+...
++import AsyncOrderQuery from "./AsyncOrderQuery.gql";
+
+...
+
+  EnhancePlaceOrder({
+    SetPaymentInfoAndPlaceOrderMutation,
+    SetCheckoutPaymentInformationAndRedirectMutation,
+    PlaceOrderAndRedirectMutation,
++    AsyncOrderQuery,
+  }),
+  branch(
+-    (props) => props.hasMessage,
++    (props) => props.message || props.errorMessage,
+    () => ErrorOccured,
+    (BaseComponent) => BaseComponent
+  )
+```
+
+```diff title="theme/modules/Checkout/PlaceOrder/EnhancePlaceOrder.js"
+...
++import withAsyncOrderAction from "./PaymentFlow/withAsyncOrderAction";
+
+
+export const supportedPaymentFlowTypes = [
+  "directOrder",
++  "asyncOrder",
+  "redirectBeforeOrder",
+  "redirectAfterOrder",
+  "directOrderWithAdditionalAction",
+  "workflowAgnosticCheckout",
+];
+
+const EnhancePlaceOrder = ({
+  SetPaymentInfoAndPlaceOrderMutation,
+  SetCheckoutPaymentInformationAndRedirectMutation,
+  PlaceOrderAndRedirectMutation,
++  AsyncOrderQuery,
+}) =>
+...
+    withHandlers({
+      onError:
+        (props) =>
+        ({ errorMessage }) =>
+          props.formatErrorMessage(errorMessage),
+    }),
++    withAsyncOrderAction(AsyncOrderQuery),
+    makeCommandDispatcher({
+
+```
+
+### DomainEvent rework
+
+The DomainEvent class was reworked.
+
+If you handled payment events on orders (backend operation) using
+[DomainEvent implementations](https://gitlab.com/front-commerce/front-commerce/-/tree/main/src/server/modules/front-commerce/payment/domain/events),
+these implementations now base on a `PurchaseIdentifier` instead of a direct
+`orderId` (this allows to update order events based on a cartId)
+
+Here is the new usage for those classes
+
+```diff
+new PaymentCaptured(
+-  orderId,
++  new PurchaseIdentifier({ orderId }),
+  paymentDetail
+)
+```
+
+### Payzen/Lyra on Magento1
+
+We migrated the Payzen/Lyra embedded payment module for Magento2 to the new
+`asyncOrder` payment workflow.
+
+As this is not supported for Magento1, override
+`theme/pages/Checkout/checkoutFlowOf.js` to keep using the former workflow.
+
+```diff title="theme/pages/Checkout/checkoutFlowOf.js"
+
+const checkoutFlowOf = (method) => {
+  ...
+
+-  if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "payzen_embedded") return "directOrder";
+
+  ...
+};
+```
+
 <hr className="my-10" />
 
 ## `2.15.0` -> `2.16.0`
