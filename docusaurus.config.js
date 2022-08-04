@@ -57,16 +57,6 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-        // see https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-analytics
-        googleAnalytics: {
-          trackingID: process.env.GOOGLE_ANALYTICS || "UA-154725716-1",
-          anonymizeIP: true,
-        },
-        // see https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag
-        gtag: {
-          trackingID: process.env.GOOGLE_TAG_MANAGER || "GTM-WRN2WPF",
-          anonymizeIP: true,
-        },
       }),
     ],
   ],
@@ -221,7 +211,23 @@ const config = {
       "@docusaurus/plugin-google-gtag",
       {
         id: "universal-analytics",
-        trackingID: "UA-154725716-1",
+        trackingID: process.env.UNIVERSAL_ANALYTICS || "UA-154725716-1",
+        anonymizeIP: true,
+      },
+    ],
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        id: "google-tag-manager",
+        trackingID: process.env.GOOGLE_TAG_MANAGER || "GTM-WRN2WPF",
+        anonymizeIP: true,
+      },
+    ],
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        id: "google-analytics-4",
+        trackingID: process.env.GOOGLE_ANALYTICS || "266421257",
         anonymizeIP: true,
       },
     ],
