@@ -1,0 +1,171 @@
+---
+title: "Release: 2.16"
+authors: josquin
+date: 2022-06-24T18:00
+hide_table_of_contents: true
+---
+
+## BigCommerce connector V1, TwicPics for Front-Commerce out of beta and Prismic granular cache invalidation
+
+**Heat waves and hot news at Front-Commerce** 🔥
+
+We have just entered summer with our 2.16 release and thrilling news!
+
+🎉 The first version of our BigCommerce connector for Front-Commerce is now
+available! It is a huge step for us and we are glad to be able to deliver the
+power of
+[this ever-growing and powerful solution](https://www.bigcommerce.com/product/)
+through our product !
+
+Since we’ve been taking a lot of time to work on this project, this release note
+will probably seem a bit shorter than usual 😇
+
+However, we also made progress on many other aspects (detailed in this release
+note):
+
+- TwicPics connector out of beta
+- Prismic: granular cache invalidation
+- Global maintenance mode
+
+Take some popcorn, have a seat and watch the show 🍿
+
+<!--truncate-->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import Calendly from "@site/src/components/Calendly";
+import ReactPlayer from "react-player";
+
+<Calendly />
+
+## [Big x Front] Commerce V1
+
+It’s live! After several weeks of work, we are very proud to show you our first
+version of our BigCommerce connector: it offers everything required from catalog
+and product browsing, login and checkout.
+
+During the next iteration, we will enrich the connector with new features and
+improvements: should you require a personalized demo, please
+[contact us](https://www.front-commerce.com/contact/)!
+
+According to McQuivey's Forrester study, _How Video Will Take Over the World_,
+_“Video is worth 1.8 million words.”_: here is an overview of our demo 👀
+
+<ReactPlayer
+  url="https://www.youtube.com/embed/tC8ltqSIZVs"
+  className="mx-auto video"
+  allowFullScreen
+/>
+
+## Prismic: granular cache and invalidation (beta version)
+
+Performance is key when working with media and CMS capabilities. When updating
+content and publishing a new version, Content Managers would generally want the
+related cache to be invalidated, and the unrelated cache to remain, so they can
+work on regular changes without worrying about performance issues.
+
+For 2.16, we’ve improved the way we deal with cache invalidation in our Prismic
+module, always offering more performance for your website!
+
+## TwicPics for Front-Commerce out of beta and webinar
+
+Our TwicPics integration got out of beta with Front-Commerce 2.16! You want to
+know more about it ? If you are reading this release note before the 5th of
+July, then it is your lucky day! 🍀
+
+Indeed, we have been invited by TwicPics to talk about headless and composable
+commerce. This, in parallel with the development of the first version of our
+connector with TwicPics’ perfectly sized images and videos deliverability
+solution.
+
+<p className="center">
+  <a
+    className="link primary button"
+    href="https://app.livestorm.co/twicpics/ecommerce-headless/"
+  >
+    Click here to register
+  </a>
+</p>
+
+## Global Maintenance Mode
+
+With our new Global Maintenance Mode, you now have a way to set your site in and
+out of maintenance mode at will. Whenever you want to update your Front-Commerce
+(which we highly recommend 💅) or any other related system (e.g. your backend
+Magento/BigCommerce/Proximis…) you now have the possibility to display a proper
+maintenance page.
+
+## Other changes
+
+### Features
+
+- **dx:** debug the available payment methods
+  ([25cb164](https://gitlab.com/front-commerce/front-commerce/commit/25cb1643010f9c31ee62b9b9f0ba1c228fb92bd6))
+- **graph:** created fc core order type
+  ([1adba61](https://gitlab.com/front-commerce/front-commerce/commit/1adba61e76cc8be00d6118d5384f764ddbb67b83))
+- **magento2:** uses SHA256 for admin OAuth encryption for 2.4.4 compat
+  ([4707b2b](https://gitlab.com/front-commerce/front-commerce/commit/4707b2b629528299766c081fc4c5bdc24278bd33))
+- **react:** prevent client side hydration with `window.__HYDRATE__ = false`
+  ([d545655](https://gitlab.com/front-commerce/front-commerce/commit/d545655d9d21df4874505e185d4f8f0b02225bfa))
+
+### Bug Fixes
+
+- **build:** fixed build following simultaneous uncompatible merges
+  ([53620ef](https://gitlab.com/front-commerce/front-commerce/commit/53620ef1d5744ff7cba36bce4e9ea0363e758b2a))
+- **buybox:** additionnalData casting for ReturnFromPayment workflow
+  ([64ec5d1](https://gitlab.com/front-commerce/front-commerce/commit/64ec5d18a51e3d1652c5502d897a4b5de19b5a56))
+- **buybox:** doExpressCheckoutPayment must return an object
+  ([24c955c](https://gitlab.com/front-commerce/front-commerce/commit/24c955caa5726c74d7e54621ba5725262bf70aac))
+- **checkout:** return only free payment method when applicable
+  ([8fc4c72](https://gitlab.com/front-commerce/front-commerce/commit/8fc4c7210a12161811834fbdb8041631849f05f6))
+- **dataLoader:** properly handle error in makeBatchLoaderFromSingleFetch
+  ([3f15c52](https://gitlab.com/front-commerce/front-commerce/commit/3f15c52e92da01becc45b7e527fa02a5914053ff))
+- **dependencies:** directly install @types/node
+  ([894efc6](https://gitlab.com/front-commerce/front-commerce/commit/894efc680ed212913eaae3e57a8fd268406082cc))
+- **e2e:** M2 prices after tax change
+  ([16a14cd](https://gitlab.com/front-commerce/front-commerce/commit/16a14cde0a626150e21aa1bade1b5490a260ffa4))
+- **e2e:** M2 prices after tax change
+  ([88af0e8](https://gitlab.com/front-commerce/front-commerce/commit/88af0e89db956df5cd63a18c87cae73911db41f1))
+- **hipay:** PaymentAuthorized saved with undefined transactionReference
+  ([15981b9](https://gitlab.com/front-commerce/front-commerce/commit/15981b920dc7f1ecb07ac853b9a535a0fd3c1c1f))
+- **search:** adjusted for tax for M2 native search
+  ([773473a](https://gitlab.com/front-commerce/front-commerce/commit/773473a432ee1fae628bb04e99d9fca44cd8a5a6))
+- translations
+  ([ca70d5e](https://gitlab.com/front-commerce/front-commerce/commit/ca70d5e2ca25d7c78a11687bee7a64a5c7895425))
+- **hipay:** delay PaymentCaptured event to prevent overlapping
+  ([1718a93](https://gitlab.com/front-commerce/front-commerce/commit/1718a93c1cf4c27f09646fbc286e19d0b2ca4568))
+- **hipay:** reference the transactionId in order history for all payments
+  ([4b768bb](https://gitlab.com/front-commerce/front-commerce/commit/4b768bb7e28c2ce480a12d5373146b9ecc59793e))
+- **magento1:** remove invoice schema import
+  ([980c847](https://gitlab.com/front-commerce/front-commerce/commit/980c8477f9ef3999f82835ceac797e864c32b2f3))
+- **payline:** add an additional delayed API initialization
+  ([90cb675](https://gitlab.com/front-commerce/front-commerce/commit/90cb675a61153822ef069e76db7b7736ddc18e52))
+- **payline:** initialize the payment widget ourselves to prevent safari issues
+  ([a4b0e70](https://gitlab.com/front-commerce/front-commerce/commit/a4b0e7002e51d5269a9982404707af91c9a9da03))
+- **payments:** provide a paymentDetails loader in withPaymentApi
+  ([aef830c](https://gitlab.com/front-commerce/front-commerce/commit/aef830c64095d14aa2b98f43270705d92c71abd0))
+- **search:** elasticsuite compatibility for version >= 2.10.6
+  ([7436c31](https://gitlab.com/front-commerce/front-commerce/commit/7436c3153ce1c1a6f8f37e2831894622f3410c2a))
+
+Fixes from the
+[2.16](https://gitlab.com/front-commerce/front-commerce/-/releases/2.16.0)
+version have also been backported into previous minor versions. The following
+patch versions were released:
+[2.8.12](https://gitlab.com/front-commerce/front-commerce/-/releases/2.8.12),
+[2.9.11](https://gitlab.com/front-commerce/front-commerce/-/releases/2.9.11),
+[2.10.9](https://gitlab.com/front-commerce/front-commerce/-/releases/2.10.9),
+[2.11.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.11.6)
+[2.12.5](https://gitlab.com/front-commerce/front-commerce/-/releases/2.12.5)
+[2.13.6](https://gitlab.com/front-commerce/front-commerce/-/releases/2.13.6).
+[2.14.3](https://gitlab.com/front-commerce/front-commerce/-/releases/2.14.3).
+and
+[2.15.2](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.2).
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.16.0](/docs/appendices/migration-guides#2-14-0-gt-2-15-0)
+or
+[read the full changelog (Customers only)](https://gitlab.com/front-commerce/front-commerce/-/releases/2.15.0)
+
+</ChangelogFooter>

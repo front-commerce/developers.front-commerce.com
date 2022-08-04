@@ -1,0 +1,68 @@
+---
+sidebar_position: 5
+title: Quick orders
+description:
+  Front-Commerce's QuickOrder component allows customers to add products to the
+  cart by entering an SKU and a quantity. This component is self-contained and
+  renders a compact form that has been designed to be integrated into different
+  contexts. This guide explains how to integrate this feature into your
+  application.
+---
+
+import Figure from "@site/src/components/Figure";
+import { Button } from "react-infima";
+import Link from "@docusaurus/Link";
+
+<p>{frontMatter.description}</p>
+
+# QuickOrder Component
+
+> _Since version 2.11_
+
+The `<QuickOrder />` component adds a user interface allowing your customers to
+directly order an item based on its <abbr title="Stock Keeping Unit">SKU</abbr>
+
+<Figure
+  src={require("./assets/Quickorder-sample.png").default}
+  alt="Example with the component added to the default's theme minicart"
+/>
+
+## Integrate QuickOrder into your project
+
+You must include the component in your page with the following lines:
+
+```jsx
+import React from "react";
+// highlight-next-line
+import QuickOrder from "theme/modules/QuickOrder";
+
+const MyComponent = () => {
+  return (
+    <div>
+      // highlight-next-line
+      <QuickOrder />
+    </div>
+  );
+};
+```
+
+You will also need to add the following line to your
+`web/theme/modules/_modules.scss` file:
+
+```scss
+@import "~theme/modules/QuickOrder/QuickOrder";
+```
+
+## Customize the QuickOrder texts
+
+The placeholders and messages displayed by the QuickOrder component have
+translation keys prefixed with `modules.QuickOrder`. You can customize the text
+from your application translations files.
+
+<div className="text-center pt-4">
+  <Link to="/docs/advanced/theme/translations">
+    <Button theme="primary" size="large">
+      View the QuickOrder component documentation
+    </Button>
+  </Link>
+</div>

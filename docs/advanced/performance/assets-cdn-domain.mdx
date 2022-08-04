@@ -1,0 +1,51 @@
+---
+sidebar_position: 6
+title: Serving assets from a CDN/custom domain
+description:
+  You may want to use a different domain for your assets for several reasons.
+  This guide explains how to configure this in a Front-Commerce application.
+---
+
+<p>{frontMatter.description}</p>
+
+> _This feature has been added in version `2.7.0`_
+
+## Configuration
+
+Serving assets from a custom domain can be done with a configuration change:
+
+1. for each store in `config/stores`, you can add a `assetsBaseUrl` entry so
+   that static assets and images are served from it. For instance:
+
+   ```js
+   module.exports = {
+     default: {
+       url: process.env.FRONT_COMMERCE_URL,
+       assetsBaseUrl: "http://a.cdn.example.com",
+       locale: "en-US",
+       currency: "EUR",
+       default_country_id: "GB",
+       countries: (IsoCountries) =>
+         IsoCountries.registerLocale(
+           require("i18n-iso-countries/langs/en.json")
+         ),
+     },
+   };
+   ```
+
+   In a multiple store setup, it's possible to use the same `assetsBaseUrl` for
+   all stores.
+
+1. [Configure the <abbr title="Content Security Policy">CSP</abbr>](/docs/reference/configurations#configwebsitejs)
+   so that assets can be loaded from this external URL
+
+After restarting Front-Commerce, your assets should be loaded from this custom
+domain.
+
+:::note
+
+The `assetsBaseUrl` configuration only effects your `production` environment. In
+the `development` environment, your assets will still be served from the root of
+your application.
+
+:::

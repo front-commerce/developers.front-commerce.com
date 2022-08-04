@@ -1,0 +1,56 @@
+---
+sidebar_position: 4
+title: Payment on account
+description:
+  This guide explains how Front-Commerce allows using Payment on account in a
+  headless commerce project.
+---
+
+<p>{frontMatter.description}</p>
+
+Payment on account is a payment method for B2B contexts. It allows companies to
+make place orders using the credit limit that is specified in their profile.
+There is only one way to accept such payments in your Front-Commerce application
+for now.
+
+## Magento2 B2B
+
+> _Since version 2.11.0_
+
+### Enable Payment on account
+
+:::note
+
+This feature is directly provided by Adobe Commerce. Please refer to
+[the corresponding documentation page to properly configure it on Magento side](https://docs.magento.com/user-guide/payment/payment-on-account.html).
+
+:::
+
+#### Enable the B2B module
+
+First, you need to
+[enable and integrate the Front-Commerce B2B module for Magento2](/docs/magento2/b2b#Enable-B2B-support).
+
+#### Register the Payment on account payment component
+
+1. Override the file that lets you register additional payments components in
+   Front-Commerce
+
+   ```shell
+   mkdir -p my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/front-commerce/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+1. Register the component `PaymentOnAccount` to be used for `companycredit`
+   payments in `getAdditionalDataComponent.js`
+
+   ```diff title='my-module/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js'
+   +import PaymentOnAccount from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/PaymentOnAccount";
+
+   const ComponentMap = {
+   +  companycredit: PaymentOnAccount,
+   };
+   ```
+
+And that's it. After having restarted Front-Commerce, a company customer having
+_Payment on account_ enabled should be able to use this payment method.

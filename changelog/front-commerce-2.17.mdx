@@ -1,0 +1,193 @@
+---
+title: "Release: 2.17"
+authors: josquin
+date: 2022-08-03T18:00
+hide_table_of_contents: true
+---
+
+# Allow your customers to return their products with RMA for Adobe Commerce, use advanced caching mechanisms for BigCommerce and facilitate your customers' next payments with Adyen!
+
+Aaah summer times! Sun, _farniente_ and the end of monolithic architectures!
+What could be better than a nice release note to brighten up your holiday
+reading?
+
+Here goes Front-Commerce 2.17 and our summer release, with many highlights:
+
+- We have progressively migrated our existing live websites to our cloud
+  infrastructure, to allow you to benefit from auto-scaling (environments will
+  automatically add resources to hold the load), better reliability and better
+  monitoring and support
+- We have continued to enhance our BigCommerce connector with advanced caching
+  mechanisms and new features (we presented the connector for our 2.16 release
+  in a [video demo](https://www.youtube.com/watch?v=tC8ltqSIZVs))
+- We added new features for Adyen (register my credit card with Adyen) and
+  Magento2 Adobe Commerce (RMA)
+- Finally, as always, we have made various patches and adjustments to allow you
+  to have an even more efficient front-end 🚀
+
+Have a great summer, see you in September to chop heads! And as always, should
+you have any requests regarding the product roadmap, do not hesitate to contact
+Josquin 👋
+
+<!--truncate-->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ReactPlayer from "react-player";
+
+## Our developers doc is getting a new look!
+
+As you may have noticed, our developers doc has changed 💅
+
+Many of you have asked us to review the way our documentation works and we have
+followed your advice!
+
+We hope you like this new version, don't hesitate to give us your feedback, it’s
+always very useful _(my favourite feature, the light / dark mode switch in the
+top right corner 😍)_
+
+The main sections:
+
+- **Docs:** everything you need to play with Front-Commerce
+- **Changelogs:** all Front-Commerce product & tech news
+- **Support:** if you need help or have a question
+
+## BigCommerce: caching for more performance
+
+Cache management is one of Front-Commerce’s most powerful assets! Every time we
+work on a new connector, we need to take into account the way cache mechanisms
+work within the integrated solution. Thus we can deal with it to manage caching
+as smoothly as possible and help your website go even faster. BigCommerce is no
+exception and with this first work on caching, every essential item such as
+products, categories, lists, and variants ... will benefit!
+
+<ReactPlayer
+  url="https://youtu.be/t8FAlBvTkko"
+  className="mx-auto video"
+  allowFullScreen
+/>
+
+## BigCommerce: registration via email
+
+For this 2.17.0 release, we have also enhanced our BigCommerce connector: you
+can now create a BigCommerce account from Front-Commerce (the first version of
+the connector only supported login for an existing account)
+
+We will accelerate the development of features for BigCommerce in our next
+releases, stay tuned! In the meantime, here is a short demo of this new feature:
+
+<ReactPlayer
+  url="https://youtu.be/tialV8FsFKE"
+  className="mx-auto video"
+  allowFullScreen
+/>
+
+## RMA for Adobe Commerce: improve user journey by returning items
+
+In a user's online buying experience, it is very powerful to offer an easy
+returns process that allows customers and the customer service to communicate
+easily.
+
+This is the principle of RMA (Return Merchandising Authorisation): the customer,
+after having received his products, can make a total or partial return request
+by indicating the reasons for the request and, depending on the acceptance or
+refusal of the customer service, send back to the merchant one or more products.
+
+Thanks to the implementation of this new functionality, your Magento2 Adobe
+Commerce instances will be able to deliver it within Front-Commerce!
+
+## Adyen for Front-Commerce: save your credit card details
+
+When you make your first online payment, it can be useful to save your payment
+details for a future order.
+
+This is now possible in Adyen for Front-Commerce thanks to the integration of
+this new feature! Want to see more? Here is the demo:
+
+<ReactPlayer
+  url="https://youtu.be/d-J_H-ElAtg"
+  className="mx-auto video"
+  allowFullScreen
+/>
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **logging:** add custom type to provide winston transport directly
+  ([18a37b7](https://gitlab.com/front-commerce/front-commerce/commit/18a37b7c5a54a2d52e87335c60412361e35e3d16))
+- **cache:** allow passing a cacheMap to redis-dataloader
+  ([a38e5e7](https://gitlab.com/front-commerce/front-commerce/commit/a38e5e7af0e12cf242797c93dbf97ddc31f6ff30))
+- **checkout:** limit cart status to customers carts
+  ([81896bb](https://gitlab.com/front-commerce/front-commerce/commit/81896bb8bf1c821a934a0d9ab9181383d91fb002))
+- **magento2:** cancel the order on PaymentRefused
+  ([600fd7c](https://gitlab.com/front-commerce/front-commerce/commit/600fd7ca2272f4866798a962212adacfbf1dc5a0))
+- **magento2:** handle guest cart to order for PlaceOrderCommand
+  ([6848e4f](https://gitlab.com/front-commerce/front-commerce/commit/6848e4f9eec97904e0ec1267e508880fe575959d))
+- **magento2:** handle PlaceOrder payment command
+  ([65f9b6c](https://gitlab.com/front-commerce/front-commerce/commit/65f9b6c2b8bb9b25ffc25e7b0e432a199733711a))
+- **magento2:** use checkout status on asyncOrder
+  ([d97511a](https://gitlab.com/front-commerce/front-commerce/commit/d97511abe02cbe1320c666b52b3d29a561332c49))
+- **payment:** allow DomainEvents to ref by cartId
+  ([c1b0220](https://gitlab.com/front-commerce/front-commerce/commit/c1b0220ed34b423d85c2eef0e9c03b07fff181ec))
+- **payments:** create command dispatcher for IPN notifications
+  ([d8b9135](https://gitlab.com/front-commerce/front-commerce/commit/d8b91353d407ea848a1ea99e10f11231d1cb95da))
+- **paypal:** use DomainEvents properly
+  ([b00f371](https://gitlab.com/front-commerce/front-commerce/commit/b00f371f125a556211d39aab3172170f8ab2f9ee))
+- **payzen:** capture payment by IPN
+  ([edf0f5d](https://gitlab.com/front-commerce/front-commerce/commit/edf0f5dbc46e53d79007e7f9991a0c034ce3b863))
+- **payzen:** create AsyncOrder payment workflow
+  ([11026ec](https://gitlab.com/front-commerce/front-commerce/commit/11026ec32778d67bd8a38f2146c366857aa0c5fa))
+- **payzen:** finalize IPN handling
+  ([2d83039](https://gitlab.com/front-commerce/front-commerce/commit/2d83039a2aa5188d6c19aa0463e16538301339be))
+
+```mdx-code-block
+</details>
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **headers:** configure helmet 5.x to have the same behavior as helmet 4.x
+  ([2457057](https://gitlab.com/front-commerce/front-commerce/commit/245705798ac2fc48bed42bd1a58c6f1aeca42413))
+- **lint:** Fixed lint
+  ([5aee0d4](https://gitlab.com/front-commerce/front-commerce/commit/5aee0d471450feac8649a3f0edaa7fcecdb868d8))
+- **prices:** magento 1 product min price don't care tier prices
+  ([ce7d43f](https://gitlab.com/front-commerce/front-commerce/commit/ce7d43f931108832243869404d168ef0e1705cd7))
+- **magento2:** allow to return RMA items with custom attributes
+  ([a620ee1](https://gitlab.com/front-commerce/front-commerce/commit/a620ee12a618b153a3a474509ba3ec9842c37a47))
+- **magento2:** expose actual store credit in orders instead of 0
+  ([74b8c73](https://gitlab.com/front-commerce/front-commerce/commit/74b8c73d2921815e9764b4933af490220793a3b5))
+- **magento2:** Fix crash when customer loader call fails
+  ([5ecf11a](https://gitlab.com/front-commerce/front-commerce/commit/5ecf11a12455b095a5f67afa683b66f3ec52541a))
+- **payzen:** duplicated place order notification
+  ([e2883de](https://gitlab.com/front-commerce/front-commerce/commit/e2883de624e4f4326a204103f2816b440374905a))
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.17.0"}
+  previousVersions={[
+    "2.16.1",
+    "2.15.3",
+    "2.14.4",
+    "2.13.7",
+    "2.12.6",
+    "2.11.7",
+    "2.9.12",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.17.0](/docs/appendices/migration-guides#2160---2170)
+or
+[read the full changelog (Customers only)](https://gitlab.com/front-commerce/front-commerce/-/releases/2.17.0)
+
+</ChangelogFooter>
