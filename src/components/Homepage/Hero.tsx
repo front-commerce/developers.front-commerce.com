@@ -13,7 +13,7 @@ const LogoSlider = ({ children }: { children: ReactNode[] }) => {
     centerMode: true,
     dots: false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     speed: 5000,
@@ -30,9 +30,9 @@ const LogoSlider = ({ children }: { children: ReactNode[] }) => {
 
 export default function Hero() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
-      <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 dark:text-slate-100 sm:text-7xl">
-        Consistently deliver the
+    <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
+      <h1 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 dark:text-slate-100 sm:text-7xl">
+        Consistently deliver the{" "}
         <span className="relative whitespace-nowrap text-primary">
           <svg
             aria-hidden="true"
@@ -51,12 +51,12 @@ export default function Hero() {
       </p>
       <div className="mt-10 flex justify-center gap-x-6 group">
         <Link to="/docs/welcome">
-          <Button theme="primary" className="py-4">
+          <Button theme="primary" className="py-2 sm:py-4">
             Get Started &nbsp;&nbsp;→
           </Button>
         </Link>
       </div>
-      <div className="mt-36 lg:mt-44">
+      <div className="mt-24 md:mt-36 lg:mt-44">
         <p className="font-display text-base text-slate-900 dark:text-slate-100">
           Trusted by these companies
         </p>
@@ -71,15 +71,15 @@ export default function Hero() {
               { name: "Occitech", logo: "/img/logos/occitech.png" },
               { name: "PH2M", logo: "/img/logos/ph2m.png" },
               { name: "Smile", logo: "/img/logos/smile.png" },
-              { name: "TBD Group", logo: "/img/logos/TBD.png" },
               { name: "WEBQAM", logo: "/img/logos/webqam.png" },
+              { name: "TBD Group", logo: "/img/logos/tbd.svg" },
               { name: "Zento", logo: "/img/logos/zento.png" },
             ].map((company) => (
               <div key={company.name} className="px-10 text-center">
                 <img
                   src={company.logo}
                   alt={company.name}
-                  className="invert dark:invert-0  mx-auto max-h-[50px] w-auto"
+                  className="invert dark:invert-0 mx-auto h-[50px] w-auto"
                 />
               </div>
             ))}

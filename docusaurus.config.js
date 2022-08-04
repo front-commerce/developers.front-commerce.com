@@ -11,7 +11,7 @@ const REPOSITORY_URL =
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Front Commerce Developer",
+  title: "Front Commerce Developers",
   tagline:
     "Stay one step ahead and consistently deliver the brand experience your customers expect",
   url: "https://developers.front-commerce.com",
