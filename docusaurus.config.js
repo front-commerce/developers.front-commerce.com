@@ -9,6 +9,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const REPOSITORY_URL =
   "https://github.com/front-commerce/developers.front-commerce.com";
 
+const noIndex = process.env.CONTEXT !== "production";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Front Commerce Developers",
@@ -17,6 +19,8 @@ const config = {
   url: "https://developers.front-commerce.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
+
+  noIndex,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
