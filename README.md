@@ -16,13 +16,13 @@ The code though is under [MIT License](https://github.com/front-commerce/develop
 ### Installation
 
 ```
-$ pnpm install
+$ npm install
 ```
 
 ### Local Development
 
 ```
-$ pnpm start
+$ npm start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
@@ -30,7 +30,7 @@ This command starts a local development server and opens up a browser window. Mo
 ### Build
 
 ```
-$ pnpm build
+$ npm build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
@@ -38,7 +38,7 @@ This command generates static content into the `build` directory and can be serv
 ### Run
 
 ```
-$ pnpm serve
+$ npm serve
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
