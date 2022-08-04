@@ -17,7 +17,7 @@ const LogoSlider = ({ children }: { children: ReactNode[] }) => {
     slidesToScroll: 1,
     autoplay: true,
     speed: 5000,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 0,
     cssEase: "linear",
     arrows: false,
     pauseOnFocus: false,
