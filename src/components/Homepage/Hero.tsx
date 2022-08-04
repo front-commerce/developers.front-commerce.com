@@ -47,7 +47,7 @@ export default function Hero() {
         your customers expect
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700 dark:text-slate-300">
-        Keep. Change. Simple
+        Keeping. Change. Simple.
       </p>
       <div className="mt-10 flex justify-center gap-x-6 group">
         <Link to="/docs/welcome">
