@@ -11,7 +11,7 @@ const REPOSITORY_URL =
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Front Commerce Developer",
+  title: "Front Commerce Developers",
   tagline:
     "Stay one step ahead and consistently deliver the brand experience your customers expect",
   url: "https://developers.front-commerce.com",
@@ -215,6 +215,14 @@ const config = {
         min: 640, // min resized image's size. if original is lower, use that size.
         steps: 2, // the max number of images generated between min and max (inclusive)
         disableInDev: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        id: "universal-analytics",
+        trackingID: "UA-154725716-1",
+        anonymizeIP: true,
       },
     ],
   ],

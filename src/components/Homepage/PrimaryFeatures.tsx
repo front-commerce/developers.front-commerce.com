@@ -55,18 +55,22 @@ function Feature({ title, Svg, description }: FeatureItem) {
         <Svg className="w-20 h-20" role="img" />
       </div>
       <div className="text--center padding-horiz--md">
-        <h3>{title}</h3>
-        <p className="text-justify">{description}</p>
+        <h3 className="text-slate-100">{title}</h3>
+        <p className="text-justify text-slate-200">{description}</p>
       </div>
     </div>
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+export default function PrimaryFeatures(): JSX.Element {
   return (
-    <section className="flex items-center py-[4rem] w-full">
+    <section
+      id="features"
+      aria-label="What is Front-Commerce?"
+      className="flex items-center py-[4rem] w-full bg-primary"
+    >
       <div className="container text-center">
-        <h2 className="text-primary pb-[2rem]">What is Front-Commerce?</h2>
+        <h2 className="text-white pb-[2rem]">What is Front-Commerce?</h2>
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />

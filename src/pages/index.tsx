@@ -1,34 +1,9 @@
-import React from "react";
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/Homepage/Features";
+import PrimaryFeatures from "@site/src/components/Homepage/PrimaryFeatures";
 import AngledImageRight from "@site/src/components/Homepage/TechnologiesBanner";
-import HeaderImage from "@site/static/img/logo-full-alt-white.svg";
-import { Button } from "react-infima";
-
-function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
-  return (
-    <header
-      className={
-        "hero hero--primary py-[2rem] text-center relative overflow-hidden sm:py-[8rem] text-white"
-      }
-    >
-      <div className="container">
-        <HeaderImage aria-label="Front-Commerce" fontSize={400} height={200} />
-        <p className="hero__subtitle max-w-lg mx-auto">{siteConfig.tagline}</p>
-        <div className="flex align-center justify-center">
-          <Link to="/docs/welcome">
-            <Button size="large" theme="secondary" className="py-4">
-              Get Started &nbsp;&nbsp;→
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
+import Layout from "@theme/Layout";
+import React from "react";
+import Hero from "../components/Homepage/Hero";
 
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
@@ -37,11 +12,10 @@ export default function Home(): JSX.Element {
       title={`✨ Front-Commerce · Craft delightful e-commerce experiences using modern web technologies`}
       description={siteConfig.tagline}
     >
-      <HomepageHeader />
+      <Hero />
       <main>
-        <HomepageFeatures />
+        <PrimaryFeatures />
         <AngledImageRight />
-        {/* TODO - add other sections */}
       </main>
     </Layout>
   );
