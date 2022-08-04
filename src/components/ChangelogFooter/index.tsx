@@ -11,13 +11,13 @@ export default function ChangelogFooter({
   children = null,
 }: ChangelogFooterProps) {
   return (
-    <div>
+    <div className="max-w-full">
       <div className="text-center py-20 space-y-4">
         <Link
           href="https://www.front-commerce.com/contact/"
           className="intercom-launcher"
         >
-          <Button size="large" theme="primary">
+          <Button size="large" theme="primary" className="whitespace-normal">
             💌 Ask your questions about Front-Commerce
           </Button>
         </Link>
