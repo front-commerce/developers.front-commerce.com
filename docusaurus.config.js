@@ -9,6 +9,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const REPOSITORY_URL =
   "https://github.com/front-commerce/developers.front-commerce.com";
 
+// ensures that the docs only index when in production build, this variable
+// is set by netlify and should be updated if deploying to another environment.
+// see: https://docs.netlify.com/configure-builds/environment-variables/#build-metadata
 const noIndex = process.env.CONTEXT !== "production";
 
 /** @type {import('@docusaurus/types').Config} */
@@ -160,27 +163,11 @@ const config = {
       },
 
       algolia: {
-        // The application ID provided by Algolia
         appId: "5GW5VSP0PU",
-
-        // Public API key: it is safe to commit it
         apiKey: "79a6baff7cbdd96f9db8aeb1828c63a3",
-
         indexName: "front-commerce",
-
         // Optional: It ensures that search results are relevant to the current language and version.
         contextualSearch: false,
-
-        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-        // externalUrlRegex: "external\\.com|domain\\.com",
-
-        // Optional: Algolia search parameters
-        // searchParameters: {},
-
-        // Optional: path for search page that enabled by default (`false` to disable it)
-        // searchPagePath: "search",
-
-        //... other Algolia params
       },
     }),
   plugins: [
