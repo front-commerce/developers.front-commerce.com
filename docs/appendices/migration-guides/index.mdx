@@ -12,6 +12,14 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.17.0` -> `2.18.0`
+
+### Magento2 Adyen module update
+
+In this release, we added support for version 8 of Magento2 Adyen module. If you
+have a Front-Commerce setup where the module `Magento2/Adyen` is used,
+[the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/advanced/payments/adyen#add-the-required-environment-variables-1).
+
 ## `2.16.0` -> `2.17.0`
 
 ### Adyen's Stored payment methods
@@ -1740,7 +1748,7 @@ are needed to upgrade your project if you are using this payment platform:
    [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen#Register-the-Adyen-for-Magento2-payment-module-in-Front-Commerce).
 1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so
    you have
-   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#Add-the-Adyen-client-key-in-the-environment)
+   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#add-the-required-environment-variables-1)
 1. we have made some changes and fixes to
    [the Adyen related frontend components](https://gitlab.com/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
    If you have overridden some of those, you have to backport the changes.
