@@ -51,13 +51,14 @@ to integrate with the Adyen Magento module please refer to
 - `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on
   [webhooks below](#Add-webhook)) when you regenerate your HMAC key configure
   this to be the old one
-- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS` Boolean (more on
-  [Adyen's Stored Payment Methods](#enable-adyens-stored-payment-methods-optional-1)).
+- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS` (optional) (more on
+  [Adyen's Stored Payment Methods](#enable-adyens-stored-payment-methods-optional)).
   If you want to enable Adyen's Stored Payment Methods (Tokenization).
 
 ```shell title=".env"
 FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT=ExampleMerchant
 FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
+# the Adyen client key is prefixed with live_ or test_
 FRONT_COMMERCE_ADYEN_API_KEY=a_very_very_very_long_key
 FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX=1797a841fbb37ca7-AdyenDemo-
 FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME=a_username
@@ -65,7 +66,6 @@ FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD=a_password
 FRONT_COMMERCE_ADYEN_HMAC_KEY=the_hmac_key
 FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY=the_previous_hmac_key
 FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true
-# the Adyen client key is prefixed with live_ or test_
 ```
 
 ### Register the Adyen payment module in Front-Commerce
@@ -286,7 +286,7 @@ In your Adyen Customer Area under `Developers > Webhooks` click on the
 ### Enable Adyen's Stored Payment Methods (optional)
 
 You can opt for Adyen to store your customers' credit card information and allow
-a faster checkout experienceby adding
+a faster checkout experience by adding
 `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true` in your `.env` file.
 
 If you are using the default Front-Commerce Adyen component, your customer
@@ -335,18 +335,17 @@ it is absolutely necessary, the customer remains on the Front-Commerce store.
 
 Here is how to set this payment method up.
 
-### Install and configure the `Adyen_Payment` Magento2 extension (7.2+ < 8.0)
+### Install and configure the `Adyen_Payment` Magento2 extension (7.2+ < 9.0)
 
 Follow [Adyen's documentation](https://docs.adyen.com/plugins/magento-2) to
-install and configure the official Magento2 extension for Adyen payments. The
-minimum supported version is
-[7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0). We don't
-yet support the
-[8.x](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0) versions due
-to breaking changes.
+install and configure the official Magento2 extension for Adyen payments. We
+currently support any version from
+[7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0) to
+[8.x](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0).
 
-You must configure the "Payment Origin URL" in the "Advanced: PWA" with your
-Front-Commerce URL **for each of your stores**.
+You must configure the "Payment Origin URL" in the `Advanced: PWA` section
+(version 7.0+) or `Advance settings > Headless Integration` (version 8.0+) with
+your Front-Commerce URL **for each of your stores**.
 
 :::info important
 
@@ -357,16 +356,25 @@ have to filter them in the frontend or from your Adyen account.**
 
 :::
 
-### Add the Adyen client key in the environment
+### Add the required environment variables
 
-You need to define the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable so
-that it contains
-[your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication)
-for the domains of your Front-Commerce stores:
+- `FRONT_COMMERCE_ADYEN_CLIENT_KEY` The environment variable which contains
+  [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication)
+  for the domains of your Front-Commerce stores. You can find it in your Adyen
+  Customer Area under
+  `Developers > API Credential > [your_prefered_credential] > Client Key > Client Key`
+- `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` The version of the Magento2
+  Adyen module you use. You can find it in your magento backend, under
+  `Stores > Configuration > Sales > Payment Methods > Adyen Payments > Documentation and Support`.
+- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS` (optional) (more on
+  [Adyen's Stored Payment Methods](#enable-adyens-stored-payment-methods-optional-1)).
+  If you want to enable Adyen's Stored Payment Methods (Tokenization).
 
 ```sh title=".env"
 FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
 # the Adyen client key is prefixed with live_ or test_
+FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION=8.3.3
+FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true
 ```
 
 ### Register the Adyen payment module in Front-Commerce
@@ -420,6 +428,12 @@ In order to do so:
 If you are using the default Front-Commerce Adyen component, your customer
 should now be able to save their credit card information during checkout by
 checking the "Save for my next payment" checkbox.
+
+### Enable Paypal payments
+
+If you want to enable PayPal payments when using the Magento2 Adyen module, you
+will need to enable Adyen's `Alternative Payment Methods` located in
+`Stores > Configuration > Sales > Payment Methods > Adyen Payments > Configure payment methods`.
 
 ### That's it!
 
