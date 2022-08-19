@@ -283,6 +283,15 @@ In your Adyen Customer Area under `Developers > Webhooks` click on the
   - HMAC Key (HEX Encoded): click generate and copy it to
     `FRONT_COMMERCE_ADYEN_HMAC_KEY` environment variable defined above
 
+### Enable Paypal payments
+
+To enable PayPal payments, you need to:
+
+- [add PayPal payment method](https://docs.adyen.com/payment-methods/paypal/web-drop-in)
+  in your Adyen account
+- [update your CSPs](/docs/advanced/payments/paypal#update-your-csps) with the
+  ones from PayPal.
+
 ### Enable Adyen's Stored Payment Methods (optional)
 
 You can opt for Adyen to store your customers' credit card information and allow
@@ -431,9 +440,15 @@ checking the "Save for my next payment" checkbox.
 
 ### Enable Paypal payments
 
-If you want to enable PayPal payments when using the Magento2 Adyen module, you
-will need to enable Adyen's `Alternative Payment Methods` located in
-`Stores > Configuration > Sales > Payment Methods > Adyen Payments > Configure payment methods`.
+To enable PayPal payments, you need to:
+
+- [add PayPal payment method](https://docs.adyen.com/payment-methods/paypal/web-drop-in)
+  in your Adyen account
+- enable Adyen's `Alternative Payment Methods` in your Magento2 backend, located
+  in
+  `Stores > Configuration > Sales > Payment Methods > Adyen Payments > Configure payment methods`
+- [update your CSPs](/docs/advanced/payments/paypal#update-your-csps) with the
+  ones from PayPal.
 
 ### That's it!
 
