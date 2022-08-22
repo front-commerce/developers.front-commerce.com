@@ -43,7 +43,7 @@
     "react-twitter-embed": "4.0.4",
     "react-use-intercom": "2.0.0",
     "tailwindcss": "3.1.8",
-    "type-fest": "2.18.1"
+    "type-fest": "2.19.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.1",
