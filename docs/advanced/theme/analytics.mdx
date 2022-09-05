@@ -639,16 +639,18 @@ First, the `userConsents` configuration option will be pushed to your dataLayer
 as the `userConsents` value. You can reference it from a Variable in GTM. Here
 is an example:
 
-<Figure
-  src={require("./assets/gtm-datalayer-variable.png").default}
-  alt="Screenshot of a GTM Variable configured to expose the user consents"
-/>
+<Figure>
+
+![Screenshot of a GTM Variable configured to expose the user consents](./assets/gtm-datalayer-variable.png)
+
+</Figure>
 
 Then, you can leverage the `UserConsentUpdated` event tracked whenever users
 update their consent preferences. You could create triggers to enable scripts to
 load / remove (depending on the `userConsents` value). Here is an example:
 
-<Figure
-  src={require("./assets/gtm-trigger-example.png").default}
-  alt="Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration"
-/>
+<Figure>
+
+![Screenshot of a GTM Trigger configured to detect when users gave their consent to a specific integration](./assets/gtm-trigger-example.png)
+
+</Figure>
