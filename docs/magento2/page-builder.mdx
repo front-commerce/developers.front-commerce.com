@@ -225,6 +225,8 @@ export default {
 
 ## Extend the Image content-type
 
+> _Since version 2.18_
+
 The `image` content-type uses defaults for the formatting to optimise
 performance,
 
@@ -264,7 +266,7 @@ export default {
 
 <BrowserWindow url="http://localhost:4000/default-image-format" fullscreen>
 
-![Default Formats](./assets/pb-image-ct-default.png)
+![Default Formats](./assets/pb-image-ct-default.jpg)
 
 </BrowserWindow>
 
@@ -347,7 +349,7 @@ as per the previous example: [Using a custom format](#using-a-custom-format)
 
 <BrowserWindow url="http://localhost:4000/default-dynaimc-format" fullscreen>
 
-![Dynamic Formats](./assets/pb-image-ct-dynamic.png)
+![Dynamic Formats](./assets/pb-image-ct-dynamic.jpg)
 
 </BrowserWindow>
 
@@ -368,7 +370,7 @@ supply the `original` format.
 
 ```js title="src/server/modules/page-builder/loaders/index.js"
 import Image from "server/magento2/wysiwyg/loaders/content-types/Image";
-import { ORIGINAL_PRESET_CODE } from "server/core/image/imageResizer"; // since version: 2.18.0, otherwise defaults to "original"
+import { ORIGINAL_PRESET_CODE } from "server/core/image/imageResizer";
 
 export default {
   dependencies: ["Magento2/Wysiwyg"],
@@ -384,6 +386,6 @@ export default {
 
 <BrowserWindow url="http://localhost:4000/original-format" fullscreen>
 
-![Original Format](./assets/pb-image-ct-original.png)
+![Original Format](./assets/pb-image-ct-original.jpg)
 
 </BrowserWindow>
