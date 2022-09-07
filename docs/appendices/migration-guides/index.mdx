@@ -20,6 +20,20 @@ In this release, we added support for version 8 of Magento2 Adyen module. If you
 have a Front-Commerce setup where the module `Magento2/Adyen` is used,
 [the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/advanced/payments/adyen#add-the-required-environment-variables-1).
 
+### DomainEvent implementations reworked
+
+The `PaymentDetails` attribute was removed from the payment DomainEvents. A
+custom paymentData last attribute now allows your payment methods to provide
+custom JSON payload to the magento backend.
+
+```diff
+- new PaymentReceived(orderId, paymentDetails, pspReference)
++ new PaymentReceived(orderId, pspReference, paymentData)
+```
+
+Concerned classes : `PaymentAuthenticationStarted`, `PaymentAuthorized`,
+`PaymentCaptured`, `PaymentCancelled`, `PaymentReceived` and `PaymentRefused`
+
 ### `FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` support removal
 
 The support for the undocumented environment variable
