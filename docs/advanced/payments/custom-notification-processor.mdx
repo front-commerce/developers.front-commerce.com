@@ -1,0 +1,99 @@
+---
+sidebar_position: 5.3
+title: Custom notification processor
+description: This guide explains how to implement a notification processor
+---
+
+## Implementation
+
+See
+[the existing `DomainEvent` classes to update the order](./existing-domain-events.mdx)
+
+See
+[the existing `EarlyNotificationAck` classes bellow](#early-notification-returns)
+
+```js
+import NotificationProcessor from "server/modules/front-commerce/payment/domain/NotificationProcessor";
+import {
+  AcknowledgeNotification,
+  RefuseNotification,
+} from "server/modules/front-commerce/payment/domain/notificationAckValues";
+
+export default class MyPaymentNotificationProcessor extends NotificationProcessor {
+  constructor(...) {
+    ...
+  }
+
+  async getEarlyNotificationAck(notificationData) {
+    const data = notificationData.notificationPayload;
+
+    // ensure the notification payload is valid (IPN often uses checksums and hashes with a key to allow you to ensure the notifications can be trusted)
+
+    if (valid) {
+      return new AcknowledgeNotification("Accepted");
+    } else {
+      return new RefuseNotification("Invalid notification");
+    }
+  }
+
+  async process(notificationData, paymentCommandDispatcher) {
+    // process the notification properly here depending on the status
+
+    switch(notificationData.status) {
+      case "IN_PROGRESS":
+        // create the order in the backend application using the paymentCommandDispatcher
+        const paymentDetails = new PaymentDetails(
+          cartId, // this is needed to know which cart is to be placed as an order
+          orderTotalAmount,
+          orderCurrency
+        );
+        const orderId = await paymentCommandDispatcher.execute(
+          new PlaceOrderCommand(
+            paymentDetails, // payment details will be used to ensure the payment corresponds to the cart value and avoid "cart jacking" (insertion of an item in the cart while the payment is processing)
+            {
+              code: METHOD_CODE,
+              additionalData: [
+                // additionnal data to be stored in the order
+                { key: "transactionId", value: transactionId },
+              ],
+            },
+            guestCartId // for unlogged customer, the guestCartId is needed as it can differ from a logged in user's cartId
+          )
+        );
+
+        // return an array of DomainEvent that will be stored into the order in the backend, the last event will define the order's status
+        return [
+          new PaymentCaptureStarted(new PurchaseIdentifier({ orderId }), {
+            transactionId,
+          }),
+        ];
+      case "PAID":
+        return [
+          new PaymentCaptured(
+            new PurchaseIdentifier({ cartId })
+          ),
+        ];
+      case "ERROR":
+        // process error cases and return the relevant DomainEvent
+        return [...];
+    }
+  }
+}
+```
+
+## Early Notification returns
+
+Early notifications can be used by notification processors to acknowledge or
+reject a notification for security reasons (invalid authenticity proof).
+
+- [See the acknowledgment implementations here](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/payment/domain/notificationAckValues.js)
+
+### AcknowledgeNotification
+
+When a notification is acknowledged the payment provider is answered with a
+status 200 - OK
+
+## RefuseNotification
+
+When a notification is refused the payment provider is answered with a status
+403 - Forbidden
