@@ -34,6 +34,15 @@ custom JSON payload to the magento backend.
 Concerned classes : `PaymentAuthenticationStarted`, `PaymentAuthorized`,
 `PaymentCaptured`, `PaymentCancelled`, `PaymentReceived` and `PaymentRefused`
 
+### `FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` support removal
+
+The support for the undocumented environment variable
+`FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` has been removed in this
+version. If you were previously defining this variable, you can safely remove
+it. The main use case for this variable was to change `npm run lint` behavior so
+that it triggers a warning instead of an error when a deprecated GraphQL is
+used. This is now the default behavior.
+
 ## `2.16.0` -> `2.17.0`
 
 ### Adyen's Stored payment methods
