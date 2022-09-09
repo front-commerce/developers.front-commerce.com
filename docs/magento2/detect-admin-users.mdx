@@ -172,7 +172,7 @@ In case you rely on
 you will need to make sure that data fetched by admins are not cached in the
 same namespace as your normal users. For this reason, please make sure to update
 your
-[Caching strategies](/docs/advanced/graphql/dataloaders-and-cache-invalidation#PerMagentoAdminRole)
+[Caching strategies](/docs/advanced/graphql/dataloaders-and-cache-invalidation#permagentoadminrole)
 with the relevant `PerMagentoAdminRole` configuration.
 
 :::
@@ -242,5 +242,5 @@ curl -v 'http://localhost:4000/__front-commerce/UNSAFE_injectRole?data={"foo":"b
 ```
 
 Please note that this featured is only enabled if
-[the environment is configured](#Configuring-your-environment) and `NODE_ENV` is
+[the environment is configured](#configuring-your-environment) and `NODE_ENV` is
 `development`.

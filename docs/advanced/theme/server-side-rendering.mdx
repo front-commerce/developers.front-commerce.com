@@ -18,7 +18,7 @@ Front-Commerce uses <abbr title="Server Side Rendering">SSR</abbr> (opposed to
 <abbr title="User experience">UX</abbr> by serving
 <abbr title="Hypertext Markup Language">HTML</abbr> pages to users on their
 first hit to the server. You can read [A typical request in
-Front-Commerce](/docs/concepts/architecture-overview#A-typical-request-in-Front-Commerce)
+Front-Commerce](/docs/concepts/architecture-overview#a-typical-request-in-front-commerce)
 to get a better understanding of this process.
 
 To generate this HTML page, Front-Commerce will render the React application as
@@ -137,7 +137,7 @@ export default withIsServer()(MyIsomorphicComponent);
 In order to reduce the amount of Javascript sent to users, we've found that code
 using `branchServerClient()` are often good candidates to code splitting. You
 may consider using a `loadable()` component here. You can use
-[`DEBUG="front-commerce:webpack"`](/docs/reference/environment-variables#Debugging)
+[`DEBUG="front-commerce:webpack"`](/docs/reference/environment-variables#debugging)
 to analyze your bundles and decide wether it would improve your application or
 not.
 
@@ -185,7 +185,7 @@ for implementation details and <ContactLink /> if you think of any improvements.
 
 During <abbr title="Server Side Rendering">SSR</abbr> you might face some errors
 (syntax errors,
-[browser API usage](/docs/advanced/theme/server-side-rendering#There-is-no-window-on-the-server),
+[browser API usage](/docs/advanced/theme/server-side-rendering#there-is-no-window-on-the-server),
 render errors, etc.). By default in dev mode, Front-Commerce provides an error
 page that makes the mistake obvious to allow you to fix it as early as possible.
 
@@ -197,7 +197,7 @@ another visual waiting page to users while the application is being rendered
 client side.**
 
 If you still want to display the `theme/pages/SsrFallback` page in dev mode,
-[add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables](/docs/reference/environment-variables#DX).
+[add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables](/docs/reference/environment-variables#dx).
 
 ## Restrictions on pages that will be server-rendered
 

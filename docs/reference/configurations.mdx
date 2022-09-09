@@ -25,14 +25,14 @@ in Front-Commerce. If you want to override some, duplicate those in
 
 > _New in version `1.0.0-beta.3`:_ configurations are inherited across themes
 > declared in your `.front-commerce.js` in a similar fashion than
-> [theme overrides](/docs/essentials/extend-the-theme#Understanding-theme-overrides).
+> [theme overrides](/docs/essentials/extend-the-theme#understanding-theme-overrides).
 
 :::caution Security Notice
 
 Please keep in mind that most of these configurations are imported and bundled
 into your client application. Thus it is important to not include private
 configurations in them, and to use
-[environment variables](/docs/reference/environment-variables#Add-your-own-environment-variables)
+[environment variables](/docs/reference/environment-variables#add-your-own-environment-variables)
 instead.
 
 :::
@@ -62,7 +62,7 @@ your website. The term website refers to what a
   the loss of valuable analytics insights.
 - `default_image_url` (ex: an absolute URL of an image): which image to use when
   no image path has been given to
-  [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware#lt-ResizedImage-gt-component)
+  [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware#lt-resizedimage-gt-component)
 - `defaultTitle`: the default meta title of your application
 - `defaultDescription`: the default meta description of your application
 - `available_page_sizes`: which page sizes to display in a product list page (or
@@ -236,7 +236,7 @@ implementations. It can export a configuration with the following keys:
 Each strategy can be configured with the keys below:
 
 - `implementation`: name of the
-  [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation#Caching-strategies)
+  [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation#caching-strategies)
   (**mandatory**)
 - `supports`: list of loaders impacted by this strategy. Either an array of
   values or `"*"` for all. (**mandatory**)
@@ -298,5 +298,5 @@ Allows to define configurations related to GraphQL rate limiting feature.
   memory
 
 See
-[Use a persistent store](/docs/advanced/graphql/rate-limiting#Use-a-persistent-store)
+[Use a persistent store](/docs/advanced/graphql/rate-limiting#use-a-persistent-store)
 for further information.

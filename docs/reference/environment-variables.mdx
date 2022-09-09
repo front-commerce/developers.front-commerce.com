@@ -23,7 +23,7 @@ files no matter if it is a server-side or client-side file. However, not all
 variables are exposed in your client code. Client code only have access to
 variables such as `FRONT_COMMERCE_WEB_*` which were defined during
 `front-commerce build`. See
-[Add your own environment variables](/docs/reference/environment-variables#Add-your-own-environment-variables)
+[Add your own environment variables](/docs/reference/environment-variables#add-your-own-environment-variables)
 for more details.
 
 ## How to update environment variables
@@ -88,7 +88,7 @@ redirects user to the HTTPS version of a page in this case. Use the
 
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications
   invalidate parts of Front-Commerce cache. See
-  [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation#Invalidating-the-cache)
+  [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation#invalidating-the-cache)
   for more details.
 
 ### Performance
@@ -141,7 +141,7 @@ redirects user to the HTTPS version of a page in this case. Use the
 ### DX
 
 - `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables
-  [the SSR warning page](/docs/advanced/theme/server-side-rendering#SSR-Fallback-when-things-go-wrong)
+  [the SSR warning page](/docs/advanced/theme/server-side-rendering#ssr-fallback-when-things-go-wrong)
   before loading. This allows you to see what happens in production.
 - `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE`: disables the image resizing errors
   in case you've passed malformed requests to the server. This allows you to see
@@ -209,7 +209,7 @@ variables:
 :::info
 
 As of Front-Commerce 2.6,
-[the Algolia Front-Commerce module](/docs/magento1/search-engine#Algolia) is
+[the Algolia Front-Commerce module](/docs/magento1/search-engine#algolia) is
 automatically configured based on Magento1 configuration. Those environment
 variables only apply to Front-Commerce 2.5 with Magento1.
 
@@ -269,7 +269,7 @@ keys** page from the menu.
 Get your access keys by following the
 [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html).
 See
-[our documentation page](/docs/advanced/payments/payzen#Configure-your-environment)
+[our documentation page](/docs/advanced/payments/payzen#configure-your-environment)
 for further details.
 
 - `FRONT_COMMERCE_PAYZEN_PUBLIC_KEY`
@@ -282,12 +282,12 @@ for further details.
 ### BuyBox
 
 See
-[our dedicated documentation page](/docs/advanced/payments/buybox#Configure-your-environment).
+[our dedicated documentation page](/docs/advanced/payments/buybox#configure-your-environment).
 
 ### Capency
 
 See
-[our related documentation](/docs/advanced/features/smart-forms#Capency-CapAddress-CapPhone-CapEmail)
+[our related documentation](/docs/advanced/features/smart-forms#capency-capaddress-capphone-capemail)
 for details.
 
 - `FRONT_COMMERCE_CAPENCY_DISABLED`: set to `true` to temporary disable all the
@@ -374,7 +374,7 @@ Here is a list of available debug namespaces:
   VERBOSE!**)
 - `front-commerce:graphql`: debugs GraphQL related code
 - `front-commerce:httpauth`: debugs how
-  [basic authorization](/docs/reference/configurations#config-httpAuth-js) is
+  [basic authorization](/docs/reference/configurations#config-httpauth-js) is
   enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot
   interactions with remote media servers)

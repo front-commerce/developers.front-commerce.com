@@ -77,7 +77,7 @@ field of our custom Prismic type.
 
 Now you need to add your type to the GraphQL dispatcher query. For more info on
 the topic please refer to
-[Add GraphQL type to the dispatcher query section of the route dispatcher documentation](/docs/advanced/theme/route-dispatcher#Add-GraphQL-type-to-the-dispatcher-query)
+[Add GraphQL type to the dispatcher query section of the route dispatcher documentation](/docs/advanced/theme/route-dispatcher#add-graphql-type-to-the-dispatcher-query)
 
 ## Register the Prismic custom type as a routable type
 
@@ -126,7 +126,7 @@ export default {
 
 The `postTransformer` above is optional. It is a function that will be called
 after
-[the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content#Field-Transformers).
+[the transformation is done using `contentTransformOptions`](/docs/prismic/expose-content#field-transformers).
 It is given the current URL being resolved and the transformed document. It can
 be used if you have some custom logic to apply to the document or if you want to
 prevent the document from showing using some custom logic (returning a _falsy_
@@ -193,7 +193,7 @@ export const dispatchedRoutes = {
 ```
 
 For more details please refer to
-[Add the mapping between the type and the page component](/docs/advanced/theme/route-dispatcher#Add-the-mapping-between-the-type-and-the-page-component)
+[Add the mapping between the type and the page component](/docs/advanced/theme/route-dispatcher#add-the-mapping-between-the-type-and-the-page-component)
 in the [route dispatcher](/docs/advanced/theme/route-dispatcher).
 
 Now an instance of the custom Prismic type with the `url` field set to

@@ -122,8 +122,8 @@ resolve data.
 Clearing the cache manually is possible on some of the supported platforms. Read
 dedicated pages for details:
 
-- [Magento 1](/docs/magento1/advanced#Clearing-Front-Commerce-cache)
-- [Magento 2](/docs/magento2/advanced#Clearing-Front-Commerce-cache)
+- [Magento 1](/docs/magento1/advanced#clearing-front-commerce-cache)
+- [Magento 2](/docs/magento2/advanced#clearing-front-commerce-cache)
 <!-- TODO - add BigCommerce and Prismic manual cache clearing backlinks -->
 
 ## What are DataLoaders?
@@ -134,9 +134,9 @@ it is the name of the reference implementation in Javascript:
 [graphql/dataloader](https://github.com/graphql/dataloader).
 
 A DataLoader is instantiated with a **batching function**, that will allow to
-fetch data in a grouped way (see [Batching](#Batching) above). It also has a
+fetch data in a grouped way (see [Batching](#batching) above). It also has a
 caching strategy that prevents fetching the same data twice in the same request
-or across requests (see [Caching](#Caching) above).
+or across requests (see [Caching](#caching) above).
 
 By default every DataLoader provides request-level caching. But this can be
 configured to switch to a persistent caching strategy instead. For instance,
@@ -276,7 +276,7 @@ const fooLoader = makeDataLoader("AcmeFoo")((ids) =>
 
 In some contexts, cache invalidation could be impossible or difficult to
 implement in remote systems. You may still want to leverage Front-Commerce's
-caching features, such as [the Redis persistent cache](#Redis), to improve
+caching features, such as [the Redis persistent cache](#redis), to improve
 performance of your application.
 
 The Redis strategy supports an additional option (to be provided during
@@ -389,7 +389,7 @@ When using 3rd party APIs or legacy systems, such APIs might not always be
 available. Using dataLoaders in this case will not allow you to reduce the
 number of requests in the absolute, however it could still allow you to prevent
 most of these requests (or reduce its number in practice) thanks to
-[caching](#Caching). It is thus very convenient when dealing with a slow
+[caching](#caching). It is thus very convenient when dealing with a slow
 service.
 
 The `makeBatchLoaderFromSingleFetch` allows you to create a batching function
@@ -435,7 +435,7 @@ strategy**. It means that during the same GraphQL query, the same data will only
 be requested once.
 
 Front-Commerce is also shipped with a persistent cache implementation, using a
-Redis strategy (see [Caching strategies](#Caching-strategies)). You can
+Redis strategy (see [Caching strategies](#caching-strategies)). You can
 implement new strategies to support more services (we also can help and support
 more strategies, please <ContactLink />).
 
@@ -579,7 +579,7 @@ The `PerCurrency` implementation is a decorator that is specific to Magento 1
 integrations. It will decorate the existing caching strategies so that
 DataLoader keys are different depending on the store's currency selected by the
 user. This is only useful if a store has multiple currencies
-([`config/stores.js::availableCurrencies`](/docs/advanced/production-ready/multistore#Multiple-currencies)).
+([`config/stores.js::availableCurrencies`](/docs/advanced/production-ready/multistore#multiple-currencies)).
 It should be used on any DataLoader that returns a price value based on the
 user's session.
 
@@ -654,7 +654,7 @@ relevant.
 Front-Commerce provides several endpoints for it. They respond to `GET` or
 `POST` queries and are secured with a token to be passed in a `auth-token`
 header. The expected token must be configured with the
-[`FRONT_COMMERCE_CACHE_API_TOKEN` environment variable](/docs/reference/environment-variables#Cache).
+[`FRONT_COMMERCE_CACHE_API_TOKEN` environment variable](/docs/reference/environment-variables#cache).
 
 ### `POST` for batched invalidations
 
@@ -687,7 +687,7 @@ below.
 The payload is
 [limited to 1Mb by default](https://gitlab.com/front-commerce/front-commerce/-/blob/2af896b935b2ead5d1ea5b76bc6109b1a3f56ecd/src/server/express/config/expressConfigProvider.js#L10)
 to prevent abuses. You can extend this limit using configurations. See
-["I cannot `POST` a big payload to the server "](/docs/appendices/troubleshooting#I-cannot-POST-a-big-payload-to-the-server)
+["I cannot `POST` a big payload to the server "](/docs/appendices/troubleshooting#i-cannot-post-a-big-payload-to-the-server)
 for a way to define a greater value.
 
 :::
@@ -718,6 +718,6 @@ invalidation logic (for custom Magento entities).
 
 Front-Commerce provides a way to debug several aspects of the caching layer. You
 can use the
-[`DEBUG="front-commerce:cache"` environment variable](/docs/reference/environment-variables#Debugging)
+[`DEBUG="front-commerce:cache"` environment variable](/docs/reference/environment-variables#debugging)
 to view information about caching strategies used for a GraphQL query, along
 with cache invalidation requests received by your Front-Commerce server.
