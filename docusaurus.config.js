@@ -166,8 +166,7 @@ const config = {
         appId: "5GW5VSP0PU",
         apiKey: "79a6baff7cbdd96f9db8aeb1828c63a3",
         indexName: "front-commerce",
-        // Optional: It ensures that search results are relevant to the current language and version.
-        contextualSearch: false,
+        contextualSearch: true,
       },
     }),
   plugins: [
