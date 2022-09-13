@@ -546,7 +546,7 @@ Support for shareable downloadable products was added. There is now a new page
 under the user account `/user/downloadable-products` that lists all the
 downloadable products of the current user.
 
-P.S. The [withFlashMessage](#withFlashMessages-now-exports-hooks) update is
+P.S. The [withFlashMessage](#withflashmessages-now-exports-hooks) update is
 required for the downloadable product page.
 
 To add a link to the downloadable products in the account navigation please
@@ -604,11 +604,11 @@ following modules, please do update your CSPs accordingly in your
 `config/website.js` configuration:
 
 - `Google Analytics` or `Google Tag Manager` (see
-  [analytics configuration](/docs/advanced/theme/analytics#Universal-Analytics-Google-Analytics))
+  [analytics configuration](/docs/advanced/theme/analytics#universal-analytics-google-analytics))
 - `Paypal` (see
-  [Paypal configuration](/docs/advanced/payments/paypal#Update-your-CSPs))
+  [Paypal configuration](/docs/advanced/payments/paypal#update-your-csps))
 - `Payzen` (see
-  [Payzen configuration](/docs/advanced/payments/payzen#Update-your-CSPs))
+  [Payzen configuration](/docs/advanced/payments/payzen#update-your-csps))
 
 ### Removed deprecations in `Button` component
 
@@ -697,20 +697,20 @@ const isCompanyUser = (user) => {
 
 ### New features in `2.14.0`
 
-- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher#Advanced-queries)
-- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables#Server)
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher#advanced-queries)
+- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables#server)
 - New Prismic module features:
-  - Support for [trailing slashes](/docs/prismic/routable-types#Trailing-Slash)
-  - Support for [path rewrites](/docs/prismic/routable-types#Path-Rewrites)
+  - Support for [trailing slashes](/docs/prismic/routable-types#trailing-slash)
+  - Support for [path rewrites](/docs/prismic/routable-types#path-rewrites)
   - Exposed the `url` to the
     [Content type](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
 
 :::note
 
 When a Prismic document has been registered using the
-[`registerRoutableType`](/docs/prismic/routable-types#registerRoutableType-options)
+[`registerRoutableType`](/docs/prismic/routable-types#registerroutabletype-options)
 method or the
-[`registerPrismicRoute`](/docs/prismic/routable-types#registerPrismicRoute-options)
+[`registerPrismicRoute`](/docs/prismic/routable-types#registerprismicroute-options)
 method, A `url` property is exposed in the
 [Content type object](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js).
 This property contains the resolved url of the document.
@@ -913,8 +913,8 @@ const keyToComponent = {
 
 These new features may be relevant for your existing application:
 
-- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine#Algolia)
-- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine#Algolia)
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine#algolia)
+- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine#algolia)
 - [Prismic Preview](/docs/prismic/preview)
 - [HiPay payment method](/docs/advanced/payments/hipay)
 - [Facebook and Google external logins](/docs/advanced/features/external-logins)
@@ -1554,8 +1554,8 @@ This feature is enabled by default in both in theme Chocolatine and in the base
 theme. **You MUST decide whether you want it or not and follow the related
 instructions below:**
 
-- [Integrating the zoom in feature](#Integrating-the-zoom-in-feature)
-- or [Disabling the zoom in feature](#Disabling-the-zoom-in-feature)
+- [Integrating the zoom in feature](#integrating-the-zoom-in-feature)
+- or [Disabling the zoom in feature](#disabling-the-zoom-in-feature)
 
 #### Disabling the zoom in feature
 
@@ -1606,7 +1606,7 @@ In this version, we have improved the MondialRelay shipping support with
 Magento2 so that a customer can only choose a pickup point suitable for the
 products being ordered. This improvement requires an update of Magentix's module
 to
-[install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay#Integrate-with-Magento2).
+[install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay#integrate-with-magento2).
 
 ### New icons required
 
@@ -1682,7 +1682,7 @@ in them:
 
 In order to support Magento Page Builder's default content types, we have added
 new components to the
-[default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#MagentoWysiwyg).
+[default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg).
 
 See
 [the Page Builder ones](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
@@ -1724,7 +1724,7 @@ In a nutshell, the Front-Commerce module
 that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you
 are upgrading a Magento1 based project using the MondialRelay module, you have
 to update your `.front-commerce.js` as documented in
-[the MondialRelay guide page](/docs/advanced/shipping/mondial-relay#Integrate-with-Magento1).
+[the MondialRelay guide page](/docs/advanced/shipping/mondial-relay#integrate-with-magento1).
 In addition, if you have custom code importing files from
 `modules/shipping-mondialrelay-magento1`, you will also have to update those
 imports to match the new file layout.
@@ -1737,10 +1737,10 @@ are needed to upgrade your project if you are using this payment platform:
 
 1. the Magento2 Adyen Front-Commerce module has been moved. As a result, you
    have to
-   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen#Register-the-Adyen-for-Magento2-payment-module-in-Front-Commerce).
+   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen#register-the-adyen-for-magento2-payment-module-in-front-commerce).
 1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so
    you have
-   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#Add-the-Adyen-client-key-in-the-environment)
+   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
 1. we have made some changes and fixes to
    [the Adyen related frontend components](https://gitlab.com/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
    If you have overridden some of those, you have to backport the changes.
@@ -1832,5 +1832,5 @@ and
 These new features may be relevant for your existing application:
 
 - [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen)
-- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay#Integrate-with-Magento2)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay#integrate-with-magento2)
 - [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)

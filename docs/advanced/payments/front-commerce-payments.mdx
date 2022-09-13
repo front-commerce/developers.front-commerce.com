@@ -24,18 +24,18 @@ These payment methods are also aimed at being as frictionless as possible for
 Customers, so payment inputs are usually embedded in the checkout page to
 prevent redirecting Customers to third-party providers. Per their nature follow
 the
-[Direct Order payment workflow](/docs/advanced/payments/payment-workflows#Direct-Order).
+[Direct Order payment workflow](/docs/advanced/payments/payment-workflows#direct-order).
 
 ## Supported Payment platforms
 
 Front-Commerce Payments are currently available for the platforms below, learn
 how to install each one of them from the related documentation page:
 
-- [Stripe](/docs/advanced/payments/stripe#Front-Commerce-Payment)
-- [Paypal](/docs/advanced/payments/paypal#Front-Commerce-Payment)
-- [PayZen](/docs/advanced/payments/payzen#Front-Commerce-Payment)
-- [Ingenico](/docs/advanced/payments/ingenico#Front-Commerce-Payment)
-- [BuyBox](/docs/advanced/payments/buybox#Front-Commerce-Payment)
+- [Stripe](/docs/advanced/payments/stripe#front-commerce-payment)
+- [Paypal](/docs/advanced/payments/paypal#front-commerce-payment)
+- [PayZen](/docs/advanced/payments/payzen#front-commerce-payment)
+- [Ingenico](/docs/advanced/payments/ingenico#front-commerce-payment)
+- [BuyBox](/docs/advanced/payments/buybox#front-commerce-payment)
 - [Adyen](/docs/advanced/payments/adyen)
 
 :::info
@@ -73,7 +73,7 @@ Front-Commerce allows you to implement your own payment method. New embedded
 payment methods have to be registered from a GraphQL module. Let’s create a new
 "PWAy" payment module for a fictive payment provider.
 
-1. [create a new GraphQL module](/docs/essentials/extend-the-graphql-schema#Create-a-new-GraphQL-module)
+1. [create a new GraphQL module](/docs/essentials/extend-the-graphql-schema#create-a-new-graphql-module)
 2. add a depency upon `"Magento2/Checkout"`
 
    ```js

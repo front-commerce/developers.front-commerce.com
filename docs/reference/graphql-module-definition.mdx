@@ -201,7 +201,7 @@ keys:
 - `req`: the current server request
 - `loaders`: current loaders (from module initialized beforehand)
 - `makeDataLoader`: a factory to build a dataloader (see
-  [`makeDataLoader` usage](/docs/advanced/graphql/dataloaders-and-cache-invalidation#makeDataLoader-usage))
+  [`makeDataLoader` usage](/docs/advanced/graphql/dataloaders-and-cache-invalidation#makedataloader-usage))
 - `config`: the global configuration
 
 Example:
@@ -250,7 +250,7 @@ export default {
 
 By default all queries and mutations are merged with the current schema. A set
 of default transformations are applied: read
-[the dedicated documentation section](/docs/advanced/graphql/remote-schemas#Default-transforms)
+[the dedicated documentation section](/docs/advanced/graphql/remote-schemas#default-transforms)
 for further information.
 
 ### `transforms` (optional)
@@ -261,7 +261,7 @@ before it is stitched with the existing Front-Commerce schema.
 It must be an array of valid
 [`graphql-tools` Schema Transforms](https://www.graphql-tools.com/docs/schema-stitching/#using-with-transforms),
 and will be applied **before** Front-Commerce’s
-[default transforms](/docs/advanced/graphql/remote-schemas#Default-transforms).
+[default transforms](/docs/advanced/graphql/remote-schemas#default-transforms).
 
 Example:
 
@@ -297,7 +297,7 @@ system in your remote service.
 You can create your own executor from scratch by following
 [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor)
 from GraphQL Tools or use the
-[`makeExecutor` helper](/docs/reference/remote-schema-helpers#makeExecutor)
+[`makeExecutor` helper](/docs/reference/remote-schema-helpers#makeexecutor)
 available in Front-Commerce.
 
 The following example demonstrates how to add an `Authorization` header to your

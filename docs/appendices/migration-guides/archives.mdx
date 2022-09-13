@@ -136,7 +136,7 @@ These new features may be relevant for your existing application:
   specific `front-commerce:prismic:cache` debug flag allows you to view usage
   information. The new`FRONT_COMMERCE_PRISMIC_API_CACHE_TTL_IN_SECONDS`
   environment variable allows to change
-  [the default TTL configuration](/docs/prismic/installation#Configure-the-environment-for-Prismic).
+  [the default TTL configuration](/docs/prismic/installation#configure-the-environment-for-prismic).
 - New logger dedicated to payments. If you maintain a custom Front-Commerce
   payment implementation you might want to use the new
   `loaders.Payment.getLogger()` method to inject this logger instead of using
@@ -147,7 +147,7 @@ These new features may be relevant for your existing application:
 ### Ensure your pages will be rendered server side
 
 We've added a guard to ensure that Server Side Rendering
-[is only tried for relevant pages](/docs/advanced/theme/server-side-rendering#Restrictions-on-pages-that-will-be-server-rendered).
+[is only tried for relevant pages](/docs/advanced/theme/server-side-rendering#restrictions-on-pages-that-will-be-server-rendered).
 Front-Commerce will now only render pages on the server for URLs that have **no
 extension** or the `.html` extension.
 
@@ -159,7 +159,7 @@ please <ContactLink />.
 These new features may be relevant for your existing application:
 
 - reduce CPU usage by
-  [deactivating response compression](/docs/advanced/performance/deactivating-unnecessary-features#Deactivate-response-compression)
+  [deactivating response compression](/docs/advanced/performance/deactivating-unnecessary-features#deactivate-response-compression)
 
 ## `2.6.0` -> `2.7.0`
 
@@ -317,7 +317,7 @@ payment form assets. **Please do a test payment to ensure that everything is
 working as expected**.
 
 If you are using Lyra Collect, use the `api.lyra.com` value as per
-[our documentation](/docs/advanced/payments/payzen#Lyra-Collect-supportq)
+[our documentation](/docs/advanced/payments/payzen#lyra-collect-support)
 
 #### `PayzenEmbeddedQuery` query update
 
@@ -544,7 +544,7 @@ recommended to use the `<WishlistProvider>` to handle wishlist related tasks
 behaviour of Front-Commerce since 2.6.0. So if you started with Front-Commerce
 at or after 2.6.0 you have nothing to worry about. However if you upgraded from
 versions lower than 2.6.0 please refer to the
-[WishlistProvider migration guide](#Wishlist-Provider)
+[WishlistProvider migration guide](#wishlist-provider)
 
 ### Automatic Algolia configuration
 
@@ -565,7 +565,7 @@ Please ensure that you include it in your theme if you customized the bar.
 
 New options were also added in the analytics initialization, which allows you to
 use the user consents in external integrations. We've updated our
-[<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics#Google-Tag-Manager)
+[<abbr title="Google Tag Manager">GTM</abbr> example documentation section](/docs/advanced/theme/analytics#google-tag-manager)
 to illustrate this.
 
 ### Updated dependencies
@@ -620,7 +620,7 @@ Front-Commerce Cloud customers must update the FCC submodule to version
 ### Default Redis TTL change
 
 We've reduced the default TTL for the
-[Redis application caching strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation#Redis).
+[Redis application caching strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis).
 It used to be 10 days, and we reduced it to 23h to ensure cache invalidation
 misses don't impact the store for too long.
 
@@ -864,9 +864,9 @@ these improvements:
 - if your theme contains a list of images but you don't actually know the ratio
   of the final image, you might be interested by the newly introduced
   `placeholderHeight` attribute of images presets (see
-  [the updated `config/images.js` example](/docs/advanced/production-ready/media-middleware#How-to-configure-it))
+  [the updated `config/images.js` example](/docs/advanced/production-ready/media-middleware#how-to-configure-it))
 - ensure you no longer use our 0.x `<ResizedImage>` component
-  ([introduced in 2.0.0-rc.0](#Responsive-images)). The `<Image>` component has
+  ([introduced in 2.0.0-rc.0](#responsive-images)). The `<Image>` component has
   the same API and should work seamlessly.
 
 ### Street lines
@@ -1153,7 +1153,7 @@ configurations are made available through the API.
 If that's not possible, for Magento2 you can manually expose configurations from
 the version `2.0.0` of the module. If you can't upgrade to `2.2.0` then add the
 configuration below
-([as documented in "Using Magento Configuration"](/docs/magento2/using-magento-configuration#Fetch-configurations-from-frontcommerce-storeConfigs-Magento-endpoint)):
+([as documented in "Using Magento Configuration"](/docs/magento2/using-magento-configuration#fetch-configurations-from-frontcommerce-storeconfigs-magento-endpoint)):
 
 ```xml
 <item name="general/region/state_required" xsi:type="string">general/region/state_required</item>
@@ -1355,7 +1355,7 @@ The deprecations introduced in `2.0.0-rc.2` have been removed. Ensure that your
 > to `FRONT_COMMERCE_ES_ALIAS=magento2` in your `.env` file (the `_default` will
 > be appended from your `stores.js` configuration). It is important to
 > acknowledge
-> [Elasticsearch related changes from our previous release](#Elasticsearch-related-changes)
+> [Elasticsearch related changes from our previous release](#elasticsearch-related-changes)
 > if you are upgrading from an earlier version.
 
 ### GraphQL Dataloaders: `loadMany()` change
@@ -1489,7 +1489,7 @@ been renamed and subtle low-level behavior changes were introduced (required
 errors by default in errors etc…).
 
 **If you were using
-[Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/appendices/migration-guides#Abstract-Formsy)
+[Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/appendices/migration-guides#abstract-formsy)
 you might not encounter any issues**. Otherwise, we recommend to refactor your
 code to use them!
 
@@ -1793,7 +1793,7 @@ Here the list of the main updates you need to be concerned about:
 - [formsy-react](https://github.com/formsy/formsy-react): `0.20.1` -> `1.1.5` It
   should be compatible. However you will have warnings if you use
   `formsy-react-2`. Simply rename it to `formsy-react`. Please have a look at
-  the [Abstract Formsy section](#Abstract-Formsy) below to learn about broader
+  the [Abstract Formsy section](#abstract-formsy) below to learn about broader
   changes regarding the form inputs.
 - [react-helmet](https://github.com/nfl/react-helmet) ->
   [react-helmet-async](https://github.com/staylor/react-helmet-async) It should
@@ -1883,7 +1883,7 @@ endpoint. However, in your production environment you will still see the image.
 :::note
 
 This release also contain a utility library that makes
-[adding your own media proxy](/docs/advanced/production-ready/media-middleware#Add-your-own-media-proxy-endpoint)
+[adding your own media proxy](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint)
 a breeze. Please read the related documentation to know more.
 
 :::
@@ -1903,7 +1903,7 @@ users. The second change is that you can decide to opt-out of `Formsy` any time
 by passing an `onChange` property directly.
 
 For more information, please have a look at
-[how to create new input types](/docs/advanced/theme/form#New-input-types).
+[how to create new input types](/docs/advanced/theme/form#new-input-types).
 
 For existing projects, the goal would be to replace `formsy-react`'s HOC by
 `withFormHandlers`. The best way to migrate components you have overriden in
@@ -2078,7 +2078,7 @@ Previously, in order to change the sitemap loader, you had to override the
 default resolver for `Query.sitemap` and add your own nodes to the default ones.
 From now on, you will instead need to register nodes dynamically. Please follow
 the
-[Sitemap guide](/docs/advanced/production-ready/sitemap#Add-your-own-routes-in-the-sitemap)
+[Sitemap guide](/docs/advanced/production-ready/sitemap#add-your-own-routes-in-the-sitemap)
 for more details.
 
 ### Caching update
@@ -2092,10 +2092,10 @@ use the previous format but is backward-compatible.
 
 This refactoring allowed us to leverage strategies decorators to implement
 something that Magento store owners will appreciate: a
-[`PerMagentoCustomerGroup` caching implementation](/docs/advanced/graphql/dataloaders-and-cache-invalidation#PerMagentoCustomerGroup).
+[`PerMagentoCustomerGroup` caching implementation](/docs/advanced/graphql/dataloaders-and-cache-invalidation#permagentocustomergroup).
 We now recommend Magento 1 and Magento 2 users to cache all dataLoaders in a
 persistent cache (such as
-[Redis](/docs/advanced/graphql/dataloaders-and-cache-invalidation#Redis)), with
+[Redis](/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis)), with
 the `PerMagentoCustomerGroup` strategy for the `CatalogPrice` dataLoader.
 
 Here is how it would look:
@@ -2142,7 +2142,7 @@ mode using the `http` protocol will automatically redirect to `https`.
 If you experience issues after the upgrade, here are the things to ensure:
 
 - start the application with the
-  [`FRONT_COMMERCE_UNSAFE_INSECURE_MODE`](/docs/reference/environment-variables#Front-Commerce-related-variables)
+  [`FRONT_COMMERCE_UNSAFE_INSECURE_MODE`](/docs/reference/environment-variables#front-commerce-related-variables)
   set to `true` to see if that solves your issue
 - if the above manipulation worked, ensure that your proxy (if any) forwards the
   protocol using the `X-Forwarded-Proto` HTTP header
@@ -2177,7 +2177,7 @@ methods.
 If you had a custom remote schema stitching module with Magento 2, you could
 reuse the authentication middleware from Front-Commerce to access resources
 under the currently logged in user by leveraging the
-[new HTTP headers customization feature](/docs/advanced/graphql/remote-schemas#Customize-remote-HTTP-requests).
+[new HTTP headers customization feature](/docs/advanced/graphql/remote-schemas#customize-remote-http-requests).
 
 Here is how it might look:
 
@@ -2221,7 +2221,7 @@ the latest beta in your Magento project.
 :::info Important
 
 **IMPORTANT:** please ensure to keep your
-[`FRONT_COMMERCE_MAGENTO_MODULE_VERSION`](/docs/reference/environment-variables#Magento-2)
+[`FRONT_COMMERCE_MAGENTO_MODULE_VERSION`](/docs/reference/environment-variables#magento-2)
 up-to-date in the `.env` file of your Front-commerce application. It should now
 be `1.0.0-beta`.
 
@@ -2230,14 +2230,14 @@ be `1.0.0-beta`.
 ### Translations
 
 We have introduced the mechanism of
-[Translation Fallback](/docs/advanced/theme/translations#Translations-fallback).
+[Translation Fallback](/docs/advanced/theme/translations#translations-fallback).
 This is means that you will have fewer conflicts during next upgrades.
 
 ### Improved search experience
 
 While working on our compatibility with Magento 2.3, we decided to use
 [ElasticSuite](https://elasticsuite.io/). Learn more about it in our
-[announcement](/changelog/release-1.0.0-beta.0/#Improved-search-experience).
+[announcement](/changelog/release-1.0.0-beta.0/#improved-search-experience).
 
 During this change, we needed to update some parts of the GraphQL schema. If you
 don't use our implementation, this won't impact you. However, if you do, here is
@@ -2312,7 +2312,7 @@ at the moment.
   environment variables. To ensure that you have the newest behavior, please set
   `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=true`. To keep the deprecated one,
   please use `FRONT_COMMERCE_USE_SERVER_DYNAMIC_ENV=false`. See
-  [How to update environment variables](/docs/reference/environment-variables#How-to-update-environment-variables).
+  [How to update environment variables](/docs/reference/environment-variables#how-to-update-environment-variables).
 - While upgrading the search behavior, we have also changed deprecated the
   `search.blacklistKeys` configuration in `config/website.js`. This now should
   be `search.ignoredAttributeKeys` which is less offensive and more explicit.

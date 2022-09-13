@@ -155,7 +155,7 @@ We will use some of them in the following examples.
 ## Implementation examples
 
 Those examples assume that you have created
-[a GraphQL module](/docs/essentials/extend-the-graphql-schema#Create-a-new-GraphQL-module)
+[a GraphQL module](/docs/essentials/extend-the-graphql-schema#create-a-new-graphql-module)
 and that it is already registered. Before being able to use the Prismic module
 API, you have to make sure `Prismic/Core` is a dependency of your module. In
 addition, we will use the Wysiwyg feature provided by `Front-Commerce/Wysiwyg`,
@@ -291,7 +291,7 @@ export default {
 > The `ImageTransformer` also rewrites the image path provided by the Prismic
 > API to use a custom image proxy defined by the module. This path rewrite makes
 > those image path directly usable by
-> [Front-Commerce's `<Image />` component](/docs/advanced/production-ready/media-middleware#lt-Image-gt-component).
+> [Front-Commerce's `<Image />` component](/docs/advanced/production-ready/media-middleware#lt-image-gt-component).
 
 In addition, each view carries some metadata like the alternative text or the
 image dimensions. The following changes allow to expose the alternative text of

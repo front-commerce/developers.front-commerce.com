@@ -49,7 +49,7 @@ query Sitemap {
 This query will be run for each store available in your `config/stores.js` file.
 
 If the request does not work, please make sure that the environment variable
-[`FRONT_COMMERCE_SITEMAP_TOKEN`](/docs/reference/environment-variables#Sitemap)
+[`FRONT_COMMERCE_SITEMAP_TOKEN`](/docs/reference/environment-variables#sitemap)
 is available when running your script.
 
 The result of this query will then be transformed in xml files that are
@@ -71,7 +71,7 @@ through a cron to ensure that the sitemap is up to date.
 By default the sitemap will contain nodes that have been registered by modules
 declared in your Front-Commerce application. For instance, if you have
 registered a `server/modules/magento2` module in your
-[`.front-commerce.js`'s `serverModules` key](/docs/reference/front-commerce-js#serverModules),
+[`.front-commerce.js`'s `serverModules` key](/docs/reference/front-commerce-js#servermodules),
 you should have categories, products and CMS pages available in your sitemap.
 
 However, if you need to setup your own routes, you will need to register your

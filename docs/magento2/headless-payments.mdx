@@ -24,7 +24,7 @@ modules headlessly and supports
 the implementation uses very low-level Magento mechanisms. One must be very
 careful about the implementation and **must rigorously test the payment
 integration** because some extensions could have nasty side effects. Read more
-about it in the [Warnings & Known issues](#Warnings-amp-Known-issues) section if
+about it in the [Warnings & Known issues](#warnings-amp-known-issues) section if
 you plan to use such payment methods.
 
 :::
@@ -35,10 +35,10 @@ Our Magento2 integration currently provides native adapters for the platforms
 below, learn how to install each one of them from the related documentation
 page:
 
-- [Affirm](/docs/advanced/payments/affirm#Magento2-module)
-- [Ingenico](/docs/advanced/payments/ingenico#Magento2-module)
-- [Paypal](/docs/advanced/payments/paypal#Magento2-module)
-- [PayZen](/docs/advanced/payments/payzen#Magento2-module)
+- [Affirm](/docs/advanced/payments/affirm#magento2-module)
+- [Ingenico](/docs/advanced/payments/ingenico#magento2-module)
+- [Paypal](/docs/advanced/payments/paypal#magento2-module)
+- [PayZen](/docs/advanced/payments/payzen#magento2-module)
 - [Payment on account](/docs/advanced/payments/payment-on-account)
 
 :::info
@@ -80,7 +80,7 @@ Adapters must implement methods that are called at key times in order to:
 ### `redirectionFromCheckoutRedirectActionResponse`
 
 **Payment flows:**
-[Redirect before order](/docs/advanced/payments/payment-workflows#Redirect-Before-Order)
+[Redirect before order](/docs/advanced/payments/payment-workflows#redirect-before-order)
 
 Converts an internal Magento response to a
 [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
@@ -96,7 +96,7 @@ public function redirectionFromCheckoutRedirectActionResponse(
 ### `redirectionFromCheckoutRedirectAfterActionResponse`
 
 **Payment flows:**
-[Redirect after order](/docs/advanced/payments/payment-workflows#Redirect-After-Order)
+[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 Converts an internal Magento response to a
 [`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
@@ -112,7 +112,7 @@ public function redirectionFromCheckoutRedirectAfterActionResponse(
 ### `prepareAfterCheckoutContext`
 
 **Payment flows:**
-[Redirect after order](/docs/advanced/payments/payment-workflows#Redirect-After-Order)
+[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 Populates session objects with information required by the payment action.
 
@@ -127,8 +127,8 @@ public function prepareAfterCheckoutContext(
 ### `checkoutRedirectUrl`
 
 **Payment flows:**
-[Redirect before order](/docs/advanced/payments/payment-workflows#Redirect-Before-Order),
-[Redirect after order](/docs/advanced/payments/payment-workflows#Redirect-After-Order)
+[Redirect before order](/docs/advanced/payments/payment-workflows#redirect-before-order),
+[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 Should return the url that will be dispatched internally to trigger the
 redirection to the payment provider in the payment module.
@@ -143,7 +143,7 @@ public function checkoutRedirectUrl(
 ### `changeAfterCheckoutResponseFromResult`
 
 **Payment flows:**
-[Redirect after order](/docs/advanced/payments/payment-workflows#Redirect-After-Order)
+[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 May populate or change the Magento response object while still in the correct
 store context. It can for instance render blocks or things like that…
@@ -160,8 +160,8 @@ public function changeAfterCheckoutResponseFromResult(
 ### `buildReturnFromPlatformProxiedAction`
 
 **Payment flows:**
-[Redirect before order](/docs/advanced/payments/payment-workflows#Redirect-Before-Order),
-[Redirect after order](/docs/advanced/payments/payment-workflows#Redirect-After-Order)
+[Redirect before order](/docs/advanced/payments/payment-workflows#redirect-before-order),
+[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 This is a factory to build a
 [`ProxiedAction`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/ProxiedAction.php)

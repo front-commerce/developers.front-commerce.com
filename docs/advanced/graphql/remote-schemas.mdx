@@ -69,7 +69,7 @@ documentation page.
 
 In its current state, this GraphQL module does nothing at all! Let’s update it
 to expose the remote GraphQL schema, by adding a
-[`remoteSchema`](/docs/reference/graphql-module-definition#remoteSchema-optional)
+[`remoteSchema`](/docs/reference/graphql-module-definition#remoteschema-optional)
 key to the module definition.
 
 ```js title="my-module/server/modules/pokemon/index.js"
@@ -192,7 +192,7 @@ headers or content. For instance, you may have to provide an API key in all
 calls or an `Authorization` header to act as the currently logged in Customer.
 
 Front-Commerce allows you to configure the underlying implementation using the
-[`remoteSchema.executor` GraphQL module definition key](/docs/reference/graphql-module-definition#linkContextBuilders-optional).
+[`remoteSchema.executor` GraphQL module definition key](/docs/reference/graphql-module-definition#linkcontextbuilders-optional).
 
 ## Mix local and remote schemas
 
