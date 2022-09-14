@@ -16,8 +16,8 @@ In Front-Commerce we expose the embed fields in two ways;
 
 - Standalone Embed fields with an EmbedTransformer
 - Embed Fields in
-  [`WysiwygV2`](/docs/advanced/theme/wysiwyg#lt-WysiwygV2-gt-usage) with
-  [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform#PrismicWysiwyg)
+  [`WysiwygV2`](/docs/advanced/theme/wysiwyg#lt-wysiwygv2-gt-usage) with
+  [`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform#prismicwysiwyg)
 
 In this section we will cover how to implement both of these methods, and how to
 implement your own custom embed fields.
@@ -126,14 +126,14 @@ type.
 ### Prerequisites
 
 To benefit from this API, you first need to
-[Configure the PrismicWysiwyg](/docs/prismic/installation#Optional-Configure-the-PrismicWysiwyg).
+[Configure the PrismicWysiwyg](/docs/prismic/installation#optional-configure-the-prismicwysiwyg).
 
 ### Example with PrismicWysiwyg
 
 Update your schema to use the
-[`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform#PrismicWysiwyg) type
+[`PrismicWysiwyg`](/docs/advanced/theme/wysiwyg-platform#prismicwysiwyg) type
 instead of the
-[`DefaultWysiwyg`](/docs/advanced/theme/wysiwyg-platform#DefaultWysiwyg).
+[`DefaultWysiwyg`](/docs/advanced/theme/wysiwyg-platform#defaultwysiwyg).
 
 ```diff
 type MyAlbum {
@@ -160,7 +160,7 @@ loaders.Prismic.defineContentTransformers("album", {
 ```
 
 You can then follow the same steps form
-[`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg#lt-WysiwygV2-gt-usage) to
+[`<WysiwygV2 /> usage`](/docs/advanced/theme/wysiwyg#lt-wysiwygv2-gt-usage) to
 implement the Wysiwyg in your client-side.
 
 ### Adding additional Embed loading scripts

@@ -14,9 +14,9 @@ import ContactLink from "@site/src/components/ContactLink";
 You can configure search and product lists with filters using the following
 platforms:
 
-- [Native Magento feature](#Native-search) (using its GraphQL API)
-- [ElasticSearch - direct access](#Elasticsearch) (using ElasticSuite)
-- [Algolia](#Algolia)
+- [Native Magento feature](#native-search) (using its GraphQL API)
+- [ElasticSearch - direct access](#elasticsearch) (using ElasticSuite)
+- [Algolia](#algolia)
 
 ## Native search
 
@@ -25,6 +25,18 @@ platforms:
 Front-Commerce supports the native Magento API for search and category listing
 pages. It means that any Magento search module compatible with its GraphQL API
 will be used in your Front-Commerce project without any specific work.
+
+:::danger KNOWN ISSUE
+
+If you're using [ElasticSuite](https://elasticsuite.io/) as search engine in
+Magento, you **MUST** ensure that you have a version greater than
+[2.10.6](https://github.com/Smile-SA/elasticsuite/releases/tag/2.10.6).
+
+See
+["I have an error **Cannot read property 'label' of null** with Magento 2 native categories listing"](/docs/appendices/troubleshooting#i-have-an-error-cannot-read-property-label-of-null-with-magento-2-native-categories-listing)
+troubleshooting section for details.
+
+:::
 
 :::caution WIP
 
@@ -84,7 +96,7 @@ module.
 :::
 
 Then, in your `.env` file, you need to define
-[the variables](/docs/reference/environment-variables#Elasticsearch).
+[the variables](/docs/reference/environment-variables#elasticsearch).
 
 ```shell title=".env"
 FRONT_COMMERCE_ES_HOST=<es_host>

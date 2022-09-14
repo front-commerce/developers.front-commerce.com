@@ -19,7 +19,7 @@ There are different ways for you to accept payments with
 
 P.S. No Magento modules are needed if you use this method. If you however want
 to integrate with the Adyen Magento module please refer to
-[Magento2 Integration section](#As-a-Magento2-Integration).
+[Magento2 Integration section](#as-a-magento2-integration).
 
 ### Add the required environment variables
 
@@ -38,18 +38,18 @@ to integrate with the Adyen Magento module please refer to
   Should be configured to contain
   [the Adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix)
 - `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` (more on
-  [webhooks below](#Add-webhook)) you create it. You then have to copy it to the
+  [webhooks below](#add-webhook)) you create it. You then have to copy it to the
   webhook section in your Adyen Customer Area under
   `Developers > Webhooks > [your_prefered_webhook] > Authentication > User Name`
 - `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` (more on
-  [webhooks below)](#Add-webhook) you create it. You then have to copy it to the
+  [webhooks below)](#add-webhook) you create it. You then have to copy it to the
   webhook section in your Adyen Customer Area under
   `Developers > Webhooks > [your_prefered_webhook] > Authentication > Password`
-- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#Add-webhook))
+- `FRONT_COMMERCE_ADYEN_HMAC_KEY` (more on [webhooks below](#add-webhook))
   create it from the webhook section in your Adyen Customer Area under
   `Developers > Webhooks > [your_prefered_webhook] > Additional Settings > HMAC key`
 - `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY` (more on
-  [webhooks below](#Add-webhook)) when you regenerate your HMAC key configure
+  [webhooks below](#add-webhook)) when you regenerate your HMAC key configure
   this to be the old one
 - `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS` (optional) (more on
   [Adyen's Stored Payment Methods](#enable-adyens-stored-payment-methods-optional)).
@@ -186,7 +186,7 @@ support new extension points for Payments.
    ```
 
 5. register
-   [custom Flash message components](/docs/advanced/features/flash-messages#Create-custom-flash-message-components)
+   [custom Flash message components](/docs/advanced/features/flash-messages#create-custom-flash-message-components)
    to display payment messages in an optimized way (**recommended**)
 
    ```shell

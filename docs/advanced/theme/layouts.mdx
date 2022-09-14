@@ -20,7 +20,7 @@ it, please first refer to the guide
 [Add a new page](/docs/essentials/add-a-page-client-side). Moreover, to complete
 this guide about layouts, you will need to have a module correctly setup in your
 project with a
-[web module preconfigured](/docs/essentials/add-a-page-client-side#Declare-your-module-as-a-web-module).
+[web module preconfigured](/docs/essentials/add-a-page-client-side#declare-your-module-as-a-web-module).
 
 ## What is a layout?
 
@@ -30,10 +30,11 @@ Let's take a Category page.
 
 <!-- TODO - update this figure with theme-chocolatine example? -->
 
-<Figure
-  src={require("./assets/category.png").default}
-  alt="A category page displays the list of the products of the category below the header and the menu."
-/>
+<Figure>
+
+![A category page displays the list of the products of the category below the header and the menu.](./assets/category.png)
+
+</Figure>
 
 The contents that are specific to this Category are the title, the products, the
 facets, etc. The header with the logo and the menu are not specific to the
@@ -48,11 +49,11 @@ the case for the account pages.
 
 <!-- TODO - update this figure with theme-chocolatine example? -->
 
-<Figure
-  src={require("./assets/account.png").default}
-  alt="An account dashboard displays the main layout, but also a navigation common
-  to all the account pages."
-/>
+<Figure>
+
+![An account dashboard displays the main layout, but also a navigation common to all the account pages.](./assets/account.png)
+
+</Figure>
 
 In this case, the sidebar navigation is by definition a layout since it remains
 across the multiple pages available in the account. However, it is contained in
@@ -181,7 +182,7 @@ Remember to restart your application to see the changes (`npm run start`).
 You can't create an `_inner-layout.js` if a `_layout.js` file already exists at
 the same level. This is the case for the files in _your_ modules but also for
 files in other's modules. However you can use
-[`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare#onCreateRoute)
+[`front-commerce-prepare.js:onCreateRoute`](/docs/reference/front-commerce-prepare#oncreateroute)
 to filter the file you don't need in your project.
 
 :::

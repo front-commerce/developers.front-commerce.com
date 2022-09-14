@@ -28,14 +28,14 @@ Front-Commerce application and data.
 Front-Commerce currently support Integration fields in a "Pull" mode. Here is
 how it works:
 
-1. [Developers register Integration fields in Front-Commerce](#Register-Integration-fields-in-Front-Commerce)
+1. [Developers register Integration fields in Front-Commerce](#register-integration-fields-in-front-commerce)
    for the data to expose to Prismic (with code)
-1. [Configure the Integration field in Prismic](#Configure-Integration-fields-in-Prismic)
+1. [Configure the Integration field in Prismic](#configure-integration-fields-in-prismic)
 1. Prismic will regularly pull data from a Front-Commerce read API endpoint
-1. [Add these fields to custom types or Slices](#Update-your-types-and-data-in-Prismic)
+1. [Add these fields to custom types or Slices](#update-your-types-and-data-in-prismic)
    so Content managers will see up-to-date data in the writing room and could
    select elements made available by Front-Commerce
-1. [Developers implement Prismic requests that know how to transform values from an integration field](#Expose-data-in-your-GraphQL-schema)
+1. [Developers implement Prismic requests that know how to transform values from an integration field](#expose-data-in-your-graphql-schema)
    into rich data from their application (with code)
 1. Frontend developers can build pages by requesting data from GraphQL as usual.
    There is no difference in data that comes from Prismic or the eCommerce
@@ -50,13 +50,13 @@ Registering a new Integration field allows to expose custom data in an API that
 can be used by Prismic. Front-Commerce's Prismic module provides a generic way
 to register Integration fields.
 
-See the [Implementations](#Implementations) section to learn more about existing
+See the [Implementations](#implementations) section to learn more about existing
 implementations.
 
 :::note
 
 In this example, we will use the
-[`SitemapableIntegrationField`](#SitemapableIntegrationField) implementation for
+[`SitemapableIntegrationField`](#sitemapableintegrationfield) implementation for
 more concise examples. Keep in mind that any `IntegrationField` implementation
 can be registered in a similar way.
 
@@ -148,7 +148,7 @@ field from the **"Settings > Integration Fields"** page.
    `https://your-store.example.com/prismic/integration/{name}`
 2. the **"Access token"** value must be the value of your
    `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` environment variable
-   ([also used for webhooks](/docs/prismic/installation#Configure-the-environment-for-Prismic))
+   ([also used for webhooks](/docs/prismic/installation#configure-the-environment-for-prismic))
 3. create the Integration field
 
 The **"Settings > Integration Fields"** page will now display the Integration
@@ -212,10 +212,10 @@ type MyPrismicContent {
 
 You then have to instruct Front-Commerce Prismic module to transform data from
 Prismic with information from a
-[registered integration field](#Register-Integration-fields-in-Front-Commerce).
+[registered integration field](#register-integration-fields-in-front-commerce).
 
 The `IntegrationFieldTransformer` will transform data from
-[an Integration Field implementation](#Implementations). We can get the correct
+[an Integration Field implementation](#implementations). We can get the correct
 Integration field instance using the name used when registering the Integration
 field, using Prismic loader's `getIntegrationField` method.
 
@@ -308,7 +308,7 @@ const categoryIntegrationField = new SitemapableIntegrationField(
 To create a `SitemapableIntegrationField`, you must provide:
 
 - `entityName`: the name of the Sitemapable entity
-  [used during sitemapable pages registration](/docs/advanced/production-ready/sitemap#Add-dynamic-pages)
+  [used during sitemapable pages registration](/docs/advanced/production-ready/sitemap#add-dynamic-pages)
 - `SitemapLoader`: a Front-Commerce Sitemap loader instance (e.g:
   `loaders.Sitemap`)
 - `resolveEntity`: a Function to resolve the entity from the `id` value of the
