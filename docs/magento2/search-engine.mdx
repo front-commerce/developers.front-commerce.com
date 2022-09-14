@@ -26,6 +26,18 @@ Front-Commerce supports the native Magento API for search and category listing
 pages. It means that any Magento search module compatible with its GraphQL API
 will be used in your Front-Commerce project without any specific work.
 
+:::danger KNOWN ISSUE
+
+If you're using [ElasticSuite](https://elasticsuite.io/) as search engine in
+Magento, you **MUST** ensure that you have a version greater than
+[2.10.6](https://github.com/Smile-SA/elasticsuite/releases/tag/2.10.6).
+
+See
+["I have an error **Cannot read property 'label' of null** with Magento 2 native categories listing"](/docs/appendices/troubleshooting#i-have-an-error-cannot-read-property-label-of-null-with-magento-2-native-categories-listing)
+troubleshooting section for details.
+
+:::
+
 :::caution WIP
 
 This section is being written. Please <ContactLink /> if you want to ask any
