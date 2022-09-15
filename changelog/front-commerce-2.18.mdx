@@ -6,7 +6,7 @@ hide_table_of_contents: true
 ---
 
 
-# 2.18: Improvements and fixes on our payment modules (Adyen, Lyra, PayPal), Prismic: 1.0.0 and major change, end of our migration from [Platform.sh](http://Platform.sh) to Front-Commerce Cloud, based on GCP
+## 2.18: Improvements and fixes on our payment modules (Adyen, Lyra, PayPal), Prismic: 1.0.0 and major change, end of our migration from [Platform.sh](http://Platform.sh) to Front-Commerce Cloud, based on GCP
 
 It is back to school time! After a very (very) hot summer, during which we all enjoyed a well-deserved break, the Front-Commerce team is back and raring to go 💪
 
@@ -31,7 +31,7 @@ As always, should you have any requests regarding the product roadmap, do not he
 import ChangelogFooter from "@site/src/components/ChangelogFooter";
 import BackportList from "@site/src/components/BackportList";
 
-## ❕Prismic: tag of the 1.0.0 of the module and major change starting from 2.18
+### ❕Prismic: tag of the 1.0.0 of the module and major change starting from 2.18
 
 Starting from Front-Commerce 2.18.0, we will change the way we work with our Prismic connector.
 
@@ -49,7 +49,7 @@ Before 2.17.X (included): final version 1.0.0 for the the Front-Commerce Prismic
 
 From 2.18.0 (included): the module is now in the Front-Commerce core
 
-## About Front-Commerce Cloud
+### About Front-Commerce Cloud
 
 In August we migrated every front-end hosted by Front-Commerce to our new infrastructure, Front-Commerce Cloud. They are all now up and running 😎
 
@@ -57,15 +57,15 @@ This allows merchants to benefit from auto-scaling (environments automatically a
 
 And in regards to our support offer, we are working on a nice interface so that you will be able to monitor your infrastructures, deal with environment variables and quickly access our support team: more to come (very) soon 👀
 
-## Improvements in our payment modules
+### Improvements in our payment modules
 
 With the release of Magento 2.4.4, we had to adapt parts of our modules to ensure compatibility: that was the case for [our Adyen connector](https://developers.front-commerce.com/docs/advanced/payments/adyen)
 
 For our [PayPal](https://developers.front-commerce.com/docs/advanced/payments/paypal) and our [Lyra](https://developers.front-commerce.com/docs/advanced/payments/payzen) integrations, we worked on payments IPN improvements (Instant Payment Notification) to provide asynchronous validation for embedded payments and other improvements from customer feedback. Want to know more about it? Read [the documentation about payments with Front-Commerce!](https://developers.front-commerce.com/docs/category/payments)
 
-# Other changes
+## Other changes
 
-### Bug Fixes
+#### Bug Fixes
 
 - **CSS:** avoid loading CSS twice
 - **Downloadable-products:** page crash if the customer has no product
@@ -78,7 +78,7 @@ For our [PayPal](https://developers.front-commerce.com/docs/advanced/payments/pa
 - **Routes:** prioritize more specific children routes of a dynamic path
 - **Social login:** merge guest and user cart on login with Magento2
 
-### Features
+#### Features
 
 - **BigCommerce:** add an image proxy to serve resized and optimized images
 - **BigCommerce:** reset my password
