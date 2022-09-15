@@ -146,7 +146,8 @@ such as cache invalidation) can be overridden using a
 
 In DEV mode, you can view the current value for these configurations by opening
 the [/\_\_front-commerce/debug](http://localhost:4000/__front-commerce/debug)
-URL.
+URL with the
+[`DEBUG="front-commerce:config"` environment variable](/docs/reference/environment-variables#debugging).
 
 :::
 
@@ -169,7 +170,7 @@ export default {
 ```
 
 The provider must then be
-[registered in your application](/docs/advanced/server/configurations#register-a-configuration-provider)
+[registered in your application](/docs/advanced/server/configurations#overriding-express-configuration-provider)
 as any other one.
 
 ## The signature is invalid. Verify and try again.
