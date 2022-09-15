@@ -366,6 +366,35 @@ const serviceOverrideProvider = {
 configService.insertAfter("serviceProvider", serviceOverrideProvider);
 ```
 
+### Overriding express configuration provider
+
+If you want to override the configuration of express, you will need to add the
+new configuration in a middleware definition file `module.config.js`.
+
+For example, if you want to increase the maximum size for `POST` payloads:
+
+```js title="my-module/server/module.config.js"
+import configService from "server/core/config/configService";
+
+const expressServiceProvider = {
+  name: "expressOverride",
+  values: {
+    express: {
+      jsonParserConfig: {
+        limit: "10mb",
+      },
+      graphQLBodyParserConfig: {
+        limit: "10mb",
+      },
+    },
+  },
+};
+
+configService.append(expressServiceProvider);
+
+export default {};
+```
+
 ## Core configuration providers
 
 Our goal is to use these configuration providers for any configuration that
