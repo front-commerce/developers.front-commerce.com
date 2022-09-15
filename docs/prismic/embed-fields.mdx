@@ -40,7 +40,7 @@ For this example let's say we want to create an album cover from an embed field.
 ### Adding an Embed Field in your server-side
 
 First add an embed field in your schema using the
-[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql)
+[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/schema.gql)
 type, for example:
 
 ```graphql
@@ -51,10 +51,10 @@ type MyAlbum {
 ```
 
 Then you can add the
-[`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/transformers/Embed.js)
+[`EmbedTransformer`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/transformers/Embed.js)
 to your album definition which will parse the embed response from Prismic as a
 rich
-[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql)
+[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/schema.gql)
 type.
 
 ```diff
@@ -90,7 +90,7 @@ fragment AlbumFragment on Album {
 ```
 
 The fragment will expose several fields from the
-[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql)
+[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/schema.gql)
 type.
 
 ```jsx
@@ -118,7 +118,7 @@ You can override the default components for each embed type in your own theme
 As mentioned above, the fragment only exposes the minimum required fields for
 the PrismicEmbed component, if you would like to create your own custom embed
 component you can refer to all the available fields on the
-[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/schema.gql)
+[`oEmbedContent`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/schema.gql)
 type.
 
 ## Wysiwyg Embed Fields
@@ -172,7 +172,7 @@ We have added loader functions for the following embed scripts:
 - `Instagram`
 
 You can update these loading functions or add your own by overriding the
-[`theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js)
+[`theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/appEmbeds.js)
 file.
 
 - This file accepts a record with the key as the embed
@@ -226,7 +226,7 @@ export default Pre;
 ```
 
 Then you will need to register this component by overriding the
-[`theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js`](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js)
+[`theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/appComponentsMap.js)
 file.
 
 ```js

@@ -34,6 +34,18 @@ and requires at least Adobe Commerce 2.4.3.
 On Magento2 side, you need to
 [install the Front-Commerce Magento2 Commerce module](/docs/magento2/commerce#magento2-commerce-module-installation).
 
+You must then install the
+[`front-commerce/magento2-b2b-module-front-commerce`](https://gitlab.com/front-commerce/magento2-b2b-module-front-commerce)
+module:
+
+```shell
+composer config repositories.front-commerce-magento2-b2b git \
+    git@gitlab.com:front-commerce/magento2-b2b-module-front-commerce.git
+composer require front-commerce/magento2-b2b-module
+
+bin/magento setup:upgrade
+```
+
 ### Front-Commerce configuration
 
 To leverage those features, you need to enable and integrate the Magento2 B2B
