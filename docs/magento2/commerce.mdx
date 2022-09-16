@@ -7,13 +7,18 @@ description:
   configure and use it.
 ---
 
+import ContactLink from "@site/src/components/ContactLink";
+
 <p>{frontMatter.description}</p>
 
 > _Since version 2.12.0_
 
-For now, the Adobe Commerce module only improves the Cms Page handling to
-partially expose
-[the Page Hierarchy mechanism](https://docs.magento.com/user-guide/cms/page-hierarchy.html).
+The Adobe Commerce improves existing features such as Cms Pages (to partially
+expose
+[the Page Hierarchy mechanism](https://docs.magento.com/user-guide/cms/page-hierarchy.html))
+and bring support for Adobe Commerce specific features such as
+
+<abbr title="Return Merchandise Authorization">RMA</abbr> or Store Credits.
 
 ## Enable Magento Commerce support
 
@@ -58,8 +63,9 @@ enabled.
 
 ### Cms Page children
 
-The Magento2 Commerce improves the Graph to expose the children pages of a Cms
-Page. With this module, you can for instance run the following the query:
+The `magento2-commerce` module improves the Graph to expose the children pages
+of a Cms Page. With this module, you can for instance run the following the
+query:
 
 ```graphql
 query CmsPage {
@@ -101,3 +107,80 @@ Depending the actual page hierarchy in Magento2, it could return something like:
 ```
 
 This can be handy to build a structured menu for instance.
+
+### <abbr title="Return Merchandise Authorization">RMA</abbr>
+
+The `magento2-commerce` module implements the required GraphQL resolvers to
+provide
+[Front-Commerce Return Merchandise Authorization features](/docs/advanced/features/return-merchandise-authorization)
+using Adobe Commerce APIs.
+
+Enabling the module is the only thing you'll have to do. It would then work as
+you might expect.
+
+#### Known issues
+
+As of Adobe Commerce 2.4.4, there are **known issues** in the Adobe Commerce
+APIs used by Front-Commerce. It leads to some minor limitations explained in
+this section.
+
+##### Impossible to use the feature with "Use Store Address" enabled
+
+You may encounter an "_Address for returns is not configured in admin_" error
+when browsing pages using RMA-related data in your application (e.g: browsing an
+order page):
+
+```
+An error occurred during an inner GraphQL query xxxxxxx
+[…]
+  "data": [
+    {
+      "message": "Address for returns is not configured in admin.",
+      "extensions": {
+        "category": "graphql-no-such-entity"
+      },
+```
+
+This error is due to a configuration in Magento that doesn't seem to be
+supported yet.
+
+Please check your RMA settings ("_Configuration > Sales > RMA Settings_") and
+ensure that "_Use Store Address_" is "_No_" if it isn't the case yet. You will
+have to duplicate your return store address information here, which will make
+the above error disappear.
+
+![RMA settings section in Mageento's admin area, with the "Use Store Address" configuration enabled](./assets/rma-use-store-address.png)
+
+##### Processed and Closed RMA have no status displayed
+
+When a return is "_Processed and Closed_" in Magento, the Magento GraphQL API
+returns a `null` value for the status.
+
+Under the hood, the following error is occurring in Magento:
+
+> report.ERROR: Expected a value of type "ReturnStatus" but received: (empty
+> string) (status is `null` )
+
+[We've decided](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1382/#note_1020963128)
+to cope with this flaw, ignore the error and display an empty status for such
+returns.
+
+![List of Returns with an empty status value for a processed and closed one](./assets/rma-no-status.png)
+
+##### Impossible to create a new return (patch needed)
+
+[A known bug in Magento core](https://github.com/magento/magento2/issues/35910#issuecomment-1238916647)
+can lead to an error "_Value of reason is incorrect_" when creating a new
+Return.
+
+The Front-Commerce Magento2 OpenSource module contains a patch for this known
+issue
+[since its version 2.8.3](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.8.3).
+
+Please ensure that your project is properly patched by ensuring that L42 of
+`vendor/magento/module-eav/Model/ResourceModel/Entity/Attribute/OptionValueProvider.php`
+filters on ` option_id` instead of `value_id`.
+
+If it isn't the case, there is an issue with the patching process in your
+project. <ContactLink>Contact us and we'll help you to troubleshoot
+this</ContactLink>.
