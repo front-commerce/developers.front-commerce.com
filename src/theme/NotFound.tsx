@@ -2,13 +2,13 @@ import React from "react";
 import Translate, { translate } from "@docusaurus/Translate";
 import { PageMetadata } from "@docusaurus/theme-common";
 import Layout from "@theme/Layout";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import {
-  BookmarkAltIcon,
+  BookmarkSquareIcon,
   BookOpenIcon,
   RssIcon,
-  ViewListIcon,
-} from "@heroicons/react/outline";
+  Bars4Icon,
+} from "@heroicons/react/24/outline";
 import Link from "@docusaurus/Link";
 
 const PopularPages = () => {
@@ -22,13 +22,13 @@ const PopularPages = () => {
     {
       title: "Changelog",
       description: "A list of all the changes we've made",
-      icon: ViewListIcon,
+      icon: Bars4Icon,
       href: "/changelog",
     },
     {
       title: "Migration Guides",
       description: "Migrations guides that cover popular setups",
-      icon: BookmarkAltIcon,
+      icon: BookmarkSquareIcon,
       href: "/docs/appendices/migration-guides",
     },
     {
