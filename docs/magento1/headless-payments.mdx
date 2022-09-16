@@ -95,3 +95,32 @@ Don't forget to replace `{payment_method_code}` by your method payment code and
 - `returnAction(String $action, [String] $additionalData): Boolean` Callback
   after payment, for example, you can add your custom code here for retrieve
   customer cart after cancel payment
+
+:::tip REMINDER
+
+Don't forget to override or update `theme/pages/Checkout/checkoutFlowOf.js` to
+ensure your payment code will use the correct client-side checkout flow:
+
+```diff
+const checkoutFlowOf = (method) => {
+  if (method === "ops_cc") return "redirectAfterOrder";
+  if (method === "ops_cc_redirect") return "redirectAfterOrder";
+  if (method === "payzen_standard") return "redirectAfterOrder";
+  if (method === "paypal_standard") return "redirectAfterOrder";
++  if (method === "payment_method_code") return "redirectAfterOrder";
+
+  if (method === "paypal_express") return "redirectBeforeOrder";
+  if (method === "buybox") return "redirectBeforeOrder";
+
+  if (method.startsWith("adyen_")) return "directOrderWithAdditionalAction";
+  if (method.startsWith("hipay_")) return "directOrderWithAdditionalAction";
+
+  if (method === "payzen_embedded") return "asyncOrder";
+
+  return "directOrder";
+};
+
+export default checkoutFlowOf;
+```
+
+:::
