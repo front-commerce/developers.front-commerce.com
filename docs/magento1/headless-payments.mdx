@@ -53,12 +53,24 @@ so we can provide information about a potential upcoming native support for it.
 
 First, you need to create your own model implementing the
 `FrontCommerce_Integration_Model_Headlesspayment_Interface` interface and
-register it using the
-`<config><frontcommerce><payment_instances><{payment_method_code}>{class_name}</{payment_method_code}></payment_instances></frontcommerce></config>`
-XML node in your `config.xml` file.
+register it in your `config.xml` file with the following XML node:
 
-**Note:** don't forget to replace `{payment_method_code}` by your method payment
-code and `{class_name}` by the class names you've just created
+```xml
+<config>
+  <frontcommerce>
+    <payment_instances>
+      <{payment_method_code}>{class_name}</{payment_method_code}>
+    </payment_instances>
+  </frontcommerce>
+</config>
+```
+
+:::note
+
+Don't forget to replace `{payment_method_code}` by your method payment code and
+`{class_name}` by the class names you've just created
+
+:::
 
 2. Implement the interface methods in your own model:
 
