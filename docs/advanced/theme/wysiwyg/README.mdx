@@ -185,17 +185,19 @@ If you want to customize `MagentoWysiwyg` instead, please refer to
 
 transformations before displaying the content
 
-1.  Duplicate `theme/modules/WysiwygV2/DefaultWysiwyg` to
-    `theme/modules/WysiwygV2/CustomWysiwyg`.
-1.  Override `theme/modules/WysiwygV2/getWysiwygComponent.js` and map your new
+1.  Duplicate the
+    [`DefaultWysiwyg.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/DefaultWysiwyg.js)
+    component to `theme/modules/WysiwygV2/CustomWysiwyg`.
+1.  Override `theme/modules/WysiwygV2/appWysiwygComponents.js` and map your new
     `CustomWysiwyg` typename (the one used in your GraphQL schema) to
     `theme/modules/WysiwygV2/CustomWysiwyg` (the file that tells React how to
     display the content)
-    ```diff
-    const typenameMap = {
-    -   MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg"))
-    +   MagentoWysiwyg: loadable(() => import("./MagentoWysiwyg/MagentoWysiwyg")),
-    +   CustomWysiwyg: loadable(() => import("./CustomWysiwyg"))
+
+    ```js title="theme/modules/WysiwygV2/appWysiwygComponents.js"
+    import loadable from "@loadable/component";
+
+    export default {
+      CustomWysiwyg: loadable(() => import("./CustomWysiwyg")),
     };
     ```
 
