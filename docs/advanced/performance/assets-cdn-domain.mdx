@@ -39,6 +39,10 @@ Serving assets from a custom domain can be done with a configuration change:
 1. [Configure the <abbr title="Content Security Policy">CSP</abbr>](/docs/reference/configurations#configwebsitejs)
    so that assets can be loaded from this external URL
 
+1. You might also have to
+   [allow this domain in CORS origins](/docs/advanced/server/customize-response-http-headers#cross-origin-resource-sharing-aka-cors)
+   to prevent "_has been blocked by CORS policy_" errors
+
 After restarting Front-Commerce, your assets should be loaded from this custom
 domain.
 
