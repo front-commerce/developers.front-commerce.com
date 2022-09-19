@@ -45,12 +45,13 @@ instructs browsers and remote services whether they're allowed to load a
 specific content or not. This check usually happens with
 [an `OPTIONS` HTTP preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request).
 
-A typical error you might encounter would be:
+:::danger A typical error you might encounter would be:
 
-> Access to font at
-> 'https://example.com/public/fonts/my-font.priority.xxxx.woff2' from origin
-> 'https://other.example.org' has been blocked by CORS policy: No
-> 'Access-Control-Allow-Origin' header is present on the requested resource.
+Access to font at 'https://example.com/public/fonts/my-font.priority.xxxx.woff2'
+from origin 'https://other.example.org' has been blocked by CORS policy: No
+'Access-Control-Allow-Origin' header is present on the requested resource.
+
+:::
 
 **In Front-Commerce, the content of this header can be controlled by customizing
 the `cors.origin` configuration** from the
