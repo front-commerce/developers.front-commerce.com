@@ -67,7 +67,7 @@ register it in your `config.xml` file with the following XML node:
 
 :::note
 
-Don't forget to replace `{payment_method_code}` by your method payment code and
+Don't forget to replace `{payment_method_code}` by your payment method code and
 `{class_name}` by the class names you've just created
 
 :::
@@ -98,10 +98,10 @@ Don't forget to replace `{payment_method_code}` by your method payment code and
 
 :::tip REMINDER
 
-Don't forget to override or update `theme/pages/Checkout/checkoutFlowOf.js` to
+Don't forget to override or update `checkoutFlowOf.js` to
 ensure your payment code will use the correct client-side checkout flow:
 
-```diff
+```diff title="theme/pages/Checkout/checkoutFlowOf.js"
 const checkoutFlowOf = (method) => {
   if (method === "ops_cc") return "redirectAfterOrder";
   if (method === "ops_cc_redirect") return "redirectAfterOrder";
