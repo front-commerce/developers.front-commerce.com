@@ -24,8 +24,8 @@ Since this version we have moved the Prismic module
 [into the core repository](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic)
 of Front-Commerce, moving forward any new features will be made available and
 follow the same
-[semantic versioning](/docs/appendices/release-process#semantic-versioning)
-as the core.
+[semantic versioning](/docs/appendices/release-process#semantic-versioning) as
+the core.
 
 You can use the module by adding the following changes to your
 `.front-commerce.js` config file:
@@ -51,11 +51,11 @@ module.exports = {
     { name: "FrontCommerce", path: "front-commerce/src/web" },
 -   {
 -     name: "Prismic",
--     path: "./node_modules/front-commerce/modules/prismic/web",
+-     path: "./node_modules/front-commerce-prismic/prismic/web",
 -   },
 +   {
 +     name: "Prismic",
-+     path: "./node_modules/front-commerce-prismic/prismic/web",
++     path: "./node_modules/front-commerce/modules/prismic/web",
 +   }
   ],
 };
@@ -69,8 +69,8 @@ missing from our dependencies, it was only useable due to a transitive
 dependency. We have added it to our dependencies to avoid any future issues.
 
 The previous version of the package was `0.1.7` and we have upgraded it to
-`6.2.1`. Because of others dependencies depending on older version
-of `path-to-regexp`, you have to install it in your project in order to satisfy
+`6.2.1`. Because of others dependencies depending on older version of
+`path-to-regexp`, you have to install it in your project in order to satisfy
 Front-Commerce's requirements by running:
 
 ```
@@ -84,8 +84,8 @@ TypeError: Object(...) is not a function
       at /path/to/your/project/build/server/webpack:/node_modules/front-commerce/src/server/modules/magento2/catalog/products/urlMatchers.js:6:1
 ```
 
-If you used this import without installing it in your project, the
-import methods have changed.
+If you used this import without installing it in your project, the import
+methods have changed.
 
 ```diff
 - import pathToRegexp from "path-to-regexp";
