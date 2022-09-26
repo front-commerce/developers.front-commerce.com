@@ -1,0 +1,158 @@
+---
+sidebar_position: 5.3
+title: Payment workflows specificities
+description:
+  Front-Commerce provides different hooks allowing you to use the payment method
+  of your choice. This section explains the implementation specificities of
+  payment workflows.
+---
+
+<p>{frontMatter.description}</p>
+
+:::note
+
+The documentation here only explains changes to apply to the default
+implementation example for each workflow.
+
+- See [the basic implementation tutorial](./custom-payment-method.mdx) for a
+  detailed implementation
+- See [the high-level workflow explanation](./payment-workflows.mdx) to choose
+  the right implementation for your usecase.
+
+:::
+
+## Async Order
+
+This workflow is recommended for payments that are fully front-end (e.g.
+Payzen/Lyra, Paypal)
+
+### Server changes
+
+Ensure the direct payment processor call does nothing in the module’s
+[`contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+
+```diff
+export default {
+  namespace: "Payments/PWAy",
+  dependencies: ["Magento2/Checkout", "Front-Commerce/Payment"],
+  contextEnhancer: ({ loaders }) => {
+    ...
+    loaders.Payment.registerEmbeddedPaymentMethod(
+      METHOD_CODE,
+      METHOD_TITLE,
+-      (paymentData, orderId, orderPaymentDetails) => {
+-        return loader.order(paymentData, orderId, orderPaymentDetails);
+-      },
++      () => {
++        throw new Error(
++          "The payment method should only be handled by IPN notifications"
++        );
++      },
+      null,
+      new MyPaymentNotificationProcessor(hipayConfig)
+    );
+
+    return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
+  },
+};
+```
+
+:::note
+
+This implies the `order` method in the module’s loader is not needed for this method (your may need to implement other methods instead to be used by the `NotificationProcessor`)
+
+```diff
+export default class MyPaymentLoader {
+-  async order(paymentData, orderId, orderPaymentDetails) {
+-    ...
+-  }
+}
+```
+
+:::
+
+### Theme changes
+
+Override `web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of the
+`asyncOrder` workflow for the `pway_awesomecheckout` method code
+
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "asyncOrder";
+
+  return "directOrder";
+};
+
+export default checkoutFlowOf;
+```
+
+## Direct Order
+
+A direct order handles directly the payment on `onAuthorize` call in the CustomComponent you created (`my-module/web/theme/modules/CustomComponent/CustomComponent.js`)
+
+This `onAuthorize` call will provide the information to the `loader.order(...)` implemented server-side. This last method is responsible for handling the full payment process.
+
+### Sub workflow : Direct Order with additional action
+
+You may need to handle a second payment step with a Direct order workflow (3DS validation, etc).
+
+In this case, perform the following steps
+
+1. Reference the payment workflow
+
+  Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of `directOrderWithAdditionalAction`
+
+  ```diff
+  const checkoutFlowOf = (method) => {
+    ...
+  +  if (method === "pway_awesomecheckout") return "directOrderWithAdditionalAction";
+
+    return "directOrder";
+  };
+
+  export default checkoutFlowOf;
+  ```
+
+2. Create and additional action component to handle the 
+
+
+  ```js title="my-module/web/theme/AdditionalAction/MyAdditionalAction.js"
+  import React from "react";
+  import { useQuery } from "react-apollo";
+  import AdyenPaymentStatusQuery from "./AdyenPaymentStatusQuery.gql";
+  import AdyenPaymentAction from "theme/modules/Adyen/AdyenPaymentAction";
+
+  import TitledCard from "theme/components/molecules/Card/TitledCard";
+  import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+  import LoadingArea from "theme/components/molecules/LoadingArea";
+
+  const MyAdditionalAction = ({ onOrderPlacedArgs, originalOnOrderPlaced }) => {
+    const intl = useIntl();
+    const orderId = onOrderPlacedArgs[0];
+
+    // call originalOnOrderPlaced() when the additionnal action is successfull
+
+    return (...);
+  };
+
+  export default MyAdditionalAction;
+  ```
+
+3. Reference the additional action component
+
+  ```js title="my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
+  import None from "theme/modules/Checkout/PlaceOrder/AdditionalAction/None";
+  import MyAdditionalAction from "theme/AdditionalAction/MyAdditionalAction";
+
+  const ComponentMap = {};
+
+  const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
+    if (paymentCode === "pway_awesomecheckout")) {
+      return MyAdditionalAction;
+    }
+    return ComponentMap?.[paymentCode] ?? None;
+  };
+
+  export default getAdditionalActionComponent;
+  ```
