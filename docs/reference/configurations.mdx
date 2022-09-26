@@ -251,7 +251,9 @@ Loaders are identified with a key. The key is the first argument passed to the
 
 :::
 
-Example of a recommended configuration for Magento stores:
+Example of a recommended configuration for Magento stores.
+
+Reminder: ensure to take a look at [the redis strategy for the fully configured redis setup](/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis)
 
 ```js
 export default {
@@ -262,7 +264,7 @@ export default {
       supports: "*",
       config: {
         host: "redis",
-        // host: "127.0.0.1"
+        // full configuration at https://developers.front-commerce.com/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis
       },
     },
     {

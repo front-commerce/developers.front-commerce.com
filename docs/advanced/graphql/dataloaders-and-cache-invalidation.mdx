@@ -458,7 +458,7 @@ It uses node's [`redis` package](https://www.npmjs.com/package/redis) as a redis
 client. Please refer to the package documentation for
 [all the available options](https://www.npmjs.com/package/redis#options-object-properties).
 
-Here is a configuration example:
+Here is a full configuration example:
 
 ```js title="my-module/config/caching.js"
 export default {
@@ -468,9 +468,18 @@ export default {
       supports: "*",
       config: {
         // see https://www.npmjs.com/package/redis#options-object-properties
-        host: "127.0.0.1",
-        port: 6379,
-        db: 1,
+        host:
+          process.env.FRONT_COMMERCE_CLOUD_REDIS_HOST || // Front-Commerce Cloud variables
+          process.env.FRONT_COMMERCE_REDIS_HOST || // default variables
+          "127.0.0.1", // default value (localhost)
+        port:
+          process.env.FRONT_COMMERCE_CLOUD_REDIS_PORT ||
+          process.env.FRONT_COMMERCE_REDIS_PORT ||
+          6379,
+        db:
+          process.env.FRONT_COMMERCE_CLOUD_REDIS_DB ||
+          process.env.FRONT_COMMERCE_REDIS_DB ||
+          0,
         // defaultExpireInSeconds: 82800 // default: 23 hours
       },
     },
