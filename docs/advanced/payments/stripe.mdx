@@ -27,7 +27,7 @@ identify them seamlessly.
 With API keys found
 [on your Stripe’s dashboard](https://dashboard.stripe.com/account/apikeys).
 
-```diff title=".env"
+```bash title=".env"
 # Stripe payment
 # API Keys from https://dashboard.stripe.com/account/apikeys
 FRONT_COMMERCE_WEB_STRIPE_PUBLISHABLE_KEY=pk_xxxxxx
@@ -99,6 +99,23 @@ To allow loading stripe related remote resources:
       baseUri: []
     }
   },
+```
+
+### Advanced: disable automatic capture
+
+> Since 2.19.0
+
+Optionally the environment variable `FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE` can
+be set to `true` to configure the Stripe module so that the payment is not
+automatically captured. If you want this behavior, you have to change your
+`.env` in the following way:
+
+```diff title=".env"
+# Stripe payment
+# API Keys from https://dashboard.stripe.com/account/apikeys
+FRONT_COMMERCE_WEB_STRIPE_PUBLISHABLE_KEY=pk_xxxxxx
+FRONT_COMMERCE_STRIPE_SECRET_KEY=sk_xxxxxx
++FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE=true
 ```
 
 ### Advanced: customize data sent to Stripe
