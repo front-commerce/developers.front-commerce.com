@@ -17,6 +17,7 @@ platforms:
 - [Native Magento feature](#native-search) (using its GraphQL API)
 - [ElasticSearch - direct access](#elasticsearch) (using ElasticSuite)
 - [Algolia](#algolia)
+- [Attraqt](#attraqt)
 
 ## Native search
 
@@ -137,7 +138,7 @@ query Search {
 }
 ```
 
-If you are using the default theme or the theme Chocolatine, the search bar
+If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
 ## Algolia
@@ -215,6 +216,107 @@ taken into account after at most one minute by Front-Commerce.
 
 After restarting Front-Commerce, you should be able to run a GraphQL query to
 search for products, categories or pages, for instance:
+
+```graphql title="http://localhost:4000/playground"
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
+
+If you are using the default theme or the Chocolatine theme, the search bar
+should now be visible.
+
+## Attraqt
+
+> _Since version `2.19`_
+
+### Requirements
+
+Due to the way Attraqt works, you will have to ensure your Attraqt index is
+Front-Commerce-ready before hand. In order to check this, we have added a simple
+script that check the basics for you, and tells what's missing from your current
+index.
+
+Using your Attraqt's search API key, you can execute this command from your
+Front-Commerce repository:
+
+```shell
+FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY=your_api_key npx front-commerce-attraqt-check
+```
+
+:::info
+
+You can find your search API key by logging in in into
+[the XO console](https://console.early-birds.io/), and navigating to:
+`Search > API Keys`
+
+:::
+
+The script should be very quick to execute, and will let you now what needs your
+attention in your Attraqt index. If you have any doubt on how to change this, do
+not hesitate to ask your Attraqt CSM.
+
+When you get the ✔️ as a response from the script, you are ready to use Attraqt
+with Front-Commerce.
+
+### Front-Commerce configuration
+
+First, you need to make sure the Attraqt's search client is installed:
+
+```shell
+npm i @attraqt/xo-js@1.6.0
+```
+
+On Front-Commerce side, you need to enable the Attraqt datasource by making the
+following changes in your .front-commerce.js file:
+
+```js title=".front-commerce.js"
+module.exports = {
+  // highlight-next-line
+  modules: ["./node_modules/front-commerce/modules/datasource-attraqt"],
+  serverModules: [
+    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+    // highlight-start
+    {
+      name: "Magento2Attraqt",
+      path: "datasource-attraqt/server/modules/magento2-attraqt",
+    },
+    // highlight-end
+    { name: "Magento2", path: "server/modules/magento2" },
+  ],
+};
+```
+
+:::caution Known issue
+
+The Attraqt server module needs to be enabled **before** the Magento module.
+
+:::
+
+Then, in your `.env` file, you need to define the
+`FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY` environment variable:
+
+```bash title=.env
+FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY=yourapikeyvalue
+```
+
+After restarting Front-Commerce, you should be able run a GraphQL query to
+search for products, categories and/or pages, for instance:
 
 ```graphql title="http://localhost:4000/playground"
 query Search {
