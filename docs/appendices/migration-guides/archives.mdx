@@ -154,6 +154,17 @@ extension** or the `.html` extension.
 If your application contains pages whose URL have extensions other than `.html`,
 please <ContactLink />.
 
+### Custom headers in index.html
+
+If you overrode the theme's index.html, add the following line.
+
+```js title="src/template/index.html"
+    <link rel="shortcut icon" href="%%__ASSETS_BASE_URL__%%/favicon.ico" />
+    // highlight-next-line
+    <%= htmlWebpackPlugin.tags.headTags %>
+    <link rel="manifest" href="%%__BASE_URL__%%/manifest.json" />
+```
+
 ### New features in `2.8.0`
 
 These new features may be relevant for your existing application:
