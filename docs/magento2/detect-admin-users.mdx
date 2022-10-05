@@ -9,6 +9,9 @@ description:
   how Front-Commerce supports these use cases.
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 <p>{frontMatter.description}</p>
 
 > _This feature has been added in version `2.1.0`_
@@ -235,10 +238,32 @@ url with a `data` query parameter to inject custom JSON serialized data in the
 admin session. It is useful to **simulate different admin information locally**
 without worrying about session cookies issues.
 
+```mdx-code-block
+<Tabs>
+<TabItem value="via Browser">
+```
+
+Here is a sample `url` request which you can run in your browser to achieve
+this:
+
+```shell
+http://localhost:4000/__front-commerce/UNSAFE_injectRole?data={"foo":"bar"}
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="via Curl">
+```
+
 Here is a sample `curl` request to achieve this:
 
 ```shell
-curl -v 'http://localhost:4000/__front-commerce/UNSAFE_injectRole?data={"foo":"bar"}'
+curl -v 'http://localhost:4000/__front-commerce/UNSAFE_injectRole?data=%7B%22foo%22%3A%22bar%22%7D'
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 Please note that this featured is only enabled if
