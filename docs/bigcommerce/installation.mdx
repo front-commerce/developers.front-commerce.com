@@ -1,0 +1,156 @@
+---
+sidebar_position: 1
+title: Installation
+description:
+  This guide explains how to install and configure the Front-Commerce
+  BigCommerce module to start interacting with an existing BigCommerce instance
+  from your application.
+---
+
+<p>{frontMatter.description}</p>
+
+## Configure Front-Commerce to use BigCommerce module
+
+To do so, update your `.front-commerce.js` file as below:
+
+```js title=".front-commerce.js"
+module.exports = {
+  name: "Front-Commerce Skeleton",
+  url: "http://localhost:4000",
+  modules: [
+    "./node_modules/front-commerce/theme-chocolatine",
+    // highlight-next-line
+    "./node_modules/front-commerce/modules/big-commerce",
+    "./src",
+  ],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-next-line
+    { name: "BigCommerce", path: "big-commerce/server/modules" },
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web" },
+    { name: "ThemeChocolatine", path: "front-commerce/theme-chocolatine/web" },
+    // highlight-start
+    {
+      name: "BigCommerce",
+      path: "front-commerce/modules/big-commerce/web",
+    },
+    {
+      name: "BigCommerceWeb",
+      path: "front-commerce/modules/big-commerce-web/web",
+    },
+    // highlight-end
+    { name: "Skeleton", path: "./src/web" },
+  ],
+};
+```
+
+## Configure the environment
+
+:::note
+
+Those environment variables are described in detail on the
+[Environments variables](/docs/reference/environment-variables#bigcommerce)
+page.
+
+:::
+
+Front-Commerce uses BigCommerce GraphQL and Management API
+
+- Management API variables: `FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT` and
+  `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN`
+- GraphQL variables: `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT` and
+  `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN`
+
+## [Access to Management API](ttps://developer.bigcommerce.com/docs/ZG9jOjIyMDYxMw-v2-and-v3-rest-api-authentication#obtaining-store-api-credentials)
+
+- In the control panel: `Advanced Settings > API Accounts > Create an API
+  Account > Create V2/V3 API Token``
+- Choose OAuth Scopes on the right
+- Save and keep the `BigCommerceAPI-credentials*.txt` file
+
+In your `.env` file, define:
+
+- `FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT` with `API PATH` value in the text file
+  (without the `/v3/` suffix)
+- `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN` with `ACCESS TOKEN` value in the text
+  file
+
+From that `.txt` file, also fill:
+
+- `FRONT_COMMERCE_BIG_COMMERCE_CLIENT_ID` with `CLIENT ID`
+- `FRONT_COMMERCE_BIG_COMMERCE_CLIENT_SECRET` with `CLIENT SECRET`
+- `FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH` with the store hash
+
+Example:
+
+```shell title=".env"
+FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT=https://api.bigcommerce.com/stores/yhowbpps2e
+FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN=ab9cd9x75abc1tumu0wce8yxedu3ue3
+FRONT_COMMERCE_BIG_COMMERCE_CLIENT_ID=aclientid
+FRONT_COMMERCE_BIG_COMMERCE_CLIENT_SECRET=aclientsecret
+FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH=yhowbpps4e
+```
+
+## [Access to BigCommerce Graph](https://developer.bigcommerce.com/docs/ZG9jOjIyMDczOQ-overview)
+
+[Create a _Customer impersonation tokens_](https://developer.bigcommerce.com/docs/ZG9jOjIyMDczOQ-overview#customer-impersonation-tokens)
+
+```shell
+# use the endpoint and the auth token generated in the previous step
+curl -X POST https://api.bigcommerce.com/stores/yhowbpps2e/v3/storefront/api-token-customer-impersonation \
+ -H "X-Auth-Token: ab9cd9x75abc1tumu0wce8yxedu3ue3" \
+ -H "Content-Type: application/json" \
+ --data '{"channel_id": 1, "expires_at": 1893452400}'
+```
+
+In your .env file, define:
+
+- `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT=https://name-of-the-sandbox.mybigcommerce.com/graphql`
+  it is the URL of the BigCommerce shop with `/graphql`
+- `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN` with generated token
+
+Example:
+
+```shell title=".env"
+FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT=https://my-sandbox.mybigcommerce.com/graphql
+FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjaWQiOjEsImNvcnMiOltdLCJlYXQiOjE4OTM0NTI0MDAsImlhdCI6MTY0NjczMTg0NSwiaXNzIjoiQkMiLCJzaWQiOjEwMDIyMjI3OTksInN1YiI6Imp3ZjdsbnNsMnNqYjJpYmYyZGF2b2JkaXF2a3lya2IiLCJzdWJfdHlwZSI6MiwidG9rZW5fdHlwZSI6Mn0.4gQ0s264i1lHVEUpgcpUo20zl1gCE68DtYOoa4P6vwRizoEMZYUAcfQV8TmaoM7LO0f-tvN_hrmV5SocZabc-w
+```
+
+### Misc env. variables
+
+[`FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` needs to filled](https://developers.front-commerce.com/docs/bigcommerce/bigcommerce-webhooks).
+To quickly run Front-Commerce with BigCommerce, it can be defined to any string.
+
+[`FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SMTP_CONNECTION_STRING` and `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SENDER_EMAIL_ADDRESS` have to be filled for the Password reset feature](https://developers.front-commerce.com/docs/bigcommerce/password-reset).
+
+## Let's test it
+
+- Restart Front-Commerce
+
+:::tip
+
+You can enable from debug flags to see what is going on. Run Front-Commerce
+with:
+
+```shell
+DEBUG=axios,front-commerce:big-commerce:* npm run start
+```
+
+:::
+
+- Use [the Playground](http://localhost:4000/playground) to load a product from
+  its SKU:
+  ```graphql
+  query productBySku {
+    product(sku: "OTS") {
+      sku
+      name
+      path
+      description
+      imageUrl
+    }
+  }
+  ```
+- Go to the `path` to view the product
