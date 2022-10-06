@@ -79,6 +79,12 @@ module.exports = {
       filename: "access.log",
     },
   ],
+  security: [
+    {
+      type: "file",
+      filename: "security.log",
+    },
+  ],
 };
 ```
 
@@ -186,6 +192,11 @@ module.exports = {
       type: "console",
     },
   ],
+  security: [
+    {
+      type: "console",
+    },
+  ],
 };
 ```
 
@@ -206,6 +217,7 @@ module.exports = {
   client: [makeLogAccordingToEnv("client.log")],
   access: [makeLogAccordingToEnv("access.log")],
   payment: [makeLogAccordingToEnv("payment.log")],
+  security: [makeLogAccordingToEnv("security.log")],
 };
 ```
 

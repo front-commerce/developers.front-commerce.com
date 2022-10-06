@@ -14,11 +14,60 @@ import TabItem from "@theme/TabItem";
 
 ## `2.18.0` -> `2.19.0`
 
+### Allow report-only frames for Adyen
+
+If you were using Adyen as a payment provider you might have allowed all iframes to load, to prevent blocking  3DS2 authorization iframes
+from credit card providers.
+
+You can now restrict the policy again and use the `reportOnlyDirectives` feature
+instead.
+
+Although it will not strengthen the policy, this will allow to log loaded
+iframes and help investigate risks of unsecure iframes.
+
+```diff title="my-module/config/website.js"
+  contentSecurityPolicy: {
+    directives: {
+-      frameSrc: ["*"],
++      frameSrc: ["*.adyen.com"],
+    }
++    reportOnlyDirectives: {
++      frameSrc: true,
++    }
+  },
+```
+
+### Configure the new logger
+
+A new `security` logger has been added (for now to collect CSP violations).
+
+Add it to your `logging.js` configuration to be able to see those logs (see
+[the logging documentation](/docs/advanced/production-ready/logging.mdx) for
+more details)
+
+```js title="my-module/config/logging.js"
+module.exports = {
+  ...
+  access: [
+    {
+      type: "console",
+    },
+  ],
+  // highlight-start
+  security: [
+    {
+      ...
+    },
+  ],
+  // highlight-end
+};
+```
+
 ### New features in `2.19.0`
 
-- [The Stripe module can be configured to not automatically capture the
-    payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
+- [The Stripe module can be configured to not automatically capture the payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
 - [Implement a custom payment method](/docs/advanced/payments/custom-payment-method)
+- [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/reference/content-security-policy.mdx)
 
 ## `2.17.0` -> `2.18.0`
 
