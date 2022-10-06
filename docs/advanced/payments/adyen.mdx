@@ -228,7 +228,7 @@ To allow loading Adyen related remote resources:
       scriptSrc: [],
 -      frameSrc: [],
 +      frameSrc: ["*.adyen.com", "*"], // only for FC < 2.19, allowing all is required
-+      frameSrc: ["*.adyen.com"], // since FC < 2.19
++      frameSrc: ["*.adyen.com"], // since FC 2.19
       styleSrc: [],
 -      imgSrc: [],
 +      imgSrc: ["*.adyen.com"],
@@ -236,7 +236,7 @@ To allow loading Adyen related remote resources:
 +      connectSrc: ["*.adyen.com"],
       baseUri: []
     },
-    // since FC < 2.19
+    // since FC 2.19
 +    reportOnlyDirectives: {
 +      frameSrc: true,
 +    }
