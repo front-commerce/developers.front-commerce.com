@@ -13,6 +13,29 @@ import Figure from "@site/src/components/Figure";
 In this section, you will learn some advanced usages of the Magento 2
 integration.
 
+## Caching customers' cart
+
+> _Since version 2.19.0_
+
+By default, the customer cart is systematically fetched from Magento. While this
+ensures the freshness of the cart representation, this generates a significant
+load on Magento side and slows down some operations in Front-Commerce. In
+2.19.0, we have added a cart cache mechanism. For now, this feature is
+considered as **experimental** and must be explicitly enabled by defining the
+`FRONT_COMMERCE_CART_CACHE_ENABLE` environment variable.
+
+```shell title=.env
+FRONT_COMMERCE_CART_CACHE_ENABLE=true
+```
+
+:::caution
+
+The cart handling is a critical feature on an eCommerce website, if you enable
+the cart cache we strongly advice to fully test your project before going live
+with it.
+
+:::
+
 ## Additional headers in Magento API calls
 
 > _Since version 2.7.0_
