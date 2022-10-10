@@ -465,3 +465,28 @@ Consequently it will be available on
 Please note to
 [escape regular expression special characters](https://javascript.info/regexp-escaping)
 when needed.
+
+### Ignore caching for builded files
+
+The former `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` only handles assets and
+external URLs caching.
+
+In case you want to prevent caching build time compiled files, you can set the
+`FRONT_COMMERCE_BACKEND_IGNORE_BUILD_CACHE_REGEX` variable instead.
+
+This will set the `ignoreBuildCacheRegex` config of the
+[`expressConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/express/config/expressConfigProvider.js#L55).
+Consequently it will be available on
+`staticConfigFromProviders.express.ignoreBuildCacheRegex` should you ever need
+it.
+
+Please note to
+[escape regular expression special characters](https://javascript.info/regexp-escaping)
+when needed.
+
+:::warning
+
+This regex can heavily impact the response time of your site, please consider
+carefully its usage beforehand
+
+:::
