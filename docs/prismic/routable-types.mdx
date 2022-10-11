@@ -50,7 +50,7 @@ type Album implements Routable {
 
 Note that in order for the custom type to be routable it needs to implement the
 core Front-Commerce
-[Routable interface](https://gitlab.com/front-commerce/front-commerce/-/blob/2.7.1/src/server/modules/front-commerce/core/schema.gql#L87).
+[Routable interface](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.7.1/src/server/modules/front-commerce/core/schema.gql#L87).
 That is why the GraphQL type must have a field called `path` to represent the
 URL of the routable type.
 
@@ -299,7 +299,7 @@ Prismic Route Resolver, it can also create a sitemapable route.
   redirected the base path.
 - `isSitemapable` (boolean): whether the type should be included in the sitemap
 - `postTransformer`
-  ([PostTransformerCallback](https://gitlab.com/front-commerce/front-commerce-prismic/blob/084cbb54049614259cf31045bf03de636c08c201/prismic/server/modules/prismic/core/makeRoutableTypeRegisterer.js#L114-120)):
+  ([PostTransformerCallback](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/blob/084cbb54049614259cf31045bf03de636c08c201/prismic/server/modules/prismic/core/makeRoutableTypeRegisterer.js#L114-120)):
   a function that will be called after the transformation is done using
   `contentTransformOptions`
 
