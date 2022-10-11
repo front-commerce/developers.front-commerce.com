@@ -13,6 +13,42 @@ import Figure from "@site/src/components/Figure";
 In this section, you will learn some advanced usages of the Magento 2
 integration.
 
+## Caching customers' cart
+
+> _Since version 2.19.0_
+
+By default, the customer cart is systematically fetched from Magento. While this
+ensures the freshness of the cart representation, this generates a significant
+load on Magento side and slows down some operations in Front-Commerce. In
+2.19.0, we have added a cart cache mechanism. For now, this feature is
+considered as **experimental** and must be explicitly enabled by defining the
+`FRONT_COMMERCE_CART_CACHE_ENABLE` environment variable.
+
+```shell title=.env
+FRONT_COMMERCE_CART_CACHE_ENABLE=true
+```
+
+:::caution
+
+The cart handling is a critical feature on an eCommerce website, if you enable
+the cart cache we strongly advice to fully test your project before going live
+with it.
+
+:::
+
+When the cart cache is enabled, Front-Commerce will cache the cart and as with
+any cache mechanism, at some point, the cache needs to be expired.
+Front-Commerce takes care of expiring the cart cache when an operation can have
+an effect on the cart representation (for instance when adding an item to the
+cart). If you use an API that changes the cart, you will also have to expire the
+cart cache. To do that, you can use
+[`decorateWithCartCacheExpire`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/cart/cache/decorateWithCartCacheExpire.js)
+in the loader where this API is used. You can have a look at how it is used in
+[`CachedCartLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/d8d74295d36455419f5e80c4d28e69987976b59c/src/server/modules/magento2/cart/loaders/CachedCartLoader.js#L20-24)
+or
+[`CartCacheAwareStoreCreditLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/d29c30a0c6a513472b66f10441bd2c620903b11c/src/server/modules/magento2-commerce/store-credit/loaders/CartCacheAwareStoreCreditLoader.js#L43-51)
+where the cart cache is expired after some operations.
+
 ## Additional headers in Magento API calls
 
 > _Since version 2.7.0_
