@@ -52,9 +52,9 @@ export default (props) => <WysiwygV2 content={props.cms.contentWysiwyg} />;
 
 The `contentWysiwyg` property must come from a GraphQL field of type `Wysiwyg`,
 you should add the `WysiwygFragment` available at
-[`theme/modules/WysiwygV2/WysiwygFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/modules/WysiwygV2/WysiwygFragment.gql),
+[`theme/modules/WysiwygV2/WysiwygFragment.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/blob/main/src/web/theme/modules/WysiwygV2/WysiwygFragment.gql),
 to the `CmsPageFragment` available at
-[`theme/pages/CmsPage/CmsPageFragment.gql`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/web/theme/pages/CmsPage/CmsPageFragment.gql).
+[`theme/pages/CmsPage/CmsPageFragment.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/blob/main/src/web/theme/pages/CmsPage/CmsPageFragment.gql).
 
 ```diff title="my-module/modules/CmsPage/CmsPageFragment.gql"
 #import "theme/modules/CmsPage/CmsPageSeo/CmsPageSeoFragment.gql"
@@ -186,7 +186,7 @@ If you want to customize `MagentoWysiwyg` instead, please refer to
 transformations before displaying the content
 
 1.  Duplicate the
-    [`DefaultWysiwyg.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/DefaultWysiwyg.js)
+    [`DefaultWysiwyg.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/DefaultWysiwyg.js)
     component to `theme/modules/WysiwygV2/CustomWysiwyg`.
 1.  Override `theme/modules/WysiwygV2/appWysiwygComponents.js` and map your new
     `CustomWysiwyg` typename (the one used in your GraphQL schema) to

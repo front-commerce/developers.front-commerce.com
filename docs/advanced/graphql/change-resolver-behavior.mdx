@@ -31,7 +31,7 @@ export default {
 Before being able to inject you custom resolver logic, you first need to find
 the module that defines the resolver for the field. In our example, the Product
 `meta_description` is resolved
-[by the resolver provided by the `Magento2/Catalog/Products` module](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/catalog/products/resolvers.js#L245-248).
+[by the resolver provided by the `Magento2/Catalog/Products` module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/catalog/products/resolvers.js#L245-248).
 As a result, the `Magento2/Catalog/Products` module must be added as a
 dependency of our custom module:
 

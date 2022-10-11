@@ -317,7 +317,7 @@ Writing batching functions and loaders could lead to reusing the same patterns.
 We have extracted some utility functions to help you in this task.
 
 You can find them in the
-[`server/core/graphql/dataloaderHelpers`](https://gitlab.com/front-commerce/front-commerce/blob/main/src/server/core/graphql/dataloaderHelpers.js)
+[`server/core/graphql/dataloaderHelpers`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/blob/main/src/server/core/graphql/dataloaderHelpers.js)
 module.
 
 ### `reorderForIds`
@@ -405,7 +405,7 @@ makeBatchLoaderFromSingleFetch = (
 ```
 
 Example (from
-[the Magento2 category loader](https://gitlab.com/front-commerce/front-commerce/-/blob/6ba7ceed3244c47f1c75e03a60c8a5e87a3f5104/src/server/modules/magento1/catalog/categories/categoryLoader.js#L6)):
+[the Magento2 category loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6ba7ceed3244c47f1c75e03a60c8a5e87a3f5104/src/server/modules/magento1/catalog/categories/categoryLoader.js#L6)):
 
 ```js
 import { makeBatchLoaderFromSingleFetch } from "server/core/graphql/dataloaderHelpers";
@@ -694,7 +694,7 @@ below.
 :::info
 
 The payload is
-[limited to 1Mb by default](https://gitlab.com/front-commerce/front-commerce/-/blob/2af896b935b2ead5d1ea5b76bc6109b1a3f56ecd/src/server/express/config/expressConfigProvider.js#L10)
+[limited to 1Mb by default](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2af896b935b2ead5d1ea5b76bc6109b1a3f56ecd/src/server/express/config/expressConfigProvider.js#L10)
 to prevent abuses. You can extend this limit using configurations. See
 ["I cannot `POST` a big payload to the server "](/docs/appendices/troubleshooting#i-cannot-post-a-big-payload-to-the-server)
 for a way to define a greater value.

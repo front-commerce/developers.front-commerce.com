@@ -25,7 +25,7 @@ and bring support for Adobe Commerce specific features such as
 ### Magento2 Commerce module installation
 
 You need to install the
-[`front-commerce/magento2-commerce-module` module](https://gitlab.com/front-commerce/magento2-commerce-module-front-commerce/):
+[`front-commerce/magento2-commerce-module` module](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/):
 
 ```shell
 composer config repositories.front-commerce-magento2-commerce git \
@@ -161,7 +161,7 @@ Under the hood, the following error is occurring in Magento:
 > report.ERROR: Expected a value of type "ReturnStatus" but received: (empty
 > string) (status is `null` )
 
-[We've decided](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1382/#note_1020963128)
+[We've decided](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1382/#note_1020963128)
 to cope with this flaw, ignore the error and display an empty status for such
 returns.
 
@@ -175,7 +175,7 @@ Return.
 
 The Front-Commerce Magento2 OpenSource module contains a patch for this known
 issue
-[since its version 2.8.3](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/releases/2.8.3).
+[since its version 2.8.3](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/releases/2.8.3).
 
 Please ensure that your project is properly patched by ensuring that L42 of
 `vendor/magento/module-eav/Model/ResourceModel/Entity/Attribute/OptionValueProvider.php`

@@ -7,7 +7,7 @@ interface BackportListProps {
 }
 
 const releaseUrl = (version: string) => {
-  return `https://gitlab.com/front-commerce/front-commerce/-/releases/${version}`;
+  return `https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/${version}`;
 };
 
 const stripPatchVersion = (version: string) => {

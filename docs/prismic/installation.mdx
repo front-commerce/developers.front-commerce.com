@@ -10,7 +10,7 @@ description:
 <p>{frontMatter.description}</p>
 
 This guide assumes that you are working in
-[a Front-Commerce skeleton environment](https://gitlab.com/front-commerce/front-commerce-skeleton/).
+[a Front-Commerce skeleton environment](https://gitlab.blackswift.cloud/front-commerce/front-commerce-skeleton/).
 
 ## Configure the environment for Prismic
 
@@ -133,8 +133,9 @@ domain `images.prismic.io` to `imgSrc` in
 ## Optional: Configure the PrismicWysiwyg
 
 If you are using any other Wysiwyg enabled modules, then you will need to
-override [`getWysiwygComponent.js`](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/getWysiwygComponent.js) and map all of the
-Wysiwyg customizations, for example:
+override
+[`getWysiwygComponent.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/getWysiwygComponent.js)
+and map all of the Wysiwyg customizations, for example:
 
 ```js title="theme/modules/WysiwygV2/getWysiwygComponent.js"
 import loadable from "@loadable/component";
@@ -165,7 +166,7 @@ learn more.
 **Default transforms**
 
 - `<script>` tags with a
-  [supported embed script](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js)
+  [supported embed script](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/embeds.js)
   are transformed into
-  [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js)
+  [`theme/web/WysiwygV2/PrismicWysiwyg/EmbedScript`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/web/theme/modules/WysiwygV2/PrismicWysiwyg/Components/EmbedScript/EmbedScript.js)
   components.

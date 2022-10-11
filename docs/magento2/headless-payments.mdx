@@ -61,7 +61,7 @@ We will explain the mechanisms available to implement your own adapter if
 supported Magento payment modules do not suit your needs.
 
 **Payment Adapters must implement the
-[`\FrontCommerce\Integration\Api\HeadlessPayment\Adapter`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/Adapter.php)
+[`\FrontCommerce\Integration\Api\HeadlessPayment\Adapter`](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/Adapter.php)
 interface no matter the [workflows](/docs/advanced/payments/payment-workflows)
 they support.**
 
@@ -83,7 +83,7 @@ Adapters must implement methods that are called at key times in order to:
 [Redirect before order](/docs/advanced/payments/payment-workflows#redirect-before-order)
 
 Converts an internal Magento response to a
-[`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
+[`RedirectionInterface`](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
 value object.
 
 ```php
@@ -99,7 +99,7 @@ public function redirectionFromCheckoutRedirectActionResponse(
 [Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 Converts an internal Magento response to a
-[`RedirectionInterface`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
+[`RedirectionInterface`](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/Data/HeadlessPayment/RedirectionInterface.php)
 value object.
 
 ```php
@@ -164,7 +164,7 @@ public function changeAfterCheckoutResponseFromResult(
 [Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
 
 This is a factory to build a
-[`ProxiedAction`](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/ProxiedAction.php)
+[`ProxiedAction`](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Api/HeadlessPayment/ProxiedAction.php)
 matching the next step for the Customer depending on information transmitted by
 the payment system in the return url the user was redirected to when coming back
 to the store
@@ -188,7 +188,7 @@ Example: `throw new \RuntimeException('Checkout flow not supported');`
 Wether you've implemented a new Payment Adapter or are reusing an existing one,
 adapters have to be registered so Front-Commerce's module could instantiate it
 when relevant. Using the `di.xml`, inject the adapter in the
-[`FrontCommerce\Integration\Model\HeadlessPayments\AdapterFactory` `$adapters` constructor param](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/AdapterFactory.php#L12).
+[`FrontCommerce\Integration\Model\HeadlessPayments\AdapterFactory` `$adapters` constructor param](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/AdapterFactory.php#L12).
 
 Below is an example from Front-Commerce's core:
 
@@ -208,7 +208,7 @@ Below is an example from Front-Commerce's core:
 :::note
 
 We encourage you to investigate existing Adapters' source code from
-[Front-Commerce's core](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/tree/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter)
+[Front-Commerce's core](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/tree/main/app/code/FrontCommerce/Integration/Model/HeadlessPayments/Adapter)
 to learn about advanced patterns.
 
 :::
@@ -267,7 +267,7 @@ limitations and reasons of the issues:
    module (headless payments API)
 2. the REST endpoint will load the relevant headless payment adapter
 3. it then bootstraps
-   [a Magento internal Request](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/64784f627064d0068ca04842317eb69f3fd143b7/app/code/FrontCommerce/Integration/Model/HeadlessPayments.php#L148)
+   [a Magento internal Request](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/64784f627064d0068ca04842317eb69f3fd143b7/app/code/FrontCommerce/Integration/Model/HeadlessPayments.php#L148)
    object, and initializes it with session information (user, order, quote…) by
    delegating some initialization to the payment adapter
 4. it then dispatches the request (in an emulated `frontend` Magento area)
@@ -309,7 +309,7 @@ Possible workarounds:
 - patch the `Magento\Framework\Config\Data\Scoped` class with the patch attached
   in the related issue
 
-[Read the related issue for details](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/issues/49).
+[Read the related issue for details](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/issues/49).
 
 #### Magento 2.4.1+
 
@@ -324,4 +324,4 @@ Possible workarounds:
   reinitialize internal state properly
 - patch the `PluginList` class to handle this edge case (undefined index)
 
-[Read the related issue for details](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/issues/57).
+[Read the related issue for details](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/issues/57).

@@ -38,7 +38,7 @@ For a community edition version:
 
 ```shell
 composer config minimum-stability dev
-composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+composer config repositories.front-commerce git https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce.git
 composer config repositories.front-commerce-restful git https://github.com/PH2M/Magento-Extra-RESTful
 composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
 composer require front-commerce/magento1-module:"^1.3"
@@ -48,8 +48,8 @@ For an enterprise edition version:
 
 ```shell
 composer config minimum-stability dev
-composer config repositories.front-commerce-ee git https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce
-composer config repositories.front-commerce git https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+composer config repositories.front-commerce-ee git https://gitlab.blackswift.cloud/front-commerce/magento1-module-enterprise-front-commerce
+composer config repositories.front-commerce git https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce.git
 composer config repositories.front-commerce-restful git https://github.com/PH2M/Magento-Extra-RESTful
 composer config http-basic.gitlab.com token $FC_GITLAB_TOKEN
 composer require front-commerce/magento1-module-enterprise:"dev-master"
@@ -60,7 +60,7 @@ composer require front-commerce/magento1-module-enterprise:"dev-master"
 `front-commerce/magento1-module-enterprise` is currently in beta, requiring
 `dev-master` allows to get the last version. After this beta phase, it is
 strongly recommended to use a fixed version.
-([see available release for Enterprise Edition](https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce/-/releases))
+([see available release for Enterprise Edition](https://gitlab.blackswift.cloud/front-commerce/magento1-module-enterprise-front-commerce/-/releases))
 
 :::
 
@@ -69,7 +69,7 @@ strongly recommended to use a fixed version.
 - Community edition version:
 
   1. Clone or download
-     https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+     https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce.git
   2. Copy `app` directory and paste it in your Magento's root directory
   3. Clone or download https://github.com/PH2M/Magento-Extra-RESTful
   4. Copy `modules/Clockworkgeek_Extrarestful.xml` file and paste it in your
@@ -82,10 +82,10 @@ strongly recommended to use a fixed version.
 - Enterprise edition version:
 
   1. Clone or download
-     https://gitlab.com/front-commerce/magento1-module-front-commerce.git
+     https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce.git
   2. Copy `app` directory and paste it in your Magento's root directory
   3. Clone or download
-     https://gitlab.com/front-commerce/magento1-module-enterprise-front-commerce
+     https://gitlab.blackswift.cloud/front-commerce/magento1-module-enterprise-front-commerce
   4. Copy `app` directory and paste it in your Magento's root directory
   5. Clone or download https://github.com/PH2M/Magento-Extra-RESTful
   6. Copy `modules/Clockworkgeek_Extrarestful.xml` file and paste it in your
@@ -185,7 +185,7 @@ If the OAuth Zend Patch is not valid in the installer checker, please follow
 these steps:
 
 - Copy the
-  [`fix-sort-params-core.patch`](https://gitlab.com/front-commerce/magento1-module-front-commerce/blob/master/fix-sort-params-core.patch)
+  [`fix-sort-params-core.patch`](https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce/blob/master/fix-sort-params-core.patch)
   file in your root directory
 - Past it on your root Magento directory
 - Apply them

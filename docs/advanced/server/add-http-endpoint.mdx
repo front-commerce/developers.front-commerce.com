@@ -51,7 +51,7 @@ information.
 In the case of the WYSIWYG preview, let's say that when a user visits the
 `wysiwyg-preview` URL, we want to display static files that will let anyone
 preview how an html string will be transformed by
-[Front-Commerce's Wysiwyg component](https://gitlab.com/front-commerce/front-commerce/tree/main/src/web/theme/modules/Wysiwyg).
+[Front-Commerce's Wysiwyg component](https://gitlab.blackswift.cloud/front-commerce/front-commerce/tree/main/src/web/theme/modules/Wysiwyg).
 
 To do so, we need to create our server config file, and configure its
 `entrypoint` key.
@@ -81,7 +81,7 @@ app.use("/wysiwyg-preview", router());
 :::note
 
 See our express middleware to understand how the magic works:
-[`withCustomRouters`](https://gitlab.com/front-commerce/front-commerce/blob/daade2b43df41d4a387a04fe87f432afc1f7208b/src/server/express/withCustomRouters.js#L23).
+[`withCustomRouters`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/blob/daade2b43df41d4a387a04fe87f432afc1f7208b/src/server/express/withCustomRouters.js#L23).
 
 :::
 
