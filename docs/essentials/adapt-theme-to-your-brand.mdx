@@ -149,6 +149,27 @@ Follow the same steps than for colors:
           connectSrc: [],
    ```
 
+### Icons
+
+To introduce new icons or
+[override existing](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/icons/core-icons.js)
+icons you can add an `app-icons` file including your icons, for example:
+
+```js title="theme/components/atoms/Icon/icons/app-icons.js"
+import { FcHome, FcPhone } from "react-icons/fc";
+/** @type {Record<string, import("react-icons").IconType>} */
+const componentIcons = {
+  home: FcHome // this will override the `IoIosHome` icon from the core implementation
+  phone: FcPhone // this will add a new icon
+};
+/** @type {string[]} */
+const svgIcons = [];
+export default {
+  componentIcons,
+  svgIcons,
+};
+```
+
 ## A new look
 
 Front-Commerce would then now look like this:
