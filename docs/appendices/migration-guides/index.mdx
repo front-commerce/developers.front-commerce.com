@@ -16,8 +16,9 @@ import TabItem from "@theme/TabItem";
 
 ### Allow report-only frames for Adyen
 
-If you were using Adyen as a payment provider you might have allowed all iframes to load, to prevent blocking  3DS2 authorization iframes
-from credit card providers.
+If you were using Adyen as a payment provider you might have allowed all iframes
+to load, to prevent blocking 3DS2 authorization iframes from credit card
+providers.
 
 You can now restrict the policy again and use the `reportOnlyDirectives` feature
 instead.
@@ -62,6 +63,41 @@ module.exports = {
   // highlight-end
 };
 ```
+
+### Adding custom icons
+
+We have improved the way you can add custom icons to your theme. Before you had
+to override the
+[`theme/components/atoms/Icon/Icon.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js)
+file to add your custom icons. Now you can simply extend or override the core
+icons with your custom icons by adding them to the
+[`theme/components/atoms/Icon/icons/app-icons.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/icons/app-icons.js)
+file.
+
+```js title="theme/components/atoms/Icon/icons/app-icons.js"
+import { FcHome, FcPhone } from "react-icons/fc";
+
+/** @type {Record<string, import("react-icons").IconType>} */
+const componentIcons = {
+  home: FcHome // this will override the `IoIosHome` icon from the core implementation
+  phone: FcPhone // this will add a new icon
+};
+
+/** @type {string[]} */
+const svgIcons = [];
+
+export default {
+  componentIcons,
+  svgIcons,
+};
+```
+
+:::important
+
+To apply this change you need to restore the original `Icon.js` files, you can
+do this by deleting the override from your custom theme.
+
+:::
 
 ### New features in `2.19.0`
 
