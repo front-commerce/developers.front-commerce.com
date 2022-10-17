@@ -12,6 +12,38 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.18.0` -> `2.19.0`
+
+### Default country from graph
+
+In this release, we have changed the usage of `default_country_id` defined in
+your `stores.js` configuration.
+
+From 2.19.0, this settings is directly exposed in the GraphQL API directly in
+[`Country.isDefault`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fa573a6cd5ad259d455acb70afeb56aacee5b30e/src/server/modules/front-commerce/country/schema.gql#L23)
+field.
+
+:::note
+
+This field will use the value returned by Magento2, and default to the one
+defined in your `stores.js` otherwise. In order to fully benefit from this
+change, you will also have to update you Front-Commerce Magento 2 module to
+version 2.8.4.
+
+On other backends (Magento1, BigCommerce), this field will only expose the value
+from your `stores.js`.
+
+:::
+
+**Breaking changes**: Previously, this setting was used directly in the frontend
+in `web/theme/modules/User/Address/AddressForm/AddressForm.js`, and was removed
+in favor of using the `isDefault` field in the graph. Please verify if you
+overwrote any of these files:
+
+- `web/theme/modules/User/Address/AddressForm/AddressForm.js`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/CountriesWithRegionQuery.gql`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/withCountriesAndRegions.js`
+
 ## `2.17.0` -> `2.18.0`
 
 ### The Prismic module has moved to a new home.
