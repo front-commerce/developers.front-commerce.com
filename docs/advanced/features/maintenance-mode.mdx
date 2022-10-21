@@ -73,5 +73,11 @@ note that you can have multiple IPs separated by a comma like:
 
 ```shell title=".env"
 FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN=a-secret-token
-FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS=127.0.0.1,83.65.12.111
+FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS=127.0.0.1,83.65.12.111,2ce8:c427::7156:ad8e
 ```
+
+:::caution
+
+Please configure both v4 and v6 IP as much as possible. You can retrieve your own IP addresses with https://www.whatismyip.com/
+
+:::
