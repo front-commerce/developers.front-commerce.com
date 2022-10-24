@@ -14,6 +14,21 @@ import TabItem from "@theme/TabItem";
 
 ## `2.18.0` -> `2.19.0`
 
+### Replaced `mkdirp` package with `make-dir`
+
+Due to
+[a bug](https://github.com/isaacs/node-mkdirp/issues/31#issuecomment-777254013)
+causing issues with our image resizer we have opted to replace the
+[`mkdirp`](https://www.npmjs.com/package/mkdirp) package with
+[`make-dir`](https://www.npmjs.com/package/make-dir) in our dependencies,
+starting from version `2.19.0` we will no longer ship this package in
+Front-Commerce, so if you are using `mkdirp` in your own code, you will need to
+ensure that you have installed it.
+
+```bash
+npm install mkdirp
+```
+
 ### Allow report-only frames for Adyen
 
 If you were using Adyen as a payment provider you might have allowed all iframes
@@ -127,7 +142,6 @@ overwrote any of these files:
 - `web/theme/modules/User/Address/CountryFieldWithRegion/CountriesWithRegionQuery.gql`
 - `web/theme/modules/User/Address/CountryFieldWithRegion/withCountriesAndRegions.js`
 
-
 :::
 
 ### `Form/Item` `inline` property depreciation
@@ -153,7 +167,6 @@ property, you have to apply changes similar to:
 ```
 
 or
-
 
 ```diff
  import FormItem from "theme/components/molecules/Form/Item";
