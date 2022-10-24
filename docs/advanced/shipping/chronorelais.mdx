@@ -1,0 +1,93 @@
+---
+title: ChronoRelais integration
+description:
+  This guide explains how Front-Commerce can be configured to expose the
+  ChronoRelais shipping method.
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+The ChonoRelais Front-Commerce modules requires a Map component to display
+pickup points. Thus, before proceeding, please make sure that you've chosen a
+Map implementation from [Display a map](/docs/advanced/features/display-a-map).
+
+## Integrate with Magento2
+
+> _Since version 2.19.0_
+
+The integration of ChronoRelais in Magento2 & Front-Commerce relies on [the
+official Chronopost Magento2 module](https://www.chronopost.fr/fr/plateformes-e-commerce)
+and [our headless Chronorelais module for Magento2](https://github.com/front-commerce/magento2-module-chronorelais-headless)
+so both need to be installed. For the official Chronopost module, please refer
+to the official documentation. For our headless Chronoless module, you can use
+composer:
+
+```shell
+composer require front-commerce-magento/module-headless-chronorelais
+```
+
+Then, within your Front-Commerce project, you have to:
+
+- Use the module in your `.front-commerce.js`
+
+  ```javascript title=".front-commerce.js"
+  module.exports = {
+    name: "Front Commerce DEV",
+    url: "http://www.front-commerce.test",
+    modules: [
+     // highlight-next-line
+      "./node_modules/front-commerce/modules/shipping-chronorelais"
+      "./src"
+    ],
+    serverModules: [
+      { name: "FrontCommerce", path: "server/modules/front-commerce" },
+      { name: "Magento2", path: "server/modules/magento2" },
+      // highlight-start
+      {
+        name: "ChronoRelais",
+        path: "shipping-mondialrelay/server/modules/magento2-chronorelais",
+      },
+      // highlight-end
+    ],
+    webModules: [
+      { name: "FrontCommerce", path: "./src/web" },
+    ],
+  };
+  ```
+
+- Import styles of related components by overriding the
+  `_modules.scss`, for instance:
+
+  ```javascript title='src/web/theme/modules/_modules.scss'
+  @import "~front-commerce/theme-chocolatine/web/theme/modules/modules";
+
+  // highlight-next-line
+  @import "~theme/modules/ChronoRelais/ChronoRelais";
+  ```
+
+- Import `ChronoRelais` component in by overriding the
+  [`getAdditionalDataComponent`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js)
+  used for Shipping methods
+
+  ```jsx title='src/web/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js'
+  // highlight-start
+  import ChronoRelais from "theme/modules/ChronoRelais";
+
+  const ComponentMap = {
+    chronorelais: {
+      chronorelais: ChronoRelais,
+    },
+  };
+  // highlight-end
+
+  const getAdditionalDataComponent = (method) => {
+    return (
+      ComponentMap[method.carrier_code] &&
+      ComponentMap[method.carrier_code][method.method_code]
+    );
+  };
+
+  export default getAdditionalDataComponent;
+  ```

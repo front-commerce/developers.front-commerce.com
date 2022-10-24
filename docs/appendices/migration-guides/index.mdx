@@ -130,12 +130,51 @@ overwrote any of these files:
 
 :::
 
+### `Form/Item` `inline` property depreciation
+
+To standardize the API of `theme/components/molecules/Form/Item` between the
+default theme and the theme chocolatine, the `inline` property of that component
+from the default theme has been deprecated to use an `appearance` property. So
+if your project is not using the theme chocolatine and
+`theme/components/molecules/Form/Item` explicitly receives the `inline`
+property, you have to apply changes similar to:
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={true}>
++    <FormItem appearance="inline">
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
+or
+
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={false}>
++    <FormItem>
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
 ### New features in `2.19.0`
 
 - [The Stripe module can be configured to not automatically capture the payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
 - [Implement a custom payment method](/docs/advanced/payments/custom-payment-method)
 - [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/reference/content-security-policy.mdx)
 - [Ability to cache customers' cart with Magento2](/docs/magento2/advanced##caching-customers-cart)
+- [ChronoRelais shipping method support](/docs/advanced/shipping/chronorelais)
 
 ## `2.17.0` -> `2.18.0`
 

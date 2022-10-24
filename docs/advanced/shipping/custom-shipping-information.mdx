@@ -117,12 +117,13 @@ You can reference one of our implementations to get you started
 
 - [`<ModialRelay />`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/modules/shipping-mondialrelay/web/theme/modules/MondialRelay/MondialRelay.js)
 - [`<Colissimo />`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/modules/shipping-colissimo-magento2/web/theme/modules/Colissimo/Colissimo.js)
+- [`<ChronoRelais />`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/modules/shipping-chronorelais/web/theme/modules/ChronoRelais/ChronoRelais.js)
 
 :::
 
 Things to understand here:
 
-- The `SubmitShippingMethod` component is a common component accross all
+- The `SubmitShippingMethod` component is a common component across all
   shipping methods to ensure consistency in how methods are managed.
 - `CustomMethod.handlesNextStepButton = () => true;` means that you are indeed
   using `SubmitShippingMethod` in your component. This should always be `true`
