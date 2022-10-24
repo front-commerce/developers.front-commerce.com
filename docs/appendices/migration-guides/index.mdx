@@ -97,6 +97,37 @@ export default {
 To apply this change you need to restore the original `Icon.js` files, you can
 do this by deleting the override from your custom theme.
 
+### Default country from graph
+
+In this release, we have changed the usage of `default_country_id` defined in
+your `stores.js` configuration.
+
+From 2.19.0, this settings is directly exposed in the GraphQL API directly in
+[`Country.isDefault`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fa573a6cd5ad259d455acb70afeb56aacee5b30e/src/server/modules/front-commerce/country/schema.gql#L23)
+field.
+
+:::note
+
+This field will use the value returned by Magento2, and default to the one
+defined in your `stores.js` otherwise. In order to fully benefit from this
+change, you will also have to update you Front-Commerce Magento 2 module to
+version 2.8.4.
+
+On other backends (Magento1, BigCommerce), this field will only expose the value
+from your `stores.js`.
+
+:::
+
+**Breaking changes**: Previously, this setting was used directly in the frontend
+in `web/theme/modules/User/Address/AddressForm/AddressForm.js`, and was removed
+in favor of using the `isDefault` field in the graph. Please verify if you
+overwrote any of these files:
+
+- `web/theme/modules/User/Address/AddressForm/AddressForm.js`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/CountriesWithRegionQuery.gql`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/withCountriesAndRegions.js`
+
+
 :::
 
 ### New features in `2.19.0`
@@ -111,11 +142,11 @@ do this by deleting the override from your custom theme.
 ### The Prismic module has moved to a new home.
 
 We have tagged the last version of the Prismic module in the
-[external repository](https://gitlab.com/front-commerce/front-commerce-prismic)
+[external repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic)
 `v1` 🥳
 
 Since this version we have moved the Prismic module
-[into the core repository](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic)
+[into the core repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic)
 of Front-Commerce, moving forward any new features will be made available and
 follow the same
 [semantic versioning](/docs/appendices/release-process#semantic-versioning) as
@@ -145,11 +176,11 @@ module.exports = {
     { name: "FrontCommerce", path: "front-commerce/src/web" },
 -   {
 -     name: "Prismic",
--     path: "./node_modules/front-commerce/modules/prismic/web",
+-     path: "./node_modules/front-commerce-prismic/prismic/web",
 -   },
 +   {
 +     name: "Prismic",
-+     path: "./node_modules/front-commerce-prismic/prismic/web",
++     path: "./node_modules/front-commerce/modules/prismic/web",
 +   }
   ],
 };
@@ -225,7 +256,7 @@ repository.
 **If you work on an Adobe Commerce B2B project**, you must:
 
 - update `front-commerce/magento2-commerce-module` to
-  [version 2.x](https://gitlab.com/front-commerce/magento2-commerce-module-front-commerce/-/releases)
+  [version 2.x](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/-/releases)
   (currently `2.0.0`)
 - install `front-commerce/magento2-b2b-module` to its latest version
 
@@ -235,7 +266,7 @@ Here are the commands to achieve this:
 composer require front-commerce/magento2-commerce-module:2.0.0
 
 composer config repositories.front-commerce-magento2-b2b git \
-    git@gitlab.com:front-commerce/magento2-b2b-module-front-commerce.git
+    git@gitlab.blackswift.cloud:front-commerce/magento2-b2b-module-front-commerce.git
 composer require front-commerce/magento2-b2b-module:1.1.0
 
 bin/magento setup:upgrade
@@ -313,7 +344,7 @@ const EnhancePlaceOrder = ({
 The DomainEvent class was reworked.
 
 If you handled payment events on orders (backend operation) using
-[DomainEvent implementations](https://gitlab.com/front-commerce/front-commerce/-/tree/main/src/server/modules/front-commerce/payment/domain/events),
+[DomainEvent implementations](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/src/server/modules/front-commerce/payment/domain/events),
 these implementations now base on a `PurchaseIdentifier` instead of a direct
 `orderId` (this allows to update order events based on a cartId)
 
@@ -364,7 +395,7 @@ As part of our continuous dependencies upgrade process, we've upgraded the
 `dotenv` dependency to its latest version. We've updated it from version `8.2.0`
 (October 2019) to version `16.0.0` (February 2022). Technically, **it contains 2
 Breaking Changes** that we've decided to be pragmatic about.
-[We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
+[We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
 Please check that your environment variables are not impacted by these breaking
 changes:
 
@@ -674,14 +705,14 @@ that could impact your codebase:
 
 - If after the above fixes there is still `@apollo/*` dependencies and you are
   not sure how to resolve please <ContactLink /> for support. You can also check
-  [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=8fae8438d46200cbd310b16c30b3078da28b7d42)
+  [here](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=8fae8438d46200cbd310b16c30b3078da28b7d42)
   and
-  [here](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=418a291f917660b18672b6be2eb2778cb51dfef9)
+  [here](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=418a291f917660b18672b6be2eb2778cb51dfef9)
   for the changes we did to our codebase.
 - Resolvers for fields that are not in the `schema` now throw errors. To avoid
   this remove all unneeded `field`/`Type` resolvers that do not have a
   representation in the GraphQL `schema`. Check our
-  [cleaning commit](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238)
+  [cleaning commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238)
   regarding this issue.
 - `makeApolloClientStub` now expects resolvers as an argument instead of mocks.
   This is in tandem with the
@@ -764,7 +795,7 @@ please add the following line to it:
 The logic of `withFlashMessages` is now also exported as a hook
 `useFlashMessages`. If you have overridden `withFlashMessages` please apply the
 changes in
-[this diff](https://gitlab.com/front-commerce/front-commerce/-/commit/11e7d55bc68d22b422ea5bc9c8357551cd2412ea)
+[this diff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/11e7d55bc68d22b422ea5bc9c8357551cd2412ea)
 to it.
 
 ### Added downloadable products support for Magento2
@@ -783,17 +814,17 @@ apply the following diffs to your project:
 
 If you are using the base theme:
 
-- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?view=parallel#9f4b70799a5d0472977d4a6992b5f751d4c7b2a3)
-- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#a85a9f3a6d6111152efe2fc74320dfab7295d39d)
-- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#92527070b393735c35c5825b3174987e566962e6)
-- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f9a39a6723f4100486c2658dff702698421eae41)
+- [AccountNavigation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?view=parallel#9f4b70799a5d0472977d4a6992b5f751d4c7b2a3)
+- [AccountLayout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#a85a9f3a6d6111152efe2fc74320dfab7295d39d)
+- [EnhanceAccount](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#92527070b393735c35c5825b3174987e566962e6)
+- [\_modules.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f9a39a6723f4100486c2658dff702698421eae41)
 
 If you are using theme chocolatine:
 
-- [AccountNavigation](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#e7af65f5100c0e8b1d5bda98a735eb5744a44386)
-- [AccountLayout](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f7e1de354176dd6902903dc889133f0c5f2733e3)
-- [EnhanceAccount](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=3#899be9e8de73bf492922cdfdd67ff14b859454a0)
-- [\_modules.scss](https://gitlab.com/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#ec9462e7d49a82bcb8c759d1fb734ce39160140b)
+- [AccountNavigation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#e7af65f5100c0e8b1d5bda98a735eb5744a44386)
+- [AccountLayout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f7e1de354176dd6902903dc889133f0c5f2733e3)
+- [EnhanceAccount](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=3#899be9e8de73bf492922cdfdd67ff14b859454a0)
+- [\_modules.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#ec9462e7d49a82bcb8c759d1fb734ce39160140b)
 
 ### PaymentMethodLabel relocated
 
@@ -854,7 +885,7 @@ Please update your code to fit the new behavior.
 ### Code clean up
 
 In this release, we have removed some dead and unused code
-([see corresponding MR](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/967)):
+([see corresponding MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/967)):
 
 - `src/theme/pages/Account/Account.js` that despites its name is not used at all
   and very unlikely to be used by any project
@@ -932,7 +963,7 @@ const isCompanyUser = (user) => {
   - Support for [trailing slashes](/docs/prismic/routable-types#trailing-slash)
   - Support for [path rewrites](/docs/prismic/routable-types#path-rewrites)
   - Exposed the `url` to the
-    [Content type](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
+    [Content type](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
 
 :::note
 
@@ -941,7 +972,7 @@ When a Prismic document has been registered using the
 method or the
 [`registerPrismicRoute`](/docs/prismic/routable-types#registerprismicroute-options)
 method, A `url` property is exposed in the
-[Content type object](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js).
+[Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js).
 This property contains the resolved url of the document.
 
 :::
@@ -963,7 +994,7 @@ composer update front-commerce/magento2-module
 :::info
 
 You can refer to the `Magento2` module
-[changelog](https://gitlab.com/front-commerce/magento2-module-front-commerce/-/blob/main/CHANGELOG.md)
+[changelog](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/CHANGELOG.md)
 for the full details.
 
 :::
@@ -973,7 +1004,7 @@ for the full details.
 The `front-commerce-prismic` module is now using the latest version of prismic.
 
 ```shell
-npm install git+ssh://git@gitlab.com/front-commerce/front-commerce-prismic.git#1.0.0
+npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce-prismic.git#1.0.0
 ```
 
 The most notable breaking changes is the removal of the
@@ -983,7 +1014,7 @@ The most notable breaking changes is the removal of the
 :::info
 
 You can refer to the `front-commerce-prismic` module
-[changelog](https://gitlab.com/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md)
+[changelog](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md)
 for the full details.
 
 :::
@@ -1239,9 +1270,9 @@ it from your application:
 If you are using base theme and wish to use the B2B module you have to override
 `theme/modules/ProductView/Synthesis/AddProductToCart.js` from the base theme
 and provide a way to add to requisition list from the product page (see
-[AddProductToRequisitionList](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.js)
+[AddProductToRequisitionList](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.js)
 and
-[B2B's AddProductToCart](https://gitlab.com/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/ProductView/Synthesis/AddProductToCart.js)
+[B2B's AddProductToCart](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/ProductView/Synthesis/AddProductToCart.js)
 for inspiration). You also need to override
 `theme/modules/AddToCart/_AddToCart.scss` if you have not already and just copy
 the styles from the base theme to it
@@ -1807,7 +1838,7 @@ In the base theme, the `<Gallery />` component is rendered by
 
 If you want to add that feature to your project you have to define an image
 format named `zoomable`. For instance, we have added one in
-[the last version of the Skeleton](https://gitlab.com/front-commerce/front-commerce-skeleton/-/commit/4b0d4175f9468c47e1a9af9329f3856c2b00c025)
+[the last version of the Skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce-skeleton/-/commit/4b0d4175f9468c47e1a9af9329f3856c2b00c025)
 but the actual format parameters depends on your project constraints.
 
 :::note
@@ -1821,9 +1852,9 @@ render the image on which the customer can zoom in. This component accepts an
 Then, depending on the amount of customization, you might also have to bring
 changes similar to what we have done in the merge requests for that feature:
 
-- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/699/diffs
-- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/717/diffs
-- https://gitlab.com/front-commerce/front-commerce/-/merge_requests/719/diffs
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/699/diffs
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/717/diffs
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/719/diffs
 
 In a nutshell, when the feature is enabled, we place a transparent button on top
 of the product image; if the customer clicks on it, we then render a
@@ -1840,7 +1871,7 @@ to
 ### New icons required
 
 In this release, two new icons (`warn` and `users`) were added to
-[the `<Icon>` component](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+[the `<Icon>` component](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
 
 If you have overridden the `<Icon>` component, you need to add both icons as
 follows to the list of icons to avoid any error messages at page loading:
@@ -1870,12 +1901,12 @@ weird issue after upgrading:
 
 - `axios` does not append the `charset=utf-8` anymore for requests with
   `Content-Type:application/json`. See
-  [#680](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/680#note_711807434),
+  [#680](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/680#note_711807434),
   [#4016](https://github.com/axios/axios/issues/4016) and
   [#2154](https://github.com/axios/axios/issues/2154) and for details.
 - `prettier` has been updated
   [from 2.2.1 to 2.4.1](https://github.com/prettier/prettier/blob/main/CHANGELOG.md)
-  ([MR!742](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/742)).
+  ([MR!742](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/742)).
   We've reformatted our code with this version, so it may lead to style
   differences with your overrides. To update your application code, you can run
   `npx prettier -w ./path/to/your/directories` and commit the changes.
@@ -1896,7 +1927,7 @@ The product overview component does not need to escape the product name with
 `safeHtml`.
 
 If you did override any of the following components, you can safely
-[remove `safeHtml` calls](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/750)
+[remove `safeHtml` calls](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/750)
 in them:
 
 - `src/web/theme/modules/ProductView/Overview/Overview.js`
@@ -1914,7 +1945,7 @@ new components to the
 [default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg).
 
 See
-[the Page Builder ones](https://gitlab.com/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
+[the Page Builder ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
 and ensure there is no collision with your custom WYSIWYG components. While very
 unlikely, it could be possible. For instance, if you may have overridden the
 `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwyg.js` to add a custom
@@ -1935,7 +1966,7 @@ These new features may be relevant for your existing application:
   using [Depfu](https://depfu.com/). Patches are automatically applied if the CI
   is green, minor versions are manually approved. We always review changelogs
   provided by Depfu. **You can review updates any time
-  [by filtering Merge Requests tagged `depfu`](https://gitlab.com/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
+  [by filtering Merge Requests tagged `depfu`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
 
 <hr className="my-10" />
 
@@ -1971,7 +2002,7 @@ are needed to upgrade your project if you are using this payment platform:
    you have
    [to configure the environment so that it is defined](/docs/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
 1. we have made some changes and fixes to
-   [the Adyen related frontend components](https://gitlab.com/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
+   [the Adyen related frontend components](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
    If you have overridden some of those, you have to backport the changes.
 
 ### Magento1 Payline module update
@@ -2052,9 +2083,9 @@ support browser autocomplete.
 
 The public API remains unchanged but if you've overriden internal components,
 please check your overrides against their original. See these Merge Requests:
-[#641](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/641)
+[#641](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/641)
 and
-[#645](https://gitlab.com/front-commerce/front-commerce/-/merge_requests/645)
+[#645](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/645)
 
 ### New features in `2.10.0`
 

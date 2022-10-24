@@ -19,7 +19,7 @@ to also read these related pages.
 ## How to set your configurations
 
 Each file described below exist in
-[`node_modules/front-commerce/src/config`](https://gitlab.com/front-commerce/front-commerce/tree/main/src/config)
+[`node_modules/front-commerce/src/config`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/tree/main/src/config)
 in Front-Commerce. If you want to override some, duplicate those in
 `my-module/config`.
 
@@ -72,7 +72,7 @@ your website. The term website refers to what a
 - `tax` (ex: `1.2` for 20% VAT): Used to correctly filter products within layer
   queries (this configuration should soon be deprecated with search updates in
   Front-Commerce — see
-  [#102](https://gitlab.com/front-commerce/front-commerce/issues/102))
+  [#102](https://gitlab.blackswift.cloud/front-commerce/front-commerce/issues/102))
 - `contentSecurityPolicy`: the <abbr title="Content Security Policy">CSP</abbr>
   configuration
   [see the related guide](/docs/reference/content-security-policy.mdx)
@@ -146,7 +146,7 @@ module.exports = {
   ]
 
   // Headers where it's most likely to find the client IP
-  // Useful for logging the client's ip in the client logger (cf. https://gitlab.com/front-commerce/front-commerce/issues/23)
+  // Useful for logging the client's ip in the client logger (cf. https://gitlab.blackswift.cloud/front-commerce/front-commerce/issues/23)
   headers: ["x-real-ip", "x-forwarded-for"],
 };
 ```
@@ -233,7 +233,10 @@ Loaders are identified with a key. The key is the first argument passed to the
 
 :::
 
-Example of a recommended configuration for Magento stores:
+Example of a recommended configuration for Magento stores.
+
+Reminder: ensure to take a look at
+[the redis strategy for the fully configured redis setup](/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis)
 
 ```js
 export default {
@@ -244,7 +247,7 @@ export default {
       supports: "*",
       config: {
         host: "redis",
-        // host: "127.0.0.1"
+        // full configuration at https://developers.front-commerce.com/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis
       },
     },
     {

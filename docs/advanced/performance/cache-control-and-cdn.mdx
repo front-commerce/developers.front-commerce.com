@@ -35,6 +35,11 @@ update your application accordingly.
 Caching is disabled by default for user related content and for cart related
 content. This is done to avoid inadvertently caching sensitive user information.
 
+In practice, for any page using `Order`, `Cart` or `Wishlist` types or a non
+anonymous `Customer` from the Graph, the HTTP cache will be disabled. To get
+useful information on that topic, you can start Front-Commerce with
+`DEBUG=front-commerce:cache`.
+
 :::
 
 ## Preface
@@ -67,7 +72,7 @@ In this example, the longest _outdated_ data can be served to the user is **11
 minutes (60sec + 10min)**. For more information on the subject please refer to
 [Keeping things fresh with stale-while-revalidate](https://web.dev/stale-while-revalidate/)
 (P.S. we use `sMaxAge` instead of `maxAge` because this is the value used by
-CDNs\reverse-proxies)
+CDNs/reverse-proxies)
 
 ## Dynamic Pages
 

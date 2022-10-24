@@ -32,7 +32,7 @@ The Prismic loader has the following API to request Content from Prismic:
 ### `loadSingle(typeIdentifier)`
 
 Returns a
-[Content](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
+[Content](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
 representing a Prismic Content of
 [the corresponding type](https://prismic.io/docs/core-concepts/custom-types). If
 such Content does not exist, it throws an error.
@@ -46,7 +46,7 @@ such Content does not exist, it throws an error.
 ### `loadByID(id)`
 
 Returns a
-[Content](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
+[Content](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
 representing a Prismic Content of
 [the corresponding type](https://prismic.io/docs/core-concepts/custom-types). If
 such Content does not exist, it throws an error.
@@ -58,7 +58,7 @@ such Content does not exist, it throws an error.
 ### `loadByUID(typeIdentifier, uid)`
 
 Returns a
-[Content](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
+[Content](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/Content.js)
 representing a Prismic Content of
 [the corresponding type](https://prismic.io/docs/core-concepts/custom-types) and
 having [a UID field](https://prismic.io/docs/core-concepts/uid) with the given
@@ -74,15 +74,15 @@ value. If such Content does not exist, it throws an error.
 ### `loadList(query)`
 
 Returns
-[a `ContentList`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ContentList.js)
+[a `ContentList`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ContentList.js)
 matching the query. `query` must be an instance of
-[`ListQuery`](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ListQuery.js),
+[`ListQuery`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ListQuery.js),
 it provides a way to filter, sort and paginate Prismic Content.
 
 **Arguments:**
 
 - `query`
-  ([ListQuery](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ListQuery.js)):
+  ([ListQuery](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/ListQuery.js)):
   A query for a list of documents
 
 ### `defineContentTransformers(typeIdentifier, options)`
@@ -95,7 +95,7 @@ Defines the content transform options for a given document type.
   ([string](https://prismic.io/docs/technologies/rest-api-technical-reference#document.type)):
   The type of document.
 - `options`
-  ([ContentTransformOptions](https://gitlab.com/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/index.js#L35-39)):
+  ([ContentTransformOptions](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic/server/modules/prismic/core/loaders/index.js#L35-39)):
   Content transform options
 
 ### Field Transformers
@@ -149,7 +149,7 @@ the
 :::
 
 The complete list of available Transformers can be found under
-[the `transformers` directory in Prismic module](https://gitlab.com/front-commerce/front-commerce-prismic/-/tree/main/prismic/server/modules/prismic/core/loaders/transformers).
+[the `transformers` directory in Prismic module](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/tree/main/prismic/server/modules/prismic/core/loaders/transformers).
 We will use some of them in the following examples.
 
 ## Implementation examples
