@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Plugins
 description:
   The analytics library is designed to work with any third party analytics tools
@@ -27,12 +27,31 @@ Plugins can be broken down into 2 types:
 - **Custom plugins** - additional features, data manipulation, & any other side
   effects.
 
-Both have the same signature, as illustrated below.
+Both have the same signature, and are registered in the same way, here we will
+explore how they are implemented within a Front-Commerce app.
 
-## Provider Plugins
+:::info
+
+You can look at the analytics library documentation to learn more about the
+plugin types.
+
+- [Plugins](https://getanalytics.io/plugins)
+- [Writing Plugins](https://getanalytics.io/plugins/writing-plugins/)
+
+:::
+
+## Writing a new plugin
+
+:::tip
+
+You can also
+[request and contribute plugins](https://getanalytics.io/plugins/request/)
+within the analytics library ❤️ Open Source
+
+:::
 
 Let's say for this example we want to create a new provider plugin for a third
-party `acme` analytics tool.
+party analytics tool `acme`. We will name this plugin `acme`.
 
 Provider plugins typically
 
@@ -43,11 +62,11 @@ Provider plugins typically
 1. Have a loaded function to let analytics know when its safe to send the third
    party data.
 
-Here is an example if the `analytics-plugin-acme` plugin:
+Here is an example if the `acme` plugin:
 
 ```js title="my-analytics-module/plugins/analytics-plugin-acme.js"
 // `settings` is the value defined in the plugin config in `config/analytics.js`
-export default function providerPluginExample(settings) {
+export default function acmePluginExample(settings) {
   // return object for analytics to use
   return {
     /* All plugins require a name */
@@ -79,14 +98,15 @@ export default function providerPluginExample(settings) {
 
 ### Extending with `EcommercePlugin`
 
-The `EcommercePlugin` plugin is a plugin provided by Front-Commerce. It allows you to create an interface to map
+The `EcommercePlugin` plugin is a plugin provided by Front-Commerce. It allows
+you to create an interface to map
 [e-commerce events and properties](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce)
 to the relevant events and properties for your `acme` provider, you can find a
 full list of events in the
 [EcommercePlugin.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/core/analytics/plugins/e-commerce/domain/e-commerce-plugin.js)
 
-Below is an example of how to extend the `analytics-plugin-acme` plugin to
-handle e-commerce events.
+Below is an example of how to extend the `acme` plugin to handle e-commerce
+events.
 
 ```js title="my-analytics-module/plugins/analytics-plugin-acme.js"
 import { EcommercePlugin } from "web/core/analytics/plugins/e-commerce";
@@ -167,7 +187,7 @@ in your `config/analytics.js` configuration, this allow us to only import and
 load scripts based on authorisation (cookies), which in turn reduces the page
 loading for your end users.
 
-Let's add our `analytics-plugin-acme` plugin to our `config/analytics.js` file.
+Let's add our `acme` plugin to our `config/analytics.js` file.
 
 ```js title="src/config/analytics.js"
 module.exports = {
@@ -194,9 +214,9 @@ module.exports = {
 
 :::info REMINDER
 
-Just like any other integrations, don't forget to setup the `cookiesServices.js`
-file accordingly, in order to load the newly created integration only when the
-user has given their consent.
+Just like any other plugin, don't forget to setup the `cookiesServices.js` file
+accordingly, in order to load the newly created integration only when the user
+has given their consent.
 
 :::
 
@@ -325,7 +345,7 @@ load / remove (depending on the `userConsents` value). Here is an example:
 ### Meta Pixel
 
 You can use our
-[example plugin](https://gitlab.blackswift.cloud/front-commerce/examples/analytics/facebook-pixel)
+[example plugin](https://gitlab.blackswift.cloud/front-commerce/examples/analytics/meta-pixel)
 to track a pixel. This is a good starting point, the
 [e-commerce events](https://developers.facebook.com/docs/meta-pixel/reference#standard-events)
 would also need to be created using the
