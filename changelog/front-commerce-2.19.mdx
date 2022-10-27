@@ -1,0 +1,174 @@
+---
+title: "Release: 2.19"
+authors: josquin
+date: 2022-10-17T18:00
+hide_table_of_contents: true
+---
+
+## 2.19: the first version of our connector with the search tool Attraqt, Google Analytics 4 for Front-Commerce, GitLab Migration, and Chronopost Relay
+
+It's been a busy autumn for Front-Commerce!
+
+We launched our first version of the [Front-Commerce Cockpit](https://cockpit.front-commerce.com/) and were able to work on a variety of topics, for the core of Front-Commerce, our cloud offering, and many other topics!
+
+Without further ado, here is the Front-Commerce 2.19.0 program, with a whole host of new features:
+
+- We have developed the first version of our connector with the headless search tool [Attraqt](https://attraqt.com/)
+- We worked on a beta version for the API-first content platform [Contentful](https://www.contentful.com/)
+- We made Front-Commerce compatible with Google Analytics 4
+- We ensured compatibility with Magento 2.4.5 for Front-Commerce
+- We made [Chronopost Relay Pick-up](https://www.chronopost.fr/fr/relais-pickup) available for Front-Commerce with Magento 2
+- We migrated our code away from [Gitlab.com](http://gitlab.com/) to cope with the [new Gitlab.com pricing](https://about.gitlab.com/blog/2022/03/24/efficient-free-tier/) not being adapted to our context
+
+As always, should you have any requests regarding the product roadmap, do not hesitate to contact Josquin 👋
+
+<!-- truncate -->
+
+import Calendly from "@site/src/components/Calendly";
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+
+### Analytics: a new foundation allowing to use GA4 with Front-Commerce
+
+As announced by Google, [Universal Analytics will disappear on July 1, 2023](https://support.google.com/analytics/answer/11583528?hl=en). [Google Analytics 4](https://support.google.com/analytics/answer/10089681) is a next-generation measurement solution and is replacing Universal Analytics.
+
+Well, good news: from 2.19, Front-Commerce is compatible with Google Analytics 4!
+
+Compatibility with <abbr title="Google Analytics 4">GA4</abbr> forced us to prioritize a new foundation for our analytics components.
+
+The library we previously used (analytics.js) has changed over time and the latest versions require merchants to use [Segment.com](https://segment.com/). We considered this as a blocker and benchmarked different alternatives for platform-agnostic analytics tracking.
+
+We selected the `analytics` library ([https://getanalytics.io/](https://getanalytics.io/)) as a new foundation for our core analytics components. Front-Commerce 2.19 allows you to leverage this new foundation to use up-to-date integrations with the main platforms you might need, **including Google Analytics 4**.
+
+Here are some highlights of this new version:
+
+- It has a similar intuitive plugin system, which fills all our analytical requirements.
+- Out-of-the-Box Integrations (plug & play) already cover the main existing use cases we've identified so far: [Simple Analytics](https://getanalytics.io/plugins/simple-analytics/) ([https://www.simpleanalytics.com/](https://www.simpleanalytics.com/)) and [Plausible](https://github.com/DavidWells/analytics/issues/96#issuecomment-1029021278) ([https://plausible.io/](https://plausible.io/)) are GDPR-friendly solution you can already use as an alternative to Google Analytics if need be.
+- You (and we) could contribute new plugins in the future. See the current [plugin requests](https://github.com/DavidWells/analytics/issues/153) (we plan to contribute [Matomo](https://fr.matomo.org/) - french GDPR-friendly alternative to Google - in the near future)
+- We kickstarted a new [Analytics Examples Gitlab group](https://gitlab.blackswift.cloud/front-commerce/examples/analytics) with repositories providing integration examples for common plugins not yet included in [Analytics](https://getanalytics.io/), also feel free to contribute if you have any ideas!
+
+For previous versions of Front-Commerce (2.18 and below), [we detailed the procedure to migrate from Analytics.js to Analytics.io on our Help site](https://help.front-commerce.com/en/articles/6682944-how-to-use-google-analytics-4-in-front-commerce). However, we recommend upgrading your Front-Commerce version to 2.19 for an easier integration.
+
+### Attraqt: the first version of the connector (Search and Merchandising)
+
+Front-Commerce is already compatible with [Algolia](/docs/magento2/search-engine#algolia), [ElasticSearch](/docs/magento2/search-engine#elasticsearch), and [Magento 2’s native search](/docs/magento2/search-engine#native-search) features. With our Attraqt connector, you now have a whole range of solutions to offer your customers an outstanding experience while browsing your website and searching for content, whether that is products, categories, or even blog posts.
+
+Here is a quick demo of the connector:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xcd0OWnW7Yo" title="Attraqt search v1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### Chronopost Relay for Front-Commerce with Magento2
+
+Within our shipping methods, we already handle [Colissimo](/docs/advanced/shipping/colissimo) and [Mondial Relay](/docs/advanced/shipping/mondial-relay), displaying a map directly in Front-Commerce to help your customers select the pick-up point they want their products to be delivered to.
+
+Magento2 retailers can now provide Chronopost pick-up point selection to their customers. Front-Commerce 2.19 brings compatibility with Magento2 to the [Chronopost official extension](https://www.chronopost.fr/sites/default/files/atoms/files/guide_magento_2.pdf).
+
+Here is a quick demo:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wSq8MQzSiUo" title="Chronopost Relay Pick-up for Magento2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### Performance Improvements: fewer API calls for faster applications!
+
+As a headless front-end solution for e-retailers, we strive to improve your application's web performance.
+
+In Front-Commerce 2.19, we added some improvements directly related to transactional events, by reducing the number of cart-related API calls and adding support for current customer caching in session. These changes are available for Magento2, and [must be enabled in your project](/docs/appendices/migration-guides/#new-features-in-2190) after upgrading to 2.19.
+
+This should help you gain precious performance points and directly impact your conversion rates!
+
+### Contentful: beta version
+
+During the past weeks, we built a beta version of a connector with the API-first content platform [Contentful](https://www.contentful.com/). The results are very promising. To test it in real conditions, we were able to deploy a full Adobe Commerce B2B x Front-Commerce x Contentful demo.
+
+Want to now more? You can schedule a personalised demo with Laurent or Christian!
+
+<Calendly href="https://www.front-commerce.com/headless-frontend-demo/">
+  Schedule a personalised demo
+</Calendly>
+
+### Magento 2.4.5 compatibility
+
+Magento launched version 2.4.5 in August 2022.
+
+At Front-Commerce, to ensure compatibility with different modules and provide a safe migration path to our Magento customers, we’ve decided to provide compatibility with new Magento versions for their "p1" releases.
+
+This is done with Front-Commerce 2.19, compatible with the Community Edition and Commerce Edition of Magento 2.4.5-p1 (which was planned for the 11th of October: see [Magento release schedule](https://experienceleague.adobe.com/docs/commerce-operations/release/planning/schedule.html))
+
+⏭️ The next compatibility version will be made with Magento 2.4.6-p1, for which the date is still unknown (Magento 2.4.6 is planned for March 14, 2023)
+
+### Autumn clean: technical debt management and low-hanging fruits
+
+For the first Autumn days, we decided to treat ourselves to a week of tackling technical debt issues and low-hanging fruit tasks that we’d postponed or had no time to deal with before (if you are a developer or work with developers, you should know all about this 🙃)
+
+This "out of the flow" week allowed us to tackle small topics that you will find in [the Other Changes section.](#other-changes)
+
+### GitLab Migration: welcome Blackswift!
+
+Earlier this year, Gitlab [announced a new pricing](https://about.gitlab.com/blog/2022/03/24/efficient-free-tier/) that took place on October 19, 2022. Much like for many other users, [this new pricing was not adapted to our context](https://forum.gitlab.com/t/gitlab-introduces-user-limits-for-free-users-on-saas/64288/138). We discovered this information in September and have been trying to find the best solution since then.
+
+We've decided to migrate our repositories and users from Gitlab.com to another Gitlab SaaS provider: [Blackswift](https://blackswift.fr/) 🇫🇷. We continue to provide you the code and everything you already know… the only difference is the domain name!
+
+If you are curious about the topic, you can read [our article](https://help.front-commerce.com/en/articles/6618841-migrate-from-gitlab-com-to-blackswift-cloud) about it 👀
+
+## Other changes
+
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **dx:** allow app to add new components to existing WYSIWYG components ([8e6bd7b](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/8e6bd7b2d5bfe8e8c63e68a9cd2a9d64fafe3bc4))
+- **dx:** improved Icon component override DX to add custom icons ([efb6936](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/efb6936f99b8873835c0e4eecd4a54731a02ecd9))
+- **dx:** merge tsconfig in skeleton ([2ae1af1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/2ae1af181b140090ac6c9416743462ffed9e7fee))
+- **dx:** improve HTTP cache debug message ([f54aa68](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/f54aa68f75a7cdfcd07c6f421c7217390858c2df))
+- **magento1:** Expose isDefault in country resolver ([1baa68f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/1baa68fd5e1f1a90c8c46780dd01c865e78500a0))
+- **magento2:** Expose isDefault in country resolver ([8c78b49](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/8c78b497ac5befc2f37aa03e7bb8456e4391237d))
+- **magento2:** add a category search fallback using Magento's Graph ([1df091b](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/1df091b2be6a2bc7c9b81604185bfb2deeae3712))
+- **magento2:** add a product search fallback using Magento's Graph ([d8cb5cb](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/d8cb5cb03a018d206204c1a0666295ac1ba06dfd))
+- **magento2:** compute active facets when the Graph based search fallback is used ([d8a28f1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/d8a28f158c22ac3663aed8eff0eac0cd4c918ca9))
+- **stripe:** allow to configure stripe module to not capture payment ([316ccc7](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/316ccc7edc1c7018115cf317a7a6bb963622dcfb))
+- **account:** Clear the password form after update success ([ea3bfe6](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/ea3bfe6211cdb9381aa72793b6ee8b8422a3dee5))
+- **cache:** add FRONT_COMMERCE_BACKEND_IGNORE_BUILD_CACHE_REGEX to disable build caching ([16b4f2a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/16b4f2a8504046f193e7e2d528ceab1600a6ba9c))
+- **csp:** allow reportOnly categories and log violated rules ([3367a9f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/3367a9fcf0d66740574a585588bab436bcfbde74))
+- **codemod:** add codemod script to cli ([27752bb](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/27752bbbbfc6aae5b32bd60fce92afb88ebadd0d))
+
+```mdx-code-block
+</details>
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **images:** support empty preset sizes ([dbf3a07](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/dbf3a0726d1cf8172329c2188e001f45be2e4ca1))
+- **magento2:** regions were not returned in the graph ([447ff04](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/447ff0443d7098dab1b0295b6ff68a1ba5e13f04))
+- **magento2:** prevent unnecessary calls to customers/me from perMagentoCustomerGroup ([ec3c82b](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/ec3c82b762c1e86f2a5e567e6e55a286f4ddd1cd))
+- **hipay:** remove useless reference check in HiPay callback URL ([3ae8342](https://gitlab.blackswift.cloud/front-commerce/front-commerce/commit/3ae8342189492adda69995690725c1b137fcdb9b))
+- **imageResizer:** replace `mkdirp` with `make-dir` to prevent `TypeError: Cannot read property 'catch' of undefined at imageResizer` errors ([c8f7c5f3](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/c8f7c5f37ed745826c8a0f1e8f632dd274104371))
+- **quick-order:** fixes `addToCartCallback` method ([91e52eff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/91e52effcddd319dbc38a22db66d270530de3edc))
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.19.0"}
+  previousVersions={[
+    "2.18.2",
+    "2.17.3",
+    "2.16.4",
+    "2.15.6",
+    "2.14.6",
+    "2.13.9",
+    "2.12.8",
+    "2.11.9",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.19.0](/docs/appendices/migration-guides#2180---2190)
+or
+[read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.19.0)
+
+</ChangelogFooter>
