@@ -100,7 +100,24 @@ improvements from customer feedback. Want to know more about it? Read
 
 ## Other changes
 
-#### Bug Fixes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+- **BigCommerce:** add an image proxy to serve resized and optimized images
+- **BigCommerce:** reset my password
+- **GraphQL:** remove `FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` env.
+  support
+- **UX:** prevent event propagation on clicks on a pending button
+- **Front-Commerce Prismic module:** add default preset format for image
+  transformer
+
+```mdx-code-block
+</details>
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
 
 - **CSS:** avoid loading CSS twice
 - **Downloadable-products:** page crash if the customer has no product
@@ -113,15 +130,9 @@ improvements from customer feedback. Want to know more about it? Read
 - **Routes:** prioritize more specific children routes of a dynamic path
 - **Social login:** merge guest and user cart on login with Magento2
 
-#### Features
-
-- **BigCommerce:** add an image proxy to serve resized and optimized images
-- **BigCommerce:** reset my password
-- **GraphQL:** remove FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS env.
-  support
-- **UX:** prevent event propagation on clicks on a pending button
-- **Front-Commerce Prismic module:** add default preset format for image
-  transformer
+```mdx-code-block
+</details>
+```
 
 <BackportList
   currentVersion={"2.18.0"}
