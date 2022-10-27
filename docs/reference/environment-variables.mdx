@@ -91,7 +91,9 @@ redirects user to the HTTPS version of a page in this case. Use the
   [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation#invalidating-the-cache)
   for more details.
 - `FRONT_COMMERCE_CART_CACHE_ENABLE`: allows to enable [the cart cache (only
-    available when running Front-Commerce with Magento2)](/docs/magento2/advanced##caching-customers-cart)
+    available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-customers-cart)
+- `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE`: allows to enable [the current customer cache (only
+    available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-current-customers-information)
 
 ### Performance
 
@@ -390,6 +392,8 @@ Here is a list of available debug namespaces:
   information and [HTTP Cache
   deactivation](/docs/advanced/performance/cache-control-and-cdn/).
 - `front-commerce:cart`: debugs cart corrupted data received from remote sources
+- `front-commerce:cart:cache`: debugs cache information for customer's cart (see [Caching customers' cart](/docs/magento2/advanced#caching-customers-cart))
+- `front-commerce:customer:cache`: debugs cache information for current user's information (see [Caching current customers' information for Magento2](/docs/magento2/advanced#caching-current-customers-information))
 - `front-commerce:cluster`: debugs the node process id and other information to
   help configuring cluster mode
 - `front-commerce:config`: dumps the configuration for a typical request at the
