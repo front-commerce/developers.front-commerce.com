@@ -14,6 +14,106 @@ import TabItem from "@theme/TabItem";
 
 ## `2.18.0` -> `2.19.0`
 
+### Replaced `mkdirp` package with `make-dir`
+
+Due to
+[a bug](https://github.com/isaacs/node-mkdirp/issues/31#issuecomment-777254013)
+causing issues with our image resizer we have opted to replace the
+[`mkdirp`](https://www.npmjs.com/package/mkdirp) package with
+[`make-dir`](https://www.npmjs.com/package/make-dir) in our dependencies,
+starting from version `2.19.0` we will no longer ship this package in
+Front-Commerce, so if you are using `mkdirp` in your own code, you will need to
+ensure that you have installed it.
+
+```bash
+npm install mkdirp@^1.0.4
+```
+
+### Allow report-only frames for Adyen
+
+If you were using Adyen as a payment provider you might have allowed all iframes
+to load, to prevent blocking 3DS2 authorization iframes from credit card
+providers.
+
+You can now restrict the policy again and use the `reportOnlyDirectives` feature
+instead.
+
+Although it will not strengthen the policy, this will allow to log loaded
+iframes and help investigate risks of unsecure iframes.
+
+```diff title="my-module/config/website.js"
+  contentSecurityPolicy: {
+    directives: {
+-      frameSrc: ["*"],
++      frameSrc: ["*.adyen.com"],
+    }
++    reportOnlyDirectives: {
++      frameSrc: true,
++    }
+  },
+```
+
+### Configure the new logger
+
+A new `security` logger has been added (for now to collect CSP violations).
+
+Add it to your `logging.js` configuration to be able to see those logs (see
+[the logging documentation](/docs/advanced/production-ready/logging.mdx) for
+more details)
+
+```js title="my-module/config/logging.js"
+module.exports = {
+  ...
+  access: [
+    {
+      type: "console",
+    },
+  ],
+  // highlight-start
+  security: [
+    {
+      ...
+    },
+  ],
+  // highlight-end
+};
+```
+
+### Adding custom icons
+
+We have improved the way you can add custom icons to your theme. Before you had
+to override the
+[`theme/components/atoms/Icon/Icon.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js)
+file to add your custom icons. Now you can simply extend or override the core
+icons with your custom icons by adding them to the
+[`theme/components/atoms/Icon/icons/app-icons.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/icons/app-icons.js)
+file.
+
+```js title="theme/components/atoms/Icon/icons/app-icons.js"
+import { FcHome, FcPhone } from "react-icons/fc";
+
+/** @type {Record<string, import("react-icons").IconType>} */
+const componentIcons = {
+  home: FcHome // this will override the `IoIosHome` icon from the core implementation
+  phone: FcPhone // this will add a new icon
+};
+
+/** @type {string[]} */
+const svgIcons = [];
+
+export default {
+  componentIcons,
+  svgIcons,
+};
+```
+
+:::important
+
+To apply this change you need to restore the original `Icon.js` files, you can
+do this by deleting the override from your custom theme.
+
+:::
+
 ### Default country from graph
 
 In this release, we have changed the usage of `default_country_id` defined in
@@ -28,7 +128,7 @@ field.
 This field will use the value returned by Magento2, and default to the one
 defined in your `stores.js` otherwise. In order to fully benefit from this
 change, you will also have to update you Front-Commerce Magento 2 module to
-version 2.8.4.
+[version 2.9.0](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/releases/2.9.0).
 
 On other backends (Magento1, BigCommerce), this field will only expose the value
 from your `stores.js`.
@@ -43,6 +143,52 @@ overwrote any of these files:
 - `web/theme/modules/User/Address/AddressForm/AddressForm.js`
 - `web/theme/modules/User/Address/CountryFieldWithRegion/CountriesWithRegionQuery.gql`
 - `web/theme/modules/User/Address/CountryFieldWithRegion/withCountriesAndRegions.js`
+
+### `Form/Item` `inline` property depreciation
+
+To standardize the API of `theme/components/molecules/Form/Item` between the
+default theme and the theme chocolatine, the `inline` property of that component
+from the default theme has been deprecated to use an `appearance` property. So
+if your project is not using the theme chocolatine and
+`theme/components/molecules/Form/Item` explicitly receives the `inline`
+property, you have to apply changes similar to:
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={true}>
++    <FormItem appearance="inline">
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
+or
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={false}>
++    <FormItem>
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
+### New features in `2.19.0`
+
+- [The Stripe module can be configured to not automatically capture the payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
+- [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/reference/content-security-policy.mdx)
+- Magento2 performance improvements (opt-in)
+  - [Ability to cache customers' cart](/docs/magento2/advanced#caching-customers-cart)
+  - [Ability to cache current customers' information](/docs/magento2/advanced#caching-current-customers-information)
+- [ChronoRelais shipping method support](/docs/advanced/shipping/chronorelais)
 
 ## `2.17.0` -> `2.18.0`
 
@@ -771,7 +917,7 @@ following modules, please do update your CSPs accordingly in your
 `config/website.js` configuration:
 
 - `Google Analytics` or `Google Tag Manager` (see
-  [analytics configuration](/docs/advanced/theme/analytics#universal-analytics-google-analytics))
+  [analytics configuration](/docs/advanced/analytics/legacy#universal-analytics-google-analytics))
 - `Paypal` (see
   [Paypal configuration](/docs/advanced/payments/paypal#update-your-csps))
 - `Payzen` (see
