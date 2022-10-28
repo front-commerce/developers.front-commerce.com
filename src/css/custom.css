@@ -77,3 +77,9 @@ video.video-cover:not(:fullscreen) {
   min-height: 80px; /* ensures it covers the intercom bar */
   backdrop-filter: blur(10px);
 }
+
+.markdown iframe,
+.markdown video,
+.markdown img {
+  max-width: 100%;
+}
