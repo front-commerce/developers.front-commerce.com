@@ -82,7 +82,7 @@ Let's install the required packages
 ([versions are important](/docs/advanced/features/display-a-map#open-street-map-osm-with-leaflet)):
 
 ```shell
-npm install leaflet@^1.7 react-leaflet@3.1.0 @react-leaflet/core@1.0.2
+npm install leaflet@^1.7 react-leaflet@3.2.5
 ```
 
 :::note
@@ -169,9 +169,8 @@ With that, you should see the map appear in your homepage.
 You will detect issues with remote assets (images, CSS…) not being loaded. It is
 related to the default <abbr title="Content Security Policy">CSP</abbr> headers
 sent by Front-Commerce. To allow new domains, you should modify your
-[`config/website.js`'s `contentSecurityPolicy`
-key](/docs/reference/content-security-policy.mdx) (i.e: define
-`imgSrc: ["*.openstreetmap.org"]`).
+[`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/content-security-policy.mdx)
+(i.e: define `imgSrc: ["*.openstreetmap.org"]`).
 
 :::
 
