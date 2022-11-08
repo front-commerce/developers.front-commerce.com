@@ -20,12 +20,12 @@
   },
   "dependencies": {
     "@algolia/client-search": "4.14.2",
-    "@docusaurus/core": "2.1.0",
-    "@docusaurus/plugin-client-redirects": "2.1.0",
-    "@docusaurus/plugin-content-blog": "2.1.0",
-    "@docusaurus/plugin-google-gtag": "2.1.0",
-    "@docusaurus/plugin-ideal-image": "2.1.0",
-    "@docusaurus/preset-classic": "2.1.0",
+    "@docusaurus/core": "2.2.0",
+    "@docusaurus/plugin-client-redirects": "2.2.0",
+    "@docusaurus/plugin-content-blog": "2.2.0",
+    "@docusaurus/plugin-google-gtag": "2.2.0",
+    "@docusaurus/plugin-ideal-image": "2.2.0",
+    "@docusaurus/preset-classic": "2.2.0",
     "@heroicons/react": "2.0.13",
     "@mdx-js/react": "1.6.22",
     "autoprefixer": "10.4.13",
@@ -45,7 +45,7 @@
     "tailwindcss": "3.2.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.1.0",
+    "@docusaurus/module-type-aliases": "2.2.0",
     "@tsconfig/docusaurus": "1.0.6",
     "@types/react": "18.0.25",
     "@types/react-slick": "0.23.10",
