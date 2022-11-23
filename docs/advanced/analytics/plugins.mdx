@@ -305,12 +305,12 @@ Configuration example in `src/config/analytics.js`
 {
   name: "google-tag-manager",
   needConsent: true,
-  settings: (authorization, otherAuthorizations) => {
+  settings: (authorization, otherAuthorizations) => ({
     containerId: "GTM-123xyz",
     // the userConsents option is a specific key that the plugin will use and expose in the GTM dataLayer
     userConsents: otherAuthorizations
-  }
-  script: () => import("@segment/analytics.js-integration-google-tag-manager"),
+  }),
+  script: () => import("@analytics/google-tag-manager"),
 }
 ```
 
