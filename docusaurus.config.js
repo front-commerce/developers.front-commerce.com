@@ -54,6 +54,8 @@ const config = {
           },
         },
         blog: {
+          blogTitle: "Changelog",
+          blogDescription: "Discover all the latest features brought to Front-Commerce.",
           showReadingTime: true,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) => {
             return `${REPOSITORY_URL}/tree/main/${blogDirPath}/${blogPath}`;
