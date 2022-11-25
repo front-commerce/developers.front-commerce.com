@@ -54,14 +54,10 @@ const config = {
           },
         },
         blog: {
-          blogTitle: "Changelog",
-          blogDescription: "Discover all the latest features brought to Front-Commerce.",
           showReadingTime: true,
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) => {
             return `${REPOSITORY_URL}/tree/main/${blogDirPath}/${blogPath}`;
           },
-          path: "changelog",
-          routeBasePath: "/changelog",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -86,6 +82,7 @@ const config = {
             position: "right",
             label: "Docs",
           },
+          { to: "/blog", label: "Blog", position: "right" },
           { to: "/changelog", label: "Changelog", position: "right" },
           {
             href: "https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team",
@@ -221,6 +218,18 @@ const config = {
         id: "google-analytics-4",
         trackingID: process.env.GOOGLE_ANALYTICS || "266421257",
         anonymizeIP: true,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-blog",
+      {
+        showReadingTime: true,
+        editUrl: ({ locale, blogDirPath, blogPath, permalink }) => {
+          return `${REPOSITORY_URL}/tree/main/${blogDirPath}/${blogPath}`;
+        },
+        id: "changelog",
+        routeBasePath: "/changelog",
+        path: "./changelog",
       },
     ],
   ],

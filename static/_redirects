@@ -1,7 +1,6 @@
 # see https://docs.netlify.com/routing/redirects/ for documentation
 # Redirects (temporary)
 /blog/:year/:month/:day/:slug                           /changelog/:slug                                    301
-/blog                                                   /changelog                                          301
 /docs/advanced/features/advanced-external-logins        /docs/advanced/features/external-logins/advanced    301
 /docs/advanced/theme/wysiwyg-legacy                     /docs/advanced/theme/wysiwyg/legacy                 301
 /docs                                                   /docs/welcome	                                    301
