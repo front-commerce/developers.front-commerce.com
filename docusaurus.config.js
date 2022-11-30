@@ -233,6 +233,9 @@ const config = {
         id: "changelog",
         routeBasePath: "/changelog",
         path: "./changelog",
+        blogTitle: "Changelog",
+        blogDescription:
+          "Discover all the latest features brought to Front-Commerce.",
       },
     ],
   ],
