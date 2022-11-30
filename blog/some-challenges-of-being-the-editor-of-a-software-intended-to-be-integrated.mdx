@@ -1,0 +1,104 @@
+---
+title: Some challenges of being the editor of a software intended to be integrated
+authors: [damien]
+date: 2022-12-07T09:55
+hide_table_of_contents: true
+---
+
+Essentially, Front-Commerce is a software meant to be integrated by developers
+so that a merchant can sell products to its customers in its own online store
+and even [without having to completely change an existing e-commerce
+stack](https://www.front-commerce.com/e-commerce-replatforming-big-bang-or-progressive-migration/).
+While this is probably the simplest definition of Front-Commerce (more or less
+the one I use to describe my job to my family and friends 😉), it hides some
+challenges we face every day.
+
+<!--truncate-->
+
+## Three targets: developers, merchants and customers
+
+The first challenge is not really technical. As stated in the introduction, we
+try to address three main personas:
+
+- the developers integrating our solution to create an online store for…
+- a merchant willing to sell something to…
+- a customer seeking a product.
+
+Anybody having at least a small experience as a software editor knows that
+properly addressing one persona can already be challenging, so you can guess
+what it is like with three, even if they don’t necessarily want opposing
+features, more targets mean more constraints.
+
+Let’s take a deliberately extreme example 😃 They all want a performant store.
+
+The customer:
+
+> I want a performant and great shopping experience even in the middle of
+> nowhere with a low to average 3G connection.
+
+The merchant:
+
+> Can I have a great shopping experience for my customers? And also, I want to
+> put very high quality photos and videos online. In addition, I want my pages
+> to be always highly up to date with customer specific and very dynamic
+> content. And next Friday is Black Friday! The website needs to scale,
+> it’s the biggest selling event of the year.
+
+The developers:
+
+> The merchant wants a performant and scalable website. Is your software doing
+> that out of the box or can it be done by turning on a setting?
+
+I guess you get the idea, each target adds a set of constraints. It’s no
+surprise that pleasing  everyone is difficult but it’s also a stimulating
+challenge.
+
+## Extensibility
+
+As a software meant to be integrated by developers, Front-Commerce needs to be
+extensible so that it can serve different use cases. The most obvious reason is
+that each merchant wants its own customized store implementing a dedicated
+shopping experience.
+
+In addition, each project needs a specific set of features and while we try to
+support as many as possible out of the box, having an extensible architecture
+allows the developers to fill the gaps. As far as I’m concerned, it’s always a
+pleasure to see very unexpected or specific features nicely implemented even if
+I would never have imagined it could exist.
+
+It’s also worth mentioning that in the world of composable architectures and
+[headless commerce](https://www.front-commerce.com/what-is-headless-commerce/),
+extensibility is a key feature.
+
+## Backwards compatibility and *upgradability*
+
+Being able to implement a project is nice but that’s only the very beginning of
+the story. At some point, new features and fixes for bugs will be needed. The
+challenge here is to be able to deliver those without breaking anything.
+
+On a practical level, that means we try to follow [semantic
+versioning](https://semver.org/) by regularly providing patch releases
+containing only bug fixes and every six weeks, we release a minor version with
+new features. Those minor versions always have [a migration
+guide](https://developers.front-commerce.com/docs/appendices/migration-guides/)
+to make the upgrade process as frictionless as possible. And what about a major
+version? In the last couple of years, we have not released any, but I’ve heard
+that something is cooking 😇
+
+In the code, this has a quite deep impact. When changing code, we have to keep
+in mind both existing projects using our software and new ones. We also have to
+think about how APIs are being used before we can make any changes to them. This
+forces us to carefully encapsulate our API’s to reduce their surface as much
+as possible. This has a tendency to limit the extensibility and the versatility
+so as usual when it comes to code, the key is to find the right trade-off.
+
+## Anything else?
+
+Oh yeah, I could have approached the support, the documentation, the developer
+experience or the dependency management to name a few. This will probably be the
+subject of another post…
+
+In any case, all this is a part of the context in which we build Front-Commerce
+and where we try find the best solutions or trade-off. As usual when it comes to
+our product, we are always seeking feedback, so don’t hesitate to contact us if
+you have any remarks or comments. This can only make the product better.
