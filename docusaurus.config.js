@@ -58,6 +58,9 @@ const config = {
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) => {
             return `${REPOSITORY_URL}/tree/main/${blogDirPath}/${blogPath}`;
           },
+          feedOptions: {
+            title: "Front-Commerce Developers Blog",
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
