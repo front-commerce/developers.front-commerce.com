@@ -236,6 +236,9 @@ const config = {
         blogTitle: "Changelog",
         blogDescription:
           "Discover all the latest features brought to Front-Commerce.",
+        feedOptions: {
+          title: "Front-Commerce Changelog",
+        },
       },
     ],
   ],
