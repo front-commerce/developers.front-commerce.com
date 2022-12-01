@@ -10,6 +10,7 @@ description:
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
 
 <p>{frontMatter.description}</p>
 
@@ -365,7 +366,7 @@ If you need more information about implementing this, please <ContactLink />.
 
 ### Dynamic styles
 
-> _Since version 2.11_
+<SinceVersion tag="2.11" />
 
 You may want to render inline styles dynamically when displaying WYSIWYG
 components. It can be required if content managers customizes how a given

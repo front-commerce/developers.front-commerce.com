@@ -7,13 +7,14 @@ description:
   In this guide, you will learn how to use this feature and extend it.
 ---
 
-<p>{frontMatter.description}</p>
-
 import Figure from "@site/src/components/Figure";
 import ContactLink from "@site/src/components/ContactLink";
 import BrowserWindow from "@site/src/components/BrowserWindow";
+import SinceVersion from "@site/src/components/SinceVersion";
 
-> _Since version 2.11.0 (early preview)_
+<SinceVersion tag="2.11 (early preview)" />;
+
+<p>{frontMatter.description}</p>
 
 Common tasks as a developer would consist in creating new _content types_ and
 refining UI components so that merchants can create the rich shopping
@@ -225,7 +226,7 @@ export default {
 
 ## Extend the Image content-type
 
-> _Since version 2.18_
+<SinceVersion tag="2.18" />;
 
 The `image` content-type uses defaults for the formatting to optimise
 performance,

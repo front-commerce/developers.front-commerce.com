@@ -5,6 +5,8 @@ description:
   headless commerce project.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 There are different ways for you to ship orders with
@@ -20,7 +22,7 @@ sure that you've chosen a Map implementation from
 
 ## Integrate with Magento2
 
-> _Since version 2.10.0_
+<SinceVersion tag="2.10" />
 
 The integration of MondialRelay in Magento2 & Front-Commerce relies on
 [Magentix' module](https://mondialrelay.magentix.fr/fr/magento-2/) for pickup
@@ -77,7 +79,7 @@ Then, within your Front-Commerce project, you have to:
 
 ## Integrate with Magento1
 
-> _Since version 2.5.0_
+<SinceVersion tag="2.5" />
 
 The integration of MondialRelay in Magento1 & Front-Commerce relies on
 [man4x's module](https://github.com/OpenMageModuleFostering/man4x_mondialrelay)
