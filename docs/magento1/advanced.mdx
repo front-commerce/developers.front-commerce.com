@@ -6,13 +6,15 @@ description:
   1 integration in a Front-Commerce project.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 import BrowserWindow from "@site/src/components/BrowserWindow";
 
 ## Additional headers in Magento API calls
 
-> _Since version 2.7.0_
+<SinceVersion tag="2.7" />
 
 Front-Commerce allows you to send additional headers in all API calls. To do so,
 you must define the `magento.api.extraHeaders` (for storefront API) and/or

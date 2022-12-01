@@ -6,6 +6,9 @@ description:
   2 integration in a Front-Commerce project.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+<SinceVersion tag="2.7" />;
+
 <p>{frontMatter.description}</p>
 
 import Figure from "@site/src/components/Figure";
@@ -15,7 +18,7 @@ integration.
 
 ## Caching customers' cart
 
-> _Since version 2.19.0_
+<SinceVersion tag="2.19" />
 
 By default, the customer cart is systematically fetched from Magento. While this
 ensures the freshness of the cart representation, this generates a significant
@@ -51,15 +54,26 @@ where the cart cache is expired after some operations.
 
 ## Caching current customers' information
 
-> _Since version 2.19.0_
+<SinceVersion tag="2.19" />
 
-By default, any GraphQL query fetching data under the `Query.me` field (`Customer` type) systematically leads to customer data being fetched from Magento. While this ensure the freshness of current customer's information, it has several drawbacks:
+By default, any GraphQL query fetching data under the `Query.me` field
+(`Customer` type) systematically leads to customer data being fetched from
+Magento. While this ensure the freshness of current customer's information, it
+has several drawbacks:
+
 - Magento is hit more often than needed
-- child resolvers are resolved after this initial query is received (waterfall effect)
+- child resolvers are resolved after this initial query is received (waterfall
+  effect)
 
-Considering that customer's information are likely not updated without user interaction on the application, we've added a way to cache customer's information in their user session in 2.19.0. It allows to greatly improve the perceived performance of transactional user journeys, but should be adopted with care.
+Considering that customer's information are likely not updated without user
+interaction on the application, we've added a way to cache customer's
+information in their user session in 2.19.0. It allows to greatly improve the
+perceived performance of transactional user journeys, but should be adopted with
+care.
 
-For now, this feature is considered as **experimental** and must be explicitly enabled by defining the `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE` environment variable.
+For now, this feature is considered as **experimental** and must be explicitly
+enabled by defining the `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE`
+environment variable.
 
 ```shell title=.env
 FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE=true
@@ -67,20 +81,32 @@ FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE=true
 
 :::caution
 
-If you enable current customer's cache, we strongly advice to fully test your project before going live with it. You can use the `DEBUG=front-commerce:customer:cache` flag to monitor what happens in your process output.
+If you enable current customer's cache, we strongly advice to fully test your
+project before going live with it. You can use the
+`DEBUG=front-commerce:customer:cache` flag to monitor what happens in your
+process output.
 
 :::
 
-When the current customer cache is enabled, Front-Commerce will cache customer's information in its own session. As with any cache mechanism, at some point, the cache needs to be expired.
+When the current customer cache is enabled, Front-Commerce will cache customer's
+information in its own session. As with any cache mechanism, at some point, the
+cache needs to be expired.
 
-Front-Commerce takes care of expiring these information when an operation can have an effect on the customer information (for instance when adding an address to the account). If you use an API that updates customer information, you will also have to expire the
-cart cache.
+Front-Commerce takes care of expiring these information when an operation can
+have an effect on the customer information (for instance when adding an address
+to the account). If you use an API that updates customer information, you will
+also have to expire the cart cache.
 
-To do that, you can use [`makeCurrentCustomerCache`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/cache/makeCurrentCustomerCache.js) factory to create an instance of this cache, and `expire()` it. You can have a look at how it is used in [`CustomerLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/loaders/CustomerLoader.js) where the customer cache is expired after some operations.
+To do that, you can use
+[`makeCurrentCustomerCache`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/cache/makeCurrentCustomerCache.js)
+factory to create an instance of this cache, and `expire()` it. You can have a
+look at how it is used in
+[`CustomerLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/loaders/CustomerLoader.js)
+where the customer cache is expired after some operations.
 
 ## Additional headers in Magento API calls
 
-> _Since version 2.7.0_
+<SinceVersion tag="2.7" />
 
 Front-Commerce allows you to send additional headers in all API calls. To do so,
 you must define the `magento.api.extraHeaders` (for storefront API) and/or

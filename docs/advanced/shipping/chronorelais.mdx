@@ -5,6 +5,8 @@ description:
   ChronoRelais shipping method.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 ## Prerequisites
@@ -15,11 +17,12 @@ Map implementation from [Display a map](/docs/advanced/features/display-a-map).
 
 ## Integrate with Magento2
 
-> _Since version 2.19.0_
+<SinceVersion tag="2.19" />
 
-The integration of ChronoRelais in Magento2 & Front-Commerce relies on [the
-official Chronopost Magento2 module](https://www.chronopost.fr/fr/plateformes-e-commerce)
-and [our headless Chronorelais module for Magento2](https://github.com/front-commerce/magento2-module-chronorelais-headless)
+The integration of ChronoRelais in Magento2 & Front-Commerce relies on
+[the official Chronopost Magento2 module](https://www.chronopost.fr/fr/plateformes-e-commerce)
+and
+[our headless Chronorelais module for Magento2](https://github.com/front-commerce/magento2-module-chronorelais-headless)
 so both need to be installed. For the official Chronopost module, please refer
 to the official documentation. For our headless Chronoless module, you can use
 composer:
@@ -57,8 +60,8 @@ Then, within your Front-Commerce project, you have to:
   };
   ```
 
-- Import styles of related components by overriding the
-  `_modules.scss`, for instance:
+- Import styles of related components by overriding the `_modules.scss`, for
+  instance:
 
   ```javascript title='src/web/theme/modules/_modules.scss'
   @import "~front-commerce/theme-chocolatine/web/theme/modules/modules";

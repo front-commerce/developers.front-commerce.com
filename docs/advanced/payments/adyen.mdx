@@ -7,6 +7,7 @@ description:
 ---
 
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
 
 <p>{frontMatter.description}</p>
 
@@ -15,7 +16,7 @@ There are different ways for you to accept payments with
 
 ## As a Front-Commerce payment method
 
-> _Since version 2.10.0_
+<SinceVersion tag="2.10.0" />
 
 P.S. No Magento modules are needed if you use this method. If you however want
 to integrate with the Adyen Magento module please refer to
@@ -248,7 +249,8 @@ To allow loading Adyen related remote resources:
 The `reportOnlyDirectives` block allows all iframes on you application, this is
 required to allow 3DS2 authentication iframes to load in your site.
 
-If you are not using the credit card payments consider removing this code block (for FC < 2.19, please remove the `"*"` rule instead).
+If you are not using the credit card payments consider removing this code block
+(for FC < 2.19, please remove the `"*"` rule instead).
 
 :::
 
@@ -324,7 +326,7 @@ different payment methods in the checkout.
 
 ## As a Magento2 Integration
 
-> _Since version 2.3.0 (developer preview since 2.1.0)_
+<SinceVersion tag="2.3.0 (developer preview since 2.1.0)" />
 
 :::note
 

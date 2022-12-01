@@ -9,6 +9,7 @@ description:
 ---
 
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
 
 Performance is a key factor in Front-Commerce projects. We aim to make your
 GraphQL server as fast as possible while ensuring that your data is always
@@ -489,7 +490,7 @@ export default {
 
 ### `PerMagentoCustomerGroup`
 
-> _Since version 2.0.0-rc.0_
+<SinceVersion tag="2.0.0-rc.0" />
 
 The `PerMagentoCustomerGroup` implementation is a decorator that is specific to
 Magento 1 and Magento 2 modules. It will decorate the existing caching
@@ -534,7 +535,7 @@ export default {
 
 ### `PerMagentoCustomerTaxZone`
 
-> _Since version 2.14.0_
+<SinceVersion tag="2.14" />
 
 The `PerMagentoCustomerTaxZone` implementation is a decorator that is specific
 to the Magento 2 module. It will decorate the existing caching strategies so
@@ -582,7 +583,7 @@ export default {
 
 ### `PerCurrency`
 
-> _Since version 2.2.0_
+<SinceVersion tag="2.2" />
 
 The `PerCurrency` implementation is a decorator that is specific to Magento 1
 integrations. It will decorate the existing caching strategies so that
@@ -621,7 +622,7 @@ export default {
 
 ### `PerMagentoAdminRole`
 
-> _Since version 2.1.0_
+<SinceVersion tag="2.1" />
 
 The `PerMagentoAdminRole` implementation is a decorator that is specific to
 Magento 2 integrations. It will decorate the existing caching strategies so that
@@ -667,7 +668,7 @@ header. The expected token must be configured with the
 
 ### `POST` for batched invalidations
 
-> _Since version 2.1.0_
+<SinceVersion tag="2.1" />
 
 This is the recommended way to invalidate cache. It allows to invalidate several
 entries in one HTTP call which is more efficient.
