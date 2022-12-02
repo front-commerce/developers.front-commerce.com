@@ -18,6 +18,7 @@ platforms:
 - [ElasticSearch - direct access](#elasticsearch) (using ElasticSuite)
 - [Algolia](#algolia)
 - [Attraqt](#attraqt)
+- [Attraqt Recommendations](#attraqt-recommendations)
 
 ## Native search
 
@@ -359,6 +360,44 @@ query Search {
 
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
+
+## Attraqt recommendations
+
+> _Since version `2.19`_
+
+Front-Commerce provides a loaders to retrieve recommendations from
+[Attraqt's Widgets](https://attraqt.gitbook.io/developer-documentation/xo-recommendations/readme-first).
+
+### Front-Commerce configuration
+
+To enable the Attraqt recommendation module, you need to add it to your
+`.front-commerce.js` config:
+
+```js title=".front-commerce.js"
+module.exports = {
+  // highlight-next-line
+  modules: ["./node_modules/front-commerce/modules/recommendations-attraqt"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-start
+    {
+      name: "AttraqtRecommendations",
+      path: "recommendations-attraqt/server/modules/attraqt-recommendations",
+    },
+    // highlight-end
+    { name: "Magento2", path: "server/modules/magento2" },
+  ],
+};
+```
+
+Then, you need to define the API url in your environment variables:
+
+```bash title=.env
+FRONT_COMMERCE_ATTRAQT_RECOMMENDATION_API_URL=http://api.early-birds.io/widget
+```
+
+After this step, you should be able to use this loader in your modules to fetch
+Attraqt recommendations for your widgets.
 
 ## Fallback Search
 
