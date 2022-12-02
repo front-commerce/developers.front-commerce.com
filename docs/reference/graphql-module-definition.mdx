@@ -6,6 +6,8 @@ description:
   documentation explains the different configuration keys available.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 :::info
@@ -284,7 +286,7 @@ export default {
 
 ### `executor` (optional)
 
-> _This feature has been added in version `2.0.0`_
+<SinceVersion tag="2.0" />
 
 The `executor` key allows you to optionally modify the underlying
 [executor](https://www.graphql-tools.com/docs/remote-schemas/#wrapschemaschemaconfig)
