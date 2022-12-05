@@ -135,10 +135,23 @@ module.exports = {
 See [Configure multiple stores](/docs/advanced/production-ready/multistore) for
 further information.
 
-:::info Magento
+:::info Platform specificities
+
+
+<Tabs>
+<TabItem value="Magento">
 
 When using Front-Commerce with **Magento**, store codes must match
 [Magento store view code](https://docs.magento.com/m2/ee/user_guide/stores/stores-all-create-view.html).
+
+</TabItem>
+<TabItem value="BigCommerce">
+
+When using Front-Commerce with **BigCommerce**, [each store must be associated
+with an existing channel](/docs/bigcommerce/installation#associate-each-store-with-a-channel).
+
+</TabItem>
+</Tabs>
 
 :::
 
