@@ -8,7 +8,9 @@ description:
   provides insights about its implementation.
 ---
 
-> _Since version 2.13 (Beta feature ~ API may change)_
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.13 (Beta feature ~ API may change)" />
 
 <p>{frontMatter.description}</p>
 
@@ -133,12 +135,12 @@ For example if you have two stores `https://example.com/en` and
 
 ### Working with the Facebook provider in development mode (localhost)
 
-External login rely on redirections, and in development your server is usually at
-`http://localhost` i.e. not reachable to Facebook. So to circumvent this in
+External login rely on redirections, and in development your server is usually
+at `http://localhost` i.e. not reachable to Facebook. So to circumvent this in
 development mode you can use a proxying service such as
 [ngrok](https://ngrok.com/) to proxy requests to your local machine. A proxying
-service will provide a publicly accessible URL to your local server. So to
-work with Facebook external logins on your local machine you need to set the
+service will provide a publicly accessible URL to your local server. So to work
+with Facebook external logins on your local machine you need to set the
 `FRONT_COMMERCE_FACEBOOK_DEVELOPMENT_BASE_CALLBACK_URL` environment variable to
 the URL given to you by your proxying service. (p.s. use just the origin part of
 the url without any trailing slashes `/`).

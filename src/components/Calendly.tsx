@@ -5,17 +5,21 @@ import { Button } from "react-infima";
 interface CalendlyProps {
   href?: string;
   children?: React.ReactNode;
+  variant?: "button" | "link";
 }
 
+const DEFAULT_LINK =
+  "https://get.front-commerce.com/book-a-free-consultation-demo-with-front-commerce-ceo-laurent";
+
 export default function Calendly({
-  href = "https://calendly.com/josquin-front-commerce/30min",
-  children = (
-    <>
-      Schedule a 30min meeting in Josquin's agenda <br />{" "}
-      <i>coffee is on us ☕</i>
-    </>
-  ),
+  href = DEFAULT_LINK,
+  children = <>Schedule a meeting</>,
+  variant = "button",
 }: CalendlyProps) {
+  if (variant !== "button") {
+    return <Link href={href}>{children}</Link>;
+  }
+
   return (
     <div className="text-center">
       <Link href={href}>

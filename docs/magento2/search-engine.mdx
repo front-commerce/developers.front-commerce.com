@@ -7,9 +7,10 @@ description:
   options available to you.
 ---
 
-<p>{frontMatter.description}</p>
-
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<p>{frontMatter.description}</p>
 
 You can configure search and product lists with filters using the following
 platforms:
@@ -22,7 +23,7 @@ platforms:
 
 ## Native search
 
-> _Since version 2.15_
+<SinceVersion tag="2.15" />
 
 Front-Commerce supports the native Magento API for search and category listing
 pages. It means that any Magento search module compatible with its GraphQL API
@@ -252,7 +253,7 @@ should now be visible.
 
 ## Attraqt
 
-> _Since version `2.19`_
+<SinceVersion tag="2.19" />
 
 ### Requirements
 
@@ -401,7 +402,7 @@ Attraqt recommendations for your widgets.
 
 ## Fallback Search
 
-> _Since version 2.15_
+<SinceVersion tag="2.15" />
 
 If no search module is configured Front-Commerce will default to using the
 native Magento search API to do the search.

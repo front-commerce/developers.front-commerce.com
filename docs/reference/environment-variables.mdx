@@ -7,9 +7,10 @@ description:
   staging, and local."
 ---
 
-<p>{frontMatter.description}</p>
-
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<p>{frontMatter.description}</p>
 
 Environment variables documented in this guide can be defined in two different
 ways:
@@ -90,10 +91,10 @@ redirects user to the HTTPS version of a page in this case. Use the
   invalidate parts of Front-Commerce cache. See
   [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation#invalidating-the-cache)
   for more details.
-- `FRONT_COMMERCE_CART_CACHE_ENABLE`: allows to enable [the cart cache (only
-    available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-customers-cart)
-- `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE`: allows to enable [the current customer cache (only
-    available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-current-customers-information)
+- `FRONT_COMMERCE_CART_CACHE_ENABLE`: allows to enable
+  [the cart cache (only available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-customers-cart)
+- `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE`: allows to enable
+  [the current customer cache (only available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-current-customers-information)
 
 ### Performance
 
@@ -190,18 +191,28 @@ for each one of these.
 
 ### BigCommerce
 
-- Access to the Management API: follow [the Creating an API Account guide](https://support.bigcommerce.com/s/article/Store-API-Accounts?language=en_US#creating) and then with the generated text file fill the following variables:
-  - `FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT` contains the `API PATH` without the `/v3/` suffix e.g. something like `https://api.bigcommerce.com/stores/<storeHash>`
+- Access to the Management API: follow
+  [the Creating an API Account guide](https://support.bigcommerce.com/s/article/Store-API-Accounts?language=en_US#creating)
+  and then with the generated text file fill the following variables:
+  - `FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT` contains the `API PATH` without the
+    `/v3/` suffix e.g. something like
+    `https://api.bigcommerce.com/stores/<storeHash>`
   - `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN` contains the `ACCESS TOKEN`
   - `FRONT_COMMERCE_BIG_COMMERCE_CLIENT_ID` contains the `CLIENT ID`
   - `FRONT_COMMERCE_BIG_COMMERCE_CLIENT_SECRET` contains the `CLIENT SECRET`
-  - `FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH` contains the store hash, it's
-      the last part of the `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN` described
-      above.
+  - `FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH` contains the store hash, it's the
+    last part of the `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN` described above.
 - [Reset password](/docs/bigcommerce/password-reset):
-  - `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SMTP_CONNECTION_STRING` contains the SMTP connection string used to send password reset emails e.g. something like `smtps://login:mypassword@smtp.example.com:465`. Both `smtp` and `smtps` are supported; login, password and port are optional.
-  - `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SENDER_EMAIL_ADDRESS` contains a plain email address (`noreply@example.com`) or a formatted sender (`My store <noreply@example.com>`) used as the sender of reset password emails.
-- `FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` contains the webhook secret, see [Configure the webhook secret](/docs/bigcommerce/bigcommerce-webhooks)
+  - `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SMTP_CONNECTION_STRING` contains
+    the SMTP connection string used to send password reset emails e.g. something
+    like `smtps://login:mypassword@smtp.example.com:465`. Both `smtp` and
+    `smtps` are supported; login, password and port are optional.
+  - `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SENDER_EMAIL_ADDRESS` contains a
+    plain email address (`noreply@example.com`) or a formatted sender
+    (`My store <noreply@example.com>`) used as the sender of reset password
+    emails.
+- `FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` contains the webhook secret, see
+  [Configure the webhook secret](/docs/bigcommerce/bigcommerce-webhooks)
 
 ### Elasticsearch
 
@@ -355,7 +366,7 @@ See [our related documentation](/docs/category/prismic) for details.
 
 ## Debugging
 
-> _Since version 1.0.0-beta.0_
+<SinceVersion tag="1.0.0-beta.0" />
 
 Front-Commerce leverages the [debug](https://www.npmjs.com/package/debug)
 package to show useful debugging information in the console. The `DEBUG`
@@ -375,7 +386,7 @@ Learn more in
 Here is a list of available debug namespaces:
 
 - `axios`: debugs axios requests and responses (using
-  [`axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
+  [axios-debug-log](https://www.npmjs.com/package/axios-debug-log))
 - `express-http-proxy`: debugs media requests proxied by the media middleware
   (see
   [express-http-proxy](https://www.npmjs.com/package/express-http-proxy#trace-debugging))
@@ -388,11 +399,14 @@ Here is a list of available debug namespaces:
 - `front-commerce:authorization`: debugs proxy authorization for remote sources
   (see `makeProtectedProxyRouter.js`)
 - `front-commerce:cache`: debugs cache invalidation calls, strategies
-  information and [HTTP Cache
-  deactivation](/docs/advanced/performance/cache-control-and-cdn/).
+  information and
+  [HTTP Cache deactivation](/docs/advanced/performance/cache-control-and-cdn/).
 - `front-commerce:cart`: debugs cart corrupted data received from remote sources
-- `front-commerce:cart:cache`: debugs cache information for customer's cart (see [Caching customers' cart](/docs/magento2/advanced#caching-customers-cart))
-- `front-commerce:customer:cache`: debugs cache information for current user's information (see [Caching current customers' information for Magento2](/docs/magento2/advanced#caching-current-customers-information))
+- `front-commerce:cart:cache`: debugs cache information for customer's cart (see
+  [Caching customers' cart](/docs/magento2/advanced#caching-customers-cart))
+- `front-commerce:customer:cache`: debugs cache information for current user's
+  information (see
+  [Caching current customers' information for Magento2](/docs/magento2/advanced#caching-current-customers-information))
 - `front-commerce:cluster`: debugs the node process id and other information to
   help configuring cluster mode
 - `front-commerce:config`: dumps the configuration for a typical request at the

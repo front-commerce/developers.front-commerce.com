@@ -80,6 +80,9 @@ export default function Hero() {
                   src={company.logo}
                   alt={company.name}
                   className="invert dark:invert-0 mx-auto h-[50px] w-auto"
+                  style={{
+                    filter: "var(--tw-invert)", // fixes FC-1211
+                  }}
                 />
               </div>
             ))}

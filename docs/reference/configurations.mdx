@@ -287,3 +287,48 @@ Allows to define configurations related to GraphQL rate limiting feature.
 See
 [Use a persistent store](/docs/advanced/graphql/rate-limiting#use-a-persistent-store)
 for further information.
+
+### `config/images.js`
+
+Allows to define configurations related to images and image resizing to ensure
+the best performance.
+
+- `defaultBgColor`: background of your images if they are not in the correct
+  ratio
+- `presets`: different formats available
+
+:::tip
+
+In addition to the presets explicitly declared, there is also an `original`
+preset which allows to retrieve the image without any transformation.
+
+⚠️ this format should be used with caution as these images would be unoptimised,
+it is expected that you take care of the optimisation of these images yourself.
+
+:::
+
+```js title="src/config/images."
+export default {
+  defaultBgColor: "transparent",
+  presets: {
+    thumbnail: {
+      width: 50, // size of the resized image
+      height: 50, // size of the resized image
+    },
+    noRatio: {
+      width: 474,
+      // the placeholder image may have a different height than the loaded image
+      // when you have a list of images but don't actually know the ratio of the final image
+      // you can replace the height with placeholderHeight in the preset
+      placeholderHeight: 474,
+    },
+    withSizes: {
+      width: 1100,
+      height: 1100,
+      // the sizes allows the image to resize itself depending on the screen size
+      // if no sizes are defined then these default sizes will be used
+      sizes: ["0.5", "1", "2", "4"],
+    },
+  },
+};
+```

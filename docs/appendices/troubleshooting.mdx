@@ -5,6 +5,8 @@ description:
   information that will help to solve them quickly.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 import ContactLink from "@site/src/components/ContactLink";
@@ -132,7 +134,7 @@ for further information
 
 ## I cannot `POST` a big payload to the server
 
-> _This value is configurable since version `2.2.0`_
+<SinceVersion tag="2.2" />
 
 Front-Commerce's server contains 2 configurations defining a maximum size for
 `POST` payloads to prevent abuses.

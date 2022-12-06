@@ -27,13 +27,13 @@
 * see https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima
 */
 [data-theme="dark"] {
-  --ifm-color-primary: #ff2a6a;
-  --ifm-color-primary-dark: #ff0c55;
-  --ifm-color-primary-darker: #fc004c;
-  --ifm-color-primary-darkest: #d0003e;
-  --ifm-color-primary-light: #ff487f;
-  --ifm-color-primary-lighter: #ff5789;
-  --ifm-color-primary-lightest: #ff83a8;
+  --ifm-color-primary: #ff8aab;
+  --ifm-color-primary-dark: #ff638f;
+  --ifm-color-primary-darker: #ff4f81;
+  --ifm-color-primary-darkest: #ff1456;
+  --ifm-color-primary-light: #ffb1c7;
+  --ifm-color-primary-lighter: #ffc5d5;
+  --ifm-color-primary-lightest: #ffffff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -76,4 +76,10 @@ video.video-cover:not(:fullscreen) {
   z-index: 2147483647;
   min-height: 80px; /* ensures it covers the intercom bar */
   backdrop-filter: blur(10px);
+}
+
+.markdown iframe,
+.markdown video,
+.markdown img {
+  max-width: 100%;
 }
