@@ -1,0 +1,92 @@
+---
+sidebar_position: 3
+title: Custom Adapter
+description:
+  Deliver images enhanced and optimized for every user using your custom
+  adapter.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.20" />;
+
+<p>{frontMatter.description}</p>
+
+### What is an Image Adapter?
+
+An Image Adapter is a custom function that you can use to deliver images
+enhanced and optimized for every user. It is a function that takes an image URL
+as input and returns a new image URL as output. The new image URL can be the
+same as the original image URL, or it can be a different image URL that is
+optimized for the user's device, browser, or network.
+
+### Getting Started
+
+To get started, you need to create a custom adapter class. The class must extend
+the `ImageAdapter` domain which implements a `supportSrc` method, and a
+`makeImageSrc` method.
+
+The `supportSrc` method is used to check if the image URL is valid for the
+current adapter. If the image URL is valid, the `makeImageSrc` method is called
+to generate the new image URL.
+
+### Creating an Image Adapter
+
+So for example, if we have two Image Adapters, one for images from the Unsplash,
+
+```js title="src/web/adapters/unsplash.js"
+import { ImageAdapter } from "theme/components/atoms/Image/ImageAdapter";
+
+class UnsplashAdapter extends ImageAdapter {
+  supportSrc(src) {
+    return src.includes("unsplash.com");
+  }
+
+  makeImageSrc(src) {
+    // ... do something with the image URL
+    return src;
+  }
+}
+
+export default new UnsplashAdapter();
+```
+
+and one for images from the Lorem Picsum, we can create the following classes:
+
+```js title="src/web/adapters/lorem-picsum.js"
+import { ImageAdapter } from "theme/components/atoms/Image/ImageAdapter";
+
+class LoremPicsumAdapter extends ImageAdapter {
+  supportSrc(src) {
+    return src.includes("picsum.photos");
+  }
+
+  makeImageSrc(src) {
+    // ... do something with the image URL
+    return src;
+  }
+}
+
+export default new LoremPicsumAdapter();
+```
+
+### Registering an Image Adapter
+
+To register an Image Adapter, you need to add it to the `imageAdapters`
+component you can do this by adding it to a top level route or a layout for
+example.
+
+```js title="src/web/routes/Home/Home.js"
+import imageAdapters from "theme/components/atoms/Image/adapters";
+
+import UnsplashAdapter from "src/web/adapters/unsplash";
+import LoremPicsumAdapter from "src/web/adapters/lorem-picsum";
+
+imageAdapters.register(UnsplashAdapter);
+imageAdapters.register(LoremPicsumAdapter);
+```
+
+### Using an Image Adapter
+
+All the built-in image components use the ImageAdapters by default to deliver
+images enhanced and optimized images.
