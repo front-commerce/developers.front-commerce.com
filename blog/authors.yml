@@ -1,0 +1,28 @@
+front-commerce:
+  name: Front-Commerce Team
+  url: https://github.com/orgs/front-commerce
+  image_url: https://github.com/front-commerce.png
+
+paul:
+  name: Paul van Dyk
+  title: Developer @ Front-Commerce
+  url: https://github.com/paul-vd
+  image_url: https://github.com/paul-vd.png
+
+pierre:
+  name: Pierre Martin
+  title: CTO & Co-founder @ Front-Commerce
+  url: https://github.com/real34
+  image_url: https://github.com/real34.png
+
+damien:
+  name: Damien Pobel
+  title: Developer @ Front-Commerce
+  url: https://github.com/dpobel
+  image_url: https://github.com/dpobel.png
+
+gaetan:
+  name: Gaetan Flament
+  title: Developer @ Front-Commerce
+  url: https://github.com/kagaminara
+  image_url: https://github.com/kagaminara.png
