@@ -1,0 +1,154 @@
+---
+title: "Release: 2.20"
+authors: pierre
+date: 2022-12-08T18:00
+hide_table_of_contents: true
+---
+
+## Closing 2022 with BigCommerce multi-store support, Cloudinary, Node 18 and pro-active monitoring for Cloud customers
+
+As the year comes to a close, we're excited to announce important updates for BigCommerce projects and Front-Commerce Cloud customers.
+
+In this release, we've focused on polishing the product and fixing bugs, as part of our quarterly *cleaning session*. This ensures that Front-Commerce continues to provide a stable and reliable platform for building online stores.
+
+Additionally, with several projects going live over the past few weeks, our team has been busy providing support and expertise to help make these projects a success. Congratulations to everyone involved in these production releases - we're proud to see more Front-Commerce storefronts out there!
+
+Grab a cup of ☕ and read on to learn more about what's new in this release.
+
+<!-- truncate -->
+
+import Calendly from "@site/src/components/Calendly";
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ContactLink from "@site/src/components/ContactLink";
+
+
+## BigCommerce accounts and multi-store
+
+In this release, we've added support for key features in the BigCommerce platform, including:
+
+- Multi-store with channel support, including cart creation, prices, and a forgot password functionality
+- User account management, including address management, order pages with shipment information, and wishlist management
+- Product swatches
+
+These additions bring our BigCommerce connector up to par with the platform's most important features.
+
+## Cloudinary image adapter
+
+We're introducing support for [Cloudinary](https://cloudinary.com/) as another best-of-breed solution for image management in Front-Commerce.
+
+For those unfamiliar, Cloudinary is a cloud-based platform that offers a range of image-related services, including storage, optimization, and manipulation. With the Cloudinary adapter, you can now use these services seamlessly within your Front-Commerce projects, **without the need for any additional customization in your existing theme** (if you're using the `<Image>` component).
+
+This new integration allows you to take advantage of Cloudinary's powerful image-related capabilities, helping you to improve the performance and visual appeal of your online store.
+
+## Node 18 compatibility
+
+In this release, we've made sure that Front-Commerce is fully compatible with Node 18. This ensures that you can use the latest version of Node.js when building your Front-Commerce projects.
+
+It's worth nothing that Front-Commerce supports [all actively supported Long-Term Support (LTS) versions of Node.js](https://endoflife.date/nodejs).
+This means that you can use the latest LTS release of Node.js with Front-Commerce, and be confident that you will never be blocked on an outdated node version.
+
+**We recommend that you take this opportunity to upgrade to Node 18 and test your Front-Commerce application as part of the update to 2.20.**
+This may be as simple as updating your Dockerfiles and CI pipelines to use the latest version of Node.js. By doing so, you can take advantage of the latest improvements and security updates in Node.js, while still being able to rely on long-term support for your application.
+
+## Front-Commerce Cloud improvements
+
+In this release, we've made a number of improvements to Front-Commerce Cloud, our managed hosting platform for Front-Commerce projects.
+
+- We've added support for **redirection plans with thousands of lines**. This allows you to define complex redirect rules for your application, making it easier to manage your website's URLs and improve its SEO during large content reorganization.
+- We've implemented a new mechanism to prevent concurrent builds on the same branch. This ensures that your builds are not interrupted or corrupted by other builds running at the same time, resulting in more stable and reliable deployments.
+- We've introduced the ability to specify the Node.js version to use for each branch in your repository. This allows you to **use different versions of Node.js for different branches**.
+
+*These features are not yet available in self-service, but <ContactLink>our support team</ContactLink> will be able to apply these changes to your project within a few hours!*
+
+## Pro-active monitoring for Cloud projects
+
+We're excited to announce the launch of pro-active monitoring for Front-Commerce Cloud projects. This new service is designed to **help teams continuously improve the quality of their projects and provide the best possible experience for their customers**.
+
+Over the coming weeks, we'll be reaching out to development teams of Front-Commerce Cloud projects on a regular basis to highlight the most important issues detected on their projects.
+This pro-active approach will help teams **quickly identify and resolve root causes of problems, saving time on bug detection and resolution**.
+
+This is an ongoing process. New devices, content changes, new versions of your code or remote services updates are all contributing to an uncertain world!
+With pro-active monitoring, we hope to support a culture of continuous improvement, so that teams can quickly and easily resolve any issues that may arise and embrace uncertainty.
+
+We're looking forward to receiving feedback on this new feature, and we'll be working to **shape the pro-active monitoring process to fit seamlessly into your workflow**. If you have any thoughts or suggestions, <ContactLink>please let us know!</ContactLink>
+
+## Supporting projects and teams
+
+As the end of the year approaches, we're pleased to see several Front-Commerce projects that were started earlier this year reaching completion. These projects range from **progressive migrations and new storefronts, to full frontend reworks, showcasing the diverse range of applications for Front-Commerce.**
+
+In addition to developing new features for Front-Commerce, our core team is also dedicated to providing support and high-quality service to our partners and customers. This ensures that their projects are successful and meet their goals.
+
+We've been working closely with project teams on a variety of topics to ensure the success of their Front-Commerce projects. This includes audits, performance improvements, expertise, support for last-minute bugs, platform monitoring, and stabilization.
+
+**Congratulation to partners and customers** for reaching these milestones with us! 🎉
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+* **analytics:** the Product Search event payload now contains the number of orpducts in the `productsCount` value for use in analytics pluging
+* **dx:** slightly reduced the JS bundle size by adding `babel-plugin-lodash` to the build configuration
+* **lodash:** updated imports to use more specific version
+
+```mdx-code-block
+</details>
+
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+* **analytics:** prevent syntax error when tracking cart page after removing the last cart item from the cart page
+* **cart:** the cart cache is now properly reflecting cart merge on login
+* **category:** navigating between categories from a PLP now resets page number
+* **magento:** prevent crash when filtering on category page with active filters in cache (since 2.19)
+* **magento2:** the user account now only list customer orders from the current store
+* **stripe:** fixed a rounding issue in stripe payment amount
+* **prismic:**
+    * support node 14 by adding a `replaceAll` polyfill
+    * disable HTTP cache in preview mode
+    * in preview mode content writers won't be served cached content from CDN/reverse proxies
+    * paths are now ignored when no route has been registered
+    * the `LinkTransform` now gracefully ignores links with type `Any` and broken links
+    * routable types can now contain a dot in their paths ([workaround for a known Prismic issue](https://community.prismic.io/t/routes-with-suffix/11546))
+    * fixed an issue with caching deserialization of reserved fields for Link and Image transformers
+    * prevent "undefined content list" errors when cached resolvers return `undefined` instead of an empty list
+
+```mdx-code-block
+</details>
+
+<details>
+  <summary><h3 className="mb-0">Dependencies updates</h3></summary>
+```
+* updated @types/react to `v16.14.34`
+* updated apollo-server-caching to `^0.7.0`
+* updated mini-css-extract-plugin to `^0.12.0`
+* updated sharp to `^0.31.0`
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.20.0"}
+  previousVersions={[
+    "2.18.4",
+    "2.17.5",
+    "2.16.6",
+    "2.15.7",
+    "2.14.7",
+    "2.13.10",
+    "2.12.9",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.20.0](/docs/appendices/migration-guides#2190---2200)
+or
+[read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.20.0)
+
+</ChangelogFooter>
