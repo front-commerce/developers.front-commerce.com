@@ -1,0 +1,144 @@
+---
+sidebar_position: 1
+title: Cloudinary
+description:
+  Streamline media management and improve user experience by automatically
+  delivering images enhanced and optimized for every user.
+---
+
+import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.20" />
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+Add the `cloudinary` module to your config file:
+
+```js title=".front-commerce.js"
+module.exports = {
+  name: "Front Commerce",
+  modules: [
+    "./node_modules/front-commerce/theme-chocolatine",
+    // highlight-next-line
+    "./node_modules/front-commerce/modules/cloudinary",
+    "./src",
+  ],
+};
+```
+
+## Configuration
+
+In order to use Cloudinary, you need to extend your
+[`src/config/images.js`](/docs/reference/configurations#configimagesjs) config.
+
+- `cloudName` (required): the Cloud Name of your Cloudinary environment. (can be
+  found [in your Cloudinary console](https://console.cloudinary.com/console)).
+- `autoUploadMapping`: To attach an upload-preset to a mapped folder.
+- `transformations`: transformations which should be applied to the images.
+
+```js title="src/config/images.js"
+// Full configuration
+module.exports = {
+  cloudinary: {
+    cloudName: "my-cloud-name",
+    autoUploadMapping: [{ prefix: "/media", folder: "my-media-folder" }],
+    transformations: {
+      quality: "auto",
+      gravity: "auto",
+    },
+  },
+};
+```
+
+Update your <abbr title="Content Security Policy">CSP</abbr> to allow Cloudinary
+to work:
+
+```diff title="src/config/website.jss"
+  contentSecurityPolicy: {
+    directives: {
+      scriptSrc: [],
+      frameSrc: [],
+      styleSrc: [],
+-     imgSrc: [],
++     imgSrc: ["https://res.cloudinary.com"],
+      fontSrc: [],
+      connectSrc: [],
+      baseUri: [],
+    }
+  },
+```
+
+## Auto Upload Mapping
+
+You can automatically upload images to Cloudinary by mapping a folder to
+matching path.
+
+```js title="src/config/images.js"
+module.exports = {
+  cloudinary: {
+    cloudName: "my-cloud-name",
+    // highlight-start
+    autoUploadMapping: [
+      {
+        prefix: "/media", // the public URL's to match in Front-Commerce, for example /media would match `/media/image.jpg`
+        folder: "my-media-folder", // Cloudinary's folder name to upload remote images to
+      },
+    ],
+    // highlight-end
+  },
+};
+```
+
+In cloudinary this can be configured by following this guide:
+
+<iframe
+  src="https://scribehow.com/embed/Cloudinary__Auto_Upload_Mapping__don2zglETA6AUHheSjPTeA"
+  width="100%"
+  height="640"
+  allowfullscreen
+  frameborder="0"
+></iframe>
+
+## Transformations
+
+We currently support the following transformations:
+
+- `quality`: The quality of the image to be delivered. defaults to `auto` (see
+  [docs](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto))
+- `gravity`: The part of the image to focus on. defaults to `auto` (see
+  [docs](https://cloudinary.com/documentation/resizing_and_cropping#control_gravity))
+
+Do not hesitate to <ContactLink>contact us</ContactLink> if you need more
+transformations.
+
+### Preset Transformations
+
+You can also apply different transformations based on the preset, for example:
+
+```js title="src/config/images.js"
+module.exports = {
+  presets: {
+    large: {
+      width: 100,
+      height: 100,
+      // highlight-start
+      cloudinary: {
+        transformations: {
+          quality: "high",
+        },
+      },
+      // highlight-end
+    },
+  },
+  cloudinary: {
+    cloudName: "my-cloud-name",
+    transformations: {
+      quality: "auto",
+      gravity: "auto",
+    },
+  },
+};
+```

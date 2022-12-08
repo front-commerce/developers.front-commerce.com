@@ -48,6 +48,45 @@ module.exports = {
 };
 ```
 
+## Associate each store with a channel
+
+Each store in `src/config/stores.js` must be associated with [a BigCommerce
+channel](https://developer.bigcommerce.com/api-reference/38ae38c2aa5a7-channels#channels).
+For that each entry should have a `channelName` field containing the name of an
+existing channel. It's also mandatory to properly set the `currency` field so
+that it is consistent with the channel configuration.
+
+For instance, if in BigCommerce you have defined two channels called `French`
+and `British` to sell products in Euros and in British Pounds, your `stores.js`
+should contain something like:
+
+```js
+module.exports = {
+  fr: {
+    url: `${process.env.FRONT_COMMERCE_URL}/fr`,
+    // highlight-start
+    channelName: "French", // must match a channel name
+    currency: "EUR", // must be consistent with the channel settings
+    // highlight-end
+    locale: "fr-FR",
+    default_country_id: "FR",
+    countries: (IsoCountries) =>
+      IsoCountries.registerLocale(require("i18n-iso-countries/langs/fr.json")),
+  },
+  en: {
+    url: `${process.env.FRONT_COMMERCE_URL}/en`,
+    // highlight-start
+    channelName: "British", // must match a channel name
+    currency: "GBP", // must be consistent when the channel settings
+    // highlight-end
+    locale: "en-GB",
+    default_country_id: "GB",
+    countries: (IsoCountries) =>
+      IsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json")),
+  },
+};
+```
+
 ## Configure the environment
 
 :::note
@@ -58,14 +97,7 @@ page.
 
 :::
 
-Front-Commerce uses BigCommerce GraphQL and Management API
-
-- Management API variables: `FRONT_COMMERCE_BIG_COMMERCE_ENDPOINT` and
-  `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN`
-- GraphQL variables: `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT` and
-  `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN`
-
-## [Access to Management API](ttps://developer.bigcommerce.com/docs/ZG9jOjIyMDYxMw-v2-and-v3-rest-api-authentication#obtaining-store-api-credentials)
+### [Access to Management API](ttps://developer.bigcommerce.com/docs/ZG9jOjIyMDYxMw-v2-and-v3-rest-api-authentication#obtaining-store-api-credentials)
 
 - In the control panel, browse to:
   [Advanced Settings > API Accounts > Create an API Account](https://login.bigcommerce.com/deep-links/manage/settings/api-accounts/create)
@@ -94,32 +126,6 @@ FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN=ab9cd9x75abc1tumu0wce8yxedu3ue3
 FRONT_COMMERCE_BIG_COMMERCE_CLIENT_ID=aclientid
 FRONT_COMMERCE_BIG_COMMERCE_CLIENT_SECRET=aclientsecret
 FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH=yhowbpps4e
-```
-
-## [Access to BigCommerce Graph](https://developer.bigcommerce.com/docs/ZG9jOjIyMDczOQ-overview)
-
-You need to
-[create a _Customer impersonation token_](https://developer.bigcommerce.com/docs/ZG9jOjIyMDczOQ-overview#customer-impersonation-tokens)
-
-```shell
-# use the endpoint and the auth token generated in the previous step
-curl -X POST https://api.bigcommerce.com/stores/yhowbpps2e/v3/storefront/api-token-customer-impersonation \
- -H "X-Auth-Token: ab9cd9x75abc1tumu0wce8yxedu3ue3" \
- -H "Content-Type: application/json" \
- --data '{"channel_id": 1, "expires_at": 1893452400}'
-```
-
-In your .env file, define:
-
-- `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT=https://name-of-the-sandbox.mybigcommerce.com/graphql`
-  it is the URL of the BigCommerce shop with `/graphql`
-- `FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN` with generated token
-
-Example:
-
-```shell title=".env"
-FRONT_COMMERCE_BIG_COMMERCE_GRAPH_ENDPOINT=https://my-sandbox.mybigcommerce.com/graphql
-FRONT_COMMERCE_BIG_COMMERCE_GRAPH_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjaWQiOjEsImNvcnMiOltdLCJlYXQiOjE4OTM0NTI0MDAsImlhdCI6MTY0NjczMTg0NSwiaXNzIjoiQkMiLCJzaWQiOjEwMDIyMjI3OTksInN1YiI6Imp3ZjdsbnNsMnNqYjJpYmYyZGF2b2JkaXF2a3lya2IiLCJzdWJfdHlwZSI6MiwidG9rZW5fdHlwZSI6Mn0.4gQ0s264i1lHVEUpgcpUo20zl1gCE68DtYOoa4P6vwRizoEMZYUAcfQV8TmaoM7LO0f-tvN_hrmV5SocZabc-w
 ```
 
 ### Misc env. variables

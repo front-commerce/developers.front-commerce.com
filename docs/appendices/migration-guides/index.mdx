@@ -12,6 +12,21 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.19.0` -> `2.20.0`
+
+### Default shipping and billing address support
+
+In this release, we updated how the `"Use as default billing address"` and
+`"Use as default shipping address"` checkboxes are displayed in the
+[`AddressForm`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/User/Address/AddressForm/AddressForm.js)
+component. It now can be controlled globally using a configuration in the
+[`src/config/website.js`](/docs/reference/configurations#configwebsitejs)
+configuration file.
+
+Please check if you have overriden the `AddressForm` component
+([commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/fd27e93d3e345157251ac6d3ace5e5e56c528ce6))
+if you're interested in using this feature.
+
 ## `2.18.0` -> `2.19.0`
 
 ### Replaced `mkdirp` package with `make-dir`
