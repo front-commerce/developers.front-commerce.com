@@ -67,6 +67,10 @@ FRONT_COMMERCE_PAYZEN_SHA256=xxxxxxxxx
 #FRONT_COMMERCE_PAYZEN_PRODUCT=payzen # use lyra_collect to switch to Lyra Collect's API URLs
 ```
 
+You must also configure notifications in Payzen or Lyra "expert mode" to ensure **only one notification is sent** upon payment, to prevent multiple orders being created for a single payment:
+
+![PayZen notification rules configuration with only one notification enabled for "URL de notification à la fin du paiement"](assets/payzen-notifications-configuration.png)
+
 ### Register the PayZen payment module
 
 In your Front-Commerce application:
