@@ -44,7 +44,12 @@ In order to use Cloudinary, you need to extend your
 module.exports = {
   cloudinary: {
     cloudName: "my-cloud-name",
-    autoUploadMapping: [{ prefix: "/media", folder: "my-media-folder" }],
+    autoUploadMapping: [
+      {
+        prefix: "/media",
+        folder: "my-media-folder",
+      },
+    ],
     transformations: {
       quality: "auto",
       gravity: "auto",
