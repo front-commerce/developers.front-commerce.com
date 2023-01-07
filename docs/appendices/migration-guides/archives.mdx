@@ -735,7 +735,7 @@ For a Magento2 based Front-Commerce setup:
 -  modules: [],
 +  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 +    {
 +      name: "Magento2Elasticsearch",
 +      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
@@ -750,7 +750,7 @@ For a Magento1 based Front-Commerce setup:
 -  modules: [],
 +  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 +    {
 +      name: "Magento1Elasticsearch",
 +      path: "datasource-elasticsearch/server/modules/magento1-elasticsearch",

@@ -80,7 +80,7 @@ module.exports = {
   // highlight-next-line
   modules: ["./node_modules/front-commerce/modules/payment-adyen"],
   serverModules: [
-    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
     { name: "Magento1", path: "server/modules/magento1" },
     // highlight-start
     {
@@ -108,7 +108,7 @@ module.exports = {
   // highlight-next-line
   modules: ["./node_modules/front-commerce/modules/payment-adyen"],
   serverModules: [
-    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
     { name: "Magento2", path: "server/modules/magento2" },
     // highlight-start
     {
@@ -400,7 +400,7 @@ FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true
 -  modules: [],
 +  modules: ["./node_modules/front-commerce/modules/payment-adyen"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 -    { name: "Magento2", path: "server/modules/magento2" }
 +    { name: "Magento2", path: "server/modules/magento2" },
 +    {

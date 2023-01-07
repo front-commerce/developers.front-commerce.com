@@ -47,7 +47,7 @@ In your Front-Commerce application:
 -   modules: [],
 +   modules: ["./node_modules/front-commerce/modules/payment-buybox"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 -    { name: "Magento2", path: "server/modules/magento2" }
 +    { name: "Magento2", path: "server/modules/magento2" },
 +    { name: "BuyBox", path: "payment-buybox/server/modules/payment-buybox" }
