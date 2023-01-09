@@ -95,7 +95,7 @@ Here is an example of a custom router that proxy a Magento remote url with
 additional checks:
 
 ```js
-import proxy from "express-http-proxy";
+import proxy from "server/core/proxy";
 import config from "server/express/config";
 import withMagentoProxyHeaders from "server/express/withMagentoProxyHeaders";
 import makeProtectedProxyRouter from "server/core/makeProtectedProxyRouter";
