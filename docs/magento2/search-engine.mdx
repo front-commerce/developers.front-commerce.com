@@ -213,8 +213,16 @@ Front-Commerce retrieves the following parameters from Magento:
 - the number of values per facet
 - the configured facet attributes
 
-On the configured facets, only the attribute name is taken into account (_Facet
-type_, _Label_, _Searchable_ and _Create Query rule_ are ignored for now).
+On the configured facets, only the attribute name and the facet type are taken
+into account (_Label_, _Searchable_ and _Create Query rule_ are ignored for
+now).
+
+:::note
+
+Before version 2.21, the facet type was ignored and Front-Commerce behaved as if
+the facet type was set to `Conjunctive`.
+
+:::
 
 :::warning
 
