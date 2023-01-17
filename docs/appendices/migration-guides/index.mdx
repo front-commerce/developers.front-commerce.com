@@ -14,6 +14,16 @@ import TabItem from "@theme/TabItem";
 
 ## `2.20.0` -> `2.21.0`
 
+### Algolia facet configurations
+
+As of this version, the Algolia datasource for Magento2 takes the facet type
+into account to build queries sent to Algolia. In previous versions,
+Front-Commerce behaved as if the facet type was set to `Conjunctive`. So by
+upgrading to this version, you might experience a change of behavior in the
+search results. To avoid that, you can set the facet type to `Conjunctive` under
+Stores > Configuration > Algolia Search > Instant Search Results Page in the
+Facets configuration.
+
 ### Media proxy updated to send a custom user agent
 
 If you have added a [custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint) in your application, we recommend to update the code as follows:
