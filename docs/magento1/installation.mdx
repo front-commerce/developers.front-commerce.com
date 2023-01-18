@@ -16,7 +16,7 @@ description:
 
 ### Recommendation
 
-- [Magento LTS](https://github.com/OpenMage/magento-lts) (1.9.4.x)
+- [OpenMage LTS](https://github.com/OpenMage/magento-lts) (1.9.4.x - v19.x)
 - `php` 7.3 with OpenSSL
 - `MySQL` 8.0+
 
@@ -105,7 +105,7 @@ in System > Configuration.
 
 :::
 
-### **Check install**
+### Check install
 
 Go to the `Front-Commerce > Configuration` admin menu entry. You should see an
 "Installer checker" that will ensure that everything is configured correctly in
@@ -114,7 +114,7 @@ your shop.
 Right after your first installation, most of the checks should be invalid.
 Please refer to the next steps to validate them.
 
-### **REST roles**
+### REST roles
 
 Front-Commerce requires you to define 3 roles.
 
@@ -130,7 +130,7 @@ See the
 [official documentation](https://docs.magento.com/m1/ce/user_guide/system-operations/web-services-activate.html)
 for detailed information about how to achieve this with Magento.
 
-### **REST attributes**
+### REST attributes
 
 Front-Commerce roles must have access to several data on each entities, so it
 can expose them in GraphQL. You must allow each role to read these information.
@@ -140,7 +140,7 @@ can expose them in GraphQL. You must allow each role to read these information.
 - Set all ACL attributes rules to all resource access (ACL Attribute Rules tab >
   Resource Access "All").
 
-### **REST OAuth Consumer**
+### REST OAuth Consumer
 
 Front-Commerce must be able to create tokens for users when they log-in. You
 should ensure there is a `Front-Commerce` consumer configured in your install.
@@ -155,7 +155,7 @@ The Key/Secret values should be used to configure your Front-Commerce, with the
 `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET` environment variables in your `.env`
 file.
 
-### **Admin user**
+### Admin user
 
 Advanced features such as Embedded Payments have to use an admin user with REST
 access. You must ensure it exists, by doing the following steps.
@@ -170,7 +170,7 @@ access. You must ensure it exists, by doing the following steps.
   - Password: enter a password
   - REST Role: Admin
 
-### **REST admin token**
+### REST admin token
 
 You must generate admin tokens to configure Front-Commerce.
 
@@ -179,7 +179,7 @@ You must generate admin tokens to configure Front-Commerce.
   the same key as `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN` and
   `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET` in your Front-Commerce `.env`)
 
-### **Magento core patch**
+### Magento core patch
 
 If the OAuth Zend Patch is not valid in the installer checker, please follow
 these steps:
@@ -192,7 +192,7 @@ these steps:
   - With GIT: `git apply fix-sort-params-core.patch`
   - Without GIT: `patch -p1 < fix-sort-params-core.patch`
 
-### **URLs settings**
+### URLs settings
 
 - Go to System > Configuration > Front-Commerce General > URLs Settings
 - Add your Front-Commerce Front URL. In development environment, it should be
@@ -204,13 +204,13 @@ these steps:
   (`http://localhost:4000/` in development environment) for each store view
   value. You can keep your admin URL for the default value.
 
-### **Cache settings**
+### Cache settings
 
 - Go to System > Configuration > Front-Commerce General > Cache Settings
 - Add random Key (This should be the same key as
   `FRONT_COMMERCE_CACHE_API_TOKEN` in your Front-Commerce `.env`)
 
-### **Front-Commerce secret key**
+### Front-Commerce secret key
 
 For more security add a random key on `frontcommerce_secret_key` in your
 `app/etc/local.xml`
@@ -223,7 +223,7 @@ For more security add a random key on `frontcommerce_secret_key` in your
     // ...
 ```
 
-### **Clean Magento cache**
+### Clean Magento cache
 
 ## Ensure it works Once this is done, all the checks should be green in your
 installer checker and you should be good to go. You can check that the guest
