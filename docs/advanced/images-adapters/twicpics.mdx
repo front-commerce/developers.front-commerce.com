@@ -62,7 +62,7 @@ to work:
 In order to use TwicPics, you need to extend your
 [`src/config/images.js`](/docs/reference/configurations#configimagesjs) config.
 
-- `subdomain` (required): the Cloud Name of your TwicPics environment (see
+- `domain` (required): the Cloud Name of your TwicPics environment (see
   [reference](https://www.twicpics.com/docs/getting-started/fundamentals#domains-and-paths))
 - `paths`: paths which should be proxied to TwicPics. (see
 [reference](https://www.twicpics.com/docs/getting-started/fundamentals#domains-and-paths))
@@ -71,7 +71,7 @@ In order to use TwicPics, you need to extend your
 ```js title="src/config/images.js"
 module.exports = {
   twicpics: {
-    subdomain: "https://<sub>.twic.pics",
+    domain: "https://<sub>.twic.pics",
     paths: [
       {
         source: "/media", // the source to match, (eg `/media` would match `/media/image.jpg`, or `https://my-domain.com/media` would match `https://my-domain.com/media/image.jpg`)
@@ -114,7 +114,7 @@ module.exports = {
     },
   },
   twicpics: {
-    subdomain: "https://<sub>.twic.pics",
+    domain: "https://<sub>.twic.pics",
     paths: [
       {
         source: "/media", // the source to match, (eg `/media`, or `https://my-domain.com/media`)
