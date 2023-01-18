@@ -16,7 +16,7 @@ of each module supporting a feature flag (e.g.
 [wishlist](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/wishlist/index.js#L21),
 [search](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/search/index.js#L41)).
 
-To enable or disable a feature one must update the overriden `FeatureFlag`
+To enable or disable a feature one must update the overridden `FeatureFlag`
 loader in the `contexEnhancer` of the module and ensure `isActive` returns
 `true` (to enable the feature) or `false` (to disable the feature) ONLY when the
 name matches the feature flag's name. For example setting the below in

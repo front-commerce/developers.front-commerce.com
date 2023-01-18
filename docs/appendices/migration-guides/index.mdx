@@ -23,7 +23,7 @@ component. It now can be controlled globally using a configuration in the
 [`src/config/website.js`](/docs/reference/configurations#configwebsitejs)
 configuration file.
 
-Please check if you have overriden the `AddressForm` component
+Please check if you have overridden the `AddressForm` component
 ([commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/fd27e93d3e345157251ac6d3ace5e5e56c528ce6))
 if you're interested in using this feature.
 
@@ -905,7 +905,7 @@ If you are using theme chocolatine:
 The `<PaymentMethodLabel>` component was moved from
 `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to
 `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will
-still work but will output deprecation messages when used. If you have overriden
+still work but will output deprecation messages when used. If you have overridden
 `<PaymentMethodLabel>` you should also relocate your override to the same path
 and update all references to point to it.
 
@@ -2155,7 +2155,7 @@ using it you need to change where you are importing if like below:
 In this release, we've reworked the internals of SmartForm fields to better
 support browser autocomplete.
 
-The public API remains unchanged but if you've overriden internal components,
+The public API remains unchanged but if you've overridden internal components,
 please check your overrides against their original. See these Merge Requests:
 [#641](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/641)
 and
