@@ -99,7 +99,7 @@ GraphQL modules allows you to
 module.exports = {
   // […]
   serverModules: [
-    { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
     { name: "Magento2", path: "server/modules/magento2" },
   ],
   // […]
@@ -130,7 +130,7 @@ management.
 As of the latest release, Front-Commerce’s provides the following GraphQL
 modules (or [meta-modules](/docs/advanced/graphql/meta-modules)):
 
-- `server/modules/front-commerce-core`: core features of Front-Commerce.
+- `server/modules/front-commerce`: core features of Front-Commerce.
 - `server/modules/magento2` _(meta module)_: Magento2 GraphQL modules to
   [use Front-Commerce with all Magento2 supported features](/docs/category/magento2).
   Register single sub-modules explicitly if you only need a subset of features.

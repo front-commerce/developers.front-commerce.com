@@ -66,7 +66,7 @@ making the changes in your `.front-commerce.js` file similar to:
 -  modules: [],
 +  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 +    {
 +      name: "Magento1Elasticsearch",
 +      path: "datasource-elasticsearch/server/modules/magento1-elasticsearch",
@@ -155,7 +155,7 @@ changes in your `.front-commerce.js` file similar to:
 -  modules: [],
 +  modules: ["./node_modules/front-commerce/modules/datasource-algolia"],
    serverModules: [
-     { name: "FrontCommerceCore", path: "server/modules/front-commerce-core" },
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
 +    {
 +      name: "Magento1Algolia",
 +      path: "datasource-algolia/server/modules/magento1-algolia",

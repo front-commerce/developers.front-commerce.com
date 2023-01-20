@@ -12,6 +12,31 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.20.0` -> `2.21.0`
+
+### Algolia facet configurations
+
+As of this version, the Algolia datasource for Magento2 takes the facet type
+into account to build queries sent to Algolia. In previous versions,
+Front-Commerce behaved as if the facet type was set to `Conjunctive`. So by
+upgrading to this version, you might experience a change of behavior in the
+search results. To avoid that, you can set the facet type to `Conjunctive` under
+Stores > Configuration > Algolia Search > Instant Search Results Page in the
+Facets configuration.
+
+### Media proxy updated to send a custom user agent
+
+If you have added a [custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint) in your application, we recommend to update the code as follows:
+
+```diff
+- import proxy from "express-http-proxy";
++ import proxy from "server/core/proxy";
+```
+
+We detected an issue with some remote services that were blocking Front-Commerce due to firewall rules detecting a *weird behavior* caused by the media proxy: many requests from the same IP address with different `User-Agent` values was considered as a suspicious activity. It could ultimately lead to a blacklisting.
+
+This behavior [has been fixed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1776) in this version and backported to all support branches. Front-Commerce will now send a custom `User-Agent` value to the remote services: `Front-Commerce media proxy/<version>` (where `<version>` is the version of Front-Commerce). Please update your codebase as described above to ensure your code is compatible with this new behavior.
+
 ## `2.19.0` -> `2.20.0`
 
 ### Default shipping and billing address support
