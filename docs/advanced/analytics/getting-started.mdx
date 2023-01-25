@@ -29,7 +29,7 @@ we represent how it works, it would look like this:
 
 Across your React application, you can track events using functions such as
 `trackEvent` or `trackPage`. Then, the event is dispatched to all the relevant
-integrations registered in your application, learn more in the
+plugins registered in your application, learn more in the
 [Tracking API](tracking-api) docs.
 
 This means that once you have correctly configured events in your React
@@ -67,7 +67,7 @@ module.exports = {
         name: "google-analytics",
         // Usually we always need to set it to true since GDPR
         needConsent: true,
-        // Some integrations may have a privacy mode allowing them
+        // Some plugins may have a privacy mode allowing them
         // to be enabled by default. Use this configuration to always
         // enable it. It is irrelevant if `needConsent` is `false`.
         enabledByDefault: true,
@@ -94,18 +94,18 @@ module.exports = {
 };
 ```
 
-## GDPR consent
+## The GDPR consent
 
-If your integrations need consent of the user before running, you need to setup
-the `config/cookieServices.js` file. This file will let you define which cookies
-and trackings services are used within your application and will let the user
-chose which tracking service to allow.
+If your plugins need consent of the user before running, you need to setup the
+`cookiesServices.js` file. This file will let you define which cookies and
+trackings services are used within your application and will let the user chose
+which tracking service to allow.
 
-```js title="config/cookieServices.js"
+```js title="config/cookiesServices.js"
 export default {
   default_en: [
     {
-      // Category of cookies to allow the user to accept all the integrations at once in a specific category
+      // Category of cookies to allow the user to accept all the plugins at once in a specific category
       title: "Analytics",
       description:
         "These cookies allows us to measure the traffic on our contents and hence to improve them.",
