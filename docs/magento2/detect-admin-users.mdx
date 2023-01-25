@@ -78,14 +78,12 @@ export default {
 ```
 
 ```js title="server/modules/admin-data/loaders.js"
-import { makeUserClientFromRequest } from "server/modules/magento1/core/factories";
-import { AdminDataLoader } from "./loaders";
-
 export const AdminDataLoader = (axiosInstance) => {
   return {
-    loadData: async () => {
-      const response = await axiosInstance.get("/admin-custom-endpoint");
-      return response.data;
+    loadData: () => {
+      return axiosInstance
+        .get("/admin-custom-endpoint")
+        .then((res) => res.data);
     },
   };
 };
@@ -143,9 +141,6 @@ to use this endpoint. Otherwise, if your Magento URL is compromised, any user
 could request sensitive admin data.
 
 ```diff title="server/modules/admin-data/loaders.js"
-import { makeUserClientFromRequest } from "server/modules/magento1/core/factories";
-import { AdminDataLoader } from "./loaders";
-
 -export const AdminDataLoader = (axiosInstance) => {
 +export const AdminDataLoader = (axiosInstance, MagentoAdmin) => {
   return {
