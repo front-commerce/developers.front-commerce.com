@@ -158,6 +158,8 @@ original source file you could set it up like this:
 
 ```jsx title="my-module/web/theme/modules/ProductView/ProductItem/ProductItem.js"
 import React from "react";
+
+// eslint-disable-next-line no-restricted-imports (ESLint rule added in 2.19.0)
 import BaseProductItem from "front-commerce/src/web/theme/modules/ProductView/ProductItem/ProductItem.js";
 
 const ProductItem = (props) => (
