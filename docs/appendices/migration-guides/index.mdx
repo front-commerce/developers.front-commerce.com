@@ -12,6 +12,21 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.21.0` -> `2.22.0`
+
+### Fix sort params in `QueryHelper`'s `getFacetsParams`
+
+We detected a bug related to `sort` parameters retrieved from the URL (notably
+on the PLP page), where the GraphQL query would fail if the object passed in
+this URL parameter did not match the `SortInput` input
+[defined in the GraphQL schema](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1b2a91710286adc66079f951ee714aeea7f32570/src/server/model/catalog/layers/schema.gql#L50).
+We fixed it by picking only the parameters required by the schema in
+[`QueryHelper.getFacetsParams()`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1785).
+
+**Breaking change**: If you extended `SortInput` input in the GraphQL schema,
+you will also need to override this `QueryHelper` method to reflect those
+changes, otherwise only the base input fields will be taken into account.
+
 ## `2.20.0` -> `2.21.0`
 
 ### Algolia facet configurations
@@ -26,16 +41,27 @@ Facets configuration.
 
 ### Media proxy updated to send a custom user agent
 
-If you have added a [custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint) in your application, we recommend to update the code as follows:
+If you have added a
+[custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint)
+in your application, we recommend to update the code as follows:
 
 ```diff
 - import proxy from "express-http-proxy";
 + import proxy from "server/core/proxy";
 ```
 
-We detected an issue with some remote services that were blocking Front-Commerce due to firewall rules detecting a *weird behavior* caused by the media proxy: many requests from the same IP address with different `User-Agent` values was considered as a suspicious activity. It could ultimately lead to a blacklisting.
+We detected an issue with some remote services that were blocking Front-Commerce
+due to firewall rules detecting a _weird behavior_ caused by the media proxy:
+many requests from the same IP address with different `User-Agent` values was
+considered as a suspicious activity. It could ultimately lead to a blacklisting.
 
-This behavior [has been fixed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1776) in this version and backported to all support branches. Front-Commerce will now send a custom `User-Agent` value to the remote services: `Front-Commerce media proxy/<version>` (where `<version>` is the version of Front-Commerce). Please update your codebase as described above to ensure your code is compatible with this new behavior.
+This behavior
+[has been fixed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1776)
+in this version and backported to all support branches. Front-Commerce will now
+send a custom `User-Agent` value to the remote services:
+`Front-Commerce media proxy/<version>` (where `<version>` is the version of
+Front-Commerce). Please update your codebase as described above to ensure your
+code is compatible with this new behavior.
 
 ## `2.19.0` -> `2.20.0`
 
@@ -310,10 +336,10 @@ methods have changed.
 + import { pathToRegexp } from "path-to-regexp";
 ```
 
-In addition, given [the amount of changes between the version 0.1.7 and
-6.2.1](https://github.com/pillarjs/path-to-regexp/compare/v0.1.7...v6.2.1), we
-strongly advice you to check [the project
-documentation](https://github.com/pillarjs/path-to-regexp/blob/master/Readme.md)
+In addition, given
+[the amount of changes between the version 0.1.7 and 6.2.1](https://github.com/pillarjs/path-to-regexp/compare/v0.1.7...v6.2.1),
+we strongly advice you to check
+[the project documentation](https://github.com/pillarjs/path-to-regexp/blob/master/Readme.md)
 and to carefully test any code involving this library.
 
 ### Magento2 Adyen module update
@@ -930,9 +956,9 @@ If you are using theme chocolatine:
 The `<PaymentMethodLabel>` component was moved from
 `theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to
 `theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will
-still work but will output deprecation messages when used. If you have overridden
-`<PaymentMethodLabel>` you should also relocate your override to the same path
-and update all references to point to it.
+still work but will output deprecation messages when used. If you have
+overridden `<PaymentMethodLabel>` you should also relocate your override to the
+same path and update all references to point to it.
 
 As a consequence of relocating `<PaymentMethodLabel>` we had to rename all the
 translation keys it uses. As such the following translation keys have been
