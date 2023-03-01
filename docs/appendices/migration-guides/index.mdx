@@ -12,6 +12,21 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.21.0` -> `2.22.0`
+
+### Fix sort params in `QueryHelper`'s `getFacetsParams`
+
+We detected a bug related to `sort` parameters retrieved from the URL (notably
+on the PLP page), where the GraphQL query would fail if the object passed in
+this URL parameter did not match the `SortInput` input
+[defined in the GraphQL schema](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1b2a91710286adc66079f951ee714aeea7f32570/src/server/model/catalog/layers/schema.gql#L50).
+We fixed it by picking only the parameters required by the schema in
+[`QueryHelper.getFacetsParams()`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1785).
+
+**Breaking change**: If you extended `SortInput` input in the GraphQL schema,
+you will also need to override this `QueryHelper` method to reflect those
+changes, otherwise only the base input fields will be taken into account.
+
 ## `2.20.0` -> `2.21.0`
 
 ### Algolia facet configurations
