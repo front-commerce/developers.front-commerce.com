@@ -370,14 +370,14 @@ query Search {
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
-## Attraqt recommendations
+### Attraqt recommendations
 
 > _Since version `2.19`_
 
-Front-Commerce provides a loaders to retrieve recommendations from
+Front-Commerce provides a loader to retrieve recommendations from
 [Attraqt's Widgets](https://attraqt.gitbook.io/developer-documentation/xo-recommendations/readme-first).
 
-### Front-Commerce configuration
+#### Front-Commerce configuration
 
 To enable the Attraqt recommendation module, you need to add it to your
 `.front-commerce.js` config:
@@ -396,6 +396,15 @@ module.exports = {
     // highlight-end
     { name: "Magento2", path: "server/modules/magento2" },
   ],
+  webModules: [
+    { name: "FrontCommerce", path: "./src/web" },
+    // highlight-start
+    {
+      name: "AttraqtRecommendation",
+      path: "front-commerce/modules/recommendations-attraqt/web",
+    },
+    // highlight-end
+  ],
 };
 ```
 
@@ -405,8 +414,105 @@ Then, you need to define the API url in your environment variables:
 FRONT_COMMERCE_ATTRAQT_RECOMMENDATION_API_URL=http://api.early-birds.io/widget
 ```
 
-After this step, you should be able to use this loader in your modules to fetch
-Attraqt recommendations for your widgets.
+#### Using Attraqt Orchestrator Chrome extension
+
+In order to use the
+[Attraqt Orchestrator extension for Google Chrome](https://chrome.google.com/webstore/detail/attraqt-experience-orches/icognleckonecpphokboemgcgcohcepi),
+Front-Commerce exposes a GraphQL interface and provides a front-end component
+which does the needed setup. In this example, we'll make a module
+`SuggestedProduct` that fetches a recommendation from Attraqt via
+Front-Commerce's loader, and use it to initialize Attraqt Orchestrator
+
+:::note
+
+See [Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema) for
+instructions on how to add your own GraphQL module.
+
+:::
+
+You will first need to update your GraphQL schema to implement this interface
+and use it in a query:
+
+```graphql title="my-module/server/modules/SuggestedProducts/schema.gql"
+type ProductRecommendation implements AttraqtRecommendationResult {
+  id: ID!
+  products: [Product]
+}
+
+extend type Query {
+  productRecommendation: ProductRecommendation
+}
+```
+
+Add a resolver for this query:
+
+```js title="my-module/server/modules/SuggestedProducts/resolvers.js"
+export default {
+  Query: {
+    productRecommendation: async (_, __, { loaders }) => {
+      return loaders.AttraqtRecommendations.loadRecommendationsForWidget(
+        "my-widget-id"
+      );
+    },
+  },
+  ProductRecommendation: {
+  	products: async (recommendation, _, { loaders }) => {
+      // Note: the shape of recommendation.recommendations will vary
+      // depending on your data indexed in Attraqt. Adapt this example to your use case.
+  		const skus = recommendation.recommendations.map(({ id }) => id).filter(Boolean);
+      return return loaders.Product.loadBySkus(skus);
+  	},
+  },
+};
+```
+
+On the front-end side, retrieve the results from this query using the GraphQL
+fragment provided by Front-Commerce:
+
+```graphql title="my-module/web/theme/modules/SuggestedProducts/SuggestedProductsQuery.gql"
+#import "theme/modules/AttraqtRecommendations/AttraqtRecommendationResultFragment.gql"
+#import "theme/pages/Product/ProductFragment.gql"
+
+query SuggestedProductsQuery {
+  productRecommendation {
+    ...AttraqtRecommendationResultFragment
+    products {
+      ...ProductFragment
+    }
+  }
+}
+```
+
+You can now use it in a component:
+
+```js title="my-module/web/theme/modules/SuggestedProducts/SuggestedProducts.js"
+import React from "react";
+import AttraqtRecommendationChromeExtensionRegisterer from "theme/modules/AttraqtRecommendations/attraqtRecommendationChromeExtensionRegisterer.js";
+import { graphql } from "react-apollo";
+import SuggestedProductsQuery from "./SuggestedProductsQuery.gql";
+
+const SuggestedProducts = ({ recommendation }) => {
+  return (
+    <>
+      <AttraqtRecommendationChromeExtensionRegisterer
+        recommendation={recommendation}
+      />
+      {/* ... Display products */}
+    </>
+  );
+};
+
+export default graphql(SuggestedProductsQuery, {
+  props: ({ data }) => {
+    return {
+      recommendation: data.loading ? null : data.productRecommendation,
+    };
+  },
+})(SuggestedProducts);
+```
+
+With this example, Attraqt's Chrome extension should be initialized correctly
+when accessing the page were `SuggestedProducts` is used.
 
 ## Fallback Search
 
