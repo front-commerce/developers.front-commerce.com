@@ -48,7 +48,7 @@ Future releases will contain several improvements that developers have been aski
   <summary><h3 className="mb-0">Bug Fixes</h3></summary>
 ```
 - **magento2:** we fixed race conditions to prevent incorrect order state upon concurrent payment status updates
-- **magento2:** we fixed possible SSR errors which could be caused when an incorrect sort parameter was passed in parameters for projects using Magento2 native GraphQL
+- **categories:** we fixed possible SSR errors which could be caused when an incorrect sort parameter was used
 - **payzen:** we removed an incorrect CSS rule (property name) from the stylesheet
 - the `<ScrollTopOnUpdate />` component now use setTimeout to prevent race conditions with asynchronous calls
 - **stock:** we now properly log a warning using FC’s logging mechanism when the stock provided by Magento is null
