@@ -143,7 +143,9 @@ query Search {
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
-## Algolia
+<a name="algolia"></a>
+
+## Algolia connected to Magento
 
 <SinceVersion tag="2.13" />
 
@@ -231,6 +233,167 @@ result, after changing a parameter in the backoffice, the new parameter will be
 taken into account after at most one minute by Front-Commerce.
 
 :::
+
+After restarting Front-Commerce, you should be able to run a GraphQL query to
+search for products, categories or pages, for instance:
+
+```graphql title="http://localhost:4000/playground"
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
+
+If you are using the default theme or the Chocolatine theme, the search bar
+should now be visible.
+
+## Algolia not connected to Magento
+
+<SinceVersion tag="2.23" />
+
+As of the version 2.23, it's possible to configure Front-Commerce to use Algolia
+without having to install the Algolia module for Magento2.
+
+### Requirements
+
+In that kind of setup, you need to implement your own indexing mechanism to
+replace the one provided by the Alglia module for Magento2. To help you in that
+task, we provide a script to check that the indices are compatible with
+Front-Commerce. This script can be run with the following command:
+
+```bash
+FRONT_COMMERCE_ALGOLIA_APPLICATION_ID=APPID \
+FRONT_COMMERCE_ALGOLIA_API_KEY=ADMIN_API_KEY \
+FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX=INDEX_NAME_PREFIX \
+npx front-commerce-algolia-check
+```
+
+The application ID and the admin API can be found in your Algolia account. The
+index name prefix is a prefix of the indices that Front-Commerce will use. The
+value on the command line should be the same as the one used [to configure the
+Algolia module](#algolia-standalone-env).
+
+By default, Front-Commerce is able to search for products, categories and CMS
+pages, the corresponding indices need to follow some requirements.
+
+For product indices:
+
+* the indices name must be named after the following pattern:
+ `{index_name_prefix}{store_code}_products`. For instance, in a setup where the
+  index name is `myproject_` and Front-Commerce is configured to expose 2 stores
+  which codes are `mystore` and `mystore2`, two indices named
+  `myproject_mystore_products` and `myproject_mystore2_products` must be created;
+* to be able to sort results by a field, some extra indices must be created by
+  following the same naming convention and by adding a suffix using the
+  pattern `_{sort_field}_asc` or `_{sort_field}_desc`. For instance, to
+  allow sorting by created date (field `created_at`) ascending and descending,
+  the indices `myproject_mystore_products_created_at_asc` and
+  `myproject_mystore_products_created_at_desc` must exist;
+* all documents must have a field `sku` and it must be retrievable `sku`.
+  The field must contain the product `sku` as a string and for configurable
+  product it should be an array of the SKUs of each configuration with the first
+  one being the `sku` of the configurable product;
+* all documents must have a field `category_ids`, this
+  field must be searchable and configured as an attribute for facets. It must
+  contain the category ids in which the product is positioned;
+* all documents must have a field `price` where the price is represented as an
+  object like
+```json
+{"EUR": {"default": 42}, "USD": {"default": 40}}
+```
+
+:::note
+
+`category_ids` is the only required facets. Depending on your project, you can
+configure others facets in the index. For those facets to be taken into, [you
+also have to configure the Algolia module](#algolia-standalone-config).
+
+:::
+
+For categories indices:
+
+* the indices name must be named after the following pattern:
+ `{index_name_prefix}{store_code}_categories`. For instance, in a setup where the
+  index name is `myproject_` and Front-Commerce is configured to expose 2 stores
+  which codes are `mystore` and `mystore2`, two indices named
+  `myproject_mystore_categories` and `myproject_mystore2_categories` must be
+  created;
+* the `objectID` field of each document must be the category id as a string.
+
+
+For CMS page indices:
+
+* the indices name must be named after the following pattern:
+ `{index_name_prefix}{store_code}_pages`. For instance, in a setup where the
+  index name is `myproject_` and Front-Commerce is configured to expose 2 stores
+  which codes are `mystore` and `mystore2`, two indices named
+  `myproject_mystore_pages` and `myproject_mystore2_pages` must be created.
+* all documents must have a `slug` field identifying the corresponding CMS page.
+  This field must be set as retrievable.
+
+
+### Front-Commerce configuration
+
+First, you need to make sure the Algolia's search client is installed:
+
+```shell
+npm i algoliasearch@4.8
+```
+
+On Front-Commerce side, you need to enable the Algolia datasource by making the
+changes in your `.front-commerce.js` file similar to:
+
+```js title=".front-commerce.js"
+module.exports = {
+  // highlight-next-line
+  modules: ["./node_modules/front-commerce/modules/datasource-algolia"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-start
+    {
+      name: "StandaloneAlgolia",
+      path: "datasource-algolia/server/modules/algolia",
+    },
+    // highlight-end
+    { name: "Magento2", path: "server/modules/magento2" },
+  ],
+};
+```
+
+:::caution Known issue
+
+the Algolia server module needs to be enabled **before** the Magento's module.
+
+:::
+
+
+<a name="algolia-standalone-env"></a>
+In the .env, you need to define the following environment variables:
+
+```bash title=".env"
+FRONT_COMMERCE_ALGOLIA_APPLICATION_ID=APP_ID
+FRONT_COMMERCE_ALGOLIA_SEARCH_ONLY_API_KEY=SEARCH_ONLY_API_KEY
+FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX=myproject_
+```
+
+<a name="algolia-standalone-config"></a>
+
+To further configure the Algolia module for instance to define facets, you have [to create a
+configuration provider to override](/docs/advanced/server/configurations#override-an-existing-configuration) [the `algoliaConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/65b87de451c8f0c58749369a1e8113c993028d08/modules/datasource-algolia/server/config/algoliaConfigProvider.js).
 
 After restarting Front-Commerce, you should be able to run a GraphQL query to
 search for products, categories or pages, for instance:
