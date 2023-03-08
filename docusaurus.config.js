@@ -159,7 +159,18 @@ const config = {
           },
           {
             className: "code-block-error-line",
-            line: "This will error",
+            line: "error-next-line",
+            block: { start: "error-start", end: "error-end" },
+          },
+          {
+            className: "code-block-removed-line",
+            line: "remove-next-line",
+            block: { start: "remove-start", end: "remove-end" },
+          },
+          {
+            className: "code-block-added-line",
+            line: "add-next-line",
+            block: { start: "add-start", end: "add-end" },
           },
         ],
       },
