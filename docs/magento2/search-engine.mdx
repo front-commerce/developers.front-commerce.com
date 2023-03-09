@@ -459,8 +459,8 @@ export default {
   	products: async (recommendation, _, { loaders }) => {
       // Note: the shape of recommendation.recommendations will vary
       // depending on your data indexed in Attraqt. Adapt this example to your use case.
-  		const skus = recommendation.recommendations.map(({ id }) => id).filter(Boolean);
-      return return loaders.Product.loadBySkus(skus);
+      const skus = recommendation.recommendations.map(({ id }) => id).filter(Boolean);
+      return loaders.Product.loadBySkus(skus);
   	},
   },
 };
