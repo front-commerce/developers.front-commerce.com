@@ -83,3 +83,7 @@ video.video-cover:not(:fullscreen) {
 .markdown img {
   max-width: 100%;
 }
+
+kbd {
+  white-space: nowrap;
+}
