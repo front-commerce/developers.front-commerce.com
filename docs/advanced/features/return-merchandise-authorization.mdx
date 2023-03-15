@@ -16,8 +16,8 @@ import SinceVersion from "@site/src/components/SinceVersion";
 # Return Merchandise Authorization (RMA)
 
 Front-Commerce provides a base platform-agnostic module to support RMA. We also
-ship some platform-specific implementations for RMA (so far we have an
-implementation for Magento1 Enterprise).
+ship some platform-specific implementations for RMA. For now, Magento1EE and
+[Magento2 Commerce](/docs/magento2/commerce#rma) are supported.
 
 It is up to the integrator to either use one of our provided implementations or
 extend our base RMA module to add functionality to the specific platform.
@@ -38,7 +38,7 @@ override its behaviour.
 
 ## Implementing an RMA that suits you
 
-To implement an RMA for a new platfom, you have to provide the server
+To implement an RMA for a new platform, you have to provide the server
 implementation of the Graph. Having a look at Front-Commerce's implementation
 for Magento1 Enterprise RMA (`src/server/modules/magento1ee/rma`) should help
 give you some guidance. Here is a short summary of what is needed:
