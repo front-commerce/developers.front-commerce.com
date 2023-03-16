@@ -1,0 +1,139 @@
+---
+title: Reduce friction by rediscovering your keyboard
+authors: [pierre]
+date: 2023-03-23T18:20
+hide_table_of_contents: true
+---
+
+Hey there! In this post, we'll talk about some awesome benefits that you can enjoy when you start using keyboard shortcuts and the terminal.
+
+It can really help you navigate in an application or switch between different applications and contexts without any friction. We'll also illustrate the Unix philosophy, and provide tips for gradually adopting these practices.
+
+I hope you find this helpful!
+
+<!--truncate-->
+
+## Why using your keyboard more?
+
+As developers, we spend a lot of time typing on our keyboard. For typing code of course, but also for searching, documentation (issue tracker, wiki…) and communicating with others (Slack, Teams, Discord, emails…).
+
+Now, think about how you switch context between different applications.
+
+You’re writing code in a text editor, but want to ask a question to a teammate on Slack:
+
+- do you leave your keyboard to fetch your mouse (or trackpad)?
+- do you use “Alt + Tab”?
+- do you switch to a different virtual desktop? (using the keyboard)?
+
+When on Slack:
+
+- do you use your mouse to select the person or channel you want to write to?
+- do you use “Ctrl + K” (or “Cmd + K) to navigate there?
+
+Try both approaches: with your mouse, and with your keyboard.
+How long does it take between the last character you typed in the editor and the first one you typed in Slack’s message input?
+
+In this example, you might find that navigating to this new context without removing your fingers from the keyboard leads to a smoother experience. **It removes friction.**
+
+When your brain thinks about asking on Slack, within a few keystrokes you’re ready to type your message, and a few keystrokes later you’re back in your text editor, ready to type the next line of code.
+Context switching has been reduced to its minimum, helping you to focus on the task at hand.
+
+This is just an example of context switching, but be aware of it and you’ll see that it happens all day long:
+
+- going back and forth between our code editor and our browser
+- searching for information on the internet
+- navigating in our emails or issue tracker
+- committing our code changes and pushing them to the repository to open a Pull Request
+- searching content in a file or a tree of files
+- switching to a different project, or directory
+- etc…
+
+**By rediscovering the keyboard shortcuts for each application you use, you can significantly reduce the time it takes to switch between contexts.**
+
+Most applications have a variety of keyboard shortcuts that allow you to navigate and perform actions quickly and efficiently.
+By taking the time to learn these shortcuts and incorporating them into your workflow, you can streamline your work and reduce friction throughout your day.
+
+## Why using your terminal more?
+
+I find it important to learn shortcuts for the applications you’re using the major part of your day.
+
+For developers, these applications would be something like: a text editor, a browser, an instant messaging app and of course (don’t underestimate it) your operating system!
+
+**During your career, you’ll change the applications you use.**
+Your team could switch from Slack to Teams, you’ll move away from WebStorm to VSCode, you change job and the new company uses Linear instead of Jira, Outlook instead of Gmail…
+
+Every time, it will mean that you will have to learn new shortcuts again. **These changes don’t occur very often, so it is acceptable.** After all, you spend most of your day using these applications so the investment on learning how to use them efficiently is worth it.
+
+There are however a lot of tasks (you may not yet realize it) you can perform outside those applications.
+
+What if I told you that you can invest time in learning how to reduce friction:
+
+- for your most common tasks
+- in a way that is gradually adoptable in your current workflow
+- with the ability to improve continuously without ever restarting from scratch
+- … for the rest of your career (and your life)
+
+**This is exactly what your terminal allows.**
+
+You’ll be able to achieve a wide range of tasks thanks to the ecosystem of tools embracing a simple yet powerful philosophy: **the Unix philosophy!**
+
+## The Unix philosophy
+
+> Write programs that do one thing and do it well.
+Write programs to work together.
+Write programs to handle text streams, because that is a universal interface.
+>
+
+The [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy) is a set of guidelines that emphasizes simplicity, modularity, and the use of small, specialized tools that can be combined to perform complex tasks.
+It encourages the use of plain text for data storage and communication, and favors the use of pipes and filters to process data.
+
+It offers a number of benefits:
+
+- **flexibility**: text streams can be manipulated in many different ways. It removes the barrier of what you can do. You’ll be able to combine small simple programs together, in order to achieve exactly what you want to do, and make it more complex if needed. A “pipeline” of commands is also more resilient to changes: if data, source or process change you can adapt by changing only one “step”
+- **improved efficiency**: automate things or find information by typing a command in your terminal is often faster than navigating in an application and going through several screens and forms
+- **greater control over your data**: manipulating text allows you to interact with lots of systems and APIs, you’re not locked-in a specific vendor and can create bridges between most of your tools… as soon as you can get data in a textual format (i.e: output a list of files, get data from an API call, output Git history as text…)
+- **portability**: these tools are widely available on different systems. Your skills and knowledge are valid in different contexts: you can use them on servers, on your current laptop… and the next ones.
+
+By focusing on small, specialized tools that can be combined in different ways, you can tailor your daily environment to your specific needs and preferences.
+
+Over time, you’ll bring new tools or change some of them without having to learn everything again.
+
+You’ll improve your environment and adapt practices **incrementally and continuously**, as you make complex tasks easier to perform or automate repetitive processes. Weeks after weeks, you’ll work more efficiently.
+
+## OK, I’m sold! What’s next?
+
+Great! I’m glad that you want to reduce friction in your daily activities.
+**I suggest that you start now, with baby steps.**
+
+Be aware of your hand position at every time, and learn to detect when your fingers are about to leave your keyboard. **That’s the trigger!**
+
+Whenever this trigger occurs, stop and start asking yourself:
+
+- what was I about to do?
+- is it possible to achieve this without leaving the keyboard?
+    - search in your application “Keyboard shortcuts” help page
+    - search on internet
+    - … or ask ChatGPT!
+    Here is a prompt you can use as a base:
+
+    > **I want you to act like a Unix user, and explain each tool individually.**
+    >
+    >
+    > **Q:** how would you get the content from a JSON URL ([https://dummyjson.com/users](https://dummyjson.com/users)) and filter the first five "names" starting with a "S", sorting them alphabetically and outputting them as uppercased text in a file in the `/tmp` directory.
+    >
+    > **A: let's think step by step**
+    >
+
+    After a few trial/errors you could end up with this one-liner:
+
+    ```bash
+    curl https://dummyjson.com/users | jq -r '.users[] | select(.lastName | startswith("S")) | .lastName' | sort | tr '[:lower:]' '[:upper:]' > /tmp/names.txt
+    ```
+
+- try to do it with a shortcut or a command, and note it down to try to remember it next time. You can also use [cheat sheets](https://quickref.me/) (I personally started with physically printed cheat sheets on my desk!).
+
+You’ll be surprised to see how many shortcuts exist in the tools you already use, and you will start discovering terminal commands or new programs
+
+This article is already long enough. In a future article I’ll go through some of the shortcuts and commands I use on a daily (hourly?) basis.
+
+Follow this space!
