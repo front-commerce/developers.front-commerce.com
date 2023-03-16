@@ -52,6 +52,15 @@ or
 [`CartCacheAwareStoreCreditLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/d29c30a0c6a513472b66f10441bd2c620903b11c/src/server/modules/magento2-commerce/store-credit/loaders/CartCacheAwareStoreCreditLoader.js#L43-51)
 where the cart cache is expired after some operations.
 
+:::caution
+
+To avoid any cache corruption, make sure to always use the `CartCache` instance
+created by the `Magento2/Cart` GraphQL module (see for instance [the
+initialization of the `StoreCredit`
+loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/10a4e81004d0b5b331bdb62b96b1a6daf3e66788/src/server/modules/magento2-commerce/store-credit/index.js#L31))
+
+:::
+
 ## Caching current customers' information
 
 <SinceVersion tag="2.19" />
