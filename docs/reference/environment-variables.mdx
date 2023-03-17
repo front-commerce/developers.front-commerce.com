@@ -396,8 +396,30 @@ Here is a list of available debug namespaces:
   logging as a customer and other actions
 - `front-commerce:algolia`: debugs detailed information about Algolia queries
   and interactions
+- `front-commerce:attraqt`: debugs detailed information about Attraqt queries
+  and interactions
 - `front-commerce:authorization`: debugs proxy authorization for remote sources
   (see `makeProtectedProxyRouter.js`)
+- `front-commerce:b2b:companyCredit`: debugs B2B company credit interactions
+- `front-commerce:b2b:permissions`: debugs B2B permissions interactions
+- `front-commerce:big-commerce:*`: debugs [Big Commerce
+module](/docs/category/bigcommerce) queries and interactions,
+here a list of all Big Commerce related debug flags:
+  - `front-commerce:big-commerce:address`
+  - `front-commerce:big-commerce:cache`
+  - `front-commerce:big-commerce:cart`
+  - `front-commerce:big-commerce:category`
+  - `front-commerce:big-commerce:checkout`
+  - `front-commerce:big-commerce:core`
+  - `front-commerce:big-commerce:customer`
+  - `front-commerce:big-commerce:hacks`
+  - `front-commerce:big-commerce:layer`
+  - `front-commerce:big-commerce:navigation`
+  - `front-commerce:big-commerce:order`
+  - `front-commerce:big-commerce:product`
+  - `front-commerce:big-commerce:reset-password`
+  - `front-commerce:big-commerce:url`
+  - `front-commerce:big-commerce:wishlist`
 - `front-commerce:cache`: debugs cache invalidation calls, strategies
   information and
   [HTTP Cache deactivation](/docs/advanced/performance/cache-control-and-cdn/).
@@ -411,16 +433,24 @@ Here is a list of available debug namespaces:
   help configuring cluster mode
 - `front-commerce:config`: dumps the configuration for a typical request at the
   `/__front-commerce/debug` URL
+- `front-commerce:country`: debugs Big Commerce country related API calls
+- `front-commerce:customer`: debugs Big Commerce customer related API calls
+- `front-commerce:customer:cache`: debugs [customer
+cache](/docs/magento2/advanced#caching-current-customers-information) related
+operations
 - `front-commerce:dispatcher`: debugs information about routes dispatching for
   registered page types
-- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY
-  VERBOSE!**)
+- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
 - `front-commerce:graphql`: debugs GraphQL related code
+- `front-commerce:hipay`: debugs [HiPay module](/docs/advanced/payments/hipay) queries and interaction
 - `front-commerce:httpauth`: debugs how
   [basic authorization](/docs/reference/configurations#config-httpauth-js) is
   enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot
   interactions with remote media servers)
+- `front-commerce:in-stock-alert`: debugs [In Stock Alert](/docs/advanced/features/in-stock-alert) API calls
+- `front-commerce:magento2:search`: debugs [Magento2 native search](/docs/magento2/search-engine#native-search) queries and
+interaction
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting
   a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several
@@ -431,15 +461,20 @@ Here is a list of available debug namespaces:
   by enabling [server timings](/docs/advanced/performance/server-timings)
 - `front-commerce:prismic`: turns [the Prismic module](/docs/category/prismic)
   debug on
-- `front-commerce:prismic:cache`: debugs the Prismic caching layer specifically.
-  Can be targetted directly, or included with the previous namespace using
-  `DEBUG=front-commerce:prismic*`
+- `front-commerce:prismic:*`: debugs various aspects of the Prismic module, here
+is the available list of Prismic related flags:
+  - `front-commerce:prismic:cache`
+  - `front-commerce:prismic:fetch`
+  - `front-commerce:prismic:webhook`
+- `front-commerce:remote-schemas`: debugs remote schema related code
+- `front-commerce:rma`: debugs Return Merchandize Authorization related queries
+and interactions
 - `front-commerce:scripts`: debugs all scripts and tooling related commands
   (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the
   `prepare` command
-- `front-commerce:shipping:mondialrelay`: debugs MondialRelay related operations
 - `front-commerce:shipping:chronorelais`: debugs ChronoRelais related operations
+- `front-commerce:shipping:mondialrelay`: debugs MondialRelay related operations
 - `front-commerce:smart-forms:capency`: debugs full requests, responses and
   errors related to Capency's webservice
 - `front-commerce:store-credits`: debugs responses and errors related to store
