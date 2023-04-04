@@ -9,12 +9,12 @@ features.
 ## Enabling or Disabling a feature
 
 Feature flags are resolved by the
-[FeatureFlagLoader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/core/loaders.js#L7)
+[FeatureFlagLoader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/front-commerce/core/loaders.js)
 which is typically overridden in the
 [`contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
 of each module supporting a feature flag (e.g.
-[wishlist](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/wishlist/index.js#L21),
-[search](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/search/index.js#L41)).
+[wishlist](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/magento2/wishlist/index.js#L19),
+[search](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/front-commerce/search/index.js#L41)).
 
 To enable or disable a feature one must update the overridden `FeatureFlag`
 loader in the `contexEnhancer` of the module and ensure `isActive` returns
