@@ -368,7 +368,7 @@ const MyAwesomeForm = ({ email }) => {
 
 With this code, when the user submits the form, the hook will call the GraphQL
 API to validate the email. The GraphQL email validation API is designed
-[to return different validation statuses](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L22)
+[to return different validation statuses](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/front-commerce/smart-forms/schema.gql#L22)
 (not only valid/invalid) and by default, the `onSubmit` handler returned by
 `useEmailServerValidation` has the following behaviour:
 
@@ -444,7 +444,7 @@ context object that contains the following properties:
 - `formModel`: an object with the value of fields in the form
 - `emailField`: the name of the email field passed to `useEmailServerValidation`
 - `validationResult`:
-  [the validation result](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/front-commerce/smart-forms/schema.gql#L29)
+  [the validation result](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/front-commerce/smart-forms/schema.gql#L29)
   returned by the server
 - `updateInputsWithError`: a function to
   [update a field with an error message](https://github.com/formsy/formsy-react/blob/master/API.md#updateInputsWithError)

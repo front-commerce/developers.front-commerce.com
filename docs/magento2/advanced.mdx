@@ -45,12 +45,21 @@ Front-Commerce takes care of expiring the cart cache when an operation can have
 an effect on the cart representation (for instance when adding an item to the
 cart). If you use an API that changes the cart, you will also have to expire the
 cart cache. To do that, you can use
-[`decorateWithCartCacheExpire`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/cart/cache/decorateWithCartCacheExpire.js)
+[`decorateWithCartCacheExpire`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/magento2/cart/cache/decorateWithCartCacheExpire.js)
 in the loader where this API is used. You can have a look at how it is used in
 [`CachedCartLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/d8d74295d36455419f5e80c4d28e69987976b59c/src/server/modules/magento2/cart/loaders/CachedCartLoader.js#L20-24)
 or
 [`CartCacheAwareStoreCreditLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/d29c30a0c6a513472b66f10441bd2c620903b11c/src/server/modules/magento2-commerce/store-credit/loaders/CartCacheAwareStoreCreditLoader.js#L43-51)
 where the cart cache is expired after some operations.
+
+:::caution
+
+To avoid any cache corruption, make sure to always use the `CartCache` instance
+created by the `Magento2/Cart` GraphQL module (see for instance [the
+initialization of the `StoreCredit`
+loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/10a4e81004d0b5b331bdb62b96b1a6daf3e66788/src/server/modules/magento2-commerce/store-credit/index.js#L31))
+
+:::
 
 ## Caching current customers' information
 
@@ -98,10 +107,10 @@ to the account). If you use an API that updates customer information, you will
 also have to expire the cart cache.
 
 To do that, you can use
-[`makeCurrentCustomerCache`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/cache/makeCurrentCustomerCache.js)
+[`makeCurrentCustomerCache`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/magento2/customer/cache/makeCurrentCustomerCache.js)
 factory to create an instance of this cache, and `expire()` it. You can have a
 look at how it is used in
-[`CustomerLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/server/modules/magento2/customer/loaders/CustomerLoader.js)
+[`CustomerLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/magento2/customer/loaders/CustomerLoader.js)
 where the customer cache is expired after some operations.
 
 ## Additional headers in Magento API calls

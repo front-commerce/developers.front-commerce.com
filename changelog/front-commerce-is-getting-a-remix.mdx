@@ -1,0 +1,171 @@
+---
+title: "Front-Commerce is getting a Remix"
+authors: pierre
+date: 2023-03-21T05:00
+hide_table_of_contents: true
+image: ./assets/fc-is-getting-a-remix.png
+---
+
+We are thrilled to announce that we’re *Remixing* Front-Commerce!
+
+As you may already know, our goal for 2023 is to significantly enhance the developer experience and web performance of Front-Commerce projects. We aim to improve the Core Web Vitals of every storefront built with Front-Commerce and **achieve the best performance in the market**. This will benefit both merchants and their customers.
+
+To achieve this, we have decided to adopt new foundations for our product. These foundations will be based on **[Remix](https://remix.run/)**.
+
+We are excited about the possibilities this new version brings, and we hope you will love using it!
+
+<!--truncate-->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import ContactLink from "@site/src/components/ContactLink";
+
+
+## What is Remix?
+
+Let’s start with the Remix homepage description:
+
+> Remix is a full stack web framework that lets you focus on the user interface and work back through web standards to deliver a fast, slick, and resilient user experience. People are gonna love using your stuff.
+>
+
+Remix is an open source framework created by Ryan Florence and Michael Jackson, well known in the React ecosystem for maintaining React Router, the most widely used routing library for React.
+
+The company supporting the Remix core team’s activities [was acquired in October 2022 by Shopify](https://shopify.engineering/remix-joins-shopify), and Remix is now used as foundations for Shopify’s Hydrogen framework. This acquisition and actions taken since the merger makes us confident in Remix’s open source future. We’re glad to be part of this community and contribute to the project too!
+
+As we write this announcement, Remix is only compatible with React. Based on React Router primitives, **Remix adds support for everything involving a network request between a client and a server:** <abbr title="Server Side Rendering">SSR</abbr>, client side navigation, forms, sessions, cookies…
+
+It also provides a compiler and a development server aiming to provide a top-notch Developer Experience, fast builds and optimized production bundles.
+
+## Why Remix?
+
+We have been closely following the space of JS full-stack frameworks since our first version in 2016, and Front-Commerce's primitives were inspired by several of them. While Next.js has become the most widely used framework, we found that Remix is a simple yet efficient framework that aligns perfectly with our vision for web applications. Let me explain its most important features.
+
+### Web standards and progressive enhancement
+
+Remix is focused on web standards. It doesn’t reinvent them.
+
+This is a Progressive Web Application’s essence: to deliver a web application that works and leverage Web APIs to improve the user experience by making it reliable and more capable.
+Remix adheres to these principles and progressively enhances applications with JavaScript, while ensuring that idiomatic Remix applications can also work without any JavaScript executed in the browser!
+Front-Commerce will remain a <abbr title="Single Page Application">SPA</abbr> for now, but a side effect of using Remix is the ability to allow <abbr title="Multiple Page Application">MPA</abbr> use cases (without client-side Javascript) in the future.
+
+**Our vision with Front-Commerce is to ensure your frontend will last. Web APIs don’t change.** Being based on standard Web APIs means that we’re writing code that could last for decades. Even if Remix disappears, having APIs designed around standards ensures greater portability.
+
+We also believe that it improves the developer experience. The industry (cloud providers, frameworks, libraries) is moving towards shared primitives based on these standards. We are confident that, in the next few years, more and more people will be accustomed to the use of these standard APIs.
+Developers will thus more easily understand how to use Front-Commerce and could leverage a wider ecosystem of libraries in their applications.
+
+Ultimately, another benefit of this approach is that it leads to less code being shipped in the browser which greatly improves performance!
+
+### Simplicity
+
+One can learn Remix within a few hours. Its API is small, and already influenced several frameworks in our industry. We believe that most frontend developers will be familiar with the concept of *routes*, *loaders* and *actions* in the future. With a better knowledge of web standards too, developers will feel at home when using Front-Commerce.
+
+We really hope that *Remixing* Front-Commerce will make it **a more natural and pleasant tool to use on a daily basis to build eCommerce projects**. We’re also taking this as an opportunity to rework some of our own APIs to embrace the Remix philosophy, and have simpler primitives where possible.
+
+Using Remix means that we can remove a lot of code from our codebase! With less code to maintain, and less stuff to document, we will have more time to focus on our core value proposition: **enabling developers to build fully customized, composable storefronts leveraging every feature from best-of-breed technologies.**
+
+### Edge-first
+
+Another advantage of Remix is that it is edge-first, yet server-agnostic.
+
+Front-Commerce has always been a node/express application, and Front-Commerce Remixed will remain focused on this environment in its first version.
+
+The web platform evolves, and so does the hosting ecosystem. Edge computing is gaining popularity for good reasons, and you can be sure that we’ll keep an eye (and more) on this. We’re excited to be able to investigate new deployment targets such as Deno Deploy, Architect, Cloudflare, Fastly, Netlify, Vercel, Fly.io among others.
+
+Using Remix as our new foundation will allow us to explore this area without breaking changes!
+
+### A (far) future without React?
+
+Remixing Front-Commerce allows us to remove many external dependencies from the client-side bundle. We were able to replace Formsy with Remix’s Form, Apollo Client with Remix’s loaders/actions and many more.
+
+**React is now the main external JS dependency of our bundle (in terms of size)**, and in our mission to provide the best web performance on the market we know that it could be our next bottleneck.
+
+Choosing Remix and betting on web standards allows us to reduce our dependency on React. While we still think that JSX is a good abstraction and are happy with the React library, we're also excited about innovations in frontend frameworks over the past few years.
+
+In a near future, [Remix will very likely be compatible with Preact](https://github.com/remix-run/remix/discussions/4562) (a smaller and faster React alternative) and you can be sure that we’ll be one of the first to play with this.
+
+We aim for Front-Commerce projects to outlast frontend libraries. While it's impossible to predict which library will become "the next React", we see many promising technologies emerging, such as Qwik, Solid, Million, Lit, and WebC (among others). These technologies are challenging the current status quo.
+
+By choosing Remix as our new foundation, we can reduce our dependency on React (while Next.js is becoming even more tied to this library). This is a first step towards a possible future without React that is accessible to all Front-Commerce projects, without the need to throw years of work away!
+
+### A growing community
+
+Remix is an open source framework with a community of developers who are dedicated to web standards and simplicity.
+
+This community is friendly and supportive, and we want to contribute as much as we can to it. We’ll be happy to participate in conferences, make code contributions, engage with the community on Discord, and more. If you are part of this community, don’t hesitate to get in touch with us!
+
+The popularity of Remix is growing, with more and more developers using it to build their projects. We’re doing our best to ensure that Front-Commerce is an idiomatic Remix app that will make developers feel at home, and could also help to learn how to structure bigger apps with Remix.
+
+We also had discussions with our partners and teams interested in Front-Commerce over the past few months, and we have found that most (if not all) of them are excited about Remix and our choice.
+
+## What else does this new version bring?
+
+We will not go into too much detail in this article and will be publishing dedicated articles in the next few weeks about these topics.
+
+The key information to keep in mind is:
+
+- Front-Commerce specific concepts (and code) remain unchanged.
+- This version is focused only on technical aspects (such as "plumbing", Remix, better primitives...), and has feature parity (it won't add new features or remove any).
+- We’ve taken this opportunity to remove code that has been deprecated since our latest major version (4 years ago!).
+
+### GraphQL on the server
+
+Remix will replace Front-Commerce's "middle stack," including routing, server-side rendering (SSR), and HTTP interactions. This means that GraphQL queries and mutations will now take place only on the server, respectively in Remix's loaders and actions.
+
+This is great for web performance because it allows the removal of a major frontend dependency from the bundle: Apollo Client. By default, Front-Commerce will not use any client-side GraphQL queries and will instead use Remix loaders, actions, and fetchers.
+
+However, this does not mean we are giving up on GraphQL. In fact, **GraphQL is great for composable commerce because it allows a unified view of all your data, independent of the platform or service used**. This enables progressive migration use cases and ensures that a Front-Commerce project can outlive many replatformings.
+
+Front-Commerce still allows you to expose your GraphQL API to the web if desired. Although it is not the default, it could be useful if you have other applications using it or want to migrate some parts of your application progressively at your own pace.
+
+### Full-stack typing with TypeScript
+
+Over the past few years, the JavaScript ecosystem has adopted TypeScript, and many tools have added first-class TypeScript support. This has led to massive improvements in developer experience (DX).
+
+In the Front-Commerce core, we have gradually introduced typing over the years (with JSDoc for backwards compatibility). With this new version, we are taking this to a whole new level.
+
+Front-Commerce combines Remix, [GraphQL Code Generator](https://the-guild.dev/graphql/codegen), and your custom GraphQL schema to provide a perfect setup that improves both the DX and safety of your applications.
+
+TypeScript has become a core component of a Front-Commerce project, but we want to ensure that it can be incrementally adopted. You can keep using `*.js` (or `*.jsx`) files or rename/create `*.ts` (or `*.tsx`) files to leverage this new feature.
+
+### Composability with a New Extension API
+
+Front-Commerce projects are modular by nature. Integrators can create applications by combining different features and integrations provided by Front-Commerce, allowing them to quickly get up to speed.
+
+Since 2016, we have consistently increased our feature coverage and supported services. We have added many extension points based on real use cases from our customers.
+
+Front-Commerce enhances Remix by providing a consolidated API that can be used to register extensions, which can improve your eCommerce project in many different ways:
+
+- GraphQL modules that extend or customize the GraphQL schema
+- New routes, themes, and overrides
+- Payment methods and components
+- Analytics plugins
+- ...and many more
+
+We are also turning our core repository into a Monorepo and using this Extension API ourselves to distribute every `@front-commerce/*` package as a Front-Commerce extension that can be added to a standard Remix app!
+
+## What About Existing Front-Commerce Projects?
+
+When we say that a Front-Commerce project will last, we are serious about it. The first Front-Commerce projects went live in 2018 and are regularly updated to our latest version. We want to keep it that way.
+
+We are not throwing away all of our codebase (or yours). We are only changing the foundations that we have maintained for you over the years.
+
+For this reason, the new version includes specific features that target existing Front-Commerce projects to ensure a smooth migration path:
+
+- Codemods that will automatically convert your code to remove most of the tedious work (new import paths, etc.)
+- A `@front-commerce/compat` extension that you can use if you have highly customized React components or pages that you do not want to rework immediately
+- Dedicated documentation with a migration guide that will contain all the details
+
+**Remixing your Front-Commerce application should take days, not weeks. We are accepting the challenge!**
+
+## Is it ready?
+
+We have been diligently iterating on this *remix* over the past few months. We are now excited to share it with you as early as possible so that we can improve this new version based on **feedback from the field**.
+
+The first alpha versions will be released very soon, and the first Front-Commerce Remixed projects will go into production in a few months.
+
+**Your next Front-Commerce project can start with this new version, and you will be able to migrate your existing projects in production later this year.**
+
+We are thrilled to embark on this new journey with Remix! We invite all Front-Commerce developers to embrace this change with us and welcome new teams aboard.
+
+As always, we are available to discuss this further and will share more details with you over the next few months. Happy remixing!
+
+<ChangelogFooter />
