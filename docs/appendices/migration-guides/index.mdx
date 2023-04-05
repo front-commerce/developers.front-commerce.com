@@ -69,7 +69,7 @@ code is compatible with this new behavior.
 
 In this release, we updated how the `"Use as default billing address"` and
 `"Use as default shipping address"` checkboxes are displayed in the
-[`AddressForm`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/User/Address/AddressForm/AddressForm.js)
+[`AddressForm`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/modules/User/Address/AddressForm/AddressForm.js)
 component. It now can be controlled globally using a configuration in the
 [`src/config/website.js`](/docs/reference/configurations#configwebsitejs)
 configuration file.
@@ -149,10 +149,10 @@ module.exports = {
 
 We have improved the way you can add custom icons to your theme. Before you had
 to override the
-[`theme/components/atoms/Icon/Icon.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js)
+[`theme/components/atoms/Icon/Icon.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/components/atoms/Icon/Icon.js)
 file to add your custom icons. Now you can simply extend or override the core
 icons with your custom icons by adding them to the
-[`theme/components/atoms/Icon/icons/app-icons.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/icons/app-icons.js)
+[`theme/components/atoms/Icon/icons/app-icons.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/components/atoms/Icon/icons/app-icons.js)
 file.
 
 ```js title="theme/components/atoms/Icon/icons/app-icons.js"
@@ -265,7 +265,7 @@ We have tagged the last version of the Prismic module in the
 `v1` 🥳
 
 Since this version we have moved the Prismic module
-[into the core repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/modules/prismic)
+[into the core repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.18.x/modules/prismic)
 of Front-Commerce, moving forward any new features will be made available and
 follow the same
 [semantic versioning](/docs/appendices/release-process#semantic-versioning) as
@@ -465,7 +465,7 @@ const EnhancePlaceOrder = ({
 The DomainEvent class was reworked.
 
 If you handled payment events on orders (backend operation) using
-[DomainEvent implementations](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/src/server/modules/front-commerce/payment/domain/events),
+[DomainEvent implementations](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.17.x/src/server/modules/front-commerce/payment/domain/events),
 these implementations now base on a `PurchaseIdentifier` instead of a direct
 `orderId` (this allows to update order events based on a cartId)
 
@@ -1084,7 +1084,7 @@ const isCompanyUser = (user) => {
   - Support for [trailing slashes](/docs/prismic/routable-types#trailing-slash)
   - Support for [path rewrites](/docs/prismic/routable-types#path-rewrites)
   - Exposed the `url` to the
-    [Content type](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js)
+    [Content type](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js)
 
 :::note
 
@@ -1093,7 +1093,7 @@ When a Prismic document has been registered using the
 method or the
 [`registerPrismicRoute`](/docs/prismic/routable-types#registerprismicroute-options)
 method, A `url` property is exposed in the
-[Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/prismic/server/modules/prismic/core/loaders/Content.js).
+[Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js).
 This property contains the resolved url of the document.
 
 :::
@@ -1992,7 +1992,7 @@ to
 ### New icons required
 
 In this release, two new icons (`warn` and `users`) were added to
-[the `<Icon>` component](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/components/atoms/Icon/Icon.js).
+[the `<Icon>` component](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.11.x/src/web/theme/components/atoms/Icon/Icon.js).
 
 If you have overridden the `<Icon>` component, you need to add both icons as
 follows to the list of icons to avoid any error messages at page loading:
@@ -2066,7 +2066,7 @@ new components to the
 [default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg).
 
 See
-[the Page Builder ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
+[the Page Builder ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.11.x/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
 and ensure there is no collision with your custom WYSIWYG components. While very
 unlikely, it could be possible. For instance, if you may have overridden the
 `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwyg.js` to add a custom
