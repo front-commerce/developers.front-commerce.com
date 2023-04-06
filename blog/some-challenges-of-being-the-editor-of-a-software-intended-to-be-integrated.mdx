@@ -1,5 +1,6 @@
 ---
-title: Some challenges of being the editor of a software intended to be integrated
+title:
+  Some challenges of being the editor of a software intended to be integrated
 authors: [damien]
 date: 2022-12-07T09:55
 hide_table_of_contents: true
@@ -7,8 +8,8 @@ hide_table_of_contents: true
 
 Essentially, Front-Commerce is a software meant to be integrated by developers
 so that a merchant can sell products to its customers in its own online store
-and even [without having to completely change an existing e-commerce
-stack](https://www.front-commerce.com/e-commerce-replatforming-big-bang-or-progressive-migration/).
+and even
+[without having to completely change an existing e-commerce stack](https://www.front-commerce.com/e-commerce-replatforming-big-bang-or-progressive-migration/).
 While this is probably the simplest definition of Front-Commerce (more or less
 the one I use to describe my job to my family and friends 😉), it hides some
 challenges we face every day.
@@ -41,8 +42,8 @@ The merchant:
 > Can I have a great shopping experience for my customers? And also, I want to
 > put very high quality photos and videos online. In addition, I want my pages
 > to be always highly up to date with customer specific and very dynamic
-> content. And next Friday is Black Friday! The website needs to scale,
-> it’s the biggest selling event of the year.
+> content. And next Friday is Black Friday! The website needs to scale, it’s the
+> biggest selling event of the year.
 
 The developers:
 
@@ -50,7 +51,7 @@ The developers:
 > that out of the box or can it be done by turning on a setting?
 
 I guess you get the idea, each target adds a set of constraints. It’s no
-surprise that pleasing  everyone is difficult but it’s also a stimulating
+surprise that pleasing everyone is difficult but it’s also a stimulating
 challenge.
 
 ## Extensibility
@@ -70,27 +71,27 @@ It’s also worth mentioning that in the world of composable architectures and
 [headless commerce](https://www.front-commerce.com/what-is-headless-commerce/),
 extensibility is a key feature.
 
-## Backwards compatibility and *upgradability*
+## Backwards compatibility and _upgradability_
 
 Being able to implement a project is nice but that’s only the very beginning of
 the story. At some point, new features and fixes for bugs will be needed. The
 challenge here is to be able to deliver those without breaking anything.
 
-On a practical level, that means we try to follow [semantic
-versioning](https://semver.org/) by regularly providing patch releases
+On a practical level, that means we try to follow
+[semantic versioning](https://semver.org/) by regularly providing patch releases
 containing only bug fixes and every six weeks, we release a minor version with
-new features. Those minor versions always have [a migration
-guide](https://developers.front-commerce.com/docs/appendices/migration-guides/)
-to make the upgrade process as frictionless as possible. And what about a major
-version? In the last couple of years, we have not released any, but I’ve heard
-that something is cooking 😇
+new features. Those minor versions always have
+[a migration guide](/docs/2.x/appendices/migration-guides/) to make the upgrade
+process as frictionless as possible. And what about a major version? In the last
+couple of years, we have not released any, but I’ve heard that something is
+cooking 😇
 
 In the code, this has a quite deep impact. When changing code, we have to keep
 in mind both existing projects using our software and new ones. We also have to
 think about how APIs are being used before we can make any changes to them. This
-forces us to carefully encapsulate our API’s to reduce their surface as much
-as possible. This has a tendency to limit the extensibility and the versatility
-so as usual when it comes to code, the key is to find the right trade-off.
+forces us to carefully encapsulate our API’s to reduce their surface as much as
+possible. This has a tendency to limit the extensibility and the versatility so
+as usual when it comes to code, the key is to find the right trade-off.
 
 ## Anything else?
 

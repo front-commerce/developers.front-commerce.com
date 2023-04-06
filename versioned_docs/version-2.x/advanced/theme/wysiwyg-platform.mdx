@@ -1,0 +1,204 @@
+---
+sidebar_position: 4
+hide_table_of_contents: false
+title: WYSIWYG Platform
+description:
+  In this guide, you will learn the different WYSIWYG implementations available
+  on Front-Commerce and how to customize them.
+---
+
+import TOCInline from "@theme/TOCInline";
+import ContactLink from "@site/src/components/ContactLink";
+
+<p>{frontMatter.description}</p>
+
+If you want to learn how the core WYSIWYG component works instead, please refer
+to [Display WYSIWYG content](./wysiwyg).
+
+Each platform has a specific type of WYSIWYG. This allows to render your content
+differently depending of its origin. For instance a content from WordPress might
+have some specific media shortcodes while Magento will have some widgets to
+display a category name. In the following section you will learn about the one
+implemented in Front-Commerce:
+
+<div className="pl-4">
+  <TOCInline toc={toc} maxHeadingLevel={4} />
+</div>
+
+Definitions:
+
+- a _shortcode_ is a specific string structure that is meant to be transformed
+  into actual content
+- a _transform_ is function that replaces an HTML tag with a React Component
+
+## `DefaultWysiwyg`
+
+The goal of this Wysiwyg type is to remain as simple as possible. It is not
+meant to fetch data from additional services.
+
+**No shortcodes**
+
+**Default transforms**
+
+- `<a>` tags are transformed into `theme/components/atoms/Typography/Link`
+  components when the `href` attribute does not contain a domain.
+
+## `MagentoWysiwyg`
+
+The MagentoWyswiyg's goal is to support all the default features in Magento 1
+& 2. If you notice that some features are missing, please <ContactLink /> and
+we'll look into implementing it.
+
+**Supported shortcodes**
+
+- `{% raw %}{{media url="*"}}{% endraw %}`
+- `{% raw %}{{store url="*"}}{% endraw %}`
+- `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
+
+**Default transforms**
+
+- `<a>` tags are transformed into `theme/components/atoms/Typography/Link`
+  components when the `href` attribute does not contain a domain.
+- `<widget>` tags are transformed into
+  `theme/modules/WysiwygV2/MagentoWysiwyg/Widget/Widget.js` components. However,
+  you shouldn't write a `<widget>` tag manually. It comes from the
+  `{% raw %}{{widget}}{% endraw %}` shortcode.
+- `<style>` tags are transformed to support
+  [Magento's Page Builder](/docs/2.x/magento2/page-builder) format. The
+  `#html-body` selector is replaced with the `<WysiwygV2>` root selector. See
+  [WYSIWYG dynamic styles](/docs/2.x/advanced/theme/wysiwyg#dynamic-styles) for
+  details.
+
+### Add a custom Magento Widget
+
+Custom widgets will be automatically parsed. However, you will still need to map
+the widget's `type` to custom React Components. If you don't, they will be
+ignored and nothing will be rendered in the final page.
+
+To do so, please override
+`theme/modules/WysiwygV2/MagentoWysiwyg/Widget/getWidgetComponent.js` in your
+own theme.
+
+Now, within your newly created `getWidgetComponent.js` file, you will be able to
+add your own behavior. For instance, if you've created a widget in Magento that
+uses the type `acme/product-preview`, you will need to update the `Widget.js`
+file likewise:
+
+```js title="my-module/modules/WysiwygV2/MagentoWysiwyg/Widget/getWidgetComponent.js"
+import React from "react";
+import Spinner from "theme/components/atoms/Spinner";
+import loadable from "@loadable/component";
+
+const defaultWidgetsMap = {
+  "acme/product-preview": loadable(
+    () => import("./path/to/ProductPreview.js"),
+    {
+      fallback: <Spinner />,
+    }
+  ),
+};
+
+// ... rest of the file is intact
+```
+
+If you restart your application, you will notice that the new widget component
+is displayed. Hurray!
+
+However, in most cases, you will need to fetch data to display all the needed
+information in your widget. For instance, if the widget is
+`{% raw %}{{ widget type="acme/product-preview" sku="VSK12" }}{% endraw %}` you
+will want to fetch the product associated with the given SKU.
+
+#### Register your widget type at the GraphQL level
+
+1.  First make sure that your dependencies are up to date in your GraphQL module
+    ```js title="my-module/server/modules/wysiwyg/index.js"
+    export default {
+    namespace: "Magento1/Cms",
+    // highlight-start
+    dependencies: [
+      "Magento2/Wysiwyg", // ensure that Widget related features are available
+      "Magento2/Catalog/Product" // ensure that you can fetch a product in your Wysiwyg data
+    ],
+    // highlight-end
+    ```
+1.  Then you need to register a new WidgetData type in your schema
+    ```graphql title="my-module/server/modules/wysiwyg/schema.gql"
+    type WidgetProductPreviewData implements WidgetData {
+      dataId: ID
+      product: Product
+    }
+    ```
+1.  After that you can setup the resolvers to tell GraphQL how to fetch the
+    `product` field
+    ```js title="my-module/server/modules/wysiwyg/resolvers.js"
+    export default {
+      WidgetProductPreviewData: {
+        product: ({ node }, _, { loaders }) => {
+          const productSkuAttribute = node.attrs.find(
+            ({ name }) => name === "sku"
+          );
+          if (!productSkuAttribute) {
+            return null;
+          }
+          return loaders.Product.load(productSkuAttribute.value);
+        },
+      },
+    };
+    ```
+1.  Finally register the widget type from Magento and associate it with the
+    GraphQL type
+
+    ```js title="my-module/server/modules/wysiwyg/index.js"
+    export default {
+      // ...
+      contextEnhancer: ({ loaders }) => {
+        loaders.MagentoWidget.registerWidgetType(
+          // the tag name in your HTML
+          "acme/product-preview",
+          // The associated GraphQL type name
+          "WidgetProductPreviewData"
+        );
+      },
+    };
+    ```
+
+#### Get the data in your component
+
+1.  Override the
+    `theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql` to fetch
+    the new data needed for your widget
+    ```js title="my-module/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwygFragment.gql"
+    fragment MagentoWysiwygFragment on MagentoWysiwyg {
+      childNodes
+      data {
+        dataId
+        ... on WysiwygWidgetData {
+          data {
+            ... on WidgetInvalidData {
+              dataId
+            }
+            // highlight-start
+            ... on WidgetProductPreviewData {
+              product {
+                sku
+                name
+              }
+            }
+            // highlight-end
+          }
+        }
+      }
+    }
+    ```
+1.  Use the fetched data in the `data` props in your final widget component (the
+    `./path/to/ProductPreview.js` mentioned above)
+
+## `PrismicWysiwyg`
+
+The PrismicWysiwyg allows you to display
+[Rich Text](https://prismic.io/docs/core-concepts/edit-rich-text) content from
+Prismic in your front-end, it handles addition fields like Embed fields and
+media links. To learn more of the PrismicWysiwyg usage, please refer to the
+[Configure the PrismicWysiwyg](/docs/2.x/prismic/installation#optional-configure-the-prismicwysiwyg)
+installation guide.

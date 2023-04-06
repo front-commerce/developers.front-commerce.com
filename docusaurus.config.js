@@ -14,6 +14,8 @@ const REPOSITORY_URL =
 // see: https://docs.netlify.com/configure-builds/environment-variables/#build-metadata
 const noIndex = process.env.CONTEXT !== "production";
 
+const LAST_VERSION = "2.x";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Front Commerce Developers",
@@ -40,6 +42,7 @@ const config = {
 
   customFields: {
     INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || "xh1u2003",
+    LAST_VERSION,
   },
 
   presets: [
@@ -51,6 +54,18 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           editUrl: ({ locale, docPath, versionDocsDirPath, permalink }) => {
             return `${REPOSITORY_URL}/tree/main/${versionDocsDirPath}/${docPath}`;
+          },
+          lastVersion: LAST_VERSION,
+          versions: {
+            current: {
+              label: "Remixed 🚧",
+              path: "remixed",
+              noIndex: true, // TODO dont index until we are ready to launch
+            },
+            "2.x": {
+              label: "2.x",
+              path: "2.x",
+            },
           },
         },
         blog: {
@@ -80,6 +95,11 @@ const config = {
         },
         items: [
           {
+            type: "docsVersionDropdown",
+            position: "right",
+            dropdownActiveClassDisabled: true,
+          },
+          {
             type: "doc",
             docId: "welcome",
             position: "right",
@@ -102,15 +122,15 @@ const config = {
             items: [
               {
                 label: "Introduction",
-                to: "/docs/welcome",
+                to: `/docs/${LAST_VERSION}/welcome`,
               },
               {
                 label: "Essentials",
-                to: "/docs/category/essentials",
+                to: `/docs/${LAST_VERSION}/category/essentials`,
               },
               {
                 label: "Concepts",
-                to: "/docs/category/concepts",
+                to: `/docs/${LAST_VERSION}/category/concepts`,
               },
             ],
           },

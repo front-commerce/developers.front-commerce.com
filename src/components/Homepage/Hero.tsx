@@ -3,6 +3,7 @@ import { Button } from "react-infima";
 import Link from "@docusaurus/Link";
 import Slider from "react-slick";
 import type { Settings } from "react-slick";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 import "@site/src/css/slick.css";
 import "@site/src/css/slick-theme.css";
@@ -29,6 +30,8 @@ const LogoSlider = ({ children }: { children: ReactNode[] }) => {
 };
 
 export default function Hero() {
+  const { siteConfig } = useDocusaurusContext();
+
   return (
     <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
       <h1 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 dark:text-slate-100 sm:text-7xl">
@@ -50,7 +53,7 @@ export default function Hero() {
         Keeping. Change. Simple.
       </p>
       <div className="mt-10 flex justify-center gap-x-6 group">
-        <Link to="/docs/welcome">
+        <Link to={`/docs/${siteConfig.customFields.LAST_VERSION}/welcome`}>
           <Button theme="primary" className="py-2 sm:py-4">
             Get Started &nbsp;&nbsp;→
           </Button>
