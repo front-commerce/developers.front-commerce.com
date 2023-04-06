@@ -13,8 +13,8 @@ description:
 :::info PREREQUISITE
 
 To follow this guide, you first need to know
-[how to create new pages](/docs/essentials/add-a-page-client-side) and
-[a GraphQL module](/docs/essentials/extend-the-graphql-schema) in
+[how to create new pages](/docs/2.x/essentials/add-a-page-client-side) and
+[a GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema) in
 Front-Commerce.
 
 :::
@@ -26,7 +26,7 @@ clients.
 ## Generate a Sitemap
 
 Within Front-Commerce you can generate a sitemap by running the command
-[`npm run sitemap` command](/docs/reference/scripts#sitemap-js) in your
+[`npm run sitemap` command](/docs/2.x/reference/scripts#sitemap-js) in your
 Skeleton. It will run a GraphQL query that will fetch all the routes registered
 in your application.
 
@@ -49,7 +49,7 @@ query Sitemap {
 This query will be run for each store available in your `config/stores.js` file.
 
 If the request does not work, please make sure that the environment variable
-[`FRONT_COMMERCE_SITEMAP_TOKEN`](/docs/reference/environment-variables#sitemap)
+[`FRONT_COMMERCE_SITEMAP_TOKEN`](/docs/2.x/reference/environment-variables#sitemap)
 is available when running your script.
 
 The result of this query will then be transformed in xml files that are
@@ -71,7 +71,7 @@ through a cron to ensure that the sitemap is up to date.
 By default the sitemap will contain nodes that have been registered by modules
 declared in your Front-Commerce application. For instance, if you have
 registered a `server/modules/magento2` module in your
-[`.front-commerce.js`'s `serverModules` key](/docs/reference/front-commerce-js#servermodules),
+[`.front-commerce.js`'s `serverModules` key](/docs/2.x/reference/front-commerce-js#servermodules),
 you should have categories, products and CMS pages available in your sitemap.
 
 However, if you need to setup your own routes, you will need to register your
@@ -102,7 +102,7 @@ steps:
 
 - declare a GraphQL type as `Sitemapable`
 - register the pages by calling `loaders.Sitemap.registerNodesFetcher` from a
-  [GraphQL module's `contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+  [GraphQL module's `contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 
 Let's say that we have a FAQ with a single page (`/faq/:slug`) for each
 question. In order to add these pages to the sitemap, we will consider that we
@@ -216,7 +216,7 @@ export default {
 
 The `Sitemap` loader is a loader that is available in the `Front-Commerce/Core`
 GraphQL module. Hence, don't forget to add `Front-Commerce/Core` in the
-[`dependencies` key](/docs/reference/graphql-module-definition#dependencies-optional).
+[`dependencies` key](/docs/2.x/reference/graphql-module-definition#dependencies-optional).
 It will help you detect errors in case something is not working properly.
 
 Once you are done, you should be able to run `npm run sitemap` and see the new

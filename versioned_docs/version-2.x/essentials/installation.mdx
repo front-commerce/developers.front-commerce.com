@@ -25,7 +25,7 @@ further information.
 :::info Important
 
 you can find an exhaustive list of requirements and versions supported by
-Front-Commerce in [our release notes](/docs/appendices/release-notes).
+Front-Commerce in [our release notes](/docs/2.x/appendices/release-notes).
 
 :::
 
@@ -109,7 +109,7 @@ file, with links to relevant documentation pages.
 
 We invite you to dig into the remote services configurations and tweak them if
 you wish. See
-[our documentation](/docs/reference/environment-variables#remote-services-configuration)
+[our documentation](/docs/2.x/reference/environment-variables#remote-services-configuration)
 for further information.
 
 #### Configure stores
@@ -132,11 +132,10 @@ module.exports = {
 };
 ```
 
-See [Configure multiple stores](/docs/advanced/production-ready/multistore) for
-further information.
+See [Configure multiple stores](/docs/2.x/advanced/production-ready/multistore)
+for further information.
 
 :::info Platform specificities
-
 
 <Tabs>
 <TabItem value="Magento">
@@ -147,8 +146,8 @@ When using Front-Commerce with **Magento**, store codes must match
 </TabItem>
 <TabItem value="BigCommerce">
 
-When using Front-Commerce with **BigCommerce**, [each store must be associated
-with an existing channel](/docs/bigcommerce/installation#associate-each-store-with-a-channel).
+When using Front-Commerce with **BigCommerce**,
+[each store must be associated with an existing channel](/docs/2.x/bigcommerce/installation#associate-each-store-with-a-channel).
 
 </TabItem>
 </Tabs>
@@ -162,7 +161,7 @@ now only redis is supported, which requires to have a redis instance to connect
 to.
 
 See
-[our caching section](/docs/advanced/graphql/dataloaders-and-cache-invalidation)
+[our caching section](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation)
 to know more about caching in the GraphQL middleware.
 
 ### Launch the application
@@ -244,7 +243,7 @@ the existing components.
 :::tip
 
 You can configure which stories to display in your styleguide by setting the
-[`styleguidePaths` key in your `.front-commerce.js` file](/docs/reference/front-commerce-js#styleguidepaths).
+[`styleguidePaths` key in your `.front-commerce.js` file](/docs/2.x/reference/front-commerce-js#styleguidepaths).
 Its value should be a list of regexes (e.g: `[/.*.story.js$/];`) that will be
 matched against your stories paths.
 

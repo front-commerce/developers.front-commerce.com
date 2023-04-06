@@ -2,7 +2,8 @@
 sidebar_position: 5
 title: File uploads
 description:
-  This page explains how file uploads can be implemented in a Front-Commerce project.
+  This page explains how file uploads can be implemented in a Front-Commerce
+  project.
 ---
 
 import ContactLink from "@site/src/components/ContactLink";
@@ -17,11 +18,10 @@ other can be more suited.
 
 ## With an express based route
 
-In this strategy, on the frontend you would typically have a form with [a file
-input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) so
-that the user can pick a file. This form must have [the `enctype` attribute set
-to
-`multipart/form-data`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#enctype)
+In this strategy, on the frontend you would typically have a form with
+[a file input](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file)
+so that the user can pick a file. This form must have
+[the `enctype` attribute set to `multipart/form-data`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#enctype)
 and must be configured to post to an express based route. For instance:
 
 ```jsx
@@ -30,23 +30,25 @@ and must be configured to post to an express based route. For instance:
     <label htmlFor="file">Choose a file</label>
     <input type="file" name="file" />
   </p>
-  <p><button>Upload</button></p>
+  <p>
+    <button>Upload</button>
+  </p>
 </form>
 ```
 
 In this example, when the customer picks a file and submits the form, the file
 will be sent to the URL `/my/express/route`. To create such route, please refer
-to [the add custom endpoints to your server
-guide](/docs/advanced/server/add-http-endpoint). To ease the file upload
-handling, you can use [the express-fileupload
-package](https://www.npmjs.com/package/express-fileupload).
+to
+[the add custom endpoints to your server guide](/docs/2.x/advanced/server/add-http-endpoint).
+To ease the file upload handling, you can use
+[the express-fileupload package](https://www.npmjs.com/package/express-fileupload).
 
 :::note
 
-The request to upload the file can also be issued with `fetch` or `XMLHttpRequest`
+The request to upload the file can also be issued with `fetch` or
+`XMLHttpRequest`
 
 :::
-
 
 ## With a GraphQL mutation
 
@@ -98,9 +100,8 @@ mutation SendFileMutation($file: String!) {
 ```
 
 For that example to work, the mutation `SendFileMutation` must be defined and
-implemented in [a
-custom GraphQL module](/docs/essentials/extend-the-graphql-schema).
-
+implemented in
+[a custom GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema).
 
 ---
 

@@ -123,8 +123,8 @@ resolve data.
 Clearing the cache manually is possible on some of the supported platforms. Read
 dedicated pages for details:
 
-- [Magento 1 (OpenMage LTS)](/docs/magento1/advanced#clearing-front-commerce-cache)
-- [Magento 2](/docs/magento2/advanced#clearing-front-commerce-cache)
+- [Magento 1 (OpenMage LTS)](/docs/2.x/magento1/advanced#clearing-front-commerce-cache)
+- [Magento 2](/docs/2.x/magento2/advanced#clearing-front-commerce-cache)
 <!-- TODO - add BigCommerce and Prismic manual cache clearing backlinks -->
 
 ## What are DataLoaders?
@@ -164,7 +164,7 @@ is a pure DataLoader instance, so you could use it in a standard manner.
 
 When building a GraphQL module, Front-Commerce will inject a `makeDataLoader`
 factory function in your
-[module’s `contextEnhancer` function](/docs/reference/graphql-module-definition#contextenhancer-optional).
+[module’s `contextEnhancer` function](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional).
 
 ### `makeDataLoader` usage
 
@@ -441,7 +441,7 @@ implement new strategies to support more services (we also can help and support
 more strategies, please <ContactLink />).
 
 The DataLoader cache must be configured in the
-[`config/caching.js` configuration file](/docs/reference/configurations#config-caching-js).
+[`config/caching.js` configuration file](/docs/2.x/reference/configurations#config-caching-js).
 Please refer to the reference documentation for further details or read the
 following section to choose the most relevant strategies for your context.
 
@@ -589,7 +589,7 @@ The `PerCurrency` implementation is a decorator that is specific to Magento 1
 integrations. It will decorate the existing caching strategies so that
 DataLoader keys are different depending on the store's currency selected by the
 user. This is only useful if a store has multiple currencies
-([`config/stores.js::availableCurrencies`](/docs/advanced/production-ready/multistore#multiple-currencies)).
+([`config/stores.js::availableCurrencies`](/docs/2.x/advanced/production-ready/multistore#multiple-currencies)).
 It should be used on any DataLoader that returns a price value based on the
 user's session.
 
@@ -664,7 +664,7 @@ relevant.
 Front-Commerce provides several endpoints for it. They respond to `GET` or
 `POST` queries and are secured with a token to be passed in a `auth-token`
 header. The expected token must be configured with the
-[`FRONT_COMMERCE_CACHE_API_TOKEN` environment variable](/docs/reference/environment-variables#cache).
+[`FRONT_COMMERCE_CACHE_API_TOKEN` environment variable](/docs/2.x/reference/environment-variables#cache).
 
 ### `POST` for batched invalidations
 
@@ -697,7 +697,7 @@ below.
 The payload is
 [limited to 1Mb by default](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2af896b935b2ead5d1ea5b76bc6109b1a3f56ecd/src/server/express/config/expressConfigProvider.js#L10)
 to prevent abuses. You can extend this limit using configurations. See
-["I cannot `POST` a big payload to the server "](/docs/appendices/troubleshooting#i-cannot-post-a-big-payload-to-the-server)
+["I cannot `POST` a big payload to the server "](/docs/2.x/appendices/troubleshooting#i-cannot-post-a-big-payload-to-the-server)
 for a way to define a greater value.
 
 :::
@@ -728,6 +728,6 @@ invalidation logic (for custom Magento entities).
 
 Front-Commerce provides a way to debug several aspects of the caching layer. You
 can use the
-[`DEBUG="front-commerce:cache"` environment variable](/docs/reference/environment-variables#debugging)
+[`DEBUG="front-commerce:cache"` environment variable](/docs/2.x/reference/environment-variables#debugging)
 to view information about caching strategies used for a GraphQL query, along
 with cache invalidation requests received by your Front-Commerce server.

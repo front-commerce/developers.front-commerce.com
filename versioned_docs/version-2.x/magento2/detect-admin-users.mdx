@@ -52,8 +52,8 @@ admin status before sending a request to Magento.
 
 To do so, we will start with a custom GraphQL module that does the request but
 has no verifications. Please follow
-[Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema) if you
-are ensure how to do so.
+[Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema) if
+you are ensure how to do so.
 
 If you want to customize an existing module instead, you can skip this section.
 
@@ -166,11 +166,11 @@ could request sensitive admin data.
 :::info Important
 
 In case you rely on
-[Front-Commerce's caching mechanism](/docs/advanced/graphql/dataloaders-and-cache-invalidation)
+[Front-Commerce's caching mechanism](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation)
 you will need to make sure that data fetched by admins are not cached in the
 same namespace as your normal users. For this reason, please make sure to update
 your
-[Caching strategies](/docs/advanced/graphql/dataloaders-and-cache-invalidation#permagentoadminrole)
+[Caching strategies](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#permagentoadminrole)
 with the relevant `PerMagentoAdminRole` configuration.
 
 :::

@@ -3,10 +3,10 @@ sidebar_position: 7
 title: Magento1 (OpenMage LTS) headless payments
 description:
   Historically, Magento1 (now OpenMage LTS) does not support headless payments.
-  Even though some payment providers are using APIs from their module, most of them
-  often rely on the user's session to persist meaningful information across checkout steps.
-  This guide explains how to expose an existing Magento payment method for
-  headless usage in Front-Commerce.
+  Even though some payment providers are using APIs from their module, most of
+  them often rely on the user's session to persist meaningful information across
+  checkout steps. This guide explains how to expose an existing Magento payment
+  method for headless usage in Front-Commerce.
 ---
 
 <p>{frontMatter.description}</p>
@@ -15,7 +15,7 @@ import ContactLink from "@site/src/components/ContactLink";
 
 Front-Commerce’s Magento module provides a generic way to expose Magento payment
 modules headlessly and supports
-[the relevant Front-Commerce payment workflows](/docs/advanced/payments/payment-workflows).
+[the relevant Front-Commerce payment workflows](/docs/2.x/advanced/payments/payment-workflows).
 
 ## Supported Payment platforms
 
@@ -23,7 +23,7 @@ Our Magento1 integration currently provides native adapters for the platforms
 below, learn how to install each one of them from the related documentation
 page:
 
-- [Paypal](/docs/advanced/payments/paypal#magento1-module)
+- [Paypal](/docs/2.x/advanced/payments/paypal#magento1-module)
 
 :::info
 
@@ -47,7 +47,7 @@ so we can provide information about a potential upcoming native support for it.
 ### Using the "redirect after order" flow
 
 **Payment flows:**
-[Redirect after order](/docs/advanced/payments/payment-workflows#redirect-after-order)
+[Redirect after order](/docs/2.x/advanced/payments/payment-workflows#redirect-after-order)
 
 1. Add your own payment instance on `config.xml` file
 
@@ -98,8 +98,8 @@ Don't forget to replace `{payment_method_code}` by your payment method code and
 
 :::tip REMINDER
 
-Don't forget to override or update `checkoutFlowOf.js` to
-ensure your payment code will use the correct client-side checkout flow:
+Don't forget to override or update `checkoutFlowOf.js` to ensure your payment
+code will use the correct client-side checkout flow:
 
 ```diff title="theme/pages/Checkout/checkoutFlowOf.js"
 const checkoutFlowOf = (method) => {

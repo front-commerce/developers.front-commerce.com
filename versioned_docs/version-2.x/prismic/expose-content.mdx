@@ -17,10 +17,10 @@ maintainable and expressive).
 :::info Prerequisites
 
 To benefit from this API, you first need to
-[install the Prismic module](/docs/prismic/installation). You will also need
-[a custom GraphQL module](/docs/essentials/extend-the-graphql-schema) to define
-a GraphQL schema matching the content you want to expose and implement the
-corresponding resolver. It also recommended to have read
+[install the Prismic module](/docs/2.x/prismic/installation). You will also need
+[a custom GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema) to
+define a GraphQL schema matching the content you want to expose and implement
+the corresponding resolver. It also recommended to have read
 [the Prismic Core Concepts documentation](https://prismic.io/docs/core-concepts).
 
 :::
@@ -144,7 +144,7 @@ console.log("Last update of my homepage", homepage.lastUpdate);
 `defineContentTransformers` only needs to be defined once per content type, and
 it's usually better to defined at a higher level in your module, for example in
 the
-[contextEnhancer](/docs/reference/graphql-module-definition#contextenhancer-optional)
+[contextEnhancer](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 
 :::
 
@@ -155,7 +155,7 @@ We will use some of them in the following examples.
 ## Implementation examples
 
 Those examples assume that you have created
-[a GraphQL module](/docs/essentials/extend-the-graphql-schema#create-a-new-graphql-module)
+[a GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema#create-a-new-graphql-module)
 and that it is already registered. Before being able to use the Prismic module
 API, you have to make sure `Prismic/Core` is a dependency of your module. In
 addition, we will use the Wysiwyg feature provided by `Front-Commerce/Wysiwyg`,
@@ -291,7 +291,7 @@ export default {
 > The `ImageTransformer` also rewrites the image path provided by the Prismic
 > API to use a custom image proxy defined by the module. This path rewrite makes
 > those image path directly usable by
-> [Front-Commerce's `<Image />` component](/docs/advanced/production-ready/media-middleware#lt-image-gt-component).
+> [Front-Commerce's `<Image />` component](/docs/2.x/advanced/production-ready/media-middleware#lt-image-gt-component).
 
 In addition, each view carries some metadata like the alternative text or the
 image dimensions. The following changes allow to expose the alternative text of

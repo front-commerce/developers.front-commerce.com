@@ -46,7 +46,7 @@ The section is called `req.config` in reference to the `req` object that
 contains the current user request. Whenever you need to have access to the
 configuration object, please look for a `req` object will have the key `config`.
 For instance, in GraphQL modules,
-[the `req` object is available in the `contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional).
+[the `req` object is available in the `contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional).
 
 :::
 
@@ -143,7 +143,7 @@ these keys:
   used as the value. If none is given, the configuration won't be configurable
   by environment. Please keep in mind that environment variables should still
   match
-  [Front-Commerce's naming convention](/docs/reference/environment-variables#add-your-own-environment-variables).
+  [Front-Commerce's naming convention](/docs/2.x/reference/environment-variables#add-your-own-environment-variables).
 
 Thus, if we want to define a configuration named `serviceKey` available in
 `req.config.serviceKey` that would take its value from the environment variable
@@ -335,7 +335,7 @@ export default {
 ```
 
 It is also common to register a configuration provider from
-[an express middleware](/docs/advanced/server/add-http-endpoint#add-a-global-server-middleware)
+[an express middleware](/docs/2.x/advanced/server/add-http-endpoint#add-a-global-server-middleware)
 for cases where the corresponding configuration is used in several places in the
 application.
 
@@ -401,5 +401,5 @@ Our goal is to use these configuration providers for any configuration that
 could exist in Front-Commerce. However, this is still a work in progress and
 there are still some configurations that are not associated with a schema yet.
 Most configurations are still based on files in the
-[`config` folder of your project's module](/docs/reference/configurations). If
-you have specific needs, please <ContactLink />.
+[`config` folder of your project's module](/docs/2.x/reference/configurations).
+If you have specific needs, please <ContactLink />.

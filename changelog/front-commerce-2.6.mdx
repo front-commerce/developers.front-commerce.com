@@ -58,21 +58,21 @@ On product listing pages, the "is in wishlist" feature for product items caused
 performance issues with our new HTTP caching mechanism. We've also revamped our
 implementation to reduce the number of GraphQL queries sent by the client. It is
 now much more efficient! Please
-[read our migration guide](/docs/appendices/migration-guides#Wishlist-Provider)
+[read our migration guide](/docs/2.x/appendices/migration-guides#Wishlist-Provider)
 for further details.
 
 ## Remote configurations
 
 Front-Commerce configurations are at the core of our product.
-[Configuration providers](/docs/advanced/server/configurations) allow developers
-to access configurations in an homogeneous way, no matter how they are defined.
-Be it an API Key, a text or other preferences administrable by a store owner,
-**developers can now fetch values from a remote source without any code
-change.**
+[Configuration providers](/docs/2.x/advanced/server/configurations) allow
+developers to access configurations in an homogeneous way, no matter how they
+are defined. Be it an API Key, a text or other preferences administrable by a
+store owner, **developers can now fetch values from a remote source without any
+code change.**
 
 The first module to leverage this feature is
-[our Magento 1 Algolia integration](/docs/magento1/search-engine#Algolia). It
-will reuse the configurations from your Magento administration area without
+[our Magento 1 Algolia integration](/docs/2.x/magento1/search-engine#Algolia).
+It will reuse the configurations from your Magento administration area without
 needing to duplicate them. Future Front-Commerce releases will contain more
 improvements like this for other modules.
 
@@ -80,8 +80,8 @@ improvements like this for other modules.
 
 We've updated many of our dependencies to their latest backwards compatible
 version. Our
-[migration guide](/docs/appendices/migration-guides#Updated-dependencies) lists
-the main changes.
+[migration guide](/docs/2.x/appendices/migration-guides#Updated-dependencies)
+lists the main changes.
 
 Since
 [Node.js 10.x reaches its end of life tomorrow](https://nodejs.org/en/about/releases/),
@@ -125,7 +125,7 @@ Technically speaking, a reverse-proxy or a CDN is needed to benefit from this
 feature and Front-Commerce Cloud supports it out-of-the-box of course!
 
 **We are really excited by this first step and are listening to your feedbacks
-as [you start using it](/docs/advanced/performance/cache-control-and-cdn) in
+as [you start using it](/docs/2.x/advanced/performance/cache-control-and-cdn) in
 your specific context. Together, let's make it even better!**
 
 ## Other changes
@@ -161,7 +161,7 @@ your specific context. Together, let's make it even better!**
 
 <ChangelogFooter>
 
-[Upgrade to Front-Commerce 2.6.0](/docs/appendices/migration-guides#2-5-0-gt-2-6-0)
+[Upgrade to Front-Commerce 2.6.0](/docs/2.x/appendices/migration-guides#2-5-0-gt-2-6-0)
 or
 [read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.6.0)
 

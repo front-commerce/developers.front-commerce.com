@@ -13,7 +13,7 @@ import SinceVersion from "@site/src/components/SinceVersion";
 :::info
 
 To get started with GraphQL modules, we recommend you to read the
-[Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema)
+[Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema)
 documentation page.
 
 :::
@@ -41,7 +41,7 @@ registered in the application.
 ## `modules` (optional)
 
 The `modules` key is useful when creating a
-[meta module](/docs/advanced/graphql/meta-modules). It allows to declare the
+[meta module](/docs/2.x/advanced/graphql/meta-modules). It allows to declare the
 submodules to be registered when this module is registered.
 
 It should be an array with a list of submodules to be included in the
@@ -191,7 +191,7 @@ initializes code that will be made available in GraphQL’s context, under the
 
 This is where you could construct models or dataloaders that should be used in
 your GraphQL resolvers. See
-[Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders)
+[Slim down resolvers with loaders](/docs/2.x/advanced/graphql/slim-down-resolvers-with-loaders)
 for more information.
 
 :::
@@ -203,7 +203,7 @@ keys:
 - `req`: the current server request
 - `loaders`: current loaders (from module initialized beforehand)
 - `makeDataLoader`: a factory to build a dataloader (see
-  [`makeDataLoader` usage](/docs/advanced/graphql/dataloaders-and-cache-invalidation#makedataloader-usage))
+  [`makeDataLoader` usage](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#makedataloader-usage))
 - `config`: the global configuration
 
 Example:
@@ -231,7 +231,7 @@ export default {
 ## `remoteSchema` (optional)
 
 The `remoteSchema` key allows you to achieve
-[remote schema stitching in Front-Commerce](/docs/advanced/graphql/remote-schemas).
+[remote schema stitching in Front-Commerce](/docs/2.x/advanced/graphql/remote-schemas).
 
 It should be an object with the following keys.
 
@@ -252,7 +252,7 @@ export default {
 
 By default all queries and mutations are merged with the current schema. A set
 of default transformations are applied: read
-[the dedicated documentation section](/docs/advanced/graphql/remote-schemas#default-transforms)
+[the dedicated documentation section](/docs/2.x/advanced/graphql/remote-schemas#default-transforms)
 for further information.
 
 ### `transforms` (optional)
@@ -263,7 +263,7 @@ before it is stitched with the existing Front-Commerce schema.
 It must be an array of valid
 [`graphql-tools` Schema Transforms](https://www.graphql-tools.com/docs/schema-stitching/#using-with-transforms),
 and will be applied **before** Front-Commerce’s
-[default transforms](/docs/advanced/graphql/remote-schemas#default-transforms).
+[default transforms](/docs/2.x/advanced/graphql/remote-schemas#default-transforms).
 
 Example:
 
@@ -299,7 +299,7 @@ system in your remote service.
 You can create your own executor from scratch by following
 [Creating an executor](https://www.graphql-tools.com/docs/remote-schemas/#creating-an-executor)
 from GraphQL Tools or use the
-[`makeExecutor` helper](/docs/reference/remote-schema-helpers#makeexecutor)
+[`makeExecutor` helper](/docs/2.x/reference/remote-schema-helpers#makeexecutor)
 available in Front-Commerce.
 
 The following example demonstrates how to add an `Authorization` header to your
@@ -349,8 +349,8 @@ This option will be ignored if `executor` option is defined.
 The `linkContextBuilders` key allows you to optionally modify the underlying
 [Apollo’s HTTP Link context](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-http#context)
 for each request. Please note that the HTTP Link context is different from the
-[GraphQL Context](/docs/reference/graphql-context) (even if they share the same
-term!).
+[GraphQL Context](/docs/2.x/reference/graphql-context) (even if they share the
+same term!).
 
 It should be a list of functions that will enrich the context with the value
 they return.
@@ -358,8 +358,9 @@ they return.
 One of the most common usage for instance would be to authenticate remote
 requests by adding a `Authorization` header to requests. Context builders
 functions will receive the
-[Front-Commerce GraphQL context](/docs/reference/graphql-context) so they could
-implement a wide range of logic based on the current HTTP Request or loaders.
+[Front-Commerce GraphQL context](/docs/2.x/reference/graphql-context) so they
+could implement a wide range of logic based on the current HTTP Request or
+loaders.
 
 Example:
 

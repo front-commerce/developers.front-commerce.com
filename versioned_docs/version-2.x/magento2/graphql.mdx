@@ -24,10 +24,10 @@ This section details what is available so far.
 :::note
 
 Please note that it relies upon the
-[GraphQL modules remote schema](/docs/advanced/graphql/remote-schemas) support
-from Front-Commerce. We recommend to have at least a basic understanding of how
-it works if you know Magento’s GraphQL schema and would like to find yourself at
-home in Front-Commerce!
+[GraphQL modules remote schema](/docs/2.x/advanced/graphql/remote-schemas)
+support from Front-Commerce. We recommend to have at least a basic understanding
+of how it works if you know Magento’s GraphQL schema and would like to find
+yourself at home in Front-Commerce!
 
 :::
 
@@ -35,13 +35,13 @@ home in Front-Commerce!
 
 Front-Commerce supports both Magento 2.2 and 2.3 versions. For this reason,
 GraphQL support for Magento is not part of the default Magento2
-[meta module](/docs/advanced/graphql/meta-modules).
+[meta module](/docs/2.x/advanced/graphql/meta-modules).
 
 To enable GraphQL support for Magento 2.3+, you must register the
 `server/modules/magento2-graphql` module in your application.
 
 To do so, add the following line in your
-[`.front-commerce.js`](/docs/reference/front-commerce-js) file:
+[`.front-commerce.js`](/docs/2.x/reference/front-commerce-js) file:
 
 ```js title=".front-commerce.js"
 module.exports = {

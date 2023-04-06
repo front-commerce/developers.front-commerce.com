@@ -2,9 +2,9 @@
 sidebar_position: 2
 title: Search engine
 description:
-  When configured with Magento1 , Front-Commerce provides search capabilities for
-  your website using different technologies. This guide shows you the different
-  options available to you.
+  When configured with Magento1 , Front-Commerce provides search capabilities
+  for your website using different technologies. This guide shows you the
+  different options available to you.
 ---
 
 <p>{frontMatter.description}</p>
@@ -83,7 +83,7 @@ module.
 :::
 
 Then, in your `.env` file, you need to define
-[the `FRONT_COMMERCE_ES_HOST` and `FRONT_COMMERCE_ES_ALIAS` variables](/docs/reference/environment-variables#elasticsearch).
+[the `FRONT_COMMERCE_ES_HOST` and `FRONT_COMMERCE_ES_ALIAS` variables](/docs/2.x/reference/environment-variables#elasticsearch).
 
 After restarting Front-Commerce, you should be able run a GraphQL query to
 search for products, for instance:
@@ -172,7 +172,7 @@ The Algolia server module needs to be enabled **before** the Magento's module.
 
 As of Front-Commerce 2.6, Algolia's module is automatically configured. If you
 are using Front-Commerce 2.5, you need to define
-[all the Algolia related environment variables](/docs/reference/environment-variables#algolia)
+[all the Algolia related environment variables](/docs/2.x/reference/environment-variables#algolia)
 in your `.env` file.
 
 Front-Commerce 2.6 takes the following parameters from Magento:

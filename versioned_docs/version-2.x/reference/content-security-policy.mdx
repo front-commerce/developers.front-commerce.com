@@ -4,14 +4,15 @@ description: This guide is about Content Security Policies configuration.
 ---
 
 This guide explains how to setup
-<abbr title="Content Security Policy">CSP</abbr> in your [config/website.js
-configuration](/docs/reference/configurations#configwebsitejs).
+
+<abbr title="Content Security Policy">CSP</abbr> in your [config/website.js configuration](/docs/2.x/reference/configurations#configwebsitejs).
 
 ## Basic configuration
 
 For security reasons only URLs from the store's domain are authorized through
-CSP. However, for tracking and third-party dependencies, you will have to authorize more
-domains. Use the following config and add your custom domain in each:
+CSP. However, for tracking and third-party dependencies, you will have to
+authorize more domains. Use the following config and add your custom domain in
+each:
 
 ```js title="my-module/config/website.js"
 {

@@ -16,7 +16,8 @@ In Front Commerce we have separated our components in two categories: the
 :::note
 
 If you would like to understand why we went for this organization, feel free to
-refer to [React components structure](/docs/concepts/react-components-structure)
+refer to
+[React components structure](/docs/2.x/concepts/react-components-structure)
 first.
 
 :::
@@ -79,7 +80,7 @@ This is one of the biggest advantages of using React to build our front-end, we
 have access to this huge ecosystem.
 
 Let's install the required packages
-([versions are important](/docs/advanced/features/display-a-map#open-street-map-osm-with-leaflet)):
+([versions are important](/docs/2.x/advanced/features/display-a-map#open-street-map-osm-with-leaflet)):
 
 ```shell
 npm install leaflet@^1.7 react-leaflet@3.2.5
@@ -88,10 +89,10 @@ npm install leaflet@^1.7 react-leaflet@3.2.5
 :::note
 
 Front-Commerce also
-[provides a `<Map>` component](/docs/advanced/features/display-a-map) that would
-be a better candidate for a real project. In order to learn Front-Commerce we
-prefer to document how to do things yourself. As a stretch goal, you can try to
-replace your components with the `<Map>` one.
+[provides a `<Map>` component](/docs/2.x/advanced/features/display-a-map) that
+would be a better candidate for a real project. In order to learn Front-Commerce
+we prefer to document how to do things yourself. As a stretch goal, you can try
+to replace your components with the `<Map>` one.
 
 :::
 
@@ -169,7 +170,7 @@ With that, you should see the map appear in your homepage.
 You will detect issues with remote assets (images, CSS…) not being loaded. It is
 related to the default <abbr title="Content Security Policy">CSP</abbr> headers
 sent by Front-Commerce. To allow new domains, you should modify your
-[`config/website.js`'s `contentSecurityPolicy` key](/docs/reference/content-security-policy)
+[`config/website.js`'s `contentSecurityPolicy` key](/docs/2.x/reference/content-security-policy)
 (i.e: define `imgSrc: ["*.openstreetmap.org"]`).
 
 :::
@@ -248,8 +249,8 @@ storiesOf("modules.StoreLocator", module).add("default", () => {
 :::note
 
 We won't focus on the story in this guide. But you can refer to the
-[Storybook guide](/docs/essentials/add-component-to-storybook) to learn how to
-add any kind of stories to your Storybook.
+[Storybook guide](/docs/2.x/essentials/add-component-to-storybook) to learn how
+to add any kind of stories to your Storybook.
 
 :::
 

@@ -41,7 +41,7 @@ Customizing how invoices are resolved in your application consists in 3 steps:
 ### Add your new Invoice type to the graphql schema
 
 _This section assumes that you know how to
-[Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema)_
+[Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema)_
 
 Since the invoice is aimed at being downloadable, the new invoice type will have
 to implement the `FcDownloadableInvoice` interface.
@@ -83,9 +83,10 @@ export default {
 
 ### Make invoice files downloadable for Customers
 
-You must implement [a custom router](/docs/advanced/server/add-http-endpoint) to
-expose the PDF file on a URL. The implementation of this route is up to you and
-depends on your context.
+You must implement
+[a custom router](/docs/2.x/advanced/server/add-http-endpoint) to expose the PDF
+file on a URL. The implementation of this route is up to you and depends on your
+context.
 
 It might be a simple proxy, but if your remote data source does not implement
 access control you may have to roll your own authorization checks to ensure that

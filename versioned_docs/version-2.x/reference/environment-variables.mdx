@@ -24,7 +24,7 @@ files no matter if it is a server-side or client-side file. However, not all
 variables are exposed in your client code. Client code only have access to
 variables such as `FRONT_COMMERCE_WEB_*` which were defined during
 `front-commerce build`. See
-[Add your own environment variables](/docs/reference/environment-variables#add-your-own-environment-variables)
+[Add your own environment variables](/docs/2.x/reference/environment-variables#add-your-own-environment-variables)
 for more details.
 
 ## How to update environment variables
@@ -89,21 +89,21 @@ redirects user to the HTTPS version of a page in this case. Use the
 
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: a token that will let external applications
   invalidate parts of Front-Commerce cache. See
-  [Invalidating the cache](/docs/advanced/graphql/dataloaders-and-cache-invalidation#invalidating-the-cache)
+  [Invalidating the cache](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#invalidating-the-cache)
   for more details.
 - `FRONT_COMMERCE_CART_CACHE_ENABLE`: allows to enable
-  [the cart cache (only available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-customers-cart)
+  [the cart cache (only available when running Front-Commerce with Magento2)](/docs/2.x/magento2/advanced#caching-customers-cart)
 - `FRONT_COMMERCE_CURRENT_CUSTOMER_CACHE_ENABLE`: allows to enable
-  [the current customer cache (only available when running Front-Commerce with Magento2)](/docs/magento2/advanced#caching-current-customers-information)
+  [the current customer cache (only available when running Front-Commerce with Magento2)](/docs/2.x/magento2/advanced#caching-current-customers-information)
 
 ### Performance
 
 - ~~`FRONT_COMMERCE_FAST`: by setting it to `true`, there will be only one
   render to fetch data server side. cf.
-  [Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering)
+  [Faster Server Side Rendering](/docs/2.x/advanced/performance/faster-server-side-rendering)
   for more details.~~ Removed in version 2.7. Please use
-  [Cache-Control headers](/docs/advanced/performance/cache-control-and-cdn) to
-  improve performance of SSR pages.
+  [Cache-Control headers](/docs/2.x/advanced/performance/cache-control-and-cdn)
+  to improve performance of SSR pages.
 - `ENGINE_API_KEY`: set it to enable
   [Metrics & Logging](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/#sending-metrics-to-apollo-graph-manager)
   on your GraphQL schema, using Apollo Engine
@@ -146,7 +146,7 @@ redirects user to the HTTPS version of a page in this case. Use the
 ### DX
 
 - `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE`: disables
-  [the SSR warning page](/docs/advanced/theme/server-side-rendering#ssr-fallback-when-things-go-wrong)
+  [the SSR warning page](/docs/2.x/advanced/theme/server-side-rendering#ssr-fallback-when-things-go-wrong)
   before loading. This allows you to see what happens in production.
 - `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE`: disables the image resizing errors
   in case you've passed malformed requests to the server. This allows you to see
@@ -182,7 +182,7 @@ for each one of these.
   - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
   - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
 - `FRONT_COMMERCE_MAGENTO_ADMIN_TOKEN`: Admin role token to
-  [detect admin users](/docs/magento2/detect-admin-users) in Front-Commerce
+  [detect admin users](/docs/2.x/magento2/detect-admin-users) in Front-Commerce
   configured in « Stores > Configurations > General > General > Front-Commerce >
   Magento Admin Token »
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: The key configured here must be identical to
@@ -202,7 +202,7 @@ for each one of these.
   - `FRONT_COMMERCE_BIG_COMMERCE_CLIENT_SECRET` contains the `CLIENT SECRET`
   - `FRONT_COMMERCE_BIG_COMMERCE_STORE_HASH` contains the store hash, it's the
     last part of the `FRONT_COMMERCE_BIG_COMMERCE_AUTH_TOKEN` described above.
-- [Reset password](/docs/bigcommerce/password-reset):
+- [Reset password](/docs/2.x/bigcommerce/password-reset):
   - `FRONT_COMMERCE_BIG_COMMERCE_RESET_PASSWORD_SMTP_CONNECTION_STRING` contains
     the SMTP connection string used to send password reset emails e.g. something
     like `smtps://login:mypassword@smtp.example.com:465`. Both `smtp` and
@@ -212,7 +212,7 @@ for each one of these.
     (`My store <noreply@example.com>`) used as the sender of reset password
     emails.
 - `FRONT_COMMERCE_BIG_COMMERCE_WEBHOOK_SECRET` contains the webhook secret, see
-  [Configure the webhook secret](/docs/bigcommerce/bigcommerce-webhooks)
+  [Configure the webhook secret](/docs/2.x/bigcommerce/bigcommerce-webhooks)
 
 ### Elasticsearch
 
@@ -239,7 +239,7 @@ variables:
 :::info
 
 As of Front-Commerce 2.6,
-[the Algolia Front-Commerce module](/docs/magento1/search-engine#algolia) is
+[the Algolia Front-Commerce module](/docs/2.x/magento1/search-engine#algolia) is
 automatically configured based on Magento1 configuration. Those environment
 variables only apply to Front-Commerce 2.5 with Magento1.
 
@@ -306,7 +306,7 @@ keys** page from the menu.
 Get your access keys by following the
 [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html).
 See
-[our documentation page](/docs/advanced/payments/payzen#configure-your-environment)
+[our documentation page](/docs/2.x/advanced/payments/payzen#configure-your-environment)
 for further details.
 
 - `FRONT_COMMERCE_PAYZEN_PUBLIC_KEY`
@@ -319,12 +319,12 @@ for further details.
 ### BuyBox
 
 See
-[our dedicated documentation page](/docs/advanced/payments/buybox#configure-your-environment).
+[our dedicated documentation page](/docs/2.x/advanced/payments/buybox#configure-your-environment).
 
 ### Capency
 
 See
-[our related documentation](/docs/advanced/features/smart-forms#capency-capaddress-capphone-capemail)
+[our related documentation](/docs/2.x/advanced/features/smart-forms#capency-capaddress-capphone-capemail)
 for details.
 
 - `FRONT_COMMERCE_CAPENCY_DISABLED`: set to `true` to temporary disable all the
@@ -337,7 +337,7 @@ for details.
 
 ### Prismic
 
-See [our related documentation](/docs/category/prismic) for details.
+See [our related documentation](/docs/2.x/category/prismic) for details.
 
 - `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME`
 - `FRONT_COMMERCE_PRISMIC_ACCESS_TOKEN`
@@ -402,9 +402,9 @@ Here is a list of available debug namespaces:
   (see `makeProtectedProxyRouter.js`)
 - `front-commerce:b2b:companyCredit`: debugs B2B company credit interactions
 - `front-commerce:b2b:permissions`: debugs B2B permissions interactions
-- `front-commerce:big-commerce:*`: debugs [Big Commerce
-module](/docs/category/bigcommerce) queries and interactions,
-here a list of all Big Commerce related debug flags:
+- `front-commerce:big-commerce:*`: debugs
+  [Big Commerce module](/docs/2.x/category/bigcommerce) queries and
+  interactions, here a list of all Big Commerce related debug flags:
   - `front-commerce:big-commerce:address`
   - `front-commerce:big-commerce:cache`
   - `front-commerce:big-commerce:cart`
@@ -422,35 +422,39 @@ here a list of all Big Commerce related debug flags:
   - `front-commerce:big-commerce:wishlist`
 - `front-commerce:cache`: debugs cache invalidation calls, strategies
   information and
-  [HTTP Cache deactivation](/docs/advanced/performance/cache-control-and-cdn/).
+  [HTTP Cache deactivation](/docs/2.x/advanced/performance/cache-control-and-cdn/).
 - `front-commerce:cart`: debugs cart corrupted data received from remote sources
 - `front-commerce:cart:cache`: debugs cache information for customer's cart (see
-  [Caching customers' cart](/docs/magento2/advanced#caching-customers-cart))
+  [Caching customers' cart](/docs/2.x/magento2/advanced#caching-customers-cart))
 - `front-commerce:customer:cache`: debugs cache information for current user's
   information (see
-  [Caching current customers' information for Magento2](/docs/magento2/advanced#caching-current-customers-information))
+  [Caching current customers' information for Magento2](/docs/2.x/magento2/advanced#caching-current-customers-information))
 - `front-commerce:cluster`: debugs the node process id and other information to
   help configuring cluster mode
 - `front-commerce:config`: dumps the configuration for a typical request at the
   `/__front-commerce/debug` URL
 - `front-commerce:country`: debugs Big Commerce country related API calls
 - `front-commerce:customer`: debugs Big Commerce customer related API calls
-- `front-commerce:customer:cache`: debugs [customer
-cache](/docs/magento2/advanced#caching-current-customers-information) related
-operations
+- `front-commerce:customer:cache`: debugs
+  [customer cache](/docs/2.x/magento2/advanced#caching-current-customers-information)
+  related operations
 - `front-commerce:dispatcher`: debugs information about routes dispatching for
   registered page types
-- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY VERBOSE!**)
+- `front-commerce:elasticsearch`: debugs all elasticsearch queries (**VERY
+  VERBOSE!**)
 - `front-commerce:graphql`: debugs GraphQL related code
-- `front-commerce:hipay`: debugs [HiPay module](/docs/advanced/payments/hipay) queries and interaction
+- `front-commerce:hipay`: debugs
+  [HiPay module](/docs/2.x/advanced/payments/hipay) queries and interaction
 - `front-commerce:httpauth`: debugs how
-  [basic authorization](/docs/reference/configurations#config-httpauth-js) is
-  enabled
+  [basic authorization](/docs/2.x/reference/configurations#config-httpauth-js)
+  is enabled
 - `front-commerce:image`: debugs image proxy actions (useful to troubleshoot
   interactions with remote media servers)
-- `front-commerce:in-stock-alert`: debugs [In Stock Alert](/docs/advanced/features/in-stock-alert) API calls
-- `front-commerce:magento2:search`: debugs [Magento2 native search](/docs/magento2/search-engine#native-search) queries and
-interaction
+- `front-commerce:in-stock-alert`: debugs
+  [In Stock Alert](/docs/2.x/advanced/features/in-stock-alert) API calls
+- `front-commerce:magento2:search`: debugs
+  [Magento2 native search](/docs/2.x/magento2/search-engine#native-search)
+  queries and interaction
 - `front-commerce:payment`: debugs payment interactions to help troubleshooting
   a payment workflow
 - `front-commerce:payment:adyen`: debugs advanced Adyen information (several
@@ -458,17 +462,17 @@ interaction
 - `front-commerce:payment:buybox`: debugs HTTP interactions with BuyBox API
   (several information are also logged in `server.log` no matter this flag)
 - `front-commerce:performance`: allow to debug server performance in production
-  by enabling [server timings](/docs/advanced/performance/server-timings)
-- `front-commerce:prismic`: turns [the Prismic module](/docs/category/prismic)
-  debug on
+  by enabling [server timings](/docs/2.x/advanced/performance/server-timings)
+- `front-commerce:prismic`: turns
+  [the Prismic module](/docs/2.x/category/prismic) debug on
 - `front-commerce:prismic:*`: debugs various aspects of the Prismic module, here
-is the available list of Prismic related flags:
+  is the available list of Prismic related flags:
   - `front-commerce:prismic:cache`
   - `front-commerce:prismic:fetch`
   - `front-commerce:prismic:webhook`
 - `front-commerce:remote-schemas`: debugs remote schema related code
 - `front-commerce:rma`: debugs Return Merchandize Authorization related queries
-and interactions
+  and interactions
 - `front-commerce:scripts`: debugs all scripts and tooling related commands
   (webpack…)
 - `front-commerce:scripts:routes`: debugs routing generation during the
@@ -480,7 +484,7 @@ and interactions
 - `front-commerce:store-credits`: debugs responses and errors related to store
   credit (Magento 1 EE / Magento 2 Commerce)
 - `front-commerce:remote-schemas`: debugs
-  [remote schema stitching](/docs/advanced/graphql/remote-schemas) related
+  [remote schema stitching](/docs/2.x/advanced/graphql/remote-schemas) related
   internals
 - `front-commerce:webpack`: enables `webpack-bundle-analyzer` on webpack
   client's bundle
@@ -493,7 +497,7 @@ and interactions
 
 In `development` environment, the source maps for both the server and the client
 side are generated. That means you can follow our
-[Debugging Guide](/docs/reference/debugging) to get started with
+[Debugging Guide](/docs/2.x/reference/debugging) to get started with
 [JavaScript Debugging](https://www.w3schools.com/js/js_debugging.asp).
 
 :::

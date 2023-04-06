@@ -13,8 +13,8 @@ description:
 <p>{frontMatter.description}</p>
 
 Before tackling this documentation, please make sure that you've understood the
-[Essentials](/docs/essentials/installation) of Front-Commerce and that you've
-registered a method in your backend (Magento2…).
+[Essentials](/docs/2.x/essentials/installation) of Front-Commerce and that
+you've registered a method in your backend (Magento2…).
 
 All the code that will be created in this page should live in your own module.
 You can either put it in your client code or create a specific module for the
@@ -123,8 +123,8 @@ You can reference one of our implementations to get you started
 
 Things to understand here:
 
-- The `SubmitShippingMethod` component is a common component across all
-  shipping methods to ensure consistency in how methods are managed.
+- The `SubmitShippingMethod` component is a common component across all shipping
+  methods to ensure consistency in how methods are managed.
 - `CustomMethod.handlesNextStepButton = () => true;` means that you are indeed
   using `SubmitShippingMethod` in your component. This should always be `true`
   as `false` is the legacy behavior.
@@ -141,7 +141,7 @@ In this example we're only setting a text input, but you can do fancier things
 like fetching a list of pickup points from GraphQL and displaying them here. To
 do so, you need to use `<PostalAddressSelector />` component that allows to
 select a pickup. See
-[Add a shipping method with pickup points](/docs/advanced/shipping/add-new-shipping-data-in-graphql)
+[Add a shipping method with pickup points](/docs/2.x/advanced/shipping/add-new-shipping-data-in-graphql)
 documentation for more information.
 
 ## Send the additional data to your backend

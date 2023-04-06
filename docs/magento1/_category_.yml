@@ -1,8 +1,0 @@
-label: Magento 1 (OpenMage LTS)
-position: 5
-link:
-  slug: "/category/magento1"
-  type: generated-index
-  description:
-    We currently support the main features of Magento. You can consider that if
-    it works in Magento 1 (now OpenMage LTS), it will work with Front-Commerce!

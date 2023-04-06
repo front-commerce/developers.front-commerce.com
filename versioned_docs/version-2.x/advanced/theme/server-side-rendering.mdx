@@ -19,7 +19,7 @@ Front-Commerce uses <abbr title="Server Side Rendering">SSR</abbr> (opposed to
 <abbr title="User experience">UX</abbr> by serving
 <abbr title="Hypertext Markup Language">HTML</abbr> pages to users on their
 first hit to the server. You can read [A typical request in
-Front-Commerce](/docs/concepts/architecture-overview#a-typical-request-in-front-commerce)
+Front-Commerce](/docs/2.x/concepts/architecture-overview#a-typical-request-in-front-commerce)
 to get a better understanding of this process.
 
 To generate this HTML page, Front-Commerce will render the React application as
@@ -138,7 +138,7 @@ export default withIsServer()(MyIsomorphicComponent);
 In order to reduce the amount of Javascript sent to users, we've found that code
 using `branchServerClient()` are often good candidates to code splitting. You
 may consider using a `loadable()` component here. You can use
-[`DEBUG="front-commerce:webpack"`](/docs/reference/environment-variables#debugging)
+[`DEBUG="front-commerce:webpack"`](/docs/2.x/reference/environment-variables#debugging)
 to analyze your bundles and decide wether it would improve your application or
 not.
 
@@ -163,9 +163,9 @@ render-time media queries with the above component) we think it brings a good
 user experience.
 
 This behavior is leveraging
-[Front-Commerce's configuration system](/docs/advanced/server/configurations) to
-provide information about the device. Each `req.config` will contain a `device`
-key with the following information that you can use to if needed:
+[Front-Commerce's configuration system](/docs/2.x/advanced/server/configurations)
+to provide information about the device. Each `req.config` will contain a
+`device` key with the following information that you can use to if needed:
 
 ```js title="req.config.device"
 {
@@ -186,7 +186,7 @@ for implementation details and <ContactLink /> if you think of any improvements.
 
 During <abbr title="Server Side Rendering">SSR</abbr> you might face some errors
 (syntax errors,
-[browser API usage](/docs/advanced/theme/server-side-rendering#there-is-no-window-on-the-server),
+[browser API usage](/docs/2.x/advanced/theme/server-side-rendering#there-is-no-window-on-the-server),
 render errors, etc.). By default in dev mode, Front-Commerce provides an error
 page that makes the mistake obvious to allow you to fix it as early as possible.
 
@@ -198,7 +198,7 @@ another visual waiting page to users while the application is being rendered
 client side.**
 
 If you still want to display the `theme/pages/SsrFallback` page in dev mode,
-[add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables](/docs/reference/environment-variables#dx).
+[add `FRONT_COMMERCE_DEV_SSR_FALLBACK_DISABLE=true` to your environment variables](/docs/2.x/reference/environment-variables#dx).
 
 ## Restrictions on pages that will be server-rendered
 
@@ -222,9 +222,9 @@ Pages are server-rendered when accessed with the following URL patterns:
 
 If you want to learn more about <abbr title="Server Side Rendering">SSR</abbr>
 in Front-Commerce, we recommend you to understand how
-[Server timings](/docs/advanced/performance/server-timings) could help you to
-spot performance issues, read the
-[Faster Server Side Rendering](/docs/advanced/performance/faster-server-side-rendering)
+[Server timings](/docs/2.x/advanced/performance/server-timings) could help you
+to spot performance issues, read the
+[Faster Server Side Rendering](/docs/2.x/advanced/performance/faster-server-side-rendering)
 documentation page and to have a look at
 [hydration](<https://en.wikipedia.org/wiki/Hydration_(web_development)>) and
-[how to disable it in Front-Commerce](/docs/advanced/features/disable-hyration).
+[how to disable it in Front-Commerce](/docs/2.x/advanced/features/disable-hyration).

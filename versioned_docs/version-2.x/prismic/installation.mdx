@@ -29,7 +29,7 @@ FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET=a-secret-defined-in-webhook-configuration
   _Permanent access token_ generated for this application
 - `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` is a secret key used to clear caches
   in Front-Commerce and to secure
-  [Integration Fields API endpoints](/docs/prismic/integration-fields). To
+  [Integration Fields API endpoints](/docs/2.x/prismic/integration-fields). To
   define it, go to _Settings > Webhook_ and create a webhook pointing to your
   Front-Commerce URL `https://my-shop.example.com/prismic/webhook`. In the
   webhook form, you can configure a _Secret_. This is the one you should use in
@@ -79,7 +79,7 @@ module.exports = {
 The module is ready!
 
 **You can now use the `Prismic` loader to
-[Expose Prismic Content in your project](/docs/prismic/expose-content).**
+[Expose Prismic Content in your project](/docs/2.x/prismic/expose-content).**
 
 ## Simulate the webhook in a development environment
 
@@ -120,7 +120,7 @@ source .env ; PAYLOAD=`printf '{"secret": "%s", "type": "api-update", "masterRef
 
 If you plan to directly include images in your content, don't forget to add the
 domain `images.prismic.io` to `imgSrc` in
-[the `contentSecurityPolicy` configuration](/docs/reference/content-security-policy).
+[the `contentSecurityPolicy` configuration](/docs/2.x/reference/content-security-policy).
 
 ## Optional: Configure the PrismicWysiwyg
 
@@ -152,8 +152,8 @@ const getWysiwygComponent = (type) => {
 export default getWysiwygComponent;
 ```
 
-Refer to the [Wysiwyg Customization](/docs/advanced/theme/wysiwyg-platform) to
-learn more.
+Refer to the [Wysiwyg Customization](/docs/2.x/advanced/theme/wysiwyg-platform)
+to learn more.
 
 **Default transforms**
 

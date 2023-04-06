@@ -27,7 +27,7 @@ This name is used for _Developer Experience_ only and is not aimed at appearing
 in the theme or any website user message.
 
 It is for instance used as title in the
-[Storybook design system](/docs/essentials/add-component-to-storybook).
+[Storybook design system](/docs/2.x/essentials/add-component-to-storybook).
 
 ## `url`
 
@@ -46,12 +46,12 @@ in the theme or any website user message. You may thus use it to redirect to
 your staging instance, or project management tool for instance.
 
 It is for instance used as the link target for the name in the
-[Storybook design system](/docs/essentials/add-component-to-storybook).
+[Storybook design system](/docs/2.x/essentials/add-component-to-storybook).
 
 :::note
 
 Use
-[the `FRONT_COMMERCE_URL` environment variable](/docs/reference/environment-variables#host)
+[the `FRONT_COMMERCE_URL` environment variable](/docs/2.x/reference/environment-variables#host)
 to configure the URL used to access to your application.
 
 :::
@@ -69,8 +69,8 @@ module.exports = {
 ```
 
 Each module can contain client code to
-[extend the theme](/docs/essentials/extend-the-theme), and server code to
-[add custom server endpoints](/docs/advanced/server/add-http-endpoint).
+[extend the theme](/docs/2.x/essentials/extend-the-theme), and server code to
+[add custom server endpoints](/docs/2.x/advanced/server/add-http-endpoint).
 
 :::note
 
@@ -93,7 +93,7 @@ theme overrides in the following order (the first existing one would be used):
 
 A list of objects describing GraphQL modules to register in your application.
 GraphQL modules allows you to
-[extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema).
+[extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema).
 
 ```js
 module.exports = {
@@ -116,25 +116,25 @@ Each object must be composed of the properties below:
   for further information._
 
 - `path`: must be a path to the
-  [GraphQL module definition file](/docs/reference/graphql-module-definition)
+  [GraphQL module definition file](/docs/2.x/reference/graphql-module-definition)
 
 :::info
 
 GraphQL modules will be loaded according to the
-[`dependencies` declared in their respective definitions](/docs/reference/graphql-module-definition#dependencies-optional).
+[`dependencies` declared in their respective definitions](/docs/2.x/reference/graphql-module-definition#dependencies-optional).
 The order in the `serverModules` list should **NOT** be relied on for dependency
 management.
 
 :::
 
 As of the latest release, Front-Commerce’s provides the following GraphQL
-modules (or [meta-modules](/docs/advanced/graphql/meta-modules)):
+modules (or [meta-modules](/docs/2.x/advanced/graphql/meta-modules)):
 
 - `server/modules/front-commerce`: core features of Front-Commerce.
 - `server/modules/magento2` _(meta module)_: Magento2 GraphQL modules to
-  [use Front-Commerce with all Magento2 supported features](/docs/category/magento2).
+  [use Front-Commerce with all Magento2 supported features](/docs/2.x/category/magento2).
   Register single sub-modules explicitly if you only need a subset of features.
-- [Front-Commerce’s embedded payment](/docs/category/checkout) modules:
+- [Front-Commerce’s embedded payment](/docs/2.x/category/checkout) modules:
   - `server/modules/payment-ogone`: Ogone payment platform.
   - `server/modules/payment-paypal`: PayPal payment platform.
   - `server/modules/payment-payzen`: PayZen payment platform.
@@ -182,9 +182,9 @@ array. The later, the more important.
 The only functionality relying on `webModules` currently is the Routing. You can
 refer to the following pages for more information:
 
-- Guide: [Add a new page](/docs/essentials/add-a-page-client-side)
-- Guide: [Layouts](/docs/advanced/theme/layouts)
-- Reference: [Routing](/docs/reference/routing)
+- Guide: [Add a new page](/docs/2.x/essentials/add-a-page-client-side)
+- Guide: [Layouts](/docs/2.x/advanced/theme/layouts)
+- Reference: [Routing](/docs/2.x/reference/routing)
 
 ## `styleguidePaths`
 
@@ -192,7 +192,7 @@ _Default value: `[ /.*.story.js$/ ]`_
 
 A list of regexes that match the Storybook stories you want to use in your
 styleguide, so you can
-[only display relevant stories in your Design System](/docs/essentials/add-component-to-storybook#display-only-the-relevant-stories-to-your-design-system).
+[only display relevant stories in your Design System](/docs/2.x/essentials/add-component-to-storybook#display-only-the-relevant-stories-to-your-design-system).
 
 ```js
 module.exports = {

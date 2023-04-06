@@ -35,7 +35,7 @@ This GraphQL module should appear in the folder of a Front-Commerce module. For
 instance, if the Front-Commerce module is in `my-module`, the GraphQL module
 should be in `my-module/server/modules/clicks-counter`. Learn more about
 Front-Commerce modules within
-[Extend the theme](/docs/essentials/extend-the-theme).
+[Extend the theme](/docs/2.x/essentials/extend-the-theme).
 
 In the GraphQL module folder, there should be a definition file which will
 determine how the module should behave within your Schema:
@@ -55,7 +55,7 @@ your application yet. You need to register it.
 ## Register the module in the application
 
 Front-Commerce allows you to manage your modules in the
-[`serverModules` key of the `.front-commerce.js` file](/docs/reference/front-commerce-js#servermodules)
+[`serverModules` key of the `.front-commerce.js` file](/docs/2.x/reference/front-commerce-js#servermodules)
 located in your project’s root.
 
 Let’s add a `ClicksCounters` GraphQL module by adding it to the existing list:
@@ -469,6 +469,6 @@ export default {
 ## Make it scale!
 
 Over time your resolvers may grow and contain more business logic. See
-[Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders)
+[Slim down resolvers with loaders](/docs/2.x/advanced/graphql/slim-down-resolvers-with-loaders)
 to learn how you could extract logic from your resolvers and keep them easy to
 understand.

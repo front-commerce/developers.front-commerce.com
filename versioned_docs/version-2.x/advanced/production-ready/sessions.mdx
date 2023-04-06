@@ -11,7 +11,7 @@ description:
 <p>{frontMatter.description}</p>
 
 Sessions storage configuration occurs in the
-[`config/sessions.js`](/docs/reference/configurations#config-sessions-js)
+[`config/sessions.js`](/docs/2.x/reference/configurations#config-sessions-js)
 configuration file. Front-Commerce uses the `express-session` library and
 supports any compatible store.
 
@@ -42,7 +42,7 @@ const redisClient = createClient({
 });
 
 module.exports = {
-  // see https://developers.front-commerce.com/docs/advanced/production-ready/sessions
+  // see https://developers.front-commerce.com/docs/2.x/advanced/production-ready/sessions
   store: () => {
     return new RedisStore({ client: redisClient });
   },
@@ -74,7 +74,7 @@ if (process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_HOST) {
   });
 
   module.exports = {
-    // see https://developers.front-commerce.com/docs/advanced/production-ready/sessions
+    // see https://developers.front-commerce.com/docs/2.x/advanced/production-ready/sessions
     store: () => {
       return new RedisStore({ client: redisClient });
     },

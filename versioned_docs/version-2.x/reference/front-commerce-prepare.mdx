@@ -14,9 +14,9 @@ any web modules folder. Front-Commerce supports the keys detailed below:
 ## `onCreateRoute`
 
 A function that transforms a `route` found in the modules defined in
-[`.front-commerce.js:webModules`](/docs/reference/front-commerce-js#webmodules).
+[`.front-commerce.js:webModules`](/docs/2.x/reference/front-commerce-js#webmodules).
 
-See [Routing reference](/docs/reference/routing#how-routes-are-loaded) for
+See [Routing reference](/docs/2.x/reference/routing#how-routes-are-loaded) for
 details about the terms used.
 
 ### Parameters
@@ -25,7 +25,7 @@ details about the terms used.
   - `fromModule` (string): path of the web module defining the current route
   - `filepath` (string): absolute path to the route file
   - `path` (string): `path` that will be used for mapping URLs to this file (see
-    [Routing reference](/docs/reference/routing#how-routes-are-loaded) for
+    [Routing reference](/docs/2.x/reference/routing#how-routes-are-loaded) for
     details)
   - `isLayout` (bool): Is the file a `_layout.js`?
   - `isLayoutAddition` (bool): Is the file a layout customization? (`_error.js`
@@ -40,7 +40,7 @@ An optional route object with the following keys:
 - `fromModule` (string): path of the web module defining the current route
 - `filepath` (string): absolute path to the route file
 - `path` (string): `path` that will be used for mapping URLs to this file (see
-  [Routing reference](/docs/reference/routing#how-routes-are-loaded) for
+  [Routing reference](/docs/2.x/reference/routing#how-routes-are-loaded) for
   details)
 
 If no route is returned, the route is ignored.

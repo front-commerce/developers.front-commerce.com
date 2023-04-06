@@ -10,9 +10,9 @@ description:
 :::note
 
 Most configurations in Front-Commerce are now using
-[Environment variables](/docs/reference/environment-variables) and
-[Configuration providers](/docs/advanced/server/configurations). We invite you
-to also read these related pages.
+[Environment variables](/docs/2.x/reference/environment-variables) and
+[Configuration providers](/docs/2.x/advanced/server/configurations). We invite
+you to also read these related pages.
 
 :::
 
@@ -25,14 +25,14 @@ in Front-Commerce. If you want to override some, duplicate those in
 
 > _New in version `1.0.0-beta.3`:_ configurations are inherited across themes
 > declared in your `.front-commerce.js` in a similar fashion than
-> [theme overrides](/docs/essentials/extend-the-theme#understanding-theme-overrides).
+> [theme overrides](/docs/2.x/essentials/extend-the-theme#understanding-theme-overrides).
 
 :::caution Security Notice
 
 Please keep in mind that most of these configurations are imported and bundled
 into your client application. Thus it is important to not include private
 configurations in them, and to use
-[environment variables](/docs/reference/environment-variables#add-your-own-environment-variables)
+[environment variables](/docs/2.x/reference/environment-variables#add-your-own-environment-variables)
 instead.
 
 :::
@@ -62,7 +62,7 @@ your website. The term website refers to what a
   the loss of valuable analytics insights.
 - `default_image_url` (ex: an absolute URL of an image): which image to use when
   no image path has been given to
-  [`<ResizedImage>`](/docs/advanced/production-ready/media-middleware#lt-resizedimage-gt-component)
+  [`<ResizedImage>`](/docs/2.x/advanced/production-ready/media-middleware#lt-resizedimage-gt-component)
 - `defaultTitle`: the default meta title of your application
 - `defaultDescription`: the default meta description of your application
 - `available_page_sizes`: which page sizes to display in a product list page (or
@@ -74,7 +74,8 @@ your website. The term website refers to what a
   Front-Commerce — see
   [#102](https://gitlab.blackswift.cloud/front-commerce/front-commerce/issues/102))
 - `contentSecurityPolicy`: the <abbr title="Content Security Policy">CSP</abbr>
-  configuration [see the related guide](/docs/reference/content-security-policy)
+  configuration
+  [see the related guide](/docs/2.x/reference/content-security-policy)
 - `search`: an object that defines how the Elasticsearch queries should be made.
   - `dynamicFacetSize`: number of filters to fetch from Elasticsearch
   - `ignoredAttributeKeys`: attribute codes to ignore when generating facets
@@ -128,8 +129,8 @@ configurations could come from optional modules. Some of these are:
 This makes it possible to configure the GSC text.
 
 This file should export an object where the keys are the store's code (see
-[Configure multiple stores](/docs/advanced/production-ready/multistore)) and the
-value is a string (with some html content if needed).
+[Configure multiple stores](/docs/2.x/advanced/production-ready/multistore)) and
+the value is a string (with some html content if needed).
 
 ### `config/httpAuth.js`
 
@@ -219,7 +220,7 @@ implementations. It can export a configuration with the following keys:
 Each strategy can be configured with the keys below:
 
 - `implementation`: name of the
-  [implementation of this strategy](/docs/advanced/graphql/dataloaders-and-cache-invalidation#caching-strategies)
+  [implementation of this strategy](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#caching-strategies)
   (**mandatory**)
 - `supports`: list of loaders impacted by this strategy. Either an array of
   values or `"*"` for all. (**mandatory**)
@@ -237,7 +238,7 @@ Loaders are identified with a key. The key is the first argument passed to the
 Example of a recommended configuration for Magento stores.
 
 Reminder: ensure to take a look at
-[the redis strategy for the fully configured redis setup](/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis)
+[the redis strategy for the fully configured redis setup](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#redis)
 
 ```js
 export default {
@@ -248,7 +249,7 @@ export default {
       supports: "*",
       config: {
         host: "redis",
-        // full configuration at https://developers.front-commerce.com/docs/advanced/graphql/dataloaders-and-cache-invalidation#redis
+        // full configuration at https://developers.front-commerce.com/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#redis
       },
     },
     {
@@ -274,7 +275,7 @@ to your website.
   [connect-redis](https://github.com/tj/connect-redis).
 
 See details and examples in the
-[Setup sessions](/docs/advanced/production-ready/sessions) page.
+[Setup sessions](/docs/2.x/advanced/production-ready/sessions) page.
 
 ### `config/rateLimit.js`
 
@@ -284,7 +285,7 @@ Allows to define configurations related to GraphQL rate limiting feature.
   memory
 
 See
-[Use a persistent store](/docs/advanced/graphql/rate-limiting#use-a-persistent-store)
+[Use a persistent store](/docs/2.x/advanced/graphql/rate-limiting#use-a-persistent-store)
 for further information.
 
 ### `config/images.js`

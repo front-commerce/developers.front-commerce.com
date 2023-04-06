@@ -28,10 +28,10 @@ custom endpoint, you need to register it from your own module.
 ## What is a module?
 
 A module is declared using the
-[`modules` entry from the `.front-commerce.js` file](/docs/reference/front-commerce-js#modules).
+[`modules` entry from the `.front-commerce.js` file](/docs/2.x/reference/front-commerce-js#modules).
 Each module can contain client code (See
-[Extend the theme](/docs/essentials/extend-the-theme)), and server code (current
-guide).
+[Extend the theme](/docs/2.x/essentials/extend-the-theme)), and server code
+(current guide).
 
 Once the module is declared, Front-Commerce will automatically add your custom
 server entrypoints following your module configuration in
@@ -41,8 +41,8 @@ server entrypoints following your module configuration in
 
 GraphQL modules, are modules related to the server, but they won't let you
 extend anything else but your GraphQL Schema. See
-[Extend the GraphQL Schema](/docs/essentials/extend-the-graphql-schema) for more
-information.
+[Extend the GraphQL Schema](/docs/2.x/essentials/extend-the-graphql-schema) for
+more information.
 
 :::
 
@@ -51,7 +51,7 @@ information.
 In the case of the WYSIWYG preview, let's say that when a user visits the
 `wysiwyg-preview` URL, we want to display static files that will let anyone
 preview how an html string will be transformed by
-[Front-Commerce's Wysiwyg component](/docs/advanced/theme/wysiwyg/).
+[Front-Commerce's Wysiwyg component](/docs/2.x/advanced/theme/wysiwyg/).
 
 To do so, we need to create our server config file, and configure its
 `entrypoint` key.

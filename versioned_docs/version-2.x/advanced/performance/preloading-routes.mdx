@@ -171,9 +171,9 @@ display the `/venia-dresses` page.
 
 Under the hood, it looks into the `.front-commerce/themes.es.js` file generated
 at build time from your `theme/routes` folders (cf.
-[Routing documentation](/docs/reference/routing)). If the URL matches one of the
-routes available here, it will preload the component and then preload its data
-using the `preload` static property of the component.
+[Routing documentation](/docs/2.x/reference/routing)). If the URL matches one of
+the routes available here, it will preload the component and then preload its
+data using the `preload` static property of the component.
 
 This is why if you have trouble preloading data on one of your custom routes,
 you first need to make sure that the `preload` property is available. If it is
@@ -252,4 +252,4 @@ need to:
   manually in your own events.
 
 You can tweak how the `usePreload` works in links by adding a
-[`preload` property in your `config/website.js`](/docs/reference/configurations#configwebsitejs).
+[`preload` property in your `config/website.js`](/docs/2.x/reference/configurations#configwebsitejs).

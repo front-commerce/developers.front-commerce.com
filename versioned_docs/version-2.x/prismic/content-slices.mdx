@@ -73,12 +73,12 @@ type Homepage {
 ```
 
 In your resolvers, load your content as usual
-[with the Prismic loader](/docs/prismic/expose-content#methods-to-query-content).
+[with the Prismic loader](/docs/2.x/prismic/expose-content#methods-to-query-content).
 
 In addition to
-[the `fieldTransformers` parameter](/docs/prismic/expose-content#field-transformers)
+[the `fieldTransformers` parameter](/docs/2.x/prismic/expose-content#field-transformers)
 in the
-[defineContentTransformers](/docs/prismic/expose-content#definecontenttransformers-typeidentifier-options),
+[defineContentTransformers](/docs/2.x/prismic/expose-content#definecontenttransformers-typeidentifier-options),
 the definition accepts a `supportedSlices` key. It allows to define to a data
 structure for the Slices available in the Custom Type.
 
@@ -132,7 +132,7 @@ export default {
     sectionTitle: (content) => content.section_title,
     category: (content) => {
       // A Category Integration Field as documented in examples
-      // see https://developers.front-commerce.com/docs/prismic/integration-fields#Create-resolvers-for-these-fields
+      // see https://developers.front-commerce.com/docs/2.x/prismic/integration-fields#Create-resolvers-for-these-fields
       return content.category?.loadValue();
     },
   },

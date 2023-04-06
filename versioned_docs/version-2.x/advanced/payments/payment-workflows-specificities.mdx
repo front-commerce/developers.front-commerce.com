@@ -29,7 +29,7 @@ Payzen/Lyra, Paypal)
 ### Server changes
 
 Ensure the direct payment processor call does nothing in the module’s
-[`contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+[`contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 
 ```diff
 export default {
@@ -108,60 +108,61 @@ In this case, perform the following steps
 
 1. Reference the payment workflow
 
-  Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of `directOrderWithAdditionalAction`
+Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of
+`directOrderWithAdditionalAction`
 
-  ```diff
-  const checkoutFlowOf = (method) => {
-    ...
-  +  if (method === "pway_awesomecheckout") return "directOrderWithAdditionalAction";
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "directOrderWithAdditionalAction";
 
-    return "directOrder";
-  };
+  return "directOrder";
+};
 
-  export default checkoutFlowOf;
-  ```
+export default checkoutFlowOf;
+```
 
 2. Create and additional action component to handle the
 
-  ```js title="my-module/web/theme/AdditionalAction/MyAdditionalAction.js"
-  import React from "react";
-  import { useQuery } from "react-apollo";
-  import AdyenPaymentStatusQuery from "./AdyenPaymentStatusQuery.gql";
-  import AdyenPaymentAction from "theme/modules/Adyen/AdyenPaymentAction";
+```js title="my-module/web/theme/AdditionalAction/MyAdditionalAction.js"
+import React from "react";
+import { useQuery } from "react-apollo";
+import AdyenPaymentStatusQuery from "./AdyenPaymentStatusQuery.gql";
+import AdyenPaymentAction from "theme/modules/Adyen/AdyenPaymentAction";
 
-  import TitledCard from "theme/components/molecules/Card/TitledCard";
-  import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-  import LoadingArea from "theme/components/molecules/LoadingArea";
+import TitledCard from "theme/components/molecules/Card/TitledCard";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import LoadingArea from "theme/components/molecules/LoadingArea";
 
-  const MyAdditionalAction = ({ onOrderPlacedArgs, originalOnOrderPlaced }) => {
-    const intl = useIntl();
-    const orderId = onOrderPlacedArgs[0];
+const MyAdditionalAction = ({ onOrderPlacedArgs, originalOnOrderPlaced }) => {
+  const intl = useIntl();
+  const orderId = onOrderPlacedArgs[0];
 
-    // call originalOnOrderPlaced() when the additionnal action is successfull
+  // call originalOnOrderPlaced() when the additionnal action is successfull
 
-    return (...);
-  };
+  return (...);
+};
 
-  export default MyAdditionalAction;
-  ```
+export default MyAdditionalAction;
+```
 
 3. Reference the additional action component
 
-  ```js title="my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
-  import None from "theme/modules/Checkout/PlaceOrder/AdditionalAction/None";
-  import MyAdditionalAction from "theme/AdditionalAction/MyAdditionalAction";
+```js title="my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
+import None from "theme/modules/Checkout/PlaceOrder/AdditionalAction/None";
+import MyAdditionalAction from "theme/AdditionalAction/MyAdditionalAction";
 
-  const ComponentMap = {};
+const ComponentMap = {};
 
-  const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
-    if (paymentCode === "pway_awesomecheckout")) {
-      return MyAdditionalAction;
-    }
-    return ComponentMap?.[paymentCode] ?? None;
-  };
+const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
+  if (paymentCode === "pway_awesomecheckout")) {
+    return MyAdditionalAction;
+  }
+  return ComponentMap?.[paymentCode] ?? None;
+};
 
-  export default getAdditionalActionComponent;
-  ```
+export default getAdditionalActionComponent;
+```
 
 ## Redirect Before Order
 
@@ -183,89 +184,89 @@ creation afterwards.
 
 1. Register the payment method payment processor with
    `registerRedirectBeforeOrderPaymentMethod` module’s
-   [`contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+   [`contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 
 Replace the module's contextEnhancer with the following
 
-  ```js
-  import { getCurrentShopConfig } from "server/core/config/getShopConfig";
+```js
+import { getCurrentShopConfig } from "server/core/config/getShopConfig";
 
-  export default {
-    namespace: "Payments/PWAy",
-    dependencies: ["Magento2/Checkout", "Front-Commerce/Payment"],
-    contextEnhancer: ({ loaders }) => {
-      const shopConfig = getCurrentShopConfig(req.config);
-      const METHOD_CODE = "pway_awesomecheckout";
-      const METHOD_TITLE = "PWAy";
+export default {
+  namespace: "Payments/PWAy",
+  dependencies: ["Magento2/Checkout", "Front-Commerce/Payment"],
+  contextEnhancer: ({ loaders }) => {
+    const shopConfig = getCurrentShopConfig(req.config);
+    const METHOD_CODE = "pway_awesomecheckout";
+    const METHOD_TITLE = "PWAy";
 
-      // [...] initialization here
-      const loader = new MyPaymentLoader(shopConfig, METHOD_CODE, ...);
+    // [...] initialization here
+    const loader = new MyPaymentLoader(shopConfig, METHOD_CODE, ...);
 
-      loaders.Payment.registerRedirectBeforeOrderPaymentMethod(
-        METHOD_CODE,
-        METHOD_TITLE,
-        loader,
-      );
+    loaders.Payment.registerRedirectBeforeOrderPaymentMethod(
+      METHOD_CODE,
+      METHOD_TITLE,
+      loader,
+    );
 
-      return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
-    },
-  };
-  ```
+    return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
+  },
+};
+```
 
 2. Implement the three **required** methods in the loader
 
-  ```js
-  export default class MyPaymentLoader {
-    constructor(shopConfig, methodCode, ...) {
-      ...
+```js
+export default class MyPaymentLoader {
+  constructor(shopConfig, methodCode, ...) {
+    ...
 
-      this.callbackUrl = `${shopConfig.url}/checkout/payment/${methodCode}`;
-    }
+    this.callbackUrl = `${shopConfig.url}/checkout/payment/${methodCode}`;
+  }
 
-    /**
-     * @param {{paymentId: any, cart: any}} paymentData the paymentId is the paymentMethod registered previously
-     * @returns {PaymentCaptured} the captured payment status
-     */
-    mapCartPaymentToRedirect({ paymentId, cart }) {
-      return {
-        url: true, // set it to true for URL redirection
-        html: true, // set it to true for HTML code insertion
-        value: `...?callbackUrl=${this.callbackUrl}`, // the URL or HTML code to handle the redirection to the payment provider
-      }
-    }
-
-    /**
-     * @param {any} data : callbackUrl query parameters
-     * @returns {boolean} is the payment authorized or not, returning false will lead to the checkout cancellation
-     */
-    async isReturnSuccess(data) {
-      return true | false;
-    }
-
-    /**
-     * @typedef {object} PaymentCaptured
-     * @property {string} transactionId : the transactionId from the payment provider, it allows the merchant to make the link between an order and a payment
-     * @property {boolean} success :  the capture succeed
-     * @property {boolean} cancel : the capture was canceled
-     * NOTE : if both success and cancel are false, the capture is considered failed (throwing an error will lead to the same event)
-     */
-    /**
-     * proceed to the payment capture in the payment provider
-     * NOTE: this stage follows the order creation in Magento, you should provide the orderId to the payment provider for the transaction to be easily found by the merchant
-     * @param {any} additionalData : callbackUrl query's additionalData parameter -> "https://callbackUrl?additionalData=..."
-     * @param {string} orderId : magento order Id
-     * @param {{ currency:string, totalInclTax: number }} paymentDetails : the currency and value of the order (please ensure the payment has the same value and currency to prevent cart hijack)
-     * @returns {PaymentCaptured} the captured payment status
-     */
-    async capturePayment(additionalData, orderId, paymentDetails) {
-      return {
-        transactionId,
-        success: true,
-        cancel: true,
-      };
+  /**
+   * @param {{paymentId: any, cart: any}} paymentData the paymentId is the paymentMethod registered previously
+   * @returns {PaymentCaptured} the captured payment status
+   */
+  mapCartPaymentToRedirect({ paymentId, cart }) {
+    return {
+      url: true, // set it to true for URL redirection
+      html: true, // set it to true for HTML code insertion
+      value: `...?callbackUrl=${this.callbackUrl}`, // the URL or HTML code to handle the redirection to the payment provider
     }
   }
-  ```
+
+  /**
+   * @param {any} data : callbackUrl query parameters
+   * @returns {boolean} is the payment authorized or not, returning false will lead to the checkout cancellation
+   */
+  async isReturnSuccess(data) {
+    return true | false;
+  }
+
+  /**
+   * @typedef {object} PaymentCaptured
+   * @property {string} transactionId : the transactionId from the payment provider, it allows the merchant to make the link between an order and a payment
+   * @property {boolean} success :  the capture succeed
+   * @property {boolean} cancel : the capture was canceled
+   * NOTE : if both success and cancel are false, the capture is considered failed (throwing an error will lead to the same event)
+   */
+  /**
+   * proceed to the payment capture in the payment provider
+   * NOTE: this stage follows the order creation in Magento, you should provide the orderId to the payment provider for the transaction to be easily found by the merchant
+   * @param {any} additionalData : callbackUrl query's additionalData parameter -> "https://callbackUrl?additionalData=..."
+   * @param {string} orderId : magento order Id
+   * @param {{ currency:string, totalInclTax: number }} paymentDetails : the currency and value of the order (please ensure the payment has the same value and currency to prevent cart hijack)
+   * @returns {PaymentCaptured} the captured payment status
+   */
+  async capturePayment(additionalData, orderId, paymentDetails) {
+    return {
+      transactionId,
+      success: true,
+      cancel: true,
+    };
+  }
+}
+```
 
 ### Theme changes
 
@@ -278,18 +279,19 @@ frontend component displayed by Front-Commerce
 
 1. Reference the payment workflow
 
-  Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of `redirectBeforeOrder`
+Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of
+`redirectBeforeOrder`
 
-  ```diff
-  const checkoutFlowOf = (method) => {
-    ...
-  +  if (method === "pway_awesomecheckout") return "redirectBeforeOrder";
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "redirectBeforeOrder";
 
-    return "directOrder";
-  };
+  return "directOrder";
+};
 
-  export default checkoutFlowOf;
-  ```
+export default checkoutFlowOf;
+```
 
 ## Redirect After Order
 

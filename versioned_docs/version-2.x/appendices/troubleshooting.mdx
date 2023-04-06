@@ -84,13 +84,13 @@ project.
 ## SSR is broken
 
 > In Dev mode, I see
-> [the SSR Fallback page](/docs/advanced/theme/server-side-rendering#ssr-fallback-when-things-go-wrong)
+> [the SSR Fallback page](/docs/2.x/advanced/theme/server-side-rendering#ssr-fallback-when-things-go-wrong)
 
 1. check the stdout/stderr of your server and the `/logs` folder, there may be
    useful information
 2. are all pages broken or only some of them?
 3. ensure that there is
-   [no code using browser APIs loaded server side](/docs/advanced/theme/server-side-rendering#there-is-no-window-on-the-server)(e.g:
+   [no code using browser APIs loaded server side](/docs/2.x/advanced/theme/server-side-rendering#there-is-no-window-on-the-server)(e.g:
    Google Maps)
 
 ## My JS bundle too big
@@ -142,14 +142,14 @@ Front-Commerce's server contains 2 configurations defining a maximum size for
 The `express.graphQLBodyParserConfig.limit` (for GraphQL payloads size) and
 `express.jsonParserConfig.limit` configurations (for `POST` to server endoints,
 such as cache invalidation) can be overridden using a
-[configuration provider](/docs/advanced/server/configurations).
+[configuration provider](/docs/2.x/advanced/server/configurations).
 
 :::tip
 
 In DEV mode, you can view the current value for these configurations by opening
 the [/\_\_front-commerce/debug](http://localhost:4000/__front-commerce/debug)
 URL with the
-[`DEBUG="front-commerce:config"` environment variable](/docs/reference/environment-variables#debugging).
+[`DEBUG="front-commerce:config"` environment variable](/docs/2.x/reference/environment-variables#debugging).
 
 :::
 
@@ -172,7 +172,7 @@ export default {
 ```
 
 The provider must then be
-[registered in your application](/docs/advanced/server/configurations#overriding-express-configuration-provider)
+[registered in your application](/docs/2.x/advanced/server/configurations#overriding-express-configuration-provider)
 as any other one.
 
 ## The signature is invalid. Verify and try again.
@@ -241,7 +241,7 @@ ElasticSuite version. Front-Commerce will detect it and run queries that match
 the way data are indexed.
 
 _Note: this setting was
-[introduced in Front-Commerce 2.3](/docs/appendices/migration-guides#elasticsearch-7-x-and-elasticsuite-2-9)_
+[introduced in Front-Commerce 2.3](/docs/2.x/appendices/migration-guides#elasticsearch-7-x-and-elasticsuite-2-9)_
 
 ## I have an error when using Magento 2's GraphQL
 
@@ -272,7 +272,7 @@ In `production` mode, the error won't occur.
 ## I have an error `Cannot read property 'label' of null` with Magento 2 native categories listing
 
 If you're using Magento2 without
-[an external Search Engine](/docs/magento2/search-engine), and with
+[an external Search Engine](/docs/2.x/magento2/search-engine), and with
 [the ElasticSuite module](https://github.com/Smile-SA/elasticsuite) is installed
 in Magento you can face the following GraphQL error when browsing a category:
 

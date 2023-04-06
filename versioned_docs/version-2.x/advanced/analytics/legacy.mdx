@@ -137,7 +137,8 @@ The consent for the cookies is stored in 2 cookies:
    the following format `{ [service1_name]: true | false, ... }`
 
 These two cookies' expiration SHOULD be configured in `src/config/website.js`
-(see [website configurations](/docs/reference/configurations#config-website-js)
+(see
+[website configurations](/docs/2.x/reference/configurations#config-website-js)
 for details on why it is important to configure this). To configure the
 expiration of the consent cookies you should update `src/config/website.js` as
 follows:
@@ -315,7 +316,7 @@ module.exports = {
 ```
 
 Just like any other integrations, don't forget to setup the
-[`cookiesServices.js`](/docs/advanced/analytics/legacy#gdpr-consent) file
+[`cookiesServices.js`](/docs/2.x/advanced/analytics/legacy#gdpr-consent) file
 accordingly, in order to load the newly created integration only when the user
 has given their consent.
 
@@ -366,7 +367,7 @@ Here is a list of integrations frequently used across e-commerce shops
 
 Google Analytics 4 is not supported by the legacy analytics module. If you need
 Google Analytics 4, please use
-[the analytics module based on analytics](/docs/advanced/analytics/getting-started).
+[the analytics module based on analytics](/docs/2.x/advanced/analytics/getting-started).
 
 ### Universal Analytics (Google Analytics)
 

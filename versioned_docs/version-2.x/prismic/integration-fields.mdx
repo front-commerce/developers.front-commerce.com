@@ -68,7 +68,7 @@ can then provide a name that will identify it across Front-Commerce and an
 implementation.
 
 It can be done from
-[a GraphQL module `contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+[a GraphQL module `contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 as in the example below:
 
 ```js
@@ -148,7 +148,7 @@ field from the **"Settings > Integration Fields"** page.
    `https://your-store.example.com/prismic/integration/{name}`
 2. the **"Access token"** value must be the value of your
    `FRONT_COMMERCE_PRISMIC_WEBHOOK_SECRET` environment variable
-   ([also used for webhooks](/docs/prismic/installation#configure-the-environment-for-prismic))
+   ([also used for webhooks](/docs/2.x/prismic/installation#configure-the-environment-for-prismic))
 3. create the Integration field
 
 The **"Settings > Integration Fields"** page will now display the Integration
@@ -186,7 +186,7 @@ select values from Front-Commerce data for the configured fields:
 ## Expose data in your GraphQL schema
 
 This section supposes that you already have
-[exposed content from the previously modified Prismic custom type in your GraphQL schema](/docs/prismic/expose-content).
+[exposed content from the previously modified Prismic custom type in your GraphQL schema](/docs/2.x/prismic/expose-content).
 It will guide you throughout the process of exposing an additional Integration
 field data.
 
@@ -308,7 +308,7 @@ const categoryIntegrationField = new SitemapableIntegrationField(
 To create a `SitemapableIntegrationField`, you must provide:
 
 - `entityName`: the name of the Sitemapable entity
-  [used during sitemapable pages registration](/docs/advanced/production-ready/sitemap#add-dynamic-pages)
+  [used during sitemapable pages registration](/docs/2.x/advanced/production-ready/sitemap#add-dynamic-pages)
 - `SitemapLoader`: a Front-Commerce Sitemap loader instance (e.g:
   `loaders.Sitemap`)
 - `resolveEntity`: a Function to resolve the entity from the `id` value of the

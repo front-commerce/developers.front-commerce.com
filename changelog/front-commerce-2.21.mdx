@@ -9,7 +9,10 @@ hide_table_of_contents: true
 
 Our first release of 2023 is out!
 
-Front-Commerce 2.21 is focused on bug fixes and minor improvements. Over the past 6 weeks, each team member took a well-deserved break for the holidays. We also had our biannual off-site week, during which all of our team members got together, which is crucial for a mainly remote team like ours.
+Front-Commerce 2.21 is focused on bug fixes and minor improvements. Over the
+past 6 weeks, each team member took a well-deserved break for the holidays. We
+also had our biannual off-site week, during which all of our team members got
+together, which is crucial for a mainly remote team like ours.
 
 And we’ve also been working on a little something secret 😉
 
@@ -22,32 +25,46 @@ import ContactLink from "@site/src/components/ContactLink";
 
 ## Image improvements
 
-Following the release of version 2.20, we have further enhanced our image component.
+Following the release of version 2.20, we have further enhanced our image
+component.
 
-The TwicPics integration has been refactored to use the image adapter introduced in 2.20.
-It allowed us to improve the performance of this component by rendering performant images during server-side rendering. You now have the best of both worlds!
+The TwicPics integration has been refactored to use the image adapter introduced
+in 2.20. It allowed us to improve the performance of this component by rendering
+performant images during server-side rendering. You now have the best of both
+worlds!
 
-We also integrated new Web APIs for all images to improve web performance (LCP) for browsers supporting these standards:
+We also integrated new Web APIs for all images to improve web performance (LCP)
+for browsers supporting these standards:
 
-- priority images now leverage the [fetchpriority](https://web.dev/priority-hints/) hint
-- non-priority images are now [decoded asynchronously](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding)
+- priority images now leverage the
+  [fetchpriority](https://web.dev/priority-hints/) hint
+- non-priority images are now
+  [decoded asynchronously](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding)
 
 ## Magento2: supporting more Algolia facets configurations
 
-In this release, the Algolia Magento2 module in Front-Commerce now supports more configurations from the official Magento module.
+In this release, the Algolia Magento2 module in Front-Commerce now supports more
+configurations from the official Magento module.
 
-Facets now honors the Conjunctive/Disjunctive facet type from the configuration to decide whether several selected values must be considered as an `AND` or `OR` criteria condition.
+Facets now honors the Conjunctive/Disjunctive facet type from the configuration
+to decide whether several selected values must be considered as an `AND` or `OR`
+criteria condition.
 
 ![Screenshot of Magento's admin area with Algolia's facets configuration showing the different facet types available](assets/2.21/algolia-conjunctive.png)
 
 ## We’ve been working on something…
 
-Here is a small teaser of what we’ve also been working on during this release. In 2023, Front-Commerce aims at being one of the fastest storefront solutions out there.
+Here is a small teaser of what we’ve also been working on during this release.
+In 2023, Front-Commerce aims at being one of the fastest storefront solutions
+out there.
 
-Be prepared for future releases bringing significant web performance improvements, and new announcements allowing developers and merchants to embrace a performance culture.
+Be prepared for future releases bringing significant web performance
+improvements, and new announcements allowing developers and merchants to embrace
+a performance culture.
 
-We’re excited about what’s next and wanted to start by sharing a screenshot containing several clues 🕵 (Work In Progress).<br/>
-Stay tuned for more details over the next months!
+We’re excited about what’s next and wanted to start by sharing a screenshot
+containing several clues 🕵 (Work In Progress).<br/> Stay tuned for more details
+over the next months!
 
 ![Screenshot of a DebugBear Lighthouse panel with performance score of 94 for a mobile run of a test on Front-Commerce demo homepage](assets/2.21/teaser.png)
 
@@ -57,21 +74,33 @@ Stay tuned for more details over the next months!
 <details>
   <summary><h3 className="mb-0">Bug Fixes</h3></summary>
 ```
-- **cart:** the cart cache is now properly cleared during checkouts using the async order flow (with asynchronous notifications)
+
+- **cart:** the cart cache is now properly cleared during checkouts using the
+  async order flow (with asynchronous notifications)
   - server-side when using `FRONT_COMMERCE_CART_CACHE_ENABLE`
   - client-side in Apollo cache
 - **payment:**
   - **checkout:** only show Apple Pay payment method if the device supports it
-  - **paypal:** fixed a regression where PayPal payments captures would not be correctly send to the backend
+  - **paypal:** fixed a regression where PayPal payments captures would not be
+    correctly send to the backend
 - **search / facets:**
-  - **magento1:** fixed a regression that led to a crash when filtering on a facet
+  - **magento1:** fixed a regression that led to a crash when filtering on a
+    facet
   - **magento2:** prevent search failures when an arbitrary filter is used
-  - **prismic/algolia:** fixed a regression leading to application not starting when Algolia datasource and Prismic module were active together
-- **proxy:** the image proxy now uses a fixed user agent when proxying requests to remote systems
-- **helmet:** fixed an issue when CSP is enabled with `reportOnlyDirectivescontent` that led to loosing previous helmet configurations
-- **magento2:** prevent issues due to remote configuration fetching when Magento is in maintenance mode
-- **LinkListSelector:** fixed an issue that could redirect users to an incorrect parent page. In default theme, users on mobile where redirected to `/user/orders` when navigating to `/user/orders/123` from their account.
-- **log:** ensured logs using the `console` output were fully formatted as JSON for more portability
+  - **prismic/algolia:** fixed a regression leading to application not starting
+    when Algolia datasource and Prismic module were active together
+- **proxy:** the image proxy now uses a fixed user agent when proxying requests
+  to remote systems
+- **helmet:** fixed an issue when CSP is enabled with
+  `reportOnlyDirectivescontent` that led to loosing previous helmet
+  configurations
+- **magento2:** prevent issues due to remote configuration fetching when Magento
+  is in maintenance mode
+- **LinkListSelector:** fixed an issue that could redirect users to an incorrect
+  parent page. In default theme, users on mobile where redirected to
+  `/user/orders` when navigating to `/user/orders/123` from their account.
+- **log:** ensured logs using the `console` output were fully formatted as JSON
+  for more portability
 - **deps:** update dependency style-to-object to ^0.4.0
 - **proptype:** fixed typo for `placeholder` in the form Select component
 
@@ -97,7 +126,7 @@ Stay tuned for more details over the next months!
 
 <ChangelogFooter>
 
-[Upgrade to Front-Commerce 2.21.0](/docs/appendices/migration-guides#2200---2210)
+[Upgrade to Front-Commerce 2.21.0](/docs/2.x/appendices/migration-guides#2200---2210)
 or
 [read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.21.0)
 

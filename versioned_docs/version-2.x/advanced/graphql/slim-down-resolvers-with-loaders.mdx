@@ -102,7 +102,7 @@ this.
 ### Initial resolvers
 
 For this example, we will reuse loaders from the example used in the
-[Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema#implement-resolvers)
+[Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema#implement-resolvers)
 guide.
 
 Here is the initial code we will refactor:
@@ -256,7 +256,7 @@ For the previous refactoring to work, we must register our loader in GraphQL’s
 context so the `loaders.Counter` could be used.
 
 In Front-Commerce’s GraphQL modules, you can achieve this using the
-[`contextEnhancer`](/docs/reference/graphql-module-definition#contextenhancer-optional)
+[`contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 key of your module definition.
 
 This function is called by Front-Commerce during each request for all GraphQL
@@ -288,7 +288,7 @@ export default {
 :::info
 
 Please refer to the
-[GraphQL module definition reference](/docs/reference/graphql-module-definition#contextenhancer-optional)
+[GraphQL module definition reference](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
 for the exact signature and a more complex example.
 
 :::
@@ -309,7 +309,7 @@ manner.
 - interacting with Magento2 REST API
 - accessing the user session
 - using
-  [GraphQL modules dependencies](/docs/reference/graphql-module-definition#dependencies-optional)
+  [GraphQL modules dependencies](/docs/2.x/reference/graphql-module-definition#dependencies-optional)
   to extend an existing loader
 
 :::

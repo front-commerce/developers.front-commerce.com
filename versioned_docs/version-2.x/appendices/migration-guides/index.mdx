@@ -54,7 +54,7 @@ Facets configuration.
 ### Media proxy updated to send a custom user agent
 
 If you have added a
-[custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint)
+[custom media proxy endpoint](/docs/2.x/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint)
 in your application, we recommend to update the code as follows:
 
 ```diff
@@ -83,7 +83,7 @@ In this release, we updated how the `"Use as default billing address"` and
 `"Use as default shipping address"` checkboxes are displayed in the
 [`AddressForm`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/modules/User/Address/AddressForm/AddressForm.js)
 component. It now can be controlled globally using a configuration in the
-[`src/config/website.js`](/docs/reference/configurations#configwebsitejs)
+[`src/config/website.js`](/docs/2.x/reference/configurations#configwebsitejs)
 configuration file.
 
 Please check if you have overridden the `AddressForm` component
@@ -136,8 +136,8 @@ iframes and help investigate risks of unsecure iframes.
 A new `security` logger has been added (for now to collect CSP violations).
 
 Add it to your `logging.js` configuration to be able to see those logs (see
-[the logging documentation](/docs/advanced/production-ready/logging) for more
-details)
+[the logging documentation](/docs/2.x/advanced/production-ready/logging) for
+more details)
 
 ```js title="my-module/config/logging.js"
 module.exports = {
@@ -261,12 +261,12 @@ or
 
 ### New features in `2.19.0`
 
-- [The Stripe module can be configured to not automatically capture the payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
-- [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/reference/content-security-policy)
+- [The Stripe module can be configured to not automatically capture the payment](/docs/2.x/advanced/payments/stripe#advanced-disable-automatic-capture)
+- [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/2.x/reference/content-security-policy)
 - Magento2 performance improvements (opt-in)
-  - [Ability to cache customers' cart](/docs/magento2/advanced#caching-customers-cart)
-  - [Ability to cache current customers' information](/docs/magento2/advanced#caching-current-customers-information)
-- [ChronoRelais shipping method support](/docs/advanced/shipping/chronorelais)
+  - [Ability to cache customers' cart](/docs/2.x/magento2/advanced#caching-customers-cart)
+  - [Ability to cache current customers' information](/docs/2.x/magento2/advanced#caching-current-customers-information)
+- [ChronoRelais shipping method support](/docs/2.x/advanced/shipping/chronorelais)
 
 ## `2.17.0` -> `2.18.0`
 
@@ -280,8 +280,8 @@ Since this version we have moved the Prismic module
 [into the core repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.18.x/modules/prismic)
 of Front-Commerce, moving forward any new features will be made available and
 follow the same
-[semantic versioning](/docs/appendices/release-process#semantic-versioning) as
-the core.
+[semantic versioning](/docs/2.x/appendices/release-process#semantic-versioning)
+as the core.
 
 You can use the module by adding the following changes to your
 `.front-commerce.js` config file:
@@ -354,7 +354,7 @@ and to carefully test any code involving this library.
 
 In this release, we added support for version 8 of Magento2 Adyen module. If you
 have a Front-Commerce setup where the module `Magento2/Adyen` is used,
-[the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/advanced/payments/adyen#add-the-required-environment-variables-1).
+[the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/2.x/advanced/payments/adyen#add-the-required-environment-variables-1).
 
 ### DomainEvent implementations reworked
 
@@ -382,7 +382,7 @@ used. This is now the default behavior.
 ### New Adobe Commerce B2B PHP module
 
 Some B2B features were previously leveraging features from the
-[Magento2 Commerce module](/docs/magento2/commerce#magento2-commerce-module-installation).
+[Magento2 Commerce module](/docs/2.x/magento2/commerce#magento2-commerce-module-installation).
 During this release, we've extracted B2B related features into their own
 repository.
 
@@ -412,7 +412,7 @@ bin/magento setup:upgrade
 In this release, we added support for
 [Adyen's Stored Payment Methods](https://docs.adyen.com/plugins/magento-2/set-up-tokenization?tab=magento-vault-version-8-2-0_2#set-up-adyen-tokenization)
 for its Magento module. For more information, see
-[Adyen's Stored Payment Methods documentation](/docs/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional).
+[Adyen's Stored Payment Methods documentation](/docs/2.x/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional).
 
 ### Payment workflow rework
 
@@ -902,11 +902,11 @@ npm install
 
 ### New features in `2.15.0`
 
-- [In-Stock Alerts](/docs/advanced/features/in-stock-alert)
-- [Prismic: embed fields](/docs/prismic/embed-fields)
+- [In-Stock Alerts](/docs/2.x/advanced/features/in-stock-alert)
+- [Prismic: embed fields](/docs/2.x/prismic/embed-fields)
 - Magento2: use the native search capabilities of Magento for PLP
 - npm 7 / NodeJS 16 / NodeJS 17 compatibility
-- [Integrate Paypal w. Adyen for a seamless checkout experience](/docs/advanced/payments/adyen)
+- [Integrate Paypal w. Adyen for a seamless checkout experience](/docs/2.x/advanced/payments/adyen)
 
 <hr className="my-10" />
 
@@ -997,11 +997,11 @@ following modules, please do update your CSPs accordingly in your
 `config/website.js` configuration:
 
 - `Google Analytics` or `Google Tag Manager` (see
-  [analytics configuration](/docs/advanced/analytics/legacy#universal-analytics-google-analytics))
+  [analytics configuration](/docs/2.x/advanced/analytics/legacy#universal-analytics-google-analytics))
 - `Paypal` (see
-  [Paypal configuration](/docs/advanced/payments/paypal#update-your-csps))
+  [Paypal configuration](/docs/2.x/advanced/payments/paypal#update-your-csps))
 - `Payzen` (see
-  [Payzen configuration](/docs/advanced/payments/payzen#update-your-csps))
+  [Payzen configuration](/docs/2.x/advanced/payments/payzen#update-your-csps))
 
 ### Removed deprecations in `Button` component
 
@@ -1090,20 +1090,21 @@ const isCompanyUser = (user) => {
 
 ### New features in `2.14.0`
 
-- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher#advanced-queries)
-- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables#server)
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/2.x/advanced/theme/route-dispatcher#advanced-queries)
+- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/2.x/reference/environment-variables#server)
 - New Prismic module features:
-  - Support for [trailing slashes](/docs/prismic/routable-types#trailing-slash)
-  - Support for [path rewrites](/docs/prismic/routable-types#path-rewrites)
+  - Support for
+    [trailing slashes](/docs/2.x/prismic/routable-types#trailing-slash)
+  - Support for [path rewrites](/docs/2.x/prismic/routable-types#path-rewrites)
   - Exposed the `url` to the
     [Content type](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js)
 
 :::note
 
 When a Prismic document has been registered using the
-[`registerRoutableType`](/docs/prismic/routable-types#registerroutabletype-options)
+[`registerRoutableType`](/docs/2.x/prismic/routable-types#registerroutabletype-options)
 method or the
-[`registerPrismicRoute`](/docs/prismic/routable-types#registerprismicroute-options)
+[`registerPrismicRoute`](/docs/2.x/prismic/routable-types#registerprismicroute-options)
 method, A `url` property is exposed in the
 [Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js).
 This property contains the resolved url of the document.
@@ -1306,11 +1307,11 @@ const keyToComponent = {
 
 These new features may be relevant for your existing application:
 
-- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine#algolia)
-- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine#algolia)
-- [Prismic Preview](/docs/prismic/preview)
-- [HiPay payment method](/docs/advanced/payments/hipay)
-- [Facebook and Google external logins](/docs/advanced/features/external-logins)
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/2.x/magento2/search-engine#algolia)
+- [Search for categories and pages with Algolia in Magento1 based project](/docs/2.x/magento1/search-engine#algolia)
+- [Prismic Preview](/docs/2.x/prismic/preview)
+- [HiPay payment method](/docs/2.x/advanced/payments/hipay)
+- [Facebook and Google external logins](/docs/2.x/advanced/features/external-logins)
 
 <hr className="my-10" />
 
@@ -1340,14 +1341,14 @@ components and we added a few fixes.
 :::info
 
 For a list of available props for the map and marker components see:
-[Display a map](/docs/advanced/features/display-a-map#component-props)
+[Display a map](/docs/2.x/advanced/features/display-a-map#component-props)
 
 :::
 
 ### `carousel` image format
 
 To support
-[the Slider and Slider Magento2 page builder content types](/docs/magento2/page-builder),
+[the Slider and Slider Magento2 page builder content types](/docs/2.x/magento2/page-builder),
 we have moved the `<Carousel />` component from theme chocolatine to the default
 theme. If you plan to use this component directly or through the page builder
 Slider, you must add a `carousel` image format to your `src/config/images.js`:
@@ -1612,7 +1613,7 @@ following line to it
 
 If you overrode `theme/components/_modules.scss` you need to add the following
 line to it to use the `<ProductPicker>` component (used by
-[the QuickOrder feature](/docs/advanced/features/quickorder))
+[the QuickOrder feature](/docs/2.x/advanced/features/quickorder))
 
 ```scss
 @import "~theme/modules/ProductPicker/ProductPicker";
@@ -1817,7 +1818,7 @@ We've included a `<PasswordStrengthHint>` to provide a better feedback to users
 about the expected password complexity.
 
 > If you don't want to use this feature in your application, please follow the
-> [Disable password strength hints](/docs/advanced/features/password-fields#disable-password-strength-hints)
+> [Disable password strength hints](/docs/2.x/advanced/features/password-fields#disable-password-strength-hints)
 > guide Please update the files below, to ensure that your application displays
 > user forms consistently:
 
@@ -1867,7 +1868,7 @@ configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js`
 (introduced in this release).
 
 See
-[the password field's documentation](/docs/advanced/features/password-fields#configure-password-validity)
+[the password field's documentation](/docs/2.x/advanced/features/password-fields#configure-password-validity)
 for more details on the password field validation configuration.
 
 If you overrode some of the following components:
@@ -1999,7 +2000,7 @@ In this version, we have improved the MondialRelay shipping support with
 Magento2 so that a customer can only choose a pickup point suitable for the
 products being ordered. This improvement requires an update of Magentix's module
 to
-[install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay#integrate-with-magento2).
+[install at least the version 100.10.7](/docs/2.x/advanced/shipping/mondial-relay#integrate-with-magento2).
 
 ### New icons required
 
@@ -2075,7 +2076,7 @@ in them:
 
 In order to support Magento Page Builder's default content types, we have added
 new components to the
-[default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg).
+[default `MagentoWysiwyg` transforms](/docs/2.x/advanced/theme/wysiwyg-platform#magentowysiwyg).
 
 See
 [the Page Builder ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.11.x/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
@@ -2088,13 +2089,13 @@ unlikely, it could be possible. For instance, if you may have overridden the
 
 These new features may be relevant for your existing application:
 
-- [Magento2 B2B initial support](/docs/magento2/b2b) and
-  [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account)
-- [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder)
+- [Magento2 B2B initial support](/docs/2.x/magento2/b2b) and
+  [_Payment on account_ payment method support](/docs/2.x/advanced/payments/payment-on-account)
+- [A quickorder module has been created to order by SKU](/docs/2.x/advanced/features/quickorder)
 - Customer can now zoom in on product images in the product page
-- [Magento Page Builder content](/docs/magento2/page-builder) is now supported
-  for `MagentoWysiwyg` data. You can register new content types and extend our
-  default ones.
+- [Magento Page Builder content](/docs/2.x/magento2/page-builder) is now
+  supported for `MagentoWysiwyg` data. You can register new content types and
+  extend our default ones.
 - Front-Commerce dependencies are now regularly (and automatically) updated
   using [Depfu](https://depfu.com/). Patches are automatically applied if the CI
   is green, minor versions are manually approved. We always review changelogs
@@ -2117,7 +2118,7 @@ In a nutshell, the Front-Commerce module
 that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you
 are upgrading a Magento1 based project using the MondialRelay module, you have
 to update your `.front-commerce.js` as documented in
-[the MondialRelay guide page](/docs/advanced/shipping/mondial-relay#integrate-with-magento1).
+[the MondialRelay guide page](/docs/2.x/advanced/shipping/mondial-relay#integrate-with-magento1).
 In addition, if you have custom code importing files from
 `modules/shipping-mondialrelay-magento1`, you will also have to update those
 imports to match the new file layout.
@@ -2130,10 +2131,10 @@ are needed to upgrade your project if you are using this payment platform:
 
 1. the Magento2 Adyen Front-Commerce module has been moved. As a result, you
    have to
-   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen#register-the-adyen-for-magento2-payment-module-in-front-commerce).
+   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/2.x/advanced/payments/adyen#register-the-adyen-for-magento2-payment-module-in-front-commerce).
 1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so
    you have
-   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
+   [to configure the environment so that it is defined](/docs/2.x/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
 1. we have made some changes and fixes to
    [the Adyen related frontend components](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
    If you have overridden some of those, you have to backport the changes.
@@ -2224,6 +2225,6 @@ and
 
 These new features may be relevant for your existing application:
 
-- [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen)
-- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay#integrate-with-magento2)
-- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
+- [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/2.x/advanced/payments/adyen)
+- [MondialRelay shipping method support in Magento2](/docs/2.x/advanced/shipping/mondial-relay#integrate-with-magento2)
+- [A new hook to homogenize configurable options handling](/docs/2.x/reference/use-selected-product-with-configurable-options)

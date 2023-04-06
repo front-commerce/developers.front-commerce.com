@@ -17,7 +17,7 @@ import TabItem from "@theme/TabItem";
 
 If you want to configure your application to support multiple languages, please
 refer to
-[Configure multiple stores](/docs/advanced/production-ready/multistore).
+[Configure multiple stores](/docs/2.x/advanced/production-ready/multistore).
 
 :::
 
@@ -203,7 +203,7 @@ out for translations in the following locations and pick the ones that exist:
 - `node_modules/front-commerce/translations/[short-locale].json` or
 - `node_modules/front-commerce/translations/[locale].json`
 
-#### from your modules [declared in `.front-commerce.js`](/docs/reference/front-commerce-js#modules)
+#### from your modules [declared in `.front-commerce.js`](/docs/2.x/reference/front-commerce-js#modules)
 
 - `<my-module>/translations/[short-locale].json` or
 - `<my-module>/translations/[locale].json`
@@ -241,9 +241,9 @@ content? Things like product title and description, CMS pages, etc.
 
 This is done on the GraphQL side. The principle is that when a user is connected
 to Front-Commerce, they will be assigned a `storeViewCode` in their session (see
-[Configure multiple stores](/docs/advanced/production-ready/multistore) for more
-details).
+[Configure multiple stores](/docs/2.x/advanced/production-ready/multistore) for
+more details).
 
 This code will then be used by your GraphQL loaders to retrieve the correct
 content from your backend. Learn more about
-[GraphQL loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders).
+[GraphQL loaders](/docs/2.x/advanced/graphql/slim-down-resolvers-with-loaders).

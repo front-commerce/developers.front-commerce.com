@@ -15,7 +15,7 @@ GraphQL schema so resolvers can use it
 :::info
 
 To get started with GraphQL modules, we recommend you to read the
-[Extend the GraphQL schema](/docs/essentials/extend-the-graphql-schema)
+[Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema)
 documentation page.
 
 :::
@@ -24,7 +24,7 @@ documentation page.
 
 The `loaders` key contains all the loaders registered by GraphQL modules, from
 their
-[`contextEnhancer` module definition method](/docs/reference/graphql-module-definition#contextenhancer-optional).
+[`contextEnhancer` module definition method](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional).
 
 Example :
 
@@ -39,7 +39,7 @@ export default {
 ```
 
 See
-[Slim down resolvers with loaders](/docs/advanced/graphql/slim-down-resolvers-with-loaders)
+[Slim down resolvers with loaders](/docs/2.x/advanced/graphql/slim-down-resolvers-with-loaders)
 to understand how to leverage this value.
 
 ## `req`
@@ -53,4 +53,4 @@ use it directly. Resolvers should to use [`loaders`](#loaders) instead.
 
 One of the reason why it has been introduced in the core, is to allow context
 customization in Remote schema stitching scenario. See
-[`linkContextBuilders` for an usage example](/docs/reference/graphql-module-definition#linkcontextbuilders-optional).
+[`linkContextBuilders` for an usage example](/docs/2.x/reference/graphql-module-definition#linkcontextbuilders-optional).
