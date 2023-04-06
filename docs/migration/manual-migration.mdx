@@ -81,3 +81,35 @@ You would need to import the `color.scss` directly in the `Example.scss` file
   color: darken($colorPrimary, 10%);
 }
 ```
+
+## Modal Routes
+
+In V2, a modal state parameter facilitated rendering arbitrary routes in a modal
+during routing. In Remix, this is non-trivial unless the target route is a child
+route. We have introduced a `ModalLink` component to replace the previous
+mechanism. It generates a link that displays a component in a modal upon user
+click, with the modal state reflected in the URL hash for sharing and consistent
+UI presentation across users.
+
+Here is an example of the required changes:
+
+```jsx title="theme/components/organisms/Header/Header.js"
+// add-start
+import { ModalLink } from "theme/components/organisms/Modal";
+import Login from "theme/components/organisms/Login";
+// add-end
+
+export function Header() {
+  return (
+    <header>
+      // remove-next-line
+      <Link to={{ pathname: "/whatever", state: { modal: true } }}>Login</Link>
+      // add-start
+      <ModalLink to="/login" linkContent="Login">
+        <Login />
+      </ModalLink>
+      // add-end
+    </header>
+  );
+}
+```
