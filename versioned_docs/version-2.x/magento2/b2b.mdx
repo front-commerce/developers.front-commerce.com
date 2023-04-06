@@ -1,0 +1,108 @@
+---
+sidebar_position: 11
+title: B2B features
+description:
+  Front-Commerce supports several Magento2 B2B features. This guide explains how
+  to configure and use the B2B module.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.11" />
+
+<p>{frontMatter.description}</p>
+
+Here is the list of currently supported features:
+
+- Display details of the Company a customer belongs to
+- Company users handling (list, create, modify and deactivate company users)
+- [_Payment on account_](/docs/advanced/payments/payment-on-account) payment
+  method
+- Display company credit history
+- Requisition list
+
+:::info
+
+Those features are only available with
+[Adobe Commerce and its B2B module](https://docs.magento.com/user-guide/getting-started.html#b2b-features)
+and requires at least Adobe Commerce 2.4.3.
+
+:::
+
+## Enable B2B support
+
+### Requirements
+
+On Magento2 side, you need to
+[install the Front-Commerce Magento2 Commerce module](/docs/magento2/commerce#magento2-commerce-module-installation).
+
+You must then install the
+[`front-commerce/magento2-b2b-module-front-commerce`](https://gitlab.blackswift.cloud/front-commerce/magento2-b2b-module-front-commerce)
+module:
+
+```shell
+composer config repositories.front-commerce-magento2-b2b git \
+    git@gitlab.blackswift.cloud:front-commerce/magento2-b2b-module-front-commerce.git
+composer require front-commerce/magento2-b2b-module
+
+bin/magento setup:upgrade
+```
+
+### Front-Commerce configuration
+
+To leverage those features, you need to enable and integrate the Magento2 B2B
+module. Here is how to do it:
+
+1. You need to enable the module in your `.front-commerce.js`:
+
+   ```diff title=".front-commerce.js"
+   diff --git a/.front-commerce.js b/.front-commerce.js
+   index d607e0c..93ae34d 100644
+   --- a/.front-commerce.js
+   +++ b/.front-commerce.js
+   @@ -3,6 +3,7 @@ module.exports = {
+   url: "http://localhost:4000",
+   modules: [
+     "./node_modules/front-commerce/modules/datasource-elasticsearch",
+   +    "./node_modules/front-commerce/modules/front-commerce-b2b",
+     "./node_modules/front-commerce/theme-chocolatine",
+     "./src",
+   ],
+   @@ -13,10 +14,16 @@ module.exports = {
+       path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+     },
+     { name: "Magento2", path: "server/modules/magento2" },
+   +    { name: "Magento2B2B", path: "front-commerce-b2b/server/modules/magento2" },
+   ],
+   webModules: [
+     { name: "FrontCommerce", path: "front-commerce/src/web" },
+     { name: "ThemeChocolatine", path: "front-commerce/theme-chocolatine/web" },
+   +    {
+   +      name: "FrontCommerceB2B",
+   +      path: "front-commerce/modules/front-commerce-b2b/web",
+   +    },
+   +
+     { name: "Skeleton", path: "./src/web" },
+   ],
+   };
+   ```
+
+1. The web module provides a SCSS file that needs to be imported. To do that,
+   you can create an override of `main.scss` containing the following code:
+
+   ```scss title="src/web/theme/main.scss"
+   @import "~front-commerce/theme-chocolatine/web/theme/main";
+   /*
+   if you use the default theme as a base theme, you should use:
+   @import "~front-commerce/src/web/theme/main.scss";
+   */
+   @import "~theme/b2b";
+   ```
+
+And that's it. After having restarted Front-Commerce, the B2B module should be
+enabled and integrated into your project. If you login as a company user and
+then go to the user account dashboard, you should see new B2B specific menu
+entries (company management, credit history…).
+
+To enable _Payment on account_ payment method, please refer to
+[the Payment on account guide](/docs/advanced/payments/payment-on-account).

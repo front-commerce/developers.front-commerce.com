@@ -1,0 +1,72 @@
+---
+sidebar_position: 1
+title: Meta modules
+description:
+  We recommend keeping your GraphQL modules small and focused on a single
+  feature, but having many different modules could make distribution more
+  tedious. That is why Front-Commerce supports the concept of "meta modules",
+  which are a way to group smaller modules.
+---
+
+If several teams are working on a project, small modules are a way to
+[federate the graph implementation](https://principledgraphql.com/integrity#2-federated-implementation).
+It also makes it easier to change implementations and service providers later in
+the project.
+
+For instance, you could replace a `Magento2/Cms` module with a `Wordpress/Cms`
+one without impacting the web application (as long as both schemas share a
+common API).
+
+**Having a lot of different modules could make distribution more tedious**. That
+is why Front-Commerce allows you to author and consume "meta modules".
+
+## Using a meta module
+
+**<abbr title="Too Long; Didn't Read">TL;DR</abbr>: there is no difference
+between using a meta module and a _normal_ module!**
+
+Let’s illustrate meta module by analyzing how
+[Front-Commerce’s Magento2 integration](/docs/category/magento2) can be
+registered in your project.
+
+If your Front-Commerce application is aimed at being a PWA frontend for a
+monolithic Magento2 instance, then it is only a one line change to get all the
+features:
+
+```js title=".front-commerce.js"
+module.exports = {
+  name: "Front-Commerce",
+  url: "https://www.front-commerce.test",
+  modules: [],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-next-line
+    { name: "Magento2", path: "server/modules/magento2" },
+  ],
+};
+```
+
+Under the hood, it imports several GraphQL modules at once (`Magento2/Cms`,
+`Magento2/Catalog`, `Magento2/Checkout`, `Magento2/Search`, etc..).
+
+## How to define a meta module
+
+For a module to be considered as a meta module, you need to expose a list of
+submodules in the
+[`modules`](/docs/reference/graphql-module-definition#modules-optional) key of
+the module definition (along with the namespace).
+
+Here is an example from Magento2 meta module definition:
+
+```js title="node_modules/front-commerce/src/server/modules/magento2/index.js"
+import Cart from "./cart";
+// […]
+
+export default {
+  namespace: "Magento2",
+  modules: [
+    Cart,
+    // […]
+  ],
+};
+```

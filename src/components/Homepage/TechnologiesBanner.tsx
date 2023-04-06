@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "@docusaurus/Link";
 import { Button } from "react-infima";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 const AngledImageRight = () => {
+  const { siteConfig } = useDocusaurusContext();
   return (
     <section className="relative bg-white dark:bg-darkGray overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -34,7 +36,10 @@ const AngledImageRight = () => {
                 stay up to date and you stay in touch with your users.
               </p>
               <div className="mt-5 flex flex-col space-y-4 sm:space-y-0 sm:space-x-4 sm:flex-row sm:mt-8 sm:justify-center lg:justify-start">
-                <Link to="/docs/welcome" className="w-full sm:w-auto">
+                <Link
+                  to={`/docs/${siteConfig.customFields.LAST_VERSION}/welcome`}
+                  className="w-full sm:w-auto"
+                >
                   <Button
                     size="large"
                     theme="primary"

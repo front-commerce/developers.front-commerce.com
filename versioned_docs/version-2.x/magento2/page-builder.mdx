@@ -1,0 +1,392 @@
+---
+sidebar_position: 9
+title: Page Builder
+description:
+  Adobe Commerce and Magento 2.4.3+ allow merchants to author pages using Page
+  Builder. Front-Commerce supports Page Builder-managed content out of the box.
+  In this guide, you will learn how to use this feature and extend it.
+---
+
+import Figure from "@site/src/components/Figure";
+import ContactLink from "@site/src/components/ContactLink";
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.11 (early preview)" />
+
+<p>{frontMatter.description}</p>
+
+Common tasks as a developer would consist in creating new _content types_ and
+refining UI components so that merchants can create the rich shopping
+experiences that were designed for _their_ customers.
+
+## Prerequisites
+
+Page Builder is only available for content that:
+
+- are displayed using
+  [the `<WysiwygV2>` component and its related `WysiwygFragment` GraphQL fragment](/docs/advanced/theme/wysiwyg#lt-wysiwygv2-gt-usage)
+- get data from GraphQL fields resolved using
+  [the `MagentoWysiwyg` type](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg)
+  **(which is the case of all default Magento rich content fields)**
+
+Please check these prerequisites first if your content does not appear properly.
+
+## Concepts
+
+Page Builder content types have 2 integration points:
+
+- **server side data conversion** will parse Magento HTML response to extract
+  rich structured data exposed in GraphQL
+- **client side React components** will display the content using existing
+  components, from data fetched from GraphQL
+
+## Supported content types
+
+We currently support these content types in a basic way.
+
+:::info
+
+Additional data is exposed via the GraphQL for more more advanced
+[Customized UI components](#customize-ui-components) implementations.
+
+:::
+
+### Layout
+
+[Magento Page Builder Layout](https://docs.magento.com/user-guide/cms/page-builder-layout.html)
+
+| Type         | Name      | Description                                 |
+| ------------ | --------- | ------------------------------------------- |
+| Row          | `row`     | Adds a row container to the stage.          |
+| ColumnGroups | `heading` | Adds a column group container to the stage. |
+| Column       | `column`  | Adds a column to the stage.                 |
+
+:::caution We only have partial support for the `row` content type.
+
+**Unsupported props:**
+
+<ul className="list-none">
+  <li>❌ Mobile Image</li>
+  <li>
+    ❌ Fluid Width <i>- requires a supported layout</i>
+  </li>
+  <li>
+    ❌ Full Bleed <i>- requires a supported layout</i>
+  </li>
+  <li>
+    ❌ Video Background <i>- data exposed with `video`</i>
+  </li>
+  <li>
+    ❌ Parallax Background <i>- data exposed with `parallax`</i>
+  </li>
+</ul>
+
+:::
+
+### Elements
+
+[Magento Page Builder Elements](https://docs.magento.com/user-guide/cms/page-builder-elements.html)
+
+| Type       | Name          | Description                                      |
+| ---------- | ------------- | ------------------------------------------------ |
+| Text       | `text`        | Adds a text container and editor to the stage.   |
+| Heading    | `heading`     | Adds a heading container to the stage.           |
+| Buttons    | `buttons`     | Adds a set of buttons to the stage.              |
+| ButtonItem | `button-item` | Adds a individual button container to the stage. |
+| Divider    | `divider`     | Adds a divider container to the stage.           |
+| HTML Code  | `html`        | Adds a HTML code container to the stage.         |
+
+### Media
+
+[Magento Page Builder Media](https://docs.magento.com/user-guide/cms/page-builder-media.html)
+
+| Type   | Name     | Description                               |
+| ------ | -------- | ----------------------------------------- |
+| Image  | `image`  | Adds a image container to the stage.      |
+| Slider | `slider` | Adds a slider to the stage.               |
+| Slide  | `slide`  | Adds a slide for the slider to the stage. |
+| Map    | `map`    | Adds map with locations to the stage.     |
+
+:::caution WIP
+
+Support for internal `product`, `page` and `category` links for `button-item`
+and `image`
+
+:::
+
+### Upcoming
+
+- Internal links.
+- Native Magento widgets.
+
+Let us know if you have specific needs.
+
+## Styles
+
+Front-Commerce supports custom styles from the _Advanced_ Magento settings of
+all content types:
+
+<Figure>
+
+![Advanced styles Magento settings](./assets/page-builder-advanced-styles.jpg)
+
+</Figure>
+
+## Extend the Page Builder
+
+You can extend existing Page Builder content types, or register new ones
+specific to your projects. To do so, there are 2 extension points: UI and
+GraphQL data resolution.
+
+### Customize UI components
+
+:::caution WIP
+
+If you need details right now, please <ContactLink />. We will make sure to
+answer you in a timely manner.
+
+:::
+
+- override
+  `theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/_appComponents.scss` to
+  register your custom styles
+- override
+  `theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/appComponentsMap.js` to
+  register new components (or override
+  [existing ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js))
+
+<!-- Override GraphQL fragment too (not yet externalized in a specific fragment FC code) -->
+
+### Expose content types data in GraphQL
+
+:::caution WIP
+
+If you need details right now, please <ContactLink />. We will make sure to
+answer you in a timely manner.
+
+:::
+
+The `PageBuilder` loader allows you to register new content types.
+
+First, you must define your content type. Content types must extend the
+`ContentType` class (see below). The `name` should match Magento's content type
+identifier and the `extractData` method can be used to return structured data to
+be exposed as GraphQL fields for this type.
+
+```javascript
+import ContentType from "server/modules/magento2/wysiwyg/loaders/content-types/ContentType";
+
+export default class Foo extends ContentType {
+  name = "foo";
+  extractData(node) {
+    return {
+      // custom data. Can also be extracted from the passed `node` information
+      bar: "baz",
+    };
+  }
+}
+```
+
+Then you must register it from a `contextEnhancer`, using the
+`PageBuilder.registerContentType` method:
+
+```javascript
+PageBuilder.registerContentType(
+  new Foo(), // <-- the content type defined above
+  "MyPageBuilderFooData" // <-- the GraphQL type for related data default to MagentoPageBuilderDefaultData (if no additional data)
+);
+```
+
+If your content type exposes additional data with a specific GraphQL type
+(`MyPageBuilderFooData` in this current example), you will then have to update
+your resolvers. To do so, Front-Commerce provides a generic
+`PageBuilderContentTypeResolver` class that will expose data returned by the
+content type's `extractData`.
+
+```graphql title="schema.gql"
+# Your custom page builder node data must implement
+# both MagentoPageBuilderNodeData and WysiwygNodeData GraphQL interfaces
+type MyPageBuilderFooData implements MagentoPageBuilderNodeData & WysiwygNodeData {
+  dataId: ID
+  appearance: String
+  bar: String # <- custom structured data
+}
+```
+
+```javascript title="resolvers.js"
+import PageBuilderContentTypeResolver from "server/modules/magento2/wysiwyg/graphql/PageBuilderContentTypeResolver";
+
+export default {
+  MyPageBuilderFooData: new PageBuilderContentTypeResolver(),
+};
+```
+
+<!-- TODO: document advanced usage of custom resolver -->
+
+## Extend the Image content-type
+
+<SinceVersion tag="2.18" />
+
+The `image` content-type uses defaults for the formatting to optimise
+performance,
+
+- Desktop: `large`
+- Mobile: `medium`
+
+This might be limiting for content creators as they might want to display
+dynamically sized images, or use a different format.
+
+You can register your own image content type, and use a custom format, or you
+can determine the format dynamically using a class.
+
+### Using a custom format
+
+This is much simpler as we only need to register an Image content-type with the
+PageBuilder loader.
+
+```js title="src/server/modules/page-builder/loaders/index.js"
+import Image from "server/magento2/wysiwyg/loaders/content-types/Image"; // We import the orignal image as it already extracts all the relevant data
+
+// The formats are the keys of the presets defined
+// inside your src/config/images.js file.
+const DESKTOP_IMAGE_FORMAT = "custom_desktop_format";
+const MOBILE_IMAGE_FORMAT = "custom_mobile_format";
+
+export default {
+  dependencies: ["Magento2/Wysiwyg"],
+  contextEnhancer: ({ loaders }) => {
+    const { PageBuilder } = loaders;
+    PageBuilder.registerContentType(
+      new Image(DESKTOP_IMAGE_FORMAT, MOBILE_IMAGE_FORMAT),
+      "MagentoPageBuilderImageData"
+    );
+  },
+};
+```
+
+<BrowserWindow url="http://localhost:4000/default-image-format" fullscreen>
+
+![Default Formats](./assets/pb-image-ct-default.jpg)
+
+</BrowserWindow>
+
+### Determine format dynamically
+
+With this method you can use the classes from the page builder to determine the
+format, this will allow you to still take advantage of optimised images.
+
+First let's create our `DynamicImage` content-type which contains the logic to
+determine the format.
+
+```js title="src/server/modules/page-builder/loaders/content-types/DynamicImage.js"
+// We will extend the original Image content-type
+import Image from "server/magento2/wysiwyg/loaders/content-types/Image";
+import imageConfig from "config/images";
+
+const presetKeys = Object.keys(imageConfig.presets);
+
+const getPresetFormat = (startsWith, classes = "") => {
+  return presetKeys.find(
+    (preset) =>
+      classes
+        .split(" ")
+        .filter((className) => className.startsWith(startsWith)) // only target specific class names starting with formt__
+        .some((className) => className.endsWith(preset)) // check if the preset is present in the class name
+  );
+};
+
+export default class DynamicImage extends Image {
+  extractData = (node) => {
+    // First we extact the original image data (required for the graphql)
+    const originalImageData = super.extractData(node);
+
+    // We then get the classes attached to the image node
+    const classes = super.findAttributeValue(node, "class", "");
+
+    // We can then use the classes to determine the format
+    const desktopFormat = getPresetFormat("format__desktop__", classes);
+    const mobileFormat = getPresetFormat("format__mobile__", classes);
+
+    if (desktopFormat) {
+      originalImageData.desktopFormat = desktopFormat;
+    }
+    if (mobileFormat) {
+      originalImageData.mobileFormat = mobileFormat;
+    }
+
+    return originalImageData;
+  };
+}
+```
+
+We then need to register the `DynamicImage` content-type with the PageBuilder
+
+```js title="src/server/modules/page-builder/loaders/index.js"
+import DynamicImage from "./content-types/DynamicImage";
+
+export default {
+  dependencies: ["Magento2/Wysiwyg"],
+  contextEnhancer: ({ loaders }) => {
+    const { PageBuilder } = loaders;
+    PageBuilder.registerContentType(
+      new DynamicImage(),
+      "MagentoPageBuilderImageData"
+    );
+  },
+};
+```
+
+:::tip
+
+The `DynamicImage` extends the original `Image` content-type so you can pass
+default format params, which will be used when a format class does not exists,
+as per the previous example: [Using a custom format](#using-a-custom-format)
+
+:::
+
+<b>Congratulations! 🥳</b> You now have a fully functional Dynamic PageBuilder Image
+💅
+
+<BrowserWindow url="http://localhost:4000/default-dynaimc-format" fullscreen>
+
+![Dynamic Formats](./assets/pb-image-ct-dynamic.jpg)
+
+</BrowserWindow>
+
+### Using original images
+
+You might want to opt out of image formats, and use the original intended sizes
+of the images.
+
+:::danger
+
+This will have a performance impact as it will no longer use the image proxy
+service which optimises images.
+
+:::
+
+To do so, you can follow the [Using a custom format](#using-a-custom-format) and
+supply the `original` format.
+
+```js title="src/server/modules/page-builder/loaders/index.js"
+import Image from "server/magento2/wysiwyg/loaders/content-types/Image";
+import { ORIGINAL_PRESET_CODE } from "server/core/image/imageResizer";
+
+export default {
+  dependencies: ["Magento2/Wysiwyg"],
+  contextEnhancer: ({ loaders }) => {
+    const { PageBuilder } = loaders;
+    PageBuilder.registerContentType(
+      new Image(ORIGINAL_PRESET_CODE, ORIGINAL_PRESET_CODE),
+      "MagentoPageBuilderImageData"
+    );
+  },
+};
+```
+
+<BrowserWindow url="http://localhost:4000/original-format" fullscreen>
+
+![Original Format](./assets/pb-image-ct-original.jpg)
+
+</BrowserWindow>

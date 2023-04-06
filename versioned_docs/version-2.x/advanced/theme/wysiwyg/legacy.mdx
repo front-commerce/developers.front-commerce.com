@@ -1,0 +1,143 @@
+---
+sidebar_position: 3.5
+title: Display WYSIWYG content (legacy)
+description:
+  Let your users write their content without needing any HTML or React knowledge
+  while still being able to deliver a qualitative UI (performant, responsive,
+  accessible…) to customers.
+---
+
+WYSIWYG stands for **W**hat **Y**ou **S**ee **I**s **W**hat **Y**ou **G**et. It
+means that your back office users write their content without needing any HTML
+or React knowledge. This is the case in most CMS tools nowadays. The output
+though is usually HTML which does not necessarly match the React components
+you've built in your Front-Commerce application.
+
+This is why we've built a `theme/modules/Wysiwyg` component in Front-Commerce.
+By default it takes a `content` property which contains the HTML that needs to
+be parsed, and transforms it in React components.
+
+## The `<Wysiwyg />` component
+
+The `<Wysiwyg />` component applies two types of transformations to your HTML :
+
+- shortcodes
+- transforms
+
+### Shortcodes
+
+Shortcodes are custom strings that can be parsed and transformed to HTML
+strings.
+
+In Magento, they look like
+`{% raw %}{{gallery id="123" size="medium"}}{% endraw %}`. In Wordpress they are
+like `[gallery id="123" size="medium"]`. But ultimately, they can be whatever
+string you want. The goal is to match a given regex, and transform it to some
+HTML string.
+
+For instance, for Magento, we parse `{% raw %}{{media}}{% endraw %}` shortcodes
+and replace them with `<img>` tags. It looks like this:
+
+```js
+{
+  // regex to identify the shortcode within your HTML code
+  regex: /\{\{media url="(.*?)"\}\}/gi,
+  // How to replace the given shortcode
+  replacement: (match, url) => `/media/${url}`
+}
+```
+
+See [EnhanceWysiwyg's reference](/docs/reference/wysiwyg) for more details.
+
+### Transforms
+
+Transforms are functions that take an HTML node and transform it in a React
+Element.
+
+For instance, we want to make sure that it transforms `<a>` tags to `Link`
+elements to preserve React's navigation. For instance,
+`<a href="/about-us">About us</a>` will be transformed to
+`<Link to="/about-us">About us</Link>`. It looks like this:
+
+```jsx
+export default (node, convertNodeToElement) => {
+  if (node.name === "a") {
+    const target = node.attribs && node.attribs.href;
+    const isExternal = !target || /^(https?:)?\/\//.test(target);
+
+    if (!isExternal) {
+      return (
+        <Link to={target} external={isExternal}>
+          {node.children.map(convertNodeToElement)}
+        </Link>
+      );
+    }
+  }
+};
+```
+
+See [EnhanceWysiwyg's reference](/docs/reference/wysiwyg) for more details.
+
+## Platform specific `Wysiwyg` components
+
+### Magento: `theme/modules/Wysiwyg/MagentoWysiwyg`
+
+#### Shortcodes
+
+Supported shortcodes:
+
+- `{% raw %}{{media url="*"}}{% endraw %}`
+- `{% raw %}{{store url="*"}}{% endraw %}`
+- `{% raw %}{{widget type="*" attribute="value"}}{% endraw %}`
+
+Any other shortcode will be removed from your final content.
+
+#### Transforms
+
+- `<a>` tags are transformed to the `theme/components/atoms/Typography/Link`
+  component when the `href` attribute does not contain a domain.
+- `<widget>` tags are transformed `theme/modules/Wysiwyg/MagentoWysiwyg/Widget`
+  components. However, you shouldn't write a `<widget>` tag manually. It is in
+  fact coming from the `{% raw %}{{widget}}{% endraw %}` shortcode.
+
+#### Add a custom Magento Widget
+
+Custom widgets will be automatically parsed. However, you will still need to map
+the widget's `type` to custom React Components. If you don't, they will be
+ignored.
+
+To do so, please override `theme/modules/Wysiwyg/MagentoWysiwyg/Widget.js` in
+your own theme.
+
+```shell
+mkdir -p src/web/theme/modules/Wysiwyg/MagentoWysiwyg/
+cp node_modules/front-commerce/src/web/theme/modules/Wysiwyg/MagentoWysiwyg/Widget.js \
+  src/web/theme/modules/Wysiwyg/MagentoWysiwyg/Widget.js
+```
+
+Now, within your newly created `Widget.js` file, you will be able to add your
+own behavior. For instance, if you've created a widget in Magento with the type
+`acme/product-preview`, you will need to update the `Widget.js` file likewise:
+
+```diff
++import React from "react";
+import PropTypes from "prop-types";
++//import your matching React Component
++import ProductPreview from "theme/modules/ProductPreview";
+
+const Widget = ({ type, attributes }) => {
++  // And match the type with your component
++  if (type === "acme/product-preview") {
++    return <ProductPreview sku={attributes.sku} />
++  }
++
+  return null;
+};
+
+Widget.propTypes = {
+  type: PropTypes.string.isRequired,
+  attributes: PropTypes.object.isRequired
+};
+
+export default Widget;
+```

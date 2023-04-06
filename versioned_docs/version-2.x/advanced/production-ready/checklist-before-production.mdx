@@ -1,0 +1,88 @@
+---
+sidebar_position: 5
+title: Before going to production
+description:
+  Before going to production, you should ensure that everything has been
+  customized to provide the best possible experience to your users. Some
+  features are not critical enough to block your developments and you may have
+  forgotten them during the project. This page contains a checklist to help you
+  before the go-live!
+---
+
+<p>{frontMatter.description}</p>
+
+To ensure that you are good to go, you can go through this checklist :
+
+- [ ] Style your **Offline page**
+
+<div className="pl-6">
+
+:::info
+
+This page is accessible when you disable your network while navigating in your
+shop. If you have `FRONT_COMMERCE_ENV !== "production"` this page will also be
+available at `/__front-commerce/offline`. You can then edit the
+`theme/pages/Offline` component to make sure that this page suits your brand.
+
+:::
+
+</div>
+
+- [ ] Style your **Maintenance page**
+
+<div className="pl-6">
+
+:::info
+
+This page is accessible when your backend returns is in Maintenance mode (503).
+If you have `FRONT_COMMERCE_ENV !== "production"` this page will also be
+available at `/__front-commerce/maintenance`. You can then edit the
+`theme/pages/Maintenance` component to make sure that this page suits your
+brand.
+
+:::
+
+</div>
+
+- [ ] Ensure your server can serve the application in **HTTPS** mode.
+
+<div className="pl-6">
+
+:::info
+
+Front-Commerce is aimed at being exposed in HTTPS when in production mode
+(`NODE_ENV === "production"`). It will redirect users to an HTTPS url if they
+try to access a page using HTTP. Cookies are also set with secure mode. If you
+want to overcome this limitation (which we don’t recommend!), you may use the
+[`FRONT_COMMERCE_UNSAFE_INSECURE_MODE` environment variable](/docs/reference/environment-variables#host).
+
+:::
+
+</div>
+
+- [ ] Ensure that the `manifest.json` is correct.
+
+<div className="pl-6">
+
+:::info
+
+It provides informations about the application so that the web browser can
+detect whether it's a Progressive Web Application. See
+[the customize manifest.json guide](/docs/advanced/theme/manifest-json).
+
+:::
+
+</div>
+
+- [ ] Ensure that the `robots.txt` has been overridden.
+
+<div className="pl-6">
+
+:::info
+
+It instructs bots what they can access. By default,
+[it forbids crawling to prevent unexpectedly exposing dev applications](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/public/robots.txt).
+
+:::
+
+</div>

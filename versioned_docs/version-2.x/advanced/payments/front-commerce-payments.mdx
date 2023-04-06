@@ -1,0 +1,63 @@
+---
+sidebar_position: 2
+title: Front-Commerce Payments
+description:
+  Front-Commerce contains mechanisms that allow to process of payments in a
+  platform-agnostic way. Payment platforms integrated as a Front-Commerce
+  Payment are compatible with every eCommerce platform that Front-Commerce
+  supports. This guide provides insights about how they work so you can better
+  understand how they could fit into your project.
+---
+
+import ContactLink from "@site/src/components/ContactLink";
+
+<p>{frontMatter.description}</p>
+
+With Front-Commerce payments, interactions occur from Front-Commerce
+GraphQL/Node.js middleware so that remote systems (<abbr title="Order Management
+System">OMS</abbr>, <abbr title="Enterprise resource planning">ERP</abbr>
+softwares…) will only receive Orders when they are paid.
+
+These payment methods are also aimed at being as frictionless as possible for
+Customers, so payment inputs are usually embedded in the checkout page to
+prevent redirecting Customers to third-party providers. Per their nature follow
+the
+[Direct Order payment workflow](/docs/advanced/payments/payment-workflows#direct-order).
+
+## Supported Payment platforms
+
+Front-Commerce Payments are currently available for the platforms below, learn
+how to install each one of them from the related documentation page:
+
+- [Stripe](/docs/advanced/payments/stripe#front-commerce-payment)
+- [Paypal](/docs/advanced/payments/paypal#front-commerce-payment)
+- [PayZen](/docs/advanced/payments/payzen#front-commerce-payment)
+- [Ingenico](/docs/advanced/payments/ingenico#front-commerce-payment)
+- [BuyBox](/docs/advanced/payments/buybox#front-commerce-payment)
+- [Adyen](/docs/advanced/payments/adyen#as-a-front-commerce-payment-method)
+
+:::info
+
+<span>
+  If you want to use a Payment platform not yet listed above, please{" "}
+  <ContactLink /> so we can provide information about a potential upcoming
+  native support for it.
+</span>
+
+:::
+
+## How is a Front-Commerce Payment method integrated with eCommerce platforms
+
+Front-Commerce handle payments directly, without the need for a payment
+integration in your eCommerce system. However, **Front-Commerce provides a
+generic Payment method** tailored for your eCommerce platform so that you can
+still benefit from its order management features and workflows.
+
+From your eCommerce system's perspective, a payment made with Front-Commerce is
+integrated in a similar way than checks / wire payments (sometimes named
+"offline payment"). The difference is that Front-Commerce will update orders
+statuses upon receiving automatic notifications from the payment service.
+
+## Implement a new Front-Commerce Payment method
+
+See [how to implement a custom payment method](./custom-payment-method)

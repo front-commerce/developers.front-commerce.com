@@ -1,0 +1,2229 @@
+---
+title: Migration Guides
+description:
+  This area contains the Migration steps to follow for upgrading your store to
+  new Front-Commerce versions.
+toc_max_heading_level: 2
+---
+
+<p>{frontMatter.description}</p>
+
+import ContactLink from "@site/src/components/ContactLink";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## `2.22.0` -> `2.23.0`
+
+### Adobe Commerce RMA
+
+This version contains improvements to RMA functionality. When updating your
+project, you must also update the
+[Magento2 Commerce - Module Front Commerce to version `2.1.0+`](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/-/releases/2.1.0)
+
+```shell
+composer require front-commerce/magento2-commerce-module@2.1.0
+```
+
+## `2.21.0` -> `2.22.0`
+
+### Fix sort params in `QueryHelper`'s `getFacetsParams`
+
+We detected a bug related to `sort` parameters retrieved from the URL (notably
+on the PLP page), where the GraphQL query would fail if the object passed in
+this URL parameter did not match the `SortInput` input
+[defined in the GraphQL schema](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1b2a91710286adc66079f951ee714aeea7f32570/src/server/model/catalog/layers/schema.gql#L50).
+We fixed it by picking only the parameters required by the schema in
+[`QueryHelper.getFacetsParams()`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1785).
+
+**Breaking change**: If you extended `SortInput` input in the GraphQL schema,
+you will also need to override this `QueryHelper` method to reflect those
+changes, otherwise only the base input fields will be taken into account.
+
+## `2.20.0` -> `2.21.0`
+
+### Algolia facet configurations
+
+As of this version, the Algolia datasource for Magento2 takes the facet type
+into account to build queries sent to Algolia. In previous versions,
+Front-Commerce behaved as if the facet type was set to `Conjunctive`. So by
+upgrading to this version, you might experience a change of behavior in the
+search results. To avoid that, you can set the facet type to `Conjunctive` under
+Stores > Configuration > Algolia Search > Instant Search Results Page in the
+Facets configuration.
+
+### Media proxy updated to send a custom user agent
+
+If you have added a
+[custom media proxy endpoint](/docs/advanced/production-ready/media-middleware#add-your-own-media-proxy-endpoint)
+in your application, we recommend to update the code as follows:
+
+```diff
+- import proxy from "express-http-proxy";
++ import proxy from "server/core/proxy";
+```
+
+We detected an issue with some remote services that were blocking Front-Commerce
+due to firewall rules detecting a _weird behavior_ caused by the media proxy:
+many requests from the same IP address with different `User-Agent` values was
+considered as a suspicious activity. It could ultimately lead to a blacklisting.
+
+This behavior
+[has been fixed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1776)
+in this version and backported to all support branches. Front-Commerce will now
+send a custom `User-Agent` value to the remote services:
+`Front-Commerce media proxy/<version>` (where `<version>` is the version of
+Front-Commerce). Please update your codebase as described above to ensure your
+code is compatible with this new behavior.
+
+## `2.19.0` -> `2.20.0`
+
+### Default shipping and billing address support
+
+In this release, we updated how the `"Use as default billing address"` and
+`"Use as default shipping address"` checkboxes are displayed in the
+[`AddressForm`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/modules/User/Address/AddressForm/AddressForm.js)
+component. It now can be controlled globally using a configuration in the
+[`src/config/website.js`](/docs/reference/configurations#configwebsitejs)
+configuration file.
+
+Please check if you have overridden the `AddressForm` component
+([commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/fd27e93d3e345157251ac6d3ace5e5e56c528ce6))
+if you're interested in using this feature.
+
+## `2.18.0` -> `2.19.0`
+
+### Replaced `mkdirp` package with `make-dir`
+
+Due to
+[a bug](https://github.com/isaacs/node-mkdirp/issues/31#issuecomment-777254013)
+causing issues with our image resizer we have opted to replace the
+[`mkdirp`](https://www.npmjs.com/package/mkdirp) package with
+[`make-dir`](https://www.npmjs.com/package/make-dir) in our dependencies,
+starting from version `2.19.0` we will no longer ship this package in
+Front-Commerce, so if you are using `mkdirp` in your own code, you will need to
+ensure that you have installed it.
+
+```bash
+npm install mkdirp@^1.0.4
+```
+
+### Allow report-only frames for Adyen
+
+If you were using Adyen as a payment provider you might have allowed all iframes
+to load, to prevent blocking 3DS2 authorization iframes from credit card
+providers.
+
+You can now restrict the policy again and use the `reportOnlyDirectives` feature
+instead.
+
+Although it will not strengthen the policy, this will allow to log loaded
+iframes and help investigate risks of unsecure iframes.
+
+```diff title="my-module/config/website.js"
+  contentSecurityPolicy: {
+    directives: {
+-      frameSrc: ["*"],
++      frameSrc: ["*.adyen.com"],
+    }
++    reportOnlyDirectives: {
++      frameSrc: true,
++    }
+  },
+```
+
+### Configure the new logger
+
+A new `security` logger has been added (for now to collect CSP violations).
+
+Add it to your `logging.js` configuration to be able to see those logs (see
+[the logging documentation](/docs/advanced/production-ready/logging) for more
+details)
+
+```js title="my-module/config/logging.js"
+module.exports = {
+  ...
+  access: [
+    {
+      type: "console",
+    },
+  ],
+  // highlight-start
+  security: [
+    {
+      ...
+    },
+  ],
+  // highlight-end
+};
+```
+
+### Adding custom icons
+
+We have improved the way you can add custom icons to your theme. Before you had
+to override the
+[`theme/components/atoms/Icon/Icon.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/components/atoms/Icon/Icon.js)
+file to add your custom icons. Now you can simply extend or override the core
+icons with your custom icons by adding them to the
+[`theme/components/atoms/Icon/icons/app-icons.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.20.x/src/web/theme/components/atoms/Icon/icons/app-icons.js)
+file.
+
+```js title="theme/components/atoms/Icon/icons/app-icons.js"
+import { FcHome, FcPhone } from "react-icons/fc";
+
+/** @type {Record<string, import("react-icons").IconType>} */
+const componentIcons = {
+  home: FcHome // this will override the `IoIosHome` icon from the core implementation
+  phone: FcPhone // this will add a new icon
+};
+
+/** @type {string[]} */
+const svgIcons = [];
+
+export default {
+  componentIcons,
+  svgIcons,
+};
+```
+
+:::important
+
+To apply this change you need to restore the original `Icon.js` files, you can
+do this by deleting the override from your custom theme.
+
+:::
+
+### Default country from graph
+
+In this release, we have changed the usage of `default_country_id` defined in
+your `stores.js` configuration.
+
+From 2.19.0, this settings is directly exposed in the GraphQL API directly in
+[`Country.isDefault`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fa573a6cd5ad259d455acb70afeb56aacee5b30e/src/server/modules/front-commerce/country/schema.gql#L23)
+field.
+
+:::note
+
+This field will use the value returned by Magento2, and default to the one
+defined in your `stores.js` otherwise. In order to fully benefit from this
+change, you will also have to update you Front-Commerce Magento 2 module to
+[version 2.9.0](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/releases/2.9.0).
+
+On other backends (Magento1, BigCommerce), this field will only expose the value
+from your `stores.js`.
+
+:::
+
+**Breaking changes**: Previously, this setting was used directly in the frontend
+in `web/theme/modules/User/Address/AddressForm/AddressForm.js`, and was removed
+in favor of using the `isDefault` field in the graph. Please verify if you
+overwrote any of these files:
+
+- `web/theme/modules/User/Address/AddressForm/AddressForm.js`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/CountriesWithRegionQuery.gql`
+- `web/theme/modules/User/Address/CountryFieldWithRegion/withCountriesAndRegions.js`
+
+### `Form/Item` `inline` property depreciation
+
+To standardize the API of `theme/components/molecules/Form/Item` between the
+default theme and the theme chocolatine, the `inline` property of that component
+from the default theme has been deprecated to use an `appearance` property. So
+if your project is not using the theme chocolatine and
+`theme/components/molecules/Form/Item` explicitly receives the `inline`
+property, you have to apply changes similar to:
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={true}>
++    <FormItem appearance="inline">
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
+or
+
+```diff
+ import FormItem from "theme/components/molecules/Form/Item";
+
+ const MyComponent = () => {
+   return (
+-    <FormItem inline={false}>
++    <FormItem>
+       <SomeComponent />
+     </FormItem>
+   );
+}
+```
+
+### New features in `2.19.0`
+
+- [The Stripe module can be configured to not automatically capture the payment](/docs/advanced/payments/stripe#advanced-disable-automatic-capture)
+- [Report-Only <abbr title="Content Security Policy">CSP</abbr> are now configurable](/docs/reference/content-security-policy)
+- Magento2 performance improvements (opt-in)
+  - [Ability to cache customers' cart](/docs/magento2/advanced#caching-customers-cart)
+  - [Ability to cache current customers' information](/docs/magento2/advanced#caching-current-customers-information)
+- [ChronoRelais shipping method support](/docs/advanced/shipping/chronorelais)
+
+## `2.17.0` -> `2.18.0`
+
+### The Prismic module has moved to a new home.
+
+We have tagged the last version of the Prismic module in the
+[external repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic)
+`v1` 🥳
+
+Since this version we have moved the Prismic module
+[into the core repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.18.x/modules/prismic)
+of Front-Commerce, moving forward any new features will be made available and
+follow the same
+[semantic versioning](/docs/appendices/release-process#semantic-versioning) as
+the core.
+
+You can use the module by adding the following changes to your
+`.front-commerce.js` config file:
+
+```diff title=".front-commerce.js"
+module.exports = {
+  modules: [
+    "./node_modules/front-commerce/theme-chocolatine",
+-   "./node_modules/front-commerce-prismic/prismic",
++   "./node_modules/front-commerce/modules/prismic",
+    "./src",
+  ],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    {
+      name: "Magento2Elasticsearch",
+      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+    },
+    { name: "Magento2", path: "server/modules/magento2" },
+    { name: "Prismic", path: "prismic/server/modules/prismic" },
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web" },
+-   {
+-     name: "Prismic",
+-     path: "./node_modules/front-commerce-prismic/prismic/web",
+-   },
+  ],
+};
+```
+
+### path-to-regexp package added
+
+We noticed that the
+[`path-to-regexp`](https://github.com/pillarjs/path-to-regexp) package was
+missing from our dependencies, it was only useable due to a transitive
+dependency. We have added it to our dependencies to avoid any future issues.
+
+The previous version of the package was `0.1.7` and we have upgraded it to
+`6.2.1`. Because of others dependencies depending on older version of
+`path-to-regexp`, you have to install it in your project in order to satisfy
+Front-Commerce's requirements by running:
+
+```
+npm install path-to-regexp@^6.2.1
+```
+
+If you don't, you'll experience server side rendering errors like:
+
+```
+TypeError: Object(...) is not a function
+      at /path/to/your/project/build/server/webpack:/node_modules/front-commerce/src/server/modules/magento2/catalog/products/urlMatchers.js:6:1
+```
+
+If you used this import without installing it in your project, the import
+methods have changed.
+
+```diff
+- import pathToRegexp from "path-to-regexp";
++ import { pathToRegexp } from "path-to-regexp";
+```
+
+In addition, given
+[the amount of changes between the version 0.1.7 and 6.2.1](https://github.com/pillarjs/path-to-regexp/compare/v0.1.7...v6.2.1),
+we strongly advice you to check
+[the project documentation](https://github.com/pillarjs/path-to-regexp/blob/master/Readme.md)
+and to carefully test any code involving this library.
+
+### Magento2 Adyen module update
+
+In this release, we added support for version 8 of Magento2 Adyen module. If you
+have a Front-Commerce setup where the module `Magento2/Adyen` is used,
+[the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/advanced/payments/adyen#add-the-required-environment-variables-1).
+
+### DomainEvent implementations reworked
+
+The `PaymentDetails` attribute was removed from the payment DomainEvents. A
+custom paymentData last attribute now allows your payment methods to provide
+custom JSON payload to the magento backend.
+
+```diff
+- new PaymentReceived(orderId, paymentDetails, pspReference)
++ new PaymentReceived(orderId, pspReference, paymentData)
+```
+
+Concerned classes : `PaymentAuthenticationStarted`, `PaymentAuthorized`,
+`PaymentCaptured`, `PaymentCancelled`, `PaymentReceived` and `PaymentRefused`
+
+### `FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` support removal
+
+The support for the undocumented environment variable
+`FRONT_COMMERCE_WEB_UNSAFE_USE_DEPRECATED_FIELDS` has been removed in this
+version. If you were previously defining this variable, you can safely remove
+it. The main use case for this variable was to change `npm run lint` behavior so
+that it triggers a warning instead of an error when a deprecated GraphQL is
+used. This is now the default behavior.
+
+### New Adobe Commerce B2B PHP module
+
+Some B2B features were previously leveraging features from the
+[Magento2 Commerce module](/docs/magento2/commerce#magento2-commerce-module-installation).
+During this release, we've extracted B2B related features into their own
+repository.
+
+**If you work on an Adobe Commerce B2B project**, you must:
+
+- update `front-commerce/magento2-commerce-module` to
+  [version 2.x](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/-/releases)
+  (currently `2.0.0`)
+- install `front-commerce/magento2-b2b-module` to its latest version
+
+Here are the commands to achieve this:
+
+```shell
+composer require front-commerce/magento2-commerce-module:2.0.0
+
+composer config repositories.front-commerce-magento2-b2b git \
+    git@gitlab.blackswift.cloud:front-commerce/magento2-b2b-module-front-commerce.git
+composer require front-commerce/magento2-b2b-module:1.1.0
+
+bin/magento setup:upgrade
+```
+
+## `2.16.0` -> `2.17.0`
+
+### Adyen's Stored payment methods
+
+In this release, we added support for
+[Adyen's Stored Payment Methods](https://docs.adyen.com/plugins/magento-2/set-up-tokenization?tab=magento-vault-version-8-2-0_2#set-up-adyen-tokenization)
+for its Magento module. For more information, see
+[Adyen's Stored Payment Methods documentation](/docs/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional).
+
+### Payment workflow rework
+
+We added a new frontend payment workflow for payment means using asynchronous
+notifications. As most embedded payment methods will be migrated in the future,
+please ensure you update the following files if you overrode them
+
+```diff title="theme/modules/Checkout/PlaceOrder/PlaceOrder.js"
+...
++import AsyncOrderQuery from "./AsyncOrderQuery.gql";
+
+...
+
+  EnhancePlaceOrder({
+    SetPaymentInfoAndPlaceOrderMutation,
+    SetCheckoutPaymentInformationAndRedirectMutation,
+    PlaceOrderAndRedirectMutation,
++    AsyncOrderQuery,
+  }),
+  branch(
+-    (props) => props.hasMessage,
++    (props) => props.message || props.errorMessage,
+    () => ErrorOccured,
+    (BaseComponent) => BaseComponent
+  )
+```
+
+```diff title="theme/modules/Checkout/PlaceOrder/EnhancePlaceOrder.js"
+...
++import withAsyncOrderAction from "./PaymentFlow/withAsyncOrderAction";
+
+
+export const supportedPaymentFlowTypes = [
+  "directOrder",
++  "asyncOrder",
+  "redirectBeforeOrder",
+  "redirectAfterOrder",
+  "directOrderWithAdditionalAction",
+  "workflowAgnosticCheckout",
+];
+
+const EnhancePlaceOrder = ({
+  SetPaymentInfoAndPlaceOrderMutation,
+  SetCheckoutPaymentInformationAndRedirectMutation,
+  PlaceOrderAndRedirectMutation,
++  AsyncOrderQuery,
+}) =>
+...
+    withHandlers({
+      onError:
+        (props) =>
+        ({ errorMessage }) =>
+          props.formatErrorMessage(errorMessage),
+    }),
++    withAsyncOrderAction(AsyncOrderQuery),
+    makeCommandDispatcher({
+
+```
+
+### DomainEvent rework
+
+The DomainEvent class was reworked.
+
+If you handled payment events on orders (backend operation) using
+[DomainEvent implementations](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.17.x/src/server/modules/front-commerce/payment/domain/events),
+these implementations now base on a `PurchaseIdentifier` instead of a direct
+`orderId` (this allows to update order events based on a cartId)
+
+Here is the new usage for those classes
+
+```diff
+new PaymentCaptured(
+-  orderId,
++  new PurchaseIdentifier({ orderId }),
+  paymentDetail
+)
+```
+
+### Payzen/Lyra on Magento1
+
+We migrated the Payzen/Lyra embedded payment module for Magento2 to the new
+`asyncOrder` payment workflow.
+
+As this is not supported for Magento1, override
+`theme/pages/Checkout/checkoutFlowOf.js` to keep using the former workflow.
+
+```diff title="theme/pages/Checkout/checkoutFlowOf.js"
+
+const checkoutFlowOf = (method) => {
+  ...
+
+-  if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "payzen_embedded") return "directOrder";
+
+  ...
+};
+```
+
+<hr className="my-10" />
+
+## `2.15.0` -> `2.16.0`
+
+Updating Front-Commerce from 2.15.0 to 2.16.0 does not require any manual
+operation.
+
+<hr className="my-10" />
+
+## `2.14.0` -> `2.15.0`
+
+### Environment variables: quote values containing `#` or ``` characters
+
+As part of our continuous dependencies upgrade process, we've upgraded the
+`dotenv` dependency to its latest version. We've updated it from version `8.2.0`
+(October 2019) to version `16.0.0` (February 2022). Technically, **it contains 2
+Breaking Changes** that we've decided to be pragmatic about.
+[We prioritized having an up-to-date dependency with a minor migration check, over an outdated one for pure SemVer compatibility.](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1231#note_927541557)
+Please check that your environment variables are not impacted by these breaking
+changes:
+
+1. [**15.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1500-2022-01-31):
+   `#` marks the beginning of a comment (UNLESS the value is wrapped in quotes.
+   Please update your `.env` files to wrap in quotes any values containing `#`:
+1. [**16.0.0**](https://github.com/motdotla/dotenv/blob/HEAD/CHANGELOG.md#1600-2022-02-02):
+   If you had values containing the backtick character, please quote those
+   values with either single or double quotes.
+
+```diff
+- SECRET_WITH_HASH=something-with-a-#-hash
+- SECRET_WITH_BACKTICK=something-with-a-`-backtick
++ SECRET_WITH_HASH="something-with-a-#-hash"
++ SECRET_WITH_BACKTICK="something-with-a-`-backtick"
+```
+
+:::info
+
+you can change your environment variables **right away**. Quoted values also
+work with previous Front-Commerce versions.
+
+:::
+
+### In-Stock Alerts
+
+In this release, we introduced the In-Stock Alert feature. When this feature is
+enabled on your backend (Magento 1 and 2), it will by default render a new
+component `SubscribeToInStockAlert` inside the existing `OutOfStock` component.
+
+### Paginated orders
+
+In this release we added pagination for orders. In the process, the `orders`
+GraphQL field used to retrieve orders has been deprecated and will eventually be
+removed in FC version 3.0.0. `orderList` should now be used instead. If you had
+overridden the `Orders` (`theme/pages/Account/Orders/Orders.js`) component, you
+might want to update it to use the new GraphQL field and add a pagination
+component.
+
+### Node Version Support Change
+
+We now support Node versions 14, 16 and 17 (Node 17 is supported on a best
+effort basis). If you are using Node 12
+([which reached its end of life](https://nodejs.org/en/about/releases/)), you
+must update your Node version (we recommend Node 16). To support these latest
+Node versions, we had to upgrade some dependencies. These upgrades imply changes
+that could impact your codebase:
+
+- You need to update to the latest version of your `front-commerce-skeleton`
+- `@apollo/*` are only installed as sub-dependencies and therefore **should not
+  be used directly**. In `2.15.0` you need to replace all uses of `@apollo/*` in
+  your codebase with `react-apollo`, or `graphql-tag` imports where applicable.
+
+  ```mdx-code-block
+  <details>
+  <summary><strong>Check if you overrode any file that you need to apply the changes to</strong></summary>
+  ```
+
+  <br />
+
+  ```diff title="modules/front-commerce-b2b/web/core/permissions/CompanyPermissionsContext.js"
+  - * @property {import('@apollo/react-hoc').DataValue<{ me: Object }, {}>} data
+  + * @property {import('react-apollo').DataValue<{ me: Object }, {}>} data
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/Company/CompanyStructure/CompanyStructure/withCompanyStructureMutations.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  -
+  -/**
+  - * @callback MutationFunction
+  - * @param {import('@apollo/react-common/lib/types/types').MutationFunctionOptions} options
+  - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+  - */
+  +import { useMutation } from "react-apollo";
+  +
+  +/**
+  + * @typedef {typeof useMutation} UseMutation
+  + * @typedef {ReturnType<useMutation>} UseMutationReturn
+  + * @typedef {UseMutationReturn[0]} MutationFunction
+  + */
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserDeactivate/CompanyUserDeactivate.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/Company/CompanyUserModal/CompanyUserModal.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.js"
+  - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.js"
+  +/**
+  + * @typedef {typeof useMutation} UseMutation
+  + * @typedef {ReturnType<useMutation>} UseMutationReturn
+  + * @typedef {UseMutationReturn[0]} MutationFunction
+  + * @typedef {ReturnType<MutationFunction>} MutationFunctionReturn
+  + */
+  /**
+  * @typedef {object} AddToRequisitionListFunctionProps
+  * @param {string} requisitionListId
+  * @param {any[]} selectedItems
+  */
+  /**
+  * @callback AddToRequisitionListFunction
+  * @param {AddToRequisitionListFunctionProps} props
+  - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+  + * @returns {MutationFunctionReturn}
+  */
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddToRequisitionList/withProductConfigurationModal.js"
+  - * @returns {Promise<import('@apollo/react-common/lib/types/types').ExecutionResult>}
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListDelete/RequisitionListDelete.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListItemsGrid/RequisitionListItem/RequisitionListItem.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListModal/RequisitionListUpdateModal/RequisitionListUpdateModal.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/modules/RequisitionList/RequisitionListToolbar/RequisitionListToolbarAddToCart/RequisitionListToolbarAddToCart.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/pages/Account/CompanyStructure/EnhanceCompanyStructure.js"
+  -         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
+  +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+  ```
+
+  <hr />
+
+  ```diff title="modules/front-commerce-b2b/web/theme/pages/Account/RequisitionListDetails/EnhanceRequisitionListDetails.js"
+  -         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
+  +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+  ```
+
+  <hr />
+
+  ```diff title="modules/payment-adyen/web/theme/modules/Adyen/PaypalCheckout/EnhancePaypalCheckout.js"
+  -         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
+  +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+  ```
+
+  <hr />
+
+  ```diff title="modules/payment-adyen/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/Adyen/Adyen.js"
+  -import { useQuery } from "@apollo/react-hooks";
+  +import { useQuery } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="modules/payment-hipay/web/theme/modules/Checkout/PlaceOrder/AdditionalAction/HiPay/HiPayActions.js"
+  -import { useQuery } from "@apollo/react-hooks";
+  +import { useQuery } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/core/apollo/graphqlWithPreload.js"
+  - * @param {import('@apollo/react-hoc/lib/types').OperationOption & PreloadOperationOptions} options
+  + * @param {import('react-apollo').OperationOption & PreloadOperationOptions} options
+  ...
+  -    /** @type {import('@apollo/client').ApolloClient | null} */
+  +    /** @type {import('apollo-client').ApolloClient | null} */
+  ...
+  ```
+
+  <hr />
+
+  ```diff title="src/web/core/shop/ShopContext.js"
+  - * @property {import('@apollo/react-hoc').DataValue<{ shop: Shop, loading: boolean, error: import('apollo-client').ApolloError }, {}>} data
+  + * @property {import('react-apollo').DataValue<{ shop: Shop, loading: boolean, error: import('apollo-client').ApolloError }, {}>} data
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/modules/SmartForms/Field/Email/useEmailServerValidation.js"
+  -import { useApolloClient } from "@apollo/react-hooks";
+  +import { useApolloClient } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/modules/SmartForms/Field/PhoneNumber/usePhoneNumberValidation.js"
+  -import { useLazyQuery } from "@apollo/react-hooks";
+  +import { useLazyQuery } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/modules/SmartForms/Field/helpers/useLazyQueryAlwaysTriggeredOnComplete.js"
+  -import { useLazyQuery } from "@apollo/react-hooks";
+  +import { useLazyQuery } from "react-apollo";
+  +
+  +/**
+  + * @typedef {typeof useLazyQuery} UseLazyQuery
+  + * @typedef {Parameters<UseLazyQuery>} UseLazyQueryParams
+  + * @typedef {ReturnType<UseLazyQuery>} UseLazyQueryReturn
+  + */
+  /**
+  * @callback OnCompletedCallback
+  * @param {any} data
+  */
+  /**
+  * @typedef {Object} QueryResultsRef
+  * @property {OnCompletedCallback} onCompleted
+  * @property {boolean} loading
+  * @property {import('apollo-client/errors/ApolloError').ApolloError} error
+  * @property {any} data
+  - * @property {import('@apollo/react-common').OperationVariables} variables
+  + * @property {UseLazyQueryReturn[1]["variables"]} variables
+  */
+  /**
+  - * @param {import('graphql').DocumentNode} Query
+  - * @param {import('@apollo/react-hooks/lib/types').LazyQueryHookOptions} options
+  - * @returns {import('@apollo/react-hooks/lib/types').QueryTuple<any,import('@apollo/react-common').OperationVariables>}
+  + * @param {UseLazyQueryParams[0]} Query
+  + * @param {UseLazyQueryParams[1]} options
+  + * @returns {UseLazyQueryReturn}
+  */
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/modules/Wishlist/AddAllWishlistToCartModal/useAddAllWishlistToCartModalInternal.js"
+  -import { useMutation } from "@apollo/react-hooks";
+  +import { useMutation } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/modules/Wishlist/WishlistProvider/WishlistProvider.js"
+  -import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+  +import { useLazyQuery, useQuery } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/pages/Account/DownloadableProduct/EnhanceDownloadableProduct.js"
+  -         * @param {import('@apollo/react-hoc/lib/types').OptionProps<any, GraphQLData, any>} param0
+  +         * @param {import('react-apollo').OptionProps<any, GraphQLData, any>} param0
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/pages/Orders/Orders.js"
+  -import { useLazyQuery } from "@apollo/react-hooks";
+  +import { useLazyQuery } from "react-apollo";
+  ```
+
+  <hr />
+
+  ```diff title="src/web/theme/pages/Product/useProductBySkuLoader.js"
+  -import { useQuery } from "@apollo/react-hooks";
+  +import { useQuery } from "react-apollo";
+  ```
+
+  ```mdx-code-block
+  </details>
+  ```
+
+- If after the above fixes there is still `@apollo/*` dependencies and you are
+  not sure how to resolve please <ContactLink /> for support. You can also check
+  [here](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=8fae8438d46200cbd310b16c30b3078da28b7d42)
+  and
+  [here](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1215/diffs?commit_id=418a291f917660b18672b6be2eb2778cb51dfef9)
+  for the changes we did to our codebase.
+- Resolvers for fields that are not in the `schema` now throw errors. To avoid
+  this remove all unneeded `field`/`Type` resolvers that do not have a
+  representation in the GraphQL `schema`. Check our
+  [cleaning commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1216/diffs?commit_id=1e2e04e7f28dba2ebd36da50701478a13a58a238)
+  regarding this issue.
+- `makeApolloClientStub` now expects resolvers as an argument instead of mocks.
+  This is in tandem with the
+  [`graphql-tools` upgrade notes](https://www.graphql-tools.com/docs/mocking#migration-from-v7-and-below).
+  Note that we provided an adapter that converts `mocks` to `resolvers` so that
+  old tests are not affected. However it is recommended to make the change. To
+  disable the adapter's warning set
+  `FRONT_COMMERCE_WEB_PRINT_MAKEAPOLLOCLIENTSTUB_MOCKS_DEPRECATION_WARNING`
+  environment variable to `"false"`.
+- The use of `SchemaVisitor`/`SchemaDirectiveVisitor` to implement GraphQL
+  directive is deprecated and it is replaced by the use of the
+  [new API](https://www.graphql-tools.com/docs/schema-directives). We
+  implemented an adapter so that uses of
+  `SchemaVisitor`/`SchemaDirectiveVisitor` will not break, however it is
+  recommended to make the change. Please note that the adapter only supports the
+  use of `visitFieldDefinition` function of the
+  `SchemaVisitor`/`SchemaDirectiveVisitor` class. If you have use for other
+  functions and cannot make the change to the new API please <ContactLink /> for
+  help.
+- When using Node 17 you need to prefix your npm commands by
+  `NODE_OPTIONS=--openssl-legacy-provider` e.g.
+  `NODE_OPTIONS=--openssl-legacy-provider npm start`,
+  `NODE_OPTIONS=--openssl-legacy-provider npm run build`.
+- When using npm >= 7 you need to add `--legacy-peer-deps` to npm install
+  commands. e.g. `npm install --legacy-peer-deps`,
+  `npm i some_dependency --legacy-peer-deps`.
+
+- Reinstall your dependencies after the update:
+
+```mdx-code-block
+<Tabs>
+<TabItem value="For npm >= 7">
+```
+
+```sh
+rm -rf ./node_modules/
+npm install --legacy-peer-deps
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="For npm < 7">
+```
+
+```shell
+rm -rf ./node_modules/
+npm install
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+### New features in `2.15.0`
+
+- [In-Stock Alerts](/docs/advanced/features/in-stock-alert)
+- [Prismic: embed fields](/docs/prismic/embed-fields)
+- Magento2: use the native search capabilities of Magento for PLP
+- npm 7 / NodeJS 16 / NodeJS 17 compatibility
+- [Integrate Paypal w. Adyen for a seamless checkout experience](/docs/advanced/payments/adyen)
+
+<hr className="my-10" />
+
+## `2.13.0` -> `2.14.0`
+
+### New style sheet for B2B
+
+In this release we updated the RequisitionList configurable options modal. In
+case you are using the B2B module and have overridden
+`modules/front-commerce-b2b/web/theme/modules/RequisitionList/_RequisitionList.scss`
+please add the following line to it:
+
+```scss
+@import "~theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModal";
+```
+
+### `withFlashMessages` now exports hooks
+
+The logic of `withFlashMessages` is now also exported as a hook
+`useFlashMessages`. If you have overridden `withFlashMessages` please apply the
+changes in
+[this diff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/11e7d55bc68d22b422ea5bc9c8357551cd2412ea)
+to it.
+
+### Added downloadable products support for Magento2
+
+> _Minimum required magento 2 module version 2.6.1_
+
+Support for shareable downloadable products was added. There is now a new page
+under the user account `/user/downloadable-products` that lists all the
+downloadable products of the current user.
+
+P.S. The [withFlashMessage](#withflashmessages-now-exports-hooks) update is
+required for the downloadable product page.
+
+To add a link to the downloadable products in the account navigation please
+apply the following diffs to your project:
+
+If you are using the base theme:
+
+- [AccountNavigation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?view=parallel#9f4b70799a5d0472977d4a6992b5f751d4c7b2a3)
+- [AccountLayout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#a85a9f3a6d6111152efe2fc74320dfab7295d39d)
+- [EnhanceAccount](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#92527070b393735c35c5825b3174987e566962e6)
+- [\_modules.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f9a39a6723f4100486c2658dff702698421eae41)
+
+If you are using theme chocolatine:
+
+- [AccountNavigation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#e7af65f5100c0e8b1d5bda98a735eb5744a44386)
+- [AccountLayout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#f7e1de354176dd6902903dc889133f0c5f2733e3)
+- [EnhanceAccount](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=3#899be9e8de73bf492922cdfdd67ff14b859454a0)
+- [\_modules.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6f83e7b889369efab8a2560c66a410a1b3a6f7db?page=2#ec9462e7d49a82bcb8c759d1fb734ce39160140b)
+
+### PaymentMethodLabel relocated
+
+The `<PaymentMethodLabel>` component was moved from
+`theme/modules/User/Order/OrderMethod/PaymentMethodLabel.js` to
+`theme/modules/Checkout/Payment/PaymentMethodLabel.js` the old location will
+still work but will output deprecation messages when used. If you have
+overridden `<PaymentMethodLabel>` you should also relocate your override to the
+same path and update all references to point to it.
+
+As a consequence of relocating `<PaymentMethodLabel>` we had to rename all the
+translation keys it uses. As such the following translation keys have been
+updated
+
+| Old Key                                                        | New Key                                                       |
+| -------------------------------------------------------------- | ------------------------------------------------------------- |
+| modules.User.Order.OrderMethod.PaymentMethod.checkmo           | modules.Checkout.Payment.PaymentMethodLabel.checkmo           |
+| modules.User.Order.OrderMethod.PaymentMethod.ogoneFlexcheckout | modules.Checkout.Payment.PaymentMethodLabel.ogoneFlexcheckout |
+| modules.User.Order.OrderMethod.PaymentMethod.paymentOnAccount  | modules.Checkout.Payment.PaymentMethodLabel.paymentOnAccount  |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalButton      | modules.Checkout.Payment.PaymentMethodLabel.paypalButton      |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalExpress     | modules.Checkout.Payment.PaymentMethodLabel.paypalExpress     |
+| modules.User.Order.OrderMethod.PaymentMethod.paypalStandard    | modules.Checkout.Payment.PaymentMethodLabel.paypalStandard    |
+| modules.User.Order.OrderMethod.PaymentMethod.payzenEmbedded    | modules.Checkout.Payment.PaymentMethodLabel.payzenEmbedded    |
+| modules.User.Order.OrderMethod.PaymentMethod.stripe            | modules.Checkout.Payment.PaymentMethodLabel.stripe            |
+| modules.User.Order.OrderMethod.PaymentMethod.hipay             | modules.Checkout.Payment.PaymentMethodLabel.hipay             |
+
+All translation keys that start with
+`modules.User.Order.OrderMethod.PaymentMethod` now starts with
+`modules.Checkout.Payment.PaymentMethodLabel`. You need to update any use of the
+old keys (if any) in your project to the respective new key.
+
+### Update your CSPs
+
+In this release, we have removed most of the module-related CSPs from
+Front-Commerce default configuration file. If you are using one or more of the
+following modules, please do update your CSPs accordingly in your
+`config/website.js` configuration:
+
+- `Google Analytics` or `Google Tag Manager` (see
+  [analytics configuration](/docs/advanced/analytics/legacy#universal-analytics-google-analytics))
+- `Paypal` (see
+  [Paypal configuration](/docs/advanced/payments/paypal#update-your-csps))
+- `Payzen` (see
+  [Payzen configuration](/docs/advanced/payments/payzen#update-your-csps))
+
+### Removed deprecations in `Button` component
+
+The properties that were tagged as deprecated in
+`theme/components/atoms/Button/Button.js` before version 2.0 have been removed
+in this release:
+
+- `appearance` should now be used instead of `primary`, `icon`, `link` and
+  `warning`.
+- `state` should now be used instead of `disabled` and `pending`.
+
+Please update your code to fit the new behavior.
+
+### Code clean up
+
+In this release, we have removed some dead and unused code
+([see corresponding MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/967)):
+
+- `src/theme/pages/Account/Account.js` that despites its name is not used at all
+  and very unlikely to be used by any project
+- some loadable routes from `src/web/LoadableRoutes.js` there were useless since
+  the addition of file based routing in `2.0.0-rc.0`.
+
+<p>
+  If you have trouble about those removals while upgrading, please{" "}
+  <ContactLink />.
+</p>
+
+### Fixed the Front-Commerce B2B module's company credit display
+
+In the account menu we displayed the company credit menu even for companies not
+allowed to pay on account.
+
+If you overrode `FirstnameQuery.gql` add the following code
+
+```diff title="modules/front-commerce-b2b/web/theme/pages/Account/FirstnameQuery.gql"
+query Firstname {
+  me {
+    ...
+    company {
+      name
++      credit {
++        availableCredit {
++          amount
++        }
++      }
+    }
+  }
+}
+```
+
+If you overrode `AccountNavigation.js` perform the following changes
+
+```diff title="theme/modules/User/AccountNavigation/AccountNavigation.js"
+...
+
+const isCompanyUser = (user) => {
+  return Boolean(user?.company);
+};
+
++const isCompanyCreditsAllowed = (user) => {
++  return Boolean(user?.company?.credit);
++};
+
+...
+-     isCompanyUser(user) && {
++     isCompanyCreditsAllowed(user) && {
+        value: "/user/company/credit",
+        label: intl.formatMessage(messages.companyCredit),
+      },
+...
+-       {isCompanyUser(user) && (
++       {isCompanyCreditsAllowed(user) && (
+          <Route
+            exact
+            path={`${basePath}/company/credit`}
+            children={({ match }) => (
+              <Link to="/user/company/credit" className={makeClassName(match)}>
+                {intl.formatMessage(messages.companyCredit)}
+                <Icon icon="cash" title="" />
+              </Link>
+            )}
+          />
+...
+```
+
+### New features in `2.14.0`
+
+- [Custom routable pages now supports dynamic GraphQL variables from URL](/docs/advanced/theme/route-dispatcher#advanced-queries)
+- [New `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE` environment variable for temporarily deactivating the GraphQL Persisted Queries feature](/docs/reference/environment-variables#server)
+- New Prismic module features:
+  - Support for [trailing slashes](/docs/prismic/routable-types#trailing-slash)
+  - Support for [path rewrites](/docs/prismic/routable-types#path-rewrites)
+  - Exposed the `url` to the
+    [Content type](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js)
+
+:::note
+
+When a Prismic document has been registered using the
+[`registerRoutableType`](/docs/prismic/routable-types#registerroutabletype-options)
+method or the
+[`registerPrismicRoute`](/docs/prismic/routable-types#registerprismicroute-options)
+method, A `url` property is exposed in the
+[Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js).
+This property contains the resolved url of the document.
+
+:::
+
+<hr className="my-10" />
+
+## `2.12.0` -> `2.13.0`
+
+### Upgrade the Magento2 module
+
+If you are using Magento2, version 2.6.0 of `front-commerce/magento2-module` is
+now the minimum required version. To update it to the latest version, from
+Magento2 root, you can run:
+
+```sh
+composer update front-commerce/magento2-module
+```
+
+:::info
+
+You can refer to the `Magento2` module
+[changelog](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/-/blob/main/CHANGELOG.md)
+for the full details.
+
+:::
+
+### Upgrade the Prismic module
+
+The `front-commerce-prismic` module is now using the latest version of prismic.
+
+```shell
+npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce-prismic.git#1.0.0
+```
+
+The most notable breaking changes is the removal of the
+`FRONT_COMMERCE_PRISMIC_URL` and the inclusion of the `path` option for the
+`registerRoutableType` method.
+
+:::info
+
+You can refer to the `front-commerce-prismic` module
+[changelog](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/main/CHANGELOG.md)
+for the full details.
+
+:::
+
+#### `FRONT_COMMERCE_PRISMIC_URL` has been removed
+
+The environment variable `FRONT_COMMERCE_PRISMIC_URL` has been removed. Please
+use `FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME` instead.
+
+```diff title=".env"
+- FRONT_COMMERCE_PRISMIC_URL=https://my-repo.prismic.io
++ FRONT_COMMERCE_PRISMIC_REPOSITORY_NAME=my-repo
+```
+
+#### Improved the `registerRoutableType` method
+
+- A new required property has been added for dynamic routes: `path` <br />
+  Examples: `/:uid`, `/:lang/:uid`, `/:category*/:uid`,
+  `/:section/:category?/:uid`.
+
+  :::tip ProTip™
+
+  You can use the online
+  [express-route-tester@2.0.0](http://forbeslindesay.github.io/express-route-tester)
+  to test your paths.
+
+  :::
+
+- A new `resolvers` property to allow the nested routes content relationship
+  resolution.
+
+  ```diff
+    PrismicLoader.registerRoutableType({
+      typeIdentifier: "album", // document type "album" will resolve to path `/albums/:uid`
+  -   path: "/album/:uid",     // "/album/queen"
+  +   path: "/:category/:uid", // "/rock-and-roll/queen"
+  +   resolvers: {
+  +     category: "category"   // identifier of the Content Relationship in the album Custom Type
+  +   },
+      ...
+    })
+  ```
+
+:::warning Depth Limit
+
+The Route Resolver is limited to retrieving data from 2 levels deep, please see
+the
+[Route Resolver example](https://prismic.io/docs/technologies/route-resolver-nuxtjs#route-resolver-examples)
+for more information.
+
+:::
+
+#### `@prismicio/client` has been updated to v6
+
+See https://prismic.io/docs/technologies/prismic-client-v6-migration-guide for
+the complete migration guide
+
+The new predicate object contains the same predicate functions as Predicates
+with new names to better match the API's predicate names.
+
+```diff
+- import { Predicates } from "@prismicio/client";
++ import * as prismic from "@prismicio/client";
+const query = new ListQuery(10)
+- query.addPredicate(prismic.Predicates.gt('my.movie.rating', 3))
++ query.addPredicate(prismic.predicate.numberGreaterThan('my.movie.rating', 3))
+```
+
+The following `predicates` have been renamed:
+
+- `dayOfMonth` → `dateDayOfMonth`
+- `dayOfMonthAfter` → `dateDayOfMonthAfter`
+- `dayOfMonthBefore` → `dateDayOfMonthBefore`
+- `dayOfWeek` → `dateDayOfWeek`
+- `dayOfWeekAfter` → `dateDayOfWeekAfter`
+- `dayOfWeekBefore` → `dateDayOfWeekBefore`
+- `month` → `dateMonth`
+- `monthBefore` → `dateMonthBefore`
+- `monthAfter` → `dateMonthAfter`
+- `year` → `dateYear`
+- `hour` → `dateHour`
+- `hourBefore` → `dateHourBefore`
+- `hourAfter` → `dateHourAfter`
+- `gt` → `numberGreaterThan`
+- `lt` → `numberLessThan`
+- `inRange` → `numberInRange`
+- `near` → `geopointNear`
+
+#### `prismic-dom` replaced with `@prismicio/helpers`
+
+See https://prismic.io/docs/technologies/prismic-helpers-v2-migration-guide for
+the complete migration guide
+
+### Added FlashMessages to the Order Details
+
+For the HiPay payment method, FlashMessages may be shown at the order detail
+level for errors.
+
+If you overrode `<OrderDetailsLayout>` add the following lines to it
+
+```diff
++ import FlashMessages from "theme/modules/FlashMessages";
+...
+  return (
+    <div
+      className={classNames("order-details-layout", {
+        "account-orders-details--no-actions": !showOrderActions,
+      })}
+    >
++  <FlashMessages />
+...
+```
+
+### Login Form Update
+
+For the external logins feature `<AdditionalLoginFormActions>` and
+`<FlashMessages>` have been added to the `<LoginForm>`.
+
+If you overrode `<LoginForm>` please add the following lines to it
+
+```diff
+...
++import AdditionalLoginFormActions from "theme/modules/User/LoginForm/AdditionalLoginFormActions";
++import FlashMessages from "theme/modules/FlashMessages";
+...
+          {props.errorMessage && <ErrorAlert>{props.errorMessage}</ErrorAlert>}
++          <FlashMessages />
+...
+            </SubmitButton>
++            <AdditionalLoginFormActions />
+          </FormActions>
+...
+```
+
+### New icons required
+
+In this release, these new icons were added `google`, `facebook` to the `<Icon>`
+component `theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as
+follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+-import { FaUserCircle } from "react-icons/fa";
++import { FaUserCircle, FaFacebook, FaGoogle } from "react-icons/fa";
+const keyToComponent = {
+  ...
+  organigram: GiOrganigram,
+  gripper: VscGripper,
++  facebook: FaFacebook,
++  google: FaGoogle,
+};
+```
+
+### New features in `2.13.0`
+
+These new features may be relevant for your existing application:
+
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/magento2/search-engine#algolia)
+- [Search for categories and pages with Algolia in Magento1 based project](/docs/magento1/search-engine#algolia)
+- [Prismic Preview](/docs/prismic/preview)
+- [HiPay payment method](/docs/advanced/payments/hipay)
+- [Facebook and Google external logins](/docs/advanced/features/external-logins)
+
+<hr className="my-10" />
+
+## `2.11.0` -> `2.12.0`
+
+### Upgrade the Magento2 module
+
+If you are using Magento2, version 2.5.0 of `front-commerce/magento2-module` is
+now the minimum required version. To update it to the last version, from
+Magento2 root, you can run:
+
+```sh
+composer update front-commerce/magento2-module
+```
+
+### Homogenize the `Map` components
+
+To ensure a more consistent usage we have homogenize the props of the map
+components and we added a few fixes.
+
+- The `LocationInternalShape` has been deprecated in favor of
+  `LocationInputShape`.
+- The `CoordinatesShape` now accepts either {`latitude`,`longitude`} or
+  {`lat`,`lng`}.
+- Included the `onBoundsChanged` prop in the `Map` components
+
+:::info
+
+For a list of available props for the map and marker components see:
+[Display a map](/docs/advanced/features/display-a-map#component-props)
+
+:::
+
+### `carousel` image format
+
+To support
+[the Slider and Slider Magento2 page builder content types](/docs/magento2/page-builder),
+we have moved the `<Carousel />` component from theme chocolatine to the default
+theme. If you plan to use this component directly or through the page builder
+Slider, you must add a `carousel` image format to your `src/config/images.js`:
+
+```diff title="src/config/images.js"
+@@ -6,6 +6,7 @@ module.exports = {
+     large: { width: 1100, height: 1100, bgColors: [] },
++    carousel: { width: 1280, height: 600, bgColors: [] },
+     zoomable: { width: 1100, height: 1100, bgColors: [], sizes: [2] },
+   },
+ };
+```
+
+### `swatch` image format in base theme
+
+We backported the `swatch` image format from theme chocolatine to base theme.
+This image format is used to display product images of a requisition list. If
+you are using the base theme and want to use the requisition list feature of the
+B2B module you have to add the swatch image format to your
+`src/config/images.js` as follows:
+
+```diff title="src/config/images.js"
+module.exports = {
+  defaultBgColor: "FFFFFF",
+  presets: {
+...
++    swatch: { width: 26, height: 26, bgColors: [] },
+...
+  },
+};
+```
+
+### Smarter image resizing mechanism
+
+In this release, we have improved the image resizing mechanism to be bit
+smarter. Before this release, a check on the requested file extension was done
+before trying to resize an image. As of this release, this check has been
+removed and it's now up to the underlying image processing library to check if
+this file is a image or not. As a result, out of the box, more image file
+formats can be processed without any configuration. The `extensions` setting
+from `config/images.js` becomes useless and is now deprecated. You should remove
+it from your application:
+
+```diff title="src/config/images.js"
+    large: { width: 1100, height: 1100, bgColors: [] }
+  },
+-  extensions: [".jpg", ".jpeg", ".png"]
+};
+```
+
+### Added requisition list features to B2B module (only theme chocolatine suported)
+
+If you are using base theme and wish to use the B2B module you have to override
+`theme/modules/ProductView/Synthesis/AddProductToCart.js` from the base theme
+and provide a way to add to requisition list from the product page (see
+[AddProductToRequisitionList](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.js)
+and
+[B2B's AddProductToCart](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.12.0/modules/front-commerce-b2b/web/theme/modules/ProductView/Synthesis/AddProductToCart.js)
+for inspiration). You also need to override
+`theme/modules/AddToCart/_AddToCart.scss` if you have not already and just copy
+the styles from the base theme to it
+(`src/web/theme/modules/AddToCart/_AddToCart.scss`).
+
+If you are using theme chocolatine and have overridden
+`theme/modules/ProductView/Synthesis/AddProductToCart.js` and want to use the
+B2B module you need to apply the following change to it:
+
+```diff
+...
++import AddProductToRequisitionList from "theme/modules/RequisitionList/AddProductToRequisitionList";
+...
+      <AddToCart
+        appearance={appearance}
+        selectedOptions={selectedOptions}
+        selectedCustomOptions={selectedCustomOptions}
+        selectedBundleOptions={selectedBundleOptions}
+        onProductAdded={onProductAdded}
+        product={withComputedPrice(product)}
+        label={intl.formatMessage(messages.addToCartLabel)}
+        unavailableLabel={intl.formatMessage(messages.unavailableLabel)}
+        actions={
+-          withWishlist !== false && (
++          <>
++            {withWishlist !== false && (
+              <AddProductToWishlist
+                sku={product.sku}
+                selectedOptions={selectedOptions}
+                selectedCustomOptions={selectedCustomOptions}
+                selectedBundleOptions={selectedBundleOptions}
+                size="big"
+              />
+-            )
++            )}
++            <AddProductToRequisitionList
++              product={product}
++              selectedConfigurableOptions={selectedOptions}
++              size="big"
++            />
++          </>
+        }
+      />
+...
+```
+
+If you overrode `theme/modules/Cart/CartTitle/CartTitle.js` you need to apply
+the following diff to it:
+
+```diff
+...
++import AddCartToRequisitionList from "../../RequisitionList/AddCartToRequisitionList";
+...
+        <FormActions appearance="center">
++          <AddCartToRequisitionList cart={props.cart} size="big" />
+          {hasCartError ? (
+            <Button onDisableClick={() => {}} state="disabled">
+              <ProceedToCheckout />
+            </Button>
+          ) : (
+            <Link to="/checkout" buttonAppearance="primary">
+              <ProceedToCheckout />
+            </Link>
+          )}
+        </FormActions>
+...
+```
+
+### Cookies max age configuration
+
+The `cookieMaxAgeInMonths` configuration in `src/config/website.js` represents
+the consent cookie's maxage in months. It now has a default value of **12
+months**. Previously if left unconfigured the cookie banner will appear to users
+every time they visit the site.
+
+#### New links added to `<AccountNavigation>`
+
+The company structure and requisition list links are added to the
+`<AccountNavigation>` component. Those links are part of the B2B features so if
+you need them and overrode the `<AccountNavigation>` component you need to apply
+the below diff to your overridden `<AccountNavigation>`:
+
+```mdx-code-block
+<details>
+<summary><strong>"AccountNavigation" diff (click to expand diff)</strong></summary>
+```
+
+```diff
+import React from "react";
+...
+const messages = defineMessages({
+...
++  companyStructureLink: {
++    id: "pages.Account.Navigation.companyStructure",
++    defaultMessage: "Company structure",
++  },
+...
++  requisitionListsLink: {
++    id: "pages.Account.Navigation.requisitionLists",
++    defaultMessage: "Your requisition lists",
++  },
+...
+});
+...
+export const MobileSelector = injectIntl(
+  ({
+    intl,
+    location,
+    ordersCount,
+    storeCredit,
+    wishlist,
++    requisitionList,
+    user,
+    returnMerchandiseAuthorization,
+  }) => {
+    const companyRoutes = isCompanyUser(user)
+      ? [
+...
++          {
++            value: "/user/company/structure",
++            label: intl.formatMessage(messages.companyStructureLink),
++          },
+        ]
+      : [];
+    const routes = [
+...
++      requisitionList?.isFeatureActive && {
++        value: "/user/requisition-lists",
++        label: intl.formatMessage(messages.requisitionListsLink),
++      },
+...
+    ].filter(Boolean);
+...
+  }
+);
+...
+export const DesktopLeftMenu = injectIntl(
+  ({
+    intl,
+    basePath,
+    ordersCount,
+    storeCredit,
+    wishlist,
+    user,
++    requisitionList,
+    returnMerchandiseAuthorization,
+  }) => {
+    return (
+      <nav className="account-navigation">
+...
+        {isCompanyUser(user) ? (
+          <>
+...
++            <Route
++              exact
++              path={`${basePath}/company/structure`}
++              children={({ match }) => (
++                <Link
++                  to="/user/company/structure"
++                  className={makeClassName(match)}
++                >
++                  {intl.formatMessage(messages.companyStructureLink)}
++                  <Icon icon="organigram" title="" />
++                </Link>
++              )}
++            />
+          </>
+        ) : null}
+...
++        {requisitionList?.isFeatureActive && (
++          <Route
++            path={`${basePath}/requisition-lists`}
++            children={({ match }) => (
++              <Link
++                to="/user/requisition-lists"
++                className={makeClassName(match, ordersCount === 0)}
++              >
++                {intl.formatMessage(messages.requisitionListsLink)}
++                <Icon icon="list" title="" />
++              </Link>
++            )}
++          />
++        )}
+...
+      </nav>
+    );
+  }
+);
+```
+
+```mdx-code-block
+</details>
+```
+
+### New style sheets
+
+If you overrode `theme/components/_components.scss` you need to add the
+following line to it
+
+```scss
+@import "~theme/components/molecules/LoadingOverlay/LoadingOverlay";
+@import "~theme/components/molecules/SelectMenu/SelectMenu";
+```
+
+If you overrode `theme/components/_modules.scss` you need to add the following
+line to it to use the `<ProductPicker>` component (used by
+[the QuickOrder feature](/docs/advanced/features/quickorder))
+
+```scss
+@import "~theme/modules/ProductPicker/ProductPicker";
+```
+
+If you are using the B2B module and overrode `theme/_b2b.scss` you need to add
+the following lines to it
+
+```scss
+@import "~theme/components/organisms/Tree/Tree";
+@import "~theme/modules/Company/CompanyStructure/CompanyStructure";
+@import "~theme/modules/RequisitionList/RequisitionList";
+@import "~theme/modules/RequisitionList/RequisitionListTable/RequisitionListTable";
+```
+
+If you overrode `src/web/theme/components/atoms/Button/_Button.scss` apply the
+following diff to it:
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Base theme diff">
+```
+
+```diff
+...
++.button--disabled {
++  &:hover,
++  &:focus {
++    background: $white;
++  }
++}
+...
+.button--disabled {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    background: $white;
++    text-decoration: none;
+    cursor: not-allowed;
+    border-color: $shade04;
+    background: $white;
+    color: $shade04;
+    &.button--primary {
+      border-color: $shade04;
+      background: $shade04;
+      color: $white;
+    }
+    &.button--icon {
+      background: transparent;
+      color: $shade04;
+    }
++  }
+}
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Theme chocolatine diff">
+```
+
+```diff
+...
+.button--disabled {
+  border-color: $shade03;
+  &:hover,
+- &:focus {
++ &:focus,
++ &:active {
+    background: $white;
+  }
+}
+...
+.button--disabled {
+-  cursor: not-allowed;
+-
+-  &,
+-  &:hover {
++  &,
++  &:hover,
++  &:focus,
++  &:active {
++    text-decoration: none;
++    cursor: not-allowed;
+    border-color: $shade03;
+    background: $white;
+    color: $shade03;
+    &.button--primary {
+      border-color: $shade03;
+      background: $shade03;
+      color: $fontColor;
+    }
+  }
+}
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+if you overrode `theme/modules/AddToCart/_AddToCart.scss` and are using theme
+chocolatine apply the following diff to it:
+
+```diff
+...
+  &__actions {
+    display: none;
+    padding: math.div($boxSizeMargin, 2);
+    @media screen and (min-width: $menuBreakpoint) {
+      display: block;
+    }
+  }
+  &__actions {
+-    display: none;
++    display: flex;
+    padding: math.div($boxSizeMargin, 2);
+-    @media screen and (min-width: $menuBreakpoint) {
+-      display: block;
+-    }
++    > * {
++      margin-left: math.div($boxSizeMargin, 2);
++    }
++    :first-child {
++      margin-left: 0;
++    }
+  }...
+```
+
+### New icons required
+
+In this release, these new icons were added `eye-off`, `user-circle`,
+`organigram` and `gripper` to the `<Icon>` component
+`theme/components/atoms/Icon/Icon.js`.
+
+If you have overridden the `<Icon>` component, you need to add the icons as
+follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+import {
+  ...
++ IoIosEyeOff,
+} from "react-icons/io";
++import { FaUserCircle } from "react-icons/fa";
++import { GiOrganigram } from "react-icons/gi";
++import { VscGripper } from "react-icons/vsc";
+const keyToComponent = {
+  ...
+  eye: IoIosEye,
++ "eye-off": IoIosEyeOff,
+  pencil: IoMdCreate,
+  ...
++  "user-circle": FaUserCircle,
++  organigram: GiOrganigram,
++  gripper: VscGripper,
+};
+```
+
+### Password field updated with a show/hide feature
+
+The `<Password>` input now displays a show/hide icon allowing users to reveal
+their password. It is enabled by default. You can opt-out this feature using the
+`disableShowPassword` prop:
+
+```diff
+<Password
+  id="password"
+  name="password"
+  required
++ disableShowPassword
+/>
+```
+
+This new `Password` component requires a stylesheet to add in the
+`_components.scss` file if you overrode it.
+
+```diff
+// theme/components/_components.scss
+...
+@import "~theme/components/atoms/Form/Label/Label";
++@import "~theme/components/atoms/Form/Input/Password/Password";
+@import "~theme/components/atoms/Form/Input/Select/Select";
+...
+```
+
+If you overrode the `_Input.scss` file, you may need to indicate the inputs
+height by adding an `input-height` class to correct the vertical alignment of
+the icon.
+
+```diff
+// theme/components/atoms/Form/Input/_Input.scss
+input,
++.input-height,
+select {
+  height: 3.4rem;
+}
+```
+
+### New `<PasswordStrengthHint>` component in default forms
+
+We've included a `<PasswordStrengthHint>` to provide a better feedback to users
+about the expected password complexity.
+
+> If you don't want to use this feature in your application, please follow the
+> [Disable password strength hints](/docs/advanced/features/password-fields#disable-password-strength-hints)
+> guide Please update the files below, to ensure that your application displays
+> user forms consistently:
+
+```diff
+// theme/components/_components.scss
++@import "~theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
++@import "~theme/components/atoms/ProgressStatus/ProgressStatus";
+```
+
+```diff
+// theme/components/atoms/Form/Input/index.js
++import PasswordStrengthHint from "./PasswordStrengthHint";
+export {
+  ...
++ PasswordStrengthHint,
+};
+```
+
+You should add the `<PasswordStrengthHint>` component in every override using
+the `<Password>` input. In the default theme, the following components were
+affected:
+
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+Here is an example of the changes involved to use this component (usually added
+after the `<Password>` field):
+
+```diff
++import PasswordStrengthHint from "theme/components/atoms/Form/Input/PasswordStrengthHint/PasswordStrengthHint";
+<Password
+  name="password"
+  ...
+/>
++ <PasswordStrengthHint
++  formValuePath="password" // must equal the password name value
++/>
+```
+
+### `passwordValidation` deprecation
+
+The file `theme/components/atoms/Form/Input/Password/passwordValidation.js` is
+now deprecated. If you overrode it, you must also override the password validity
+configuration in `theme/components/atoms/Form/Input/Password/passwordConfig.js`
+(introduced in this release).
+
+See
+[the password field's documentation](/docs/advanced/features/password-fields#configure-password-validity)
+for more details on the password field validation configuration.
+
+If you overrode some of the following components:
+
+- `theme/modules/User/RegisterForm/RegisterForm.js`
+- `theme/pages/Account/Information/ChangeUserPasswordForm.js`
+- `theme/pages/PasswordManagment/PasswordReset/PasswordReset.js`
+- `theme/modules/User/PasswordManagement/PasswordResetForm/PasswordResetForm.js`
+
+You must use the new
+`src/web/theme/components/atoms/Form/Input/Password/passwordFieldValidator.js`
+instead of the deprecated `passwordValidation` as follow:
+
+```diff
+-import {
+-  isPasswordValid,
+-  errorMessage,
+-  MIN_PASSWORD_LENGTH,
+-  MIN_CHAR_CLASSES,
+-} from "theme/components/atoms/Form/Input/Password/passwordValidation";
++import {
++  passwordValidationRules,
++  passwordValidationErrors,
++} from "theme/components/atoms/Form/Input/Password/passwordFieldValidator";
+...
+<Password
+  name="password"
+- validations={{
+-   magentoPasswordRule: (_, value) => isPasswordValid(value),
+- }}
++ validations={passwordValidationRules}
+- validationError={intl.formatMessage(errorMessage, {
+-   minLength: MIN_PASSWORD_LENGTH,
+-   minClasses: MIN_CHAR_CLASSES,
+- })}
++ validationError={passwordValidationErrors}
+/>
+```
+
+### New Confirmation Modal
+
+We added a new `<ConfirmationModal>` in `theme/components/organisms/Modal`. If
+you overrode the `theme/components/organisms/Modal/index.js` file please add the
+following lines to ensure that the confirmation modal works :
+
+```diff
++import ConfirmationModal from "./ConfirmationModal/ConfirmationModal";
+-export { CloseModal };
++export { CloseModal, ConfirmationModal };
+```
+
+### New features in `2.12.0`
+
+These new features may be relevant for your existing application:
+
+- Page builder: Slider content type and Slide support
+- the `<Password>` component now allows the user to reveal the password
+- New component: `<PasswordStrengthHint>` to show hints of password's strength
+  criterias to the user
+- New component: `<ProgressStatus>` to show a progressbar with a label
+- New component: `<ConfirmationModal>` to simplify confirmation modals
+
+<hr className="my-10" />
+
+## `2.10.0` -> `2.11.0`
+
+### Zoom-in on product images
+
+In this release, we have added the ability for customers to zoom in on product
+images in the product page. For that, we have implemented
+[a `<Ligthbox />` component](https://magento2.front-commerce.app/styleguide/?path=/story/modules-organisms-lightbox--with-images)
+that leverages
+[react-image-lightbox library](https://www.npmjs.com/package/react-image-lightbox)
+behind the scene.
+
+This feature is enabled by default in both in theme Chocolatine and in the base
+theme. **You MUST decide whether you want it or not and follow the related
+instructions below:**
+
+- [Integrating the zoom in feature](#integrating-the-zoom-in-feature)
+- or [Disabling the zoom in feature](#disabling-the-zoom-in-feature)
+
+#### Disabling the zoom in feature
+
+This feature is controlled by the `enableZoomOnImage` property of the product
+`<Gallery />` component in the base theme or the `<GalleryWithCarousel />`
+component in theme Chocolatine. So If you want to disable this feature and one
+of these components is used in your integration, you can pass `false` in the
+`enableZoomOnImage` property.
+
+:::note
+
+In the base theme, the `<Gallery />` component is rendered by
+`theme/modules/ProductView/ProductView`, while in theme Chocolatine, the
+`<GalleryWithCarousel />` is rendered by
+`theme/modules/ProductView/Gallery/Gallery`.
+
+:::
+
+#### Integrating the zoom in feature
+
+If you want to add that feature to your project you have to define an image
+format named `zoomable`. For instance, we have added one in
+[the last version of the Skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce-skeleton/-/commit/4b0d4175f9468c47e1a9af9329f3856c2b00c025)
+but the actual format parameters depends on your project constraints.
+
+:::note
+
+`zoomable` is the default image format used by the `<Lightbox />` component to
+render the image on which the customer can zoom in. This component accepts an
+`imageFormat` property in which you can pass an other image format.
+
+:::
+
+Then, depending on the amount of customization, you might also have to bring
+changes similar to what we have done in the merge requests for that feature:
+
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/699/diffs
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/717/diffs
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/719/diffs
+
+In a nutshell, when the feature is enabled, we place a transparent button on top
+of the product image; if the customer clicks on it, we then render a
+`<Lightbox />` for that image.
+
+### MondialRelay shipping in a Magento2 based project
+
+In this version, we have improved the MondialRelay shipping support with
+Magento2 so that a customer can only choose a pickup point suitable for the
+products being ordered. This improvement requires an update of Magentix's module
+to
+[install at least the version 100.10.7](/docs/advanced/shipping/mondial-relay#integrate-with-magento2).
+
+### New icons required
+
+In this release, two new icons (`warn` and `users`) were added to
+[the `<Icon>` component](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.11.x/src/web/theme/components/atoms/Icon/Icon.js).
+
+If you have overridden the `<Icon>` component, you need to add both icons as
+follows to the list of icons to avoid any error messages at page loading:
+
+```diff
+import {
+  ...
++ IoIosWarning,
++ IoIosPeople,
+} from "react-icons/io";
+const keyToComponent = {
+  ...
++ warn: IoIosWarning,
++ users: IoIosPeople,
+};
+```
+
+### Dependencies updates
+
+**We recommend to reformat your source code using the latest Prettier version**
+(see below).
+
+Here are some highlights of the main changes in upstream libraries that
+_unlikely may_ impact your application. We have tested them and haven't found
+any regression, but we prefer to mention these changes in case you detect a
+weird issue after upgrading:
+
+- `axios` does not append the `charset=utf-8` anymore for requests with
+  `Content-Type:application/json`. See
+  [#680](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/680#note_711807434),
+  [#4016](https://github.com/axios/axios/issues/4016) and
+  [#2154](https://github.com/axios/axios/issues/2154) and for details.
+- `prettier` has been updated
+  [from 2.2.1 to 2.4.1](https://github.com/prettier/prettier/blob/main/CHANGELOG.md)
+  ([MR!742](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/742)).
+  We've reformatted our code with this version, so it may lead to style
+  differences with your overrides. To update your application code, you can run
+  `npx prettier -w ./path/to/your/directories` and commit the changes.
+
+:::tip ProTip™
+
+we've discovered the
+[git `ignoreRevsFile` option](https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt)
+it could be useful
+[in your project too](https://www.moxio.com/blog/43/ignoring-bulk-change-commits-with-git-blame)
+😎
+
+:::
+
+### Unnecessary safeHtml in product overviews
+
+The product overview component does not need to escape the product name with
+`safeHtml`.
+
+If you did override any of the following components, you can safely
+[remove `safeHtml` calls](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/750)
+in them:
+
+- `src/web/theme/modules/ProductView/Overview/Overview.js`
+- `theme-chocolatine/web/theme/modules/ProductView/ProductItem/Overview/Overview.js`
+
+```diff
+- {<span dangerouslySetInnerHTML={{ __html: safeHtml(name) }} />}
++ {name}
+```
+
+### New Magento `<WysiwygV2>` transforms may conflict with yours
+
+In order to support Magento Page Builder's default content types, we have added
+new components to the
+[default `MagentoWysiwyg` transforms](/docs/advanced/theme/wysiwyg-platform#magentowysiwyg).
+
+See
+[the Page Builder ones](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.11.x/src/web/theme/modules/WysiwygV2/MagentoWysiwyg/PageBuilder/index.js)
+and ensure there is no collision with your custom WYSIWYG components. While very
+unlikely, it could be possible. For instance, if you may have overridden the
+`theme/modules/WysiwygV2/MagentoWysiwyg/MagentoWysiwyg.js` to add a custom
+`heading` component to the `componentsMap`.
+
+### New features in `2.11.0`
+
+These new features may be relevant for your existing application:
+
+- [Magento2 B2B initial support](/docs/magento2/b2b) and
+  [_Payment on account_ payment method support](/docs/advanced/payments/payment-on-account)
+- [A quickorder module has been created to order by SKU](/docs/advanced/features/quickorder)
+- Customer can now zoom in on product images in the product page
+- [Magento Page Builder content](/docs/magento2/page-builder) is now supported
+  for `MagentoWysiwyg` data. You can register new content types and extend our
+  default ones.
+- Front-Commerce dependencies are now regularly (and automatically) updated
+  using [Depfu](https://depfu.com/). Patches are automatically applied if the CI
+  is green, minor versions are manually approved. We always review changelogs
+  provided by Depfu. **You can review updates any time
+  [by filtering Merge Requests tagged `depfu`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests?scope=all&state=merged&label_name[]=depfu).**
+
+<hr className="my-10" />
+
+## `2.9.0` -> `2.10.0`
+
+### Magento1 MondialRelay module update
+
+In this release we have added support for MondialRelay as a shipping method in
+Magento2 based Front-Commerce implementation. As a result, we have changed the
+way files are organized on the disk.
+
+In a nutshell, the Front-Commerce module
+`modules/shipping-mondialrelay-magento1` has been renamed to
+`modules/shipping-mondialrelay` and this module was defining a GraphQL module
+that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you
+are upgrading a Magento1 based project using the MondialRelay module, you have
+to update your `.front-commerce.js` as documented in
+[the MondialRelay guide page](/docs/advanced/shipping/mondial-relay#integrate-with-magento1).
+In addition, if you have custom code importing files from
+`modules/shipping-mondialrelay-magento1`, you will also have to update those
+imports to match the new file layout.
+
+### Magento2 Adyen module update
+
+In this release the Magento2 Adyen Front-Commerce module got a major revamp to
+make it compatible with the latest Magento2 Adyen plugin (7.2). Several steps
+are needed to upgrade your project if you are using this payment platform:
+
+1. the Magento2 Adyen Front-Commerce module has been moved. As a result, you
+   have to
+   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/advanced/payments/adyen#register-the-adyen-for-magento2-payment-module-in-front-commerce).
+1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so
+   you have
+   [to configure the environment so that it is defined](/docs/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
+1. we have made some changes and fixes to
+   [the Adyen related frontend components](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
+   If you have overridden some of those, you have to backport the changes.
+
+### Magento1 Payline module update
+
+In this release, we've implemented automatic configuration for the Payline
+environment from the related Magento setting. Payline will use the `HOMO` or
+`PRODUCTION` environment based on what is configured in Magento.
+
+If using Payline, you should update the Magento module to version
+[1.3.0](https://github.com/front-commerce/magento1-module-payline-front-commerce/releases/tag/1.3.0).
+If you don't, you will see the error below in your logs (and the `PRODUCTION`
+environment will be used):
+
+> ERROR on reorderForIds, the id payment/payline_common/environment has no
+> associated result
+
+### Configurable options HOC refactoring
+
+**We highly recommend to test products configuration on the product and cart
+pages after this migration.** Product configuration, bundle and custom options
+selectors where homogeneized between these pages to fix some issues.
+
+In this release we have done a refactor of the configurable product options. We
+have extracted much of the logic from configurable product options from HOCs
+into functions that can be used even outside of react.
+
+This refactoring homogenized how options were used and allowed us to fix some
+discrepancies between the product page and cart item update configurators.
+Internal APIs were updated to cope with this change, and we deprecated some
+legacy props.
+
+#### CartItemOptionsUpdater needs `product` prop
+
+`<CartItemOptionsUpdater>` now expects a `product` prop if you are using it you
+should now send it the `product` as a prop like below:
+
+```diff
+-<CartItemOptionsUpdater {...props} />
++<CartItemOptionsUpdater product={product} {...props} />
+```
+
+#### ConfigurableOptions needs `selectedOptions` and deprecates `currentOptions`
+
+`currentOptions` is deprecated in `<ConfigurableOptions>` (format
+`{ optionLabel: valueLabel }`). `<ConfigurableOptions>` now expects
+`selectedOptions` (format `{ optionId: valueId }` same as what
+`useSelectedProductWithConfigurableOptions` returns)
+
+```diff
+-<ConfigurableOptions currentOptions={currentOptions} {...props} />
++<ConfigurableOptions selectedOptions={selectedOptions} {...props} />
+```
+
+#### New style sheet for `CartItemOptionsUpdater`
+
+add the following line to `theme/modules/_modules.scss`
+
+```scss
+@import "~theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdater";
+```
+
+#### Import `hasCartItemOptions` from its own file in theme chocolatine
+
+We refactored `hasCartItemOptions` from
+`theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions` to
+`theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions` so if you where
+using it you need to change where you are importing if like below:
+
+```diff
+-import { hasCartItemOptions } from "theme/modules/Cart/CartItem/CartItemOptions/CartItemOptions";
++import hasCartItemOptions from "theme/modules/Cart/CartItem/CartItemOptions/hasCartItemOptions";
+```
+
+### SmartForms field internal changes
+
+In this release, we've reworked the internals of SmartForm fields to better
+support browser autocomplete.
+
+The public API remains unchanged but if you've overridden internal components,
+please check your overrides against their original. See these Merge Requests:
+[#641](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/641)
+and
+[#645](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/645)
+
+### New features in `2.10.0`
+
+These new features may be relevant for your existing application:
+
+- [Front-Commerce is now compatible with the latest Magento2 Adyen plugin](/docs/advanced/payments/adyen)
+- [MondialRelay shipping method support in Magento2](/docs/advanced/shipping/mondial-relay#integrate-with-magento2)
+- [A new hook to homogenize configurable options handling](/docs/reference/use-selected-product-with-configurable-options)
