@@ -26,7 +26,31 @@ composer require front-commerce/magento2-commerce-module@2.1.0
 
 ### New features in `2.23.0`
 
-- [Use Magento's `storeConfig` GraphQL query](/docs/2.x/magento2/using-magento-configuration#use-magentos-storeconfig-graphql-query) to access configurations with the `MagentoGraphQLConfig` loader
+- [Use Magento's `storeConfig` GraphQL query](/docs/2.x/magento2/using-magento-configuration#use-magentos-storeconfig-graphql-query)
+  to access configurations with the `MagentoGraphQLConfig` loader
+
+### Adobe Commerce Negotiable quotes
+
+In this version, we added support for
+[Negotiable quotes](https://experienceleague.adobe.com/docs/commerce-admin/b2b/quotes/quotes.html).
+When updating your project, if you want to be able to use Negotiable quotes,
+please note that you will need to synchronize your changes with the core ones on
+the following files:
+
+- `theme/components/atoms/Icon/icons/core-icons.js`
+  ([1f324c8a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/1f324c8a2002fe41aa5600dfdaf57a235868ffcd))
+- `theme/modules/Cart/CartFooter.js`
+  ([7613b30d](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/7613b30d89f3be7074ad6561d816d90728987b37))
+- `theme/modules/User/AccountNavigation/AccountNavigation.js`
+  ([1f324c8a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/1f324c8a2002fe41aa5600dfdaf57a235868ffcd))
+- `theme/layouts/Header/Navigation/AccountNavigation/AccountSubNavigation.js`
+  ([6c1bfd3a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/6c1bfd3aa96ea6d961c5040807a6ca921f7c21d4))
+- `theme/pages/Account/AccountLayout.js`
+  ([1f324c8a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/1f324c8a2002fe41aa5600dfdaf57a235868ffcd))
+- `theme/pages/Account/EnhanceAccount.js`
+  ([1f324c8a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/1f324c8a2002fe41aa5600dfdaf57a235868ffcd))
+- `theme/_b2b.scss`
+  ([ddc9b581](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/ddc9b5814cd33815a31865c4d75365a44094972d))
 
 ## `2.21.0` -> `2.22.0`
 

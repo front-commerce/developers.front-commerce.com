@@ -20,6 +20,7 @@ Here is the list of currently supported features:
   method
 - Display company credit history
 - Requisition list
+- Negotiable quotes (_require Adobe Commerce 2.4.5+_)
 
 :::info
 
@@ -106,3 +107,63 @@ entries (company management, credit history…).
 
 To enable _Payment on account_ payment method, please refer to
 [the Payment on account guide](/docs/2.x/advanced/payments/payment-on-account).
+
+## Negotiable quotes
+
+<SinceVersion tag="2.23" />
+
+In order to use Front-Commerce's Negotiable quotes module, you will need to
+enable the feature in your Magento back office. Please note that you'll need an
+Adobe Commerce B2B version >= 2.4.5.
+
+Navigate to `Stores > Configuration > General > B2B Features`, and set both
+`Enable Company` and `Enable B2B quote` to `Yes`.
+
+Quotes also have to be enabled _per-company_. To do so, navigate to a company's
+settings (`Customers > Companies`, then open a company), and under
+`Advanced settings` switch `Allow Quotes` on.
+
+:::info
+
+Negotiable quotes are only availble to users that have a Company with Quotes
+enabled. More in
+[Adobe documentation](https://experienceleague.adobe.com/docs/commerce-admin/b2b/quotes/configure-quotes.html).
+
+:::
+
+That's it, you should now be able to use Adobe Commerce's Negotiable quotes with
+Front-Commerce!
+
+### Known issues
+
+This module has been fully implemented with Adobe Commerce's GraphQL API
+(version 2.4.5). Unfortunately, this means it is also limited to what the API
+exposes, thus some of the features available in Adobe Commerce's native frontend
+could not be tackled yet:
+
+#### Negotiable quotes miminum price is not enforced nor exposed in the GraphQL API
+
+Front-Commerce's module allow the creation of negotiable quotes from _any
+amount_, regardless of the settings in Magento.
+
+#### Negotiable quotes GraphQL API does not support file-related features
+
+File upload and download in negotiable quote comments are not available in
+Front-Commerce.
+
+#### "Catalog" total prices is not exposed in negotiable quotes
+
+The GraphQL API only exposes the quote's total price with applied discounts from
+the sales representative, so the catalog prices cannot be easily displayed.
+
+#### Magento does not expose quote owners' user ID
+
+For this reason, Front-Commerce compares first and last names of a user to
+detect ownership. Please note it could lead to subtle edge cases for homonyms in
+the same company, where a non-owner could see additional UI components without
+being able to act on them.
+
+#### Front-Commerce does not take into account per-company permissions yet
+
+Since per-company permissions are not easily accessible through Magento2's
+GraphQL API, Front-Commerce do not support this feature yet.
