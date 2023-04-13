@@ -163,7 +163,11 @@ detect ownership. Please note it could lead to subtle edge cases for homonyms in
 the same company, where a non-owner could see additional UI components without
 being able to act on them.
 
-#### Front-Commerce does not take into account per-company permissions yet
+#### Front-Commerce does not take into account per-company feature deactivation
 
-Since per-company permissions are not easily accessible through Magento2's
-GraphQL API, Front-Commerce do not support this feature yet.
+We do support the global B2B feature toggle and honor user permissions attached to company roles.
+However, Front-Commerce doesn't support the per-company feature deactivation.
+
+The reason is because the information isn't exposed in Magento's API, and company ACLs don't change depending on this option.
+
+As a consequence, it is possible that some users belonging to a company with negotiable quote deactivated (on a shop with the feature globally active) will view some negotiable quotes UI.
