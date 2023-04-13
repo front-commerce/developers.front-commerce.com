@@ -7,6 +7,7 @@ description:
   Front-Commerce application to give merchants more autonomy. This guide
   explains how to achieve this.
 ---
+import SinceVersion from "@site/src/components/SinceVersion";
 
 <p>{frontMatter.description}</p>
 
@@ -210,3 +211,83 @@ export default {
   },
 };
 ```
+
+## Use Magento's `storeConfig` GraphQL query
+
+<SinceVersion tag="2.23" />
+
+Front-Commerce also provides a way to access configurations from Magento's `storeConfig` GraphQL query. With just a few easy steps, you can access configurations without relying on Front-Commerce's Magento2 PHP extension. This section explains the different steps involved.
+
+### Magento: expose Your Configuration on the `StoreConfig` type
+
+The first step is to ensure that your configuration is exposed on the `StoreConfig` type in Magento. You can refer to [the `storeConfig` query documentation](https://developer.adobe.com/commerce/webapi/graphql/schema/store/queries/store-config/) for more details on which configurations are available by default.
+
+If you need to extend the existing schema, follow [this helpful guide on how to extend configuration data](https://developer.adobe.com/commerce/webapi/graphql/develop/extend-existing-schema/#extend-configuration-data). This step sets the foundation for accessing your configurations using the GraphQL query.
+
+You must now be able to query Magento's GraphQL endpoint to fetch your configuration with a query of the following form:
+```graphql
+{
+  storeConfig {
+    is_negotiable_quote_active
+    my_custom_config_value
+  }
+}
+```
+
+:::info Important
+
+In the current state, only 1 level of configuration can be queried by Front-Commerce. Nested configurations aren't supported.
+
+:::
+
+### Use `MagentoGraphQLConfig` loader for fetching configurations
+
+Once your configuration is exposed on Magento, you can use the `MagentoGraphQLConfig` loader to fetch it. This loader (from the `Magento2/Store` GraphQL module) acts as a bridge between your GraphQL resolvers and the underlying configurations in Magento.
+
+Here's an example of how you can use the `MagentoGraphQLConfig` loader:
+
+```js title="my-module/server/modules/custom/resolvers.js"
+export default {
+  MyApp: {
+    configurations: async (_parentData, _args, { loaders }) => {
+      const configurations = await loaders.MagentoGraphQLConfig.loadStoreConfigurations([
+        {
+          // Magento configuration key, for caching
+          magentoConfigKey: "btob/website_configuration/negotiablequote_active",
+          // Magento StoreConfig GraphQL field name, for fetching
+          graphQLFieldName: "is_negotiable_quote_active",
+        },
+        {
+          magentoConfigKey: "my/custom/app/config_value",
+          graphQLFieldName: "config_value",
+        },
+      ]);
+
+      // the loader returns an array of values, so you can use them by destructuring them
+      const [isNegotiableQuoteActive, configValue] = configurations;
+      return {isNegotiableQuoteActive, configValue};
+    }
+  }
+}
+```
+
+This example demonstrates how you can fetch multiple configurations at once, specifying the `magentoConfigKey` and the corresponding `graphQLFieldName` for each configuration. This provides an efficient way to retrieve your configurations while benefiting from Front-Commerce configuration caching mechanisms. The cache is shared with the [`MagentoConfig` loader](#use-the-magentoconfig-loader).
+
+These values should be reverse-engineered from Magento's GraphQL definitions. Indeed, the `magentoConfigKey` is the value from the `<item></item>` element defining the `storeConfig` GraphQL field exposed in Magento.
+
+Here is an example of how the above `my/custom/app/config_value` [would be exposed in Magento to extend configuration data](https://developer.adobe.com/commerce/webapi/graphql/develop/extend-existing-schema/#extend-configuration-data):
+
+```xml my-custom-module/etc/graphql/di.xml
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+  <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
+    <arguments>
+      <argument name="extendedConfigData" xsi:type="array">
+        <item name="config_value" xsi:type="string">my/custom/app/config_value</item>
+      </argument>
+    </arguments>
+  </type>
+</config>
+```
+
+The `my/custom/app/config_value` is the value to use for `magentoConfigKey` in this example.
