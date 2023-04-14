@@ -125,7 +125,7 @@ settings (`Customers > Companies`, then open a company), and under
 
 :::info
 
-Negotiable quotes are only availble to users that have a Company with Quotes
+Negotiable quotes are only available to users that have a Company with Quotes
 enabled. More in
 [Adobe documentation](https://experienceleague.adobe.com/docs/commerce-admin/b2b/quotes/configure-quotes.html).
 
@@ -141,7 +141,7 @@ This module has been fully implemented with Adobe Commerce's GraphQL API
 exposes, thus some of the features available in Adobe Commerce's native frontend
 could not be tackled yet:
 
-#### Negotiable quotes miminum price is not enforced nor exposed in the GraphQL API
+#### Negotiable quotes minimum price is not enforced nor exposed in the GraphQL API
 
 Front-Commerce's module allow the creation of negotiable quotes from _any
 amount_, regardless of the settings in Magento.
@@ -171,3 +171,8 @@ However, Front-Commerce doesn't support the per-company feature deactivation.
 The reason is because the information isn't exposed in Magento's API, and company ACLs don't change depending on this option.
 
 As a consequence, it is possible that some users belonging to a company with negotiable quote deactivated (on a shop with the feature globally active) will view some negotiable quotes UI.
+
+#### Advanced shipping methods and online payments aren't supported
+
+In its current state, Front-Commerce's module only supports shipping methods without additional information to provide for customers.
+It also doesn't support online payments, but fully supports offline payments such as: payment on account, bank transfer, etc.
