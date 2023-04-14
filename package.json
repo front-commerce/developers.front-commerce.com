@@ -19,7 +19,7 @@
     "lint": "prettier --check ."
   },
   "dependencies": {
-    "@algolia/client-search": "4.14.3",
+    "@algolia/client-search": "4.17.0",
     "@docusaurus/core": "2.4.0",
     "@docusaurus/plugin-client-redirects": "2.4.0",
     "@docusaurus/plugin-content-blog": "2.4.0",
