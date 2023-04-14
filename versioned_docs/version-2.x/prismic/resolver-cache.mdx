@@ -1,0 +1,250 @@
+---
+sidebar_position: 8
+title: Cache
+descriptions:
+  The PrismicCachedResolver is a decorator for a resolver that returns Prismic
+  Content. It caches the results at a resolver level with references to the
+  documents.
+---
+
+<p>{frontMatter.description}</p>
+
+In order to create references from prismic to the cached documents, we need to
+ensure that the `PrismicCachedResolver` receives a
+[Content](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/modules/prismic/server/modules/prismic/core/loaders/Content.js)
+type from your resolver. The resolver can either cache a `singleton` Content, or
+a `list` of Content.
+
+## Resolver Cache API
+
+#### `PrismicCachedResolver(resolver[, options])`
+
+Returns a resolver that caches the result of the given resolver.
+
+**Arguments:**
+
+- `resolver`: A
+  [custom resolver](/docs/2.x/advanced/graphql/change-resolver-behavior#implement-your-custom-resolver-logic)
+  that returns a `Content` or an array of `Content`,
+- `options` : An object with the following properties:
+  - `mapParamsToId` A function that maps the resolver parameters to a unique id.
+  - `contentProperty` The name of the property that contains the
+    [Content](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/modules/prismic/server/modules/prismic/core/loaders/Content.js).
+
+## Usage
+
+To use the `PrismicCachedResolver` you need to import it into your
+`resolvers.js` and wrap your resolver with decorator.
+
+```js title="my-module/resolvers.js"
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+    resolver: PrismicCachedResolver((_, __, { loaders }) =>
+      loaders.MyModule.loadAll()
+    ),
+  },
+};
+```
+
+### Singleton Content
+
+This is the most simple usecase. The `PrismicCachedResolver` will cache a
+singleton Content.
+
+So let's say we want to cache a resolver that loads a single Faq entry, we can
+simply decorate our original resolver
+
+```js
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+    faqEntry: PrismicCachedResolver((source, { slug }, { loaders }) => {
+      return loaders.FaqLoader.loadBySlug(slug); // returns Promise<Content>
+    }),
+  },
+};
+```
+
+Now the **faqEntry** resolver will always load the same cached faq entry.
+
+To avoid this issue, map the `slug` parameter to the cache key, by passing the
+`mapParamsToId` option to the `PrismicCachedResolver`.
+
+```diff
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+-    faqEntry: PrismicCachedResolver((source, {slug}, {loaders}) =>{
+-      return loaders.FaqLoader.loadBySlug(slug);
+-    }),
++    faqEntry: PrismicCachedResolver((source, {slug}, {loaders}) =>{
++      return loaders.FaqLoader.loadBySlug(slug);
++    }, {
++      mapParamsToId: (_, { slug }) => slug,
++    }),
+  },
+};
+```
+
+### List Content
+
+When caching a list of Content we expect to receive an Array containing the
+Content.
+
+```js
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+    faqList: PrismicCachedResolver((_, __, { loaders }) => {
+      return ctx.loaders.FaqLoader.loadAll(); // returns Promise<Content[]>
+    }),
+  },
+};
+```
+
+You can also define a `contentProperty`, this is for a more advanced usecase,
+where you want to return an object with a property containing the Content array,
+for example with pagination
+
+```js
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+    faqList: PrismicCachedResolver(
+      (_, __, { loaders }) => {
+        // returns Promise<{
+        //    list: [Content, Content],
+        //    total: 10
+        // }>
+        return ctx.loaders.FaqLoader.loadAll();
+      },
+      {
+        contentProperty: "list",
+      }
+    ),
+  },
+};
+```
+
+:::tip ProTip™
+
+`contentProperty` can also be used with `singleton` Content.
+
+:::
+
+### NullContent
+
+The `NullContent` has been introduced to allow caching of resolvers that return
+`null`.
+
+Lets say that you return a tag based on an id, but you only want to return the
+tags which are in the allow list, in this case, we will return `null` for the
+tags that are not in the allow list.
+
+```js
+const allowList = ["tag1", "tag2"];
+export default {
+  Query: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.TagLoader.loadById(args.id);
+      return allowList.includes(tag.name) ? tag : null;
+    }),
+  },
+};
+```
+
+The issue we have here is that there is no way to create a reference to the Tag
+document in prismic, so we won't be able to know that `tag3` or `tag4` should
+cache `null`. For this we have the `NullContent`.
+
+The `NullContent` takes in a single parameter, `contentOrDcoumentId`, which is
+either the Content object that should be cached as `null`, or the direct id to
+the document parent document.
+
+```diff
+import NullContent from "prismic/server/domain/NullContent";
+const allowList = ["tag1", "tag2"];
+export default {
+  Query: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.TagLoader.loadById(args.id);
+-      return allowList.includes(tag.name) ? tag : null;
++      return allowList.includes(tag.name) ? tag : NullContent(tag);
+    }),
+  },
+};
+```
+
+The direct id of the document is usefull when the caching is based on the parent
+of the document, for example when you want to cache the `tag` inside a `Faq`
+document.
+
+```js
+export default {
+  Fax: {
+    tag: PrismicCachedResolver((parent, args, { loaders }) => {
+      const tag = loaders.DocumentLoader.loadTagByDocumentID(
+        source.documentMetadata.documentID
+      );
+      return allowList.includes(tag.name)
+        ? tag
+        : NullContent(source.documentMetadata.documentID);
+    }),
+  },
+};
+```
+
+## Advanced Usecase
+
+What if we want to manipulate the data after it is retrieved either from the
+cache or the resolver?
+
+The `PrismicCachedResolver` is a resolver like any other, so you can call it at
+any time within a resolver, as soon as you propagate the resolver parameters to
+the `PrismicCachedResolver`.
+
+```js
+import PrismicCachedResolver from "prismic/server/modules/prismic/core/cache/PrismicCachedResolver";
+
+export default {
+  Query: {
+    faqList: async (...params) => {
+      const list = await PrismicCachedResolver((_, __, { loaders }) => {
+        return ctx.loaders.FaqLoader.loadAll(); // returns Promise<Content[]>
+      })(...params); // propogate the params to `PrismicCachedResolver`
+
+      if (!list) {
+        return null;
+      }
+
+      return {
+        list,
+        total: list.length,
+      };
+    },
+    faqEntry: async (...params) => {
+      const [source, { slug }, { loaders }] = params; // we can also reuse the params from the current resolver
+      const entry = await PrismicCachedResolver(
+        () => {
+          return loaders.FaqLoader.loadBySlug(slug); // returns Promise<Content>
+        },
+        {
+          mapParamsToId: () => slug,
+        }
+      )(...params);
+
+      if (!entry) {
+        return null;
+      }
+
+      return entry;
+    },
+  },
+};
+```

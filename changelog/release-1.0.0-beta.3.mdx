@@ -54,7 +54,7 @@ interactive content.
 
 However, this component was a bit tough to customize in its previous versions.
 So we have revamped its API to make sure that you can customize it as much as
-you want. See [WYSIWYG documentation](/docs/advanced/theme/wysiwyg) for more
+you want. See [WYSIWYG documentation](/docs/2.x/advanced/theme/wysiwyg) for more
 details.
 
 This was also an opportunity to support a wider range of Magento's features. For
@@ -62,13 +62,13 @@ instance, we now support
 [Widgets](https://www.toptal.com/magento/custom-widgets-in-magento-2) in
 Magento. Any contributed widget will be parsed and then render a React component
 that you can customize depending on your needs. See
-[Magento's WYSIWYG supported features](/docs/advanced/theme/wysiwyg#Magento-theme-modules-Wysiwyg-MagentoWysiwyg)
+[Magento's WYSIWYG supported features](/docs/2.x/advanced/theme/wysiwyg#Magento-theme-modules-Wysiwyg-MagentoWysiwyg)
 for more details.
 
 ### Load configuration files from parent modules
 
-[Custom themes](/docs/essentials/extend-the-theme) defined in the
-[`modules` key of your `.front-commerce.js` file](/docs/reference/front-commerce-js#modules)
+[Custom themes](/docs/2.x/essentials/extend-the-theme) defined in the
+[`modules` key of your `.front-commerce.js` file](/docs/2.x/reference/front-commerce-js#modules)
 will now inherits configuration files from parent themes.
 
 Before this change, all config files had to be defined in the latest module. It
@@ -119,10 +119,10 @@ christmas
 And a few more features such as:
 
 - Auto redirect HTTP requests to HTTPS in production mode
-  ([see more details](/docs/appendices/migration-guides#HTTPS))
+  ([see more details](/docs/2.x/appendices/migration-guides#HTTPS))
 - Improved schema stitching from developers feedbacks to allow custom headers
   and authenticated requests
-  ([see more details](/docs/advanced/graphql/remote-schemas#Customize-remote-HTTP-requests))
+  ([see more details](/docs/2.x/advanced/graphql/remote-schemas#Customize-remote-HTTP-requests))
 - Expose a product's short description in the GraphQL schema
 
 ## Bugfixes
@@ -158,7 +158,7 @@ instance!
 
 To know more about this release, we recommend you to check the following pages:
 
-- [Migration guide from 1.0.0-beta.0 to 1.0.0-beta.3](/docs/appendices/migration-guides#1-0-0-beta-0-gt-1-0-0-beta-3)
+- [Migration guide from 1.0.0-beta.0 to 1.0.0-beta.3](/docs/2.x/appendices/migration-guides#1-0-0-beta-0-gt-1-0-0-beta-3)
 - [Full changelog from Front-Commerce release notes](https://gitlab.blackswift.cloud/front-commerce/front-commerce/releases)
   and
   [its Magento 2 extension](https://gitlab.blackswift.cloud/front-commerce/magento2-module-front-commerce/releases)

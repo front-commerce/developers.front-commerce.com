@@ -10,14 +10,19 @@ import {
   Bars4Icon,
 } from "@heroicons/react/24/outline";
 import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 const PopularPages = () => {
+  const { siteConfig } = useDocusaurusContext();
+
+  const LAST_VERSION = siteConfig.customFields.LAST_VERSION;
+
   const links = [
     {
       title: "Documentation",
       description: "Learn how to integrate our tools with your app",
       icon: BookOpenIcon,
-      href: "/docs/welcome",
+      href: `/docs/${LAST_VERSION}/welcome`,
     },
     {
       title: "Changelog",
@@ -29,7 +34,7 @@ const PopularPages = () => {
       title: "Migration Guides",
       description: "Migrations guides that cover popular setups",
       icon: BookmarkSquareIcon,
-      href: "/docs/appendices/migration-guides",
+      href: `/docs/${LAST_VERSION}/appendices/migration-guides`,
     },
     {
       title: "Support",
@@ -123,10 +128,7 @@ export default function NotFound() {
         <main className="container margin-vert--xl">
           <div className="text-center">
             <p className="text-sm font-semibold text-primary-600 dark:text-primary-300 uppercase tracking-wide">
-              <Translate
-                id="theme.NotFound.errorCode"
-                description="  404 error"
-              >
+              <Translate id="theme.NotFound.errorCode" description="404 error">
                 404 error
               </Translate>
             </p>

@@ -1,0 +1,229 @@
+---
+sidebar_position: 2
+title: Search engine
+description:
+  When configured with Magento1 , Front-Commerce provides search capabilities
+  for your website using different technologies. This guide shows you the
+  different options available to you.
+---
+
+<p>{frontMatter.description}</p>
+
+import ContactLink from "@site/src/components/ContactLink";
+
+You can configure search and product lists with filters using the following
+platforms:
+
+- [Native search](#native-search)
+- [Elasticsearch](#elasticsearch)
+  - [Requirements](#requirements)
+  - [Front-Commerce configuration](#front-commerce-configuration)
+- [Algolia](#algolia)
+  - [Requirements](#requirements-1)
+  - [Front-Commerce configuration](#front-commerce-configuration-1)
+
+## Native search
+
+Front-Commerce supports searching using the native Magento API for category
+listing pages. Please <ContactLink /> if your store uses a custom Magento search
+implementation to see how to make it work in your Front-Commerce project.
+
+## Elasticsearch
+
+### Requirements
+
+On Magento's side, you need to install
+[the `front-commerce-oss/magento1-elasticsuite-indexer` module](https://github.com/front-commerce/magento1-elasticsuite-indexer#magento-1-elasticsearch-indexer-).
+You can install it with composer:
+
+```shell
+composer require front-commerce-oss/magento1-elasticsuite-indexer
+```
+
+After the installation, you need to configure it, at least:
+
+1. in System > Catalog > Catalog in the _Catalog Search_ section, make sure the
+   search engine is set on _Smile Searchandising Suite_
+1. in the same section, set the server host and port
+1. take note of the alias (`magento` by default)
+
+You can then run the indexer so that the products, categories and cms pages are
+indexed in Elasticsearch.
+
+### Front-Commerce configuration
+
+First, you need to make sure the Elasticsearch search client is installed with a
+version that matches your ElasticSearch server:
+
+```shell
+npm i @elastic/elasticsearch@6
+```
+
+On Front-Commerce side, you need to enable the Elasticsearch datasource by
+making the changes in your `.front-commerce.js` file similar to:
+
+```diff title='.front-commerce.js'
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/datasource-elasticsearch"],
+   serverModules: [
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
++    {
++      name: "Magento1Elasticsearch",
++      path: "datasource-elasticsearch/server/modules/magento1-elasticsearch",
++    },
+     { name: "Magento1", path: "server/modules/magento1" },
+   ]
+```
+
+:::caution Known issue
+
+Tthe Elasticsearch server module needs to be enabled **before** the Magento's
+module.
+
+:::
+
+Then, in your `.env` file, you need to define
+[the `FRONT_COMMERCE_ES_HOST` and `FRONT_COMMERCE_ES_ALIAS` variables](/docs/2.x/reference/environment-variables#elasticsearch).
+
+After restarting Front-Commerce, you should be able run a GraphQL query to
+search for products, for instance:
+
+```graphql
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+  }
+}
+```
+
+If you are using the default theme or the theme Chocolatine, the search bar
+should now be visible.
+
+## Algolia
+
+### Requirements
+
+On Magento's side, you need to install
+[the `algolia/algoliasearch-magento` module](https://github.com/algolia/algoliasearch-magento).
+You can install it with modman:
+
+```shell
+modman clone https://github.com/algolia/algoliasearch-magento.git
+```
+
+After the installation, you need to configure it, at least:
+
+1. in System > Algolia Search > Configuration in the _Credentials & Setup_
+   section, set the _Enable Indexing_ option
+1. in the same section, fill the credentials you can find on
+   [the Algolia Dashboard](https://www.algolia.com/dashboard/api-keys)
+1. The attribute `category_ids` must be listed in both the facets configuration
+   and in the indexed product attributes (and there it must be set as
+   _Searchable_) as Front-Commerce relies on it to list the products in
+   categories.
+
+You can then run the indexer so that the products are indexed in Algolia's
+index.
+
+:::note
+
+`category_ids` is the only required facets. Depending on your project, you can
+configure any other attribute to be exposed as a facet by following the same
+steps.
+
+:::
+
+### Front-Commerce configuration
+
+First, you need to make sure the Algolia's search client is installed:
+
+```shell
+npm i algoliasearch
+```
+
+On Front-Commerce side, you need to enable the Algolia datasource by making the
+changes in your `.front-commerce.js` file similar to:
+
+```diff title=".front-commerce.js"
+-  modules: [],
++  modules: ["./node_modules/front-commerce/modules/datasource-algolia"],
+   serverModules: [
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
++    {
++      name: "Magento1Algolia",
++      path: "datasource-algolia/server/modules/magento1-algolia",
++    },
+     { name: "Magento1", path: "server/modules/magento1" },
+   ]
+```
+
+:::caution Known issue
+
+The Algolia server module needs to be enabled **before** the Magento's module.
+
+:::
+
+As of Front-Commerce 2.6, Algolia's module is automatically configured. If you
+are using Front-Commerce 2.5, you need to define
+[all the Algolia related environment variables](/docs/2.x/reference/environment-variables#algolia)
+in your `.env` file.
+
+Front-Commerce 2.6 takes the following parameters from Magento:
+
+- [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+- [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+- the index name prefix
+- the number of values per facet
+- the configured facet attributes
+
+On the configured facets, only the attribute name is taken into account (Facet
+type, Label, Searchable and Create Query rule are ignored for now).
+
+:::caution
+
+For performance reason, the configuration retrieved from Magento is cached. As a
+result, after changing a parameter in the backoffice, the new parameter will be
+taken into account after at most one minute by Front-Commerce.
+
+:::
+
+After restarting Front-Commerce, you should be able to run a GraphQL query to
+search for products, categories or pages, for instance:
+
+```graphql
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
+
+:::info
+
+Support for category or page search with Algolia has been added in
+Front-Commerce 2.13.
+
+:::
+
+If you are using the default theme or the Chocolatine theme, the search bar
+should now be visible.

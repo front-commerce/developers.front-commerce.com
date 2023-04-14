@@ -1,0 +1,304 @@
+---
+sidebar_position: 5.3
+title: Payment workflows specificities
+description:
+  Front-Commerce provides different hooks allowing you to use the payment method
+  of your choice. This section explains the implementation specificities of
+  payment workflows.
+---
+
+<p>{frontMatter.description}</p>
+
+:::note
+
+The documentation here only explains changes to apply to the default
+implementation example for each workflow.
+
+- See [the basic implementation tutorial](./custom-payment-method.mdx) for a
+  detailed implementation
+- See [the high-level workflow explanation](./payment-workflows.mdx) to choose
+  the right implementation for your usecase.
+
+:::
+
+## Async Order
+
+This workflow is recommended for payments that are fully front-end (e.g.
+Payzen/Lyra, Paypal)
+
+### Server changes
+
+Ensure the direct payment processor call does nothing in the module’s
+[`contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
+
+```diff
+export default {
+  namespace: "Payments/PWAy",
+  dependencies: ["Magento2/Checkout", "Front-Commerce/Payment"],
+  contextEnhancer: ({ loaders }) => {
+    ...
+    loaders.Payment.registerEmbeddedPaymentMethod(
+      METHOD_CODE,
+      METHOD_TITLE,
+-      (paymentData, orderId, orderPaymentDetails) => {
+-        return loader.order(paymentData, orderId, orderPaymentDetails);
+-      },
++      () => {
++        throw new Error(
++          "The payment method should only be handled by IPN notifications"
++        );
++      },
+      null,
+      new MyPaymentNotificationProcessor(hipayConfig)
+    );
+
+    return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
+  },
+};
+```
+
+:::note
+
+This implies the `order` method in the module’s loader is not needed for this
+method (your may need to implement other methods instead to be used by the
+`NotificationProcessor`)
+
+```diff
+export default class MyPaymentLoader {
+-  async order(paymentData, orderId, orderPaymentDetails) {
+-    ...
+-  }
+}
+```
+
+:::
+
+### Theme changes
+
+Override `web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of the
+`asyncOrder` workflow for the `pway_awesomecheckout` method code
+
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "asyncOrder";
+
+  return "directOrder";
+};
+
+export default checkoutFlowOf;
+```
+
+## Direct Order
+
+A direct order handles directly the payment on `onAuthorize` call in the
+CustomComponent you created
+(`my-module/web/theme/modules/CustomComponent/CustomComponent.js`)
+
+This `onAuthorize` call will provide the information to the `loader.order(...)`
+implemented server-side. This last method is responsible to handle the full
+payment process.
+
+### Sub workflow : Direct Order with additional action
+
+You may need to handle a second payment step with a Direct order workflow (3DS
+validation, etc).
+
+In this case, perform the following steps
+
+1. Reference the payment workflow
+
+Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of
+`directOrderWithAdditionalAction`
+
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "directOrderWithAdditionalAction";
+
+  return "directOrder";
+};
+
+export default checkoutFlowOf;
+```
+
+2. Create and additional action component to handle the
+
+```js title="my-module/web/theme/AdditionalAction/MyAdditionalAction.js"
+import React from "react";
+import { useQuery } from "react-apollo";
+import AdyenPaymentStatusQuery from "./AdyenPaymentStatusQuery.gql";
+import AdyenPaymentAction from "theme/modules/Adyen/AdyenPaymentAction";
+
+import TitledCard from "theme/components/molecules/Card/TitledCard";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import LoadingArea from "theme/components/molecules/LoadingArea";
+
+const MyAdditionalAction = ({ onOrderPlacedArgs, originalOnOrderPlaced }) => {
+  const intl = useIntl();
+  const orderId = onOrderPlacedArgs[0];
+
+  // call originalOnOrderPlaced() when the additionnal action is successfull
+
+  return (...);
+};
+
+export default MyAdditionalAction;
+```
+
+3. Reference the additional action component
+
+```js title="my-module/web/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
+import None from "theme/modules/Checkout/PlaceOrder/AdditionalAction/None";
+import MyAdditionalAction from "theme/AdditionalAction/MyAdditionalAction";
+
+const ComponentMap = {};
+
+const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
+  if (paymentCode === "pway_awesomecheckout")) {
+    return MyAdditionalAction;
+  }
+  return ComponentMap?.[paymentCode] ?? None;
+};
+
+export default getAdditionalActionComponent;
+```
+
+## Redirect Before Order
+
+:::warning
+
+This workflow is only supported for Magento2, please
+[contact us](mailto:contact@front-commerce.com) if you need this workflow with
+another backend server
+
+:::
+
+A redirect before order workflow allows to interact with payment providers
+handling the complete payment workflow on their side.
+
+Front-Commerce will only redirect to the payment provider and ensure the order
+creation afterwards.
+
+### Server changes
+
+1. Register the payment method payment processor with
+   `registerRedirectBeforeOrderPaymentMethod` module’s
+   [`contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional)
+
+Replace the module's contextEnhancer with the following
+
+```js
+import { getCurrentShopConfig } from "server/core/config/getShopConfig";
+
+export default {
+  namespace: "Payments/PWAy",
+  dependencies: ["Magento2/Checkout", "Front-Commerce/Payment"],
+  contextEnhancer: ({ loaders }) => {
+    const shopConfig = getCurrentShopConfig(req.config);
+    const METHOD_CODE = "pway_awesomecheckout";
+    const METHOD_TITLE = "PWAy";
+
+    // [...] initialization here
+    const loader = new MyPaymentLoader(shopConfig, METHOD_CODE, ...);
+
+    loaders.Payment.registerRedirectBeforeOrderPaymentMethod(
+      METHOD_CODE,
+      METHOD_TITLE,
+      loader,
+    );
+
+    return {}; // you may export loaders here in case the payment provides custom Queries (to fetch a payment token for instance)
+  },
+};
+```
+
+2. Implement the three **required** methods in the loader
+
+```js
+export default class MyPaymentLoader {
+  constructor(shopConfig, methodCode, ...) {
+    ...
+
+    this.callbackUrl = `${shopConfig.url}/checkout/payment/${methodCode}`;
+  }
+
+  /**
+   * @param {{paymentId: any, cart: any}} paymentData the paymentId is the paymentMethod registered previously
+   * @returns {PaymentCaptured} the captured payment status
+   */
+  mapCartPaymentToRedirect({ paymentId, cart }) {
+    return {
+      url: true, // set it to true for URL redirection
+      html: true, // set it to true for HTML code insertion
+      value: `...?callbackUrl=${this.callbackUrl}`, // the URL or HTML code to handle the redirection to the payment provider
+    }
+  }
+
+  /**
+   * @param {any} data : callbackUrl query parameters
+   * @returns {boolean} is the payment authorized or not, returning false will lead to the checkout cancellation
+   */
+  async isReturnSuccess(data) {
+    return true | false;
+  }
+
+  /**
+   * @typedef {object} PaymentCaptured
+   * @property {string} transactionId : the transactionId from the payment provider, it allows the merchant to make the link between an order and a payment
+   * @property {boolean} success :  the capture succeed
+   * @property {boolean} cancel : the capture was canceled
+   * NOTE : if both success and cancel are false, the capture is considered failed (throwing an error will lead to the same event)
+   */
+  /**
+   * proceed to the payment capture in the payment provider
+   * NOTE: this stage follows the order creation in Magento, you should provide the orderId to the payment provider for the transaction to be easily found by the merchant
+   * @param {any} additionalData : callbackUrl query's additionalData parameter -> "https://callbackUrl?additionalData=..."
+   * @param {string} orderId : magento order Id
+   * @param {{ currency:string, totalInclTax: number }} paymentDetails : the currency and value of the order (please ensure the payment has the same value and currency to prevent cart hijack)
+   * @returns {PaymentCaptured} the captured payment status
+   */
+  async capturePayment(additionalData, orderId, paymentDetails) {
+    return {
+      transactionId,
+      success: true,
+      cancel: true,
+    };
+  }
+}
+```
+
+### Theme changes
+
+:::warning
+
+No AdditionalDataComponent is required for this implementation as there is no
+frontend component displayed by Front-Commerce
+
+:::
+
+1. Reference the payment workflow
+
+Override `src/web/theme/pages/Checkout/checkoutFlowOf.js` to indicate the use of
+`redirectBeforeOrder`
+
+```diff
+const checkoutFlowOf = (method) => {
+  ...
++  if (method === "pway_awesomecheckout") return "redirectBeforeOrder";
+
+  return "directOrder";
+};
+
+export default checkoutFlowOf;
+```
+
+## Redirect After Order
+
+:::warning
+
+This workflow is not supported anymore, please
+[contact us](mailto:contact@front-commerce.com) if you identify a usecase of
+this workflow
+
+:::
