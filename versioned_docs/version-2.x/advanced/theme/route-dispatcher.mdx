@@ -106,8 +106,7 @@ const myCustomUrlMatcher = (loader) => async (url, match) => {
   }
   return {
     // return your custom routable entity
-    path: myMatch.canonical_url || url, // depending on your use case, it can be same as the url
-    url,
+    path: myMatch.canonical_url || url,
     __typename: "MyCustomType", // the GraphQL type of your custom type (should be added in schema.gql),
     ...myMatch, // or some adaptation of it. this will be available to your component defined bellow on a prop called `matched`
   };
