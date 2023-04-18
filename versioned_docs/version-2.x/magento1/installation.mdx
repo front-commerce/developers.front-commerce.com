@@ -3,22 +3,16 @@ sidebar_position: 1
 title: Installation
 description:
   Front-Commerce applications requires a Front-Commerce module to be installed
-  on the Magento instance. This guide explains how to install it.
+  in Magento1 / OpenMage. This guide explains how to install it.
 ---
 
 <p>{frontMatter.description}</p>
 
 ## Module compatibility
 
-- `php` (>= 5.4)
-- `Magento CE` (>=1.7.x)
-- `Magento EE` (>=1.12.x)
-
-### Recommendation
-
-- [OpenMage LTS](https://github.com/OpenMage/magento-lts) (1.9.4.x - v19.x)
-- `php` 7.3 with OpenSSL
-- `MySQL` 8.0+
+We recommend to use [OpenMage LTS](https://github.com/OpenMage/magento-lts)
+(1.9.4.x - v19.x) with at least PHP 7.3 (with OpenSSL) and MySQL 8.0. It is also
+compatible with Magento CE >= 1.7 and Magento EE 1.12.x.
 
 ## Installation
 
@@ -231,17 +225,30 @@ permissions are correctly configured by accessing this URL:
 
 `{MAGENTO_BASE_URL}/api/rest/frontcommerce/urls/match?urls[0]=/about-magento-demo-store`
 
-## Frequent errors
+## Common issues
 
-- URL Rewrite: the entry point of the API is the file `api.php`. In order to
-  work, you need to have the following rules:
-  - for Apache in an `.htaccess`:
-    `RewriteRule ^api/rest api.php?type=rest [QSA,L]`
-  - for Nginx in server config:
-    ```
-    location /api {
-        rewrite ^/api/rest /api.php?type=rest last;
-        rewrite ^/api/v2_soap /api.php?type=v2_soap last;
-        rewrite ^/api/soap /api.php?type=soap last;
-    }
-    ```
+### URL Rewrite
+
+The entry point of the API is the file `api.php`. In order to work, you need to
+have the following rules:
+
+For Apache in an `.htaccess` or in the server configuration:
+
+```
+RewriteRule ^api/rest api.php?type=rest [QSA,L]
+```
+
+For nginx in server configuration:
+
+```
+location /api {
+    rewrite ^/api/rest /api.php?type=rest last;
+    rewrite ^/api/v2_soap /api.php?type=v2_soap last;
+    rewrite ^/api/soap /api.php?type=soap last;
+}
+```
+
+### Mistake in ACL access
+
+Double check that you have followed [REST roles](#rest-roles) and [REST
+attributes](#rest-attributes) sections carefully.
