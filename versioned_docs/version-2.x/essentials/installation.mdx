@@ -61,10 +61,38 @@ Depending on your internet connection, feel free to grab some tea and a cookieâ€
 
 ### Configure the project
 
-This skeleton comes with default values for most of the configuration. Below are
+The skeleton comes with default values for most of the configuration. Below are
 the configurations you will most likely have to change/create.
 
 #### Configure the instance
+
+`.front-commerce.js` must be configured to
+enable module(s) matching your eCommerce backend. The skeleton is configured by
+default for Magento2.
+
+To interact with Magento1, you need to change `.front-commerce.js` to import
+the Magento1 module instead of the Magento2 one.
+
+```diff
+module.exports = {
+  name: "Front Commerce Skeleton",
+  url: "http://localhost:4000",
+  modules: ["./src"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+-    { name: "Magento2", path: "server/modules/magento2" }
++    { name: "Magento1", path: "server/modules/magento1" }
+  ]
+};
+```
+
+:::info
+
+It's also possible [to connect your Front-Commerce instance to BigCommerce](/docs/2.x/bigcommerce/installation).
+
+:::
+
+#### Configure the environment
 
 Front-Commerce uses environment variables for runtime configurations depending
 on the instance that runs (local, staging, production).
@@ -83,13 +111,9 @@ Front-Commerceâ€™s cache securely.
 These kind of tokens are configured as environment variables (according to
 [one of the 12-factor app principles](https://12factor.net/config)).
 
-You will find an exhaustive list of available variables commented in the `.env`
-file, with links to relevant documentation pages.
-
-We invite you to dig into the remote services configurations and tweak them if
-you wish. See
-[our documentation](/docs/2.x/reference/environment-variables#remote-services-configuration)
-for further information.
+We invite you [to dig into the remote services
+configurations](/docs/2.x/reference/environment-variables#remote-services-configuration)
+and tweak them if you wish.
 
 #### Configure stores
 
