@@ -1,0 +1,88 @@
+---
+sidebar_position: 1
+title: Installation
+description:
+  Front-Commerce applications requires a Front-Commerce module to be installed
+  in Magento2. This guide explains how to install and configure it.
+---
+
+<p>{frontMatter.description}</p>
+
+## Module compatibility
+
+The Magento2 module is compatible with Magento2 2.3.2 to 2.4.5-p1 (Open Source,
+Commerce and B2B). To use respectively Commerce or B2B specific features, you
+need to install and setup [the Front-Commerce's Magento2 Commerce
+module](/docs/2.x/magento2/commerce#magento2-commerce-module-installation)
+or [the Front-Commerce's Magento2 B2B
+module](/docs/2.x/magento2/b2b#requirements).
+
+:::note
+
+Magento 2.4.3 requires [an Adobe official patch](https://experienceleague.adobe.com/docs/commerce-knowledge-base/kb/troubleshooting/known-issues-patches-attached/web-api-resources-limit.html).
+
+:::
+
+## Install with composer
+
+```shell
+composer config repositories.front-commerce git git@gitlab.blackswift.cloud:front-commerce/magento2-module-front-commerce.git
+composer require front-commerce/magento2-module
+bin/magento setup:upgrade
+```
+
+:::tip
+
+We recommend to use a specific version of this module and not to rely on the
+latest blindly.
+
+:::
+
+## Configuration
+
+:::note
+
+If the installation is successful, in Magento's administration panel, you will
+see Front-Commerce settings for instance under _Stores > Configuration >
+General > General_
+
+:::
+
+### Settings to configure the REST API behavior
+
+This can be done by running the following commands:
+
+```bash
+./bin/magento config:set "webapi/webapisecurity/allow_insecure" "1"
+./bin/magento config:set "tax/display/type" "3"
+./bin/magento config:set "tax/display/shipping" "3"
+```
+
+### Create the API integration
+
+An API integration must be created for Front-Commerce. To do so in the
+administration panel, go to `System > Extensions > Integrations` create and an integration. In the API section, make sure to set _Resource Access_ to _All_.
+
+After doing that, configure the tokens in Front-Commerce’s environment variables with the values generated for the integration:
+- `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
+- `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
+- `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
+- `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET`
+
+### Define Front-Commerce URL
+
+In the administration panel, go to `System > Custom Variables` and set the value
+of the `fc_url` variable with the public Front-Commerce public URL (e.g.
+`http://localhost:4000`)
+
+### Define the cache API token
+
+In the administration panel, go to `System > Custom Variables` and set the value
+of the `fc_cache_api_token` variable with a secret value. This value must match
+the content of the `FRONT_COMMERCE_CACHE_API_TOKEN` environment variable.
+
+## Ensure it works
+
+To check that everything works, you can try to request this URL:
+`http://magento.url/rest/V1/frontcommerce/urls/match?urls[]=<url>` where `<url>`
+is one of the URL key of your products
