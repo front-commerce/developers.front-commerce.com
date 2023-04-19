@@ -83,6 +83,8 @@ the content of the `FRONT_COMMERCE_CACHE_API_TOKEN` environment variable.
 
 ## Ensure it works
 
-To check that everything works, you can try to request this URL:
-`http://magento.url/rest/V1/frontcommerce/urls/match?urls[]=<url>` where `<url>`
+To check that the API is properly configured, you can try to request:
+
+* `http://magento.url/rest/V1/store/storeViews`
+* `http://magento.url/rest/V1/frontcommerce/urls/match?urls[]=<url>` where `<url>`
 is one of the URL key of your products
