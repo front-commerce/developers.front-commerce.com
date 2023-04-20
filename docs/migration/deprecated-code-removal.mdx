@@ -47,6 +47,47 @@ The legacy analytics implementation based on analytics.js has been removed in
 [Remove legacy
 analytics](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1864).
 
+### WysiwygV1
+
+The legacy `WysiwygV1` implementation has been removed in
+[Remove legacy WysiwygV1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929)
+
+<!--TODO: add link to MR which applies updates the location of WysiwygV2 -> Wysiwyg and applies the codemod changes-->
+The `WysiwygV2` implementation has been renamed to `Wysiwyg` in [this merge request](#). To ensure that you are using the correct version of the component, 
+before running the [automated migration process](/docs/remixed/migration/automated-migration) step, you should search for any imports in your codebase which 
+is still targeting `WysiwygV1` implementation: `theme/modules/Wysiwyg`, and follow [the documentation](/docs/2.x/advanced/theme/wysiwyg/#wysiwygv2--usage) to update the usages to `WysiwygV2`.
+
+After running the [automated migration process](/docs/remixed/migration/automated-migration) step, all related imports will be automatically updated, for example:
+```diff
+js:
+- import Wysiwyg from "theme/modules/WysiwygV2";
++ import Wysiwyg from "theme/modules/Wysiwyg";
+
+scss:
+- @import "~theme/modules/WysiwygV2/Wysiwyg";
++ @import "~theme/modules/Wysiwyg/Wysiwyg";
+
+gql:
+- #import "theme/modules/WysiwygV2/WysiwygFragment.gql"
++ #import "theme/modules/Wysiwyg/WysiwygFragment.gql"
+```
+
+Here is a list of components which have been updated to use the equivalent `WysiwygV2` based field:
+
+* [Updated `CmsPage` usage](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929/diffs?commit_id=023c59ef68a1e19ce231de6ebfbcdec9e12473ea)
+* [Updated `Description` usage](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929/diffs?commit_id=3b600e9b227cb5fe736c87635cf53d120cd8feae)
+* [Updated `ShortDescription` usage](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929/diffs?commit_id=ad77d18dcfdfa7d65bd78f1eed3ac64b67cec080)
+* [Updated `Synthesis` usage in `ProductView`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929/diffs?commit_id=5ba58f1375b8defcb5e9ae8a9997d0e7cc3ac20b)
+* [Updated `Category` usage](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1929/diffs?commit_id=755114b537f64d361a5a57ffd790cfe23ae0cb36)
+
+We also removed the following as it no longer has any use after the removal of `WysiwygV1`:
+
+* [Removed `CmsBlock`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1948) which it was essentially re-implementing `WysiwygV2` while keeping support for `WysiwygV1` which is now removed.
+* [Removed `config/licenses`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1947) which took in an html string based on `storeView`, this was used by the 
+[`GscText`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.23.x/src/web/theme/modules/Checkout/Payment/Gsc/GscText.js?ref_type=heads#L12) component, we have opted to 
+[inline](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/0de91a220a2ac482ef04b8b6d223c95e2ae568ce/src/web/theme/modules/Checkout/Payment/Gsc/GscText.js#L10-72) the licenses config, which in turn will 
+allow to apply translations to the text.
+  
 ## Backend
 
 ### Deprecated public loader methods
