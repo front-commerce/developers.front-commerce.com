@@ -20,20 +20,18 @@ in your Front-Commerce application for now.
 
 :::note
 
-<span>
-  This integration is aimed at being transparent for administrators and
-  developers. That is why we haven't duplicated documentation from existing
-  Magento resources. Please <ContactLink /> if you need further assistance.
-</span>
+This integration is aimed at being transparent for administrators and
+developers. That is why we haven't duplicated documentation from existing
+Magento resources. Please <ContactLink /> if you need further assistance.
 
 :::
 
-Front-Commerce for Magento2 contains a `FrontCommerce_HeadlessAffirm` module
-that turns the
-[Affirm's official Magento extension](https://github.com/Affirm/Magento2_Affirm)
-into a headless payment method for Front-Commerce. It is aimed at being
-transparent for Magento administrators and developers while allowing for a
-better Customer experience in a Front-Commerce application.
+Front-Commerce extension for Magento2 contains a `FrontCommerce_HeadlessAffirm`
+module that turns the [Affirm's official Magento
+extension](https://github.com/Affirm/Magento2_Affirm) into a headless payment
+method for Front-Commerce. It is aimed at being transparent for Magento
+administrators and developers while allowing for a better Customer experience in
+a Front-Commerce application.
 
 This integration is slightly different from
 [traditional Magento2 headless payments](/docs/2.x/magento2/headless-payments)
@@ -45,11 +43,10 @@ Here is how to set this payment method up.
 
 ### Install and configure the `Astound_Affirm` Magento2 extension
 
-Follow
-[Affirm's documentation](https://docs.affirm.com/affirm-developers/docs/magento-2)
-to install and configure the official Magento2 extension for Affirm payments.
-You only need to follow steps `1.` and `2.` since other storefront features are
-not relevant in a headless context.
+Follow [Affirm's
+documentation](https://docs.affirm.com/platforms/docs/magento-2-installation#install-the-extension)
+to install the official Magento2 extension and [to configure
+it](https://docs.affirm.com/platforms/docs/magento-2-configure-affirm).
 
 You have to **configure the `Checkout Flow Type` to `Modal`** (instead of
 `Redirect`).
