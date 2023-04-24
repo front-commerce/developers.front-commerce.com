@@ -51,22 +51,20 @@ it](https://docs.affirm.com/platforms/docs/magento-2-configure-affirm).
 You have to **configure the `Checkout Flow Type` to `Modal`** (instead of
 `Redirect`).
 
-### Enable the `FrontCommerce_HeadlessAffirm` Magento2 extension
+### Install the `FrontCommerce_HeadlessAffirm` Magento2 extension
 
-Turn Affirm into a headless payment method by enabling Front-Commerce's
-`HeadlessAffirm` module. No configuration is needed.
+Turn Affirm into a headless payment method by installing the Front-Commerce's
+Headless Affirm module. No configuration is needed.
 
 ```shell
-php bin/magento module:enable FrontCommerce_HeadlessAffirm
+composer require front-commerce-magento/module-headless-affirm
 php bin/magento setup:upgrade
-php bin/magento setup:di:compile
 ```
 
-:::note
+:::tip
 
-If the `FrontCommerce_HeadlessAffirm` is not detected by your Magento
-installation, please ensure that you are using a Front-Commerce module version
-`> 2.1.0`. Otherwise, you must first update your dependencies.
+We recommend to use a specific version of this module and not to blindly rely on
+the latest version.
 
 :::
 
