@@ -76,14 +76,6 @@ documents in the preview and a link to open them in the Writing Room.
 You can include the toolbar by adding it to your app's layout. You can read the
 [layout documentation](/docs/2.x/advanced/theme/layouts) to learn more.
 
-:::info Important
-
-For the toolbar script to be injected in your dom, you need the search param
-`previewRepo` containing your repo name, e.g. `path/?previewRepo=my-repo`, in
-your url.
-
-:::
-
 ```js title="src/theme/routes/_layout.js"
 import React from "react";
 import PrismicPreview from "theme/modules/Prismic/PrismicPreview";
