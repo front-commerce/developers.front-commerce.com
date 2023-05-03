@@ -28,6 +28,17 @@ This feature is directly provided by Adobe Commerce. Please refer to
 
 :::
 
+In addition, this feature is also controlled by the roles and the associated
+permissions assigned to a user within the company. For now, those roles can only
+be set programmtically or through the Magento frontend. In local environments, to make sure a company user can use the
+_Payment on account_ method you need to:
+
+1. login as the administrator of the company or as a user having the _Manage
+   roles and permissions_ permission.
+1. go to `https://magento-front.example.com/company/role/`
+1. for the role assigned to the user, check the permissions _Sales / Allow
+   Checkout / Use Pay On Account method_ and _Company Credit / View_
+
 #### Enable the B2B module
 
 First, you need to
