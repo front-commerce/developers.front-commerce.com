@@ -1,0 +1,62 @@
+---
+title: "@front-commerce/remix"
+description:
+  "This package contains Front-Commerce implementations related to Remix."
+---
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/remix@latest
+```
+
+## Type Safety
+
+You can get type safety over the network for your loaders with
+[LoaderArgs](https://remix.run/docs/en/1.16.0/route/loader#type-safety) and for
+your actions with
+[ActionArgs](https://remix.run/docs/en/1.16.0/route/action#action). To ensure
+that the typed frontCommerce context is in the arguments, you can add the
+`@front-commerce/remix` reference to your `remix.env.d.ts` file.
+
+```ts
+/// <reference types="@remix-run/dev" />
+/// <reference types="@remix-run/node" />
+// highlight-next-line
+/// <reference types="@front-commerce/remix" />
+```
+
+## Front-Commerce Context
+
+To ensure the Front-Commerce Context is available in your loaders and actions,
+you need to add it to your server via the
+[`getLoadContext`](https://remix.run/docs/en/1.16.0/route/loader#context), to do
+this, update your
+[`server.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b99f0475ce494591a54fdc2b904e956a083e9b51/skeleton/server.ts)
+
+```ts
+// add-start
+import { createFrontCommerceContext } from "@front-commerce/remix";
+import { createRemixRequest } from "@remix-run/express/dist/server";
+// add-end
+
+app.all(
+  "*",
+  createRequestHandler({
+    build: require(BUILD_DIR),
+    mode: process.env.NODE_ENV,
+    // add-start
+    getLoadContext(request, response) {
+      const remixRequest = createRemixRequest(request, response);
+      return {
+        frontCommerce: createFrontCommerceContext(remixRequest),
+      };
+    },
+    // add-end
+  })
+);
+```

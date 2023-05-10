@@ -1,0 +1,107 @@
+---
+title: "FrontCommerceApp"
+sidebar_position: 1
+description:
+  "The FrontCommerce instance uses the frontCommerce context to expose different
+  API to be used in your Application."
+---
+
+The `FrontCommerceApp` instance uses the
+[`frontCommerce` context](/docs/remixed/api-reference/front-commerce-remix/#front-commerce-context)
+to expose different API's which can be used in your Application.
+
+To use the `FrontCommerceApp` instance you can add it to your loaders or
+actions.
+
+```ts
+import type { LoaderArgs, ActionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+export const loader = ({ context }: LoaderArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // your loader logic here
+};
+
+export const action = ({ context }: ActionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // your action logic here
+};
+```
+
+## API Reference
+
+### `app.user`
+
+Exposes the current user information.
+
+```ts
+interface User {
+  clientIp: string;
+}
+```
+
+### `app.env`
+
+Exposes the current environment information. If the `FRONT_COMMERCE_ENV` has
+been set, it will use that, otherwise fallback to `process.env.NODE_ENV`.
+
+```ts
+type Environment = "production" | "development" | "test";
+```
+
+### `app.request`
+
+Exposes the
+[Remix NodeRequest](https://github.com/remix-run/remix/blob/410e9d8aac044b3453c1dddbeb0bcc1d53cdec68/packages/remix-node/fetch.ts#LL34C1-L46C2)
+request.
+
+This is essentially the same request which you will find in your `loader` or
+`action` functions.
+
+### `app.graphql`
+
+Exposes the graphql client.
+
+- `query` - Executes a graphql query.
+- `mutate` - Executes a graphql mutation.
+
+```ts
+export const loader = ({ context }: LoaderArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  const result = app.graphql.query(/* GraphQL */ `
+    query {
+      products {
+        items {
+          id
+          name
+        }
+      }
+    }
+  `);
+
+  // your loader logic here
+};
+
+export const action = ({ context }: ActionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  const result = app.graphql.mutate(
+    /* GraphQL */ `
+    mutation AddToCart($input: AddToCartInput!)) {
+      addToCart(input: $input) {
+        cart {
+          items {
+            id
+            name
+          }
+        }
+      }
+    }
+  `,
+    { sku: "123", quantity: 1 }
+  );
+
+  // your action logic here
+};
+```
