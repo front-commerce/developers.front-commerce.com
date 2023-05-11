@@ -1,0 +1,39 @@
+---
+sidebar_position: 1
+title: Akamai Image Manager
+description:
+  Automatically optimize and enhance visual media for every user, on any device.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.24" />
+
+## Installation
+
+Add the `image-adapter-akamai` module to your config file:
+
+```js title=".front-commerce.js"
+module.exports = {
+  name: "Front Commerce",
+  modules: [
+    "./node_modules/front-commerce/theme-chocolatine",
+    // highlight-next-line
+    "./node_modules/front-commerce/modules/image-adapter-akamai",
+    "./src",
+  ],
+};
+```
+
+## Akamai configuration
+
+The adapter uses
+[Akamai's IMQueries](https://techdocs.akamai.com/ivm/docs/imquery) to handle
+transformation on images, with the default `im` as variable name.
+
+:::info
+
+In Front-Commerce Cloud Akamai Image Manager configuration, all IMQuery image
+transformations are enabled by default.
+
+:::
