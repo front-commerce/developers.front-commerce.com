@@ -1,0 +1,7 @@
+label: Wordpress
+position: 90
+link:
+  type: generated-index
+  description:
+    The Front-Commerce Wordpress module brings support for Wordpress as a headless
+    CMS and allows you to quickly add a blog to your Front-Commerce project.

@@ -1,0 +1,96 @@
+---
+sidebar_position: 1
+title: Installation
+description:
+  This page explains how to install the Front-Commerce Wordpress module.
+---
+
+<p>{frontMatter.description}</p>
+
+## Install
+
+The Front-Commerce Wordpress module lives [in a dedicated
+repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce-wordpress).
+As a result, you first need to install it with npm:
+
+```shell
+npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce-wordpress.git
+```
+
+:::tip
+
+We recommend to use a specific version of this module and not to blindly rely on
+the latest version.
+
+:::
+
+## Configure
+
+This module requires the `FRONT_COMMERCE_WORDPRESS_ENDPOINT` environment
+variable to be set with the URL of your WordPress instance (without a
+trailing slash):
+
+```shell title=.env
+FRONT_COMMERCE_WORDPRESS_ENDPOINT=https://wordpress.example.com
+```
+
+Then the module must be enabled in your `.front-commerce.js`. The Front-Commerce
+Wordpress module comes with two main GraphQL modules:
+
+* `WordPress/Blog` brings a blog to your Front-Commerce project
+* `WordPress/Cms` exposes the CMS pages from Wordpress.
+
+Depending on your project you can use both or only one of these GraphQL modules.
+
+:::note
+
+In any case, you also need to enable the `WordPress/Core` module.
+
+:::
+
+```javascript title=.front-commerce.js
+module.exports = {
+  name: "Front Commerce Skeleton",
+  url: "http://localhost:4000",
+  modules: [
+    // highlight-next-line
+    "./node_modules/front-commerce-wordpress/front-commerce-wordpress",
+    "./src",
+  ],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    { name: "Magento2", path: "server/modules/magento2" },
+    // highlight-start
+    {
+      name: "WordPressCore",
+      path: "front-commerce-wordpress/server/modules/wordpress/core",
+    },
+    // if you want a blog
+    {
+      name: "WordPressBlog",
+      path: "front-commerce-wordpress/server/modules/wordpress/blog",
+    },
+    // if you want to expose Cms Pages from Wordpress
+    {
+      name: "WordPressCms",
+      path: "front-commerce-wordpress/server/modules/wordpress/cms",
+      // if your Front-Commerce project is connected to a Magento1 instance, you
+      // need to use the following path instead
+      // path: "front-commerce-wordpress/server/modules/wordpress/cms/index.magento1.js",
+    },
+    // highlight-end
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "front-commerce/src/web" },
+    // highlight-start
+    {
+      name: "Wordpress",
+      path: "front-commerce-wordpress/front-commerce-wordpress/web",
+    },
+    // highlight-end
+    { name: "YourProject", path: "./src/web" },
+  ],
+};
+```
+
+After these changes, you need to restart Front-Commerce.
