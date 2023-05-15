@@ -20,13 +20,19 @@ each:
   // highlight-start
   contentSecurityPolicy: {
     directives: {
+      defaultSrc: [],
       scriptSrc: [],
       frameSrc: [],
       styleSrc: [],
       imgSrc: [],
       fontSrc: [],
       connectSrc: [],
-      baseUri: []
+      baseUri: [],
+      mediaSrc:[]
+      objectSrc: [],
+      workerSrc: [],
+      manifestSrc: [],
+      childSrc: [],
     }
   }
   // highlight-end
