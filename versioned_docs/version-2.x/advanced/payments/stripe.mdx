@@ -7,6 +7,7 @@ description:
 ---
 
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
 
 <p>{frontMatter.description}</p>
 
@@ -103,7 +104,7 @@ To allow loading stripe related remote resources:
 
 ### Advanced: disable automatic capture
 
-> Since 2.19.0
+<SinceVersion tag="2.19" />
 
 Optionally the environment variable `FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE` can
 be set to `true` to configure the Stripe module so that the payment is not
