@@ -12,6 +12,31 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.23.0` -> `2.24.0`
+
+### Apple Pay and Google Pay support with Stripe
+
+In this version, we have added support for [Apple Pay and Google Pay with
+Stripe](/docs/2.x/advanced/payments/stripe#optional-enable-apple-pay-andor-google-pay).
+We have also took this as an opportunity to upgrade Stripe related dependencies.
+If your project uses Stripe, we strongly advice you to test your integration.
+
+:::note
+
+To enable support for Apple Pay and Google Pay, we have [changed the
+implementation of `StripeCheckoutForm` to use Stripe's `PaymentElement` instead
+of Stripe's
+`CardElement`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2030).
+This results in a slight user interface change. Please update your
+`theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/*`
+overrides if any.
+
+:::
+
+### New features in `2.24.0`
+
+* [Apple Pay and Google Pay support with Stripe](/docs/2.x/advanced/payments/stripe)
+
 ## `2.22.0` -> `2.23.0`
 
 ### Adobe Commerce RMA
