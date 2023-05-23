@@ -16,17 +16,15 @@ import TabItem from "@theme/TabItem";
 
 ### Apple Pay and Google Pay support with Stripe
 
-In this version, we have added support for [Apple Pay and Google Pay with
-Stripe](/docs/2.x/advanced/payments/stripe#optional-enable-apple-pay-andor-google-pay).
+In this version, we have added support for
+[Apple Pay and Google Pay with Stripe](/docs/2.x/advanced/payments/stripe#optional-enable-apple-pay-andor-google-pay).
 We have also took this as an opportunity to upgrade Stripe related dependencies.
 If your project uses Stripe, we strongly advice you to test your integration.
 
 :::note
 
-To enable support for Apple Pay and Google Pay, we have [changed the
-implementation of `StripeCheckoutForm` to use Stripe's `PaymentElement` instead
-of Stripe's
-`CardElement`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2030).
+To enable support for Apple Pay and Google Pay, we have
+[changed the implementation of `StripeCheckoutForm` to use Stripe's `PaymentElement` instead of Stripe's `CardElement`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2030).
 This results in a slight user interface change. Please update your
 `theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/*`
 overrides if any.
@@ -35,7 +33,15 @@ overrides if any.
 
 ### New features in `2.24.0`
 
-* [Apple Pay and Google Pay support with Stripe](/docs/2.x/advanced/payments/stripe)
+- [Apple Pay and Google Pay support with Stripe](/docs/2.x/advanced/payments/stripe)
+- Added additional
+  [<abbr title="Content Security Policy">CSP</abbr> directives](/docs/2.x/reference/content-security-policy).
+  - [media-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/media-src)
+  - [default-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src)
+  - [object-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src)
+  - [worker-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src)
+  - [manifest-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src)
+  - [child-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src)
 
 ## `2.22.0` -> `2.23.0`
 
