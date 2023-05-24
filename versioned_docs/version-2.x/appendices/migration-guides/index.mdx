@@ -31,6 +31,69 @@ overrides if any.
 
 :::
 
+### ImageAdapters without multiple sources
+
+In the version we extended the `ImageAdapters` feature allow an adapter to
+change how sources are generated for the srcSet, to allow this, we had to
+[make changes to the `makeImagesProps`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2037)
+If you have overriden this file, you will need to update it to match the new
+implementation.
+
+```js title="src/web/theme/components/atoms/Image/makeImagesProps.js"
+// add-next-line
+import imageAdapters from "./adapters";
+
+const makeImgProps = (baseUrl, src, format, bg, cover, fluid) => {
+  // [..]
+
+  // add-start
+  const sourcesExtensions = imageAdapters.getSupportedExtensions(
+    src,
+    bg === "transparent"
+  );
+  const defaultExtension = imageAdapters.getDefaultExtension(src);
+  // add-end
+
+  return {
+    // remove-next-line
+    src: makeImgSrc(src, format, sizes[0], bg, extension, cover, baseUrl),
+    // add-next-line
+    src: makeImgSrc(src, format, sizes[0], bg, defaultFormat, cover, baseUrl),
+    sources: sourcesExtensions.map((extension) => ({
+      // remove-next-line
+      type: `image/${extension}`,
+      // add-next-line
+      ...(extension ? { type: `image/${extension}` } : {}),
+      srcSet: makeImageSrcset(
+        baseUrl,
+        src,
+        format,
+        sizes,
+        bg,
+        extension,
+        cover,
+        fluid
+      ),
+    })),
+  };
+};
+```
+
+We also added two optional methods `getSupportedExtensions` and
+`getDefaultExtension` to adapters, see
+[Custom ImageAdapters documentation](/docs/2.x/advanced/images-adapters/custom-adapter#changing-the-generated-sources-for-srcset)
+for more information.
+
+:::info
+
+This change removed the responsibility of the
+[exported `transparentExtensions`, `extensions` and `defaultExtension`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/8369167c12d4c655fab8998723b54332dc6a5274/src/web/theme/components/atoms/Image/ImageComponent.js#L8-20)
+consts from the `ImageComponent` so we have marked them for deprecation in v3,
+they are currently re-exporting the methods from the default Front-Commerce
+image adapter
+
+:::
+
 ### New features in `2.24.0`
 
 - [Apple Pay and Google Pay support with Stripe](/docs/2.x/advanced/payments/stripe)
