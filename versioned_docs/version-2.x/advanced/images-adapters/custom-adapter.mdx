@@ -90,3 +90,65 @@ imageAdapters.register(LoremPicsumAdapter);
 
 All the built-in image components use the ImageAdapters by default to deliver
 images enhanced and optimized images.
+
+### Changing the generated sources for srcSet
+
+The ImageAdapter has two optional methods:
+
+- `getSupportedExtensions` this allows you to change how the `srcSet` is
+  generated.
+- `getDefaultExtension` this allows you to change the default format used for
+  the `srcSet`.
+
+For example, if we want to change the supported formats for the UnsplashAdapter:
+
+```js title="src/web/adapters/unsplash.js"
+import { ImageAdapter } from "theme/components/atoms/Image/ImageAdapter";
+
+class UnsplashAdapter extends ImageAdapter {
+  supportSrc(src) {
+    return src.includes("unsplash.com");
+  }
+
+  makeImageSrc(src) {
+    return src;
+  }
+
+  // add-start
+  getSupportedExtensions(transparent) {
+    if (transparent) {
+      return ["webp", "png"];
+    }
+
+    return ["webp", "jpeg"];
+  }
+
+  getDefaultExtension() {
+    return "jpeg";
+  }
+  // add-end
+}
+```
+
+You can also opt-out of multiple sources for the `srcSet` by either returning a
+single format or a null if you don't want to specify a format.
+
+```js title="src/web/adapters/unsplash.js"
+  // add-start
+  getSupportedExtensions(transparent) {
+    if (transparent) {
+      return "webp" // return a single format
+    }
+
+    return null // generate one source without a format specification
+  }
+  // add-end
+```
+
+:::note
+
+Not specifing the `getSupportedExtensions` and `getDefaultExtension` methods
+will fallback to the
+[default implementation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/7b41c06087c621b172b91270465a79c4d1aa2713/src/web/theme/components/atoms/Image/ImageAdapter.js#L17-33).
+
+:::

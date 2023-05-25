@@ -7,6 +7,7 @@ description:
 ---
 
 import ContactLink from "@site/src/components/ContactLink";
+import SinceVersion from "@site/src/components/SinceVersion";
 
 <p>{frontMatter.description}</p>
 
@@ -82,6 +83,23 @@ In your Front-Commerce application:
    };
    ```
 
+### Optional: enable Apple Pay and/or Google Pay
+
+<SinceVersion tag="2.24" />
+
+If enabled in your Stripe account, Apple Pay and Google Pay payment methods are
+supported and can be used in your Front-Commerce store. Please refer to [the
+Google Pay with Stripe](https://stripe.com/docs/google-pay) and [the Apple Pay
+with Stripe](https://stripe.com/docs/apple-pay) documentation to learn how to
+configure those payment methods.
+
+:::tip
+
+For those payment methods to show up, your Front-Commerce store must use the
+https protocol even in a test environment.
+
+:::
+
 ### Update your CSPs
 
 To allow loading stripe related remote resources:
@@ -103,7 +121,7 @@ To allow loading stripe related remote resources:
 
 ### Advanced: disable automatic capture
 
-> Since 2.19.0
+<SinceVersion tag="2.19" />
 
 Optionally the environment variable `FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE` can
 be set to `true` to configure the Stripe module so that the payment is not

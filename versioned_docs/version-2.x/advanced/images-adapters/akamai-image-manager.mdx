@@ -1,0 +1,65 @@
+---
+sidebar_position: 1
+title: Akamai Image Manager
+description:
+  Automatically optimize and enhance visual media for every user, on any device, at edge with Akamai.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+import ContactLink from "@site/src/components/ContactLink";
+
+<SinceVersion tag="2.24" />
+<p>{frontMatter.description}</p>
+
+## Installation
+
+Add the `akamai-image-manager` module to your config file:
+
+```js title=".front-commerce.js"
+module.exports = {
+  name: "Front Commerce",
+  modules: [
+    "./node_modules/front-commerce/theme-chocolatine",
+    // highlight-next-line
+    "./node_modules/front-commerce/modules/akamai-image-manager",
+    "./src",
+  ],
+};
+```
+
+## Configuration
+
+The `akamai-image-manager` module works out-of-the-box without requiring any changes to your existing image configuration. It however supports additional configurations for specific use cases.
+
+Configuration is available under the `akamai` key of the [`src/config/images.js`](/docs/2.x/reference/configurations#configimagesjs)
+config.
+
+### Using Image Manager for a subset of images
+
+You can customize the `akamai.paths` value to limit images handled by image manager to only a subset of paths. This option accepts an array of paths. Only images under this path will be handled by the image manager adapter. Default value is `["/"]` (all images).
+
+Example:
+
+```js title="src/config/images.js"
+module.exports = {
+  // […]
+  akamai: {
+    paths: [
+      "/media",
+      "/cms/images/",
+    ],
+  },
+};
+```
+
+## Akamai configuration
+
+The adapter uses
+[Akamai's IMQueries](https://techdocs.akamai.com/ivm/docs/imquery) to handle
+transformation on images, with the default `im` as variable name.
+
+:::info
+
+In Front-Commerce Cloud, Akamai Image Manager isn't enabled by default. Please <ContactLink>contact us</ContactLink> if you plan to use this feature.
+
+:::
