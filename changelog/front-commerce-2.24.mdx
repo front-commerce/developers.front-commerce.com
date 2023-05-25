@@ -1,0 +1,164 @@
+---
+title: "Release: 2.24"
+authors: pierre
+date: 2023-05-25T12:00
+hide_table_of_contents: true
+image: ./assets/2.24/stripe-payment-screen.jpg
+---
+
+## Apple Pay & Google Pay support for Stripe, Akamai Image Manager and first alpha versions of Front-Commerce Remixed
+
+Front-Commerce 2.24 is out. As usual, it contains features requested by customers and continuous improvements.
+The key features of this release are Akamai Image Manager and payment wallets support for our Stripe connector.
+
+We've also been busy working on Front-Commerce Remixed, and are excited to share this progress with you!
+
+☕ Read on to learn more about these updates and as always, should you have any requests regarding the product roadmap, do not hesitate to contact us 👋
+
+<!-- truncate -->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ContactLink from "@site/src/components/ContactLink";
+
+
+## Stripe update: Apple Pay & Google Pay support
+
+In this release, we added support for Apple Pay and Google Pay wallets in our [Stripe payment integration.](/docs/2.x/advanced/payments/stripe)
+
+![Checkout payment step with Stripe card payment selected](assets/2.24/stripe-payment-screen.jpg)
+
+Users can now easily pay for their purchases using their preferred mobile payment method. This feature is seamlessly integrated into the payment process, providing a smooth and efficient transaction experience.
+
+
+We also took this as an opportunity to update Stripe dependencies to their latest version.
+
+## Akamai Image Manager support
+
+After Cloudinary and TwicPics, we ensured our Front-Commerce component could be used with [Akamai Image Manager](https://www.akamai.com/products/image-and-video-manager).
+
+Akamai Image Manager optimizes website images for faster delivery and improved website performance. Images are cached on Akamai's global network of servers and optimized automatically for every user and any device.
+
+Image Manager chooses the optimal format based on the user device and bandwidth and compresses images without degrading quality.
+
+As for other image adapters, using Akamai Image Manager doesn't require any code change. [Follow our documentation](/docs/2.x/advanced/images-adapters/akamai-image-manager) to configure it in your application.
+
+:::note
+
+**About Front-Commerce Cloud:** Image Manager isn't enabled by default for Front-Commerce Cloud customers using the Akamai <abbr title="Content Delivery Network">CDN</abbr>. Please <ContactLink>contact us</ContactLink> if you want to use this service in your project.
+
+:::
+
+## Front-Commerce Remixed saw its first (technical) alpha versions
+
+As announced [in our previous changelog entry](/changelog/front-commerce-2.23#the-front-commerce-dj-team-has-started-to-remix-it), our `main` branch is now active with work on the Front-Commerce Remixed upcoming release.
+
+We tagged 3 `alpha` versions as we made progress on core features and repository reorganization. It still isn't ready for you to play with, but we're getting closer!
+
+Here are the highlights of these versions if you want to stay in the loop.
+
+### Deprecated code in `2.x` versions was removed
+
+In [our `3.0.0-alpha.0` release](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.0.0-alpha.0), we've finalized the removal of all deprecated code since our  `2.0` version (almost 4 years ago!).
+
+More than 7K lines were removed across more than 250 files! 😅
+
+Notable removals include the *legacy analytics* implementation and components. For an exhaustive list, please refer to [our migration guide](/docs/remixed/migration/deprecated-code-removal).
+
+We've also taken this as an opportunity to [rename Magento environment variables prefix](/docs/remixed/migration/manual-migration#magento) to include the platform version number: `FRONT_COMMERCE_MAGENTO_*` becomes either `FRONT_COMMERCE_MAGENTO1_*` or `FRONT_COMMERCE_MAGENTO2_*`.
+
+### A new repository layout was introduced
+
+Front-Commerce is composed of several parts. In versions `2.x` developers installed everything at once, as a single dependency.
+
+In FC Remixed, we've decided to switch to a monorepo layout (using `pnpm` workspaces) and split the `front-commerce` dependency into discrete packages that could be distributed through an NPM registry (e.g: `@front-commerce/core`, `@front-commerce/magento2`, `@front-commerce/adyen` …).
+
+The Front-Commerce *skeleton* is also back into our main repository, and will be distributed as a [Remix Stack](https://remix.run/docs/en/main/pages/stacks) so you could start a Front-Commerce project with a single command! It is a standard Remix/TypeScript/Express application with Front-Commerce core and tooling already configured.
+
+For more details, customers can read our [monorepo <abbr title="Architecture Decision Record">ADR</abbr>](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/docs/adr/0007-monorepo-distribution-tooling.md) along with our [Front-Commerce as Remix extensions <abbr title="Architecture Decision Record">ADR</abbr>](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/docs/adr/0008-front-commerce-as-remix-extensions.md).
+
+### `@front-commerce/compat`: our promise to Front-Commerce projects
+
+In [3.0.0-alpha.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.0.0-alpha.1#front-commercecompat) and [3.0.0-alpha.2](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.0.0-alpha.2#front-commercecompat), we focused on our key core packages. One of the most important for all our customers is the `@front-commerce/compat` package.
+
+This package will contain all the code needed to progressively migrate a project started on Front-Commerce `2.x` to Front-Commerce Remixed, and then benefit from all the improvements it brings!
+
+In these releases, we've added an initial version of our **Codemods** scripts which will allow us to [automate every migration step](/docs/remixed/migration/automated-migration) that can be automated (import changes, conventions…).
+
+We've also added `@front-commerce/compat/recompose` utility functions to replace the unmaintained `recompose` library we heavily used in our components before hooks were announced. This package is compatible with React 18 (which isn't the case of other forks).
+
+### Front-Commerce as Remix extensions
+
+We want Front-Commerce projects to be Remix projects. For this reason, we've [decided to build Front-Commerce Remixed as Remix extensions](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/docs/adr/0008-front-commerce-as-remix-extensions.md). In [`3.0.0-alpha.2`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.0.0-alpha.2#front-commercecompat) we implemented the fundamental pieces of this integration:
+
+- A new [`FrontCommerceApp` class](/docs/remixed/api-reference/front-commerce-remix/front-commerce-app) that will be the main way to interact with the Front-Commerce application domain, mostly through GraphQL. This class should be constructed in each Remix `loader` and `action`, and allows developers to run GraphQL requests and mutations and access information about the current context (user, configurations etc…).
+- It is a core component of our `@front-commerce/remix` package, containing all the glue between the agnostic `@front-commerce/*` packages and the Remix framework.
+- The `@front-commerce/remix` package also serves [a GraphQL playground](/docs/remixed/api-reference/front-commerce-remix/graphql-playground) in development mode. It is based on the latest GraphiQL version (bye-bye GraphQL playground 👋). For the most curious: Front-Commerce Remixed GraphQL server stack is now based on `envelop` and `yoga`!
+
+More is coming in the next weeks, with the introduction of the Front-Commerce CLI, Front-Commerce Extensions, GraphQL Codegen and of course… the first modules! Stay tuned.
+
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **csp:** we added support for more CSP directives in CSP configurations
+- **image:** image adapters can now customize extension types generated in each element. It allows to adapt to each service image delivery and supported image types
+
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **external-logins:** improved redirection URLs generation to prevent double slashes in their path
+- **image:** ensured Image adapters are registered with a predictable name to prevent having different adapters used between SSR and hydration
+- **magento1:** the *"use buildBuckets() method instead"* deprecation warnings is not incorrectly displayed anymore on category layer when the cache is enabled
+- **prismic:** avoided cache corruption edge cases by removing Prismic reference TTL
+- **search:** search results are now resilient to incorrect page identifiers returned by search datasources. Not found pages are ignored to prevent crashes.
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Performance Improvements</h3></summary>
+```
+
+- **i18n:** translations are not duplicated anymore in chunks. It should reduce the amount of Javascript served to users.
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.24.0"}
+  previousVersions={[
+    "2.23.2",
+    "2.22.4",
+    "2.21.4",
+    "2.20.6",
+    "2.19.12",
+    "2.18.10",
+    "2.17.11",
+    "2.16.12",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.24.0](/docs/2.x/appendices/migration-guides#2230---2240)
+or
+[read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.0)
+
+</ChangelogFooter>
