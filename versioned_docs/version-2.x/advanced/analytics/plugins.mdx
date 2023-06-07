@@ -282,11 +282,11 @@ Configuration example in `src/config/analytics.js`
   needConsent: true,
   settings: (authorization) => {
     return {
-        measurementIds: ['G-abc123'],
-        gtagConfig:{
-            anonymize_ip: !authorization
-        }
-      },
+      measurementIds: ['G-abc123'],
+      gtagConfig:{
+          anonymize_ip: !authorization
+      }
+    };
   },
   script: () => import("@analytics/google-analytics"),
 }
