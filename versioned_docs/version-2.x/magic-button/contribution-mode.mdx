@@ -1,0 +1,89 @@
+---
+sidebar_position: 1
+title: Contribution Mode
+description:
+  Contribution Mode is the core of the Magic Button tool. When Contribution
+  Mode is enabled for a user, your storefront displays a set of tools created
+  for content creators.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.25" />
+
+<p>{frontMatter.description}</p>
+
+## How to activate Contribution Mode
+
+### Activate with Config Provider
+
+The **Magic Button** is only visible when the **Contribution Mode** is active.
+
+The default activation for **Contribution Mode** is defined by the
+[`contributionModeConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2cc02f42cf4f984f3269f4b1bfc07cea9a53795f/src/server/modules/front-commerce/contribution-mode/contributionModeConfigProvider.js)
+and is controlled by the `FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE` environment
+variable.
+
+You can follow [the
+override an existing configuration guide](/docs/2.x/advanced/server/configurations#override-an-existing-configuration)
+to implement your own rule to conditionally enable the contribution mode.
+
+:::tip
+
+While in development you can use the
+`FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE=true` environment variable to force the
+contribution mode to be enabled, but this should not be used in production.
+
+:::
+
+### Activate with Loader
+
+To activate the **Contribution Mode** through a loader, you can take advantage
+of the `forceEnablePreviewMode` method in the
+[`ContributionModeLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2cc02f42cf4f984f3269f4b1bfc07cea9a53795f/src/server/modules/front-commerce/contribution-mode/loaders/ContributionModeLoader.js)
+
+```js
+export default {
+  namespace:"MyModule"
+  dependencies:["Front-Commerce/Contribution-Mode"]
+  resolvers:{
+    Mutation:{
+      enableContributorMode: async (root, args, context) => {
+        context.loaders.ContributionMode.forceEnablePreviewMode()
+        return true
+      }
+    }
+  }
+}
+```
+
+This will activate the Contribution Mode and the Preview Mode.
+
+## Check if Contribution Mode is active
+
+You can check if the **Contribution Mode** is active by using the `enabled`
+field in the `ContributionModeLoader`
+
+```js
+export default {
+  namespace:"MyModule"
+  dependencies:["Front-Commerce/Contribution-Mode"]
+  resolvers:{
+    Query:{
+      myQuery: async (root, args, context) => {
+        return context.loaders.ContributionMode.enabled
+      }
+    }
+  }
+}
+```
+
+It is also exposed in the Graph:
+
+```graphql
+query {
+  contribution {
+    enabled
+  }
+}
+```
