@@ -234,7 +234,7 @@ methods in the checkout.
 The HiPay payment module is extensible. It leverages Front-Commerce's "data
 transform" pattern to allow developers to customize payment data sent to HiPay.
 
-You need to create a backend loader to register the transformation.
+You can create a backend loader to register the custom payment data transformations.
 
 ```js
 export default {
@@ -250,7 +250,7 @@ export default {
 };
 ```
 
-:::warning
+:::caution
 
 Root attributes like `custom_data` indicated here are directly added to the
 HiPay `/order` form-data

@@ -14,6 +14,12 @@ import TabItem from "@theme/TabItem";
 
 ## `2.23.0` -> `2.24.0`
 
+:::caution
+
+We've released version [2.24.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.1) which fixes a critical regression introduced in version 2.24.0. **Please ensure that you're upgrading to the latest 2.24.x version.**
+
+:::
+
 ### Apple Pay and Google Pay support with Stripe
 
 In this version, we have added support for
@@ -93,6 +99,14 @@ they are currently re-exporting the methods from the default Front-Commerce
 image adapter
 
 :::
+
+### Search engine interface updated
+
+If you implemented a very custom search engine datasource, please update it to expose a `scopes.queries.matchingQuery` scope.
+You can use a dummy implementation if you don't want to support search query autocompletion.
+See [MR!2072](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2072) for an example.
+
+If you use an existing Front-Commerce search engine (Platform native, ElasticSearch, Algolia or Attraqt), you don't have anything to do.
 
 ### New features in `2.24.0`
 
