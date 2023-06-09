@@ -25,8 +25,8 @@ Only for Magento 2
 In this version we've added the list of products shipped in each shipments of an
 order.
 
-If you've override the `OrderShipmentTrackingFragment.gql` file, you must inject
-a new fragment:
+If you've overriden the `OrderShipmentTrackingFragment.gql` file, you must
+inject a new fragment:
 
 ```graphql title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTrackingFragment.gql"
 // add-next-line
@@ -48,8 +48,8 @@ fragment OrderShipmentTrackingFragment on Shipment {
 
 ```
 
-If you've override the `BaseTrackingDetails` component, you must add a new
-component to display list of items:
+If you've overriden the `BaseTrackingDetails` component, you must add a new
+component to display the list of items:
 
 ```js title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTracking.js"
 import React from "react";
