@@ -12,11 +12,87 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.24.0` -> `2.25.0`
+
+### Multi shipment enhanced display
+
+:::info
+
+Only for Magento 2
+
+:::
+
+In this version we've added the
+[list of products shipped in each shipments of an order](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075).
+
+If you've overriden the `OrderShipmentTrackingFragment.gql` file, you must
+inject a new fragment:
+
+```graphql title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTrackingFragment.gql"
+// add-next-line
+#import "theme/modules/User/Order/OrderShipmentTrackingProducts/OrderShipmentTrackingProductsFragment.gql"
+fragment OrderShipmentTrackingFragment on Shipment {
+  trackingDetails {
+    trackingId
+    name
+    url
+    // add-next-line
+    items {
+      // add-next-line
+      ...OrderShipmentTrackingProductsFragment
+      // add-next-line
+    }
+    __typename
+  }
+}
+
+```
+
+If you've overriden the `BaseTrackingDetails` component, you must add a new
+component to display the list of items:
+
+```js title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTracking.js"
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import Link from "theme/components/atoms/Typography/Link";
+import { BodyFade } from "theme/components/atoms/Typography/Body";
+// add-next-line
+import OrderShipmentTrackingProducts from "theme/modules/User/Order/OrderShipmentTrackingProducts";
+
+const Tracking = ({ tracking }) => {
+  const name = tracking.url ? (
+    <Link to={tracking.url}>{tracking.name}</Link>
+  ) : (
+    tracking.name
+  );
+
+  return (
+    <div className="account-orders-details__item">
+      <div className="account-orders-details__item__title">{name}</div>
+      <BodyFade>
+        <FormattedMessage
+          id="modules.User.Order.OrderShipmentTracking.number"
+          defaultMessage="Tracking number: {trackingId}"
+          values={{ trackingId: tracking.trackingId }}
+        />
+      </BodyFade>
+      // add-next-line
+      <OrderShipmentTrackingProducts items={tracking.items} />
+    </div>
+  );
+};
+
+export default Tracking;
+```
+
 ## `2.23.0` -> `2.24.0`
 
 :::caution
 
-We've released version [2.24.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.1) which fixes a critical regression introduced in version 2.24.0. **Please ensure that you're upgrading to the latest 2.24.x version.**
+We've released version
+[2.24.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.1)
+which fixes a critical regression introduced in version 2.24.0. **Please ensure
+that you're upgrading to the latest 2.24.x version.**
 
 :::
 
@@ -102,11 +178,14 @@ image adapter
 
 ### Search engine interface updated
 
-If you implemented a very custom search engine datasource, please update it to expose a `scopes.queries.matchingQuery` scope.
-You can use a dummy implementation if you don't want to support search query autocompletion.
-See [MR!2072](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2072) for an example.
+If you implemented a very custom search engine datasource, please update it to
+expose a `scopes.queries.matchingQuery` scope. You can use a dummy
+implementation if you don't want to support search query autocompletion. See
+[MR!2072](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2072)
+for an example.
 
-If you use an existing Front-Commerce search engine (Platform native, ElasticSearch, Algolia or Attraqt), you don't have anything to do.
+If you use an existing Front-Commerce search engine (Platform native,
+ElasticSearch, Algolia or Attraqt), you don't have anything to do.
 
 ### New features in `2.24.0`
 
@@ -119,7 +198,8 @@ If you use an existing Front-Commerce search engine (Platform native, ElasticSea
   - [worker-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src)
   - [manifest-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src)
   - [child-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src)
-- [Akamai Image Manager adapter](/docs/2.x/advanced/images-adapters/akamai-image-manager) for the `<Image>` component
+- [Akamai Image Manager adapter](/docs/2.x/advanced/images-adapters/akamai-image-manager)
+  for the `<Image>` component
 
 ## `2.22.0` -> `2.23.0`
 
