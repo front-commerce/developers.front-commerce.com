@@ -1,0 +1,130 @@
+---
+sidebar_position: 3
+title: Preview Mode
+description:
+  Get a sneak peek of your content's appearance and make necessary changes for
+  an optimal user experience.
+---
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="2.25" />
+
+**Preview Mode** is an integral feature of Magic Button, specifically designed
+to enable content creators to preview their drafts from systems supporting this
+feature before publishing changes.
+
+## How to activate Preview Mode
+
+### Using the Magic Button
+
+Activate the **Preview Mode** directly from the Editorial Toolbox. Click on the
+Magic Button and select the Preview Mode option.
+
+<div style={{ width: 600, maxWidth: "100%" }}>
+  <BrowserWindow noPadding>
+    <img
+      src={require("./assets/enable-preview.gif").default}
+      width="100%"
+      height="100%"
+      style={{ objectFit: "contain", marginBottom: -10 }}
+    />
+  </BrowserWindow>
+</div>
+
+### Programmatically
+
+Alternatively, **Preview Mode** can be activated programmatically by leveraging
+the
+[`ContributionModeLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2cc02f42cf4f984f3269f4b1bfc07cea9a53795f/src/server/modules/front-commerce/contribution-mode/loaders/ContributionModeLoader.js).
+There are two methods for this:
+
+### `setPreviewMode`
+
+The `setPreviewMode` method is typically used for safe activation of Preview
+Mode. If Contribution Mode is not enabled, Preview Mode will not be activated.
+
+It is also possible to enable the preview mode by using the
+`contribution.setPreviewMode` mutation:
+
+```graphql
+mutation EnablePreviewMode {
+  contribution {
+    setPreviewMode(enabled: true) {
+      success
+      enabled
+    }
+  }
+}
+```
+
+You can also call this method directly from the loader:
+
+```js
+export default {
+  namespace: "MyModule",
+  dependencies: ["Front-Commerce/Contribution-Mode"],
+  resolvers: {
+    Mutation: {
+      setPreviewMode: async (root, args, context) => {
+        return context.loaders.ContributionMode.setPreviewMode(args.enabled);
+      },
+    },
+  },
+};
+```
+
+### `forceEnablePreviewMode`
+
+`forceEnablePreviewMode` is used to forcefully activate Preview Mode,
+irrespective of whether Contribution Mode is enabled or not. It's useful when
+you have custom endpoints which validate if the current user is an authorized
+contributor.
+
+Typically, this method is used in custom endpoints:
+
+```js title="src/server/modules/my-module/module.config.js"
+import { Router } from "express";
+import makeLoadersFromRequest from "server/core/graphql/makeLoadersFromRequest";
+
+export default {
+  endpoint: {
+    path: "/my-path/preview",
+    router: (staticConfig) => {
+      const router = Router();
+
+      router.use(async (req, res, next) => {
+        const loaders = makeLoadersFromRequest(staticConfig, req);
+
+        // Check if preview mode is already enabled.
+        // highlight-start
+        const isPreview = loaders.ContributionMode.preview;
+        if (!isPreview && req.query.secret !== "foobar") {
+          return res.status(403).send("Forbidden");
+        }
+        if (!isPreview) {
+          loaders.ContributionMode.forceEnablePreviewMode();
+        }
+        // highlight-end
+
+        return next();
+      });
+
+      return router;
+    },
+  }
+};
+```
+
+### Check if Preview Mode is enabled
+
+The preview mode is exposed in the Graph:
+
+```graphql
+query {
+  contribution {
+    previewMode
+  }
+}
+```
