@@ -19,8 +19,8 @@ for editing, thereby improving content management efficiency.
 
 ## How to activate X-Ray
 
-To activate the **X-Ray** feature, click on the Magic Button and
-select the X-Ray option.
+To activate the **X-Ray** feature, click on the Magic Button and select the
+X-Ray option.
 
 <div style={{ width: 600, maxWidth: "100%" }}>
   <BrowserWindow noPadding>
@@ -36,6 +36,16 @@ select the X-Ray option.
 When enabled, content composing the page are outlined with a user interface
 allowing the contributor to know the source of it and providing a quick access
 to the corresponding administration interface.
+
+:::tip
+
+When using Front-Commerce with Magento 1 as backend you can set the env variable
+`FRONT_COMMERCE_MAGENTO_TYPE` to `magento1` or `openmage` to specify to Mangeto
+1 backend type (by default `openmage`).
+
+It will only change color of border content to match the color of your backend
+
+:::
 
 ## X-Ray on custom types
 
@@ -61,7 +71,8 @@ type MyCustomType @storeContentDirective(extractorIdentifier: "identifier") {
 
 The `extractorIdentifier` identifies a _content metadata extractor_ that must be
 registered in the application. This is typically done in the `contextEnhancer`
-of [the GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema#create-a-new-graphql-module):
+of
+[the GraphQL module](/docs/2.x/essentials/extend-the-graphql-schema#create-a-new-graphql-module):
 
 ```javascript title="src/my-module/index.js"
 import typeDefs from "./schema.gql";
@@ -116,7 +127,7 @@ const MyCustomType = ({ aMyCustomType }) => {
       <h1>{aMyCustomType.name}</h1>
     </StorefrontContent>
   );
-}
+};
 ```
 
 ### Style a custom source
