@@ -123,13 +123,9 @@ const MyCustomType = ({ aMyCustomType }) => {
 
 If your content comes from a specific source, you can configure a dedicated
 color and icon for that source. For that, you can can override
-`theme/modules/StorefrontContent/sources`, in that example:
+`app-sources`:
 
-```js
-import magento from "./magento";
-import contentful from "./contentful";
-import prismic from "./prismic";
-
+```js title="theme/modules/StorefrontContent/app-sources.js"
 const anSvgIcon = /* … */
 
 const customStyle = {
@@ -138,5 +134,5 @@ const customStyle = {
   icon: anSvgIcon,
 }
 
-export default [magento, contentful, prismic, aCustomSource].filter(Boolean);
+export default [customStyle];
 ```
