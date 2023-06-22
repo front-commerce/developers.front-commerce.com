@@ -105,13 +105,24 @@ from the theme:
     commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
 - `theme/pages/Account/Orders/Details/Details.js` ([see the corresponding
     commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
-- `theme/pages/Product/Product.js` ([see the corresponding
-    commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
 - `theme/pages/CmsPage/CmsPage.js` ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/61fddb8f9c68278a818a3875fb29c3c4294df4eb#0910701e610443ed0dabb3fb9b053e2b3b9e4ad7_22_13))
 - `theme/pages/Category/Category.js` ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e#f73633265fb675f84c088c5b3d38749242fe36f8))
 - `theme/modules/_modules.scss` ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/5d803de8a30d9429cf4c085c3b3da91285c22ae1#f9a39a6723f4100486c2658dff702698421eae41))
-- `template/index.html` ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/deb16c3af50250b449da80b2ab59eb547296f623#3247326c60e05cf712f07173ced7f41410f2f6b5))
-- `theme-chocolatine/web/theme/components/organisms/ItemsSlider/_ItemsSlider.scss` ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/0b620671e5af62e1acd8360551e382a3ad2a79e5))
+
+If you have an override of `template/index.html`, you need to apply the
+following changes:
+
+```diff title="template/index.html"
+     <script>
+       window.__APOLLO_STATE__ = %%__APOLLO_STATE__%%;
+     </script>
++    <script>
++      window.__CONTRIBUTION_MODE_DATA__ = %%__CONTRIBUTION_MODE_DATA__%%;
++    </script>
+     <script>
+       window.__MAINTENANCE__ = %%__MAINTENANCE__%%;
+     </script>
+```
 
 We strongly advice you to synchronize any override you may have done in your
 project.
