@@ -119,6 +119,18 @@ const MyCustomType = ({ aMyCustomType }) => {
 }
 ```
 
+By default, the X-Ray view will be scoped as **block**.
+You can make it global to the whole page by defining the
+`scope="page"` prop.
+
+```js
+<StorefrontContent type="MyCustomPage" id={aMyCustomPage.slug} scope="page">
+```
+
+The screenshot below illustrates a page scope for the category (1) and block scopes for product items (2):
+[![Example of X-Ray scopes on the same page](./assets/x-ray-blocks-types.png)](./assets/x-ray-blocks-types.png)
+
+
 ### Style a custom source
 
 If your content comes from a specific source, you can configure a dedicated
