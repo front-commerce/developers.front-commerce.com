@@ -80,7 +80,7 @@ module.exports = {
       height: 50, // size of the resized image
       bgColors: [], // allowed background colors
     },
-    small: { width: 200, height: 200, bgColors: [] },
+    small: { width: 200, height: 200, bgColors: ["e7e7e7"] },
     medium: { width: 474, height: 474, bgColors: [] },
     mediumNoRatio: {
       width: 474,
@@ -101,18 +101,18 @@ Once you have configured your media middleware, you will be able to actually
 request a proxied image. To do so, you need to build your URL as follow:
 
 ```wiki
-http://localhost:4000/media/<pathToMyImage>?format=<presetName>&bgColor=<colorValue>&cover=<coverBoolean>&dpi=x2
+http://localhost:4000/media/<pathToMyImage>?format=<presetName>&bg=<colorValue>&cover=<coverBoolean>&dpi=x2
 ```
 
 With actual values, it would look like this:
 
 ```wiki
-http://localhost:4000/media/path/to/my/image.jpg?format=small&bgColor=FFFFFF&cover=true
+http://localhost:4000/media/path/to/my/image.jpg?format=small&bg=e7e7e7&cover=true
 ```
 
 - `format`: must be one of the keys available in your `presets` configuration or
   `original` to request the image without any transformation
-- `bgColor` (optional): must have one of the values in the array `bgColors` of
+- `bg` (optional): must have one of the values in the array `bgColors` of
   your preset. If you don't set it, it will be the `defaultBgColor`
 - `cover` (optional): crops the image so that both dimensions are covered,
   making parts of the image hidden if necessary. If this option is not set, the
@@ -132,8 +132,11 @@ import Image from "theme/components/atoms/Image";
   alt="a suited description of the image"
   format="small"
   cover={true}
+  bg={e7e7e7}
 />;
 ```
+
+Here as well `bg` and `cover` are optional.
 
 :::info Important
 
