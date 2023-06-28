@@ -307,11 +307,18 @@ Configuration example in `src/config/analytics.js`
 {
   name: "google-tag-manager",
   needConsent: true,
-  settings: (authorization, otherAuthorizations) => ({
-    containerId: "GTM-123xyz",
-    // the userConsents option is a specific key that the plugin will use and expose in the GTM dataLayer
-    userConsents: otherAuthorizations
-  }),
+  settings: (authorization, otherAuthorizations) => {
+    // This ensure an event is pushed with current authorizations
+    // right after the plugin's initilization.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "initConsents",
+      userConsents: otherAuthorizations,
+    });
+    return {
+      containerId: "GTM-ABC123",
+    };
+  },
   script: () => import("@analytics/google-tag-manager"),
 }
 ```
@@ -324,9 +331,9 @@ for more details)
 In GTM, you will then be able to leverage several specific things configured in
 your plugins.
 
-First, the `userConsents` configuration option will be pushed to your dataLayer
-as the `userConsents` value. You can reference it from a Variable in GTM. Here
-is an example:
+First, pushing the `initConsents` event will push the current customer's
+authorization to your dataLayer as `userConsents` value. You can reference it
+from a Variable in GTM. Here is an example:
 
 <Figure>
 
