@@ -14,6 +14,25 @@ import TabItem from "@theme/TabItem";
 
 ## `2.24.0` -> `2.25.0`
 
+### Use facet labels as values
+
+To opt-in to using facet labels as values, you must add the following following configuration to your `config/website`:
+
+```js title="config/website.js"
+module.exports = {
+ ...
+  search: {
+    dynamicFacetSize: 10,
+    ignoredAttributeKeys: [],
+    attributeFacetMinimumDocumentCount: 1,
+    authorizedCategoriesFacet: [],
+    categoryFacetMinimumDocumentCount: 1,
+    // add-next-line
+    useAttributeLabels: true,
+  },
+};
+```
+
 ### Multi shipment enhanced display
 
 :::info
