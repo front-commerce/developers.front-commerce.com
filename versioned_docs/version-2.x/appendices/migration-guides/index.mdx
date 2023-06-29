@@ -210,6 +210,26 @@ checkout. **Please contact us if you need help with this upgrade.**
 
 :::
 
+### Image caching
+
+In this version we've introduced
+[Focal Point](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/40185d3aecd3fd7c7d959483db16cdea21541a82)
+support for the `<Image>` component.
+
+**If you use integrated FC Image proxy** the cache needs to be fully
+regenerated.
+
+To do so, you should delete the `.front-commerce/cache/images` directory and
+deploy your project.
+
+:::caution
+
+Regenerate image cache will lead to a **high CPU usage**, to not disturb the
+availability of your app, we recommend you do this outside peak visit time on
+your website.
+
+:::
+
 ### New features in `2.25.0`
 
 - [Magic Button](/docs/2.x/category/magic-button)
