@@ -143,6 +143,31 @@ query Search {
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
 
+### Alternative facet filtering
+
+Front-Commerce ElasticSearch module provides an alternative way of filtering
+with facets. By default, each active facet will "refine" (i.e. substract)
+results from the search and from the selectable facets. With this alternative
+way, active facets for one attribute will become additive instead.
+
+In order to activate this feature, set `search.refinementFacetsOnly` to `false`
+in your `website.js`:
+
+```diff title="src/config/website.js"
+   themeColor: "#666699",
+   search: {
+     dynamicFacetSize: 10,
+     ignoredAttributeKeys: [],
+     attributeFacetMinimumDocumentCount: 1,
+     authorizedCategoriesFacet: [],
+     categoryFacetMinimumDocumentCount: 1,
+-    refinementFacetsOnly: true,
++    refinementFacetsOnly: false,
+   },
+   phoneNumber: "01 02 03 04 05",
+   email: "contact@example.com",
+```
+
 <a name="algolia"></a>
 
 ## Algolia connected to Magento
@@ -535,7 +560,10 @@ should now be visible.
 
 :::tip
 
-In case of emergency, Front-Commerce provides [a configuration to quickly deactivate Attraqt's search feature](/docs/2.x/reference/environment-variables#attraqt). Use the `FRONT_COMMERCE_ATTRAQT_DISABLED=true` and restart your application to temporarily deactivate the module.
+In case of emergency, Front-Commerce provides
+[a configuration to quickly deactivate Attraqt's search feature](/docs/2.x/reference/environment-variables#attraqt).
+Use the `FRONT_COMMERCE_ATTRAQT_DISABLED=true` and restart your application to
+temporarily deactivate the module.
 
 :::
 
@@ -543,17 +571,25 @@ In case of emergency, Front-Commerce provides [a configuration to quickly deacti
 
 <SinceVersion tag="2.23" />
 
-Front-Commerce allows you to leverage [Attraqt's Context](https://attraqt.gitbook.io/developer-documentation/xo-search/api-parameters/context) feature in your application. This is a great way to add contextual information to your queries, so that you can get results adapted to your users needs.
+Front-Commerce allows you to leverage
+[Attraqt's Context](https://attraqt.gitbook.io/developer-documentation/xo-search/api-parameters/context)
+feature in your application. This is a great way to add contextual information
+to your queries, so that you can get results adapted to your users needs.
 
-Contexts can be provided at different levels, from the most generic to the most specific. Context values will be used as **Attraqt context variables**.
-Here's how to do it in your application.
+Contexts can be provided at different levels, from the most generic to the most
+specific. Context values will be used as **Attraqt context variables**. Here's
+how to do it in your application.
 
 #### Global context
 
-The simplest way to add context variables to all your queries is to use a global context. Front-Commerce's Attraqt module has a configuration for it: `config.attraqt.globalContext`.
-It is defined in the `Attraqt` [configuration provider](/docs/2.x/advanced/server/configurations), so you can use any extension mechanism at your disposal to customize this value.
+The simplest way to add context variables to all your queries is to use a global
+context. Front-Commerce's Attraqt module has a configuration for it:
+`config.attraqt.globalContext`. It is defined in the `Attraqt`
+[configuration provider](/docs/2.x/advanced/server/configurations), so you can
+use any extension mechanism at your disposal to customize this value.
 
 Example: an app-wide context for every users and queries
+
 ```js
 import configService from "server/core/config/configService";
 
@@ -573,6 +609,7 @@ configService.insertAfter("Attraqt", myAppConfigProvider);
 ```
 
 Example: a global context dynamically determined per request
+
 ```js
 import mem from "mem";
 import configService from "server/core/config/configService";
@@ -598,20 +635,25 @@ const myAppConfigProvider = {
 configService.insertAfter("Attraqt", myAppConfigProvider);
 ```
 
-You can also use remote values or per user values using [other configuration providers features](/docs/2.x/advanced/server/configurations).
+You can also use remote values or per user values using
+[other configuration providers features](/docs/2.x/advanced/server/configurations).
 
 #### Layer-specific context
 
-Contexts can also be provided at the *layer level*. It allows to add context variables only for search queries restricted to a single item kind (e.g: categories).
+Contexts can also be provided at the _layer level_. It allows to add context
+variables only for search queries restricted to a single item kind (e.g:
+categories).
 
-To do so, you must use the `context` option of `datasource.buildLayer()` function in your application. Example:
+To do so, you must use the `context` option of `datasource.buildLayer()`
+function in your application. Example:
+
 ```js
 const layer = searchDatasource.buildLayer({
   type: "categories",
   // your context variables here
   context: {
     priority: "online_sales",
-    foo: "bar"
+    foo: "bar",
   },
   executeQuery: executeCategoryQuery,
   formatHit: searchDatasource.formatters.category,
@@ -629,9 +671,13 @@ Layer-specific context replace the global context.
 
 #### Query-specific context
 
-Finally, you can also implement advanced use cases by adding contextual information directly in the `SearchQuery`. It means that any scope, pagination or facet can update a query context.
+Finally, you can also implement advanced use cases by adding contextual
+information directly in the `SearchQuery`. It means that any scope, pagination
+or facet can update a query context.
 
-To do so, you must use the `addContext` method of `SearchQuery`. Example: a context based implementation of random sorting could be implemented like this
+To do so, you must use the `addContext` method of `SearchQuery`. Example: a
+context based implementation of random sorting could be implemented like this
+
 ```js
 const randomizable =
   () =>
@@ -649,7 +695,8 @@ export default randomizable;
 
 :::info
 
-Query-specific context is merged with global/layer-specific context variables. It can override specific variables while keeping others unchanged.
+Query-specific context is merged with global/layer-specific context variables.
+It can override specific variables while keeping others unchanged.
 
 :::
 
