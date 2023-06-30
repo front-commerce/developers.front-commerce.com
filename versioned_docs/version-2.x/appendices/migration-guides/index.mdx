@@ -137,9 +137,38 @@ following changes:
 We strongly advice you to synchronize any override you may have done in your
 project.
 
+### Negotiable Quotes: online payments
+
+In this release, we've added support for a first online payment method ([Stripe](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)) to the negotiable quote checkout.
+
+To achieve this feature, we had to perform a minor but potentially impactful Breaking Change to the negotiable checkout. The payment method selection step now only performs a single mutation instead of two.
+
+The `setNegotiableQuotePaymentMethod` and `placeNegotiableQuoteOrder` mutations have been merged into `setNegotiableQuotePaymentInformationAndPlaceOrder`.
+Here is [the merge request containing the diff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2104), so that you can check whether or not your overrides are affected by this change.
+
+To use this feature you need to:
+- update your Magento2 B2B Front-Commerce module to [version 1.2.0+](https://gitlab.blackswift.cloud/front-commerce/magento2-b2b-module-front-commerce/-/releases/1.2.0)
+- ensure you haven't overriden theme files impacted with this breaking change
+
+Impacted files:
+- `theme/modules/Checkout/NegotiableQuotes/Payment/ChoosePayment.js`
+- `theme/modules/Checkout/NegotiableQuotes/Payment/EnhanceChoosePayment.js`
+- `theme/modules/Checkout/NegotiableQuotes/Payment/SetNegotiableQuotePaymentMethod.gql`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/EnhancePlaceOrder.js`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/PlaceNegotiableQuoteOrderMutation.gql`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/PlaceOrder.js`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/SetNegotiableQuotePaymentInformationAndPlaceOrderMutation.gql`
+
+:::note
+
+We usually try hard to avoid Breaking Changes. In this context, we decided to remain pragmatic as we knew that this relatively new feature wasn't used by many projects. For this reason, we chose the simplest solution instead of adding complexity with deprecated GraphQL mutations and conditional paths in the checkout. **Please contact us if you need help with this upgrade.**
+
+:::
+
 ### New features in `2.25.0`
 
 - [Magic Button](/docs/2.x/category/magic-button)
+- [Stripe: Negotiable Quote checkout support](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)
 
 ## `2.23.0` -> `2.24.0`
 
