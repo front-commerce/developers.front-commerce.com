@@ -210,10 +210,32 @@ checkout. **Please contact us if you need help with this upgrade.**
 
 :::
 
+### Image caching
+
+In this version we've introduced
+[Focal Point](/docs/2.x/reference/image-component#focal-point-focalpoint)
+support for the `<Image>` component.
+
+**If you use
+[Front-Commerce's media middleware](/docs/2.x/advanced/production-ready/media-middleware)**,
+the cache needs to be fully regenerated.
+
+To do so, you should delete the `.front-commerce/cache/images` directory and
+deploy your project.
+
+:::caution
+
+Regenerate image cache will lead to a **high CPU usage**, to not disturb the
+availability of your app, we recommend you do this outside peak visit time on
+your website.
+
+:::
+
 ### New features in `2.25.0`
 
 - [Magic Button](/docs/2.x/category/magic-button)
 - [Stripe: Negotiable Quote checkout support](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)
+- [Focal Point](/docs/2.x/reference/image-component#focal-point-focalpoint)
 
 ## `2.23.0` -> `2.24.0`
 

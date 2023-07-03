@@ -1,0 +1,120 @@
+---
+title: Image React Component
+description:
+  This reference documentation contains a detailed guide on how to use the Image
+  component
+---
+
+<p>{frontMatter.description}</p>
+
+import SinceVersion from "@site/src/components/SinceVersion";
+
+## `Image` component
+
+This component will automatically fetch the image through the proxy with the
+correct settings. Moreover, it will display a spinner while the image is loading
+and a fallback image if it breaks.
+
+It will also lazyload the image. However, in some cases you might not want this
+to happen. For instance, you don't want this to happen on the main image of your
+product page. To disable lazyloading, you can use the option
+`dangerouslyDisableLazyLoad` or (even better in the following example)
+[**the `priority` prop**](#preload-image-priority)
+
+For a more data-efficient browser preload, we also recommend that you define the
+[`sizes` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes)
+for the image. A more detailed explanation about the `sizes` attribute and how
+to determine the best `sizes` for your image check out this
+[srcset + sizes = AWESOME!](https://ericportis.com/posts/2014/srcset-sizes/#part-2)
+article.
+[The "Images size" section of media optimization](/docs/2.x/advanced/production-ready/media-middleware#image-sizes)
+explains how we added `sizes` attributes in our themes, and how and when you
+should override it. Here is an example of the `sizes` attribute:
+
+```jsx
+<Image
+  src="/media/path/to/my/image.jpg"
+  alt="a suited description of the image"
+  format="small"
+  appearance="full"
+  priority
+  sizes="(max-width: 45em) 50vw,
+         (max-width: 70em) 33vw,
+         25vw"
+/>
+```
+
+## Props
+
+### Source (`src`)
+
+The source for your image
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" format="thumbnail">
+```
+
+### Alt (`alt`)
+
+The standard HTML alt attribute
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" alt="my product" format="thumbnail">
+```
+
+### Format (`format`)
+
+Will render the image with the format specified in
+[config/images.js](/docs/2.x/advanced/production-ready/media-middleware#how-to-configure-it)
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" format="thumbnail">
+```
+
+### Background (`bg`)
+
+This will define a background color for your image (must have one of the values
+in the
+[array bgColors of your preset.](/docs/2.x/advanced/production-ready/media-middleware#how-to-configure-it))
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" alt="my product" format="thumbnail" bg="FFFFFF">
+```
+
+### Cover (`cover`)
+
+The `cover` props allow you to generate image that take the size of the
+container, images larger than container will be cropped
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" format="thumbnail" cover>
+```
+
+### Preload image (`priority`)
+
+This prop will add meta to the header to allow preloading of the image
+(`<link rel=preload>`)
+
+:::tip
+
+We recommend you for better performance to use these on images that are above
+the fold
+
+:::
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" format="thumbnail" priority>
+```
+
+### Focal point (`focalPoint`)
+
+<SinceVersion tag="2.25" />
+
+Focal point will define a point to focus in case of image cropping, it will
+allow you to target and center a specific point of the image.
+
+Coordinates must be defined in relation to the dimensions of the original image.
+
+```jsx title="pages/home.js"
+<Image src="/my-image.jpg" format="thumbnail" focalPoint={{x: 10, y: 10}}>
+```
