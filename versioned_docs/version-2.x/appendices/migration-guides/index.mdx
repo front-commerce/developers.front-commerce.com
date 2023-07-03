@@ -14,6 +14,32 @@ import TabItem from "@theme/TabItem";
 
 ## `2.24.0` -> `2.25.0`
 
+### Use facet labels as values
+
+To opt-in to using facet labels as values, you must add the following following configuration to your `config/website`:
+
+```js title="config/website.js"
+module.exports = {
+ ...
+  search: {
+    dynamicFacetSize: 10,
+    ignoredAttributeKeys: [],
+    attributeFacetMinimumDocumentCount: 1,
+    authorizedCategoriesFacet: [],
+    categoryFacetMinimumDocumentCount: 1,
+    // add-next-line
+    useAttributeLabels: true,
+  },
+};
+```
+
+This also introduced the new `isUsingIdsForAttributes` method for datasources, if you have custom datasources, 
+you must implement this method. 
+
+If your datasource already uses labels as values the method should return `false`, for example:
+- [Algolia](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/08ab2dd5a9b128592df2b76f1975b061dc2639e0/modules/datasource-algolia/server/datasource/index.js#L193-195) uses labels as values
+- [Elasticsearch](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/08ab2dd5a9b128592df2b76f1975b061dc2639e0/modules/datasource-elasticsearch/server/datasource/index.js#L225-227) uses ids as values
+
 ### Multi shipment enhanced display
 
 :::info
