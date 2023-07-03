@@ -14,6 +14,21 @@ import TabItem from "@theme/TabItem";
 
 ## `2.24.0` -> `2.25.0`
 
+### New default sorting method for ElasticSearch datasource
+
+In this version we changed the behavior when sorting with ElasticSearch
+datasource. From now on, if no sorting params are passed to the datasource, it
+will instead sort by the items' category index.
+
+:::info
+
+It also affects the sort by "Popular" on Front-Commerce themes.
+
+:::
+
+<ContactLink>Please let us know</ContactLink> if you encounter any issues regarding
+this new behavior.
+
 ### Use facet labels as values
 
 To opt-in to using facet labels as values, you must add the following following
