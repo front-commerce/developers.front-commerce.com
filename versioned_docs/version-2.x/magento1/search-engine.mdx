@@ -106,6 +106,31 @@ query Search {
 If you are using the default theme or the theme Chocolatine, the search bar
 should now be visible.
 
+### Alternative facet filtering
+
+Front-Commerce ElasticSearch module provides an alternative way of filtering
+with facets. By default, each active facet will "refine" (i.e. substract)
+results from the search and from the selectable facets. With this alternative
+way, active facets for one attribute will become additive instead.
+
+In order to activate this feature, set `search.refinementFacetsOnly` to `false`
+in your `website.js`:
+
+```diff title="src/config/website.js"
+   themeColor: "#666699",
+   search: {
+     dynamicFacetSize: 10,
+     ignoredAttributeKeys: [],
+     attributeFacetMinimumDocumentCount: 1,
+     authorizedCategoriesFacet: [],
+     categoryFacetMinimumDocumentCount: 1,
+-    refinementFacetsOnly: true,
++    refinementFacetsOnly: false,
+   },
+   phoneNumber: "01 02 03 04 05",
+   email: "contact@example.com",
+```
+
 ## Algolia
 
 ### Requirements
