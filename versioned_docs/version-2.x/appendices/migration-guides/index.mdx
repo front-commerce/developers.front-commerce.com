@@ -99,6 +99,12 @@ Only for Magento 2
 In this version we've added the
 [list of products shipped in each shipments of an order](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075).
 
+If you've redefined the resolver for `Shipment.trackingDetails`, you must
+synchronize your version to apply [the same kind of change as in the patch
+providing the
+feature](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075/diffs#diff-content-75bbde141df1d2d7e11f59ac7dcb34eaddd2882f)
+so that `items` is correctly defined in the tracking details.
+
 If you've overridden the `OrderShipmentTrackingFragment.gql` file, you must
 inject a new fragment:
 
