@@ -14,6 +14,24 @@ import TabItem from "@theme/TabItem";
 
 ## `2.24.0` -> `2.25.0`
 
+### Updated canonical URL creation method
+
+**Breaking**: In this version we have changed the way
+`QueryHelper.filterCanonicalQueryStringParameters` compute the canonical URL
+parameters, in order to better fit SEO-recommended rules (see
+[Google article](https://developers.google.com/search/docs/crawling-indexing/canonicalization#:~:text=the%20results%20of%20sorting%20and%20filtering%20functions%20of%20a%20category%20page)
+on this matter).
+
+To opt-in to this behaviour, you can pass a boolean as the second parameter of
+`QueryHelper.filterCanonicalQueryStringParameters` to configure whether or not
+additional filters should be included in the canonical. `true` (default value)
+will include additional filters, and `false` will exclude them. Please note that
+we removed the `sorting`, `minPrice` and `maxPrice` parameters from the
+canonical url parameters.
+
+See more in the
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/ebffdc8412f2657bff6782bab1c49568fc78520a?merge_request_iid=2121).
+
 ### Drop support of Node 14
 
 In this version we've **dropped support for Node 14**
