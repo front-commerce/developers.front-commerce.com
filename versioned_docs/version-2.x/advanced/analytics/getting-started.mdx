@@ -94,6 +94,31 @@ module.exports = {
 };
 ```
 
+### Retrieve authorized cookie services in analytics
+
+In Front-Commerce, to allow authorized cookie services to be injected in
+analytics services `settings(authorization, otherAuthorizations)` callback (as
+its 2nd parameter), those services also need to be defined in
+`config/analytics.js`.
+
+This can be done by declaring "dummy" modules in `config/analytics.js` such as:
+
+```diff title="src/config/analytics.js"
+       // ...
++      {
++        name: "my-service",
++        needConsent: true,
++        script: () => () => {
++          return {
++            name: "my-service",
++          };
++        },
++      },
+     ],
+   },
+ };
+```
+
 ## The GDPR consent
 
 If your plugins need consent of the user before running, you need to setup the

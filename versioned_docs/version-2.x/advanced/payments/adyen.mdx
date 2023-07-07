@@ -383,9 +383,13 @@ currently support any version from
 [7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0) to
 [8.x](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0).
 
-You must configure the "Payment Origin URL" in the `Advanced: PWA` section
-(version 7.0+) or `Advance settings > Headless Integration` (version 8.0+) with
-your Front-Commerce URL **for each of your stores**.
+You must configure the extension's Headless/PWA settings with your Front-Commerce URL **for each of your stores**.
+Settings [changed in version 8.0.0](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0), so it will be slightly different depending on your version.
+- `< 8`: configure "Payment Origin URL" in the `Advanced: PWA` section
+- `>= 8`: configure  `Advanced settings > Headless Integration` with
+  - Payment Origin URL: your Front-Commerce URL (e.g: [http://localhost:4000/](http://localhost:4000/))
+  - Payment Return URL: the `/adyen/process/result` path (e.g: [http://localhost:4000/adyen/process/result](http://localhost:4000/adyen/process/result))
+  - Custom Success Redirect Path: same value as Payment Return URL
 
 :::info important
 
