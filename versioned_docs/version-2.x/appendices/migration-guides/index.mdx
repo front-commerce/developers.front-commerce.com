@@ -12,11 +12,309 @@ import ContactLink from "@site/src/components/ContactLink";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## `2.24.0` -> `2.25.0`
+
+### Updated canonical URL creation method
+
+**Breaking**: In this version we have changed the way
+`QueryHelper.filterCanonicalQueryStringParameters` compute the canonical URL
+parameters, in order to better fit SEO-recommended rules (see
+[Google article](https://developers.google.com/search/docs/crawling-indexing/canonicalization#:~:text=the%20results%20of%20sorting%20and%20filtering%20functions%20of%20a%20category%20page)
+on this matter).
+
+To opt-in to this behaviour, you can pass a boolean as the second parameter of
+`QueryHelper.filterCanonicalQueryStringParameters` to configure whether or not
+additional filters should be included in the canonical. `true` (default value)
+will include additional filters, and `false` will exclude them. Please note that
+we removed the `sorting`, `minPrice` and `maxPrice` parameters from the
+canonical url parameters.
+
+See more in the
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/ebffdc8412f2657bff6782bab1c49568fc78520a?merge_request_iid=2121).
+
+### Drop support of Node 14
+
+In this version we've **dropped support for Node 14**
+(<abbr title="End Of Life">EOL</abbr>: 2023-04-30). The minimum required version
+is now Node 16.
+
+You need to check your project dependencies for compatibility with at least Node
+16 (you can check [npm](https://www.npmjs.com/) to find infos about your
+dependencies) and upgrade them in your `package.json` file.
+
+### New default sorting method for ElasticSearch datasource
+
+In this version we changed the behavior when sorting with ElasticSearch
+datasource. From now on, if no sorting params are passed to the datasource, it
+will instead sort by the items' category index.
+
+:::info
+
+It also affects the sort by "Popular" on Front-Commerce themes.
+
+:::
+
+<ContactLink>Please let us know</ContactLink> if you encounter any issues regarding
+this new behavior.
+
+### Use facet labels as values
+
+To opt-in to using facet labels as values, you must add the following following
+configuration to your `config/website`:
+
+```js title="config/website.js"
+module.exports = {
+ ...
+  search: {
+    dynamicFacetSize: 10,
+    ignoredAttributeKeys: [],
+    attributeFacetMinimumDocumentCount: 1,
+    authorizedCategoriesFacet: [],
+    categoryFacetMinimumDocumentCount: 1,
+    // add-next-line
+    useAttributeLabels: true,
+  },
+};
+```
+
+This also introduced the new `isUsingIdsForAttributes` method for datasources,
+if you have custom datasources, you must implement this method.
+
+If your datasource already uses labels as values the method should return
+`false`, for example:
+
+- [Algolia](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/08ab2dd5a9b128592df2b76f1975b061dc2639e0/modules/datasource-algolia/server/datasource/index.js#L193-195)
+  uses labels as values
+- [Elasticsearch](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/08ab2dd5a9b128592df2b76f1975b061dc2639e0/modules/datasource-elasticsearch/server/datasource/index.js#L225-227)
+  uses ids as values
+
+### Multi shipment enhanced display
+
+:::info
+
+Only for Magento 2
+
+:::
+
+In this version we've added the
+[list of products shipped in each shipments of an order](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075).
+
+If you've redefined the resolver for `Shipment.trackingDetails`, you must
+synchronize your version to apply [the same kind of change as in the patch
+providing the
+feature](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075/diffs#diff-content-75bbde141df1d2d7e11f59ac7dcb34eaddd2882f)
+so that `items` is correctly defined in the tracking details.
+
+If you've overridden the `OrderShipmentTrackingFragment.gql` file, you must
+inject a new fragment:
+
+```graphql title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTrackingFragment.gql"
+// add-next-line
+#import "theme/modules/User/Order/OrderShipmentTrackingProducts/OrderShipmentTrackingProductsFragment.gql"
+fragment OrderShipmentTrackingFragment on Shipment {
+  trackingDetails {
+    trackingId
+    name
+    url
+    // add-next-line
+    items {
+      // add-next-line
+      ...OrderShipmentTrackingProductsFragment
+      // add-next-line
+    }
+    __typename
+  }
+}
+
+```
+
+If you've overridden the `BaseTrackingDetails` component, you must add a new
+component to display the list of items:
+
+```js title="src/web/theme/modules/User/Order/OrderShipmentTracking/OrderShipmentTracking.js"
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import Link from "theme/components/atoms/Typography/Link";
+import { BodyFade } from "theme/components/atoms/Typography/Body";
+// add-next-line
+import OrderShipmentTrackingProducts from "theme/modules/User/Order/OrderShipmentTrackingProducts";
+
+const Tracking = ({ tracking }) => {
+  const name = tracking.url ? (
+    <Link to={tracking.url}>{tracking.name}</Link>
+  ) : (
+    tracking.name
+  );
+
+  return (
+    <div className="account-orders-details__item">
+      <div className="account-orders-details__item__title">{name}</div>
+      <BodyFade>
+        <FormattedMessage
+          id="modules.User.Order.OrderShipmentTracking.number"
+          defaultMessage="Tracking number: {trackingId}"
+          values={{ trackingId: tracking.trackingId }}
+        />
+      </BodyFade>
+      // add-next-line
+      <OrderShipmentTrackingProducts items={tracking.items} />
+    </div>
+  );
+};
+
+export default Tracking;
+```
+
+### Magic Button
+
+To implement the Magic Button related features, we have changed several files
+from the theme:
+
+- `theme/layouts/GenericLayout.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/0378fcceafbd7cb4bf5a1c26e7c9080cdd66fcf7))
+- `theme/modules/ProductView/ProductItem/ProductItem.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/modules/CmsBlock/CmsBlock.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/Product/Product.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/Account/Dashboard/Dashboard.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/Account/Dashboard/EnhanceDashboard.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/Account/Orders/Details/Invoice/Invoice.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/Account/Orders/Details/Details.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e))
+- `theme/pages/CmsPage/CmsPage.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/61fddb8f9c68278a818a3875fb29c3c4294df4eb#0910701e610443ed0dabb3fb9b053e2b3b9e4ad7_22_13))
+- `theme/pages/Category/Category.js`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8234c24547b3a22a737f9279ebafddb697135a5e#f73633265fb675f84c088c5b3d38749242fe36f8))
+- **Mandatory** `theme/components/atoms/Colors/_colors.scss`
+  ([see the corresponding commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/d34b4bf4819fc2c8e4275d28aa62d94608aa418e#cb2e530ac7e57d50b7a4e6773fd6b24b86b0a982))
+- `theme/modules/_modules.scss` (see
+  [this first commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/d34b4bf4819fc2c8e4275d28aa62d94608aa418e?page=2#f9a39a6723f4100486c2658dff702698421eae41)
+  and
+  [this second commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/5d803de8a30d9429cf4c085c3b3da91285c22ae1#f9a39a6723f4100486c2658dff702698421eae41))
+- `theme/components/_components.scss`
+  ([see the corresponding changes](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2084/diffs#diff-content-1ff60716b8b194110c074a70473544b96850f2ac))
+
+If you have an override of `template/index.html`, you need to apply the
+following changes:
+
+```diff title="template/index.html"
+     <script>
+       window.__APOLLO_STATE__ = %%__APOLLO_STATE__%%;
+     </script>
++    <script>
++      window.__CONTRIBUTION_MODE_DATA__ = %%__CONTRIBUTION_MODE_DATA__%%;
++    </script>
+     <script>
+       window.__MAINTENANCE__ = %%__MAINTENANCE__%%;
+     </script>
+```
+
+We strongly advice you to synchronize any override you may have done in your
+project.
+
+### Negotiable Quotes: online payments
+
+In this release, we've added support for a first online payment method
+([Stripe](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)) to the
+negotiable quote checkout.
+
+To achieve this feature, we had to perform a minor but potentially impactful
+Breaking Change to the negotiable checkout. The payment method selection step
+now only performs a single mutation instead of two.
+
+The `setNegotiableQuotePaymentMethod` and `placeNegotiableQuoteOrder` mutations
+have been merged into `setNegotiableQuotePaymentInformationAndPlaceOrder`. Here
+is
+[the merge request containing the diff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2104),
+so that you can check whether or not your overrides are affected by this change.
+
+To use this feature you need to:
+
+- update your Magento2 B2B Front-Commerce module to
+  [version 1.2.0+](https://gitlab.blackswift.cloud/front-commerce/magento2-b2b-module-front-commerce/-/releases/1.2.0)
+- ensure you haven't overriden theme files impacted with this breaking change
+
+Impacted files:
+
+- `theme/modules/Checkout/NegotiableQuotes/Payment/ChoosePayment.js`
+- `theme/modules/Checkout/NegotiableQuotes/Payment/EnhanceChoosePayment.js`
+- `theme/modules/Checkout/NegotiableQuotes/Payment/SetNegotiableQuotePaymentMethod.gql`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/EnhancePlaceOrder.js`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/PlaceNegotiableQuoteOrderMutation.gql`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/PlaceOrder.js`
+- `theme/modules/Checkout/NegotiableQuotes/PlaceOrder/SetNegotiableQuotePaymentInformationAndPlaceOrderMutation.gql`
+
+:::note
+
+We usually try hard to avoid Breaking Changes. In this context, we decided to
+remain pragmatic as we knew that this relatively new feature wasn't used by many
+projects. For this reason, we chose the simplest solution instead of adding
+complexity with deprecated GraphQL mutations and conditional paths in the
+checkout. **Please contact us if you need help with this upgrade.**
+
+:::
+
+### Image caching
+
+In this version we've introduced
+[Focal Point](/docs/2.x/reference/image-component#focal-point-focalpoint)
+support for the `<Image>` component.
+
+**If you use
+[Front-Commerce's media middleware](/docs/2.x/advanced/production-ready/media-middleware)**,
+the cache needs to be fully regenerated.
+
+To do so, you should delete the `.front-commerce/cache/images` directory and
+deploy your project.
+
+:::caution
+
+Regenerate image cache will lead to a **high CPU usage**, to not disturb the
+availability of your app, we recommend you do this outside peak visit time on
+your website.
+
+:::
+
+### Performance: remove chunks preloading
+
+<>
+  We've{" "}
+  <a href="https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2120">
+    removed the chunks preloading feature
+  </a>
+  as it led to blocking network requests that could reduce the <abbr title="Largest Contentful Paint">
+    LCP
+  </abbr> / <abbr title="First Contentful Paint">FCP</abbr>
+</>
+
+of your app. From our analysis it improves the performance of the application
+and is a good default.
+
+We invite you to test the impact of this change (i.e: run a Core Web Vitals test
+on your application and compare the results to confirm this).
+
+If you want to restore the previous behavior, you can set the
+`FRONT_COMMERCE_ENABLE_CHUNKS_PRELOAD=true` environment variable.
+
+### New features in `2.25.0`
+
+- [Magic Button](/docs/2.x/category/magic-button)
+- [Stripe: Negotiable Quote checkout support](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)
+- [Focal Point](/docs/2.x/reference/image-component#focal-point-focalpoint)
+
 ## `2.23.0` -> `2.24.0`
 
 :::caution
 
-We've released version [2.24.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.1) which fixes a critical regression introduced in version 2.24.0. **Please ensure that you're upgrading to the latest 2.24.x version.**
+We've released version
+[2.24.1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.24.1)
+which fixes a critical regression introduced in version 2.24.0. **Please ensure
+that you're upgrading to the latest 2.24.x version.**
 
 :::
 
@@ -102,11 +400,14 @@ image adapter
 
 ### Search engine interface updated
 
-If you implemented a very custom search engine datasource, please update it to expose a `scopes.queries.matchingQuery` scope.
-You can use a dummy implementation if you don't want to support search query autocompletion.
-See [MR!2072](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2072) for an example.
+If you implemented a very custom search engine datasource, please update it to
+expose a `scopes.queries.matchingQuery` scope. You can use a dummy
+implementation if you don't want to support search query autocompletion. See
+[MR!2072](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2072)
+for an example.
 
-If you use an existing Front-Commerce search engine (Platform native, ElasticSearch, Algolia or Attraqt), you don't have anything to do.
+If you use an existing Front-Commerce search engine (Platform native,
+ElasticSearch, Algolia or Attraqt), you don't have anything to do.
 
 ### New features in `2.24.0`
 
@@ -119,7 +420,8 @@ If you use an existing Front-Commerce search engine (Platform native, ElasticSea
   - [worker-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/worker-src)
   - [manifest-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src)
   - [child-src](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/child-src)
-- [Akamai Image Manager adapter](/docs/2.x/advanced/images-adapters/akamai-image-manager) for the `<Image>` component
+- [Akamai Image Manager adapter](/docs/2.x/advanced/images-adapters/akamai-image-manager)
+  for the `<Image>` component
 
 ## `2.22.0` -> `2.23.0`
 

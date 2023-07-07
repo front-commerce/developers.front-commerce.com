@@ -1,0 +1,239 @@
+---
+title: "Release: 2.25"
+authors: pierre
+date: 2023-07-06T17:00
+hide_table_of_contents: true
+image: ./assets/2.25/magic-button-screen.jpg
+---
+
+## Introducing Magic Button, Focal Point, Enhanced ElasticSearch, and Adobe B2B Online Payments
+
+Embrace the summer sun with Front-Commerce 2.25! We're excited to unveil several
+exciting updates that will brighten up your e-commerce experience.
+
+In this release, we introduce the Magic Button™, empowering content contributors
+like never before. Get ready to elevate visual experiences with the new Focal
+Point for Images feature. Enjoy enhanced sorting and facets behaviour in
+ElasticSearch-driven PLPs, and simplify online payments for Negotiable quotes
+with Adobe B2B.
+
+While you embrace these powerful updates, we're also dedicated to finalizing
+Front-Commerce Remixed, with the aim of having live projects in production by
+the end of the year. During the next months, we will reduce new features to
+their strict minimum and focus on Remixing!
+
+☕ Let's dive into the details of Front-Commerce 2.25…
+
+<!-- truncate -->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ContactLink from "@site/src/components/ContactLink";
+
+## Empowering content contribution with the Magic Button™
+
+Managing content in a composable architecture comes with its own set of
+challenges. To address these challenges, we're excited to introduce the Magic
+Button in Front-Commerce 2.25. This feature expands the scope of a headless
+storefront by **bringing content contributors and stakeholders back into the
+equation.**
+
+With Front-Commerce, developers can now enhance the contribution experience and
+make it more efficient. When Contribution Mode is enabled, the Magic Button
+appears, providing access to an Editorial Toolbox with a range of powerful
+features.
+
+**Preview Mode:** Get a sneak peek of upcoming content versions on your
+storefront before publishing them in your CMS (for platforms that support this
+functionality). Ensure content accuracy and consistency before it goes public.
+
+**Auto-refresh:** Experience real-time updates of all the data on the screen
+without the need for manual reloading. Stay up to date with the latest changes
+effortlessly.
+
+**X-Ray:** Easily identify the system responsible for underlying data by adding
+visual outlines around UI components. With a single click, swiftly access the
+management page for faster backend navigation. Streamline your workflow and save
+time.
+
+Watch this demo screencast to see the Magic Button in action.
+
+<iframe
+  width="100%"
+  height="422"
+  src="https://www.youtube-nocookie.com/embed/lT02uuuNyok"
+  title="YouTube video player for the Magic Button demo"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
+
+We've worked diligently to ensure that the Magic Button has no impact on the
+end-user experience or application performance. We've created API primitives,
+such as components and GraphQL directives, to support these features and make
+implementation seamless.
+
+Additionally, we've updated our default themes and connectors to enhance the
+contribution experience when using Magento1/OpenMage LTS, Magento2/Adobe
+Commerce, and Contentful.
+
+Please [refer to our documentation](/docs/2.x/category/magic-button) to learn
+more about the Magic Button and how to implement its features in your projects.
+
+## Focal Point: craft better visual experiences with Focal Point for images
+
+Front-Commerce 2.25 introduces a new feature that elevates the visual impact of
+your storefront – the "Focal Point" for images. The **`<Image />`** component
+and our existing adapters allow you to implement responsive images, serving
+optimized versions based on the user's device and layout.
+
+Previously, developers had no control over which part of the image remained
+visible when visual space was limited. With the new **`focalPoint`** property in
+the **`<Image />`** component, **you can now specify the focal point coordinates
+(x/y) to crop the image around that point**. This ensures that the most
+important elements of the image remain visible, regardless of the device.
+
+The best part? You can start using this feature right away. We've added
+compatibility with all our current image adapters. Our default media proxy,
+along with Cloudinary, TwicPics, and Akamai Image Manager, fully supports the
+**`focalPoint`** functionality.
+
+## ElasticSearch: better default sorting and a new facets behaviour
+
+In this release, we've dedicated efforts to enhance the user experience of
+ElasticSearch-driven Product Listing Pages (PLPs). We've made significant
+improvements in two crucial areas: sorting and facets behaviour.
+
+With the introduction of the new **`refinementsFacetsOnly`** feature flag, you
+have more control over how facets are displayed to users. The historical
+faceting behaviour, where only facets matching the existing selection were
+returned, allowed users to refine their selection incrementally. However, this
+required removing filters to select new options.<br />_Example: if users select
+“Brand = Adidas”, they will have to remove this filter in order to select “Brand
+= Puma”._
+
+By turning off the **`refinementsFacetsOnly`** feature flag, the ElasticSearch
+module now returns facet values in a"smarter" way. Users can expand their
+current selection with new options for a facet without the need to remove
+existing filters. This allows for a more seamless and intuitive browsing
+experience, enabling users to explore a wider range of products.<br />_Example:
+if users select “Brand = Adidas”, they’ll now continue to see other brands as
+soon as they have products matching the other selected filters (e.g.: price
+range, size, colour, etc…)_
+
+Another feature supported in this version is to **use facet labels as values in
+URLs**. This is an opt-in feature that can be enabled with the
+`useAttributeLabels` search configuration. It doesn’t require any code change,
+but be careful as it leads to changes in URLs!
+
+In addition to the facets improvements, we've also made enhancements to default
+sorting in ElasticSearch-driven PLPs. When no user-defined sorting criteria are
+specified, **products are now sorted based on the position defined by
+merchants** in Magento. This default sorting behaviour ensures a consistent and
+merchant-centric product presentation.
+
+## Adobe B2B: Online payments for Negotiable quotes (with Stripe)
+
+Introduced in [Front-Commerce 2.23](/changelog/front-commerce-2.23), Negotiable
+quotes could only be purchased using "offline" payment methods, such as payment
+on account or bank transfer.
+
+However, we understand the importance of providing convenient online payment
+options to streamline the purchasing process.
+
+With this release, we've improved the Negotiable checkout to support
+Front-Commerce payment methods. Now, customers can pay for negotiated quotes
+online using our Stripe payment module. This integration with Stripe offers a
+secure and efficient payment experience, eliminating the need for manual payment
+processing.
+
+Head over to
+[our Stripe documentation](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b)
+to learn how to enable this feature.
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Performance Improvements</h3></summary>
+```
+
+- Auditing performance led us to a change that will likely improve your Core Web
+  Vitals: **we no longer preload chunks script tags by default**. It allows the
+  loading of critical assets faster by reducing network pressure.
+- Sitemap generation is now **50× faster** for projects using the ElasticSearch
+  datasources
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **node**: we dropped official support for node 14 which has reached
+  End-Of-Life
+- **coupons:** coupons now have an explicit “label” GraphQL field, used to
+  display a user-friendly label in the cart, instead of the code for platforms
+  supporting it (supported on Magento2)
+- **magento2:** order details page now displays multiple shipments and tracking
+  numbers
+- **magento:** it is now possible to attribute facets labels as values in URLs,
+  instead of ids
+- **seo**: we added an option to remove filters from canonical URLs on PLPs
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **facets:** filtering by price now keeps the correct user input displayed in
+  the price range text inputs, no matter the tax configuration
+- **search:** we’re now keeping all query input fields, fixing a regression for
+  projects having custom search query inputs
+- **prismic:** empty RichText Prismic fields now display nothing instead of an
+  empty paragraph
+- **log:** we don't log “persisted query not found” errors anymore, it was only
+  an information
+- **akamai:** when using the Akamai Image Adapter locally, generated image URLs
+  are now compatible with the default FC Image proxy to have the same visual
+  aspect
+- **hipay:** we now ensure the external scripts have loaded to prevent edge case
+  issues
+- **search:** we ensured that all datasources implement the required interface
+  for queries autocomplete (regression introduced in 2.24.0 and quickly shipped
+  as 2.24.1)
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.25.0"}
+  previousVersions={[
+    "2.24.2",
+    "2.23.3",
+    "2.22.5",
+    "2.21.5",
+    "2.20.7",
+    "2.19.13",
+    "2.18.11",
+    "2.17.12",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.25.0](/docs/2.x/appendices/migration-guides#2240---2250)
+or
+[read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.25.0)
+
+</ChangelogFooter>

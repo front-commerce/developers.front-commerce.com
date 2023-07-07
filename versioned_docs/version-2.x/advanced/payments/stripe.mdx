@@ -51,6 +51,27 @@ In your Front-Commerce application:
    ]
 ```
 
+#### Adobe Commerce B2B
+
+<SinceVersion tag="2.25" />
+
+The Stripe payment module supports the [Negotiable Quote](/docs/2.x/magento2/b2b#negotiable-quotes) checkout and allows customers to pay a negotiated quote with Stripe.
+
+To enable this feature, you must have the Magento2 B2B module enabled and register an additional `serverModule`:
+
+
+```diff title=".front-commerce.js"
+   modules: [],
+   serverModules: [
+     { name: "FrontCommerce", path: "server/modules/front-commerce" },
+     { name: "Magento2", path: "server/modules/magento2" },
+-    { name: "Stripe", path: "server/modules/payment-stripe" }
++    { name: "Stripe", path: "server/modules/payment-stripe" },
++    { name: "StripeM2B2B", path: "server/modules/payment-stripe/magento2-b2b" },
+   ]
+```
+
+
 #### Magento1 (OpenMage LTS)
 
 ```diff title=".front-commerce.js"

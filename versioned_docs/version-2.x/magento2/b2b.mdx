@@ -6,6 +6,7 @@ description:
   to configure and use the B2B module.
 ---
 
+import ContactLink from "@site/src/components/ContactLink";
 import SinceVersion from "@site/src/components/SinceVersion";
 
 <SinceVersion tag="2.11" />
@@ -148,6 +149,14 @@ This module has been fully implemented with Adobe Commerce's GraphQL API
 exposes, thus some of the features available in Adobe Commerce's native frontend
 could not be tackled yet:
 
+#### Advanced shipping methods and online payments aren't fully supported
+
+In its current state, Front-Commerce's module only supports shipping methods without additional information to provide for customers.
+
+The negotiable quote checkout fully supports offline payments such as payment on account, check/money or bank transfer. It only has a partial support for online payments and requires the Magento 2 B2B Front-Commerce module in version [>= 1.2.0](https://gitlab.blackswift.cloud/front-commerce/magento2-b2b-module-front-commerce/-/releases/1.2.0). Stripe is the only supported payment method (since version 2.25.0): please refer to [Stripe's documentation page](/docs/2.x/advanced/payments/stripe#adobe-commerce-b2b) to enable this feature.
+
+Please <ContactLink /> if you have a specific requirement.
+
 #### Negotiable quotes minimum price is not enforced nor exposed in the GraphQL API
 
 Front-Commerce's module allow the creation of negotiable quotes from _any
@@ -178,8 +187,3 @@ However, Front-Commerce doesn't support the per-company feature deactivation.
 The reason is because the information isn't exposed in Magento's API, and company ACLs don't change depending on this option.
 
 As a consequence, it is possible that some users belonging to a company with negotiable quote deactivated (on a shop with the feature globally active) will view some negotiable quotes UI.
-
-#### Advanced shipping methods and online payments aren't supported
-
-In its current state, Front-Commerce's module only supports shipping methods without additional information to provide for customers.
-It also doesn't support online payments, but fully supports offline payments such as: payment on account, bank transfer, etc.
