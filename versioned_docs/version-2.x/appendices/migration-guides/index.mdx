@@ -280,6 +280,27 @@ your website.
 
 :::
 
+### Performance: remove chunks preloading
+
+<>
+  We've{" "}
+  <a href="https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2120">
+    removed the chunks preloading feature
+  </a>
+  as it led to blocking network requests that could reduce the <abbr title="Largest Contentful Paint">
+    LCP
+  </abbr> / <abbr title="First Contentful Paint">FCP</abbr>
+</>
+
+of your app. From our analysis it improves the performance of the application
+and is a good default.
+
+We invite you to test the impact of this change (i.e: run a Core Web Vitals test
+on your application and compare the results to confirm this).
+
+If you want to restore the previous behavior, you can set the
+`FRONT_COMMERCE_ENABLE_CHUNKS_PRELOAD=true` environment variable.
+
 ### New features in `2.25.0`
 
 - [Magic Button](/docs/2.x/category/magic-button)
