@@ -13,8 +13,6 @@ description:
 
 This feature is only available for Magento1 and Magento2 classic checkout.
 
-Support for negociated quote will be available soon
-
 :::
 
 ## Classic checkout
@@ -137,4 +135,38 @@ You must be sure to pass a shipping address without ID to the
   }}
   onChangeShippingAddress={() => props.gotoStepNumber(0)}
 />
+```
+
+## Nagociable quote checkout
+
+You need to override the `EnhanceAddress` enhancer. And on set checkout shipping
+address, you must add an input to the mutation to specify if you need to save or
+not the address. It's original location is :
+`modules/front-commerce-b2b2/web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js`
+
+```diff title="web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js"
+ makeCommandDispatcher({
+      setShippingAddress:
+        (props) =>
+        ({ address, onSuccess }) => {
+          return {
+            options: {
+              mutation: SetNegotiableQuoteShippingAddressMutation,
+              variables: {
+                input: {
+                  quoteId: props.negotiableQuoteId,
+                  address: formatCheckoutAddressInput(address),
++                 saveInAddressBook: true
+                },
+              },
+            },
+```
+
+In the same file, you will find in the `withHandlers` property the
+`onChooseAddress` method that will call the `setShippingAddress` mutation, you
+can insert your logic here to tell if you need to save address or not
+
+```js
+    withHandlers({
+      onChooseAddress: (props) => (billing, shipping) => {
 ```
