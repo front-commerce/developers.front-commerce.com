@@ -47,6 +47,8 @@ within your code during the `build` of your application. For this reason, if you
 are are in a case where you can't update the variable, you will need to trigger
 a new build with the new environment variables defined and restart your server.
 
+<hr />
+
 ## Front-Commerce related variables
 
 ### Host
@@ -152,6 +154,8 @@ redirects user to the HTTPS version of a page in this case. Use the
   in case you've passed malformed requests to the server. This allows you to see
   what happens in production.
 
+<hr />
+
 ## Remote services configuration
 
 Your Front-Commerce application is an empty shell if it's not connected to
@@ -165,18 +169,18 @@ for each one of these.
 - `FRONT_COMMERCE_MAGENTO_ENDPOINT`: the URL of the Magento instance (ex:
   `http://magento2.local`)
 
-  :::caution
+:::caution
 
-  Due to the way
-  [token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158),
-  using a URL containing basic authentication credentials (such as
-  `http://user:password@magento2.local`) is not possible yet. It would prevent
-  users to login.
+Due to the way
+[token based authentication is implemented in Magento2 Web API](https://github.com/magento/magento2/blob/75cf82651deefef6c38b052ce40e771475607d7c/app/code/Magento/Webapi/Model/Authorization/TokenUserContext.php#L158),
+using a URL containing basic authentication credentials (such as
+`http://user:password@magento2.local`) is not possible yet. It would prevent
+users to login.
 
-  :::
+:::
 
-- Integration tokens configured in Magento’s `System > Extensions >
-  Integrations` admin page:
+- Integration tokens configured in Magento’s
+  `System > Extensions > Integrations` admin page:
   - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
   - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
   - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
@@ -188,6 +192,10 @@ for each one of these.
 - `FRONT_COMMERCE_CACHE_API_TOKEN`: The key configured here must be identical to
   Magento’s `fc_cache_api_token` custom variable to enable cache invalidation
   from Magento2 (configured in « System > Other Settings > Custom Variables » )
+- `FRONT_COMMERCE_MAGENTO_TIMEOUT`: The timeout in milliseconds for Magento
+  requests (default: `60000`)
+- `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT`: The timeout in milliseconds for
+  Magento requests that require admin privileges (default: `10000`)
 
 ### Magento 1
 
@@ -205,6 +213,10 @@ for each one of these.
   `Front-Commerce > Configuration > Cache Settings`
 - `FRONT_COMMERCE_XRAY_MAGENTO_VERSION`: The magento 1 version you are using
   (default: `openmage`, possible values: `openmage`, `magento1`)
+- `FRONT_COMMERCE_MAGENTO_TIMEOUT`: The timeout in milliseconds for Magento
+  requests (default: `60000`)
+- `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT`: The timeout in milliseconds for
+  Magento requests that require admin privileges (default: `10000`)
 
 ### BigCommerce
 
@@ -280,9 +292,10 @@ keys** page from the menu.
   [the XO console](https://console.early-birds.io/) under `Search > API Keys`
 - `FRONT_COMMERCE_ATTRAQT_RECOMMENDATION_API_URL`:
   [Attraqt's recommendation API url](https://attraqt.gitbook.io/developer-documentation/xo-recommendations/using-the-recommendations-api)
-- `FRONT_COMMERCE_ATTRAQT_DISABLED` (*since 2.23*): setting it to `true` disables Attraqt search temporarily. This
-  environment can be used to quickly disable Attraqt search without
-  changing the code. To remove the module definitely, remove it from `.front-commerce.js` instead.
+- `FRONT_COMMERCE_ATTRAQT_DISABLED` (_since 2.23_): setting it to `true`
+  disables Attraqt search temporarily. This environment can be used to quickly
+  disable Attraqt search without changing the code. To remove the module
+  definitely, remove it from `.front-commerce.js` instead.
 
 ### Paypal
 
@@ -319,7 +332,9 @@ keys** page from the menu.
 - `FRONT_COMMERCE_OGONE_USERNAME`
 - `FRONT_COMMERCE_OGONE_PASSWORD`
 - `FRONT_COMMERCE_OGONE_ACCEPT_URL`
-- `FRONT_COMMERCE_OGONE_EXCEPTION_UR`
+- `FRONT_COMMERCE_OGONE_EXCEPTION_URL`
+- `FRONT_COMMERCE_OGONE_TIMEOUT`: timeout in milliseconds for the Ogone
+  requests. (default: `10000`)
 
 ### Payzen
 
@@ -366,13 +381,25 @@ See [our related documentation](/docs/2.x/category/prismic) for details.
 
 ### Wordpress
 
-- `FRONT_COMMERCE_WORDPRESS_ENDPOINT`: the URL of the Wordpress instance. [See
-Front-Commerce Wordpress module documentation](/docs/2.x/wordpress/installation).
+- `FRONT_COMMERCE_WORDPRESS_ENDPOINT`: the URL of the Wordpress instance.
+  [See Front-Commerce Wordpress module documentation](/docs/2.x/wordpress/installation).
+
+### Colissimo
+
+See [our related documentation](/docs/2.x/advanced/shipping/colissimo) for
+details.
+
+<hr />
 
 ## Contribution mode
 
 - `FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE`: force the contribution mode by
   setting it to `true`.
+
+- `FRONT_COMMERCE_COLISSIMO_TIMEOUT`: timeout in milliseconds for the Colissimo
+  requests. (default: `60000`)
+
+<hr />
 
 ## Build related variables
 
@@ -387,12 +414,16 @@ Front-Commerce Wordpress module documentation](/docs/2.x/wordpress/installation)
   maps in production. By default it's `false` unless you've set
   `FRONT_COMMERCE_ENV=dev`.
 
+<hr />
+
 ## Current experiments
 
 - `FRONT_COMMERCE_EXPERIMENTAL_NEW_RELIC_INSTRUMENT_GRAPHQL_SERVER`: enable
   Apollo Server experimental NewRelic instrumentation
 - `FRONT_COMMERCE_EXPRESS_SHOP_FALLBACK_REDIRECT_HTTP_CODE`: allow to change the
   default store fallback HTTP code
+
+<hr />
 
 ## Debugging
 
@@ -532,6 +563,8 @@ side are generated. That means you can follow our
 
 :::
 
+<hr />
+
 ## Deprecation warnings
 
 Front-Commerce leverages the [depd](https://www.npmjs.com/package/depd) package
@@ -551,6 +584,8 @@ Example:
 ```shell
 TRACE_DEPRECATION=*
 ```
+
+<hr />
 
 ## Add your own environment variables
 
