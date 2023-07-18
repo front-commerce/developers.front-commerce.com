@@ -535,14 +535,17 @@ export default {
 
 ### `PerMagentoCustomerTaxZone`
 
-<SinceVersion tag="2.14" />
+<p>
+  <SinceVersion tag="2.14" platform="Magento 2" inline />{" "}
+  <SinceVersion tag="2.26" platform="Magento 1" inline />
+</p>
 
 The `PerMagentoCustomerTaxZone` implementation is a decorator that is specific
-to the Magento 2 module. It will decorate the existing caching strategies so
-that DataLoader keys are specific to the current customer's tax zone. We highly
-recommend to use it on Magento stores that have price with taxes depending on
-several tax zones, so they can leverage other caching mechanisms (such as
-`Redis`).
+to the Magento platform (Magento 1 and Magento 2). It will decorate the existing
+caching strategies so that DataLoader keys are specific to the current
+customer's tax zone. We highly recommend to use it on Magento stores that have
+price with taxes depending on several tax zones, so they can leverage other
+caching mechanisms (such as `Redis`).
 
 As such strategy can be complex, the tax zone definition is left to the
 integrator through the `taxZoneKeyFromAddress` function
@@ -571,10 +574,11 @@ export default {
       config: {
         addressType: "shipping", // or "billing" depending on which address is used to define the taxes showed to the user
         defaultTaxZoneKey: "FR",
-        taxZoneKeyFromAddress: (address) => {
-          // see https://docs.magento.com/user-guide/tax/tax-zones-rates.html
-          return "FR"; // default implementation uses the defaultTaxZoneKey value
-        },
+        // Uncomment this line to override the default tax zone partitioning
+        // taxZoneKeyFromAddress: (address) => {
+        //   // see https://docs.magento.com/user-guide/tax/tax-zones-rates.html
+        //   return address.country_id;
+        // },
       },
     },
   ],
