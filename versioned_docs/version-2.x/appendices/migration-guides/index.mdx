@@ -45,6 +45,33 @@ updating the Magento module instead of relying on this environment variable.
 
 :::
 
+### Configurable Axios Timeouts
+
+In this version, we have added the ability to configure the timeouts for the
+Axios instance used by Front-Commerce. We recommend using the new configuration
+instead of the
+[timeout file with static values](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/core/graphql/timeout.js),
+which has been marked as deprecated for v3.0.
+
+The loaders that previously used these values have been updated to use a
+`configProvider` to get the values, which are customizable via the following
+environment variables:
+
+- [Magento1 configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/magento1/core/config/magentoProvider.js#L70-81)
+  - `FRONT_COMMERCE_MAGENTO_TIMEOUT` (default: 60000)
+  - `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` (default: 10000)
+- [Magento2 configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/magento2/core/config/magentoProvider.js#L149-160)
+  - `FRONT_COMMERCE_MAGENTO_TIMEOUT` (default: 60000)
+  - `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` (default: 10000)
+- [Colissimo configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/modules/shipping-colissimo-magento2/server/modules/colissimo/config/colissimoConfigProvider.js#L5-10)
+  - `FRONT_COMMERCE_COLISSIMO_TIMEOUT` (default: 10000)
+- [Ogone configuration](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/payment-ogone/makeConfigFromEnv.js#L74)
+  - `FRONT_COMMERCE_OGONE_TIMEOUT` (default: 10000)
+
+We hope this documentation helps you configure the timeouts for the Axios
+instance used by Front-Commerce. If you have any questions or concerns, please
+don't hesitate to <ContactLink>contact us</ContactLink>.
+
 ## `2.24.0` -> `2.25.0`
 
 ### Updated canonical URL creation method
