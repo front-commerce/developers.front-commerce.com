@@ -1,0 +1,172 @@
+---
+sidebar_position: 2
+title: Temporary shipping address
+description:
+  By default, Front-Commerce theme manages shipping addresses in the customer
+  account address book. However, it is still possible to manage shipping
+  addresses that will not be saved in the address book.
+---
+
+<p>{frontMatter.description}</p>
+
+:::info
+
+This feature is only available for Magento1 and Magento2 classic checkout.
+
+:::
+
+## Classic checkout
+
+You can test these queries in the
+[GraphQL Playground](/docs/2.x/magento2/add-new-attribute#discover-the-playground)
+
+This example set an address in customer's address book as the shipping address:
+
+```graphql
+mutation {
+  setCheckoutShippingInformation(
+    cartId: "189"
+    shippingMethod: { carrier_code: "flatrate", method_code: "flatrate" }
+    shippingAddress: { id: 12 }
+  ) {
+    success
+  }
+}
+```
+
+This example set a shipping address that will not be saved in the address book:
+
+```graphql
+mutation {
+  setCheckoutShippingInformation(
+    cartId: "209"
+    shippingMethod: { carrier_code: "flatrate", method_code: "flatrate" }
+    shippingAddress: {
+      address: {
+        firstname: "Testing"
+        lastname: "Front-Commerce"
+        street: ["42 Street of test"]
+        postcode: "31000"
+        city: "Toulouse"
+        country_id: "FR"
+      }
+    }
+  ) {
+    success
+    errorMessage
+  }
+}
+```
+
+To achieve this, you will need to remove the check for addresses ids for logged
+in customers in the `web/theme/pages/Checkout/stepsDefinition.js`:
+
+```diff title="web/theme/pages/Checkout/stepDefinitions.js"
+const steps = [
+  {
+    renderProgressItem: () =>
+      renderProgressItem("address", "user", messages.address),
+    renderStep: (props) => (
+      <Address
+        checkoutType={props.checkoutState.checkoutType}
+        isEditingBillingAddress={props.checkoutState.isEditingBillingAddress}
+        isEditingShippingAddress={props.checkoutState.isEditingShippingAddress}
+        initialAddress={{
+          billing: props.checkoutState.billingAddress,
+          shipping: props.checkoutState.shippingAddress,
+        }}
+        onChooseAddress={(billing, shipping, email) => {
+          props.checkoutTransaction(() => {
+            props.setEmail(email);
+            props.setBillingAddress(billing);
+            if (shipping) {
+              props.setShippingAddress(shipping);
+            }
+          });
+        }}
+        shouldAskShipping={props.checkoutState.isShippable ?? true}
+      />
+    ),
+    isValid: (checkoutState) => {
+-      const isValidAddress = (address) =>
+-        checkoutState.checkoutType === ACCOUNT_TYPE.GUEST
+-          ? address
+-          : address?.id;
+      const hasGuestInfo =
+        checkoutState.checkoutType !== ACCOUNT_TYPE.GUEST ||
+        checkoutState.email;
+
+      return (
+        isValidAddress(checkoutState.billingAddress) &&
+        (!checkoutState.isShippable ||
+-          isValidAddress(checkoutState.shippingAddress)) &&
+        hasGuestInfo
+      );
+    },
+    isRelevant: () => true,
+    isDisplayable: () => true,
+  },
+```
+
+You must be sure to pass a shipping address without ID to the
+`ChooseShippingMethod` component in the `stepsDefinition.js` file by editing the
+`Address` component that handle address selection.
+
+```jsx title="web/theme/pages/Checkout/stepDefinitions.js"
+<ChooseShippingMethod
+  // highlight-start
+  // On the line below, if an address has an id, it will use id in address book
+  // if not it will use the temporary address
+  shippingAddress={props.checkoutState.shippingAddress}
+  // highlight-end
+  billingAddress={props.checkoutState.billingAddress}
+  setShippingAddress={props.setShippingAddress}
+  setBillingAddress={props.setBillingAddress}
+  initialShipping={{
+    shippingMethod: props.checkoutState.shippingMethod,
+    shippingAdditionalInfo: props.checkoutState.shippingAdditionalInfo,
+  }}
+  onChooseShippingMethod={(method) => {
+    const { additionalData, ...rest } = method;
+    props.checkoutTransaction(() => {
+      props.setShippingMethod(rest);
+      props.setShippingAdditionalInfo(additionalData || {});
+    });
+  }}
+  onChangeShippingAddress={() => props.gotoStepNumber(0)}
+/>
+```
+
+## Nagociable quote checkout
+
+You need to override the `EnhanceAddress` enhancer. And on set checkout shipping
+address, you must add an input to the mutation to specify if you need to save or
+not the address. It's original location is :
+`modules/front-commerce-b2b2/web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js`
+
+```diff title="web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js"
+ makeCommandDispatcher({
+      setShippingAddress:
+        (props) =>
+        ({ address, onSuccess }) => {
+          return {
+            options: {
+              mutation: SetNegotiableQuoteShippingAddressMutation,
+              variables: {
+                input: {
+                  quoteId: props.negotiableQuoteId,
+                  address: formatCheckoutAddressInput(address),
++                 saveInAddressBook: true
+                },
+              },
+            },
+```
+
+In the same file, you will find in the `withHandlers` property the
+`onChooseAddress` method that will call the `setShippingAddress` mutation, you
+can insert your logic here to tell if you need to save address or not
+
+```js
+    withHandlers({
+      onChooseAddress: (props) => (billing, shipping) => {
+```
