@@ -18,7 +18,7 @@ const LAST_VERSION = "2.x";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Front Commerce Developers",
+  title: "Front-Commerce Developers",
   tagline:
     "Stay one step ahead and consistently deliver the brand experience your customers expect",
   url: "https://developers.front-commerce.com",
