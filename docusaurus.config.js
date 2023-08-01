@@ -105,6 +105,7 @@ const config = {
             position: "right",
             label: "Docs",
           },
+          { to: "/community", label: "Community", position: "right" },
           { to: "/blog", label: "Blog", position: "right" },
           { to: "/changelog", label: "Changelog", position: "right" },
           {
