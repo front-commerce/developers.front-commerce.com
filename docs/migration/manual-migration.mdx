@@ -13,7 +13,7 @@ parts, or debug issues in the migration CLI output.
 
 ## Sass Migration
 
-In the latest version of Front-Commerce we converted all Sass variables to CSS
+In the latest version of Front-Commerce we converted all global Sass variables to CSS
 variables during the [automated migration](./automated-migration). This allows
 for a more modular approach to theming and a better developer experience.
 However, there are still some manual steps that need to be taken to complete the
@@ -79,6 +79,77 @@ You would need to import the `color.scss` directly in the `Example.scss` file
   color: darken(var(--colorPrimary), 10%);
   // add-next-line
   color: darken($colorPrimary, 10%);
+}
+```
+
+### Calculations
+
+The automated migration step takes care of changing SASS global variables to
+[CSS custom
+properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+and of transforming declarations value with a unique multiplication and [the
+usage of `math.div`](https://sass-lang.com/documentation/modules/math/#div) so
+that it becomes a valid CSS declaration:
+
+```scss title="theme/components/atoms/Example/Example.scss"
+.example {
+  // remove-next-line
+  padding: $boxSizeMargin;
+  // add-next-line
+  padding: var(--boxSizeMagin);
+  // remove-next-line
+  margin-top: $boxSizeMargin * 2;
+  // add-next-line
+  margin-top: calc(var(--boxSizeMagin) * 2);
+  // remove-next-line
+  margin-bottom: math.div($boxSizeMargin, 4);
+  // add-next-line
+  margin-bottom: calc(var(--boxSizeMargin) / 4);
+}
+```
+
+However for more complex calculations or for declarations with several values,
+only the usage of the SASS variable will be updated. After this step, a manual
+fix is needed. When starting Front-Commerce, `sass` is executed and it will
+report any invalid expressions. Here is a list of common pattern to fix:
+
+```scss title="theme/components/atoms/Example/Example.scss"
+.example {
+  // remove-next-line
+  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(--boxSizeMargin) * 2 0;
+  // add-next-line
+  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(var(--boxSizeMargin) * 2) 0;
+  // remove-next-line
+  max-width: calc(#{var(--boxSizeMargin) * 24} + 50ch);
+  // add-next-line
+  max-width: calc(var(--boxSizeMargin) * 24 + 50ch);
+  // remove-next-line
+  margin: calc(-var(--boxSizeMargin) / 4) * 3;
+  // add-next-line
+  margin: calc(-var(--boxSizeMargin) * 3 / 4);
+```
+
+### `@extend` handling
+
+If `@extend` is used with a selector defined in another stylesheet, you need to
+manually import that stylesheet. For example, `sass` would fail compiling the following stylesheet:
+
+```scss title="theme/components/atoms/Example/Example.scss"
+.example {
+  @extend .another-selector
+}
+```
+
+This is happening because `.another-selector` is unknown, so the solution is to
+import the stylesheet defining it:
+
+
+```scss title="theme/components/atoms/Example/Example.scss"
+// add-next-line
+@import "theme/some/path/defining/another-selector";
+
+.example {
+  @extend .another-selector
 }
 ```
 
