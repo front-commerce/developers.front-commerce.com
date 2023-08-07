@@ -11,6 +11,11 @@ This manual migration process should be run after the
 [automated migration process](./automated-migration), to complete the missing
 parts, or debug issues in the migration CLI output.
 
+## `getPriceWithSelectedGroupedItems` and `fusePriceWithBundleOptions` have been inlined in `packages/magento2/modules/catalog/products/resolvers.js`
+
+Those two method were only used in this file, so the inline has been made to
+simplify the migration.
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has
