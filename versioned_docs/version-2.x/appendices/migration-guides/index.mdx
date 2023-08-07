@@ -66,8 +66,22 @@ We hope this documentation helps you configure the timeouts for the Axios
 instance used by Front-Commerce. If you have any questions or concerns, please
 don't hesitate to <ContactLink>contact us</ContactLink>.
 
-### New features in `2.26.0`
+### Redis invalidation SCAN iterations size configuration (`invalidationScanIterationSize`)
 
+We've increased the default iterations size for `SCAN` commands issued by the
+[Redis caching strategy](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#redis)
+during cache invalidation with wildcards.
+
+It used to be an arbitrary value of 100, and we increased it to 1000 to have
+better performances when invalidating cache on databases containing several
+millions of keys.
+
+We feel it's a better default from our observations. This value is now
+configurable, so if you want to tweak its value or go back to the previous
+behavior, please update your `caching.js` with the
+`invalidationScanIterationSize: 100` value.
+
+### New features in `2.26.0`
 
 - **caching:** the `PerMagentoCustomerTaxZone` caching strategy is now also
   available for Magento 1, to cache prices per tax zone (see

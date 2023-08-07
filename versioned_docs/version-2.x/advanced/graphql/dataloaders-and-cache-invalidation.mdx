@@ -481,7 +481,9 @@ export default {
           process.env.FRONT_COMMERCE_CLOUD_REDIS_DB ||
           process.env.FRONT_COMMERCE_REDIS_DB ||
           0,
-        // defaultExpireInSeconds: 82800 // default: 23 hours
+        // Front-Commerce options
+        // defaultExpireInSeconds: 82800, // default: 23 hours
+        // invalidationScanIterationSize: 2000, // default: 1000
       },
     },
   ],
