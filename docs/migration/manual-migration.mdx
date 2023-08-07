@@ -11,6 +11,31 @@ This manual migration process should be run after the
 [automated migration process](./automated-migration), to complete the missing
 parts, or debug issues in the migration CLI output.
 
+## `makeCommandDispatcherWithCommandFeedback` API change
+
+[`makeCommandDispatcherWithCommandFeedback` API has
+changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
+In version 2, the second parameter of `makeCommandDispatcherWithCommandFeedback` was an
+optional boolean (default `true`) and if this parameter was evaluated to a
+truthy value, the resulting component had the responsibility of displaying the
+result of the command with the `InlineAlert` component. In version 3,
+`makeCommandDispatcherWithCommandFeedback` now expects an optional React
+component to display the result of the command.
+
+To cope with this change, you need to review all components using
+`makeCommandDispatcherWithCommandFeedback`:
+
+* if `makeCommandDispatcherWithCommandFeedback` is called with a falsy second
+  parameter, you don't have to change anything
+* if `makeCommandDispatcherWithCommandFeedback` is called with a truthy second
+  parameter or without the second parameter, you have to adapt your code. To
+  have exactly the same behavior as before, the new call should look like:
+  ```jsx
+  makeCommandDispatcherWithCommandFeedback({ /* commands definition */ }, ({ success, message }) => {
+    return <InlineAlert appearance={success ? "success" : "error"}>{message}</InlineAlert>;
+  })
+  ```
+
 ## Sass Migration
 
 In the latest version of Front-Commerce we converted all global Sass variables to CSS
