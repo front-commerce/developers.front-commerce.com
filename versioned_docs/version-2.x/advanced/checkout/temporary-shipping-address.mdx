@@ -137,11 +137,11 @@ You must be sure to pass a shipping address without ID to the
 />
 ```
 
-## Nagociable quote checkout
+## Negotiable quote checkout
 
-You need to override the `EnhanceAddress` enhancer. And on set checkout shipping
-address, you must add an input to the mutation to specify if you need to save or
-not the address. It's original location is :
+You will need to override the `EnhanceAddress` enhancer, and add an input to the
+mutation to specify if the address needs to be save or not. Its original
+location is:
 `modules/front-commerce-b2b2/web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js`
 
 ```diff title="web/theme/modules/Checkout/NegotiableQuotes/Address/EnhanceAddress.js"
