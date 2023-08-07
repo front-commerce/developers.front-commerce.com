@@ -88,6 +88,16 @@ module.exports = {
 };
 ```
 
+:::note Check your customizations
+
+This change was implemented by modifying the `Category.layer` and
+`AttributeBucket.value` resolvers. If you've rewritten them with a custom logic,
+you'll have to update your code accordingly. Check
+[the Merge Request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2069)
+for more details.
+
+:::
+
 This also introduced the new `isUsingIdsForAttributes` method for datasources,
 if you have custom datasources, you must implement this method.
 
