@@ -25,25 +25,18 @@ regularly!
 
 ## Extensions
 
-These projects extends Front-Commerce core features using Front-Commerce
+These projects extend Front-Commerce core features using Front-Commerce
 extension points.
 
-### Analytics: Facebook conversions API
+- [Analytics: Facebook conversions API](https://github.com/PH2M/front-commerce-facebook-conversions-api) -
+  PH2M
 
-_Contributor: PH2M_
+  > Implement the
+  > [Facebook conversions API](https://www.facebook.com/business/help/2041148702652965?id=818859032317965)
+  > to your Front-Commerce project
 
-> Implement the
-> [Facebook conversions API](https://www.facebook.com/business/help/2041148702652965?id=818859032317965)
-> to your Front-Commerce project
-
-[View on Github.](https://github.com/PH2M/front-commerce-facebook-conversions-api)
-
-### External login: Apple
-
-_Contributor: PH2M_
-
-> Implement the external login with Apple your Front-Commerce project using
-> [passport-apple](https://www.npmjs.com/package/passport-apple) and following
-> [Front-Commerce documentation](/docs/2.x/advanced/features/external-logins/)
-
-[View on Github.](https://github.com/PH2M/front-commerce-external-login-apple)
+- [External login: Apple](https://github.com/PH2M/front-commerce-external-login-apple) -
+  PH2M
+  > Implement the external login with Apple in your Front-Commerce project using
+  > [passport-apple](https://www.npmjs.com/package/passport-apple) and following
+  > [Front-Commerce documentation](/docs/2.x/advanced/features/external-logins/)
