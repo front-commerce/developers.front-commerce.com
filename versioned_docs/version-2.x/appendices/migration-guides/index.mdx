@@ -132,6 +132,14 @@ You need to check your project dependencies for compatibility with at least Node
 16 (you can check [npm](https://www.npmjs.com/) to find infos about your
 dependencies) and upgrade them in your `package.json` file.
 
+:::info
+
+If you are a Front-Commerce-Cloud customer, when you upgrade to Front-Commerce
+2.25+, please <ContactLink>contact us</ContactLink> to upgrade the Node version
+used to deploy your project(s).
+
+:::
+
 ### New default sorting method for ElasticSearch datasource
 
 In this version we changed the behavior when sorting with ElasticSearch
@@ -190,9 +198,8 @@ In this version we've added the
 [list of products shipped in each shipments of an order](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075).
 
 If you've redefined the resolver for `Shipment.trackingDetails`, you must
-synchronize your version to apply [the same kind of change as in the patch
-providing the
-feature](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075/diffs#diff-content-75bbde141df1d2d7e11f59ac7dcb34eaddd2882f)
+synchronize your version to apply
+[the same kind of change as in the patch providing the feature](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2075/diffs#diff-content-75bbde141df1d2d7e11f59ac7dcb34eaddd2882f)
 so that `items` is correctly defined in the tracking details.
 
 If you've overridden the `OrderShipmentTrackingFragment.gql` file, you must
@@ -884,7 +891,9 @@ In this release, we added support for version 8 of Magento2 Adyen module. If you
 have a Front-Commerce setup where the module `Magento2/Adyen` is used,
 [the `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION` environment variable is now required and it must contain the Magento2 module version](/docs/2.x/advanced/payments/adyen#add-the-required-environment-variables-1).
 
-New configurations were added in the Adyen Magento module regarding headless storefronts. Please [ensure you've configured the "Headless Integration" as per our docs](/docs/2.x/advanced/payments/adyen#install-and-configure-the-adyen_payment-magento2-extension-72--90).
+New configurations were added in the Adyen Magento module regarding headless
+storefronts. Please
+[ensure you've configured the "Headless Integration" as per our docs](/docs/2.x/advanced/payments/adyen#install-and-configure-the-adyen_payment-magento2-extension-72--90).
 
 ### DomainEvent implementations reworked
 
