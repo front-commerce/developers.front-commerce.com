@@ -13,11 +13,10 @@ parts, or debug issues in the migration CLI output.
 
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
-[`makeCommandDispatcherWithCommandFeedback` API has
-changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
-In version 2, the second parameter of `makeCommandDispatcherWithCommandFeedback` was an
-optional boolean (default `true`) and if this parameter was evaluated to a
-truthy value, the resulting component had the responsibility of displaying the
+[`makeCommandDispatcherWithCommandFeedback` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
+In version 2, the second parameter of `makeCommandDispatcherWithCommandFeedback`
+was an optional boolean (default `true`) and if this parameter was evaluated to
+a truthy value, the resulting component had the responsibility of displaying the
 result of the command with the `InlineAlert` component. In version 3,
 `makeCommandDispatcherWithCommandFeedback` now expects an optional React
 component to display the result of the command.
@@ -25,56 +24,113 @@ component to display the result of the command.
 To cope with this change, you need to review all components using
 `makeCommandDispatcherWithCommandFeedback`:
 
-* if `makeCommandDispatcherWithCommandFeedback` is called with a falsy second
+- if `makeCommandDispatcherWithCommandFeedback` is called with a falsy second
   parameter, you don't have to change anything
-* if `makeCommandDispatcherWithCommandFeedback` is called with a truthy second
+- if `makeCommandDispatcherWithCommandFeedback` is called with a truthy second
   parameter or without the second parameter, you have to adapt your code. To
   have exactly the same behavior as before, the new call should look like:
   ```jsx
-  makeCommandDispatcherWithCommandFeedback({ /* commands definition */ }, ({ success, message }) => {
-    return <InlineAlert appearance={success ? "success" : "error"}>{message}</InlineAlert>;
-  })
+  makeCommandDispatcherWithCommandFeedback(
+    {
+      /* commands definition */
+    },
+    ({ success, message }) => {
+      return (
+        <InlineAlert appearance={success ? "success" : "error"}>
+          {message}
+        </InlineAlert>
+      );
+    }
+  );
   ```
 
 ## Sass Migration
 
-In the latest version of Front-Commerce we converted all global Sass variables to CSS
-variables during the [automated migration](./automated-migration). This allows
-for a more modular approach to theming and a better developer experience.
+In the latest version of Front-Commerce we converted all global Sass variables
+to CSS variables during the [automated migration](./automated-migration). This
+allows for a more modular approach to theming and a better developer experience.
 However, there are still some manual steps that need to be taken to complete the
 migration.
 
-### Media Mixin
+### Breakpoints Removal
 
-If you make use of the
-[`media-breakpoint-up`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss#L23-34)
-mixin, you will need to directly import the
-[\_breakpoints.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss)
-file at the location where it is used.
+The following scss helpers have been removed. If you were using them, you have
+to manually add them back to your project or update implementation
 
-If you have the following example component:
+- [`grid-breakpoints`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss#L4-12)
+  variable
+- [`breakpoint-min`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss#L14-21)
+  function
+- [`media-breakpoint-up`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss#L23-34)
+  mixin
 
-```scss title="theme/components/atoms/Example/Example.scss"
-@include media-breakpoint-up(md) {
-  .Example {
-    color: red;
-  }
-}
-```
+To restore the usage of these scss methods you can copy it from the v2.x code
+and add it to a breakpoints override or a custom file, then you should import it
+in any of your scss files which require either the variable, mixin or function,
+for example:
 
-You would need to import the `_breakpoints.scss` directly in the `Example.scss`
-file
-
-```scss title="theme/components/atoms/Example/Example.scss"
+```scss title="theme/components/atoms/Container/Container.scss"
 // add-next-line
 @import "theme/components/atoms/Breakpoints/breakpoints";
 
-@include media-breakpoint-up(md) {
-  .Example {
-    color: red;
+.container {
+  background-color: red;
+
+  @media screen and (min-width: $menuBreakpoint) {
+    max-width: 40em;
+  }
+
+  @include media-breakpoint-up(sm) {
+    background-color: blue;
+  }
+
+  @include media-breakpoint-up(md) {
+    background-color: green;
+  }
+
+  @include media-breakpoint-up(lg) {
+    background-color: yellow;
   }
 }
 ```
+
+:::info
+
+After running the codemods on your project, you can find these deprecations by
+searching `TODO (Codemod generated)` in your project.
+
+:::
+
+### Media queries
+
+If you use any media queries which use global sass variables, you need to
+manually import the file defining the variables.
+
+If you have the following example component, You will need to import the
+`breakpoints.scss` file.
+
+```scss title="theme/components/atoms/Form/Fieldset/Fieldset.scss"
+// add-next-line
+@import "theme/components/atoms/Breakpoints/breakpoints";
+
+fieldset {
+  border: none;
+  font-size: var(--regularSize);
+  .fieldset--large {
+    max-width: 30em;
+    @media screen and (min-width: $menuBreakpoint) {
+      max-width: 40em;
+    }
+  }
+}
+```
+
+:::info
+
+After running the codemods on your project, you can easily find these
+occurrences by searching `TODO (Codemod generated)` in your project.
+
+:::
 
 ### Color functions
 
@@ -110,11 +166,10 @@ You would need to import the `color.scss` directly in the `Example.scss` file
 ### Calculations
 
 The automated migration step takes care of changing SASS global variables to
-[CSS custom
-properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-and of transforming declarations value with a unique multiplication and [the
-usage of `math.div`](https://sass-lang.com/documentation/modules/math/#div) so
-that it becomes a valid CSS declaration:
+[CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+and of transforming declarations value with a unique multiplication and
+[the usage of `math.div`](https://sass-lang.com/documentation/modules/math/#div)
+so that it becomes a valid CSS declaration:
 
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
@@ -157,24 +212,24 @@ report any invalid expressions. Here is a list of common pattern to fix:
 ### `@extend` handling
 
 If `@extend` is used with a selector defined in another stylesheet, you need to
-manually import that stylesheet. For example, `sass` would fail compiling the following stylesheet:
+manually import that stylesheet. For example, `sass` would fail compiling the
+following stylesheet:
 
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
-  @extend .another-selector
+  @extend .another-selector;
 }
 ```
 
 This is happening because `.another-selector` is unknown, so the solution is to
 import the stylesheet defining it:
 
-
 ```scss title="theme/components/atoms/Example/Example.scss"
 // add-next-line
 @import "theme/some/path/defining/another-selector";
 
 .example {
-  @extend .another-selector
+  @extend .another-selector;
 }
 ```
 
