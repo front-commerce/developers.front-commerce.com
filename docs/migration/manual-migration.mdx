@@ -11,6 +11,21 @@ This manual migration process should be run after the
 [automated migration process](./automated-migration), to complete the missing
 parts, or debug issues in the migration CLI output.
 
+## Components
+
+### SEO Components
+
+The `xxxSeo` components (eg: `HomeSeo`) have been removed in favor of
+[Remix Meta](https://remix.run/docs/en/main/route/meta-v2).
+
+If you use SEO components or have overriden Seo components, you need to:
+
+- Remove import and usage of the component from your page
+- Use the [meta](https://remix.run/docs/en/main/route/meta-v2)
+  function with our
+  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas) 
+  to inject your custom metadatas in your Route Module.
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has
