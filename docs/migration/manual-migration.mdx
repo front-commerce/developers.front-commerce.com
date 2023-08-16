@@ -64,10 +64,78 @@ to manually add them back to your project or update implementation
 - [`media-breakpoint-up`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/01f9c95003f7d4204acd12264c3375464e6c3a12/theme-chocolatine/web/theme/components/atoms/Breakpoints/_breakpoints.scss#L23-34)
   mixin
 
-To restore the usage of these scss methods you can copy it from the v2.x code
-and add it to a breakpoints override or a custom file, then you should import it
-in any of your scss files which require either the variable, mixin or function,
-for example:
+```mdx-code-block
+<details>
+  <summary><h4 className="mb-0">To replace usage of these scss methods</h4></summary>
+```
+
+Instead of relying on the removed Sass mixins, we recommend to now use a
+standardized approach that involves directly using media queries in your CSS
+code. This approach provides better control, readability, and maintenance of
+responsive styles.
+
+Here are the breakpoints values we used:
+
+- `xs`: 0
+- `sm`: 576px
+- `md`: 768px
+- `lg`: 992px
+- `xl`: 1200px
+
+For each breakpoint where you were previously using the `breakpoint-min`
+function, replace it with a media query using the `min-width` property. For
+example:
+
+**Before:**
+
+```scss
+$min: breakpoint-min("sm");
+@media (min-width: $min) {
+  // Styles for 'sm' and wider
+}
+```
+
+**After:**
+
+```scss
+@media (min-width: 576px) {
+  // Styles for 'sm' and wider
+}
+```
+
+For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
+
+**Before:**
+
+```scss
+@include media-breakpoint-up("md") {
+  // Styles for 'md' and wider
+}
+```
+
+**After:**
+
+```scss
+@media (min-width: 768px) {
+  // Styles for 'sm' and wider
+}
+```
+
+And you can remove `@include media-breakpoint-up("xs") {` as it applied CSS
+rules systematically.
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h4 className="mb-0">To restore the usage of these scss methods</h4></summary>
+```
+
+You can copy it from the v2.x code and add it to a breakpoints override or a
+custom file, then you should import it in any of your scss files which require
+either the variable, mixin or function, for example:
 
 ```scss title="theme/components/atoms/Container/Container.scss"
 // add-next-line
@@ -92,6 +160,10 @@ for example:
     background-color: yellow;
   }
 }
+```
+
+```mdx-code-block
+</details>
 ```
 
 :::info
