@@ -21,9 +21,8 @@ The `xxxSeo` components (eg: `HomeSeo`) have been removed in favor of
 If you use SEO components or have overriden Seo components, you need to:
 
 - Remove import and usage of the component from your page
-- Use the [meta](https://remix.run/docs/en/main/route/meta-v2)
-  function with our
-  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas) 
+- Use the [meta](https://remix.run/docs/en/main/route/meta-v2) function with our
+  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas)
   to inject your custom metadatas in your Route Module.
 
 ## `makeCommandDispatcherWithCommandFeedback` API change
@@ -118,7 +117,8 @@ $min: breakpoint-min("sm");
 }
 ```
 
-For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
+For cases where you were using the `media-breakpoint-up`, you can use a media
+query with `min-width` too. For example:
 
 **Before:**
 
@@ -311,14 +311,30 @@ following stylesheet:
 This is happening because `.another-selector` is unknown, so the solution is to
 import the stylesheet defining it:
 
-```scss title="theme/components/atoms/Example/Example.scss"
+````scss title="theme/components/atoms/Example/Example.scss"
 // add-next-line
 @import "theme/some/path/defining/another-selector";
 
 .example {
   @extend .another-selector;
 }
-```
+## Link component
+
+In V3, we now use Remix's own `Link` component from `@remix-run/react`. Although
+the import update is automatically handled by a codemod (see
+[automated migration process](./automated-migration)), you will have to check
+how it is used in your codebase, since it does not have the same signature as
+the one in V2. The main change is that the prop `to` is now of type `String`
+instead of `Location`, which will for example induce the following change:
+
+```jsx
+<div>
+  // remove-next-line
+  <Link to={location}>My link</Link>
+  // add-next-line
+  <Link to={location.pathname + location.search}>My link</Link>
+</div>
+````
 
 ## Modal Routes
 
