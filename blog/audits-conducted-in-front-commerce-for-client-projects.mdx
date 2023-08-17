@@ -1,0 +1,196 @@
+---
+title: Audits conducted in Front-Commerce for client projects
+authors: [paul]
+date: 2023-08-11T12:00
+hide_table_of_contents: true
+---
+
+When it comes to developing an e-commerce website, there are many different
+areas that require constant attention. Project teams may introduce performance
+issues or forget important features that could negatively impact the user
+experience. That's why audits are crucial to ensure that the website is meeting
+high standards and delivering a great user experience.
+
+At Front-Commerce, we conduct thorough audits on our client projects and provide
+recommendations to improve website performance and user experience. In this blog
+post, we will discuss the key points we measure during our audits.
+
+<!--truncate-->
+
+## 🚀 Performance
+
+Performance is a critical factor in the success of an e-commerce store. A slow
+website can lead to frustrated customers and lost sales. During our audits, we
+measure the performance of our client's websites in two key areas: server and
+webperfs.
+
+### Server
+
+During our audits, we check if the website's server is performing well. We make
+sure that things like cache and data loaders are implemented correctly to
+improve server performance. We also verify if the cache strategies are properly
+implemented to
+[reduce the number of requests made to external services](https://developers.front-commerce.com/blog/audit-optimization-number-of-external-requests).
+Another thing we check is that the server-side rendering (SSR) is implemented
+properly to improve the <abbr title="Time To First Byte">TTFB</abbr>. We also
+ensure that there are no memory leaks that can negatively impact the
+application's stability.
+
+### Webperfs
+
+<p>
+  Another important part of our performance audit is the{" "}
+  <abbr title="Web Performance">webperfs</abbr> analysis. webperfs measures the
+  website speed, responsiveness, and overall user experience. This includes
+  checking if the website's fonts and images are optimized for the store and if
+  the JavaScript bundle size is at an optimal level. We also check if important
+  pages are preloaded to improve the perceived performance for end users.
+</p>
+
+## 🎨 Theme customization
+
+We understand that every e-commerce store has unique branding requirements.
+During our audits, we check if the website's theme has been customized to match
+the client's branding guidelines. We also ensure that any customizations do not
+negatively impact the website's performance or user experience.
+
+## 🦻 Accessibility
+
+We believe that all websites should be accessible to everyone, regardless of
+their abilities. During our audits, we check if the website meets accessibility
+standards, such as having proper alt tags for images, keyboard navigation
+support, and proper contrast ratios.
+
+## 🖌️ Styleguide
+
+Consistency is key when it comes to creating a great user experience. During our
+audits, we check if the website's style guide is consistent throughout the
+website. We also ensure that the website's typography, colors, and spacing are
+in line with the client's branding guidelines.
+
+## 📨 Links received by e-mail
+
+A customer journey extends beyond the web UI and encompasses email interactions.
+That is why we also check the links that are received by email, as it ensures
+that customers can access the correct pages of the website, leading to a better
+overall user experience.
+
+## 🔗 Audit broken links in the store
+
+In a project, developers could have forgotten to update a hardcoded link, or
+content writers may have contributed unfinished content or made typos. That's
+why during our audits, we perform a thorough check for broken links and provide
+recommendations to fix them, ensuring that the website's user experience and SEO
+are not negatively impacted.
+
+## 🔍 SEO
+
+Having good SEO is crucial to driving traffic to the website. During our audits,
+we check for the following:
+
+### 404 & redirections
+
+We check for any 404 errors and ensure that the website has proper redirections
+in place. This is especially important when migrating to Front-Commerce from
+another platform, as the links may not be in the same format. This can cause 404
+errors for any pages previously crawled by search engine robots, such as Google.
+
+### Robots.txt
+
+We ensure that the website's robots.txt file is properly configured to allow
+search engines to crawl the website's pages.
+
+### Sitemap
+
+We check if the website has a sitemap.xml file and that it is correctly
+generated. More information about this can be found
+[here](https://developers.front-commerce.com/docs/2.x/advanced/production-ready/sitemap)
+
+### Meta tags and microdata
+
+We ensure that the website's meta tags and microdata are properly configured to
+improve the website's search engine rankings and visibility when sharing on
+social platforms.
+
+## 📱 PWA (Progressive Web App)
+
+We ensure that the store meets the standards for a PWA. We provide
+recommendations to improve the website's PWA capabilities.
+
+## 📈 Analytics
+
+During our audits, we check if the website has proper analytics tracking in
+place. This helps our clients to make data-driven decisions to improve their
+website's performance and user experience. More information about this can be
+found [here](https://developers.front-commerce.com/docs/2.x/category/analytics).
+
+## 🧑‍💻 Code quality audit
+
+Auditing code quality in a project is essential for several reasons. Firstly, it
+helps identify and rectify potential bugs, vulnerabilities, and performance
+issues, ensuring a more stable and secure application (as mentioned above).
+Secondly, it promotes maintainability and ensures that the project can be
+updated during its life. By adhering to Front-Commerce best practices,
+developers can upgrade to newer Front-Commerce versions more easily and with
+less risk of introducing bugs. Finally, our code quality audit encourages
+consistent coding standards and improves overall code readability. This leads to
+a more robust, efficient, and sustainable codebase.
+
+## 🪄 Application stability
+
+Application stability is a crucial aspect of a composable architecture, like the
+one used by Front-Commerce. It refers to the website's ability to remain
+resilient to external systems outages, such as server downtime or configuration
+errors. Ensuring stability is essential for a front-end solution like
+Front-Commerce, as it directly impacts the user experience and the website's
+ability to drive sales. Front-Commerce conducts thorough audits to identify
+potential issues that could affect stability and provides recommendations to
+improve resilience and ensure a reliable website.
+
+## ✨ Magic Button
+
+We believe in going above and beyond for our clients. During our audits, we look
+for opportunities to add additional features to the website that will improve
+the contribution experience and improve the merchant’s team productivity. Our
+`Magic Button` feature allows contributors to seamlessly improve the content on
+the website with direct links to the content source. We ensure that the
+contribution mode activation is secure and that any custom content is wrapped
+with the `StorefrontContent` component. More information about this can be found
+[here](https://developers.front-commerce.com/docs/2.x/category/magic-button).
+
+## ☁️ Prod server & CI
+
+We check if the website is properly deployed to the production server and if the
+continuous integration (CI) process is working correctly. This ensures that the
+website is always up-to-date and running smoothly.
+
+## 🗒️ Audit logs
+
+After conducting a thorough audit of the website, it's important to keep track
+of any bugs or issues that may arise once the site is live. While we analyze the
+codebase and test the application during the audit, we believe that analyzing
+application logs and monitoring metrics is also crucial once the site is live.
+This allows us to detect any smaller bugs or performance issues that may have
+been missed during testing. We follow up on our audits with log analysis a few
+days after the project is live to ensure that everything is running smoothly and
+to address any issues that may arise. By addressing these smaller issues, we can
+improve the overall quality of the application.
+
+## ☑️ Checklist before production
+
+Before we proceed with the audit, we have a checklist that should ideally be
+done by integrators in the project. This checklist includes items such as
+verifying that the environment is properly configured, that the data has been
+properly migrated, and that there are no broken links or missing assets. You can
+find a detailed checklist in our documentation
+[here](https://developers.front-commerce.com/docs/2.x/advanced/production-ready/checklist-before-production).
+
+## Conclusion
+
+In summary, audits are essential for ensuring that e-commerce websites meet the
+high standards necessary to drive sales and provide an exceptional user
+experience. At Front-Commerce, we take great pride in conducting comprehensive
+audits and providing our clients with actionable recommendations to enhance
+their website's performance and user experience. By partnering with us, our
+clients can rest assured that their website is optimized for success and
+delivering the best possible experience for their customers.
