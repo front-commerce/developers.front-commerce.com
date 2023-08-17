@@ -1,0 +1,165 @@
+---
+title: "Release: 2.26"
+authors: pierre
+date: 2023-08-17T17:00
+hide_table_of_contents: true
+---
+
+## Authorize.net Support for Magento 1, Improved Redis performance, Configurable `axios` timeout and Payment Log Security
+
+Summer is here, and we know that many of you are enjoying well-deserved
+holidays. That's why we're keeping things light and breezy with Front-Commerce
+2.26, a small release packed with essential improvements to enhance your
+eCommerce experience.
+
+As mentioned in our [2.25 release announcement](/changelog/front-commerce-2.25),
+**our focus during the next months is on remixing Front-Commerce**. This means
+that new features will be kept to a minimum, but rest assured, we're still
+committed to delivering quality updates that make a difference.
+
+Let's take a look at what's new in Front-Commerce 2.26…
+
+<!-- truncate -->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ContactLink from "@site/src/components/ContactLink";
+
+### Authorize.net Support for Magento 1
+
+Front-Commerce 2.26 now supports Magento 1's native Authorize.net payment method
+for headless payments. This integration allows for seamless and secure payment
+processing through the Authorize.net payment gateway within the usual
+Front-Commerce checkout flow.
+
+Read more about this integration on our
+[Authorize.net documentation page](/docs/2.x/advanced/payments/authorize-net).
+
+### Improved Redis performance: Preventing Heavy Cache Invalidations from Impacting Normal Operations
+
+In this release, we've introduced a performance improvement to prevent heavy
+cache invalidations from impacting normal operations. This performance patch is
+also available in patch releases **for every supported version!**
+
+We noticed instances of slowness on some projects heavily using Redis _(70+
+calls per page)_ when cache invalidations were performed intensively _(1700
+simultaneous `SCAN` operations on 3 million keys)_. Despite having a fully
+scalable and responsive Redis setup, the bottleneck was the Redis client
+instance shared between the invalidation mechanism and the DataLoader.
+
+To overcome this challenge, we've implemented a solution that exposes a
+different Redis client to the application than the one used in the DataLoader.
+This ensures that heavy cache invalidations no longer impact the overall
+performance of your Front-Commerce application.
+
+We've thoroughly tested this solution and beta tested it in production on an
+impacted project. We're confident that it will benefit every project and
+encourage you to **give it a try, by updating to the latest patch version of
+your currently used Front-Commerce version**.
+
+### Configurable `axios` timeout
+
+In this release, we've added an often requested feature: configurable `axios`
+timeout. With Front-Commerce 2.26, you now have the ability to set custom
+timeout values for `axios` requests for each specific services.
+
+This empowers you to optimize the reliability of your application, ensuring a
+smooth and responsive experience for your users, or dealing with slower staging
+websites.
+
+Read
+[our migration guide](/docs/2.x/appendices/migration-guides/#configurable-axios-timeouts)
+for details about the new environment variables available.
+
+### Enhanced Payment Log Security: Redacting Sensitive Information
+
+At Front-Commerce, we prioritize the security of your eCommerce platform. In
+Front-Commerce 2.26, we've introduced a new feature that **automatically redacts
+sensitive information from payment logs**, providing an extra layer of
+protection for your customers' data.
+
+We want to assure you that we haven't encountered any instances of existing
+modules logging sensitive information. However, we believe in being proactive
+when it comes to security. By implementing this feature, we ensure that your
+customers' payment or personal data remains safeguarded, even in the rare event
+of a payment module inadvertently logging sensitive information.
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Performance Improvements</h3></summary>
+```
+
+- **redis:** we've increased the `SCAN` `COUNT` iterations number during cache
+  invalidation from 100 to 1000 and made it configurable using
+  `invalidationScanIterationSize` (see
+  [Merge Request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2243)
+  for details)
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **magento1:** it is now possible to use the `PerMagentoCustomerTaxZone`
+  caching strategy to cache prices per tax zone (similar to how it works for
+  Magento 2)
+- **magento1:** the payment payload is now propagated to `/place-order` API
+  calls so payment methods can use it also in the related Magento observers
+- **magento2:** it is now possible to use a _temporary_ address during checkout.
+  This address won't be saved to the customer's address book
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **external-login:** we've fixed the external login endpoints to also support
+  `POST` HTTP verb for callbacks called by 3rd-party services (e.g: Apple)
+- **analytics:** we've fixed an issue preventing to track page after consent
+  change for plugins with `needConsent: true`
+- **images:** we've fixed an issue where images containing `/./` in their path
+  would not load properly client side in the `<Image>` component
+- **negotiable-quote:** we've fixed the magento2 schema to use the correct
+  country code field name
+- **requisition-list:** our code now uses a correct uid compatible with latest
+  magento requisition list module versions (see
+  [the migration guide dedicated section](/docs/2.x/appendices/migration-guides/#requisition-list-uid-update)
+  for details)
+
+```mdx-code-block
+</details>
+```
+
+<BackportList
+  currentVersion={"2.26.0"}
+  previousVersions={[
+    "2.25.2",
+    "2.24.4",
+    "2.23.5",
+    "2.22.7",
+    "2.21.7",
+    "2.20.9",
+    "2.19.15",
+    "2.18.13",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+[Upgrade to Front-Commerce 2.26.0](/docs/2.x/appendices/migration-guides#2250---2260)
+or
+[read the full changelog (Customers only)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.26.0)
+
+</ChangelogFooter>

@@ -1,0 +1,33 @@
+---
+title: "generateMetas"
+sidebar_position: 3
+description: "Generate Meta tags for your Front-Commerce site."
+---
+
+The `generateMetas` helper will generate metadatas for your site.
+
+The main features of this helper are :
+
+- Merge metadata with parents Metadata (defined in the parent routes /
+  `root.tsx`)
+- Will allow easier canonical generation
+
+:::tip
+We highly recommend you to use this helper as it will make your life
+easier when using nested routes. However you can still use the
+[standard Remix Meta method](https://remix.run/docs/en/main/route/meta-v2)
+:::
+
+## Usage
+
+- The first parametes is a [Remix V2 Meta Function](https://remix.run/docs/en/main/route/meta-v2#meta-function-parameters)
+- The second parameter is the canonical path (base url will be automatically injected)
+
+```jsx
+import generateMetas from "@front-commerce/remix/generateMetas";
+
+export const meta: V2_MetaFunction = (args) => {
+  const metas = generateMetas(() => [{ title: "Welcome home" }], "/");
+  return metas(args);
+};
+```

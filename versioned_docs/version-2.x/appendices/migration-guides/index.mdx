@@ -18,10 +18,88 @@ To update Front-Commerce in your project, use the command below _(with the exact
 version you need)_:
 
 ```
-npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.git#2.25.0
+npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.git#2.26.0
 ```
 
 :::
+
+## `2.25.0` -> `2.26.0`
+
+### Requisition List UID Update
+
+In version 2.26.0, we have updated the behavior of the requisition list UID to
+align with the Magento 2 GraphQL API.
+
+The requisition list UID is now a base64-encoded string instead of a decoded
+string value.
+
+If you are using a Magento version lower than 2.4.5, you must update the
+requisition list module by running the following command:
+
+```shell
+composer require magento/module-requisition-list-graph-ql 1.3.3
+```
+
+:::info
+
+We have added the
+`FRONT_COMMERCE_MAGENTO_UNSAFE_LEGACY_REQUISITION_LIST_ID=true` environment
+variable for backward compatibility. However, please note that this variable
+will be removed in version 3.0. To ensure future compatibility, we recommend
+updating the Magento module instead of relying on this environment variable.
+
+:::
+
+### Configurable Axios Timeouts
+
+In this version, we have added the ability to configure the timeouts for the
+Axios instance used by Front-Commerce. We recommend using the new configuration
+instead of the
+[timeout file with static values](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/core/graphql/timeout.js),
+which has been marked as deprecated for v3.0.
+
+The loaders that previously used these values have been updated to use a
+`configProvider` to get the values, which are customizable via the following
+environment variables:
+
+- [Magento1 configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/magento1/core/config/magentoProvider.js#L70-81)
+  - `FRONT_COMMERCE_MAGENTO_TIMEOUT` (default: 60000)
+  - `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` (default: 10000)
+- [Magento2 configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/magento2/core/config/magentoProvider.js#L149-160)
+  - `FRONT_COMMERCE_MAGENTO_TIMEOUT` (default: 60000)
+  - `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` (default: 10000)
+- [Colissimo configProvider](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/modules/shipping-colissimo-magento2/server/modules/colissimo/config/colissimoConfigProvider.js#L5-10)
+  - `FRONT_COMMERCE_COLISSIMO_TIMEOUT` (default: 10000)
+- [Ogone configuration](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bb9bda623701402156566e2e408a9afe6d7a9405/src/server/modules/payment-ogone/makeConfigFromEnv.js#L74)
+  - `FRONT_COMMERCE_OGONE_TIMEOUT` (default: 10000)
+
+We hope this documentation helps you configure the timeouts for the Axios
+instance used by Front-Commerce. If you have any questions or concerns, please
+don't hesitate to <ContactLink>contact us</ContactLink>.
+
+### Redis invalidation SCAN iterations size configuration (`invalidationScanIterationSize`)
+
+We've increased the default iterations size for `SCAN` commands issued by the
+[Redis caching strategy](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#redis)
+during cache invalidation with wildcards.
+
+It used to be an arbitrary value of 100, and we increased it to 1000 to have
+better performances when invalidating cache on databases containing several
+millions of keys.
+
+We feel it's a better default from our observations. This value is now
+configurable, so if you want to tweak its value or go back to the previous
+behavior, please update your `caching.js` with the
+`invalidationScanIterationSize: 100` value.
+
+### New features in `2.26.0`
+
+- **caching:** the `PerMagentoCustomerTaxZone` caching strategy is now also
+  available for Magento 1, to cache prices per tax zone (see
+  [documentation](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#permagentocustomertaxzone))
+- **payment**: Authorize.net is now supported for Magento1 (OpenMage LTS)
+  projects. To use it, please update the Magento module
+  [`front-commerce/magento1-module` to 1.5.0+](https://gitlab.blackswift.cloud/front-commerce/magento1-module-front-commerce/-/releases/1.5.0)
 
 ## `2.24.0` -> `2.25.0`
 
@@ -95,16 +173,6 @@ module.exports = {
   },
 };
 ```
-
-:::note Check your customizations
-
-This change was implemented by modifying the `Category.layer` and
-`AttributeBucket.value` resolvers. If you've rewritten them with a custom logic,
-you'll have to update your code accordingly. Check
-[the Merge Request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2069)
-for more details.
-
-:::
 
 This also introduced the new `isUsingIdsForAttributes` method for datasources,
 if you have custom datasources, you must implement this method.
@@ -457,7 +525,7 @@ ElasticSearch, Algolia or Attraqt), you don't have anything to do.
 
 This version contains improvements to RMA functionality. When updating your
 project, you must also update the
-[Magento2 Commerce - Module Front-Commerce to version `2.1.0+`](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/-/releases/2.1.0)
+[Magento2 Commerce - Module Front Commerce to version `2.1.0+`](https://gitlab.blackswift.cloud/front-commerce/magento2-commerce-module-front-commerce/-/releases/2.1.0)
 
 ```shell
 composer require front-commerce/magento2-commerce-module@2.1.0
