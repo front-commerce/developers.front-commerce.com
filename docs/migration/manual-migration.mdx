@@ -23,8 +23,26 @@ If you use SEO components or have overriden Seo components, you need to:
 - Remove import and usage of the component from your page
 - Use the [meta](https://remix.run/docs/en/main/route/meta-v2)
   function with our
-  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas) 
+  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas)
   to inject your custom metadatas in your Route Module.
+
+### Refactor pages to Remix routes
+
+Page `Enhancer` HOC usually were responsible for data loading in `2.x`. As we now embrace [Remix Server/Client Model](https://remix.run/docs/en/main/pages/philosophy#serverclient-model), 
+page enhancers must be removed in favor of [Remix route loaders](https://remix.run/docs/en/main/route/loader).
+
+You can see an example in the [category route file](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/app/routes/category.%24id.tsx) on
+how the data loading is now used with the `loader` method.
+
+You need to pay attention to two thing if you've overriden this file :
+
+- Did you update the query to fetch category?
+
+We now recommend you to update the GraphQL query used in category route and pass down any new props to the Category component.
+
+- Did you added more HOC to the `Enhancer`?
+
+You can either add your custom HOC to the `Category` component or replace HOC with hooks if relevant.
 
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
