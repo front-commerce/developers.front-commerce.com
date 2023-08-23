@@ -1,0 +1,61 @@
+---
+sidebar_position: 5
+title: Compat mode
+description:
+  This section documents the compatibility mode and feature flags introduced in
+  Front-Commerce, in order to be compatible with behaviors or libraries from 2.x
+  and allow a progressive migration.
+---
+
+<p>{frontMatter.description}</p>
+
+## `@front-commerce/compat`
+
+Once your app is migrated to the latest version of Front-Commerce after applying
+the migration process, your code might still be using deprecated patterns or
+libraries. These patterns were used in earlier versions of Front-Commerce but do
+not make sense in the current version. There are often better alternatives that
+are more performant and aligned with current best practices in the React/web
+ecosystem.
+
+To help with the migration process, we provide and maintain the
+`@front-commerce/compat` package. This package allows you to progressively
+migrate your code and benefit from the latest improvements in Front-Commerce.
+**We recommend creating an action plan to refactor code which uses** modules
+from `@front-commerce/compat`.
+
+Ultimately, you must strive to remove any code that depends on
+`@front-commerce/compat` from your project. New Front-Commerce projects must not
+use this package!
+
+## `v2_compat` configuration
+
+When using deprecated patterns or features, even though we tried to ease the
+migration path, you might still face some unexpected issues in a standard
+Front-Commerce application.
+
+In order to ensure a smooth migration, we have created `v2_compat` feature flags
+that you might have to enable in your Front-Commerce configuration
+(`front-commerce.config.ts`) so Front-Commerce works in the way you expect.
+
+```js title="front-commerce.config.ts"
+export default defineConfig({
+  extensions: [
+    /* … */
+  ],
+  v2_compat: {
+    // Enable feature flags here
+    // useApolloClientQueries: true,
+  },
+});
+```
+
+### `useApolloClientQueries`
+
+Default: **`false`**
+
+This feature flag must be enabled if your application uses Apollo to run
+**client-side queries**.<br />If your application uses the `graphql()` HOC, you
+must enable this feature flag.
+
+Without it, you will experience issues in development mode upon hydration.
