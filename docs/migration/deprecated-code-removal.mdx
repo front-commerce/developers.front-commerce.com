@@ -1,8 +1,7 @@
 ---
 sidebar_position: 4
 title: Deprecated code removal
-description:
-  This page lists the deprecated code that has been removed.
+description: This page lists the deprecated code that has been removed.
 ---
 
 Here is the list of the deprecated code that has been removed in version 3 of
@@ -12,41 +11,60 @@ Front-Commerce.
 
 Several fields and a mutation were deprecated, they have been removed:
 
-* [Remove deprecated `registerUser` mutation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1855): the `registerUser` mutation has been deprecated since version 2.17. Please use `registerCustomer` instead.
-* [Remove deprecated `price` and `price_type` fields on custom option GraphQL types](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1852): those fields have been [deprecated since 2.9.0](/docs/2.x/appendices/migration-guides/archives#customs-options-price-and-price_type-field-deprecations).
-* [Remove deprecated `Product.wishlistItem` GraphQL field](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1854): this field has been [deprecated since version 2.6](/docs/2.x/appendices/migration-guides/archives#wishlist-provider).
-* [Remove deprecated `Order.status` GraphQL field and related code](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1856): this field has been deprecated since version 2.5.
+- [Remove deprecated `registerUser` mutation](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1855):
+  the `registerUser` mutation has been deprecated since version 2.17. Please use
+  `registerCustomer` instead.
+- [Remove deprecated `price` and `price_type` fields on custom option GraphQL types](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1852):
+  those fields have been
+  [deprecated since 2.9.0](/docs/2.x/appendices/migration-guides/archives#customs-options-price-and-price_type-field-deprecations).
+- [Remove deprecated `Product.wishlistItem` GraphQL field](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1854):
+  this field has been
+  [deprecated since version 2.6](/docs/2.x/appendices/migration-guides/archives#wishlist-provider).
+- [Remove deprecated `Order.status` GraphQL field and related code](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1856):
+  this field has been deprecated since version 2.5.
 
 ## Theme components
 
-* [Remove deprecated MondialRelay `getMarkerUrl` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1937): ⚠️ `getMarkerUrl` was still used in `theme/modules/MondialRelay/MondialRelayPostalAddressItem`, if you have overridden this file you might have to apply the same change as in the merge request.
-* [Remove deprecated `inline` `Form/Item` prop](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1891): this property has been [deprecated in 2.19](docs/2.x/appendices/migration-guides/#formitem-inline-property-depreciation).
-* [Remove deprecated `theme/components/atoms/Form/Input/Password/passwordValidation`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1863): this has been documented in [the 2.12 migration guide](/docs/2.x/appendices/migration-guides/#passwordvalidation-deprecation).
-* [Remove deprecated `currentOptions` props from `ConfigurableOptions`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1889): this change was part of [the 2.10 release](/docs/2.x/appendices/migration-guides/#configurableoptions-needs-selectedoptions-and-deprecates-currentoptions).
-* [Remove deprecated behavior of `PayzenEmbeddedForm`/`PayzenScriptWrapper`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1888): this behavior has been deprecated [during the 2.7.0 release](/docs/2.x/appendices/migration-guides/archives#payzenembeddedquery-query-update).
-* [Remove deprecated `WishlistProductGrid` behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1936): this has been [deprecated since version 2.6](/docs/2.x/appendices/migration-guides/archives#wishlist-provider)
+- [Remove deprecated MondialRelay `getMarkerUrl` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1937):
+  ⚠️ `getMarkerUrl` was still used in
+  `theme/modules/MondialRelay/MondialRelayPostalAddressItem`, if you have
+  overridden this file you might have to apply the same change as in the merge
+  request.
+- [Remove deprecated `inline` `Form/Item` prop](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1891):
+  this property has been
+  [deprecated in 2.19](docs/2.x/appendices/migration-guides/#formitem-inline-property-depreciation).
+- [Remove deprecated `theme/components/atoms/Form/Input/Password/passwordValidation`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1863):
+  this has been documented in
+  [the 2.12 migration guide](/docs/2.x/appendices/migration-guides/#passwordvalidation-deprecation).
+- [Remove deprecated `currentOptions` props from `ConfigurableOptions`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1889):
+  this change was part of
+  [the 2.10 release](/docs/2.x/appendices/migration-guides/#configurableoptions-needs-selectedoptions-and-deprecates-currentoptions).
+- [Remove deprecated behavior of `PayzenEmbeddedForm`/`PayzenScriptWrapper`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1888):
+  this behavior has been deprecated
+  [during the 2.7.0 release](/docs/2.x/appendices/migration-guides/archives#payzenembeddedquery-query-update).
+- [Remove deprecated `WishlistProductGrid` behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1936):
+  this has been
+  [deprecated since version 2.6](/docs/2.x/appendices/migration-guides/archives#wishlist-provider)
 
 Those 2 merge requests removed deprecated theme components or exports that are
 unlikely to affect your project:
 
-* [Remove deprecated `theme/organisms/Configurator/RadioOption/RadioOption`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1924)
-* [Removes some deprecated export from theme files](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1882):
-
+- [Remove deprecated `theme/organisms/Configurator/RadioOption/RadioOption`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1924)
+- [Removes some deprecated export from theme files](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1882):
 
 Some properties of several React components were already deprecated in 2.0,
 those have been removed in the following merge requests:
 
-* [Remove deprecated `type` prop from `Alert`, `InlineAlert`, `FormActions` and `LabelledIcon`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1883)
-* [Remove deprecated `final` and `nice` props from `RecapTableLine`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1935)
-* [Remove deprecated `primary` and `related` props from `Link`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1942)
+- [Remove deprecated `type` prop from `Alert`, `InlineAlert`, `FormActions` and `LabelledIcon`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1883)
+- [Remove deprecated `final` and `nice` props from `RecapTableLine`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1935)
+- [Remove deprecated `primary` and `related` props from `Link`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1942)
 
 ## Deprecated features
 
 ### Legacy Analytics
 
 The legacy analytics implementation based on analytics.js has been removed in
-[Remove legacy
-analytics](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1864).
+[Remove legacy analytics](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1864).
 
 ### WysiwygV1
 
@@ -113,34 +131,27 @@ We also removed the following as it no longer has any use after the removal of
   the licenses config, which in turn will allow to apply translations to the
   text.
 
-* [Removed `CmsBlock`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1948) which it was essentially re-implementing `WysiwygV2` while keeping support for `WysiwygV1` which is now removed.
-* [Removed `config/licenses`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1947) which took in an html string based on `storeView`, this was used by the 
-[`GscText`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.23.x/src/web/theme/modules/Checkout/Payment/Gsc/GscText.js?ref_type=heads#L12) component, we have opted to 
-[inline](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/0de91a220a2ac482ef04b8b6d223c95e2ae568ce/src/web/theme/modules/Checkout/Payment/Gsc/GscText.js#L10-72) the licenses config, which in turn will 
-allow to apply translations to the text.
-  
 ## Backend
 
 ### Deprecated public loader methods
 
 Deprecated public methods of loaders have been removed:
 
-* [Remove deprecated `Country.getRegionFromCountryAndName` method](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1899)
-* [Remove deprecated `StoreLoader.isInCurrentStoreGroup()` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1877)
-* [Remove deprecated `chargeTransactionForOrder` from Stripe loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1866)
-* [Remove deprecated `MagentoProductSearchLoader.searchInCategory` method](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1879)
-* [Remove deprecated sitemap related code (both Magento1 and Magento2)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1872)
+- [Remove deprecated `Country.getRegionFromCountryAndName` method](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1899)
+- [Remove deprecated `StoreLoader.isInCurrentStoreGroup()` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1877)
+- [Remove deprecated `chargeTransactionForOrder` from Stripe loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1866)
+- [Remove deprecated `MagentoProductSearchLoader.searchInCategory` method](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1879)
+- [Remove deprecated sitemap related code (both Magento1 and Magento2)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1872)
 
 ### Support for old version of Magento1 and Magento2 modules
 
 The support for old versions of the Magento modules has been removed, please
 upgrade Front-Commerce's Magento modules to the latest version.
 
-* [Remove deprecated code to handle Magento1 module &lt; 1.2.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1876)
-* [Remove deprecated Magento2 product loader fallback for old Magento2 module version](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1903)
-* [Remove deprecated fallback to Magento2 `products` query if `productsBySkus` does not exist](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1930)
-* [Remove deprecated Magento2 guest checkout support check fallback](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1904)
-
+- [Remove deprecated code to handle Magento1 module &lt; 1.2.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1876)
+- [Remove deprecated Magento2 product loader fallback for old Magento2 module version](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1903)
+- [Remove deprecated fallback to Magento2 `products` query if `productsBySkus` does not exist](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1930)
+- [Remove deprecated Magento2 guest checkout support check fallback](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1904)
 
 ### Datasource related (Algolia, ElasticSearch,…)
 
@@ -149,45 +160,45 @@ involved deprecating files and various functions. When used in a project, those
 element were issuing a deprecation warnings. All the deprecated _datasource_
 related code has been removed in the following merge requests:
 
-* [Remove deprecated buckets handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1933)
-* [Remove deprecated `attributeFacets` from Algolia configuration](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1890)
-* [Remove deprecated `formatCategoryHit` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1880)
-* [Remove deprecated code from ElasticSearch datasource](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1869)
-* [Remove deprecated behavior from Front-Commerce/Search module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1865)
-* [Remove deprecated ES and Algolia datasource baseLoader behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1860)
-* [Remove deprecated esDatasource folder and `makeSearchDatasource` factories](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1859)
+- [Remove deprecated buckets handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1933)
+- [Remove deprecated `attributeFacets` from Algolia configuration](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1890)
+- [Remove deprecated `formatCategoryHit` function](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1880)
+- [Remove deprecated code from ElasticSearch datasource](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1869)
+- [Remove deprecated behavior from Front-Commerce/Search module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1865)
+- [Remove deprecated ES and Algolia datasource baseLoader behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1860)
+- [Remove deprecated esDatasource folder and `makeSearchDatasource` factories](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1859)
 
 ### Implementation changes
 
 Deprecated implementations of several features have been removed. Those changes
 are unlikely to affect your project:
 
-* [Remove deprecated Payment APIs](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1893)
-* [Remove deprecated GraphQL directive implementation mechanism](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1928)
-* [Remove deprecated Remote Schema stitching handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1925)
+- [Remove deprecated Payment APIs](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1893)
+- [Remove deprecated GraphQL directive implementation mechanism](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1928)
+- [Remove deprecated Remote Schema stitching handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1925)
 
 ### Test related APIs
 
-* [Remove `makeDescribeWithProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1862)
-* [Remove `describeWithProvider` `getUrl` deprecated behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1861)
+- [Remove `makeDescribeWithProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1862)
+- [Remove `describeWithProvider` `getUrl` deprecated behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1861)
 
 ### Internal APIs
 
 Those merge requests have removed internal APIs that are unlikely to affect your
 project.
 
-* [Remove deprecated `url` property from `PageLoader` handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1932)
-* [Remove deprecated parameter handling from Magento1 and Magento2 price loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1875)
-* [Remove deprecated files defining `Customer` and `CurrentCustomer` loaders](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1873)
-* [Remove deprecated image related code](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1858)
-* [Remove fully deprecated files](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1870)
-* [Remove deprecated `makeConfigFromEnv` from Payzen module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1868)
-* [Remove deprecated behavior from Magento1 order loader to handle old Magento1 module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1897)
-* [Remove deprecated Magento2 `CustomerLoader` behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1896)
-* [Remove deprecated address handling in `Checkout` loader for Magento1 and Magento2](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1895)
-* [Remove deprecated `formatShippingMethod` from Magento1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1894)
-* [Remove deprecated default number of street lines for Magento1 and Magento2](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1878)
-* [Remove deprecated Magento1 layer loader behavior without `makeDataLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1881)
-* [Remove deprecated `InMemoryCacheWithDeprecation`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1892)
-* [Remove deprecated `decorateLoggerWithTrace`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1926)
-* [Remove deprecated express config fields](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1871)
+- [Remove deprecated `url` property from `PageLoader` handling](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1932)
+- [Remove deprecated parameter handling from Magento1 and Magento2 price loader](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1875)
+- [Remove deprecated files defining `Customer` and `CurrentCustomer` loaders](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1873)
+- [Remove deprecated image related code](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1858)
+- [Remove fully deprecated files](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1870)
+- [Remove deprecated `makeConfigFromEnv` from Payzen module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1868)
+- [Remove deprecated behavior from Magento1 order loader to handle old Magento1 module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1897)
+- [Remove deprecated Magento2 `CustomerLoader` behavior](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1896)
+- [Remove deprecated address handling in `Checkout` loader for Magento1 and Magento2](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1895)
+- [Remove deprecated `formatShippingMethod` from Magento1](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1894)
+- [Remove deprecated default number of street lines for Magento1 and Magento2](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1878)
+- [Remove deprecated Magento1 layer loader behavior without `makeDataLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1881)
+- [Remove deprecated `InMemoryCacheWithDeprecation`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1892)
+- [Remove deprecated `decorateLoggerWithTrace`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1926)
+- [Remove deprecated express config fields](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/1871)
