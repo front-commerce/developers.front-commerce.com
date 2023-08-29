@@ -230,6 +230,10 @@ fieldset {
 }
 ```
 
+If you're using the `$boxSizeMargin`, `$smallContainerWidth`, or
+`$containerWidth` variables you should to import `@import "theme/variables";`
+instead.
+
 :::info
 
 After running the codemods on your project, you can easily find these
@@ -282,10 +286,12 @@ so that it becomes a valid CSS declaration:
   padding: $boxSizeMargin;
   // add-next-line
   padding: var(--boxSizeMagin);
+
   // remove-next-line
   margin-top: $boxSizeMargin * 2;
   // add-next-line
   margin-top: calc(var(--boxSizeMagin) * 2);
+
   // remove-next-line
   margin-bottom: math.div($boxSizeMargin, 4);
   // add-next-line
@@ -300,18 +306,37 @@ report any invalid expressions. Here is a list of common pattern to fix:
 
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
-  // remove-next-line
-  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(--boxSizeMargin) * 2 0;
-  // add-next-line
-  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(var(--boxSizeMargin) * 2) 0;
+  // remove-start
+  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(
+      --boxSizeMargin
+    ) * 2 0;
+  // remove-end
+  // add-start
+  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(
+      var(--boxSizeMargin) * 2
+    ) 0;
+  // add-end
+
   // remove-next-line
   max-width: calc(#{var(--boxSizeMargin) * 24} + 50ch);
   // add-next-line
   max-width: calc(var(--boxSizeMargin) * 24 + 50ch);
+
   // remove-next-line
   margin: calc(-var(--boxSizeMargin) / 4) * 3;
   // add-next-line
   margin: calc(-var(--boxSizeMargin) * 3 / 4);
+
+  // remove-next-line
+  padding-left: 1.5rem - calc(var(--boxSizeMargin) / 2);
+  // add-next-line
+  padding-left: calc(1.5rem - calc(var(--boxSizeMargin) / 2));
+
+  // remove-next-line
+  padding-right: 1.5rem - calc(var(--boxSizeMargin) / 2);
+  // add-next-line
+  padding-right: calc(1.5rem - calc(var(--boxSizeMargin) / 2));
+}
 ```
 
 ### `@extend` handling
