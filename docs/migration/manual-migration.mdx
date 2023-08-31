@@ -58,6 +58,59 @@ mechanics from Remix loaders and hooks:
   transfered to `useTrackPage` and `useProductPage` hooks
 - Loading state management is done directly at route loader level
 
+#### `withTrackOnMount` HOC depreciation
+
+`withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
+The new hook has a slightly different signature:
+
+- `isResolvedFromProps`, previously a function, parameter has been replaced with
+  `hasResolved` which is now a boolean
+- `mapPropsToProperties`, previously a function, has been renamed to
+  `createProperties` but is otherwise unchanged
+- `shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
+  unchanged.
+
+```jsx
+// Before (HOC)
+withTrackOnMount({
+  event: "Product Viewed",
+  isResolvedFromProps: (props) => !props.loading && props.product,
+  mapPropsToProperties: (props) => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product.sku,
+      name: props.product.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+
+// After (Hook)
+useTrackOnMount({
+  event: "Product Viewed",
+  hasResolved: !props.loading && Boolean(props.product),
+  createProperties: () => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product?.sku,
+      name: props.product?.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+```
+
+#### `withProductTracking` replaced with `useProductTracking`
+
+Similarly, the page-based HOC `withProductTracking` has been completely removed,
+in favor of a new `useProductTracking` hook.
+
+If you used this HOC in your code, you will have to replace it by calling
+`useProductTracking` in the component the HOC was previously used on.
+`useProductTracking` only takes the product as parameter.
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
