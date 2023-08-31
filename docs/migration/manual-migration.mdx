@@ -49,6 +49,103 @@ down any new props to the Category component.
 You can either add your custom HOC to the `Category` component or replace HOC
 with hooks if relevant.
 
+#### `Product` page
+
+In v3, the base theme got completely rid of any HOC, by leveraging on standard
+mechanics from Remix loaders and hooks:
+
+- `withTrackPage` and `withProductTracking` responsibilities have been
+  transfered to `useTrackPage` and `useProductPage` hooks
+- Loading state management is done directly at route loader level
+
+#### `withTrackOnMount` HOC depreciation
+
+`withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
+The new hook has a slightly different signature:
+
+| Old prop             | New prop         | Prop type                  |
+| -------------------- | ---------------- | -------------------------- |
+| isResolvedFromProps  | hasResolved      | ~~`function`~~ → `boolean` |
+| mapPropsToProperties | createProperties | `function`                 |
+
+`shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
+unchanged.
+
+```jsx
+// Before (HOC)
+// remove-start
+withTrackOnMount({
+  event: "Product Viewed",
+  isResolvedFromProps: (props) => !props.loading && props.product,
+  mapPropsToProperties: (props) => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product.sku,
+      name: props.product.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+// remove-end
+
+// After (Hook)
+// add-start
+useTrackOnMount({
+  event: "Product Viewed",
+  hasResolved: !props.loading && Boolean(props.product),
+  createProperties: () => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product?.sku,
+      name: props.product?.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+// add-end
+```
+
+#### `withProductTracking` replaced with `useProductTracking`
+
+Similarly, the page-based HOC `withProductTracking` has been completely removed,
+in favor of a new `useProductTracking` hook.
+
+If you used this HOC in your code, you will have to replace it by calling
+`useProductTracking` in the component the HOC was previously used on.
+`useProductTracking` only takes the product as parameter.
+
+#### `withProductAddedPopIn` removed
+
+The HOC `withProductAddedPopIn` has been completely removed, in favor of using a
+local `useState` insied the `Product` component.
+
+If you used this HOC in your code, you will have to replace it by using
+`useState` in the component the HOC was previously used on:
+
+```jsx
+import { useState } from "react";
+// ...
+
+const MyComponent = () => {
+  const [productAdded, setProductAdded] = useState(null);
+
+  // ...
+
+  return (
+    <div>
+      <ProductAddedPopIn product={productAdded} hidePopin={() => setProductAdded(null)} />
+
+      <ProductView
+        onProductAdded={(product) => setProductAdded(product)}
+        {/* ... */}
+      />
+    </div>
+  );
+}
+```
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
@@ -81,6 +178,24 @@ To cope with this change, you need to review all components using
     }
   );
   ```
+
+## `PartialProductQuery` removal
+
+In version 3, `PartialProductQuery` has been completely removed as it is not
+used by the base theme anymore. If it was used in your project, you will have to
+replace it with your own query or fragment.
+
+For reference, the query was:
+
+```graphql
+#import "theme/modules/ProductView/ProductItem/ProductItemFragment.gql"
+
+query PartialProductQuery($sku: String!) {
+  product(sku: $sku) {
+    ...ProductItemFragment
+  }
+}
+```
 
 ## Sass Migration
 

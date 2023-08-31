@@ -30,6 +30,66 @@ that the typed frontCommerce context is in the arguments, you can add the
 /// <reference types="@front-commerce/remix" />
 ```
 
+### Improved loader data types
+
+We exposed new methods in the `@front-commerce/remix` to replace the methods
+from `@remix-run` which allows for better type safety:
+
+#### `@front-commerce/remix/node`
+
+- `json`
+- `redirect`
+- `defer`
+
+#### `@front-commerce/remix/react`
+
+- `useLoaderData`
+- `useActionData`
+- `useFetcher`
+- `useRouteLoaderData`
+
+These methods are used the same as the ones from `@remix-run`, for example:
+
+```ts title="/app/routes/my-route.tsx"
+// remove-next-line
+import { useLoaderData } from "@remix-run/react";
+// add-next-line
+import { useLoaderData } from "@front-commerce/remix/react";
+// remove-next-line
+import { json } from "@remix-run/node";
+// add-next-line
+import { json } from "@front-commerce/remix/node";
+
+const loader = () => {
+  return json({
+    foo: "bar" as const
+    date: new Date()
+  });
+};
+
+export default function MyRoute() {
+  const data = useLoaderData<typeof loader>();
+
+  return (
+    <div>
+      {data.foo} // data will be typed as { foo: "bar", date: string } instead of SerializeObject<UndefinedToOptional<{ foo: "bar", date: string }>>
+    </div>
+  );
+}
+```
+
+In the above example the `data` will be typed as
+
+```ts
+{ foo: "bar", date: string }
+```
+
+Instead of the standard remix `SerializeObject` type:
+
+```ts
+SerializeObject<UndefinedToOptional<{ foo: "bar"; date: string }>>;
+```
+
 ## Front-Commerce Context
 
 To ensure the Front-Commerce Context is available in your loaders and actions,
