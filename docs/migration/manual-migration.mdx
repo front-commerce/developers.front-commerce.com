@@ -63,16 +63,17 @@ mechanics from Remix loaders and hooks:
 `withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
 The new hook has a slightly different signature:
 
-| Old prop             | New prop         | Prop type  |
-| -------------------- | ---------------- | ---------- |
-| isResolvedFromProps  | hasResolved      | `boolean`  |
-| mapPropsToProperties | createProperties | `function` |
+| Old prop             | New prop         | Prop type                  |
+| -------------------- | ---------------- | -------------------------- |
+| isResolvedFromProps  | hasResolved      | ~~`function`~~ → `boolean` |
+| mapPropsToProperties | createProperties | `function`                 |
 
 `shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
 unchanged.
 
 ```jsx
 // Before (HOC)
+// remove-start
 withTrackOnMount({
   event: "Product Viewed",
   isResolvedFromProps: (props) => !props.loading && props.product,
@@ -86,8 +87,10 @@ withTrackOnMount({
     };
   },
 });
+// remove-end
 
 // After (Hook)
+// add-start
 useTrackOnMount({
   event: "Product Viewed",
   hasResolved: !props.loading && Boolean(props.product),
@@ -101,6 +104,7 @@ useTrackOnMount({
     };
   },
 });
+// add-end
 ```
 
 #### `withProductTracking` replaced with `useProductTracking`
