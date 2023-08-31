@@ -21,28 +21,42 @@ The `xxxSeo` components (eg: `HomeSeo`) have been removed in favor of
 If you use SEO components or have overriden Seo components, you need to:
 
 - Remove import and usage of the component from your page
-- Use the [meta](https://remix.run/docs/en/main/route/meta-v2)
-  function with our
+- Use the [meta](https://remix.run/docs/en/main/route/meta-v2) function with our
   [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas)
   to inject your custom metadatas in your Route Module.
 
 ### Refactor pages to Remix routes
 
-Page `Enhancer` HOC usually were responsible for data loading in `2.x`. As we now embrace [Remix Server/Client Model](https://remix.run/docs/en/main/pages/philosophy#serverclient-model), 
-page enhancers must be removed in favor of [Remix route loaders](https://remix.run/docs/en/main/route/loader).
+Page `Enhancer` HOC usually were responsible for data loading in `2.x`. As we
+now embrace
+[Remix Server/Client Model](https://remix.run/docs/en/main/pages/philosophy#serverclient-model),
+page enhancers must be removed in favor of
+[Remix route loaders](https://remix.run/docs/en/main/route/loader).
 
-You can see an example in the [category route file](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/app/routes/category.%24id.tsx) on
-how the data loading is now used with the `loader` method.
+You can see an example in the
+[category route file](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/app/routes/category.%24id.tsx)
+on how the data loading is now used with the `loader` method.
 
 You need to pay attention to two thing if you've overriden this file :
 
 - Did you update the query to fetch category?
 
-We now recommend you to update the GraphQL query used in category route and pass down any new props to the Category component.
+We now recommend you to update the GraphQL query used in category route and pass
+down any new props to the Category component.
 
 - Did you added more HOC to the `Enhancer`?
 
-You can either add your custom HOC to the `Category` component or replace HOC with hooks if relevant.
+You can either add your custom HOC to the `Category` component or replace HOC
+with hooks if relevant.
+
+#### `Product` page
+
+In v3, the base theme got completely rid of any HOC, by leveraging on standard
+mechanics from Remix loaders and hooks:
+
+- `withTrackPage` and `withProductTracking` responsibilities have been
+  transfered to `useTrackPage` and `useProductPage` hooks
+- Loading state management is done directly at route loader level
 
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
@@ -76,6 +90,24 @@ To cope with this change, you need to review all components using
     }
   );
   ```
+
+## `PartialProductQuery` removal
+
+In version 3, `PartialProductQuery` has been completely removed as it is not
+used by the base theme anymore. If it was used in your project, you will have to
+replace it with your own query or fragment.
+
+For reference, the query was:
+
+```graphql
+#import "theme/modules/ProductView/ProductItem/ProductItemFragment.gql"
+
+query PartialProductQuery($sku: String!) {
+  product(sku: $sku) {
+    ...ProductItemFragment
+  }
+}
+```
 
 ## Sass Migration
 
@@ -136,7 +168,8 @@ $min: breakpoint-min("sm");
 }
 ```
 
-For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
+For cases where you were using the `media-breakpoint-up`, you can use a media
+query with `min-width` too. For example:
 
 **Before:**
 
