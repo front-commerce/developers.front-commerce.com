@@ -63,15 +63,17 @@ mechanics from Remix loaders and hooks:
 `withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
 The new hook has a slightly different signature:
 
-- `isResolvedFromProps`, previously a function, parameter has been replaced with
-  `hasResolved` which is now a boolean
-- `mapPropsToProperties`, previously a function, has been renamed to
-  `createProperties` but is otherwise unchanged
-- `shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
-  unchanged.
+| Old prop             | New prop         | Prop type                  |
+| -------------------- | ---------------- | -------------------------- |
+| isResolvedFromProps  | hasResolved      | ~~`function`~~ → `boolean` |
+| mapPropsToProperties | createProperties | `function`                 |
+
+`shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
+unchanged.
 
 ```jsx
 // Before (HOC)
+// remove-start
 withTrackOnMount({
   event: "Product Viewed",
   isResolvedFromProps: (props) => !props.loading && props.product,
@@ -85,8 +87,10 @@ withTrackOnMount({
     };
   },
 });
+// remove-end
 
 // After (Hook)
+// add-start
 useTrackOnMount({
   event: "Product Viewed",
   hasResolved: !props.loading && Boolean(props.product),
@@ -100,6 +104,7 @@ useTrackOnMount({
     };
   },
 });
+// add-end
 ```
 
 #### `withProductTracking` replaced with `useProductTracking`
@@ -110,6 +115,36 @@ in favor of a new `useProductTracking` hook.
 If you used this HOC in your code, you will have to replace it by calling
 `useProductTracking` in the component the HOC was previously used on.
 `useProductTracking` only takes the product as parameter.
+
+#### `withProductAddedPopIn` removed
+
+The HOC `withProductAddedPopIn` has been completely removed, in favor of using a
+local `useState` insied the `Product` component.
+
+If you used this HOC in your code, you will have to replace it by using
+`useState` in the component the HOC was previously used on:
+
+```jsx
+import { useState } from "react";
+// ...
+
+const MyComponent = () => {
+  const [productAdded, setProductAdded] = useState(null);
+
+  // ...
+
+  return (
+    <div>
+      <ProductAddedPopIn product={productAdded} hidePopin={() => setProductAdded(null)} />
+
+      <ProductView
+        onProductAdded={(product) => setProductAdded(product)}
+        {/* ... */}
+      />
+    </div>
+  );
+}
+```
 
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
