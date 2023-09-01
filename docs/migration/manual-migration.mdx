@@ -551,3 +551,15 @@ Other optional variables updated:
 | `FRONT_COMMERCE_MAGENTO_TIMEOUT`       | `FRONT_COMMERCE_MAGENTO1_TIMEOUT`       | `FRONT_COMMERCE_MAGENTO2_TIMEOUT`       |
 | `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` | `FRONT_COMMERCE_MAGENTO1_ADMIN_TIMEOUT` | `FRONT_COMMERCE_MAGENTO2_ADMIN_TIMEOUT` |
 | `FRONT_COMMERCE_XRAY_MAGENTO_VERSION`  | `FRONT_COMMERCE_XRAY_MAGENTO1_VERSION`  | :x: N/A                                 |
+
+## `makeImageProxyRouter` → `createResizedImageResponse`
+
+The `makeImageProxyRouter` function has been removed in favor of the new
+`createResizedImageResponse` function. You can read more about the
+implementation details in the
+[`createResizedImageResponse` documentation](/docs/remixed/api-reference/front-commerce-core/create-resized-image-response).
+
+All images which are located under `public/images/resized/*` should now be moved
+to `public/images/*`. This will allow for the
+[`/images/resized/*` resource route](https://remix.run/docs/en/1.19.3/guides/resource-routes)
+to be reserved for the new `createResizedImageResponse` function.
