@@ -46,6 +46,7 @@ export default defineConfig({
   v2_compat: {
     // Enable feature flags here
     // useApolloClientQueries: true,
+    // useApolloClientSSR: true,
   },
 });
 ```
@@ -59,3 +60,12 @@ This feature flag must be enabled if your application uses Apollo to run
 must enable this feature flag.
 
 Without it, you will experience issues in development mode upon hydration.
+
+### `useApolloClientSSR`
+
+Default: **`false`**
+
+This feature flag must be enabled if your application uses Apollo to run your
+client-side queries also during **server-side rendering**.<br /> If your
+application uses the `graphql()` HOC for **SEO critical content**, you must
+enable this feature flag.
