@@ -155,6 +155,15 @@ If you used this HOC in your code, you will have to replace it by calling
 `useCartTracking` in the component the HOC was previously used on.
 `useCartTracking` only takes the cart as parameter.
 
+#### `withLogoutMutation` has been removed
+
+The page-based HOC `withLogoutMutation` has been completely removed, and has
+been replaced with a `/logout` route.
+
+If you used this HOC in your code, you can remove it and use a link to `/logout`
+instead. See `skeleton/app/routes/logout.tsx` and
+`theme/pages/Account/Logout/Logout.jsx` for examples.
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
