@@ -581,3 +581,32 @@ All images which are located under `public/images/resized/*` should now be moved
 to `public/images/*`. This will allow for the
 [`/images/resized/*` resource route](https://remix.run/docs/en/1.19.3/guides/resource-routes)
 to be reserved for the new `createResizedImageResponse` function.
+
+## Removal of `SmartLayout` component
+
+In v3 we removed the `SmartLayout` component. This component was used to enhance
+the `Layout` component with navigationMenu for the header and footer.
+
+The `Layout` component now requires two props `headerNavigationMenu` and
+`footerNavigationMenu` to be passed to it.
+
+This is can be retrieved via a loader: _see example in
+[`_main.tsx` layout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1237955dda56451bf50b507c1cdd0a703ea32795/skeleton/app/routes/_main.tsx)_
+
+```tsx title="app/routes/_main.tsx"
+export const loader = async ({ context }: LoaderArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const headerResponse = await app.graphql.query(HeaderQueryDocument, {
+    name: "data",
+  });
+
+  const footerResponse = await app.graphql.query(NavigationMenuDocument, {
+    name: "categories",
+  });
+
+  return json({
+    headerNavigationMenu: headerResponse?.navigationMenu || [],
+    footerNavigationMenu: footerResponse?.navigationMenu || [],
+  });
+};
+```
