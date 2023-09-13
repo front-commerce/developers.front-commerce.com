@@ -1,0 +1,7 @@
+label: How-to
+position: 3
+collapsible: false
+link:
+  type: generated-index
+  description:
+    In this section, you will learn how-to basics about Front-Commerce V3

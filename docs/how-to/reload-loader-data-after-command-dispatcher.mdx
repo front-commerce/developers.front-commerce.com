@@ -1,0 +1,137 @@
+---
+sidebar_position: 1
+title: Reload loader data after command dispatcher
+description:
+  In V3 we mix GraphQL calls made in remix data loader and client-side requests
+  with Apollo. Here you will learn how to reload loader data after command
+  execution
+---
+
+:::caution
+
+This part of the documentation is still a work in progress. This reflect the
+actual state of the work done in V3.
+
+Please consider it in an unstable state and it may be subject to changes.
+
+:::
+
+<p>{frontMatter.description}</p>
+
+# Philosophy
+
+In V3, we decided to get rid of the Apollo component and focus on the
+[Remix data loader](https://remix.run/docs/en/main/route/loader) and
+[Remix actions](https://remix.run/docs/en/main/route/action).
+
+However, while progressively migrating queries and mutation to Remix, we found
+some client side actions (like update a customer address) are done client side
+using `makeCommandDispatcher` which is based on Apollo.
+
+Since the SSR initial load are made in Remix context and `makeCommandDispatcher`
+in Apollo context, the using of `refetchQueries` isn't possible on data loaded
+by remix.
+
+:::tip
+
+Since the Front-Commerce theme is based on Remix data flow, we highly recommend
+you to do the same and migrate your code to Remix actions/loader ! We recommend
+you to read the
+[Fullstack data flow](https://remix.run/docs/en/main/discussion/data-flow) to
+learn more about this.
+
+:::
+
+# Example
+
+Let's take an example with the User Newsletter page :
+
+```tsx title="skeleton/app/routes/user.newsletter.tsx"
+import { FrontCommerceApp } from "@front-commerce/remix";
+import generateMetas from "@front-commerce/remix/generateMetas";
+import { json } from "@front-commerce/remix/node";
+import { useLoaderData } from "@front-commerce/remix/react";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import Newsletter from "theme/pages/Account/Newsletter/Newsletter";
+import { AccountInformationDocument } from "~/graphql/graphql";
+
+export const meta: V2_MetaFunction = (args) => {
+  const metas = generateMetas(() => {
+    return [{ title: "Newsletter" }];
+  });
+  return metas(args);
+};
+
+export async function loader({ context }: LoaderArgs) {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const response = await app.graphql.query(AccountInformationDocument);
+  return json({ user: response.me });
+}
+
+export default function UserNewsletterPage() {
+  const { user } = useLoaderData<typeof loader>();
+
+  return <Newsletter user={user} />;
+}
+```
+
+Here, we are loading data about customer information to know if they subscribed
+to the newsletter with Remix data loader.
+
+Then, in the enhancer that handle subscription, we are using
+`makeCommandDispatcherWithFeedback`:
+
+```tsx title="packages/theme-chocolatine/theme/pages/Account/Newsletter/Newsletter"
+const EnhanceNewsletter = ({ AccountInfoQuery, ChangeUserInfoMutation }) =>
+  compose(
+    injectIntl,
+    // add-next-line
+    withRevalidator(),
+    makeCommandDispatcherWithMessageFeedback(
+      {
+        handleSubscription: (props) => (subscription) => {
+          const updatedUserData = {
+            customer: {
+              website_id: config.website_id,
+              id: props.user.id,
+              firstname: props.user.firstname,
+              lastname: props.user.lastname,
+              email: props.user.email,
+              is_subscribed_to_newsletter: subscription,
+            },
+          };
+          return {
+            options: {
+              mutation: ChangeUserInfoMutation,
+              variables: updatedUserData,
+              update: () => {
+                updateAccountInfoFromResponse(AccountInfoQuery);
+                // add-next-line
+                props.revalidator.revalidate();
+              },
+            },
+            messages: {
+              error: props.intl.formatMessage(messages.error),
+              success: subscription
+                ? props.intl.formatMessage(messages.subscribeSuccess)
+                : props.intl.formatMessage(messages.unsubscribeSuccess),
+            },
+          };
+        },
+      },
+      false
+    )
+  );
+```
+
+You can see two new lines :
+
+- `withRevalidator()` : it adds the `revalidator` in props from the
+  [useRevalidator](https://remix.run/docs/en/main/hooks/use-revalidator) hook
+  from Remix
+- `props.revalidator.revalidate();` : it tells Remix to reload the data from the
+  page data loader without refreshing the whole page
+
+Using this new `withRevalidator` HOC with the `revalidate` method will allow you
+to reload the data after they've been affected by a mutation in a command
+dispatcher.
