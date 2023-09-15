@@ -118,3 +118,7 @@ video.video-cover:not(:fullscreen) {
 kbd {
   white-space: nowrap;
 }
+
+code {
+  vertical-align: baseline;
+}
