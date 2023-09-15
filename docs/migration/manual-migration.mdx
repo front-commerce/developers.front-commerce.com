@@ -610,3 +610,18 @@ export const loader = async ({ context }: LoaderArgs) => {
   });
 };
 ```
+
+## `react-helmet-async` removal
+
+In version 3, `react-helmet-async` has been removed as it does not make sense in
+a remix application. If you used this in any custom components or pages, you
+will now need to move it the
+[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2) of the
+route.
+
+## `CartSeo` removal
+
+In version 3, `CartSeo` has been removed as it is not used by the base theme
+anymore. If you overrode this component or one using it, you will need to move
+any of the customisation to the `cart` route
+[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2).
