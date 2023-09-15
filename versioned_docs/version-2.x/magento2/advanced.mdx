@@ -127,7 +127,9 @@ from your Magento server.
 
 :::tip
 
-You can refer to our [Quanta module example](https://github.com/front-commerce/examples) for a working example using this feature.
+You can refer to our
+[Quanta module example](https://github.com/front-commerce/examples) for a
+working example using this feature.
 
 :::
 
@@ -150,3 +152,24 @@ There are two ways to clear the magento cache:
 ![Clear Front-Commerce cache](./assets/clear-fc-cache.jpg)
 
 </Figure>
+
+## Deactivating URL rewrites in emails
+
+<SinceVersion tag="Magento2 module 2.10.0" />
+
+For Merchants also using their Magento2 backend in a non-headless way, it is
+possible to disable URL rewrites for emails related to the monolithic Magento2
+frontend while rewriting emails sent from a Front-Commerce API call.
+
+This feature is an opt-in feature, which means that merchants can choose to
+enable or disable it based on their requirements.
+
+To do so, go to the "**Stores > Configuration > General > Front-Commerce**"
+section and update the configuration as illustrated below:
+
+![Rewrite URLs in all emails configuration field](./assets/config-rewrite-urls-in-all-emails.png)
+
+- when this configuration is `Yes` (default), URLs in all emails sent are
+  rewritten to use the Front-Commerce frontend URL.
+- when this configuration is `No`, URLs in emails are not rewritten except if
+  the email is directly sent from a Front-Commerce API call.
