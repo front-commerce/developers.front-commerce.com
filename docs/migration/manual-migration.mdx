@@ -58,6 +58,19 @@ mechanics from Remix loaders and hooks:
   transfered to `useTrackPage` and `useProductPage` hooks
 - Loading state management is done directly at route loader level
 
+#### `Account` pages
+
+Similarly, page-base HOCs on the Account page have been completely removed, and
+replaced with standard Remix and React mechanics. Here's a list of all removed
+Enhancers in those pages:
+
+- `EnhanceDownloadableProduct` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2444))
+- `EnhanceAddressBook` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2439))
+- `EnhanceDashboard` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2441))
+
 #### `withTrackOnMount` HOC depreciation
 
 `withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
