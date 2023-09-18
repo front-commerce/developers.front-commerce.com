@@ -632,6 +632,21 @@ will now need to move it the
 [`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2) of the
 route.
 
+## `@loadable/comoonent` removal
+
+`@loadable/component` is no longer a dependency of Front-Commerce. That means
+components that were previously made _loadable_ are now loaded synchronously as
+any other component. In terms of usage, in most cases this change should be
+transparent. That's not the case if [you are manually preloading a component
+with
+`Component.preload()`](https://loadable-components.com/docs/prefetching/#manually-preload-a-component)
+or if you have overridden a file that is doing it. In those case, you have to
+remove `.preload()` calls.
+
+In addition, you can still use
+`@loadable/component` in your custom components and then you have to make sure
+`@loadable/component` is a dependency of your project.
+
 ## `CartSeo` removal
 
 In version 3, `CartSeo` has been removed as it is not used by the base theme
