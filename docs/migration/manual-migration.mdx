@@ -637,15 +637,14 @@ route.
 `@loadable/component` is no longer a dependency of Front-Commerce. That means
 components that were previously made _loadable_ are now loaded synchronously as
 any other component. In terms of usage, in most cases this change should be
-transparent. That's not the case if [you are manually preloading a component
-with
-`Component.preload()`](https://loadable-components.com/docs/prefetching/#manually-preload-a-component)
+transparent. That's not the case if
+[you are manually preloading a component with `Component.preload()`](https://loadable-components.com/docs/prefetching/#manually-preload-a-component)
 or if you have overridden a file that is doing it. In those case, you have to
 remove `.preload()` calls.
 
-In addition, you can still use
-`@loadable/component` in your custom components and then you have to make sure
-`@loadable/component` is a dependency of your project.
+In addition, you can still use `@loadable/component` in your custom components
+and then you have to make sure `@loadable/component` is a dependency of your
+project.
 
 ## `CartSeo` removal
 
@@ -653,3 +652,15 @@ In version 3, `CartSeo` has been removed as it is not used by the base theme
 anymore. If you overrode this component or one using it, you will need to move
 any of the customisation to the `cart` route
 [`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2).
+
+## `EmptyCart` refactor
+
+The component `EmptyCart` has been refactored and its HOC `EnhanceEmptyCart` has
+been removed to benefit from data served directly from the `cart` route loader.
+It is now rendered directly as a page in `_main.cart.tsx` instead of rendered as
+a component in `Cart`. If you have overridden this component in you project, you
+will need to ensure the changes are compatible with the new version.
+
+See
+[related MR (!2525)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2525)
+for more informations.
