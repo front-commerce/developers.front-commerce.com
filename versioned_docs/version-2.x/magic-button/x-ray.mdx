@@ -84,8 +84,8 @@ class MyCustomTypeExtractor extends ContentMetadataExtractor {
     return "identifier"; // the same value as in schema.gql
   }
 
-  await extract(resolvedData, source, args, context) {
-    return new ContentMetadataExtractor(
+  async extract(resolvedData, source, args, context) {
+    return new ContentMetadata(
       source.id,
       "MyCustomType",
       // it can be any string identifying a source, we use `magento` or
