@@ -54,16 +54,16 @@ by Front-Commerce (Product, Categories, …). It is also possible to implement
 X-Ray for custom types and/or for existing types that are extended with data
 coming from another source.
 
-### Add the `@storeContentDirective` in the schema referencing a metadata extractor
+### Add the `@storefrontContent` directive in the schema referencing a metadata extractor
 
-First, when defining a custom type, you have to use the `@storeContentDirective`
-to instruct the X-Ray feature that an object of that custom type comes from an
-external service and can be edited. The directive will dynamically add an
-internal resolver to track usage of any field of the type. Your `schema.gql`
+First, when defining a custom type, you have to use the `@storefrontContent`
+directive to instruct the X-Ray feature that an object of that custom type comes
+from an external service and can be edited. The directive will dynamically add
+an internal resolver to track usage of any field of the type. Your `schema.gql`
 would look like:
 
 ```graphql title="src/my-module/schema.gql"
-type MyCustomType @storeContentDirective(extractorIdentifier: "identifier") {
+type MyCustomType @storefrontContent(extractorIdentifier: "identifier") {
   ID id!
   String name!
 }
@@ -130,23 +130,21 @@ const MyCustomType = ({ aMyCustomType }) => {
 };
 ```
 
-By default, the X-Ray view will be scoped as **block**.
-You can make it global to the whole page by defining the
-`scope="page"` prop.
+By default, the X-Ray view will be scoped as **block**. You can make it global
+to the whole page by defining the `scope="page"` prop.
 
 ```js
 <StorefrontContent type="MyCustomPage" id={aMyCustomPage.slug} scope="page">
 ```
 
-The screenshot below illustrates a page scope for the category (1) and block scopes for product items (2):
+The screenshot below illustrates a page scope for the category (1) and block
+scopes for product items (2):
 [![Example of X-Ray scopes on the same page](./assets/x-ray-blocks-types.png)](./assets/x-ray-blocks-types.png)
-
 
 ### Style a custom source
 
 If your content comes from a specific source, you can configure a dedicated
-color and icon for that source. For that, you can can override
-`app-sources`:
+color and icon for that source. For that, you can can override `app-sources`:
 
 ```js title="theme/modules/StorefrontContent/app-sources.js"
 const anSvgIcon = /* … */
