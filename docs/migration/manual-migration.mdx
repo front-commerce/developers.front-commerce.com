@@ -664,3 +664,85 @@ will need to ensure the changes are compatible with the new version.
 See
 [related MR (!2525)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2525)
 for more informations.
+
+## Removed `MenuNavigation` component
+
+The component `MenuNavigation` was only used in the default theme of
+Front-Commerce, and was subsequently removed in version 3.0 (see
+[related MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2524))
+
+## `react-apollo` usage removed from `theme-chocolatine`
+
+In an effort to remove `react-apollo` dependency in theme chocolatine, we
+removed all occurences of `graphql()`, `useQuery()` and `useLazyQuery()` calls
+in it, and replace them by either direct API calls using remix's `useFetcher`,
+or move them to the related route loader when possible. This means a good number
+of `Enhancers` have also been reworked, and sometimes removed completely. Here's
+the list of the `Enhancers` that have been removed:
+
+- `EnhanceEmptyCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2525)):
+  `EmptyCart` component is now used as a page rendered directly under `/cart`
+  route
+- `EnhanceCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2527))
+  was moved to the `/cart` route loader
+- `withCountries` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2520)):
+  replaced with `useCountries` hook
+- `EnhanceChoosePayment` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2528)):
+  replaced with `usePaymentMethods` hook
+- `EnhanceHeader` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2535)):
+  replaced with `useCustomer` and `useCart`
+- `checkCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2553)):
+  refactor
+- `withCartId` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537)):
+  replaced with `withCart`
+- `EnhanceMiniCartContent` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537)):
+  replaced with `useCart`
+- `EnhanceCartRecap` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2540)):
+  replaced with `useCart`
+- `withCheckoutSuccessTracking` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2545)):
+  replaced with`useCheckoutSuccessTracking`
+- `GscText` 's HOC (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2546)):
+  replaced with `useStore`
+- `EnhanceProductReviews` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2557)):
+  replaced with `useProductReviews`
+- `withIsSubscribedToInStockAlert` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2565)):
+  replaced with `useIsSubscribedToStockAlert`
+- `EnhanceSearchBar` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2568)):
+  moved logic to `useSearchBar`
+
+Additionally, some `Enhancers` and HOCs were modified for the same purpose. If
+you those were overriden in your project, you will have to check what change and
+adapt it in your code:
+
+- `EnhanceChooseShippingMethod` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537))
+- `EnhanceAddToCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2540))
+- `EnhanceAddress` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2547))
+- `withCheckoutTracking` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2553))
+- `EnhanceProductGallery` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2554))
+- `EnhancePublishProductreview` and `EnhanceLoginForm` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2564))
+- `EnhanceSubscribeToInStockAlert` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2565))
+- `EnhanceCurrencySelector` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2582))
+- `EnhanceAddToCartModal` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2586))
