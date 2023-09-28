@@ -6,8 +6,9 @@ description:
   resizing and caching images on the fly."
 ---
 
-The `createResizedImageResponse` allows to create [resource routes](https://remix.run/docs/en/1.19.3/guides/resource-routes) which allow
-resizing and caching images on the fly.
+The `createResizedImageResponse` allows to create
+[resource routes](https://remix.run/docs/en/2.0.1/guides/resource-routes) which
+allow resizing and caching images on the fly.
 
 ## Usage
 
@@ -52,7 +53,7 @@ const loader = async ({ request, params }: LoaderArgs) => {
     request,
     () => fetchRemoteImage(imagePath),
     {
-      cacheDuration: ONE_YEAR,
+      cacheDuration: ONE_WEEK,
     }
   );
   // highlight-end
