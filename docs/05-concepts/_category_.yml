@@ -1,0 +1,8 @@
+label: Concepts
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains understanding-oriented documentation that provides
+    conceptual information about Front-Commerce design choices and philosophy to
+    help you find your way.
