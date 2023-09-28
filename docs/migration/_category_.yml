@@ -1,6 +1,6 @@
 label: Migrating from v2
-position: 3
-collapsible: false
+position: 5
+collapsible: true
 link:
   type: generated-index
   description:

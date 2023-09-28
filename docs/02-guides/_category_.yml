@@ -1,0 +1,7 @@
+label: Guides
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains goal-oriented documentation that provides step-by-step
+    instructions for completing a specific task in Front-Commerce.
