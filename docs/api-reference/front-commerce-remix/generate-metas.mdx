@@ -23,8 +23,8 @@ easier when using nested routes. However you can still use the
 - The first parametes is a [Remix V2 Meta Function](https://remix.run/docs/en/main/route/meta-v2#meta-function-parameters)
 - The second parameter is the canonical path (base url will be automatically injected)
 
-```jsx
-import generateMetas from "@front-commerce/remix/generateMetas";
+```typescript
+import { generateMetas } from "@front-commerce/remix/node";
 
 export const meta: V2_MetaFunction = (args) => {
   const metas = generateMetas(() => [{ title: "Welcome home" }], "/");
