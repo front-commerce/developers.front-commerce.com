@@ -632,6 +632,15 @@ will now need to move it the
 [`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2) of the
 route.
 
+## Client side log handler removal
+
+[The client side log mechanism has been removed from Front-Commerce
+3.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2594).
+For future version, we plan to bring back this feature. In the meantime, if you
+are using this feature or you have overridden a component using this feature,
+you need to remove it. In version 2.x, the API was imported from
+`web/core/logs/logHandler`.
+
 ## `@loadable/component` removal
 
 `@loadable/component` is no longer a dependency of Front-Commerce. That means
