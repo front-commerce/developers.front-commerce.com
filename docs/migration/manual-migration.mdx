@@ -746,3 +746,12 @@ adapt it in your code:
   [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2582))
 - `EnhanceAddToCartModal` (see
   [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2586))
+
+## `useDevice()` removal
+
+We removed the `useDevice()` hook in version 3.0. It was unused in the base
+theme, and we had no use cases in mind for it.
+
+Device information are still available in the configuration. Access it using
+`config.device`. Please contact us if you have a use case we don't support
+anymore.
