@@ -1,0 +1,202 @@
+---
+title: "React"
+sidebar_position: 3
+description:
+  "This documentation will cover all React dedicated APIs provided by the
+  Front-Commerce core."
+---
+
+<p>{frontMatter.description}</p>
+
+To help you creating the best front-end with React, we've created convenient
+React hooks and components that you can reuse in your application.
+
+## `useConditionalCallOnMount`
+
+Execute a callback when component is mounted if a condition is met.
+
+```js
+useConditionalCallOnMount(condition, callback);
+```
+
+Arguments:
+
+| Name        | Type       | Description                                               |
+| ----------- | ---------- | --------------------------------------------------------- |
+| `condition` | `boolean`  | Specify if the callback must be executed                  |
+| `callback`  | `function` | A function that must be executed if `condition` is `true` |
+
+Example:
+
+```jsx
+import { useConditionalCallOnMount } from "@front-commerce/core/react";
+
+const AcmeComponent = ({ props }) => {
+  const logOnMount = () => {
+    console.log("I am mounted");
+  };
+
+  useConditionalCallOnMount(props.shouldLogOnMounted, logOnMount);
+
+  return <div>Acme Component</div>;
+};
+```
+
+## `useIsMount`
+
+A variable that return `true` or `false` depending of the component mount status
+
+```js
+useIsMount();
+```
+
+Return: `boolean`
+
+Example:
+
+```jsx
+import { useIsMount } from "@front-commerce/core/react";
+
+const AcmeComponent = ({ props }) => {
+  const isMounted = useIsMount();
+
+  return (
+    <div>
+      {isMounted ? "Component is mounted" : "Component isn't mounted yet"}
+    </div>
+  );
+};
+```
+
+## `useItemsValidityCheck`
+
+:::caution
+
+We recommend you to don't use this API in your application (unless you have a
+specific use-case that can match this method behaviour).
+
+:::
+
+Return an object to tell the status of validty of an array (mostly used in the
+context of cart items).
+
+```js
+useItemsValidityCheck(items);
+```
+
+Arguments:
+
+| Name    | Type    | Description                                           |
+| ------- | ------- | ----------------------------------------------------- |
+| `items` | `Array` | an array of object that have a property named `valid` |
+
+Return
+
+`Object`:
+
+| Name                  | Type      | Description                                           |
+| --------------------- | --------- | ----------------------------------------------------- |
+| `allValidityResolved` | `boolean` | all items contains a `valid` property                 |
+| `hasValid`            | `boolean` | array contain at least one item with `valid` property |
+| `allValid`            | `boolean` | all items have `valid` property with value `true`     |
+
+## `useCallbackModal`
+
+Manage interactions with a modal and its state.
+
+```js
+const modalCallback = useCallbackModal();
+```
+
+Return
+
+`Object`:
+
+| Name                | Type       | Description                                                   |
+| ------------------- | ---------- | ------------------------------------------------------------- |
+| `isOpen`            | `boolean`  | modal state (`closed` or `opened`)                            |
+| `onRequestClose`    | `function` | method that must be passed as prop when modal request a close |
+| `onSuccess`         | `function` | method that must be passed as prop when modal action succeed  |
+| `openCallbackModal` | `function` | method that is the callback after modal cycle execution       |
+
+Example : see
+[`useEnsureLoggedInPromise.jsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/modules/User/helpers/useEnsureLoggedInPromise.jsx?ref_type=heads)
+
+## `NoPermissionProvider`
+
+Component context provider.
+
+```jsx
+<NoPermissionProvider>
+  <MyChildrenComponent />
+</NoPermissionProvider>
+```
+
+## `Restricted`
+
+Component wrapper to prevent access to pages
+
+```jsx
+<Restricted to={to}>{children}</Restricted>
+```
+
+Props:
+
+| Name       | Type        | Description          |
+| ---------- | ----------- | -------------------- |
+| `to`       | `string`    | Authorisation name   |
+| `children` | `component` | Component to display |
+
+Example:
+
+```jsx
+<Restricted to="acme.access">
+  <Link to="acme/access">Restricted access</Link>
+</Restricted>
+```
+
+## `useNoPermissions`
+
+Check if the user have the permission
+
+Example :
+
+```jsx
+const authorization = useNoPermissions();
+const { isAllowedTo } = authorisation;
+
+return <div>User authorisation status : {isAllowedTo ? "yes" : "no"}</div>;
+```
+
+## `trackPage`
+
+Not meant to be used directly, we recommend that you use `useTrackPage` from
+`@front-commerce/remix` instead
+
+```ts
+import { useTrackPage } from "@front-commerce/remix/react";
+
+function AcmePage() {
+  const trackPage = useTrackPage();
+
+  useEffect(() => {
+    trackPage("Acme Page");
+  }, []);
+
+  return <div>Acme Page</div>;
+}
+```
+
+## `trackEvent`
+
+Track an event on page.
+
+```ts
+import { trackEvent } from "@front-commerce/core/react";
+
+function AcmePage() {
+  return (
+    <button onClick={() => trackEvent("Acme Page click")}>Acme Page</button>
+  );
+}
+```
