@@ -1,0 +1,122 @@
+---
+title: "@front-commerce/remix"
+description:
+  "This package contains Front-Commerce implementations related to Remix."
+---
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/remix@latest
+```
+
+## Type Safety
+
+You can get type safety over the network for your loaders with
+[LoaderFunctionArgs](https://remix.run/docs/en/2.0.1/route/loader#loader) and
+for your actions with
+[ActionFunctionArgs](https://remix.run/docs/en/2.0.1/route/action#action). To
+ensure that the typed frontCommerce context is in the arguments, you can add the
+`@front-commerce/remix` reference to your `remix.env.d.ts` file.
+
+```ts title="remix.env.d.ts"
+/// <reference types="@remix-run/dev" />
+/// <reference types="@remix-run/node" />
+// add-next-line
+/// <reference types="@front-commerce/remix" />
+```
+
+### Improved loader data types
+
+We exposed new methods in the `@front-commerce/remix` to replace the methods
+from `@remix-run` which allows for better type safety:
+
+#### `@front-commerce/remix/node`
+
+- `json`
+- `redirect`
+- `defer`
+
+#### `@front-commerce/remix/react`
+
+- `useLoaderData`
+- `useActionData`
+- `useFetcher`
+- `useRouteLoaderData`
+
+These methods are used the same as the ones from `@remix-run`, for example:
+
+```ts title="/app/routes/my-route.tsx"
+// remove-next-line
+import { useLoaderData } from "@remix-run/react";
+// add-next-line
+import { useLoaderData } from "@front-commerce/remix/react";
+// remove-next-line
+import { json } from "@remix-run/node";
+// add-next-line
+import { json } from "@front-commerce/remix/node";
+
+const loader = () => {
+  return json({
+    foo: "bar" as const
+    date: new Date()
+  });
+};
+
+export default function MyRoute() {
+  const data = useLoaderData<typeof loader>();
+
+  return (
+    <div>
+      {data.foo} // data will be typed as { foo: "bar", date: string } instead of SerializeObject<UndefinedToOptional<{ foo: "bar", date: string }>>
+    </div>
+  );
+}
+```
+
+In the above example the `data` will be typed as
+
+```ts
+{ foo: "bar", date: string }
+```
+
+Instead of the standard remix `SerializeObject` type:
+
+```ts
+SerializeObject<UndefinedToOptional<{ foo: "bar"; date: string }>>;
+```
+
+## Front-Commerce Context
+
+To ensure the Front-Commerce Context is available in your loaders and actions,
+it needs to be added to the
+[`getLoadContext`](https://remix.run/docs/en/2.0.1/route/loader#context), to do
+this you can use the `createFrontCommerceContext` method from in your
+[`server.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b6e60a53aad662ec87f83cb8dd6d581f8bf13e91/skeleton/server.ts)
+
+```ts
+// add-start
+import { createFrontCommerceContext } from "@front-commerce/remix";
+import { createRemixRequest } from "@remix-run/express/dist/server";
+// add-end
+
+app.all(
+  "*",
+  createRequestHandler({
+    build: require(BUILD_DIR),
+    mode: process.env.NODE_ENV,
+    // add-start
+    getLoadContext(request, response) {
+      const remixRequest = createRemixRequest(request, response);
+      return {
+        frontCommerce: createFrontCommerceContext(remixRequest),
+      };
+    },
+    // add-end
+  })
+);
+```

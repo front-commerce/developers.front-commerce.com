@@ -25,6 +25,158 @@ If you use SEO components or have overriden Seo components, you need to:
   [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas)
   to inject your custom metadatas in your Route Module.
 
+### Refactor pages to Remix routes
+
+Page `Enhancer` HOC usually were responsible for data loading in `2.x`. As we
+now embrace
+[Remix Server/Client Model](https://remix.run/docs/en/main/pages/philosophy#serverclient-model),
+page enhancers must be removed in favor of
+[Remix route loaders](https://remix.run/docs/en/main/route/loader).
+
+You can see an example in the
+[category route file](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/app/routes/category.%24id.tsx)
+on how the data loading is now used with the `loader` method.
+
+You need to pay attention to two thing if you've overriden this file :
+
+- Did you update the query to fetch category?
+
+We now recommend you to update the GraphQL query used in category route and pass
+down any new props to the Category component.
+
+- Did you added more HOC to the `Enhancer`?
+
+You can either add your custom HOC to the `Category` component or replace HOC
+with hooks if relevant.
+
+#### `Product` page
+
+In v3, the base theme got completely rid of any HOC, by leveraging on standard
+mechanics from Remix loaders and hooks:
+
+- `withTrackPage` and `withProductTracking` responsibilities have been
+  transfered to `useTrackPage` and `useProductPage` hooks
+- Loading state management is done directly at route loader level
+
+#### `Account` pages
+
+Similarly, page-base HOCs on the Account page have been completely removed, and
+replaced with standard Remix and React mechanics. Here's a list of all removed
+Enhancers in those pages:
+
+- `EnhanceDownloadableProduct` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2444))
+- `EnhanceAddressBook` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2439))
+- `EnhanceDashboard` (see
+  [merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2441))
+
+#### `withTrackOnMount` HOC depreciation
+
+`withTrackOnMount` has been deprecated in favor of a new hook `useTrackOnMount`.
+The new hook has a slightly different signature:
+
+| Old prop             | New prop         | Prop type                  |
+| -------------------- | ---------------- | -------------------------- |
+| isResolvedFromProps  | hasResolved      | ~~`function`~~ → `boolean` |
+| mapPropsToProperties | createProperties | `function`                 |
+
+`shouldMountEvent`, `shouldUpdateEvent` and `trackEvent` have been left
+unchanged.
+
+```jsx
+// Before (HOC)
+// remove-start
+withTrackOnMount({
+  event: "Product Viewed",
+  isResolvedFromProps: (props) => !props.loading && props.product,
+  mapPropsToProperties: (props) => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product.sku,
+      name: props.product.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+// remove-end
+
+// After (Hook)
+// add-start
+useTrackOnMount({
+  event: "Product Viewed",
+  hasResolved: !props.loading && Boolean(props.product),
+  createProperties: () => {
+    const finalPrice = props.product?.prices?.finalPrice?.priceInclTax?.value;
+    return {
+      sku: props.product?.sku,
+      name: props.product?.name,
+      price: finalPrice?.amount,
+      currency: finalPrice?.currency,
+    };
+  },
+});
+// add-end
+```
+
+#### `withProductTracking` replaced with `useProductTracking`
+
+Similarly, the page-based HOC `withProductTracking` has been completely removed,
+in favor of a new `useProductTracking` hook.
+
+If you used this HOC in your code, you will have to replace it by calling
+`useProductTracking` in the component the HOC was previously used on.
+`useProductTracking` only takes the product as parameter.
+
+#### `withProductAddedPopIn` removed
+
+The HOC `withProductAddedPopIn` has been completely removed, in favor of using a
+local `useState` insied the `Product` component.
+
+If you used this HOC in your code, you will have to replace it by using
+`useState` in the component the HOC was previously used on:
+
+```jsx
+import { useState } from "react";
+// ...
+
+const MyComponent = () => {
+  const [productAdded, setProductAdded] = useState(null);
+
+  // ...
+
+  return (
+    <div>
+      <ProductAddedPopIn product={productAdded} hidePopin={() => setProductAdded(null)} />
+
+      <ProductView
+        onProductAdded={(product) => setProductAdded(product)}
+        {/* ... */}
+      />
+    </div>
+  );
+}
+```
+
+#### `withCartTracking` replaced with `useCartTracking`
+
+The page-based HOC `withCartTracking` has been completely removed, in favor of a
+new `useCartTracking` hook.
+
+If you used this HOC in your code, you will have to replace it by calling
+`useCartTracking` in the component the HOC was previously used on.
+`useCartTracking` only takes the cart as parameter.
+
+#### `withLogoutMutation` has been removed
+
+The page-based HOC `withLogoutMutation` has been completely removed, and has
+been replaced with a `/logout` route.
+
+If you used this HOC in your code, you can remove it and use a link to `/logout`
+instead. See `skeleton/app/routes/logout.tsx` and
+`theme/pages/Account/Logout/Logout.jsx` for examples.
+
 ## `makeCommandDispatcherWithCommandFeedback` API change
 
 [`makeCommandDispatcherWithCommandFeedback` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2cc5515682349ca0f1b1aba922a277db27ad067c?merge_request_iid=2200).
@@ -90,6 +242,24 @@ handle this mechanism directly withing the related `loader` by throwing a `404`
 response there. For more information about this practice, see
 [Remix's guide on handling 404s](https://remix.run/docs/en/main/guides/not-found).
 
+## `PartialProductQuery` removal
+
+In version 3, `PartialProductQuery` has been completely removed as it is not
+used by the base theme anymore. If it was used in your project, you will have to
+replace it with your own query or fragment.
+
+For reference, the query was:
+
+```graphql
+#import "theme/modules/ProductView/ProductItem/ProductItemFragment.gql"
+
+query PartialProductQuery($sku: String!) {
+  product(sku: $sku) {
+    ...ProductItemFragment
+  }
+}
+```
+
 ## Sass Migration
 
 In the latest version of Front-Commerce we converted all global Sass variables
@@ -149,8 +319,7 @@ $min: breakpoint-min("sm");
 }
 ```
 
-For cases where you were using the `media-breakpoint-up`, you can use a media
-query with `min-width` too. For example:
+For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
 
 **Before:**
 
@@ -244,6 +413,10 @@ fieldset {
 }
 ```
 
+If you're using the `$boxSizeMargin`, `$smallContainerWidth`, or
+`$containerWidth` variables you should to import `@import "theme/variables";`
+instead.
+
 :::info
 
 After running the codemods on your project, you can easily find these
@@ -296,10 +469,12 @@ so that it becomes a valid CSS declaration:
   padding: $boxSizeMargin;
   // add-next-line
   padding: var(--boxSizeMagin);
+
   // remove-next-line
   margin-top: $boxSizeMargin * 2;
   // add-next-line
   margin-top: calc(var(--boxSizeMagin) * 2);
+
   // remove-next-line
   margin-bottom: math.div($boxSizeMargin, 4);
   // add-next-line
@@ -314,18 +489,37 @@ report any invalid expressions. Here is a list of common pattern to fix:
 
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
-  // remove-next-line
-  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(--boxSizeMargin) * 2 0;
-  // add-next-line
-  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(var(--boxSizeMargin) * 2) 0;
+  // remove-start
+  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(
+      --boxSizeMargin
+    ) * 2 0;
+  // remove-end
+  // add-start
+  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(
+      var(--boxSizeMargin) * 2
+    ) 0;
+  // add-end
+
   // remove-next-line
   max-width: calc(#{var(--boxSizeMargin) * 24} + 50ch);
   // add-next-line
   max-width: calc(var(--boxSizeMargin) * 24 + 50ch);
+
   // remove-next-line
   margin: calc(-var(--boxSizeMargin) / 4) * 3;
   // add-next-line
   margin: calc(-var(--boxSizeMargin) * 3 / 4);
+
+  // remove-next-line
+  padding-left: 1.5rem - calc(var(--boxSizeMargin) / 2);
+  // add-next-line
+  padding-left: calc(1.5rem - calc(var(--boxSizeMargin) / 2));
+
+  // remove-next-line
+  padding-right: 1.5rem - calc(var(--boxSizeMargin) / 2);
+  // add-next-line
+  padding-right: calc(1.5rem - calc(var(--boxSizeMargin) / 2));
+}
 ```
 
 ### `@extend` handling
@@ -419,3 +613,185 @@ Other optional variables updated:
 | `FRONT_COMMERCE_MAGENTO_TIMEOUT`       | `FRONT_COMMERCE_MAGENTO1_TIMEOUT`       | `FRONT_COMMERCE_MAGENTO2_TIMEOUT`       |
 | `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT` | `FRONT_COMMERCE_MAGENTO1_ADMIN_TIMEOUT` | `FRONT_COMMERCE_MAGENTO2_ADMIN_TIMEOUT` |
 | `FRONT_COMMERCE_XRAY_MAGENTO_VERSION`  | `FRONT_COMMERCE_XRAY_MAGENTO1_VERSION`  | :x: N/A                                 |
+
+## `makeImageProxyRouter` → `createResizedImageResponse`
+
+The `makeImageProxyRouter` function has been removed in favor of the new
+`createResizedImageResponse` function. You can read more about the
+implementation details in the
+[`createResizedImageResponse` documentation](/docs/remixed/api-reference/front-commerce-core/create-resized-image-response).
+
+All images which are located under `public/images/resized/*` should now be moved
+to `public/images/*`. This will allow for the
+[`/images/resized/*` resource route](https://remix.run/docs/en/1.19.3/guides/resource-routes)
+to be reserved for the new `createResizedImageResponse` function.
+
+## Removal of `SmartLayout` component
+
+In v3 we removed the `SmartLayout` component. This component was used to enhance
+the `Layout` component with navigationMenu for the header and footer.
+
+The `Layout` component now requires two props `headerNavigationMenu` and
+`footerNavigationMenu` to be passed to it.
+
+This is can be retrieved via a loader: _see example in
+[`_main.tsx` layout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1237955dda56451bf50b507c1cdd0a703ea32795/skeleton/app/routes/_main.tsx)_
+
+```tsx title="app/routes/_main.tsx"
+export const loader = async ({ context }: LoaderArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const headerResponse = await app.graphql.query(HeaderQueryDocument, {
+    name: "data",
+  });
+
+  const footerResponse = await app.graphql.query(NavigationMenuDocument, {
+    name: "categories",
+  });
+
+  return json({
+    headerNavigationMenu: headerResponse?.navigationMenu || [],
+    footerNavigationMenu: footerResponse?.navigationMenu || [],
+  });
+};
+```
+
+## `react-helmet-async` removal
+
+In version 3, `react-helmet-async` has been removed as it does not make sense in
+a remix application. If you used this in any custom components or pages, you
+will now need to move it the
+[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2) of the
+route.
+
+## Client side log handler removal
+
+[The client side log mechanism has been removed from Front-Commerce
+3.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2594).
+For future version, we plan to bring back this feature. In the meantime, if you
+are using this feature or you have overridden a component using this feature,
+you need to remove it. In version 2.x, the API was imported from
+`web/core/logs/logHandler`.
+
+## `@loadable/component` removal
+
+`@loadable/component` is no longer a dependency of Front-Commerce. That means
+components that were previously made _loadable_ are now loaded synchronously as
+any other component. In terms of usage, in most cases this change should be
+transparent. That's not the case if
+[you are manually preloading a component with `Component.preload()`](https://loadable-components.com/docs/prefetching/#manually-preload-a-component)
+or if you have overridden a file that is doing it. In those case, you have to
+remove `.preload()` calls.
+
+In addition, you can still use `@loadable/component` in your custom components
+and then you have to make sure `@loadable/component` is a dependency of your
+project.
+
+## `CartSeo` removal
+
+In version 3, `CartSeo` has been removed as it is not used by the base theme
+anymore. If you overrode this component or one using it, you will need to move
+any of the customisation to the `cart` route
+[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2).
+
+## `EmptyCart` refactor
+
+The component `EmptyCart` has been refactored and its HOC `EnhanceEmptyCart` has
+been removed to benefit from data served directly from the `cart` route loader.
+It is now rendered directly as a page in `_main.cart.tsx` instead of rendered as
+a component in `Cart`. If you have overridden this component in you project, you
+will need to ensure the changes are compatible with the new version.
+
+See
+[related MR (!2525)](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2525)
+for more informations.
+
+## Removed `MenuNavigation` component
+
+The component `MenuNavigation` was only used in the default theme of
+Front-Commerce, and was subsequently removed in version 3.0 (see
+[related MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2524))
+
+## `react-apollo` usage removed from `theme-chocolatine`
+
+In an effort to remove `react-apollo` dependency in theme chocolatine, we
+removed all occurences of `graphql()`, `useQuery()` and `useLazyQuery()` calls
+in it, and replace them by either direct API calls using remix's `useFetcher`,
+or move them to the related route loader when possible. This means a good number
+of `Enhancers` have also been reworked, and sometimes removed completely. Here's
+the list of the `Enhancers` that have been removed:
+
+- `EnhanceEmptyCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2525)):
+  `EmptyCart` component is now used as a page rendered directly under `/cart`
+  route
+- `EnhanceCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2527))
+  was moved to the `/cart` route loader
+- `withCountries` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2520)):
+  replaced with `useCountries` hook
+- `EnhanceChoosePayment` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2528)):
+  replaced with `usePaymentMethods` hook
+- `EnhanceHeader` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2535)):
+  replaced with `useCustomer` and `useCart`
+- `checkCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2553)):
+  refactor
+- `withCartId` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537)):
+  replaced with `withCart`
+- `EnhanceMiniCartContent` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537)):
+  replaced with `useCart`
+- `EnhanceCartRecap` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2540)):
+  replaced with `useCart`
+- `withCheckoutSuccessTracking` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2545)):
+  replaced with`useCheckoutSuccessTracking`
+- `GscText` 's HOC (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2546)):
+  replaced with `useStore`
+- `EnhanceProductReviews` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2557)):
+  replaced with `useProductReviews`
+- `withIsSubscribedToInStockAlert` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2565)):
+  replaced with `useIsSubscribedToStockAlert`
+- `EnhanceSearchBar` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2568)):
+  moved logic to `useSearchBar`
+
+Additionally, some `Enhancers` and HOCs were modified for the same purpose. If
+you those were overriden in your project, you will have to check what change and
+adapt it in your code:
+
+- `EnhanceChooseShippingMethod` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2537))
+- `EnhanceAddToCart` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2540))
+- `EnhanceAddress` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2547))
+- `withCheckoutTracking` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2553))
+- `EnhanceProductGallery` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2554))
+- `EnhancePublishProductreview` and `EnhanceLoginForm` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2564))
+- `EnhanceSubscribeToInStockAlert` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2565))
+- `EnhanceCurrencySelector` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2582))
+- `EnhanceAddToCartModal` (see
+  [MR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2586))
+
+## `useDevice()` removal
+
+We removed the `useDevice()` hook in version 3.0. It was unused in the base
+theme, and we had no use cases in mind for it.
+
+Device information are still available in the configuration. Access it using
+`config.device`. Please contact us if you have a use case we don't support
+anymore.

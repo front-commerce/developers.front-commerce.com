@@ -14,15 +14,15 @@ To use the `FrontCommerceApp` instance you can add it to your loaders or
 actions.
 
 ```ts
-import type { LoaderArgs, ActionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { FrontCommerceApp } from "@front-commerce/remix";
 
-export const loader = ({ context }: LoaderArgs) => {
+export const loader = ({ context }: LoaderFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
   // your loader logic here
 };
 
-export const action = ({ context }: ActionArgs) => {
+export const action = ({ context }: ActionFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
   // your action logic here
 };
@@ -66,9 +66,13 @@ Exposes the graphql client.
 - `mutate` - Executes a graphql mutation.
 
 ```ts
-export const loader = ({ context }: LoaderArgs) => {
+import { LoadingFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+export const loader = ({ context }: LoadingFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
 
+  // highlight-start
   const result = app.graphql.query(/* GraphQL */ `
     query {
       products {
@@ -79,13 +83,15 @@ export const loader = ({ context }: LoaderArgs) => {
       }
     }
   `);
+  // highlight-end
 
   // your loader logic here
 };
 
-export const action = ({ context }: ActionArgs) => {
+export const action = ({ context }: ActionFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
 
+  // highlight-start
   const result = app.graphql.mutate(
     /* GraphQL */ `
     mutation AddToCart($input: AddToCartInput!)) {
@@ -101,6 +107,7 @@ export const action = ({ context }: ActionArgs) => {
   `,
     { sku: "123", quantity: 1 }
   );
+  // highlight-end
 
   // your action logic here
 };

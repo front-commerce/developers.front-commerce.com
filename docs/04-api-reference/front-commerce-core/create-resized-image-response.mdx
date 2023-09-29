@@ -1,0 +1,117 @@
+---
+title: "createResizedImageResponse"
+sidebar_position: 2
+description:
+  "The createResizedImageResponse allows to create custom loaders which allow
+  resizing and caching images on the fly."
+---
+
+The `createResizedImageResponse` allows to create
+[resource routes](https://remix.run/docs/en/2.0.1/guides/resource-routes) which
+allow resizing and caching images on the fly.
+
+## Usage
+
+The `createResizedImageResponse` function has 3 parameters:
+
+- `request`:The request to handle.
+- `fetchRemoteImage`: A function that returns the image buffer.
+- `cacheConfig`: The optional
+  [cache configuration](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fdcbea5288ca66b12e4c839653bcbe033114a3e9/packages/core/resized-image/createResizedImageResponse.ts#L17-22)
+  which handles the caching of an image
+
+This can be used to serve images either from a remote service, or from a local
+file system, next we will see examples for both cases.
+
+### Remote image
+
+For this example, we will create a
+[splat route](https://remix.run/docs/en/1.19.3/file-conventions/route-files-v2#splat-routes)
+that will fetch an image from a remote service.
+
+To do so, we will introduce the `createResizedImageResponse` function.
+
+```ts title="/app/routes/media.picsum.$.ts"
+import type { LoaderArgs } from "@remix-run/node";
+// highlight-next-line
+import { createResizedImageResponse } from "@front-commerce/core/resizedImage.server";
+
+// highlight-start
+const fetchRemoteImage = async (imagePath: string) => {
+  const image = await fetch(`https://picsum.photos/${imagePath}`);
+  return image.arrayBuffer();
+};
+// highlight-end
+
+const loader = async ({ request, params }: LoaderArgs) => {
+  const imagePath = params["*"] as string;
+
+  const ONE_WEEK = 7 * 24 * 60 * 60; // the default cache duration is set to one year
+
+  // highlight-start
+  return createResizedImageResponse(
+    request,
+    () => fetchRemoteImage(imagePath),
+    {
+      cacheDuration: ONE_WEEK,
+    }
+  );
+  // highlight-end
+};
+```
+
+:::info
+
+When we visit the `/media/picsum/200/300.jpg?format=large&extension=webp` route,
+the image will be retrieved from the `https://picsum.photos/200/300` URL and
+resized to the same size defined in your images config for the `large` format,
+and it will be converted to a `webp` image.
+
+:::
+
+### Local image
+
+For this example, we will create a new route that will fetch an image from a
+local directory
+
+```ts title="/app/routes/media.local.$.ts"
+import type { LoaderArgs } from "@remix-run/node";
+import { createResizedImageResponse } from "@front-commerce/core/resizedImage.server";
+// highlight-next-line
+import fs from "fs";
+
+// highlight-start
+const fetchLocalImage = (relativePath: string) => {
+  try {
+    return fs.readFileSync(relativePath);
+  } catch (error) {
+    console.error(error);
+    throw new Response("Image not found", { status: 404 });
+  }
+};
+// highlight-end
+
+const loader = async ({ request, params }: LoaderArgs) => {
+  const imagePath = params["*"] as string;
+
+  const relativePath = path.resolve(
+    process.cwd(),
+    `public/images/${imagePath}`
+  );
+
+  // highlight-start
+  return createResizedImageResponse(request, () =>
+    fetchLocalImage(relativePath)
+  );
+  // highlight-end
+};
+```
+
+:::info
+
+When we visit the `/media/local/my-image.jpg?format=large&extension=webp` route,
+the image will be retrieved from the `public/images/my-image.jpg` file and
+resized to the same size defined in your images config for the `large` format,
+and it will be converted to a `webp` image.
+
+:::
