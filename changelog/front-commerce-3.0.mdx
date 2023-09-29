@@ -1,0 +1,248 @@
+---
+title: "Introducing Front-Commerce 3.0"
+authors: pierre
+date: 2023-09-28T16:00
+hide_table_of_contents: true
+# image: ./assets/fc-is-getting-a-remix.png
+---
+
+We are excited to introduce **Front-Commerce 3.0**, a big leap forward in
+e-commerce development. With a focus on web performance, developer experience,
+and adherence to web standards, this release is set to redefine how you approach
+building your online storefronts.
+
+**Front-Commerce** is a storefront for headless commerce based on the
+[newly released **Remix v2** framework](https://remix.run/blog/remix-v2). We're
+bringing all the goodness we developed over the past 7 years, to the Remix
+ecosystem.
+
+Let's examine how we've merged both technologies to enhance the experience for
+end users and developers alike.
+
+<!--truncate-->
+
+import ChangelogFooter from "@site/src/components/ChangelogFooter";
+import BackportList from "@site/src/components/BackportList";
+import ContactLink from "@site/src/components/ContactLink";
+
+## 💌 A team and community effort
+
+As we embark on the exciting journey of this new major product release, I can't
+help but feel a deep sense of gratitude. A lot happened since
+[we announced that we were Remixing Front-Commerce 6 months ago](/changelog/front-commerce-is-getting-a-remix)
+and we want to say a few words to our community.
+
+First and foremost, a heartfelt thanks goes out to our incredible team who
+poured their passion, creativity, and countless hours into bringing this vision
+to life. Without their dedication, none of this would have been possible.
+
+To our invaluable integrators (agencies, developers, project managers…), who
+have been providing feedback over the years and kept interacting with us while
+we were busy with this new version: your understanding and collaboration mean
+the world to us, and we can't wait for you to experience the magic of a
+Front-Commerce Remixed! **We've built it for you!**
+
+And for merchants trusting Front-Commerce, we genuinely thank you for your
+patience as we focused on v3 development over summer features. We're eagerly
+anticipating how this new release will enhance your business.
+
+Together, we've created something special: let's dive into what this release
+holds and how it will positively impact all of you. ☕
+
+## Web Performance Improvement
+
+We're all working together to create user experiences that convert, fast! Let's
+take a moment to explore the improvements that will lead to faster page load
+times and enhanced user experiences.
+
+### Reduced Client-side Dependencies
+
+With the introduction of Front-Commerce 3.0, we've made significant strides in
+reducing client-side dependencies. We've removed libraries like Apollo Client,
+GraphQL, GraphQL-tag, Formsy, and RxJS, replacing them with Remix default data
+fetching and primitives.
+
+This translates to **less JavaScript shipped to users**, ensuring that your
+application is faster to interact with, particularly on mobile and low-end
+devices.
+
+**We could achieve this thanks to a major shift in the way data flows in
+Front-Commerce**: instead of using GraphQL over HTTP (2.x), Front-Commerce now
+uses GraphQL server-side and uses Remix's default fetching patterns (`loaders` /
+`actions` / `fetchers`) for client-server interactions. Read
+[Server vs. Client Code Execution (Remix doc)](https://remix.run/docs/en/main/discussion/server-vs-client)
+to learn about this.
+
+### Streaming Responses to Users
+
+This new version improves how content is delivered to your users. Unlike
+previous versions where the entire page had to be generated before content was
+sent, **Front-Commerce now streams content as it gets generated** during <abbr
+title="Server Side Rendering">SSR</abbr>.
+
+This means that browsers start downloading content earlier, resulting in
+improved page load times. It's not just about today; it's about preparing for
+the future. Streaming responses open the door for more advanced patterns,
+leveraging React's features to enhance user experiences.
+
+### Embracing Remix Tooling
+
+Front-Commerce now embraces the power of Remix. These new foundations allowed us
+to update our bundling tooling. New tools offer **better performance** for both
+developer experience and deployment times, resulting in smoother workflows and
+quicker feedback loops.
+
+It also improves the perceived performance of your storefront. Without going
+into too much detail, Front-Commerce 3.0 is better to load content precisely
+when needed, minimizing unnecessary payload sent _over the network_.
+
+### Removal of Unused CSS Code
+
+Front-Commerce supports a wide range of features, that's why you love it! And
+each feature has its own styling. In Front-Commerce 2.x, while unused JavaScript
+was never loaded, unused CSS for features often made its way to end-users.
+
+Front-Commerce 3.0 addresses this by ensuring that **CSS for unused features is
+never loaded** by the end-user. We've optimized our approach by importing CSS
+styles in each React component, reducing bloat and improving performance.
+
+## Developer Experience Improvements
+
+Front-Commerce 3.0 not only enhances web performance but also elevates your
+development experience.
+
+- **TypeScript:** We've added first-class support for TypeScript in
+  Front-Commerce, both on the server and client. TypeScript is a natural
+  extension to the GraphQL types you've grown accustomed to. This enables more
+  robust and intuitive development, providing a better development experience
+  with improved discoverability and a reduced cognitive load.
+- **Faster Tooling:** Leveraging esbuild, we've significantly accelerated
+  feedback loops, making it easier to stay in the development flow. We also
+  adopted `pnpm` internally to develop the Front-Commerce core, and we encourage
+  you to adopt it too!
+- **Better Front-Commerce APIs:** We've revamped critical parts of how
+  integrators interact with Front-Commerce, including an Extension API, new CLI
+  commands, clearer packages with a smaller API surface, and aligning with
+  modern coding practices _(the next generation of FC's developers may not see a
+  HOC anymore 😃)_.
+
+Don't worry: we haven't changed most of the things you've get used to do every
+day when working with Front-Commerce. **You can still override frontend
+components, override GraphQL resolvers, extend the GraphQL schema, cache remote
+API data, configure your application in many ways, and more!**
+
+Plus, we've introduced **Codemods** for seamless migration from 2.x to 3.x,
+ensuring that your transition is smooth and cost-effective. Good news: Codemods
+are here to stay, and will also serve your minor versions upgrades!
+
+## Web Standards
+
+At the core of Front-Commerce is a commitment to web standards. Using standard
+**[Request](https://developer.mozilla.org/fr/docs/Web/API/Request) /
+[Response](https://developer.mozilla.org/fr/docs/Web/API/Response) objects** for
+web server interactions ensures interoperability, a familiar developer
+experience, and paves the way for open innovation like edge computing.
+
+### Standard Forms, to create more accessible storefronts
+
+Using GraphQL on the client is great, but it always prevented us to use a _good
+old `<form method="POST" action="/cart/items">`_ and progressively enhance the
+user experience. With GraphQL on the server, this is no longer a blocker.
+
+Front-Commerce now embraces modern web standards for forms, improving code
+accessibility and sustainability. We've replaced `formsy-react` with Remix
+`<Form>` component, aligned with standard form-related objects, and simplified
+the developer experience.
+
+We'll gradually ensure that every user interaction can _work without Javascript_
+as we refactor the theme for Progressive Enhancement.
+
+### CSS vs. Sass
+
+This release marks a first shift towards using CSS features over Sass, reducing
+our dependency on Sass. As the CSS standard continues to evolve, we're prepared
+to explore new theming possibilities in the coming years.
+
+We've decided to go step-by-step, and in this new major Front-Commerce version
+we've replaced the use of Sass variables with CSS variables.
+
+### Progressive Enhancement (PE)
+
+Progressive Enhancement will be at the heart of all Front-Commerce 3.x version
+onwards. We aim to deliver fast and enjoyable storefronts for all users, no
+matter their circumstances. Leveraging Remix features like routes, loaders, and
+actions, Front-Commerce is primed for progressive enhancement.
+
+In the future, storefronts could even be turned into **Multiple Page
+Applications** without JavaScript… who knows!
+_[(View Transitions API is an awesome web standard and people are building awesome things with it today)](https://astro-records.pages.dev/)_
+
+### A standard technical stack for futureproof projects
+
+Front-Commerce has always adhered to modern tech standards, adopting them
+because they were futureproof … not because they were trendy. We've adopted
+React, Node, GraphQL, and the Web Platform and have always tried to build on top
+of them with the best practices in mind.
+
+**Developing with Front-Commerce should feel like working with these
+technologies outside of Front-Commerce**. That's how agencies can recruit new
+developers to join their team and be quickly efficient on Front-Commerce
+projects. That's how we can guarantee that projects developed with
+Front-Commerce will be futureproof and could evolve, no matter where our
+industry is headed in the future.
+
+This year, AI and LLMs changed a lot of things in the way everyone works and
+interacts online. The relationship between standard technologies and AI-assisted
+development workflows might not be very clear at a first glance, but we're
+excited to incorporate this into your experience around Front-Commerce … but
+that's another story.
+
+## Welcome to v3
+
+If you're still reading, you must have plenty of questions about the next steps
+for you.
+
+We can't address everything in one blog post, but we're happy to help you out!
+
+Some highlights:
+
+- in the next weeks, we'll keep publishing concrete content to zoom in on new
+  Front-Commerce concepts so you'll keep learning more about this. Follow us!
+- we recommend that new Front-Commerce projects start with 3.0
+- migrating a 2.x project to 3.x is not only possible but we expect you to start
+  planning this transition. Our `@front-commerce/compat` package is dedicated to
+  this use case, so you can start migrating right away and refactor your
+  codebase progressively. The best thing is to <ContactLink>discuss it with
+  us</ContactLink>. For your information, the first project starts its migration
+  on Monday!
+- we will continue to ship new versions of Front-Commerce 2.x, but don't expect
+  major features on this branch by default
+- we still expect some performance improvements and stabilization work in the
+  next few weeks and we'll merge this work with new features in 3.1 (in 6 weeks)
+
+Follow us closely during the next weeks for more announcements and details about
+this new Front-Commerce version.
+
+You can already
+[sign up for an Early Access to the Front-Commerce 3.0 Demo](https://www.front-commerce.com/get-the-front-commerce-3-demo/)
+
+<hr />
+
+**By the way, we've also released our usual patch versions for all supported
+branches!**
+
+<BackportList
+  currentVersion={"3.0.0"}
+  previousVersions={[
+    "2.26.2",
+    "2.25.2",
+    "2.24.4",
+    "2.23.5",
+    "2.22.7",
+    "2.21.7",
+    "2.20.9",
+    "2.19.15",
+  ]}
+/>
+
+<ChangelogFooter />
