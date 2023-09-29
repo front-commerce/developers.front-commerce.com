@@ -383,6 +383,15 @@ currently support any version from
 [7.2.0](https://github.com/Adyen/adyen-magento2/releases/tag/7.2.0) to
 [8.x](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0).
 
+:::tip
+
+If you were using Adyen with Magento2 without Front-Commerce, don't forget to
+check Adyen settings. For instance, make sure [allowed origins set the step
+1](https://docs.adyen.com/plugins/adobe-commerce/set-up-adyen-customer-area/?tab=manual_2)
+match you setup with Front-Commerce.
+
+:::
+
 You must configure the extension's Headless/PWA settings with your Front-Commerce URL **for each of your stores**.
 Settings [changed in version 8.0.0](https://github.com/Adyen/adyen-magento2/releases/tag/8.0.0), so it will be slightly different depending on your version.
 - `< 8`: configure "Payment Origin URL" in the `Advanced: PWA` section
@@ -529,7 +538,7 @@ The following payment methods have been tested:
 - Paypal
 - Klarna (Pay now, Pay over time, Pay later)
 - Google Pay
-- Apple Pay
+- Apple Pay (only shown when using Safari on an Apple device)
 - Sofort
 - Alipay Magento 2 module
 - iDeal

@@ -61,6 +61,7 @@ const config = {
               label: "Remixed 🚧",
               path: "remixed",
               noIndex: true, // TODO dont index until we are ready to launch
+              banner: "unreleased",
             },
             "2.x": {
               label: "2.x",

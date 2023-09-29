@@ -28,14 +28,26 @@ redirects the admin user to the customers default storefront.
 Admins can then log out from the customer account and log as another customer if
 needed.
 
+:::caution
+
+This feature does not work with Firefox because of [Total Cookie Protection in
+Standard
+mode](https://support.mozilla.org/en-US/kb/introducing-total-cookie-protection-standard-mode).
+To workaround this issue, [you can turn off the Enhanced Tracking
+Protection](https://support.mozilla.org/en-US/kb/introducing-total-cookie-protection-standard-mode#w_what-do-i-do-if-a-site-seems-broken)
+for your Magento admin interface.
+
+:::
+
 ## Configuring your environment
 
 **Prerequisites:** the 2.2.x version of the Front-Commerce Magento module is
 installed and
 [the admin user detection is properly configured](/docs/2.x/magento2/detect-admin-users#configuring-your-environment).
 
-Then, you must configure the related ACL for Administrators who must be allowed
-to log as Customers:
+Then, you have to make sure that Magento admin interface users that need to be
+able to log in as a customer have the corresponding ACL in their assigned role
+under _Systems_ &gt; _Permissions_ &gt; _User Roles_:
 
 <Figure>
 

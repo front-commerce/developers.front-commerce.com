@@ -210,6 +210,38 @@ To cope with this change, you need to review all components using
   );
   ```
 
+## `withEntityNotFound` API change
+
+[`withEntityNotFound` API has changed](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2354).
+In version 2, the parameter `NotFoundComponent` was optional (defaulted to
+`NotFound` component). This HOC is now deprecated and is now in the
+theme-agnostic `@front-commerce/compat` package. If you still want to use
+`withEntityNotFound`, you must now provide a `NotFoundComponent` component
+parameter.
+
+To cope with this change, you need to review all component using
+`withEntityNotFound` to make sure a `NotFoundComponent` parameter is passed to
+it. For example, by using the component it was previously defaulted to:
+
+```jsx
+import NotFound "theme/modules/PageError/NotFound/NotFound"
+
+/*
+  ... your component
+*/
+
+export default withEntityNotFound({
+    isFound: () => false,
+    NotFoundComponent: NotFound,
+})(MyComponent);
+
+```
+
+A even better way would be to get rid of `withEntityNotFound`, and instead
+handle this mechanism directly withing the related `loader` by throwing a `404`
+response there. For more information about this practice, see
+[Remix's guide on handling 404s](https://remix.run/docs/en/main/guides/not-found).
+
 ## `PartialProductQuery` removal
 
 In version 3, `PartialProductQuery` has been completely removed as it is not
@@ -287,8 +319,7 @@ $min: breakpoint-min("sm");
 }
 ```
 
-For cases where you were using the `media-breakpoint-up`, you can use a media
-query with `min-width` too. For example:
+For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
 
 **Before:**
 
