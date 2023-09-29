@@ -8,9 +8,284 @@ sidebar_position: 3
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
 
-See
-https://developers.front-commerce.com/docs/2.x/essentials/extend-the-graphql-schema
+When developing an e-commerce store, you might at some point need to expose
+new data in your unified GraphQL schema to support new features and allow
+frontend developers to use them. Front-Commerce’s GraphQL modules is the
+mechanism allowing to extend and override any part of the schema defined by
+other modules.
+
+The Front-Commerce core and platform integrations (such as Magento2) are
+implemented as GraphQL modules. They leverage features from the GraphQL Schema
+Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
+
+This page will guide you through the process of exposing a new feature in your
+GraphQL schema. We will create an extension with a  GraphQL module that allows
+to maintain a counter of clicks for a product.
+
+## Create an extension
+
+To extend the GraphQL schema and implement your own logic, you first have to
+create an extension. An extension can be created by adding a new folder under
+`extensions` and by creating a `index.ts` file with the following content:
+
+```typescript title="extensions/click-counter/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default function clickCounter() {
+  return defineExtension({
+    name: "click-counter",
+    configuration: {
+      providers: [],
+    },
+  });
+}
+```
+
+## Enable the extension
+
+Then the extension needs to be enabled in the project `front-commerce.config.ts`
+file by doing the following the change:
+
+```diff title="Enable the extension in front-commerce.config.ts"
+ import { defineConfig } from "@front-commerce/core/config";
+ import themeChocolatine from "@front-commerce/theme-chocolatine";
++import clickCounter from "./extensions/click-counter";
+ import magento2 from "@front-commerce/magento2";
+ import storesConfig from "./app/config/stores";
+ import cacheConfig from "./app/config/caching";
+
+ export default defineConfig({
+-  extensions: [magento2(storesConfig), themeChocolatine()],
++  extensions: [magento2(storesConfig), themeChocolatine(), clickCounter()],
+   stores: storesConfig,
+   cache: cacheConfig,
+   configuration: {
+```
+
+## Add a GraphQL module within the extension
+
+For now, the `click-counter` extension does not provide any feature. To extend
+the GraphQL schema and implement our own logic, we need to add a GraphQL module
+to the extension containing a schema and some resolvers.
+
+### Add an empty GraphQL module
+
+For that, you can create the GraphQL module definition in the file
+`extensions/click-counter/graphql/index.ts` with the following content:
+
+```typescript title="extensions/click-counter/graphql/index.ts"
+export default {
+  namespace: "ClickCounter",
+};
+```
+
+This is a minimal GraphQL module definition which namespace is `ClickCounter`
+and that does nothing for now.
+
+Then, the extension needs to declare that it provides a GraphQL module
+by modifying the extension's index.ts:
+
+```typescript title="Changes to extensions/click-counter/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default function clickCounter() {
+  return defineExtension({
+    name: "click-counter",
+    configuration: {
+      providers: [],
+    },
+    // highlight-start
+    graphql: {
+      unstable_module: "./extensions/click-counter/graphql",
+    },
+    // highlight-end
+  });
+}
+```
+
+At this point, your Front-Commerce project is configured with an extension
+called `click-counter`, this extension provides a GraphQL module which namespace
+is `Clickcounter`. The extension is now ready to bring changes to your Graph.
+
+### Extend the Graph
+
+Front-Commerce lets you describe your schema using the expressive
+[GraphQL Schema Definition Language (SDL)](https://graphql.org/learn/schema/#type-language).
+
+We would like to:
+
+1. add a `clickCounter` field to the existing `Product` type
+2. add an `incrementProductCounter` mutation
+
+For that, you can create the file `extension/click-counter/graphql/schema.gql`:
+
+```graphql title="extension/click-counter/graphql/schema.gql"
+extend type Product {
+  clickCounter: Int
+}
+
+extend type Mutation {
+  incrementProductCounter(sku: String!, incrementValue: Int): MutationSuccess!
+}
+```
+
+:::info
+
+The `Product` type is part of Front-Commerce’s `Front-Commerce/Product` module. The
+`MutationSuccess` type, used as the response for the mutation, is part of
+Front-Commerce’s core.
 
 :::
+
+For that file to be taken into account, the extension needs to declare that it
+provides one or several schema file by modifying the
+`extension/click-counter/index.ts`:
+
+```typescript title="Changes to extensions/click-counter/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default function clickCounter() {
+  return defineExtension({
+    name: "click-counter",
+    configuration: {
+      providers: [],
+    },
+    graphql: {
+      // highlight-next-line
+      schema: ["./extensions/click-counter/graphql"],
+      unstable_module: "./extensions/click-counter/graphql",
+    },
+  });
+}
+```
+
+At this point, after restarting Front-Commerce, you should be able to see in the
+GraphQL playground `http://localhost:4000/graphql` that the type `Product` has a
+`clickCounter` field and that a mutation `incrementProductCounter` exists.
+
+You can try to execute the query below in your GraphQL playground
+`http://localhost:4000/graphql`:
+
+```graphql title="http://localhost:4000/graphql"
+{
+  product(sku: "WH09") {
+    sku
+    clickCounter
+  }
+}
+```
+
+Our GraphQL module does not yet have any code for sending content. This means
+that even if you can request the `clickCounter` field, it won't actually return
+any data. So you should see the following response:
+
+```json
+{
+  "data": {
+    "product": {
+      "sku": "WH09",
+      "clickCounter": null
+    }
+  }
+}
+```
+
+### Implement the logic
+
+The latest step is to implement the logic to retrieve the `Product.clickCounter`
+value and behind the `incrementProductCounter` mutation. For that, you have to
+add resolvers for the field and the mutation. This is where most of the _real
+work_ is done, for instance by fetching remote data sources or transforming
+data.
+
+Resolvers are exposed using the `resolvers` key of the GraphQL module
+definition. It should be a [**Resolver
+map**](https://www.graphql-tools.com/docs/resolvers): an object where each key
+is a GraphQL type name, and values are mapping between field names and resolver
+function. Resolver functions may return a
+[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+for asynchronous operations.
+
+:::note
+
+To learn more about resolvers and their internals, we recommend reading
+[GraphQL Tools resolvers documentation](https://www.graphql-tools.com/docs/resolvers).
+
+:::
+
+First, let's update the module definition as follow:
+
+```typescript title="Changes to extensions/click-counter/graphql/index.ts"
+// highlight-next-line
+import resolvers from "./resolvers";
+
+export default {
+  namespace: "ClickCounter",
+  // highlight-next-line
+  resolvers,
+};
+```
+
+And then create the `resolvers.ts` file with a resolver map as below:
+
+```typescript title="extensions/click-counter/graphql/resolvers.ts"
+export default {
+  Product: {
+    clickCounter: (product) => {
+      console.log(`click count retrieval for product ${product.sku}`);
+      // your own retrieval logic here
+      return 1;
+    },
+  },
+
+  Mutation: {
+    incrementProductCounter: (_root, params) => {
+      const { sku, incrementValue } = params;
+      console.log(`incrementing counter for product "${sku}"`);
+      console.log(`counter + ${incrementValue ?? 1}`);
+      // your own increment logic here
+      return {
+        success: true,
+      };
+    },
+  },
+};
+```
+
+It brings a very basic implementation for both the `Product.clickCounter` field
+resolution and the `incrementProductCounter` mutation. After restarting
+Front-Commerce, the `clickCounter` field of a product should now return `1`
+instead of `null`. Likewise, the mutation can also be called from the
+playground.
+
+As stated above, a resolver function can also return a Promise and thus handle
+asynchronous result. A more real life resolver map would like look like:
+
+```typescript title="extensions/click-counter/graphql/resolvers.ts"
+export default {
+  Product: {
+    clickCounter: (product) => {
+      const clickCountPromise = fetchClickCountForSku(product.sku);
+      return clickCountPromise;
+    },
+  },
+
+  Mutation: {
+    incrementProductCounter: async (_root, params) => {
+      const { sku, incrementValue } = params;
+      try {
+        await incrementProductCount(sku, incrementValue);
+        return {
+          success: true,
+        }
+      } catch (error)
+        return {
+          success: false,
+          errorMessage: error.message,
+        };
+      };
+    },
+  },
+};
+```
