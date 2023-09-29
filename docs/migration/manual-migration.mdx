@@ -623,7 +623,7 @@ implementation details in the
 
 All images which are located under `public/images/resized/*` should now be moved
 to `public/images/*`. This will allow for the
-[`/images/resized/*` resource route](https://remix.run/docs/en/1.19.3/guides/resource-routes)
+[`/images/resized/*` resource route](https://remix.run/docs/en/2.0.1/guides/resource-routes)
 to be reserved for the new `createResizedImageResponse` function.
 
 ## Removal of `SmartLayout` component
@@ -638,7 +638,7 @@ This is can be retrieved via a loader: _see example in
 [`_main.tsx` layout](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1237955dda56451bf50b507c1cdd0a703ea32795/skeleton/app/routes/_main.tsx)_
 
 ```tsx title="app/routes/_main.tsx"
-export const loader = async ({ context }: LoaderArgs) => {
+export const loader = async ({ context }: LoaderFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
   const headerResponse = await app.graphql.query(HeaderQueryDocument, {
     name: "data",
@@ -660,8 +660,7 @@ export const loader = async ({ context }: LoaderArgs) => {
 In version 3, `react-helmet-async` has been removed as it does not make sense in
 a remix application. If you used this in any custom components or pages, you
 will now need to move it the
-[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2) of the
-route.
+[`meta` function](https://remix.run/docs/en/2.0.1/route/meta) of the route.
 
 ## Client side log handler removal
 
@@ -691,7 +690,7 @@ project.
 In version 3, `CartSeo` has been removed as it is not used by the base theme
 anymore. If you overrode this component or one using it, you will need to move
 any of the customisation to the `cart` route
-[`meta` function](https://remix.run/docs/en/1.19.3/route/meta-v2#meta-v2).
+[`meta` function](https://remix.run/docs/en/2.0.1/route/meta).
 
 ## `EmptyCart` refactor
 

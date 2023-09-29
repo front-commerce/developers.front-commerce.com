@@ -12,21 +12,22 @@ The main features of this helper are:
   `root.tsx`)
 - Will allow easier canonical generation
 
-:::tip
-We highly recommend you to use this helper as it will make your life
+:::tip We highly recommend you to use this helper as it will make your life
 easier when using nested routes. However you can still use the
-[standard Remix Meta method](https://remix.run/docs/en/main/route/meta-v2)
-:::
+[standard Remix Meta method](https://remix.run/docs/en/main/route/meta-v2) :::
 
 ## Usage
 
-- The first parameter is a [Remix V2 Meta Function](https://remix.run/docs/en/main/route/meta-v2#meta-function-parameters)
-- The second parameter is the canonical path (base url will be automatically injected)
+- The first parameter is a
+  [Remix V2 Meta Function](https://remix.run/docs/en/main/route/meta#meta-function-parameters)
+- The second parameter is the canonical path (base url will be automatically
+  injected)
 
 ```typescript
+import { MetaFunction } from "@remix-run/node";
 import { generateMetas } from "@front-commerce/remix/node";
 
-export const meta: V2_MetaFunction = (args) => {
+export const meta: MetaFunction = (args) => {
   const metas = generateMetas(() => [{ title: "Welcome home" }], "/");
   return metas(args);
 };
