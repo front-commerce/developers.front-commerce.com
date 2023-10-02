@@ -1,0 +1,96 @@
+---
+title: "defineExtension"
+sidebar_position: 4
+description:
+  "defineExtension allow you to extend the features of Front-Commerce."
+---
+
+<p>
+  Extensions are registered in the application using the
+  front-commerce.config.ts file. Read [Register an
+  extension](/docs/remixed/guides/register-an-extension) to learn more.
+</p>
+
+## `defineExtension`
+
+`defineExtension` allow you to define extensions settings
+
+```js
+defineExtension(configuration);
+```
+
+Arguments:
+
+- `configuration` (`ExtensionConfig`): the extension configuration
+
+Example:
+
+```js
+defineExtension({
+  name: "acme",
+  theme: "./extensions/acme/theme",
+});
+```
+
+## `ExtensionConfig`
+
+`ExtensionConfig` is the definition interface of an extension.
+
+### `name`
+
+**Required** `string` <br />Specifies the unique name of the extension.
+
+Example:
+
+```json
+{
+  "name": "acme"
+}
+```
+
+### `configuration`
+
+**Required** `object` <br />Define configuration
+
+### `providers`
+
+**Required** `ConfigProvider[]` <br />Define configuration provider
+
+### `theme`
+
+_Optional_ `string|string[]` <br />Specifies the path to the theme that should
+be loaded by the application.
+
+Example:
+
+```json
+{
+  "theme": "./extensions/acme/theme"
+}
+```
+
+### `graphql`
+
+_Optionnal_
+
+Configuration for registering GraphQL modules in the unified GraphQL schema.
+
+#### `schema`
+
+_Optional_ `string|string[]`<br />Defines path(s) to the GraphQL schema file(s)
+to be loaded in the application.
+
+Example:
+
+```json
+{
+  "schema": "./extensions/acme/graphql"
+}
+```
+
+#### `codegen`
+
+_Optional_
+
+`CodegenConfig["generates"][] | CodegenConfig["generates"]`<br />configuration
+for code generation.
