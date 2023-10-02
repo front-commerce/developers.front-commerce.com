@@ -16,19 +16,13 @@ $ pnpm install @front-commerce/remix@latest
 
 ## Type Safety
 
-You can get type safety over the network for your loaders with <<<<<<<
-HEAD:docs/04-api-reference/front-commerce-remix/index.mdx
+You can get type safety over the network for your loaders with
 [LoaderFunctionArgs](https://remix.run/docs/en/2.0.1/route/loader#loader) and
-for your actions with =======
-[LoaderFunctionArgs](https://remix.run/docs/en/2.0.1/route/loader#type-safety)
-and for your actions with
+for your actions with
+[ActionFunctionArgs](https://remix.run/docs/en/2.0.1/route/action#action).
 
-> > > > > > > 00cf530 (chore: update docs to reference remix
-> > > > > > > v2):docs/api-reference/front-commerce-remix/index.mdx
-> > > > > > > [ActionFunctionArgs](https://remix.run/docs/en/2.0.1/route/action#action).
-> > > > > > > To ensure that the typed frontCommerce context is in the
-> > > > > > > arguments, you can add the `@front-commerce/remix` reference to
-> > > > > > > your `remix.env.d.ts` file.
+To ensure that the typed frontCommerce context is in the arguments, you can add
+the `@front-commerce/remix` reference to your `remix.env.d.ts` file.
 
 ```ts title="remix.env.d.ts"
 /// <reference types="@remix-run/dev" />
