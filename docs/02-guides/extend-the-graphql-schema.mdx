@@ -3,7 +3,7 @@ title: Extend the GraphQL schema
 description:
   This guide explains how to customize the GraphQL schema to add your own domain
   objects
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 <p>{frontMatter.description}</p>
@@ -27,7 +27,8 @@ to maintain a counter of clicks for a product.
 
 To extend the GraphQL schema and implement your own logic, you first have to
 create an extension. An extension can be created by adding a new folder under
-`extensions` and by creating a `index.ts` file with the following content:
+`extensions` and by creating a `index.ts` file (the extension definition) with
+the following content:
 
 ```typescript title="extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
@@ -42,26 +43,8 @@ export default function clickCounter() {
 }
 ```
 
-## Enable the extension
-
-Then the extension needs to be enabled in the project `front-commerce.config.ts`
-file by doing the following the change:
-
-```diff title="Enable the extension in front-commerce.config.ts"
- import { defineConfig } from "@front-commerce/core/config";
- import themeChocolatine from "@front-commerce/theme-chocolatine";
-+import clickCounter from "./extensions/click-counter";
- import magento2 from "@front-commerce/magento2";
- import storesConfig from "./app/config/stores";
- import cacheConfig from "./app/config/caching";
-
- export default defineConfig({
--  extensions: [magento2(storesConfig), themeChocolatine()],
-+  extensions: [magento2(storesConfig), themeChocolatine(), clickCounter()],
-   stores: storesConfig,
-   cache: cacheConfig,
-   configuration: {
-```
+Then you need to [register the extension into your Front-Commerce
+project](/docs/remixed/guides/register-an-extension).
 
 ## Add a GraphQL module within the extension
 

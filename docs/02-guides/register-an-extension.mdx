@@ -1,15 +1,77 @@
 ---
 title: Register an extension
 description:
-  This guide explains how to register an extension in Front-Commerce
-  application, to leverage its features.
-sidebar_position: 4
+  This guide explains how to register an extension in a Front-Commerce
+  application to leverage its features.
+sidebar_position: 3
 ---
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+All extensions of a Front-Commerce application are registered through the
+`front-commerce.config.ts` configuration file at the root of the project by
+importing the extension definitions (or functions returning an extension
+definition) and adding them the `extensions` list.
 
-TODO
+For instance, in a project configured to be connected to a Magento2 instance and
+with the theme chocolatine, [the Magento2
+extension](/docs/remixed/guides/register-an-extension) and [the Theme
+Chocolatine extension](/docs/remixed/extensions/magento2/) are registered in
+`front-commerce.config.ts`:
 
-:::
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  // highlight-next-line
+  extensions: [magento2(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+In that project, if you want to add an extension, you could add the following
+changes to `front-commerce.config.ts`:
+
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+// highlight-next-line
+import aCustomExtension from "./extensions/custom-extension";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  // highlight-next-line
+  extensions: [magento2(storesConfig), themeChocolatine(), aCustomExtension()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+where `./extensions/custom-extension/index.ts` would be something like:
+
+```typescript title="extensions/custom-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default function aCustomExtension() {
+  return defineExtension({
+    name: "custom-extension",
+    configuration: {
+      providers: [],
+    },
+  });
+}
+```
