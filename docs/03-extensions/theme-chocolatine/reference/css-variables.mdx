@@ -1,15 +1,99 @@
 ---
 title: "CSS variables"
 description:
-  "This reference lists all the CSS variables useful for customizing the theme
-  Chocolatine."
+  "This reference lists all the CSS variables useful for customizing the theme."
 sidebar_position: 1
 ---
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+Front-Commerce's theme Chocolatine uses a set of CSS variables defined in
+`theme/_variables.scss` to ensure a certain consistency in the application's
+design. We recommend to reuse these variables as much as possible, and adapting
+them to your project's design choices. See
+[Override a stylesheet](/docs/remixed/guides/override-a-stylesheet) for more
+details about adapting your application to your brand.
 
-What variables are provided by Front-Commerce and what are their usages.
+## Colors
 
-:::info
+Defined in `theme/components/atoms/Colors/_colors.scss`, color variables are
+useful to ensure a consistent design in your app.
+
+### Base colors variables
+
+Those variables are often used to define other meaningful variables, and serve
+as a root color definition base for your theme. They are used in a wide variety
+of situation in Theme Chocolatine, from text color to backgrounds.
+
+- `--white`, `--black` and `--red`
+- `--shade02`, `--shade03`, `--shade04`, `--shade05` and `--shade06`
+
+### Informational colors
+
+These colors are used to provide quick visual feedback to the user as to the
+nature of the information shown to them. They are often used anywhere an
+interaction has been made.
+
+- `--success`
+- `--info`
+- `--warning`
+- `--invertedWarning`
+- `--error`
+
+### "Brand" colors
+
+Brand colors should be the main colors in your theme. They should be a color
+that demands attention, and should be part of the colors that are the most
+present in your visuals and marketing material.
+
+- `--brandPrimary` is used nearly everywhere in the theme, it is the colors that
+  defines the "mood" of your design.
+- `--brandSecondary` is mainly used to bring color "accents" throughout the
+  theme.
+
+### "Components" colors
+
+These variables are meant to provide the same color base for all components to
+use. Currently, those variables are:
+
+- `--backgroundColor`
+- `--divider`
+- `--fontColor`
+- `--fontDisabled`
+- `--hoverableColor`
+- `--inputBorderColor`
+- `--modalBackground`
+- `--modalBorderColor`
+- `--optionColor`
+- `--optionItemBackground`
+- `--optionItemColor`
+
+### Front-Commerce color variables
+
+These variable are solely used for components specific to Front-Commerce, such
+as the Editorial Toolbox, or the Magic Button. They are not meant to be
+overriden. At the time of writing, there is only one such variable,
+`frontCommercePrimary`.
+
+## Layout variables
+
+### Breakpoint variables
+
+Defined in `theme/components/atoms/Breakpoints/_breakpoints.scss` those
+variables are used for media queries to determine at what point the app should
+be rendered for desktop or mobile. Those variables are:
+
+- `--menuBreakpoint` is used to hide desktop-only or mobile-only element
+  depending on the viewport width
+- `--tabletBreakpoint` is used to determine what the layout should look like
+  depending on the viewport width
+
+### Spacing variables
+
+Defined in `theme/_variables.scss`, those variables are used to help keeping a
+consistent layout and spacing between component around the whole app. Those
+variables are:
+
+- `--boxSizeMargin`
+- `--smallContainerWidth`
+- `--containerWidth`
