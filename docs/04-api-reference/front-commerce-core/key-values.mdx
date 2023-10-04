@@ -1,0 +1,71 @@
+---
+title: "keyValues"
+sidebar_position: 2
+description:
+  "Manipulate object with key-values methods. This is convenient to convert free
+  shaped objects to types compatible with GraphQL types."
+---
+
+<p>{frontMatter.description}</p>
+
+## `objectToKeyValues`
+
+Converts an object to key values format
+
+```ts
+import { objectToKeyValues } from "@front-commerce/core/keyValues";
+const object = {
+  product: "red",
+  color: "blue",
+  size: "XL",
+};
+console.log(objectToKeyValues(obj));
+
+/**
+ *  [
+ *    {
+ *      key: "product",
+ *      value: "red"
+ *    },
+ *    {
+ *      key: "color",
+ *      value: "blue"
+ *    },
+ *    {
+ *      key: "size",
+ *      value: "XL"
+ *    }
+ * ]
+ */
+```
+
+## `keyValuesToObject`
+
+Converts a key values array to an object
+
+```ts
+import { keyValuesToObject } from "@front-commerce/core/keyValues";
+const keyValues = [
+  {
+    key: "product",
+    value: "red",
+  },
+  {
+    key: "color",
+    value: "blue",
+  },
+  {
+    key: "size",
+    value: "XL",
+  },
+];
+console.log(keyValuesToObject(keyValues));
+
+/**
+ *  {
+ *    product: "red",
+ *    color: "blue",
+ *    size: "XL"
+ *  }
+ */
+```

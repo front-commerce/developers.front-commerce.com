@@ -66,10 +66,10 @@ Exposes the graphql client.
 - `mutate` - Executes a graphql mutation.
 
 ```ts
-import { LoadingFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { FrontCommerceApp } from "@front-commerce/remix";
 
-export const loader = ({ context }: LoadingFunctionArgs) => {
+export const loader = ({ context }: LoaderFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
 
   // highlight-start

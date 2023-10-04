@@ -6,12 +6,156 @@ sidebar_position: 3
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+# File-based routing
 
-Add instructions here:
+Front-Commerce uses Remix. Remix uses
+[API Routes](https://remix.run/docs/en/main/guides/api-routes) to handle all the
+routing of you application, and display the correct page when a user navigates
+to a URL. All routes are located under `app/routes` folder. API Routes will use
+the default export of each Route file to generate the route's UI. Go ahead and
+create a new route `hello-world.tsx`, that will display content when users
+browse http://localhost:4000/hello-world:
 
-- Create a route
-- Introduce loader
-- Redirect to Remix guides
+```tsx title="app/routes/hello-world.tsx"
+export default function HelloWorld() {
+  return (
+    <div>
+      <h1>Hello world!</h1>
+    </div>
+  );
+}
+```
 
-:::
+# Loaders
+
+In order to display dynamic content in your routes, you will need to fetch some
+data. This is done by using Remix's Routes API method `loader`.
+
+Here is a basic example of how a `loader` could be used:
+
+```tsx title="app/routes/hello-world.tsx"
+import type { LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader: LoaderFunction = () => {
+  // This method will be called prior to rendering your client-side route, it's generally used to fetch the data for your component(s)
+  return { name: "Jack Doe" };
+};
+
+export default function HelloWorld() {
+  const { name } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Hello {name}!</h1>
+    </div>
+  );
+}
+```
+
+# And many more features
+
+Routes play a fundamental part in a Remix (and Front-Commerce) application. It
+is the glue between the URL requested by a user and the response your
+application will send. We will continue to learn how to use them for the most
+common actions in the next sections, but here is a preview of everything a route
+could do:
+
+```tsx title="app/routes/hello-world.tsx"
+import {
+  json,
+  type ActionFunction,
+  type HeadersFunction,
+  type LinksFunction,
+  type LoaderFunction,
+  type MetaFunction,
+} from "@remix-run/node";
+import { useLoaderData, Form, useRouteError } from "@remix-run/react";
+
+export const headers: HeadersFunction = ({
+  actionHeaders,
+  loaderHeaders,
+  parentHeaders,
+  errorHeaders,
+}) => ({
+  "X-User-Id": loaderHeaders.get("X-User-Id"),
+  "Cache-Control": "max-age=300, s-maxage=3600",
+});
+
+export const loader: LoaderFunction = async () => {
+  // This method will be called prior to rendering your client-side route, it's generally used to fetch the data for your component(s)
+  const user = await fetch("https://my-site.com/api/user").then((res) =>
+    res.json()
+  );
+
+  return json({ name: user.name }, { headers: { "X-User-Id": user.id } });
+};
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "icon",
+      href: "/favicon.png",
+      type: "image/png",
+    },
+    {
+      rel: "stylesheet",
+      href: "https://my-site.com/styles.css",
+    },
+    {
+      rel: "preload",
+      href: "/images/banner.jpg",
+      as: "image",
+    },
+  ];
+};
+
+export const action: ActionFunction = async ({ params, request }) => {
+  const data = await request.formData();
+  const email = data.get("email");
+
+  await fetch("https://my-site.com/api/contact-list", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+
+  return { success: true };
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  return [{ title: `Hello ${data.name}` }];
+};
+
+export default function HelloWorld() {
+  const { name } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Hello {name}!</h1>
+      <h2>Contact us:</h2>
+      <Form method="post">
+        <label htmlFor="email">Email</label>
+        <input id="email" type="email" name="email" />
+        <button type="submit">Submit</button>
+      </Form>
+    </div>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  return (
+    <div>
+      Oops, something bad happened ! <pre>{error.toString()}</pre>
+    </div>
+  );
+}
+```
+
+# External resources
+
+- [Contact page example](https://remix.run/docs/en/main/start/tutorial#the-contact-route-ui)
+- [API Routes documentation](https://remix.run/docs/en/main/guides/api-routes).
+- [Loading data from an external API](https://daily-dev-tips.com/posts/remix-loading-data-from-an-external-api/)
+- [Interactive Remix routing](https://interactive-remix-routing-v2.netlify.app/)

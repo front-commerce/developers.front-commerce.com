@@ -7,8 +7,8 @@ description:
 ---
 
 The `createResizedImageResponse` allows to create
-[resource routes](https://remix.run/docs/en/2.0.1/guides/resource-routes) which
-allow resizing and caching images on the fly.
+[resource routes](https://remix.run/docs/en/2.0.1/guides/resource-routes#creating-resource-routes)
+which allow resizing and caching images on the fly.
 
 ## Usage
 
@@ -26,13 +26,13 @@ file system, next we will see examples for both cases.
 ### Remote image
 
 For this example, we will create a
-[splat route](https://remix.run/docs/en/1.19.3/file-conventions/route-files-v2#splat-routes)
+[splat route](https://remix.run/docs/en/2.0.1/file-conventions/routes#splat-routes)
 that will fetch an image from a remote service.
 
 To do so, we will introduce the `createResizedImageResponse` function.
 
 ```ts title="/app/routes/media.picsum.$.ts"
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 // highlight-next-line
 import { createResizedImageResponse } from "@front-commerce/core/resizedImage.server";
 
@@ -43,7 +43,7 @@ const fetchRemoteImage = async (imagePath: string) => {
 };
 // highlight-end
 
-const loader = async ({ request, params }: LoaderArgs) => {
+const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const imagePath = params["*"] as string;
 
   const ONE_WEEK = 7 * 24 * 60 * 60; // the default cache duration is set to one year
@@ -75,7 +75,7 @@ For this example, we will create a new route that will fetch an image from a
 local directory
 
 ```ts title="/app/routes/media.local.$.ts"
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { createResizedImageResponse } from "@front-commerce/core/resizedImage.server";
 // highlight-next-line
 import fs from "fs";
@@ -91,7 +91,7 @@ const fetchLocalImage = (relativePath: string) => {
 };
 // highlight-end
 
-const loader = async ({ request, params }: LoaderArgs) => {
+const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const imagePath = params["*"] as string;
 
   const relativePath = path.resolve(
