@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+title: Features removal
+description:
+  This page lists the features that have been removed in `3.x` because they are
+  irrelevant in the current context or were not used (we think).
+---
+
+import ContactLink from "@site/src/components/ContactLink";
+
+<p>{frontMatter.description}</p>
+
+:::note
+
+If you are a Front-Commerce customer using one of this feature in your `2.x`
+project, please <ContactLink>contact us</ContactLink> as you plan your migration
+so we could reevaluate our decision.
+
+:::
+
+## GraphQL Rate Limiting
+
+In version 3.0, we removed the
+[Rate Limiting](/docs/2.x/advanced/graphql/rate-limiting)
+feature from GraphQL. Since GraphQL is not exposed through HTTP by default, the
+rate limiting feature no longer makes sense at this level.
+
+As a consequence, if you were using the following functions you must update your
+codebase to remove these features:
+
+- `limitRateByClientIp` for resolvers
+- `rateLimiters` from the GraphQL context
+- `config/rateLimit.js` configuration file
+- `makeRateLimiters` internal API
+- or a direct import from the `graphql-rate-limit` package
+
+In the core, it was only used for the `sendContactEmail` mutation.
