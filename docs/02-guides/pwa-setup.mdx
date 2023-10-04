@@ -10,10 +10,9 @@ import Figure from "@site/src/components/Figure";
 
 ## What is a PWA
 
-PWA stands for Progressive Web App, it will allow your shop to be installed as
-an application on end user devices (mobile, desktop, tablets).
-
-It allow advanced caching on device, fastest navigation, offline support and
+[PWA stands for Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps).
+This technology allows the user to install your store as a native application on
+their device. It also brings advanced caching capabilities, offline support and
 much more.
 
 Front-Commerce integrates PWA capabilities and is available with a few
@@ -23,8 +22,8 @@ configuration.
 
 ### `webmanifest` configuration
 
-The [`webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest) will
-define meta informations about your store. To setup this informations, you needs
+The [`webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+defines meta information about your store. To setup this webmanifest, you need
 to add the following configuration in your `front-commerce.config.ts` file:
 
 ```typescript title="front-commerce.config.ts"
@@ -48,13 +47,13 @@ export default defineConfig({
     themeColor: "#fbb03b",
     icon: "public/pwa-icon.png",
     maskableIcon: "public/pwa-masked-icon",
-    ttl: 60,
+    cacheTTLInMs: 7 * 24 * 60 * 60 * 1000,
   },
   // highlight-end
 });
 ```
 
-Here's a description of options that can be configured:
+Here is a list of the available options:
 
 | Option         | Type     | Description                                                                                                          |
 | -------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -63,12 +62,12 @@ Here's a description of options that can be configured:
 | `themeColor`   | `string` | The theme color of your PWA, it will define theme for your App, we recommend you to use your website primary color   |
 | `icon`         | `string` | The icon of your PWA, it will be displayed on the home screen of your end user device, it must be at least 512x512   |
 | `maskableIcon` | `string` | The maskable icon of your PWA, it will be displayed on the home screen of your customer, it must be at lease 512x512 |
-| `ttl`          | `number` | The time to live of your PWA Cache in milliseconds, the default value is of 7 days                                   |
+| `cacheTTLInMs` | `number` | The time to live of your PWA Cache in milliseconds, the default value is of 7 days                                   |
 
 ### Icons setup
 
-PWA require multiple icons to be defined in your project that will be used by
-device to identify your PWA on end-user device screen.
+A PWA requires multiple icons to be defined in your project that will be used by
+the device to identify the application on the end-user device screen.
 
 Two types of icons are needed:
 
@@ -106,23 +105,14 @@ You can read more about icons here :
 Once everything is setup, you will be able to install your website as an
 application.
 
-:::caution
-
-Except when on localhost, PWA installation is only possible with **HTTPS**. If
-you're using Front-Commerce Cloud, HTTPS is enabled by default. If you use
-you're own server, you need to enable HTTPS.
-
-:::
-
-Depending on the browser you're using, the browser may display a prompt to
-invite you to install the application. Otherwise, please check your browser
-documentation on how to install PWA.
+Depending on the browser, a prompt inviting the customer to install the
+application is different:
 
 - Chrome: https://support.google.com/chrome/answer/9658361
-- Safari : https://web.dev/learn/pwa/installation/#ios-and-ipados-installation
-- Firefox :
+- Safari: https://web.dev/learn/pwa/installation/#ios-and-ipados-installation
+- Firefox:
   https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing
-- Edge :
+- Edge:
   https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/ux
 
 :::tip
