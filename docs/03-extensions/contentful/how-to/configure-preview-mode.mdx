@@ -1,0 +1,120 @@
+---
+title: Configure Preview Mode
+description:
+  "This feature makes it possible to preview draft and published entries."
+sidebar_position: 4
+---
+
+<p>{frontMatter.description}</p>
+
+:::caution Alpha Feature
+
+This is currently an alpha feature. The API could potentially undergo
+significant changes in the future.
+
+:::
+
+## Prerequisites
+
+To use Contentful Preview, ensure you have followed the
+[`Magic Button`](https://developers.front-commerce.com/docs/2.x/category/magic-button)
+documentation to setup `Contribution Mode`.
+
+You need to add a `FRONT_COMMERCE_CONTENTFUL_PREVIEW_ACCESS_TOKEN` environment
+variable to your `.env` file. This token will be used to authenticate the
+preview requests.
+
+## How to Configure Contentful space
+
+To take advantage of Contentful's Preview Mode, you need to set up URL
+configurations for the
+[preview environment](https://www.contentful.com/help/setup-content-preview#preview-content-in-your-online-environment)
+in your Contentful space.
+
+Follow these steps to configure your Contentful settings:
+
+1. Navigate to `Settings` > `Content Preview` in your Contentful space.
+2. Click the `Add content preview` button.
+
+You'll need to provide the following information:
+
+- `Name`: Enter the name for this particular content type preview.
+- `Description`: Provide a brief description of this content type preview.
+- `Content preview URLs`: Enter a list of URLs that you'd like to use to preview
+  different content types.
+
+In Front-Commerce, we provide a specific endpoint,
+`/contentful/preview/:space/:contentType/:id`, that you can use as a
+`Content preview URL`.
+
+Here is a sample format to follow when configuring the URL:
+
+```
+https://acme.app/contentful/preview/{env_id}/{entry.sys.contentType.sys.id}/{entry.sys.id}?secret=YOUR_PREVIEW_ACCESS_TOKEN
+```
+
+Where:
+
+- `env_id` corresponds to the environment of the current entry.
+- `entry.sys.contentType.sys.id` will resolve to the content type id of the
+  current entry.
+- `entry.sys.id` will resolve to the entry id.
+
+:::tip
+
+Due to technical limitations in Contentful, to preview a local environment, you
+must either use `ngrok` to expose your local server to the internet and benefit
+from the Live Preview feature (iframe), or open the preview in another window.
+Replace `acme.app` in the sample URL above with your ngrok or localhost URL
+accordingly.
+
+:::
+
+## Configuring Your Application
+
+By default, the preview route will direct you to the landing page (`/`) of your
+application. However, you can customize this behavior by registering an _URL
+matcher_.
+
+The `registerUrlMatcher` method is accessible through the Contentful loader's
+`routes` object, it accepts two parameters:
+
+- `contentType`: The contentful GraphQL type name of the entry you want to
+  match.
+- `urlFormatter`: A function that receives the entry id and the entry metadata
+  as arguments. This function should return a string or null.
+
+The `urlFormatter` function determines the URL to which the preview route will
+redirect:
+
+- If `urlFormatter` returns a string, the preview route will redirect to the URL
+  defined by that string.
+- If `urlFormatter` returns null, the preview route will default to the landing
+  page.
+
+Here's an example of how you might register a `urlMatcher`:
+
+```js
+export default {
+    [..],
+    contextEnhancer: ({loaders}) => {
+        loaders.Contentful.routes.registerUrlMatcher("Page", (id, metadata) => {
+            if (id === "dntmgP2QV6uRuRChrdLFj") {
+                return `/contact-us`;
+            }
+            return null;
+        });
+
+        loaders.Contentful.routes.registerUrlMatcher("BlogPost", async (id) => {
+            const blogpost = await loaders.ContentfulClient.getEntry(id);
+            if (!blogpost.fields.slug) {
+                return null;
+            }
+            return `/blog/${blogpost.fields.slug}`;
+        });
+    }
+}
+```
+
+This allows you to control the behavior of your application's preview mode on a
+per-content-type basis, enhancing flexibility and customization.

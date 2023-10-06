@@ -1,0 +1,238 @@
+---
+title: Add Content Types
+description:
+  "Content Types empower developers to craft autonomous, reusable schemas. These
+  can be employed by Content Managers to assemble dynamic web pages. This guide
+  elucidates how to utilize the provided tool to create content-driven dynamic
+  pages."
+sidebar_position: 1
+---
+
+# Content Types
+
+<p>{frontMatter.description}</p>
+
+## Expose Data in GraphQL
+
+Initially, you must **update your GraphQL Schema** to mirror the ContentType
+definitions, which will be structured as a
+[GraphQL union type](https://graphql.org/learn/schema/#union-types).
+
+```graphql
+type AcmeHomePage {
+  title: String
+  blocks: [AcmeHomePageBlock]
+  seo: Seo
+}
+
+type AcmeSeo {
+  title: String
+  description: String
+}
+
+union AcmeHomePageBlock = BlockTitleText | BlockTextImage
+
+type BlockTitleText {
+  title: String
+  subtitle: String
+  align: String
+}
+
+type BlockTextImage {
+  title: String
+  picture: String
+  picturePosition: String
+}
+```
+
+## Crafting `ContentTypes`
+
+To commence, create your initial ContentType for **`AcmeHomepage`**, which will
+be utilized to populate our homepage.
+
+The constructor of the
+[ContentType](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/contentful/graphql/core/domain/ContentType.js)
+class accepts four arguments:
+
+- `id` - The Content type id as displayed on the Contentful model detail screen.
+- `fcGraphQLType` - The GraphQL type defined in your schema.
+- `dataFormatter` - A function transforming Contentful data to fit your schema.
+
+```js title="./my-extension/cms/contentType/Homepage.js"
+import { ContentType } from "@front-commerce/contentful";
+import gql from "graphql-tag";
+
+const formatContentfulData = (contentfulData) => {
+  return {
+    title: contentfulData.pageTitle,
+    slug: contentfulData.pageSlug,
+  };
+};
+
+class Homepage extends ContentType {
+  constructor() {
+    super("homepage", "AcmeHomepage", formatContentfulData);
+  }
+
+  get contentfulFragment() {
+    return gql`
+      fragment HomepageFragment on Homepage {
+        pageTitle
+        pageSlug
+      }
+    `;
+  }
+}
+
+export default Homepage;
+```
+
+## Loading Data with the `ContentfulLoader`
+
+With the ContentfulLoader, you can implement a **`contextEnhancer`** in your
+module to retrieve homepage data from Contentful.
+
+:::note
+
+Ideally, you would execute this in your loaders. However, for the clarity of
+this guide, we're using the contextEnhancer.
+
+:::
+
+Should you require a list of content items rather than a singular item, the
+[`loadAllContentMatching`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/contentful/graphql/core/ContentfulLoader.js#L82-128)
+loader method is at your service. It accepts parameters similar to
+[`loadFirstContentMatching`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/contentful/graphql/core/ContentfulLoader.js#L82-128),
+with added pagination arguments:
+
+- `skip` - Number of items to bypass.
+- `limit` - Quantity of items to fetch.
+- `order` - Ordering criteria, accepted as a string or string[]. For more, see
+  [Contentful GraphQL API](https://www.contentful.com/developers/docs/references/graphql/#/reference/collection-order).
+
+```js title="./my-extension/cms/index.js"
+import Homepage from "./contentType/Homepage";
+
+export default {
+  namespace: "Acme/MyModule",
+  dependencies: ["Contentful"],
+  contextEnhancer: ({ req, loaders }) => {
+    const homepage = new Homepage();
+
+    return {
+      Query: {
+        loadHomepages: async () => {
+          const allPagesResponse =
+            await loaders.Contentful.loadAllContentMatching(
+              homepage,
+              undefined,
+              0,
+              5
+            );
+          return allPagesResponse.items.map(homepage.dataFormatter);
+        },
+      },
+    };
+  },
+};
+```
+
+## Creating an Independent `ContentType`
+
+Our present `AcmeHomepage` is fairly basic. Enhance it by integrating an
+independent ContentType, such as the `seo` data for our homepage.
+
+```js title="./my-extension/cms/contentType/shared/Seo.js"
+import { ContentType } from "@front-commerce/contentful";
+import gql from "graphql-tag";
+
+const formatContentfulData = (contentfulData) => {
+  return {
+    title: contentfulData.seoTitle,
+    description: contentfulData.seoDescription,
+  };
+};
+
+class Seo extends ContentType {
+  constructor() {
+    super("seo", "AcmeSeo", formatContentfulData);
+  }
+
+  get contentfulFragment() {
+    return gql`
+      fragment SeoFragment on Seo {
+        seoTitle
+        seoDescription
+      }
+    `;
+  }
+}
+
+export default Seo;
+```
+
+:::note
+
+`Seo` ContentType has its distinct formatter. We transfer it to the homepage
+formatter and utilize it for formatting the seo data.
+
+:::
+
+## Integrating `ContentTypes` with `BlocksContentType`
+
+The `BlocksContentType` is a unique ContentType that facilitates the creation of
+a repository of ContentTypes. These can be harnessed to generate reusable
+[UI components](./add-content-blocks).
+
+Construct the `AcmeHomePageBlock` ContentType, which embodies the collection of
+ContentTypes constituting our union type.
+
+```js title="./my-extension/cms/contentType/AcmeHomePageBlock.js"
+import { BlocksContentType } from "@front-commerce/contentful";
+
+const AcmeHomePageBlock = new BlocksContentType(
+  "homepage",
+  "PageContentBlocksItem",
+  [],
+  "HomePageBlock"
+);
+
+export default AcmeHomePageBlock;
+```
+
+Now, establish the `BlockTextTitle` ContentType, intended for utilization by the
+`AcmeHomePageBlock` ContentType.
+
+```js title="./my-extension/cms/contentType/BlockTitleText.js"
+import { ContentType } from "@front-commerce/contentful";
+import gql from "graphql-tag";
+
+const formatContentfulData = (contentfulData) => {
+  return {
+    title: contentfulData.blockTitle,
+    subtitle: contentfulData.excerpt,
+  };
+};
+
+class BlockTextTitle extends ContentType {
+  constructor() {
+    super("blockTextTitle", "BlockTextTitle", formatContentfulData);
+  }
+
+  get contentfulFragment() {
+    return gql`
+      fragment BlockTextTitleFragment on BlockTextTitle {
+        blockTitle
+        excerpt
+      }
+    `;
+  }
+}
+```
+
+:::note
+
+The `BlocksContentType` has a specialized formatter. We import it to the
+homepage formatter for blocks data formatting.
+
+:::

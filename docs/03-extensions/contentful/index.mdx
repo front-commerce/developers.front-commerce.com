@@ -1,0 +1,83 @@
+---
+title: "Contentful"
+description:
+  "The Contentful extension provides a connector to use Front-Commerce with a
+  Contentful. You can easily retrieve content from your Contentful instance and
+  display it in your Front-Commerce application."
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+Before you can use the Contentful extension, you need to have the following:
+
+- Access to a [Contentful](https://www.contentful.com/) instance
+- A working [Front-Commerce environment](/docs/remixed/get-started/installation)
+
+To set up a Contentful instance, please refer to the
+[Contentful documentation](https://www.contentful.com/developers/docs/).
+
+To set up a Front-Commerce environment, please refer to the
+[Front-Commerce documentation](/docs/remixed/get-started/installation).
+
+## Installation
+
+To install the Contentful extension, run the following command:
+
+```bash
+$ pnpm install @front-commerce/contentful@latest
+```
+
+## Configuration
+
+To use the Contentful extension, you need to configure your environment and your
+Front-Commerce application.
+
+### Environment variables
+
+In the `.env` file, you need to define the following environment variables:
+
+- `FRONT_COMMERCE_CONTENTFUL_SPACE_ID`: The ID of your Contentful space
+- `FRONT_COMMERCE_CONTENTFUL_ACCESS_TOKEN`: The access token for your Contentful
+  space
+- `FRONT_COMMERCE_CONTENTFUL_PREVIEW_ACCESS_TOKEN`: The preview access token for
+  your Contentful space
+
+Optionally, you can also configure a different environment using
+`FRONT_COMMERCE_CONTENTFUL_ENVIRONMENT=xxx`.
+
+You can also explicitly override the locale used when retrieving Contentful
+content by using the `FRONT_COMMERCE_CONTENTFUL_DANGEROUSLY_FORCED_LOCALE`
+environment variable or with the contentful.locale configuration from a
+[configuration provider](/docs/2.x/advanced/server/configurations#what-is-a-configuration-provider).
+Please note however that this is not recommended by Front-Commerce.
+
+### Front-Commerce application
+
+To use the Contentful extension in your Front-Commerce application, you need to
+register the extension in your `front-commerce.config.ts` file:
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+// add-next-line
+import contentful from "@front-commerce/contentful";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    magento2(storesConfig),
+    themeChocolatine(),
+    // add-next-line
+    contentful(),
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
