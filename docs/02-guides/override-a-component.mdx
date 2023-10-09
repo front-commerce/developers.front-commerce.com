@@ -2,14 +2,189 @@
 title: Override a component
 description:
   This guide explains how to override a component in Front-Commerce, to
-  customize the default theme
+  customize the theme of your application
 sidebar_position: 1
 ---
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+## Understanding theme overrides
 
-See https://developers.front-commerce.com/docs/2.x/essentials/extend-the-theme
+Front-Commerce web application is a fully featured e-commerce
+[universal](https://cdb.reacttraining.com/universal-javascript-4761051b7ae9)
+React application aimed at providing a sane base for your own theme. Even though
+you could reuse pages and components individually in a totally different theme,
+most of the time you might find easier and faster to start with the a theme and
+iterate from there.
+
+**Theme override is what allows you to:**
+
+- customize existing themes:
+  - [theme-chocolatine](/docs/remixed/extensions/theme-chocolatine/)
+- upgrade Front-Commerce and benefit from the latest component improvements.
+- or create a slightly different theme for events like Black Friday with
+  confidence!
+
+Having an understanding of
+[themes in Magento](https://developer.adobe.com/commerce/frontend-core/guide/templates/),
+[child themes in Wordpress](https://developer.wordpress.org/themes/advanced-topics/child-themes/)
+/
+[Prestashop](https://devdocs.prestashop-project.org/8/themes/reference/template-inheritance/parent-child-feature/),
+[templates override in Drupal](https://www.drupal.org/docs/develop/theming-drupal/twig-in-drupal/working-with-twig-templates),
+[themes in CakePHP](https://book.cakephp.org/3.0/en/views/themes.html) will help
+you understand Front-Commerce’s theme overrides because they all share the same
+philosophy. If you have no previous experience with these other implementations,
+let’s see how it works!
+
+Your own theme will be located in its own folder and will use default components
+from parent theme(s). You would then copy the files you want to override in your
+theme folder by maintaining an identical file structure. Your component will
+then be used instead of the one in your parent theme(s).
+
+This translates in those three steps:
+
+1. configure your custom theme and use it in your application
+2. copy the file (`jsx`, `scss` or `gql`) you want to override in the `theme`
+   folder of the `app` directory
+3. customize its content in your extension directory
+
+## Creating the `theme` folder
+
+:::info
+
+Whatever method you use, we will refer to this folder as "theme" for the rest of
+this documentation
 
 :::
+
+### Using the skeleton as base
+
+First we need to create the `theme` directory in your `app` folder
+
+```
+my-project
+└── app
+    └── theme
+```
+
+That’s it! You have successfully created the folder that will be the root of
+your custom theme!
+
+### In your own extension
+
+You can also extend theme in your extension, please read
+[Register an extension](/docs/remixed/guides/register-an-extension) guide to
+know how to create your own extension.
+
+First in your extension definition file, add the `theme` entry:
+
+```javascript title="extension/theme-acme/index.ts"
+import path from "path";
+import { defineExtension } from "@front-commerce/core";
+
+export default function themeAcme() {
+  return defineExtension({
+    name: "AcmeTheme",
+    // highlight-next-line
+    theme: path.join(__dirname, "theme"),
+    configuration: {
+      providers: [],
+    },
+  });
+}
+```
+
+And now theme file will be injected in your project!
+
+## Override a component
+
+Let's add the description of a `Product` to a `ProductItem` as an example of
+overriding the base theme.
+
+The original file is:
+[`node_modules/@front-commerce/theme-chocolatine/theme/modules/ProductView/ProductItem/ProductItem.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/modules/ProductView/ProductItem/ProductItem.jsx)
+
+:::info
+
+Please refer to the
+[Front-Commerce’s folder structure documentation page](/docs/remixed/concepts/react-components-structure)
+to get a better understanding of how components are organized in the base theme.
+
+:::
+
+1. copy it to: `theme/ProductView/ProductItem/ProductItem.jsx`
+2. add the description after the `<ProductOverview />` component in your
+   `ProductItem` with `{props.description}`.
+
+**But you are not done yet!** The `description` information is not included in
+the GraphQL fields fetched by the application in the base theme. You will thus
+need to update the fragment related to `ProductItem`.
+
+:::info
+
+In this case, the data fetching is made using a GraphQL request. Since our
+component use data fetched by a GraphQL request, we need to update this fragment
+to add the data we want to the request.
+
+We invite you to read the
+[request data flow](/docs/remixed/concepts/a-request-data-flow) to learn more
+about how data are fetched in Front-Commerce.
+
+:::
+
+The original fragment file is collocated with the original component at:
+
+1. copy the
+   [`original ProductItemFragment`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/modules/ProductView/ProductItem/ProductItemFragment.gql?ref_type=heads)
+   to the equivalent location in your extension.
+2. add the field `description` to the fragment.
+
+   ```diff title="app/theme/modules/ProductView/ProductItem/ProductItemFragment.gql"
+   fragment ProductItemFragment on Product {
+     imageUrl
+   + description
+     ...ProductOverviewFragment
+     ...ProductItemActionsFragment
+   }
+   ```
+
+3. restart the application
+
+The data will now be fetched from GraphQL every time the `ProductItem` is used
+(product listings, upsells…) and will be available for you to render it as
+wanted.
+
+### Reuse the original component
+
+Front-Commerce has been designed with small components having a single
+responsibility. **We believe that theme overrides should cover most of your use
+cases**. For some features though, it appeared that reusing the base component
+could be really useful. For instance, if you want to add a small feature or
+wrapper without changing the core feature of a component.
+
+It is possible to import a component from the `@front-commerce/theme/` module
+instead of `theme`. It is similar to if you were importing components from other
+libraries.
+
+:::note
+
+**Use with care!** We don't think that this method should be the default one,
+because it can make your updates more painful.
+
+:::
+
+In the file that we've created in the previous section, instead of copying the
+original source file you could set it up like this:
+
+```jsx title="theme/modules/ProductView/ProductItem/ProductItem.jsx"
+import BaseProductItem from "@front-commerce/theme/modules/ProductView/ProductItem/ProductItem.js";
+
+const ProductItem = (props) => (
+  <div>
+    {/* Add your feature here */}
+    <BaseProductItem {...props} />
+  </div>
+);
+
+export default ProductItem;
+```
