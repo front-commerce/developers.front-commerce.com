@@ -1,0 +1,139 @@
+---
+title: "config"
+sidebar_position: 6
+description: "Config related methods"
+---
+
+<p>{frontMatter.description}</p>
+
+## `defineConfig`
+
+The defineConfig method allows to configure the Front-Commerce application.
+
+The method takes a [`UserConfig`](#userconfig) object as parameter. It can
+either be an object, a function that return an UserConfig or a Promise that
+resolve an UserConfig.
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [magento2(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+  v2_compat: {
+    useApolloClientQueries: true,
+  },
+});
+```
+
+## `createConfigFromRequest`
+
+Create a configuration from request.
+
+:::warning
+
+This is an internal API, we recommend you to use the
+[`Front-Commerce context`](#) to retrieve configuration information
+
+:::
+
+## `getCurrentShopConfig`
+
+Get the current shop configuration.
+
+_Example_
+
+```ts
+import { getCurrentShopConfig } from "@front-commerce/core/config";
+
+const getAcmeConfig(config) {
+  return getCurrentShopConfig(config);
+}
+
+```
+
+## UserConfig
+
+### `extensions`
+
+_Optional_ List of extensions to load
+
+### `stores`
+
+**Required** Store configuration
+
+```ts
+import { defineConfig } from "@front-commerce/core/config";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [],
+  // highlight-next-line
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+### `cache`
+
+**Required** Your cache configuration
+
+```ts
+import { defineConfig } from "@front-commerce/core/config";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [],
+  stores: storesConfig,
+  // highlight-next-line
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+### `configuration`
+
+Object that define app configuration
+
+#### `providers`
+
+List of configuration providers to register in the application.
+
+### `v2_compat`
+
+Object that define V2 Compatible flags to use.
+
+:::warning
+
+This flags are provided here for compatibility with V2 project. If you start a
+new project with V3, you should not use this flags.
+
+:::
+
+#### `useApolloClientQueries`
+
+Whether the Apollo Client is still used to query data or not. Enables some fixes
+to ensure React 18 compatibility for old apollo-client versions.
+
+#### `useApolloClientSSR`
+
+Whether the SSR should honor Apollo Client queries or not. When using
+useApolloClientQueries, this flag determines whether the SSR should await for
+these queries resolution to render the application or not. Enabling this flag
+will ensure 2.x compatibility regarding SSR, but increases the Time To First
+Byte of the application.
