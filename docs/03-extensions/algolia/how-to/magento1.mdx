@@ -1,0 +1,133 @@
+---
+title: "Magento 1"
+description: "This guides explains how to configure the Algolia extension with a
+Magento 1 backend using the Algolia Magento module."
+sidebar_position: 2
+---
+
+<p>{frontMatter.description}</p>
+
+## Magento 1 requirements
+
+On Magento's side, you need to install
+[the `algolia/algoliasearch-magento` module](https://github.com/algolia/algoliasearch-magento).
+You can install it with modman:
+
+```shell
+modman clone https://github.com/algolia/algoliasearch-magento.git
+```
+
+After the installation, you need to configure it, at least:
+
+1. in System > Algolia Search > Configuration in the _Credentials & Setup_
+   section, set the _Enable Indexing_ option
+1. in the same section, fill the credentials you can find on
+   [the Algolia Dashboard](https://www.algolia.com/dashboard/api-keys)
+1. The attribute `category_ids` must be listed in both the facets configuration
+   and in the indexed product attributes (and there it must be set as
+   _Searchable_) as Front-Commerce relies on it to list the products in
+   categories.
+
+You can then run the indexer so that the products are indexed in Algolia's
+index.
+
+:::note
+
+`category_ids` is the only required facets. Depending on your project, you can
+configure any other attribute to be exposed as a facet by following the same
+steps.
+
+:::
+
+## Front-Commerce
+
+[After installing the Algolia
+package](/docs/remixed/extensions/algolia/#installation), you need to enable the
+corresponding extension. For that, you need to tweak your
+`front-commerce.config.ts` file like:
+
+```typescript title="front-commerce.config.ts for a Magento¬1 based project"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento1 from "@front-commerce/magento1";
+// highlight-next-line
+import algolia from "@front-commerce/algolia";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    // highlight-next-line
+    algolia("magento1"), // ⚠️ need to be before magento1()
+    magento1(storesConfig),
+    themeChocolatine(),
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+:::caution Known issue
+
+The Algolia extension definition needs to appear before the one for Magento in
+the `extensions` array.
+
+:::
+
+Front-Commerce retrieves the following parameters from Magento:
+
+- [the Application ID](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id)
+- [the search only API key](https://www.algolia.com/doc/guides/security/api-keys/#search-only-api-key)
+- the index name prefix
+- the number of values per facet
+- the configured facet attributes
+
+On the configured facets, only the attribute name and the facet type are taken
+into account (_Label_, _Searchable_ and _Create Query rule_ are ignored for
+now).
+
+:::caution
+
+For performance reason, the configuration retrieved from Magento is cached. As a
+result, after changing a parameter in the backoffice, the new parameter will be
+taken into account after at most one minute by Front-Commerce.
+
+:::
+
+## Test it
+
+To make sure Algolia APIs and indices are properly used, you can restart
+Front-Commerce with the `DEBUG` environment variable containing
+`front-commerce:algolia` so that it displays various information on the
+requests:
+
+```bash title="Run Front-Commerce with Algolia's debug flag"
+DEBUG=front-commerce:algolia pnpm run dev
+```
+
+After restarting Front-Commerce, you should be able to run a GraphQL query to
+search for products, categories or pages, for instance:
+
+```graphql title="http://localhost:4000/graphql"
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
