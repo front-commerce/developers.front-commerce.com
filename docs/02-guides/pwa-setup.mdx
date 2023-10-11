@@ -1,0 +1,123 @@
+---
+title: PWA Setup
+description: This guide explains how to setup your PWA.
+sidebar_position: 5
+---
+
+import Figure from "@site/src/components/Figure";
+
+<p>{frontMatter.description}</p>
+
+## What is a PWA
+
+[PWA stands for Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps).
+This technology allows the user to install your store as a native application on
+their device. It also brings advanced caching capabilities, offline support and
+much more.
+
+Front-Commerce integrates PWA capabilities and is available with a few
+configuration.
+
+## Setup PWA
+
+### `webmanifest` configuration
+
+The [`webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+defines meta information about your store. To setup this webmanifest, you need
+to add the following configuration in your `front-commerce.config.ts` file:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [magento2(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+  // highlight-start
+  pwa: {
+    appName: "ACME Store",
+    shortName: "ACME Store",
+    themeColor: "#fbb03b",
+    icon: "public/pwa-icon.png",
+    maskableIcon: "public/pwa-masked-icon",
+    cacheTTLInMs: 7 * 24 * 60 * 60 * 1000,
+  },
+  // highlight-end
+});
+```
+
+Here is a list of the available options:
+
+| Option         | Type     | Description                                                                                                          |
+| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| `appName`      | `string` | The name of your PWA                                                                                                 |
+| `shortName`    | `string` | The short name of your PWA, it will be displayed on the home screen of your customer                                 |
+| `themeColor`   | `string` | The theme color of your PWA, it will define theme for your App, we recommend you to use your website primary color   |
+| `icon`         | `string` | The icon of your PWA, it will be displayed on the home screen of your end user device, it must be at least 512x512   |
+| `maskableIcon` | `string` | The maskable icon of your PWA, it will be displayed on the home screen of your customer, it must be at lease 512x512 |
+| `cacheTTLInMs` | `number` | The time to live of your PWA Cache in milliseconds, the default value is of 7 days                                   |
+
+### Icons setup
+
+A PWA requires multiple icons to be defined in your project that will be used by
+the device to identify the application on the end-user device screen.
+
+Two types of icons are needed:
+
+#### `icon`
+
+This icon is a standard icon that will be displayed over a background color
+depending on the end-user device configuration and OS.
+
+<Figure caption="Example of standard icons displayed on Android">
+
+![Example on standard icons displayed on android](./assets/standard_icons.png)
+
+</Figure>
+
+> Source: [web.dev](https://web.dev/maskable-icon/)
+
+#### `maskableIcon`
+
+This icon must be a squared icon and will be cropped in a shape defined by the
+device
+
+<Figure caption="Example of maskable icons displayed on Android">
+
+![Example of maskable icons displayed on android](./assets/maskable_icons.png)
+
+</Figure>
+
+> Source: [web.dev](https://web.dev/maskable-icon/)
+
+You can read more about icons here :
+[https://web.dev/maskable-icon/](https://web.dev/maskable-icon/)
+
+## Install PWA
+
+Once everything is setup, you will be able to install your website as an
+application.
+
+Depending on the browser, a prompt inviting the customer to install the
+application is different:
+
+- Chrome: https://support.google.com/chrome/answer/9658361
+- Safari: https://web.dev/learn/pwa/installation/#ios-and-ipados-installation
+- Firefox:
+  https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing
+- Edge:
+  https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/ux
+
+:::tip
+
+Note that you can control PWA installation dialog using
+[Installation prompt](https://web.dev/learn/pwa/installation-prompt/)
+
+:::
