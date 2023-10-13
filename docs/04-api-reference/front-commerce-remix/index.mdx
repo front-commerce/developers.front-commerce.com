@@ -4,6 +4,10 @@ description:
   "This package contains Front-Commerce implementations related to Remix."
 ---
 
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 <p>{frontMatter.description}</p>
 
 ## Installation
@@ -31,25 +35,56 @@ the `@front-commerce/remix` reference to your `remix.env.d.ts` file.
 /// <reference types="@front-commerce/remix" />
 ```
 
-### Improved loader data types
+## Front-Commerce Context
+
+To ensure the Front-Commerce Context is available in your loaders and actions,
+you need to add the `createFrontCommerceContext` to your server via the
+[`getLoadContext`](https://remix.run/docs/en/2.0.1/route/loader#context), to do
+this, update your
+[`server.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b99f0475ce494591a54fdc2b904e956a083e9b51/skeleton/server.ts)
+
+```ts
+// add-start
+import { createFrontCommerceContext } from "@front-commerce/remix";
+import { createRemixRequest } from "@remix-run/express/dist/server";
+// add-end
+
+app.all(
+  "*",
+  createRequestHandler({
+    build: require(BUILD_DIR),
+    mode: process.env.NODE_ENV,
+    // add-start
+    getLoadContext(request, response) {
+      const remixRequest = createRemixRequest(request, response);
+      return {
+        frontCommerce: createFrontCommerceContext(remixRequest),
+      };
+    },
+    // add-end
+  })
+);
+```
+
+## `@front-commerce/remix/node`
+
+- [`json`](https://remix.run/docs/en/main/utils/json)
+- [`redirect`](https://remix.run/docs/en/main/utils/redirect)
+- [`defer`](https://remix.run/docs/en/main/utils/defer)
+
+## `@front-commerce/remix/react`
 
 We exposed new methods in the `@front-commerce/remix` to replace the methods
 from `@remix-run` which allows for better type safety:
 
-#### `@front-commerce/remix/node`
+- [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data)
+- [`useActionData`](https://remix.run/docs/en/main/hooks/use-action-data)
+- [`useFetcher`](https://remix.run/docs/en/main/start/v2#usefetcher)
+- [`useApiFetcher`](#useapifetcher)
+- [`useRouteLoaderData`](https://remix.run/docs/en/main/hooks/use-route-loader-data)
 
-- `json`
-- `redirect`
-- `defer`
-
-#### `@front-commerce/remix/react`
-
-- `useLoaderData`
-- `useActionData`
-- `useFetcher`
-- `useRouteLoaderData`
-
-These methods are used the same as the ones from `@remix-run`, for example:
+These methods are used the same as the ones from `@remix-run` with the exception
+of `useApiFetcher`, for example:
 
 ```ts title="/app/routes/my-route.tsx"
 // remove-next-line
@@ -91,33 +126,108 @@ Instead of the standard remix `SerializeObject` type:
 SerializeObject<UndefinedToOptional<{ foo: "bar"; date: string }>>;
 ```
 
-## Front-Commerce Context
+### `useApiFetcher`
 
-To ensure the Front-Commerce Context is available in your loaders and actions,
-you need to add the `createFrontCommerceContext` to your server via the
-[`getLoadContext`](https://remix.run/docs/en/2.0.1/route/loader#context), to do
-this, update your
-[`server.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b99f0475ce494591a54fdc2b904e956a083e9b51/skeleton/server.ts)
+The `useApiFetcher` is an optimised fetcher which allows to deduplicate
+client-side calls to the same `/api` endpoint. It is designed to replace the
+`load` method from `useFetcher` for API calls.
 
-```ts
-// add-start
-import { createFrontCommerceContext } from "@front-commerce/remix";
-import { createRemixRequest } from "@remix-run/express/dist/server";
-// add-end
+Here is an example of how to change from `useFetcher` to `useApiFetcher`:
 
-app.all(
-  "*",
-  createRequestHandler({
-    build: require(BUILD_DIR),
-    mode: process.env.NODE_ENV,
-    // add-start
-    getLoadContext(request, response) {
-      const remixRequest = createRemixRequest(request, response);
-      return {
-        frontCommerce: createFrontCommerceContext(remixRequest),
-      };
-    },
-    // add-end
-  })
-);
+```mdx-code-block
+<Tabs>
+<TabItem value="useFetcher">
 ```
+
+```tsx title="/app/routes/my-route.tsx"
+import type { loader } from "./api.cart";
+// remove-next-line
+import { useFetcher } from "@front-commerce/remix/react";
+
+export default function MyRoute() {
+  // remove-next-line
+  const fetcher = useFetcher<typeof loader>();
+
+  // remove-start
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state !== "loading") {
+      fetcher.load("/api/cart");
+    }
+  }, [fetcher]);
+  // remove-end
+
+  // remove-next-line
+  if (fetcher.state === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  // remove-next-line
+  const data = fetcher.data;
+
+  return (
+    <div>
+      Cart Id: {data.cart.id}
+      Cart Qty: {data.cart.items_qty}
+    </div>
+  );
+}
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="useApiFetcher">
+```
+
+```tsx title="/app/routes/my-route.tsx"
+import type { loader } from "./api.cart";
+// add-next-line
+import { useApiFetcher } from "@front-commerce/remix/react";
+
+export default function MyRoute() {
+  // add-next-line
+  const { data, loading } = useApiFetcher<typeof loader>("/api/cart");
+
+  // add-next-line
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      Cart Id: {data.cart.id}
+      Cart Qty: {data.cart.items_qty}
+    </div>
+  );
+}
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+Here is an example of 5 concurrent calls to the same `/api/cart` endpoint:
+
+<BrowserWindow noPadding>
+
+<video
+  width="100%"
+  height="400"
+  controls
+  className="video video-contain"
+  style={{ marginBottom: "-8px" }}
+>
+  <source
+    src={require("./assets/useApiFetcher.mp4").default}
+    type="video/mp4"
+  />
+  Your browser does not support the video tag.
+</video>
+
+</BrowserWindow>
+
+As you can see with the `useFetcher` it will call the API for each component,
+with the `useApiFetcher` it will only called the API once and share the data
+between the components. This also works when using the
+[useRevalidator](https://remix.run/docs/en/main/hooks/use-revalidator#userevalidator)
+hook.
