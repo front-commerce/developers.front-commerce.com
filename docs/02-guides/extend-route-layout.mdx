@@ -1,0 +1,92 @@
+---
+title: Extend layout route
+description: This guide explains how you can extend an existing layout routes.
+sidebar_position: 6
+---
+
+<p>{frontMatter.description}</p>
+
+## What is a layout route?
+
+Layout routes are used to apply a the same layout to multiple pages, generally
+these are pathless routes. For more information how routing works in Remix,
+please see the
+[Nested Routes](https://remix.run/docs/en/main/file-conventions/routes#nested-routes)
+documentation.
+
+In Front-Commerce some of the main layout routes are:
+
+- [`_main.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/routes/_main.tsx)
+- [`_main.user.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/routes/_main.user.tsx)
+- [`_main.user.orders.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/routes/_main.user.orders.tsx)
+- [`checkout.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/routes/checkout.tsx)
+
+To extend these routes you can either create your own layout route or re-use an
+existing one.
+
+## Create a new layout route
+
+To create a new layout route you can create a new file in the `routes` folder
+
+```tsx title="routes/_main.tsx"
+import { Outlet } from "@remix-run/react";
+
+const Layout = () => {
+  return (
+    <div>
+      <header>{...}</header>
+      <div className="content">
+        <Outlet />
+      </div>
+      <footer>{...}</footer>
+    </div>
+  );
+};
+
+export default Layout;
+```
+
+:::warning
+
+This will override the existing `_main.tsx` layout in the original theme, it
+doing so it might also override required actions, loaders, meta, etc. Please
+refer to the original layout to ensure you are not missing anything. If you you
+simply require a new layout, you can name it differently, for example
+`_layout.tsx`. or re-use the existing layout route, see
+[below](#re-use-an-existing-layout-route).
+
+:::
+
+## Re-use an existing layout route
+
+To re-use an existing layout route you can create a new file in the `routes`
+
+```tsx title="routes/_main.tsx"
+export * from "theme/UNSTABLE_layout/_main"; // ensures all actions, loaders, meta, etc. are preserved
+export { default } from "theme/UNSTABLE_layout/_main"; // ensures the component is preserved
+```
+
+Using this method you can also extend an existing layout route, for example
+
+```tsx title="routes/_main.tsx"
+export * from "theme/UNSTABLE_layout/_main";
+import MainLayout from "theme/UNSTABLE_layout/_main";
+
+const ExtendedMainLayout = () => {
+  return (
+    <div>
+      <MainLayout />
+      <div>My custom content</div>
+    </div>
+  );
+};
+```
+
+In the above example the `<MainLayout>` already contains an `<Outlet>` so you do
+not need to add it a second time.
+
+:::caution
+
+As indicated by the `UNSTABLE_` prefix, this is an unstable API and may change.
+
+:::
