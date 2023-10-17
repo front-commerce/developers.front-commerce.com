@@ -5,15 +5,20 @@ description:
   "defineExtension allow you to extend the features of Front-Commerce."
 ---
 
-<p>
-  Extensions are registered in the application using the
-  front-commerce.config.ts file. Read [Register an
-  extension](/docs/remixed/guides/register-an-extension) to learn more.
-</p>
+# defineExtension
+
+:::info
+
+Extensions are registered in the application using the
+`front-commerce.config.ts` file. Read
+[Register an extension](/docs/remixed/guides/register-an-extension) to learn
+more.
+
+:::
 
 ## `defineExtension`
 
-`defineExtension` allow you to define extensions settings
+`defineExtension` allows you to define extensions settings
 
 ```js
 defineExtension(configuration);
@@ -21,7 +26,9 @@ defineExtension(configuration);
 
 Arguments:
 
-- `configuration` (`ExtensionConfig`): the extension configuration
+| Name            | Type                                  | Description                 |
+| :-------------- | :------------------------------------ | :-------------------------- |
+| `configuration` | [`ExtensionConfig`](#extensionconfig) | The extension configuration |
 
 Example:
 

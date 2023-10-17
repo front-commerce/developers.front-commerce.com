@@ -1,0 +1,119 @@
+---
+title: "defineRemixExtension"
+sidebar_position: 4
+description:
+  "defineRemixExtension allow you to extend the features of Front-Commerce for a
+  Remix application."
+---
+
+:::info
+
+Extensions are registered in the application using the
+`front-commerce.config.ts` file. Read
+[Register an extension](/docs/remixed/guides/register-an-extension) to learn
+more.
+
+:::
+
+## `defineRemixExtension`
+
+The `defineRemixExtension` allows you to define extensions settings for a Remix
+application, this extends the
+[`defineExtension`](../front-commerce-core/defineExtension) configuration of
+Front-Commerce.
+
+```js
+defineRemixExtension(configuration);
+```
+
+Arguments:
+
+| Name            | Type                                            | Description                 |
+| :-------------- | :---------------------------------------------- | :-------------------------- |
+| `configuration` | [`RemixExtensionConfig`](#remixextensionconfig) | The extension configuration |
+
+Example:
+
+```js
+import { defineRemixExtension } from "@front-commerce/remix";
+
+defineRemixExtension({
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  // highlight-next-line
+  routes: "extensions/acme",
+});
+```
+
+## `RemixExtensionConfig`
+
+:::info
+
+`RemixExtensionConfig` is the definition interface of an extension, which
+extends the
+[`ExtensionConfig`](../front-commerce-core/defineExtension#extensionconfig)
+interface.
+
+:::
+
+In addition to the `ExtensionConfig`, the `RemixExtensionConfig` has the
+following properties:
+
+### `routes`
+
+**Optional** `string` |
+[`routes`](https://remix.run/docs/en/main/file-conventions/remix-config#routes)
+
+This can either be a string which defined the base directory that contains the
+routes, or the routes configuration function from Remix.
+
+#### File based routes:
+
+File based roots use the `flatRoutes` from Remix, which means that the
+convention is the same as using the `routes` directory in a Remix application.
+
+```js
+{
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  routes: "extensions/acme",
+}
+```
+
+:::caution
+
+The `flatRoutes` from Remix requires a placeholder `root.tsx` file at the same
+level as the `routes` directory.
+
+```
+extensions
+└─ acme
+   ├─ root.tsx
+   └─ routes
+      ├─ acme.tsx
+      └─ index.tsx
+```
+
+:::
+
+#### Config based routes:
+
+```js
+{
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  routes: async (defineRoutes) => {
+    return defineRoutes((routes) => {
+      routes.get("/acme", `../extensions/pages/acme.tsx`);
+    });
+  },
+}
+```
+
+:::caution
+
+Remix resolves the path to the a route file relative to the `appDirectory`,
+that's why in the above example we use `../` to go back to the root directory of
+the application.
+
+:::
