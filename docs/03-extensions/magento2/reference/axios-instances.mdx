@@ -10,7 +10,66 @@ sidebar_position: 1
 
 :::info WIP
 
-- `makeUserClientFromRequest`
 - `makeAdminClientFromRequest`
 
 :::info
+
+## `makeUserClientFromRequest`
+
+The `makeUserClientFromRequest` function creates an `axios` instance that can be
+used to interact with Magento's API as a customer.
+
+```js
+makeUserClientFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeUserClientFromRequest } from "@front-commerce/magento2/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
+
+## `makeCartUrlBuilderFromRequest`
+
+The `makeCartUrlBuilderFromRequest` function creates a `CartUrlBuilder`
+instance.
+
+```js
+makeCartUrlBuilderFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeCartUrlBuilderFromRequest } from "@front-commerce/magento2/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const cartUrlBuilder = makeCartUrlBuilderFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
