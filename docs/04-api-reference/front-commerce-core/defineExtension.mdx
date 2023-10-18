@@ -91,7 +91,10 @@ Example:
 
 ```json
 {
-  "schema": "./extensions/acme/graphql"
+  "schema": [
+    "./extensions/acme/graphql/foo/**/schema.gql", // accepts a globby pattern
+    "./extensions/acme/graphql/bar/Feature.gql" // accepts a direct path
+  ]
 }
 ```
 
