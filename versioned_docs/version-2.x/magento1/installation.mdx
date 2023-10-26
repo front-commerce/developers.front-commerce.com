@@ -6,6 +6,8 @@ description:
   in Magento1 / OpenMage. This guide explains how to install it.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 ## Module compatibility
@@ -217,11 +219,28 @@ For more security add a random key on `frontcommerce_secret_key` in your
     // ...
 ```
 
+### Reviews configuration
+
+<SinceVersion tag="2.27" />
+
+Front-Commerce, by default, uses only one review "rating", named `"main"`. Those
+are configured in Magento1's back office under
+`Catalog > Reviews and Ratings > Manage Ratings`. If your project uses more than
+one rating, or one with a different name, you will have to configure them.
+
+In order to do so, you need to override `magento1ReviewsConfigProvider`'s
+`ratingTypes` default value. To learn more on how to do this, follow
+[the override an existing configuration guide](/docs/2.x/advanced/server/configurations#override-an-existing-configuration).
+In this config provider, you will need to add each the name and id of each
+provider you want your customer to see.
+
 ### Clean Magento cache
 
-## Ensure it works Once this is done, all the checks should be green in your
-installer checker and you should be good to go. You can check that the guest
-permissions are correctly configured by accessing this URL:
+## Ensure it works
+
+Once this is done, all the checks should be green in your installer checker and
+you should be good to go. You can check that the guest permissions are correctly
+configured by accessing this URL:
 
 `{MAGENTO_BASE_URL}/api/rest/frontcommerce/urls/match?urls[0]=/about-magento-demo-store`
 
@@ -250,5 +269,5 @@ location /api {
 
 ### Mistake in ACL access
 
-Double check that you have followed [REST roles](#rest-roles) and [REST
-attributes](#rest-attributes) sections carefully.
+Double check that you have followed [REST roles](#rest-roles) and
+[REST attributes](#rest-attributes) sections carefully.
