@@ -196,6 +196,9 @@ users to login.
   requests (default: `60000`)
 - `FRONT_COMMERCE_MAGENTO_ADMIN_TIMEOUT`: The timeout in milliseconds for
   Magento requests that require admin privileges (default: `10000`)
+- `FRONT_COMMERCE_OPTIMIZED_ADD_MULTIPLE_CART_ITEMS`: set it to `true` to use an
+  alternative implementation of the `addMultipleItemsToCart` mutation that is
+  more performant when adding a high number of products to the cart.
 
 ### Magento 1
 
