@@ -1,0 +1,41 @@
+---
+sidebar_position: 5
+title: Layered navigation changes
+description:
+  This page describes changes in the layered navigation (a.k.a. Facets filtering)
+  in 3.x.
+---
+
+import ContactLink from "@site/src/components/ContactLink";
+
+<p>{frontMatter.description}</p>
+
+In version 2, the Layer
+navigation component (`LayerFacets`) was maintaining a state and depending on
+customer interaction, the page was updated with a new set of products and
+facets. The interaction in mobile was slightly different as the list of products
+and the corresponding facets were only updated when the customer hit the _Apply
+filters_ button.
+
+In version 3, the Layer navigation component monitors changes in the
+corresponding HTML form and it submits it accordingly in both desktop and mobile
+UI.
+
+This change results in important modifications in this area that needs to be
+taken into account while upgrading from 2.x to 3.x:
+
+* `theme/components/modules/Layer/LayerFacets`: the `onCancel` and
+  `applyOnChange` have been removed but it now accepts a `expanded` prop to
+  control facet initial visual state.
+* `theme/component/molecules/OptionPicker` and `theme/component/molecules/OptionPicker/Option`
+  selected option is now styled based on the checkbox state instead of relying
+  on a dedicated class.
+* `theme/components/atoms/PriceFilter` is now stateless. It does not display any
+  button and it does not trigger any `onChange` handler.
+* `theme/components/molecules/Card/ExpandableCard` always renders its content
+  which is hidden with CSS when the card is not expanded.
+
+For more details on those changes, you can refer to [the merge request where
+those modifications have been
+implemented](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2750).
+
