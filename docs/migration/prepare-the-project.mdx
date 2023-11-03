@@ -1,0 +1,193 @@
+---
+sidebar_position: 2
+title: Prepare the project
+description:
+  Before running automated migrations, you need to prepare the project to switch
+  from a 2.x layout to a 3.x one.
+---
+
+<p>{frontMatter.description}</p>
+
+## Remove generated files and `node_modules`
+
+```
+rm -rf .front-commerce build node_modules logs
+```
+
+## Relocate all your files into a `v2_todo` folder
+
+Or name it however you want. It's a temporary home for all your project files
+until they're migrated.
+
+Example:
+
+```
+mkdir v2_todo
+find . -maxdepth 1 ! -name ".git*" -exec mv {} v2_todo/ \;
+```
+
+## Follow the installation procedure
+
+Like if you started a new Front-Commerce 3.x project in your current directory.
+
+http://localhost:3000/docs/remixed/get-started/installation
+
+```
+NPM_CONFIG_LEGACY_PEER_DEPS=true pnpm dlx create-remix@latest . --template https://new.front-commerce.app/ -y
+```
+
+## Remove code that you don't use
+
+The `extensions` directory contains some examples to help you get started when
+discovering Front-Commerce. These examples aren't necessary for your project.
+You can remove them.
+
+The `CHANGELOG.md` file is related to the skeleton. You can either keep it and
+continue to use it with your project changes, reset it or delete it.
+
+The additional `front-commerce.*.config.ts` are here for illustration purposes.
+Update `front-commerce.config.ts` to your needs and remove the others.
+
+## Tip: customize it with your own specificities
+
+- Magento GraphQL schema
+  ([FC-1775 : Extensions > Magento2 > How-to > Inject your Magento GraphQL schema](https://linear.app/front-commerce/issue/FC-1775/extensions-magento2-how-to-inject-your-magento-graphql-schema))
+
+## Tip: improve your Git experience
+
+```
+# .git-blame-ignore-revs
+# 3.x: files relocation for following a new directory layout structure
+7d8c18e315793dde78210d02c586a86e6911bf51
+```
+
+## Migrate your GraphQL modules as FC extensions
+
+For features.
+
+```
+#!/usr/bin/env bash
+
+PATH_TO_UPDATE=$1
+if [ -z "$PATH_TO_UPDATE" ]; then
+  read -p "Enter the path to update: " PATH_TO_UPDATE
+fi
+
+pnpm run codeshift $PATH_TO_UPDATE -e js -t packages/compat/codemods/typedefs-remove/transform.ts
+pnpm run codeshift $PATH_TO_UPDATE -e js -t packages/compat/codemods/3.0.0/transform.ts
+pnpm run codeshift $PATH_TO_UPDATE -e js -t packages/compat/codemods/3.1.0/transform.ts
+
+cd /home/pierre/Code/fc/pop-remixed
+npx prettier --write $PATH_TO_UPDATE
+```
+
+## Migrate your theme
+
+```
+# Relocate yuor theme files
+mv v2_todo/src/web/theme app
+
+# Run codemods on it
+```
+
+⚠️ Keep the SCSS codemod output at hand, as it'll be useful in the next steps
+(manual fixes). Steps see
+https://gitlab.blackswift.cloud/front-commerce/customers/somfy/pop-remixed/-/merge_requests/16
+
+## Reinstall dependencies
+
+It could also be a good time to update your dependencies to their latest version
+(to ensure compatibility with latest React and Node versions). In FC 3.x, we
+upgraded all our dependencies to their latest version, and are keeping up with
+the pace.
+
+```shell
+grep react-resize-observer v2_todo/package.json
+npm i react-resize-observer@1.1.1
+
+grep notistack v2_todo/package.json
+npm i notistack@3.0.1
+```
+
+## TODO
+
+- FRONT_COMMERCE_ENV=development (vs dev)
+- cp v2_todo/.npmrc .
+
+```
+legacy-peer-deps=true
+```
+
+- patch-package:
+  `npx patch-package @front-commerce/adobe-b2b --exclude 'generated|.*.css.*'`
+
+- `Couldn't find type QueryInput in any of the schemas.` -> GraphQL module:
+  depends on `Front-Commerce/Layer` instead of Magento ones
+- `scalar JSON` needed in all GraphQL modules + explicit imports
+- find all gql types used without import:
+  `grep -r -l --include='*.gql' ': ImageWithFocalPoint' . | xargs grep -L 'ImageWithFocalPoint.gql'`
+- cacheControl removal
+- all graphql schemas: `find -name '*.gql'`
+
+```
+$header-height: (
+    xs: (
+        roof: 50px,
+        top: 32px,
+        bottom: 72px,
+    ),
+    md: (
+        roof: 50px,
+        top: 48px,
+        bottom: 72px,
+    ),
+    xl: (
+        roof: 50px,
+        top: 48px,
+        bottom: 72px,
+    ),
+);
+
+:root {
+    --header-height: #{$header-height}; // <-- incorrect because it's a complex variable
+}
+```
+
+- new in v2: frontend GraphQL queries and fragments must have a unique name
+
+Error due to client side query being used instead of `~/graphql/graphql` import:
+
+```
+Invariant Violation: Argument of #import "theme/pages/Home/HomePageFrontFragment.gql"
+#import "theme/pages/Product/ProductSomfyLightFragment.gql"
+
+query HomePageQuery {
+    homePage {
+        ...HomePageFrontFragment
+    }
+    me {
+        id
+        lastname
+        firstname
+        email
+        sfyBpNumber
+        requisitionLists {
+            id
+            itemCount
+            name
+            items {
+                id
+                quantity
+                product {
+                    sfyIsSellable
+                    ...ProductSomfyLightFragment
+                }
+            }
+        }
+    }
+}
+ passed to parser was not a valid GraphQL DocumentNode. You may need to use 'graphql-tag' or another method to convert your operation into a document
+```
+
+- TODO improve TODO Codemod generated for less false positive (e.g: checkCart
+  was unchanged)

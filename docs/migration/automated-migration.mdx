@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Automated Migration
 description: The migration CLI automatically migrates your v2 app.
 ---
@@ -11,3 +11,24 @@ description: The migration CLI automatically migrates your v2 app.
 add codemod instructions here
 
 :::
+
+### Scss updates
+
+:::info Warning
+
+When running codemods, you may see some warnings like this:
+
+```
+⚠️   No component found for '/home/pierre/Code/fc/pop-remixed/app/theme/components/templates/Grid/Grid'
+⚠️   No component found for '/home/pierre/Code/fc/pop-remixed/app/theme/layouts/Footer/SocialLinkList'
+⚠️   No component found for '/home/pierre/Code/fc/pop-remixed/app/theme/components/molecules/Form/FormActions/FormActions'
+```
+
+This means that you overriden styles without overriding its component. Usually,
+for core components it's not a problem, but for custom styles you must ensure
+that the stylesheet is being loaded somewhere.
+
+--
+
+Check `_components.scss` and others, to remove them after reimporting the styles
+in related components.
