@@ -21,9 +21,9 @@ so we could reevaluate our decision.
 ## GraphQL Rate Limiting
 
 In version 3.0, we removed the
-[Rate Limiting](/docs/2.x/advanced/graphql/rate-limiting)
-feature from GraphQL. Since GraphQL is not exposed through HTTP by default, the
-rate limiting feature no longer makes sense at this level.
+[Rate Limiting](/docs/2.x/advanced/graphql/rate-limiting) feature from GraphQL.
+Since GraphQL is not exposed through HTTP by default, the rate limiting feature
+no longer makes sense at this level.
 
 As a consequence, if you were using the following functions you must update your
 codebase to remove these features:
@@ -35,3 +35,16 @@ codebase to remove these features:
 - or a direct import from the `graphql-rate-limit` package
 
 In the core, it was only used for the `sendContactEmail` mutation.
+
+## `i18n-iso-countries` removal
+
+In version 3.1, we removed all requirement for the `i18n-iso-countries` package,
+we have replaced it with the
+[`Intl.DisplayNames`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames)
+fir the
+[getCountryName](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2757/diffs#7f314d01a79469d50021acfdb87dee953acfe36b)
+function
+
+As a consequence, If you have the
+[`countries`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2757/diffs#69df4605bb5ca4175fa57a539a6978643da3b33c)
+option in your `stores` configuration, you can remove it.
