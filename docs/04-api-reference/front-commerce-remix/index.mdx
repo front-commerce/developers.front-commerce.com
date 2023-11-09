@@ -231,3 +231,77 @@ with the `useApiFetcher` it will only called the API once and share the data
 between the components. This also works when using the
 [useRevalidator](https://remix.run/docs/en/main/hooks/use-revalidator#userevalidator)
 hook.
+
+## CLI
+
+### `dev`
+
+Starts the application in development mode (hot-code reloading, error reporting,
+etc.)
+
+Usage
+
+```bash
+$ front-commerce dev
+```
+
+Options
+
+    --help, -h      Displays this message
+    --port, -p      Port to run the server on
+    --verbose, -v   Verbose logging for debugging purposes
+
+Unstable Options
+
+    --command, -c   Command used to run your app server
+    --manual, -m    Command used to run your app server
+    --no-restart    Do not restart the app server when rebuilds occur.
+
+### `build`
+
+Compiles the application for production deployment
+
+Usage
+
+```bash
+$ front-commerce build
+```
+
+Options
+
+    --help, -h          Displays this message
+    --sourcemaps, -s    Generate source maps
+    --verbose, -v       Verbose logging for debugging purposes
+
+### `translate`
+
+Extract translations from your application sources
+
+Usage
+
+```bash
+$ front-commerce translate <path> --locale <locale>
+```
+
+Options
+
+    --help, -h      Displays this message
+    --locale        Output locale for the translations
+
+### `codegen`
+
+Run the
+[`graphql-codegen`](https://the-guild.dev/graphql/codegen/docs/getting-started/development-workflow)
+command
+
+Usage
+
+```bash
+$ front-commerce codegen
+```
+
+Options
+
+    --help, -h      Displays this message
+    --watch, -w     Watch for changes and regenerate
+    --verbose, -v   Verbose logging for debugging purposes

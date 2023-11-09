@@ -1,0 +1,289 @@
+---
+title: Translate your application
+description:
+  International e-commerce websites often need to translate their UI into
+  several languages to make sure that they reach a broader range of customers.
+  This documentation will show how this works for static content in your
+  application.
+sidebar_position: 8
+---
+
+<p>{frontMatter.description}</p>
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::note
+
+If you want to configure your application to support multiple languages, please
+refer to
+[Configure multiple stores](https://developers.front-commerce.com/docs/2.x/advanced/production-ready/multistore).
+
+:::
+
+Front-Commerce manages your translations by using
+[react-intl](https://formatjs.io/docs/getting-started/application-workflow), a
+standard library in the React ecosystem. This library works by transforming your
+static values in React Components. These components will then fetch your
+translations and display them in your application.
+
+## Declare translations in your application
+
+:::info
+
+You can find the full set of components in the
+[React Intl Components documentation](https://formatjs.io/docs/react-intl/components/).
+
+:::
+
+For instance, let's see how to transform your values in `react-intl` Components.
+
+### Strings
+
+```tsx
+import { FormattedMessage } from "react-intl";
+
+<FormattedMessage
+  id="My.Component.Id.messageId"
+  defaultMessage="Default translation"
+/>;
+```
+
+:::note
+
+To take full advantage of the `translate` cli in Front-Commerce, a default
+message is required for formatted messages. This will be used to extract the
+messages for the default locale and ensure there are no dead translations, or
+missing translations.
+
+:::
+
+### Dates
+
+```tsx
+import { FormattedDate } from "react-intl";
+
+<FormattedDate value={date} year="numeric" month="long" day="2-digit" />;
+```
+
+### Prices
+
+```tsx
+import { FormattedNumber } from "react-intl";
+
+<FormattedNumber
+  value={value.amount}
+  style="currency"
+  currency={value.currency}
+/>;
+```
+
+:::note
+
+However, for this particular use case we have abstracted this in Front-Commerce
+with the
+[theme/components/atoms/Price](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/atoms/Typography/Price/index.js)
+component (and its variants: `ProductPrice`, `PriceOrFree`). We recommend you to
+use it instead, so you could benefit from better integration with its related
+GraphQL Type.
+
+:::
+
+### Without React Component
+
+These components will be enough in most cases. However, the issue with these is
+that it wraps your string within a React Element, which may be troublesome when
+you actually need to handle the string itself.
+
+For instance, this is the case when you want to add some label attributes to
+your <abbr title="Document Object Model">DOM</abbr> elements.
+
+```jsx
+<span class="icon" aria-label="Icon title displayed for screen readers" />
+```
+
+Fortunately, this is correctly handled by `react-intl` if you use
+[`defineMessages`](https://formatjs.io/docs/react-intl/api/#definemessagesdefinemessage)
+combined with the
+[`useIntl`](https://formatjs.io/docs/react-intl/api/#useintl-hook) hook or the
+[`injectIntl`](https://formatjs.io/docs/react-intl/upgrade-guide-3x/#new-useintl-hook-as-an-alternative-of-injectintl-hoc)
+HOC.
+
+```jsx
+import { defineMessages, useIntl } from "react-intl";
+
+const messages = defineMessages({
+  ariaLabel: {
+    id: "screen-reader-icon-title",
+    defaultMessage: "Icon title displayed for screen readers",
+  },
+});
+
+const MyComponentWithHook = (props) => {
+  const intl = useIntl();
+  return (
+    <span class="icon" aria-label={intl.formatMessage(messages.ariaLabel)} />
+  );
+};
+```
+
+:::caution IMPORTANT
+
+You should always define a `defaultMessage`, and preferably in your default
+locale which you will use with the `translate` command. This will allow
+`FormatJS` to extract the existing messages for your application.
+
+:::
+
+## Translate what's in your components
+
+Now that you have defined what should be translated in your application, you
+actually need to translate your application. This is a two-step process:
+
+1. Run the following script that will fetch all your translatable strings in
+   your application and gather them in a JSON file located in
+   `translations/[locale].json`
+
+   ```shell
+   $ front-commerce translate <path> --locale <locale>
+   ```
+
+   :::tip ProTip™
+
+   The script has already been defined in the
+   [skeleton template](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/package.json?ref_type=heads#L13),
+   and can be used directly with `pnpm run translate`. You can change the
+   default locale to accommodate your store.
+
+   :::
+
+2. Translate the strings available in those files, and you are good to go 🙂
+
+   If your default locale is `en` and you want to add support for `fr` you can
+   create a `fr.json` in your `translations` folder and translate the strings
+   for each key.
+
+   :::tip ProTip™
+
+   You can use tools like [BabelEdit](https://www.codeandweb.com/babeledit) to
+   help translate and keep your translations in sync.
+
+   :::
+
+### Translations fallback
+
+With `react-intl` translations are usually grouped into a single file. In our
+case, we would expect them to be in `translations/[locale].json`. but we don't
+want you to be troubled by translations that are handled by the core.
+
+That's why Front-Commerce uses a mechanism called **translations fallbacks**.
+Instead of relying on a single file for translations, Front-Commerce will look
+out for translations that are defined by extensions
+
+#### From your extension [declared in `front-commerce.config.js`](/docs/remixed/guides/register-an-extension)
+
+If you are developing an extension, you will need to add the path to your
+translations in the extension configuration file, for example lets say your
+translations are located in `<my-extension>/translations/[locale].json`.
+
+You can then run the following command command to extract the translations from
+your extension:
+
+```bash
+$ pnpm run front-commerce translate <my-extension>/**/*.{js,jsx,ts,tsx} --locale <locale>
+```
+
+And then in your extension definition file you should add the `translations`
+option:
+
+```ts title="<my-extension>/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  // ...
+  translations: `${__dirname}/translations`, // path to your translations
+});
+```
+
+This will extract the translations in your extension to the following file:
+
+- `<my-extension>/translations/<locale>.json`
+
+It will also allow it to be injected into the generated translation file.
+
+#### From your project
+
+- `lang/[short-locale].json` or
+- `lang/[locale].json`
+
+`[short-locale]` here means that we are only taking the first particle of the
+`locale`. E.g. if the locale was `en-GB`, the short-locale would be `en`. That's
+how `en-GB` would load translations from both `en.json` and `en-GB.json` files.
+
+If a translation key is defined in multiple files, the last one (according to
+the above list) will be be used. This is especially useful if you want to change
+the core's translations.
+
+:::tip ProTip™
+
+You can see exactly which translation files are used by opening the files
+located in .front-commerce/compiled-lang/.
+
+:::
+
+With `react-intl` translations are usually grouped into a single file. In our
+case, we would expect them to be in `lang/[locale].json`, we don't want you to
+be troubled by translations that are handled by the core.
+
+Please keep in mind that when you run `pnpm run translate`, new keys will be
+added to `lang/[locale].json` as the script only detects locales in the `app`
+folder.
+
+## About dynamic content
+
+`react-intl` lets you translate your static content. But what about dynamic
+content? Things like product title and description, CMS pages, etc.
+
+This is done on the GraphQL side. The principle is that when a user is connected
+to Front-Commerce, they will be assigned a `storeViewCode` in their session (see
+[Configure multiple stores](/docs/2.x/advanced/production-ready/multistore) for
+more details).
+
+This code will then be used by your GraphQL loaders to retrieve the correct
+content from your backend. Learn more about
+[GraphQL loaders](/docs/2.x/advanced/graphql/slim-down-resolvers-with-loaders).
+
+## Loaders and Meta function
+
+The
+[`FrontCommerceApp`](/docs/remixed/api-reference/front-commerce-remix/front-commerce-app)
+instance exposes the [`intl` object](https://formatjs.io/docs/intl) which can be
+used to translate strings in your loaders, which can then be used in in the meta
+function.
+
+```tsx title="app/routes/my-route.ts"
+import { json } from "@front-commerce/remix/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { defineMessage } from "react-intl";
+
+const documentTitle = defineMessage({
+  id: "pages.my-route.document-title",
+  defaultMessage: "My Route",
+});
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  return json({
+    // highlight-next-line
+    title: app.intl.formatMessage(messages.documentTitle),
+  });
+};
+
+export const meta: MetaFunction = (args) => {
+  // This will contain the translated title returned from the loader function.
+  // highlight-next-line
+  return [{ title: args.data.title }];
+};
+```
