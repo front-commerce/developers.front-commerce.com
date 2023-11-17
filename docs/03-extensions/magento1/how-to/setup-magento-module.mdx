@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Set-up Magento Extension
+title: Set-up Magento Module
 description:
   Front-Commerce applications requires a Front-Commerce module to be installed
   in Magento1 / OpenMage. This guide explains how to install it.
@@ -145,8 +145,8 @@ should ensure there is a `Front-Commerce` consumer configured in your install.
   - Callback URL: `http://local.host` <- is useless but can't be empty
 
 The Key/Secret values should be used to configure your Front-Commerce, with the
-`FRONT_COMMERCE_MAGENTO_CONSUMER_KEY` and
-`FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET` environment variables in your `.env`
+`FRONT_COMMERCE_MAGENTO1_CONSUMER_KEY` and
+`FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET` environment variables in your `.env`
 file.
 
 ### Admin user
@@ -170,8 +170,8 @@ You must generate admin tokens to configure Front-Commerce.
 
 - Go to admin menu entry Front-Commerce > Configuration
 - Click on "Generate Token" link in installer checker section (This should be
-  the same key as `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN` and
-  `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN_SECRET` in your Front-Commerce `.env`)
+  the same key as `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN` and
+  `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET` in your Front-Commerce `.env`)
 
 ### Magento core patch
 
