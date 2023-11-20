@@ -24,3 +24,35 @@ First ensure you have installed the package:
 ```bash
 $ pnpm install @front-commerce/magento2@latest
 ```
+
+## Setup Magento2 Extension
+
+Update your `front-commerce.config.ts` to include the Magento2 Extension :
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [magento2(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+Add the following variables to your `.env` file:
+
+```shell title=".env"
+FRONT_COMMERCE_MAGENTO2_ENDPOINT=https://magento2.example.com
+FRONT_COMMERCE_MAGENTO2_CONSUMER_KEY=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO2_CONSUMER_SECRET=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN_SECRET=xxxxxxxxx
+```
+
