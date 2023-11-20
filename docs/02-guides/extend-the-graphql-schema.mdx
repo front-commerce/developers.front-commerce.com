@@ -8,20 +8,18 @@ sidebar_position: 4
 
 <p>{frontMatter.description}</p>
 
-
-When developing an e-commerce store, you might at some point need to expose
-new data in your unified GraphQL schema to support new features and allow
-frontend developers to use them. Front-Commerce’s GraphQL modules is the
-mechanism allowing to extend and override any part of the schema defined by
-other modules.
+When developing an e-commerce store, you might at some point need to expose new
+data in your unified GraphQL schema to support new features and allow frontend
+developers to use them. Front-Commerce’s GraphQL modules is the mechanism
+allowing to extend and override any part of the schema defined by other modules.
 
 The Front-Commerce core and platform integrations (such as Magento2) are
 implemented as GraphQL modules. They leverage features from the GraphQL Schema
 Definition Language (<abbr title="Schema Definition Language">SDL</abbr>).
 
 This page will guide you through the process of exposing a new feature in your
-GraphQL schema. We will create an extension with a  GraphQL module that allows
-to maintain a counter of clicks for a product.
+GraphQL schema. We will create an extension with a GraphQL module that allows to
+maintain a counter of clicks for a product.
 
 ## Create an extension
 
@@ -43,8 +41,8 @@ export default function clickCounter() {
 }
 ```
 
-Then you need to [register the extension into your Front-Commerce
-project](/docs/remixed/guides/register-an-extension).
+Then you need to
+[register the extension into your Front-Commerce project](/docs/remixed/guides/register-an-extension).
 
 ## Add a GraphQL module within the extension
 
@@ -66,8 +64,8 @@ export default {
 This is a minimal GraphQL module definition which namespace is `ClickCounter`
 and that does nothing for now.
 
-Then, the extension needs to declare that it provides a GraphQL module
-by modifying the extension's index.ts:
+Then, the extension needs to declare that it provides a GraphQL module by
+modifying the extension's index.ts:
 
 ```typescript title="Changes to extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
@@ -115,8 +113,8 @@ extend type Mutation {
 
 :::info
 
-The `Product` type is part of Front-Commerce’s `Front-Commerce/Product` module. The
-`MutationSuccess` type, used as the response for the mutation, is part of
+The `Product` type is part of Front-Commerce’s `Front-Commerce/Product` module.
+The `MutationSuccess` type, used as the response for the mutation, is part of
 Front-Commerce’s core.
 
 :::
@@ -136,12 +134,19 @@ export default function clickCounter() {
     },
     graphql: {
       // highlight-next-line
-      schema: ["./extensions/click-counter/graphql"],
+      schema: ["./extensions/click-counter/graphql/schema.gql"],
       unstable_module: "./extensions/click-counter/graphql",
     },
   });
 }
 ```
+
+:::tip
+
+The `schema` can also be a be a globby pattern, for instance
+`./extensions/click-counter/graphql/*.gql`.
+
+:::
 
 At this point, after restarting Front-Commerce, you should be able to see in the
 GraphQL playground `http://localhost:4000/graphql` that the type `Product` has a
@@ -183,10 +188,10 @@ work_ is done, for instance by fetching remote data sources or transforming
 data.
 
 Resolvers are exposed using the `resolvers` key of the GraphQL module
-definition. It should be a [**Resolver
-map**](https://www.graphql-tools.com/docs/resolvers): an object where each key
-is a GraphQL type name, and values are mapping between field names and resolver
-function. Resolver functions may return a
+definition. It should be a
+[**Resolver map**](https://www.graphql-tools.com/docs/resolvers): an object
+where each key is a GraphQL type name, and values are mapping between field
+names and resolver function. Resolver functions may return a
 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 for asynchronous operations.
 

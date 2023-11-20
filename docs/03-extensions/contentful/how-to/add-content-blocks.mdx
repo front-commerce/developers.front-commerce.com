@@ -1,0 +1,186 @@
+---
+title: Add Content Blocks
+description:
+  'Content Blocks allows developers to design autonomous and reusable UI
+  elements that Content managers can use to build dynamic pages. This page
+  explains how developers can use the tool we provide to create content-driven
+  dynamic pages. With Content Blocks, Front-Commerce embraces the "Don''t Ship
+  Pages, Ship a Page Builder" vision. See how to make blocks a part of your
+  authoring strategy.'
+sidebar_position: 2
+---
+
+# Content Blocks
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+To create a Block library, you will require a library of exposed
+[ContentTypes](./add-content-types) in your GraphQL schema.
+
+## How to use Blocks?
+
+Integrating a Content Blocks Zones into your project is a 2 steps process:
+
+- [Create a Block library](#create-a-block-library)
+  - [Independent components for each Block type](#independent-components-for-each-block-type)
+  - [Define the Block library](#define-the-block-library)
+- [Retrieve and display the content](#retrieve-and-display-the-content)
+
+## Create a Block library
+
+To ease the creation of a Block Library, Front-Commerce provides the
+`makeContentBlockLibrary` function. It allows developers to create a library of
+Blocks for the GraphQL types declared with [ContentTypes](./add-content-types).
+
+### Independent components for each Block type
+
+First, ensure that you have created one or more components for each Block type
+to display. Each one of them must have a GraphQL fragment defining the data they
+require.
+
+A component **must accept** data of the fragment attached to it in `props.data`.
+Here is an example for a `BlockTitleText` to be used the Home Block library
+
+```jsx title="theme/modules/Blocks/BlockTitleText/BlockTitleText.js"
+const BlockTitleText = (props) => {
+  const { subtitle, title, align = "center" } = props.data;
+
+  return (
+    <Container>
+      <div className="block-title-text">
+        {title && ( // we always check if the value is defined as "draft" data might not yet have the title set.
+          <h2 className={`block-title-text__title alignment-${align}`}>
+            {title}
+          </h2>
+        )}
+        {subtitle && ( // same here, we should always ensure it is defined before using it.
+          <h3 className={`block-title-text__subtitle alignment-${align}`}>
+            {subtitle}
+          </h3>
+        )}
+      </div>
+    </Container>
+  );
+};
+
+export default BlockTitleText;
+```
+
+and the related GraphQL fragment describing data dependencies:
+
+```graphql title="theme/modules/Blocks/BlockTitleText/BlockTitleTextFragment.gql"
+fragment BlockTitleTextFragment on BlockTitleText {
+  title
+  subtitle
+  align
+}
+```
+
+Then we can export these in the `index.js` file of the block:
+
+```js title="theme/modules/Blocks/BlockTitleText/index.js"
+export { default as BlockTitleText } from "./BlockTitleText";
+// We will also need the fragment to create the block library, explained below
+export { BlockTitleTextFragmentFragmentDocument } from "~/graphql/graphql";
+```
+
+### Define the Block library
+
+Several components and their fragments can now be assembled together in a Block
+library. Here is how to achieve this with the `makeContentBlockLibrary` factory:
+
+```js title="theme/modules/Blocks/Home/index.js"
+import { makeContentBlockLibrary } from "@front-commerce/contentful/react";
+
+import {
+  BlockTitleText,
+  BlockTitleTextFragmentFragmentDocument,
+} from "theme/modules/Blocks/BlockTitleText";
+import {
+  BlockTextImage,
+  BlockTextImageFragmentFragmentDocument,
+} from "theme/modules/Blocks/BlockTextImage";
+
+// "HomePageBlock" is the name of the GraphQL union type exposing the Block Library
+const blockLibrary = makeContentBlockLibrary("HomePageBlock", [
+  { component: BlockTitleText, fragment: BlockTitleTextFragment },
+  {
+    component: BlockTextImage,
+    fragment: BlockTextImageFragmentFragmentDocument,
+  },
+]);
+
+// This export must be left unchanged. It allows the file to be imported
+// as a Fragment in a `*.gql` file.
+// The generated fragment will have the GraphQL type name, suffixed with "Fragment".
+// In this example, it will be: HomePageBlockFragment
+export const definitions = blockLibrary.fragmentDefinitions;
+
+// This ContentBlock component is the one that will display data correctly
+export default blockLibrary.ContentBlock;
+```
+
+:::info important
+
+The `export const definitions` is required to allow importing this file as a
+GraphQL fragment (see below).
+
+:::
+
+## Retrieve and display the content
+
+Now that you have defined a Block library, you could use it wherever you need to
+display a BlockLibrary with these Blocks.
+
+Let's continue our example and update our hypothetical `<Home>` component to
+display the Block library.
+
+First, update the GraphQL query to add the Block library field (`mainContent` in
+our example)
+
+```graphql title="theme/pages/Home/HomeQuery.gql"
+#import "theme/modules/Blocks/Home"
+query HomeQuery {
+  homepage {
+    mainContent {
+      ...HomePageBlockFragment
+    }
+  }
+}
+```
+
+Then, update the `<Home>` component to display the content:
+
+```jsx title="theme/pages/Home/Home.js"
+// add-next-line
+import HomeBlockLibrary from "theme/modules/Blocks/Home";
+// […]
+
+const Home = (props) => {
+  const homepageData = props.data.homepage;
+  return (
+    <div>
+      <h1>{homepageData.title}</h1>
+      // add-start
+      <HomeBlockLibrary
+        content={homepageData.mainContent}
+        renderBlocks={(blocks) => <Stack size="8">{blocks}</Stack>}
+      />
+      // add-end
+    </div>
+  );
+};
+```
+
+:::note
+
+The `renderBlocks` prop is optional. it allows to add a container around the
+blocks. In this example, we use the `Stack` component from Front-Commerce's
+`web/theme/components/atoms/Layout/Stack` to display the blocks vertically.
+
+:::
+
+**That's it!** 🎉 You can now try to create new Blocks in Contentful or reorder
+them, and your page should reflect these changes after publication.

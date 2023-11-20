@@ -1,0 +1,234 @@
+---
+title: Add X-Ray Compatibility
+description:
+  "X-Ray allows your contributors to have an edit link which wraps the
+  Contentful data, allowing them to directly navigate to the Contentful editor
+  when in contribution mode."
+sidebar_position: 3
+---
+
+# Storefront Content
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+To use
+[X-Ray](https://developers.next.front-commerce.com/docs/2.x/magic-button/x-ray),
+ensure you have followed the
+[`Magic Button`](https://developers.front-commerce.com/docs/2.x/category/magic-button)
+documentation to setup `Contribution Mode`.
+
+## Adding the `@storefrontContent` directive
+
+To enable the `@storefrontContent` directive, you need to add it to your graphql
+schema, if we take the example from [`content-types`](./add-content-types)
+documentation, it would look like this:
+
+```graphql
+type AcmeCmsPage @storefrontContent(extractorIdentifier: "AcmeCmsPage") {
+  title: String
+  seo: Seo
+}
+
+type AcmeHomePage @storefrontContent(extractorIdentifier: "AcmeHomePage") {
+  title: String
+  blocks: [AcmeHomePageBlock]
+  seo: Seo
+}
+
+type AcmeSeo {
+  title: String
+  description: String
+}
+
+union AcmeHomePageBlock = BlockTitleText | BlockTextImage
+
+type BlockTitleText @storefrontContent(extractorIdentifier: "BlockTitleText") {
+  title: String
+  subtitle: String
+  align: String
+}
+
+type BlockTextImage @storefrontContent(extractorIdentifier: "BlockTextImage") {
+  title: String
+  picture: String
+  picturePosition: String
+}
+```
+
+## Using the `StorefrontContentType` to define your content types
+
+Previously you had to define your content types using the `ContentType` class,
+now you need to use the `StorefrontContentType` class instead, this class will
+allow you to add the `sys` to your contentfulFragment and define the
+`identifierValue` to map a unique identifier for this content type.
+
+```js
+// remove-next-line
+import { ContentType } from "@front-commerce/contentful";
+// add-next-line
+import { StorefrontContentType } from "@front-commerce/contentful";
+
+// remove-next-line
+class CmsPage extends ContentType {...}
+// add-next-line
+class CmsPage extends StorefrontContentType {...}
+```
+
+### Adding the `sys` field to you query
+
+In order to this will eventually be used to build a url to the contentful
+editor, the `sys` fragment is exposed in the `StorefrontContentType` class and
+can be called with `this.sys`.
+
+```js
+  get contentfulFragment() {
+    return gql`
+      fragment HomepageFragment on Homepage {
+        pageTitle
+        pageSlug
+        ${this.sys}
+      }
+    `;
+  }
+
+```
+
+### Defining the `identifierValue`
+
+The `StorefrontContentType` adds an additional parameter to the constructor: the
+`identifierValue`. This parameter will allow `@storefrontContent` directive to
+extract the correct identifier from the content.
+
+> **IMPORTANT:** The `identifierValue` must be a scalar value or a function
+> returning one. In the above example, the slug field cannot be an array or an
+> object.
+
+#### Using a function to extract the identifierValue
+
+In the case were you have a content type with multiple entries, you need to
+define a function to extract the identifierValue, for example the `AcmeCmsPage`
+content type can be identified with the unique `slug` field:
+
+```js
+import { StorefrontContentType } from "@front-commerce/contentful";
+
+class CmsPage extends StorefrontContentType {
+  constructor() {
+    super(
+      "cmsPage",
+      "AcmeCmsPage",
+      (contentfulData) => ({
+        title: contentfulData.pageTitle,
+        slug: contentfulData.pageSlug,
+      }),
+      (formattedData) => formattedData.slug // this is the identifierValue which will be used by the @storefrontContent directive
+    );
+  }
+
+  get contentfulFragment() {
+    return gql`
+      fragment HomepageFragment on Homepage {
+        pageTitle
+        pageSlug
+        ${this.sys}
+      }
+    `;
+  }
+}
+```
+
+#### Using a scalar value as the identifierValue
+
+In the case where you have a unique content type, you can directly use a scalar
+value as the `identifierValue`, for example a `Homepage` content type:
+
+```js
+import { StorefrontContentType } from "@front-commerce/contentful";
+
+class Homepage extends StorefrontContentType {
+  constructor() {
+    super(
+      "homepage",
+      "AcmeHomepage",
+      (contentfulData) => ({
+        title: contentfulData.pageTitle,
+      }),
+      "home" // Here we mapped home a scalar value as the identifierValue
+    );
+  }
+
+  get contentfulFragment() {
+    return gql`
+      fragment HomepageFragment on Homepage {
+        pageTitle
+        ${this.sys}
+      }
+    `;
+  }
+}
+```
+
+## Register your `StorefrontContentType`
+
+You need to register your defined `StorefrontContentType` via the Contentful
+loader. This is typically done in a loader, or a context enhancer for simpler
+use cases.
+
+```js
+export default {
+  namespace: "Example/Contentful/Homepage",
+  dependencies: ["Front-Commerce/Contentful/Core"],
+  typeDefs,
+  resolvers,
+  contextEnhancer: ({ loaders }) => {
+    const sharedBlocks = {
+      TitleText: new BlockTitleText(),
+      TextImage: new BlockTextImage(),
+    };
+
+    const Homepage = new HomepageLoader(sharedBlocks);
+    // add-next-line
+    loaders.Contentful.registerStorefrontContentType(Homepage);
+
+    // add-start
+    for (const block of Object.values(sharedBlocks)) {
+      if (block instanceof StorefrontContentType) {
+        loaders.Contentful.registerStorefrontContentType(block);
+      }
+    }
+    // add-end
+
+    return {
+      Homepage,
+    };
+  },
+};
+```
+
+:::info IMPORTANT
+
+You need to register all the content types which use the `@storefrontContent`
+directive, and they should all extend the `StorefrontContentType` class.
+
+:::
+
+## Adding the `StorefrontContent` component in your application
+
+You need to add the
+[`StorefrontContent` component](https://developers.next.front-commerce.com/docs/2.x/magic-button/x-ray#add-storefrontcontent--in-your-react-components)
+in your application, this component will be used to wrap the contentful data and
+add the edit link.
+
+```js
+export default function CmsPage(props) {
+  const { data } = props; // represents the data from your query;
+
+  return (
+    <StorefrontContent type={data?.__typename} id={props.data?.slug}>
+      <h1>{data.title}</h1>
+    </StorefrontContent>
+  );
+}
+```

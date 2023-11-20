@@ -112,6 +112,27 @@ look at how it is used in
 [`CustomerLoader`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/server/modules/magento2/customer/loaders/CustomerLoader.js)
 where the customer cache is expired after some operations.
 
+
+## Optimized add multiple products to the cart
+
+<SinceVersion tag="2.27" />
+
+By default, the `addMultipleItemsToCart` mutation relies on the Magento2 REST
+API. When this mutation is called, Front-Commerce triggers sequentially as many
+REST API calls as there are different products to add to the cart. With a high
+number of products, this process can be quite slow.
+
+By setting the `FRONT_COMMERCE_OPTIMIZED_ADD_MULTIPLE_CART_ITEMS` environment
+variable, the `addMultipleItemsToCart` mutation leverages the Magento2 GraphQL
+API to add many products to the cart in a maximum 3 API calls no matter the
+number of products. This feature is not enabled by default because it comes with
+2 limitations:
+
+* the Magento2 mutation used behind the scene does not support bundle products
+  where several products can be picked for an item (input type `checkbox`)
+* With Magento 2.4.6, the mutation is not able to set customizable options.
+
+
 ## Additional headers in Magento API calls
 
 <SinceVersion tag="2.7" />

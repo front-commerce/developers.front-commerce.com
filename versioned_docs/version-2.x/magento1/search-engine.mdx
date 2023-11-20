@@ -253,3 +253,400 @@ Front-Commerce 2.13.
 
 If you are using the default theme or the Chocolatine theme, the search bar
 should now be visible.
+
+## Attraqt
+
+<SinceVersion tag="2.27" />
+
+### Requirements
+
+Due to the way Attraqt works, you will have to ensure your Attraqt index is
+Front-Commerce-ready before hand. In order to check this, we have added a simple
+script that check the basics for you, and tells what's missing from your current
+index.
+
+Using your Attraqt's search API key, you can execute this command from your
+Front-Commerce repository:
+
+```shell
+FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY=your_api_key npx front-commerce-attraqt-check
+```
+
+:::info
+
+You can find your search API key by logging in in into
+[the XO console](https://console.early-birds.io/), and navigating to:
+`Search > API Keys`
+
+:::
+
+The script should be very quick to execute, and will let you now what needs your
+attention in your Attraqt index. If you have any doubt on how to change this, do
+not hesitate to ask your Attraqt CSM.
+
+When you get the ✔️ as a response from the script, you are ready to use Attraqt
+with Front-Commerce.
+
+### Facets
+
+Due to facet IDs not being editable in Attraqt, facets created in your Attraqt
+console must be based on your Magento attributes exact names.
+
+By example, if you have an attribute `fashion_colour` in your product and you
+want to add a facet for it, the facet in attraqt _must_ be based on an attribute
+named `fashion_colour` as well, which will create a facet with ID
+`facet-fashion_colour`.
+
+### Front-Commerce configuration
+
+First, you need to make sure the Attraqt's search client is installed:
+
+```shell
+npm i @attraqt/xo-js@1.6.0
+```
+
+On Front-Commerce side, you need to enable the Attraqt datasource by making the
+following changes in your .front-commerce.js file:
+
+```js title=".front-commerce.js"
+module.exports = {
+  // highlight-next-line
+  modules: ["./node_modules/front-commerce/modules/datasource-attraqt"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-start
+    {
+      name: "Magento1Attraqt",
+      path: "datasource-attraqt/server/modules/magento1-attraqt",
+    },
+    // highlight-end
+    { name: "Magento1", path: "server/modules/magento1" },
+  ],
+};
+```
+
+:::caution Known issue
+
+The Attraqt server module needs to be enabled **before** the Magento module.
+
+:::
+
+Then, in your `.env` file, you need to define the
+`FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY` environment variable:
+
+```bash title=.env
+FRONT_COMMERCE_ATTRAQT_SEARCH_API_KEY=yourapikeyvalue
+```
+
+After restarting Front-Commerce, you should be able run a GraphQL query to
+search for products, categories and/or pages, for instance:
+
+```graphql title="http://localhost:4000/playground"
+query Search {
+  search(query: "whatever you want to search for") {
+    query
+    products(params: { from: 0, size: 5 }) {
+      total
+      products {
+        sku
+        name
+      }
+    }
+    categories(size: 5) {
+      name
+    }
+    pages(size: 5) {
+      title
+    }
+  }
+}
+```
+
+If you are using the default theme or the Chocolatine theme, the search bar
+should now be visible.
+
+:::tip
+
+In case of emergency, Front-Commerce provides
+[a configuration to quickly deactivate Attraqt's search feature](/docs/2.x/reference/environment-variables#attraqt).
+Use the `FRONT_COMMERCE_ATTRAQT_DISABLED=true` and restart your application to
+temporarily deactivate the module.
+
+:::
+
+### Add contextual information to your queries
+
+Front-Commerce allows you to leverage
+[Attraqt's Context](https://attraqt.gitbook.io/developer-documentation/xo-search/api-parameters/context)
+feature in your application. This is a great way to add contextual information
+to your queries, so that you can get results adapted to your users needs.
+
+Contexts can be provided at different levels, from the most generic to the most
+specific. Context values will be used as **Attraqt context variables**. Here's
+how to do it in your application.
+
+#### Global context
+
+The simplest way to add context variables to all your queries is to use a global
+context. Front-Commerce's Attraqt module has a configuration for it:
+`config.attraqt.globalContext`. It is defined in the `Attraqt`
+[configuration provider](/docs/2.x/advanced/server/configurations), so you can
+use any extension mechanism at your disposal to customize this value.
+
+Example: an app-wide context for every users and queries
+
+```js
+import configService from "server/core/config/configService";
+
+const myAppConfigProvider = {
+  name: "myAppConfig",
+  values: Promise.resolve({
+    attraqt: {
+      globalContext: {
+        source: "storefront",
+        version: "1.0.0",
+      },
+    },
+  }),
+};
+
+configService.insertAfter("Attraqt", myAppConfigProvider);
+```
+
+Example: a global context dynamically determined per request
+
+```js
+import mem from "mem";
+import configService from "server/core/config/configService";
+
+const getContextFromShopId = mem((shopId) => {
+  return {
+    attraqt: {
+      globalContext: {
+        source: `storefront_${shopId}`,
+        // […] more compute intensive variables here
+      }
+    },
+  };
+});
+
+const myAppConfigProvider = {
+  name: "myAppConfig",
+  slowValuesOnEachRequest: (_req, config) => {
+    return getContextFromShopId(config.currentShopId);
+  };
+};
+
+configService.insertAfter("Attraqt", myAppConfigProvider);
+```
+
+You can also use remote values or per user values using
+[other configuration providers features](/docs/2.x/advanced/server/configurations).
+
+#### Layer-specific context
+
+Contexts can also be provided at the _layer level_. It allows to add context
+variables only for search queries restricted to a single item kind (e.g:
+categories).
+
+To do so, you must use the `context` option of `datasource.buildLayer()`
+function in your application. Example:
+
+```js
+const layer = searchDatasource.buildLayer({
+  type: "categories",
+  // your context variables here
+  context: {
+    priority: "online_sales",
+    foo: "bar",
+  },
+  executeQuery: executeCategoryQuery,
+  formatHit: searchDatasource.formatters.category,
+  fetchErrorFallback: () => () => {
+    return Promise.reject();
+  },
+});
+```
+
+:::info
+
+Layer-specific context replace the global context.
+
+:::
+
+#### Query-specific context
+
+Finally, you can also implement advanced use cases by adding contextual
+information directly in the `SearchQuery`. It means that any scope, pagination
+or facet can update a query context.
+
+To do so, you must use the `addContext` method of `SearchQuery`. Example: a
+context based implementation of random sorting could be implemented like this
+
+```js
+const randomizable =
+  () =>
+  ({ random = false }) => {
+    return (searchQuery) => {
+      if (random) {
+        searchQuery.addContext({ randomSort: true });
+      }
+      return searchQuery;
+    };
+  };
+
+export default randomizable;
+```
+
+:::info
+
+Query-specific context is merged with global/layer-specific context variables.
+It can override specific variables while keeping others unchanged.
+
+:::
+
+### Attraqt recommendations
+
+<SinceVersion tag="2.19" />
+
+Front-Commerce provides a loader to retrieve recommendations from
+[Attraqt's Widgets](https://attraqt.gitbook.io/developer-documentation/xo-recommendations/readme-first).
+
+#### Front-Commerce configuration
+
+To enable the Attraqt recommendation module, you need to add it to your
+`.front-commerce.js` config:
+
+```js title=".front-commerce.js"
+module.exports = {
+  // highlight-next-line
+  modules: ["./node_modules/front-commerce/modules/recommendations-attraqt"],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    // highlight-start
+    {
+      name: "AttraqtRecommendations",
+      path: "recommendations-attraqt/server/modules/attraqt-recommendations",
+    },
+    // highlight-end
+    { name: "Magento1", path: "server/modules/magento1" },
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "./src/web" },
+    // highlight-start
+    {
+      name: "AttraqtRecommendation",
+      path: "front-commerce/modules/recommendations-attraqt/web",
+    },
+    // highlight-end
+  ],
+};
+```
+
+Then, you need to define the API url in your environment variables:
+
+```bash title=.env
+FRONT_COMMERCE_ATTRAQT_RECOMMENDATION_API_URL=http://api.early-birds.io/widget
+```
+
+#### Using Attraqt Orchestrator Chrome extension
+
+In order to use the
+[Attraqt Orchestrator extension for Google Chrome](https://chrome.google.com/webstore/detail/attraqt-experience-orches/icognleckonecpphokboemgcgcohcepi),
+Front-Commerce exposes a GraphQL interface and provides a front-end component
+which does the needed setup. In this example, we'll make a module
+`SuggestedProduct` that fetches a recommendation from Attraqt via
+Front-Commerce's loader, and use it to initialize Attraqt Orchestrator
+
+:::note
+
+See [Extend the GraphQL schema](/docs/2.x/essentials/extend-the-graphql-schema)
+for instructions on how to add your own GraphQL module.
+
+:::
+
+You will first need to update your GraphQL schema to implement this interface
+and use it in a query:
+
+```graphql title="my-module/server/modules/SuggestedProducts/schema.gql"
+type ProductRecommendation implements AttraqtRecommendationResult {
+  id: ID!
+  products: [Product]
+}
+
+extend type Query {
+  productRecommendation: ProductRecommendation
+}
+```
+
+Add a resolver for this query:
+
+```js title="my-module/server/modules/SuggestedProducts/resolvers.js"
+export default {
+  Query: {
+    productRecommendation: async (_, __, { loaders }) => {
+      return loaders.AttraqtRecommendations.loadRecommendationsForWidget(
+        "my-widget-id"
+      );
+    },
+  },
+  ProductRecommendation: {
+    products: async (recommendation, _, { loaders }) => {
+      // Note: the shape of recommendation.recommendations will vary
+      // depending on your data indexed in Attraqt. Adapt this example to your use case.
+      const skus = recommendation.recommendations
+        .map(({ id }) => id)
+        .filter(Boolean);
+      return loaders.Product.loadBySkus(skus);
+    },
+  },
+};
+```
+
+On the front-end side, retrieve the results from this query using the GraphQL
+fragment provided by Front-Commerce:
+
+```graphql title="my-module/web/theme/modules/SuggestedProducts/SuggestedProductsQuery.gql"
+#import "theme/modules/AttraqtRecommendations/AttraqtRecommendationResultFragment.gql"
+#import "theme/pages/Product/ProductFragment.gql"
+
+query SuggestedProductsQuery {
+  productRecommendation {
+    ...AttraqtRecommendationResultFragment
+    products {
+      ...ProductFragment
+    }
+  }
+}
+```
+
+You can now use it in a component:
+
+```js title="my-module/web/theme/modules/SuggestedProducts/SuggestedProducts.js"
+import React from "react";
+import AttraqtRecommendationChromeExtensionRegisterer from "theme/modules/AttraqtRecommendations/attraqtRecommendationChromeExtensionRegisterer.js";
+import { graphql } from "react-apollo";
+import SuggestedProductsQuery from "./SuggestedProductsQuery.gql";
+
+const SuggestedProducts = ({ recommendation }) => {
+  return (
+    <>
+      <AttraqtRecommendationChromeExtensionRegisterer
+        recommendation={recommendation}
+      />
+      {/* ... Display products */}
+    </>
+  );
+};
+
+export default graphql(SuggestedProductsQuery, {
+  props: ({ data }) => {
+    return {
+      recommendation: data.loading ? null : data.productRecommendation,
+    };
+  },
+})(SuggestedProducts);
+```
+
+With this example, Attraqt's Chrome extension should be initialized correctly
+when accessing the page were `SuggestedProducts` is used.
