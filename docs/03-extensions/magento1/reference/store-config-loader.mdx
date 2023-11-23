@@ -1,0 +1,36 @@
+---
+title: "StoreConfigLoader"
+description: "This reference explains how to use the StoreConfigLoader."
+sidebar_position: 2
+---
+
+<p>{frontMatter.description}</p>
+
+## StoreConfigLoader
+
+The `StoreConfigLoader` is used to load the store configuration.
+
+```js
+StoreConfigLoader(axios, storeCode);
+```
+
+Arguments:
+
+| Name        | Type    | Description                  |
+| :---------- | :------ | :--------------------------- |
+| `axios`     | Axios   | Axios instance               |
+| `storeCode` | String  | Store code                   |
+
+Example
+
+```js
+import { StoreConfigLoader } from "@front-commerce/magento1/config";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const adminAxiosInstance = makeAdminClientFromRequest(req);
+    const storeConfig = StoreConfigLoader(adminAxiosInstance, "default");
+  },
+};
+```
