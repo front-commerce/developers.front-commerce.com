@@ -1,0 +1,63 @@
+---
+title: "Magento 1"
+description:
+  "This extension contains the connector to use Front-Commerce with a headless
+  Magento 1 backend."
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+[Install the module on Magento.](/docs/remixed/extensions/magento1/how-to/setup-magento-module)
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/magento1@latest
+```
+
+## Setup Magento1 Extension
+
+Update your `front-commerce.config.ts` to include the Magento1 Extension :
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento1 from "@front-commerce/magento1";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [magento1(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+  v2_compat: {
+    useApolloClientQueries: true,
+    useFormsy: true,
+  },
+  pwa: {
+    appName: "Front-Commerce",
+    shortName: "Front-Commerce",
+    description: "My e-commerce application",
+    themeColor: "#fbb03b",
+    icon: "assets/icon.png",
+    maskableIcon: "assets/icon.png",
+  },
+});
+```
+
+Add the following variables to your `.env` file:
+
+```shell title=".env"
+FRONT_COMMERCE_MAGENTO1_ENDPOINT=https://magento1.example.com
+FRONT_COMMERCE_MAGENTO1_CONSUMER_KEY=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET=xxxxxxxxx
+```

@@ -197,6 +197,14 @@ export default defineConfig({
     useApolloClientQueries: true,
     useFormsy: true,
   },
+  pwa: {
+    appName: "Front-Commerce",
+    shortName: "Front-Commerce",
+    description: "My e-commerce application",
+    themeColor: "#fbb03b",
+    icon: "assets/icon.png",
+    maskableIcon: "assets/icon.png",
+  },
 });
 ```
 
@@ -224,6 +232,57 @@ FRONT_COMMERCE_MAGENTO2_CONSUMER_KEY=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO2_CONSUMER_SECRET=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN_SECRET=xxxxxxxxx
+```
+
+</TabItem>
+<TabItem value="Magento1">
+   Use Front-Commerce with a headless Magento1 instance.
+
+```typescript title="front-commerce.config.js"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento1 from "@front-commerce/magento1";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [magento1(storesConfig), themeChocolatine()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+  v2_compat: {
+    useApolloClientQueries: true,
+    useFormsy: true,
+  },
+});
+```
+
+:::info
+
+Learn more about
+[configuring the Magento1 extension](/docs/remixed/extensions/magento1/) and the
+prerequisites.
+
+:::
+
+```shell title=".env"
+# Front-Commerce configuration
+FRONT_COMMERCE_ENV=development
+FRONT_COMMERCE_URL=http://localhost:4000
+FRONT_COMMERCE_HOST=localhost
+FRONT_COMMERCE_PORT=4000
+FRONT_COMMERCE_COOKIE_PASS=cookie-secret
+FRONT_COMMERCE_SITEMAP_TOKEN=sitemap-secret
+FRONT_COMMERCE_CACHE_API_TOKEN=cache-api-secret
+
+# Magento1 configuration
+FRONT_COMMERCE_MAGENTO1_ENDPOINT=https://magento1.example.com
+FRONT_COMMERCE_MAGENTO1_CONSUMER_KEY=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN=xxxxxxxxx
+FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET=xxxxxxxxx
 ```
 
 </TabItem>
