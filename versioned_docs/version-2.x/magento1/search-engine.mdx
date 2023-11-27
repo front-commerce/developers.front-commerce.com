@@ -549,14 +549,10 @@ Then, you need to define the API url in your environment variables:
 FRONT_COMMERCE_ATTRAQT_RECOMMENDATION_API_URL=http://api.early-birds.io/widget
 ```
 
-#### Using Attraqt Orchestrator Chrome extension
+#### Attraqt Recommendations usage example
 
-In order to use the
-[Attraqt Orchestrator extension for Google Chrome](https://chrome.google.com/webstore/detail/attraqt-experience-orches/icognleckonecpphokboemgcgcohcepi),
-Front-Commerce exposes a GraphQL interface and provides a front-end component
-which does the needed setup. In this example, we'll make a module
-`SuggestedProduct` that fetches a recommendation from Attraqt via
-Front-Commerce's loader, and use it to initialize Attraqt Orchestrator
+In this example, we'll make a module `SuggestedProduct` that fetches a
+recommendation from Attraqt via Front-Commerce's loader.
 
 :::note
 
@@ -565,8 +561,9 @@ for instructions on how to add your own GraphQL module.
 
 :::
 
-You will first need to update your GraphQL schema to implement this interface
-and use it in a query:
+Front-Commerce exposes a GraphQL interface to simplify the process of fetching
+recommendations. You will first need to update your GraphQL schema to implement
+this interface and use it in a query:
 
 ```graphql title="my-module/server/modules/SuggestedProducts/schema.gql"
 type ProductRecommendation implements AttraqtRecommendationResult {
@@ -574,8 +571,14 @@ type ProductRecommendation implements AttraqtRecommendationResult {
   products: [Product]
 }
 
+input ProductRecommendationInput {
+  profileId: String
+}
+
 extend type Query {
-  productRecommendation: ProductRecommendation
+  productRecommendation(
+    input: ProductRecommendationInput
+  ): ProductRecommendation
 }
 ```
 
@@ -584,9 +587,11 @@ Add a resolver for this query:
 ```js title="my-module/server/modules/SuggestedProducts/resolvers.js"
 export default {
   Query: {
-    productRecommendation: async (_, __, { loaders }) => {
+    productRecommendation: async (_, { profileId }, { loaders }) => {
       return loaders.AttraqtRecommendations.loadRecommendationsForWidget(
-        "my-widget-id"
+        "my-widget-id",
+        null,
+        profileId // Available since 2.28
       );
     },
   },
@@ -610,8 +615,8 @@ fragment provided by Front-Commerce:
 #import "theme/modules/AttraqtRecommendations/AttraqtRecommendationResultFragment.gql"
 #import "theme/pages/Product/ProductFragment.gql"
 
-query SuggestedProductsQuery {
-  productRecommendation {
+query SuggestedProductsQuery($input: ProductRecommendationInput) {
+  productRecommendation(input: $input) {
     ...AttraqtRecommendationResultFragment
     products {
       ...ProductFragment
@@ -624,22 +629,31 @@ You can now use it in a component:
 
 ```js title="my-module/web/theme/modules/SuggestedProducts/SuggestedProducts.js"
 import React from "react";
-import AttraqtRecommendationChromeExtensionRegisterer from "theme/modules/AttraqtRecommendations/attraqtRecommendationChromeExtensionRegisterer.js";
 import { graphql } from "react-apollo";
 import SuggestedProductsQuery from "./SuggestedProductsQuery.gql";
 
 const SuggestedProducts = ({ recommendation }) => {
-  return (
-    <>
-      <AttraqtRecommendationChromeExtensionRegisterer
-        recommendation={recommendation}
-      />
-      {/* ... Display products */}
-    </>
-  );
+  return <>{/* ... Display products */}</>;
 };
 
 export default graphql(SuggestedProductsQuery, {
+  options: (props) => {
+    /*
+     * `profileId` is only used of Personalised Recommendations.
+     * See: https://attraqt.gitbook.io/developer-documentation/xo-recommendations/using-the-recommendations-api#personalised-recommendation
+     *
+     * The best way to retrieve the customer's profileId might vary depending on your use case.
+     * See with your Attraqt representative the best way to retrieve it for your use case.
+     */
+    const profileId = getAttraqtProfileId();
+    return {
+      variables: {
+        input: {
+          profileId,
+        },
+      },
+    };
+  },
   props: ({ data }) => {
     return {
       recommendation: data.loading ? null : data.productRecommendation,
@@ -648,5 +662,55 @@ export default graphql(SuggestedProductsQuery, {
 })(SuggestedProducts);
 ```
 
-With this example, Attraqt's Chrome extension should be initialized correctly
+:::caution
+
+If you are using XO Recommendations API with Attraqt Activity pipeline, the
+profileId will be must be prefixed with "sessionid/", like so:
+
+```js
+const prefixedProfileId = "sessionid/" + profileId;
+```
+
+:::
+
+:::info
+
+Please note that this example is only _one way_ of retrieving recommendations
+from Attraqt Recommendations API. A better solution could be implemented
+depending on your use case.
+
+:::
+
+#### Using Attraqt Orchestrator Chrome extension
+
+In order to use the
+[Attraqt Orchestrator extension for Google Chrome](https://chrome.google.com/webstore/detail/attraqt-experience-orches/icognleckonecpphokboemgcgcohcepi),
+Front-Commerce provides a front-end component which does the needed setup. Given
+the example above, you will need to update your front-end component, and use it
+to initialize Attraqt Orchestrator:
+
+```js title="my-module/web/theme/modules/SuggestedProducts/SuggestedProducts.js"
+import React from "react";
+// highlight-next-line
+import AttraqtRecommendationChromeExtensionRegisterer from "theme/modules/AttraqtRecommendations/attraqtRecommendationChromeExtensionRegisterer.js";
+import { graphql } from "react-apollo";
+import SuggestedProductsQuery from "./SuggestedProductsQuery.gql";
+
+const SuggestedProducts = ({ recommendation }) => {
+  // highlight-start
+  return (
+    <>
+      <AttraqtRecommendationChromeExtensionRegisterer
+        recommendation={recommendation}
+      />
+      {/* ... Display products */}
+    </>
+  );
+  // highlight-end
+};
+
+// ...
+```
+
+With this change, Attraqt's Chrome extension should be initialized correctly
 when accessing the page were `SuggestedProducts` is used.
