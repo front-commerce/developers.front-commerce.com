@@ -1,0 +1,174 @@
+---
+title: "Axios instances"
+sidebar_position: 1
+description: "This reference explains how to create `axios` instances to interact with Magento's API."
+---
+
+<p>{frontMatter.description}</p>
+
+
+## `makeAdminClientFromRequest`
+
+The `makeAdminClientFromRequest` function creates an `axios` instance that can be
+used to interact with Magento's API as an Admin.
+
+```js
+makeAdminClientFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeAdminClientFromRequest } from "@front-commerce/magento1/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const adminAxiosInstance = makeAdminClientFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
+
+## `makeAuthServiceFromRequest`
+
+The `makeAuthServiceFromRequest` function creates a service that expose related session information.
+
+```js
+makeAuthServiceFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeAuthServiceFromRequest } from "@front-commerce/magento1/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const authService = makeAuthServiceFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
+
+
+## `makeUserClientFromRequest`
+
+The `makeUserClientFromRequest` function creates an `axios` instance that can be
+used to interact with Magento's API as a customer.
+
+```js
+makeUserClientFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeUserClientFromRequest } from "@front-commerce/magento1/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
+
+## `makeCartUrlBuilderFromRequest`
+
+The `makeCartUrlBuilderFromRequest` function creates a `CartUrlBuilder`
+instance.
+
+```js
+makeCartUrlBuilderFromRequest(request);
+```
+
+Arguments:
+
+| Name      | Type    | Description                  |
+| :-------- | :------ | :--------------------------- |
+| `request` | Request | v2 compatible request object |
+
+Example:
+
+```js
+import { makeCartUrlBuilderFromRequest } from "@front-commerce/magento1/axios";
+
+export default {
+  namespace: "Acme/Feature",
+  contextEnhancer: ({ req }) => {
+    const cartUrlBuilder = makeCartUrlBuilderFromRequest(req);
+
+    // rest of logic
+  },
+};
+```
+
+## `makeFilterParams`
+
+The `makeFilterParams` function creates a filter for Magento API request to filter on properties.
+
+```js
+makeFilterParams(filters, initialFilters);
+```
+
+Arguments:
+
+| Name             | Type     | Description                             |
+| :--------------- | :------- | :-------------------------------------- |
+| `filters`        | object[] | Array of filters                        |
+| `initialFilters` | object[] | Initial filters computed by other means |
+
+Example:
+
+```js
+import { makeFilterParams } from "@front-commerce/magento1/axios";
+
+const params = makeFilterParams([{ code: "is_filterable", value: "1" }], { initialParams: { limit: 0 } });
+```
+
+## `makeSkuFilters`
+
+The `makeSkuFilters` function creates a filter for Magento API request to filter on SKU.
+
+```js
+makeSkuFilters(skus);
+```
+
+Arguments:
+
+| Name      | Type     | Description                    |
+| :-------- | :------- | :----------------------------- |
+| `skus`    | string[] | Array of SKU                   |
+| `code`    | string   | Filter code (default to `sku`) |
+
+Example:
+
+```js
+import { makeSkuFilters } from "@front-commerce/magento1/axios";
+
+const filter = makeSkuFilters(["sku1", "sku2", "sku3"]);
+```
