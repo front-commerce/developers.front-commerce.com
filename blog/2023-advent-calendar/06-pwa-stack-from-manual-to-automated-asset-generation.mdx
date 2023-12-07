@@ -1,0 +1,149 @@
+---
+title: "PWA Stack: from manual to automated asset generation"
+description:
+  Progressive Web Applications (PWAs) are a way to deliver fast, reliable, and
+  engaging user experiences on the web. In this blog post, we will explore the
+  evolution of managing a “PWA Stack”, from its manual asset generation approach
+  in Front-Commerce 2.x to the streamlined and automated process introduced in
+  Front-Commerce 3.x.
+authors: [pierre]
+date: 2023-12-06T08:00
+hide_table_of_contents: true
+image: ./assets/06.png
+---
+
+Progressive Web Applications (PWAs) are a way to deliver fast, reliable, and
+engaging user experiences on the web.
+
+In Front-Commerce, we’ve always ensured that every applications could be turned
+into a PWA to improve the user experience. To achieve this, developers can rely
+on standard web features and technologies that we name “the PWA Stack”.
+Front-Commerce acts as a technical enabler to ease the lives of developers to
+create and maintain this stack.
+
+In this blog post, we will explore the evolution of this “PWA Stack”, from its
+manual asset generation approach in Front-Commerce 2.x to the streamlined and
+automated process introduced in Front-Commerce 3.x.
+
+<!-- truncate -->
+
+:::info Advent Calendar series
+
+This article is part of
+[our Advent Calendar series](./01-introducing-the-front-commerce-advent-calendar-series.mdx).
+We're publishing a new article every day until December 24th. **Stay tuned!**
+
+:::
+
+## What does the PWA Stack consist of?
+
+The PWA Stack, is our term to describe the different assets, technologies and
+practices turning websites into web applications with native app-like
+capabilities.
+
+A PWA is built on the principles of progressive enhancement and web standards.
+It provides the ability to a website for being installed and run on various
+devices. **The stack consists of three main components: the manifest, service
+workers, and app shell.**
+
+**The manifest is a JSON file** that describes the application and its behavior,
+including details such as the name, icons, start URL, and display mode.<br />
+**Service workers are scripts that run in the background** and enable features
+such as offline access, push notifications, and background
+synchronization.<br /> **The app shell is the minimal HTML, CSS, and
+JavaScript** needed to power the user interface when the application is
+launched.
+
+These components must be combined together to create reliable, fast, and
+engaging web experiences that are accessible to all users, regardless of their
+device or network conditions.
+
+In Front-Commerce, **the PWA Stack empowers developers to generate and register
+these components in a cohesive way** so they can have a minimal setup working
+out-of-the box, so they can focus on developing code adapting the user
+experience to match their specific needs (or stick with the default minimal PWA
+setup).
+
+## 2.x: a default PWA Stack to override
+
+In Front-Commerce 2.x, the process of generating PWA assets is ready when
+starting a project. It however requires manual customization by integrators and
+developers.
+
+Developers must override the `manifest.json` and `app-shell.html` in their
+project and modify its content to match their project, including the name,
+short_name, colors, and icons. While this provide flexibility, it also introduce
+complexity and the potential for human error.
+
+One common pitfall is that **developers often forgot to customize the PWA assets
+entirely or partially**, leading to a generic and less effective PWA
+implementation when going live (hopefully we detect this when auditing the site,
+but it can then be forgotten or not prioritized).
+
+Another problem we found over time, is that developers don’t necessarily want to
+invest in advanced customization or don’t understand clearly each of these
+components responsibilities. **It could lead to partially working experiences.**
+
+We provided guidance on how to customize the PWA Stack components provided by
+Front-Commerce to ensure that the website is recognized as a Progressive Web
+Application (PWA), but as any guide … it doesn’t enforce anything!
+
+## 3.x: simplicity first
+
+In Front-Commerce 3.x, we approached the PWA Stack in a different way.
+
+We focused on providing a simple and efficient way for integrators to describe
+the PWA Stack with metadata, and for Front-Commerce to derive all the required
+stack automatically.
+
+This approach not only reduces the burden on integrators and developers but also
+ensures consistency and adherence to PWA best practices.
+
+Technically, you will adapt the following configuration in your
+`front-commerce.config.ts` configuration file.
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+
+export default defineConfig({
+  extensions: [themeChocolatine()],
+  // […]
+  // highlight-start
+  pwa: {
+    appName: "ACME Store",
+    shortName: "ACME Store",
+    themeColor: "#fbb03b",
+    icon: "public/pwa-icon.png",
+    maskableIcon: "public/pwa-masked-icon",
+    cacheTTLInMs: 7 * 24 * 60 * 60 * 1000,
+  },
+  // highlight-end
+});
+```
+
+It only takes a few minutes to define, then Front-Commerce takes care of
+generating all assets required for your PWA Stack consistently.
+
+The PWA assets are generated in adherence to best practices and include all
+different icon variations in the manifest, so each device can use the most
+adapted to their specifications.
+
+## Advanced customization
+
+While the default PWA Stack is sufficient for most projects, we also want to
+provide more advanced customization options for developers who want to go
+further.
+
+In Remix, routes are a great abstraction over the network layer. They allow to
+describe the data requirements for a given page, and could be used in the
+context of a PWA to provide a fallback when the data is not available. That's
+the goal of the [Remix PWA](https://remix-pwa.run/) project.<br /> In
+Front-Commerce 3.x, our PWA Stack is using Remix PWA under the hook, but doesn't
+expose extension points for you to leverage its full power yet.
+
+We're looking for your feedback and use cases to help us prioritize the next
+steps. Please reach out to us if you have specific PWA use cases in mind!
+
+Join us tomorrow for the next article in our
+[Advent Calendar series!](./01-introducing-the-front-commerce-advent-calendar-series.mdx)
