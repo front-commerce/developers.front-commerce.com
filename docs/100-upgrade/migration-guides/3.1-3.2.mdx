@@ -88,3 +88,193 @@ AND
 (order.comment contains "Bar"
   OR order.comment contains "456")
 ```
+
+### ContributionMode
+
+<details>
+  <summary><code>entry.worker.ts</code> file</summary>
+
+```diff
+diff --git a/app/entry.worker.ts b/app/entry.worker.ts
+index 84d71494..62c36c4c 100644
+--- a/app/entry.worker.ts
++++ b/app/entry.worker.ts
+@@ -1,4 +1,6 @@
+ /// <reference lib="WebWorker" />
++import type { WorkerDataFunctionArgs } from '@remix-pwa/sw'
++import { synchronizeStorefrontContentFromResponse } from 'theme/modules/StorefrontContent/serviceWorker'
+
+ export type {}
+ declare let self: ServiceWorkerGlobalScope
+@@ -10,3 +12,14 @@ self.addEventListener('install', (event: ExtendableEvent) => {
+ self.addEventListener('activate', (event: ExtendableEvent) => {
+     event.waitUntil(self.clients.claim())
+ })
++
++export const defaultFetchHandler = async ({ request }: WorkerDataFunctionArgs) => {
++    const response = await fetch(request)
++    if (!response.ok) {
++        return response
++    }
++
++    synchronizeStorefrontContentFromResponse(response, self.clients)
++
++    return response
++}
+diff --git a/app/theme/layouts/GenericLayout.jsx b/app/theme/layouts/GenericLayout.jsx
+index 398d02c2..9825d487 100644
+```
+
+</details>
+<details>
+  <summary><code>entry.server.ts</code> file</summary>
+
+```diff
+diff --git a/app/entry.server.tsx b/app/entry.server.tsx
+index bdb7e77a..4ece0e63 100644
+--- a/app/entry.server.tsx
++++ b/app/entry.server.tsx
+@@ -5,7 +5,7 @@
+  */
+
+ import { PassThrough } from 'node:stream'
+-import type { EntryContext } from '@remix-run/node'
++import type { AppLoadContext, DataFunctionArgs, EntryContext } from '@remix-run/node'
+ import { RemixServer } from '@remix-run/react'
+ import isbot from 'isbot'
+ import { renderToPipeableStream } from 'react-dom/server'
+@@ -13,6 +13,7 @@ import { FrontCommerceServer } from '@front-commerce/remix/react'
+ import prepareV2ServerRenderedApp from '@front-commerce/compat/apollo/prepareV2ServerRenderedApp'
+ import { loadTranslationMessages } from '@front-commerce/core'
+ import appManifest from '~/manifest'
++import { transformBrowserResponse, transformDataResponse, transformBotResponse } from '@front-commerce/remix'
+
+ const ABORT_DELAY = 5_000
+
+@@ -20,14 +21,15 @@ export default async function handleRequest(
+     request: Request,
+     responseStatusCode: number,
+     responseHeaders: Headers,
+-    remixContext: EntryContext
++    remixContext: EntryContext,
++    loadContext: AppLoadContext
+ ) {
+     const shop = remixContext.staticHandlerContext.loaderData.root.shop
+     const messages = await loadTranslationMessages(shop.locale)
+
+     return isbot(request.headers.get('user-agent'))
+-        ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext, messages)
+-        : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext, messages)
++        ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext, messages)
++        : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext, messages)
+ }
+
+ function handleBotRequest(
+@@ -35,6 +37,7 @@ function handleBotRequest(
+     responseStatusCode: number,
+     responseHeaders: Headers,
+     remixContext: EntryContext,
++    loadContext: AppLoadContext,
+     messages: Record<string, string>
+ ) {
+     return new Promise(async (resolve, reject) => {
+@@ -52,12 +55,12 @@ function handleBotRequest(
+
+                     responseHeaders.set('Content-Type', 'text/html')
+
+-                    resolve(
+-                        new Response(body, {
+-                            headers: responseHeaders,
+-                            status: responseStatusCode,
+-                        })
+-                    )
++                    const response = new Response(body, {
++                        headers: responseHeaders,
++                        status: responseStatusCode,
++                    })
++                    transformBotResponse(response, loadContext.frontCommerce)
++                    resolve(response)
+
+                     pipe(body)
+                 },
+@@ -80,6 +83,7 @@ function handleBrowserRequest(
+     responseStatusCode: number,
+     responseHeaders: Headers,
+     remixContext: EntryContext,
++    loadContext: AppLoadContext,
+     messages: Record<string, string>
+ ) {
+     return new Promise(async (resolve, reject) => {
+@@ -97,12 +101,12 @@ function handleBrowserRequest(
+
+                     responseHeaders.set('Content-Type', 'text/html')
+
+-                    resolve(
+-                        new Response(body, {
+-                            headers: responseHeaders,
+-                            status: responseStatusCode,
+-                        })
+-                    )
++                    const response = new Response(body, {
++                        headers: responseHeaders,
++                        status: responseStatusCode,
++                    })
++                    transformBrowserResponse(response, loadContext.frontCommerce)
++                    resolve(response)
+
+                     pipe(body)
+                 },
+@@ -119,3 +123,8 @@ function handleBrowserRequest(
+         setTimeout(abort, ABORT_DELAY)
+     })
+ }
++
++export function handleDataRequest(response: Response, { context }: DataFunctionArgs) {
++    transformDataResponse(response, context.frontCommerce)
++    return response
++}
+```
+
+</details>
+<details>
+  <summary><code>root.tsx</code> file</summary>
+
+```diff
+diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
+index 71936d5a1..a28dcf87e 100644
+--- a/skeleton/app/root.tsx
++++ b/skeleton/app/root.tsx
+@@ -1,7 +1,7 @@
+ import { CompatScripts } from "@front-commerce/compat/CompatProvider";
+ import { FrontCommerceApp } from "@front-commerce/remix";
+ import { generateMetas, json } from "@front-commerce/remix/node";
+-import { useLoaderData } from "@front-commerce/remix/react";
++import { FrontCommerceScripts } from "@front-commerce/remix/react";
+ import { cssBundleHref } from "@remix-run/css-bundle";
+ import type {
+   LinksFunction,
+@@ -73,8 +73,6 @@ export const meta: MetaFunction = (args) => {
+ };
+
+ export default function App() {
+-  const { process } = useLoaderData<typeof loader>();
+-
+   useSWEffect();
+
+   const navigation = useNavigation();
+@@ -93,11 +91,7 @@ export default function App() {
+         <ScrollRestoration />
+         <Scripts />
+         <LiveReload />
+-        <script
+-          dangerouslySetInnerHTML={{
+-            __html: `window.process = ${JSON.stringify(process)}`,
+-          }}
+-        />
++        <FrontCommerceScripts />
+         <CompatScripts />
+       </body>
+     </html>
+```
+
+</details>
