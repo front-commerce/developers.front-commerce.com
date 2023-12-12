@@ -1,0 +1,77 @@
+---
+title: "Typescript in Front-Commerce 3"
+description:
+  How we've improved our TypeScript experience in Front-Commerce 3.
+authors: [guillaume]
+date: 2023-12-12T08:00
+hide_table_of_contents: true
+---
+
+One of the biggest change in Front-Commerce 3 is the introduction of TypeScript.
+Whenever you're a Typescript evangelist or a vanilla Javascript defender, Typescript implemenetation
+is a developer life enhancer.
+
+<!-- truncate -->
+
+## Typescript is FUN
+
+When starting writing this blogpost, the first thing that came to my mind was this GIF:
+
+<center>
+<img src="https://media0.giphy.com/media/ihYEWzTBNT6sqEvhmn/200.gif?cid=790b7611qs95gna00gy6n0aon6wj2mof5zza6otxn6880d9f&ep=v1_gifs_search&rid=200.gif&ct=g" />
+</center>
+
+If you're like me and you like writting code, you must have your favorite set of tools. Whatever IDE
+you're using, you may use autocompletion. It helps you to write code faster, improving you're productivity and sometimes replace documentation.
+
+As a personnal big fan of strongly typed languages, Typescript quickly became my friend in my daily programming tasks.
+
+That's our love of Typescript that lead us to implement it in Front-Commerce 3, and leverage your developper experience.
+
+Here's a quick tour of what's new for developper in Front-Commerce v3.
+
+## Please welcome TSX !
+
+You can now use TSX for your pages, components and hooks to strongly type your code.
+Here's a simple example on how you can now type props in your components :
+
+```tsx
+import { FC } from "react";
+
+interface MyComponentProps {
+  name: string;
+  age: number;
+  isATypescriptUser?: boolean;
+}
+
+const MyComponent: FC<MyComponentProps> = ({ name, age, isATypescriptUser }) => {
+  return
+    <>
+      <h1>Hello {name} ! your age is {age}</h1>
+      {isATypescriptUser ? "you're a Typescript user" : "you're not a Typescript user"}
+    </>;
+};
+```
+
+However if you don't feel confident with TSX, you can still use JSX or write non-typed code in TSX.
+
+## Embrace Typescript Ecosystem
+
+In the previous section, we've been using Typescript to declare props with an interface.
+
+But now you're able to fully use Typescript ecosystem like these features:
+
+* [Interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+* [Enums](https://www.typescriptlang.org/docs/handbook/enums.html)
+* [Unions Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types)
+* [Type Aliases](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases)
+* [Generics](https://www.typescriptlang.org/docs/handbook/generics.html)
+
+And more, see the [official documentation](https://www.typescriptlang.org/docs/handbook/intro.html) to learn more about the power of Typescript.
+
+## Thank you
+
+I hope this little article was useful to you and get you hyped with Typescript.
+And taht you'll be pleased to use it in Front-Commerce 3.
+
+Happy coding !
