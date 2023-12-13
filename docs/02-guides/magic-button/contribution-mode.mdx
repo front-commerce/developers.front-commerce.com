@@ -8,6 +8,8 @@ description:
 ---
 
 import SinceVersion from "@site/src/components/SinceVersion";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 <SinceVersion tag="3.2" />
 
@@ -44,7 +46,14 @@ user.contributionMode.setContributionMode({
 });
 ```
 
-### Remix Action
+Here are some examples of how to activate the **Contribution Mode**.
+
+```mdx-code-block
+<Tabs>
+<TabItem value="From a Remix Action">
+```
+
+An action can be used, for example to activate from a user interface.
 
 ```ts title="app/routes/enable-contribution-mode.ts"
 export const action = ({ context, request }: ActionFunctionArgs) => {
@@ -71,7 +80,10 @@ export const action = ({ context, request }: ActionFunctionArgs) => {
 };
 ```
 
-### Remix Loader
+```mdx-code-block
+</TabItem>
+<TabItem value="From a Remix Loader">
+```
 
 This is also possible via remix loaders, for example a custom preview route.
 
@@ -92,7 +104,13 @@ export const loader = ({ context, request }: LoaderFunctionArgs) => {
 };
 ```
 
-### GraphQL Loader
+```mdx-code-block
+</TabItem>
+<TabItem value="From GraphQL">
+```
+
+This is also possible via GraphQL, for example a custom mutation or from a
+GraphQL loader.
 
 ```js
 export default {
@@ -107,6 +125,11 @@ export default {
     }
   }
 }
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 ## Check if Contribution Mode is active

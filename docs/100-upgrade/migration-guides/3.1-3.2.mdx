@@ -1,5 +1,6 @@
 ---
 title: 3.1 -> 3.2
+sidebar_position: 99 # decrease for each release
 description:
   This page lists the highlights for upgrading a project from Front-Commerce 3.1
   to 3.2.
@@ -17,79 +18,12 @@ pnpm update "@front-commerce/\*@3.2.0"
 
 ## Code changes
 
-### Order filters
+### Remix entrypoints
 
-**Breaking:** In this release, we updated the order filters feature (released in
-3.1.0) to support having filters fields linked by a "OR" logic. This changes
-required a change in our GraphQL API which will break your application if you're
-using this feature.
-
-To cope with these changes, you will have to update the usage of `orderList`
-query in your application, specifically the format of the `attributes` argument.
-You should check for all components and / or routes you're using `orderList`
-query from, and fix the usage of `attributes` argument:
-
-```graphql
-input OrderAttributesInput {
-  "The attribute's name"
-  name: String!
-  "A list of value for the attribute"
-  value: [String!]!
-  "The type of filtering to use for this attribute"
-  type: OrderAttributeInputType = CONTAINS
-}
-```
-
-Became:
-
-```graphql
-input OrderAttributesInput {
-  "The fields filtered"
-  fields: [String!]!
-  "A list of value for the attribute"
-  values: [String!]!
-  "The type of filtering to use for this attribute"
-  type: OrderAttributeInputType = CONTAINS
-}
-```
-
-`fields` is now an array of fields the filter should be applied to.
-
-Related commit:
-[4ef9368f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/4ef9368fcaab568c4a2053cc1b3dec69c69e20e6).
-
-#### Example
-
-Given this `attributes` object:
-
-```json
-[
-  {
-    "fields": ["id", "name"],
-    "value": ["Foo", "123"]
-  },
-  {
-    "fields": ["comment"],
-    "value": ["Bar", "456"]
-  }
-]
-```
-
-The orders will be filtered with this logic:
-
-```
-(order.id contains "Foo"
-  OR order.id contains "123"
-  OR order.name contains "Foo"
-  OR order.name contains "123")
-
-AND
-
-(order.comment contains "Bar"
-  OR order.comment contains "456")
-```
-
-### ContributionMode
+In this release, we added new features that required to hook into your Remix
+application entrypoints created with the initial skeleton.<br /> You must update
+these files in your application, as detailed below **or copy the ones from the
+latest skeleton**.
 
 <details>
   <summary><code>entry.worker.ts</code> file</summary>
@@ -278,3 +212,75 @@ index 71936d5a1..a28dcf87e 100644
 ```
 
 </details>
+
+### Order filters
+
+**Breaking:** In this release, we updated the order filters feature (released in
+3.1.0) to support having filters fields linked by a "OR" logic. This changes
+required a change in our GraphQL API which will break your application if you're
+using this feature.
+
+To cope with these changes, you will have to update the usage of `orderList`
+query in your application, specifically the format of the `attributes` argument.
+You should check for all components and / or routes you're using `orderList`
+query from, and fix the usage of `attributes` argument:
+
+```graphql
+input OrderAttributesInput {
+  "The attribute's name"
+  name: String!
+  "A list of value for the attribute"
+  value: [String!]!
+  "The type of filtering to use for this attribute"
+  type: OrderAttributeInputType = CONTAINS
+}
+```
+
+Became:
+
+```graphql
+input OrderAttributesInput {
+  "The fields filtered"
+  fields: [String!]!
+  "A list of value for the attribute"
+  values: [String!]!
+  "The type of filtering to use for this attribute"
+  type: OrderAttributeInputType = CONTAINS
+}
+```
+
+`fields` is now an array of fields the filter should be applied to.
+
+Related commit:
+[4ef9368f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/4ef9368fcaab568c4a2053cc1b3dec69c69e20e6).
+
+#### Example
+
+Given this `attributes` object:
+
+```json
+[
+  {
+    "fields": ["id", "name"],
+    "value": ["Foo", "123"]
+  },
+  {
+    "fields": ["comment"],
+    "value": ["Bar", "456"]
+  }
+]
+```
+
+The orders will be filtered with this logic:
+
+```
+(order.id contains "Foo"
+  OR order.id contains "123"
+  OR order.name contains "Foo"
+  OR order.name contains "123")
+
+AND
+
+(order.comment contains "Bar"
+  OR order.comment contains "456")
+```
