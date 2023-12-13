@@ -6,6 +6,9 @@ description:
   API to be used in your Application."
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 The `FrontCommerceApp` instance uses the
 [`frontCommerce` context](/docs/remixed/api-reference/front-commerce-remix/#front-commerce-context)
 to expose different API's which can be used in your Application.
@@ -16,6 +19,7 @@ actions.
 ```ts
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { FrontCommerceApp } from "@front-commerce/remix";
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
   const app = new FrontCommerceApp(context.frontCommerce);
@@ -37,8 +41,52 @@ Exposes the current user information.
 ```ts
 interface User {
   clientIp: string;
+  session: SessionAdapter;
+  contributionMode: ContributionMode;
 }
 ```
+
+<Tabs>
+  <TabItem value="SessionAdapter" label="SessionAdapter">
+
+See
+[code reference](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/remix/server/RemixSessionAdapter.ts?ref_type=heads)
+for more details.
+
+```ts
+interface SessionAdapter {
+  getSessionData(): Record<string, any>; // used to retrieve the session data
+  commit(): Promise<void>; // used to commit the session cookie
+}
+```
+
+  </TabItem>
+  <TabItem value="ContributionMode" label="ContributionMode" >
+
+See
+[code reference](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/core/contribution-mode/ContributionMode.ts)
+for more details.
+
+```ts
+interface ContributionMode {
+  current(): ContributionModeState; // returns the current contribution mode state
+  enabled: boolean; // returns `true` if contribution mode is enabled
+  previewEnabled: boolean; // returns `true` if contribution mode and preview mode are enabled
+  xRayEnabled: boolean; // returns `true` if contribution mode and xRay mode are enabled
+  setContributionMode(options: ContributionModeState): void; // sets the contribution mode state
+  setPreviewMode(isEnabled: boolean): boolean; // sets the preview mode state if contribution mode is enabled
+  setXRayMode(isEnabled: boolean): boolean; // sets the xRay mode state if contribution mode is enabled
+}
+
+type ContributionModeState = {
+  enabled: boolean;
+  previewEnabled: boolean;
+  xRayEnabled: boolean;
+};
+```
+
+  </TabItem>
+</Tabs>
 
 ### `app.env`
 
