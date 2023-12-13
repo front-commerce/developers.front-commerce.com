@@ -1,0 +1,211 @@
+---
+title: "How-to create a new Front-Commerce project?"
+description:
+  In today’s article, we’ll explain how we made the process of starting a new
+  project as smooth as possible, so you could start from a fresh, minimal state
+  within seconds.
+authors: [pierre]
+date: 2023-12-03T08:00
+hide_table_of_contents: true
+image: ./assets/03.png
+---
+
+Starting from scratch is always exciting for a developer!
+
+Creating new Front-Commerce projects quickly has endless advantages: build a
+minimal reproduction case for reporting issues, quickly test solutions, explain
+concepts to colleagues, or prototype for potential customers.
+
+In this article we’ll explain how we made this process as smooth as possible, so
+you could start from a fresh, minimal state within seconds.
+
+<!-- truncate -->
+
+:::info Advent Calendar series
+
+This article is part of
+[our Advent Calendar series](./01-introducing-the-front-commerce-advent-calendar-series.mdx).
+We're publishing a new article every day until December 24th. **Stay tuned!**
+
+:::
+
+## The importance of a starting point
+
+When we started working on Front-Commerce, we wanted to make sure that starting
+a new project would be as easy as possible.<br /> **We made a deliberate choice
+to offer a "starter" project** containing all the essential boilerplate code
+needed to launch a fully functional Front-Commerce application locally.
+
+The maintenance of this project presents several challenges, which may not be
+immediately apparent:
+
+- have a good DX (this is the first impression newcomers will have of
+  Front-Commerce),
+- keep it up-to-date with the latest versions of Front-Commerce and
+  dependencies,
+- find the right balance (amount of code) between
+  - a good starting point with many examples for newcomers,
+  - as minimal as possible so new long-term projects don't have to remove
+    unnecessary code.
+- convenient to use in different scenarios (workshops, demos, examples,
+  reproduction cases, etc.)
+
+## 2.x: with the `skeleton` repository
+
+In Front-Commerce 2.x, we have introduced a
+[`skeleton`](https://gitlab.blackswift.cloud/front-commerce/front-commerce-skeleton)
+repository, which serves as a foundational Front-Commerce project pre-configured
+for a Magento2 setup.
+
+Developers can clone the git repository, update specific configurations with
+their Magento2 instance information, and they are good to go!<br />For
+connecting a different stack, additional changes are required. _Read our
+[2.x installation guide](/docs/2.x/essentials/installation) for the exact
+steps._
+
+Recognizing the need for **tangible and actionable examples**,
+[we have launched a new `examples` repository.](https://github.com/front-commerce/examples)<br />
+These example modules can be seamlessly integrated into a Front-Commerce's
+skeleton project, demonstrating practical applications of concepts outlined in
+our documentation.
+
+The use of the `skeleton` and `examples` repositories has become increasingly
+prevalent in our support activities, offering a more effective means of
+illustrating concepts through concrete examples.<br /> This approach has also
+proven to be more user-friendly and has evolved into a mechanism for generating
+**short-lived reproduction cases when reporting a bug**.
+
+:::note Aside: our internal `demos` repository
+
+Internally, we also have a `demos` repository, which contains the configurations
+and modules used for all our public demos (Magento2, Adobe B2B, Magento1 and
+BigCommerce).<br /> The demos you can find on our website are actually skeletons
+configured with content from this repository. For instance, our Magento2 demo
+uses our Contentful (CMS), Cloudinary (Images) and Lyra (Payment) modules.<br />
+With some workarounds, **we can deploy a preview demo on each of our Merge
+Request** on Front-Commerce Cloud, to ensure that a feature or a bugfix is
+working as expected … so we're also big users of our skeleton!
+
+:::
+
+## 3.x: with the `create-remix` CLI command
+
+In Front-Commerce 3.x, we have reevaluated and redefined our approach, driven by
+two primary objectives:
+
+1. **Simplified project initiation**: it should take less than 30 seconds to
+   start a new project from scratch, with a minimal configuration
+2. **Unified use cases**: we want to use a consistent process for both our
+   internal use cases and our users, unifying the experience across the board.
+
+### Front-Commerce's skeleton is a Remix Stack
+
+Front-Commerce 3.x is built on [Remix](https://remix.run/), you know this!<br />
+Remix is a framework that provides
+[a CLI command to create new projects](https://remix.run/docs/en/main/other-api/create-remix#create-remix),
+called `create-remix`.
+
+Naturally we decided to embrace the Remix way of doing things, and we turned our
+skeleton into a _Remix Stack_.<br /> A Remix Stack is a Remix project that can
+be used as a **template for `create-remix`**.
+
+Launching a new Front-Commerce 3.x project from scratch should be as
+straightforward as running:
+
+```bash
+npx create-remix hello-front-commerce --template https://new.front-commerce.app/
+# or with pnpm
+pnpm dlx create-remix hello-front-commerce --template https://new.front-commerce.app/
+```
+
+**Please follow our detailed
+[Installation page](/docs/remixed/get-started/installation)** if you want to try
+it out.
+
+:::info Transition period
+
+We're currently in a transition period, where we still are using some
+`@front-commerce/compat` packages in our default theme.<br /> For this reason,
+the `create-remix` command must be prefixed with
+`NPM_CONFIG_LEGACY_PEER_DEPS=true` at the date of writing.
+
+:::
+
+### A "minimal" mode
+
+For technical reasons (and design flaws), it was not possible to start a
+Front-Commerce application without a remote service in 2.x.<br /> We reworked
+our core to make it possible in 3.x. We call this mode the "minimal" mode, as it
+doesn't require any remote service.
+
+This mode is **perfect for evaluation purposes, workshops, and for creating
+reproduction cases when reporting an issue or testing an idea**.
+
+Technically, a "minimal" Front-Commerce application is an application with a
+single extension: `@front-commerce/theme-chocolatine`.
+
+### The `skeleton` is now part of Front-Commerce's repository
+
+If you want to find the code of our skeleton, you can find it
+[in our main repository](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton?ref_type=heads).
+
+We decided to move it there for several reasons:
+
+- it's easier for us to maintain, as its code can be updated in the same
+  changeset as Front-Commerce's code
+- it allows us to use the same code than our users when working on core features
+- it makes our core repository a standard Front-Commerce project repository,
+  deployable on Front-Commerce Cloud without any special treatment
+
+It has no impact whatsoever on our users, but we find it interesting to share
+this information with you: we're dogfooding our own product in a better way now!
+😉
+
+### Examples and demos are also part of the skeleton
+
+:::info Feedback wanted
+
+We're still not sure about this one, and we'd love to have your feedback on this
+move.
+
+:::
+
+As of writing, we have reorganized the code for our demos under the skeleton
+directory, and a similar transition is underway for our examples.
+
+In Front-Commerce 3.x, a notable feature is **the ability to package everything
+as an extension**. Leveraging this functionality, we have encapsulated our
+examples and demos as extensions, housed in the `./extensions` subdirectory of
+the skeleton.
+
+When initiating a new project, you can enable any of these extension by
+registering them in the `front-commerce.config.ts` file.<br /> For those
+embarking on a new "long-term" project, the extra-step of removing the
+`./extensions` directory will set you on the right path.
+
+Our rationale behind this approach is that the ability to swiftly run a demo or
+example locally far outweighs the trade-off of having additional code in the
+skeleton.
+
+## What’s next?
+
+We're still working on improving the experience of starting a new project, and
+want to ensure that it fits **your use cases**.
+
+In the pipeline, we are gearing up to introduce the following changes:
+
+- an installation CLI with prompts to help you configure it initially (register
+  and install the extensions you want to use, populate the `.env` file, etc.)
+- migration of all our examples to Front-Commerce 3.x.
+- increased utilization of minimal reproduction cases during support
+  interactions.
+
+❓ **We would greatly appreciate your input on the following:**
+
+- what additions would you like to see in the skeleton?
+- how can we further reduce friction in your daily use cases?
+- are you interested in a "Fake store" extension that populates your local
+  storefront with sample products, categories, etc.?
+
+Join us tomorrow for the next article in our
+[Advent Calendar series!](./01-introducing-the-front-commerce-advent-calendar-series.mdx)

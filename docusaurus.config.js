@@ -235,24 +235,8 @@ const config = {
     [
       "@docusaurus/plugin-google-gtag",
       {
-        id: "universal-analytics",
-        trackingID: process.env.UNIVERSAL_ANALYTICS || "UA-154725716-1",
-        anonymizeIP: true,
-      },
-    ],
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
-        id: "google-tag-manager",
-        trackingID: process.env.GOOGLE_TAG_MANAGER || "GTM-WRN2WPF",
-        anonymizeIP: true,
-      },
-    ],
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
         id: "google-analytics-4",
-        trackingID: process.env.GOOGLE_ANALYTICS || "266421257",
+        trackingID: "G-4N34PMFVBG",
         anonymizeIP: true,
       },
     ],

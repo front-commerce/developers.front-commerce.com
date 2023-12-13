@@ -1,0 +1,147 @@
+---
+title: "Front-Commerce: your project’s dependency"
+description:
+  In today’s article, we’ll explain why we switched from a single Git dependency
+  to several npm packages from a private registry.
+authors: [pierre]
+date: 2023-12-02T08:00
+hide_table_of_contents: true
+image: ./assets/02.png
+---
+
+Front-Commerce serves as an important npm dependency in your e-commerce project,
+allowing you to update it as per your requirement. To ensure its seamless
+operation, we suggest adopting the following upgrade approach: **semi-automated
+for patch versions and scheduled (2-3 times a year) for minor versions.**
+
+In today’s article, we’ll explain why we switched from a single Git dependency
+to several npm packages from a private registry.
+
+<!-- truncate -->
+
+:::info Advent Calendar series
+
+This article is part of
+[our Advent Calendar series](./01-introducing-the-front-commerce-advent-calendar-series.mdx).
+We're publishing a new article every day until December 24th. **Stay tuned!**
+
+:::
+
+## 2.x: a single Git dependency
+
+In a Front-Commerce 2.x project, the core is distributed as a single Git
+dependency. To install or update it, use the following command:
+
+```bash
+npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.git#2.27.0
+```
+
+You get all the code, directly from our private Git repository. While this
+approach may seem convenient and straightforward, it comes with some drawbacks:
+
+- **SSH Access Setup:** Setting up SSH access to our private repository,
+  including in your Docker development stack and CI environment, can be a source
+  of misunderstanding and frustration for your team.
+- **Unnecessary Code:** You receive all the code, even the portions you don't
+  use, which can be confusing when browsing the codebase.
+- **Unnecessary Dependencies:** You also get all the dependencies of modules you
+  don't use, potentially leading to conflicts with your application dependencies
+  and increasing the size of your `node_modules` and project folder.
+
+This approach also has **direct engineering consequences** in the way the code
+is designed and released.
+
+For instance, we have to rely on our own patterns and conventions to expose a
+public API.<br/> In 2.x, developers can use almost any internal module
+(resolvers, factories, adapters…). Even if an exported class or function was
+designed for internal use in a first place, we have to be very careful about
+breaking changes when we wanted to refactor it.
+
+## 3.x: transition to a set of npm packages
+
+In Front-Commerce 3.x, we have transitioned to a set of npm packages, which are
+now published on a private GitLab registry. To install or update these packages,
+use the following command:
+
+```bash
+npm install @front-commerce/core@3.1.1
+```
+
+### Authentication
+
+Instead of using SSH, you can employ any
+[private registry technique](https://docs.gitlab.com/ee/user/packages/npm_registry/#install-a-package)
+to install the packages. For instance, you can use a `.npmrc` file:
+
+```ini title="~/.npmrc"
+//gitlab.blackswift.cloud/api/v4/projects/24/packages/npm/:_authToken=<your_gitlab_token>
+@front-commerce:registry=https://gitlab.blackswift.cloud/api/v4/projects/24/packages/npm/
+```
+
+:::tip Our recommendation
+
+We recommend the use of a global `~/.npmrc` file for each developer, where you
+can store an authentication token. This approach ensures that every
+`@front-commerce/*` package will be installed from the private registry for
+every project.
+
+:::
+
+### Modularized Packages
+
+The core has been restructured into several distinct packages, each serving a
+specific purpose:
+
+- **`@front-commerce/core`**: the fundamental elements of Front-Commerce,
+  including the GraphQL API, React components, Configuration, Caching, and more,
+  as known from 2.x.
+- **`@front-commerce/remix`**: provides low-level adapters and public API for
+  accessing `@front-commerce/core` features in a standard Remix project (_more
+  details on this later this month 😉_)
+- **`@front-commerce/compat`**: offers a compatibility layer that enables the
+  use of 2.x features and removed APIs in a 3.x project, ensuring a seamless and
+  progressive transition.
+- **`@front-commerce/theme-chocolatine`**: serves as our base theme, featuring a
+  fully-equipped storefront with a set of React components and styles to build
+  upon.
+- **All other packages are features, packaged as Front-Commerce Extensions.**
+  These can be selectively chosen and combined based on your project's specific
+  requirements. Examples include:
+  - `@front-commerce/adobe-b2b`,
+  - `@front-commerce/algolia`,
+  - `@front-commerce/contentful`,
+  - `@front-commerce/magento2`,
+  - `@front-commerce/paypal`,
+  - etc.
+
+**All packages are versioned in unison** and align with our Front-Commerce
+versioning.<br/> We decided to bump the version number for every release, even
+in the absence of change in the package. This approach facilitates easy
+identification of the Front-Commerce version used in your project and simplifies
+communication about it.
+
+Similar to the process in 2.x, you can update all `@front-commerce/*` packages
+simultaneously.
+
+### Advantages
+
+This new approach offers several benefits:
+
+- **It matches the way you work** with other dependencies in your projects.
+- **Package exports are explicit**, exposing only what is intended for external
+  use. This clarity makes it easier to discover what's here for you to use and
+  enables us to provide better backward compatibility guarantees.
+- You will install only the necessary components, **avoiding unnecessary
+  bloat**.
+
+To illustrate this last point, let's compare the size of a Front-Commerce 2.x
+`node_modules` folder with a 3.x one, on our Magento2 demo project:
+
+- Front-Commerce 2.x: **1.3 GB**
+- Front-Commerce 3.x: **321 MB** 🎉
+
+We hope you'll enjoy this new approach as much as we do! We eagerly await your
+feedback.
+
+Join us tomorrow for the next article in our
+[Advent Calendar series!](./01-introducing-the-front-commerce-advent-calendar-series.mdx)

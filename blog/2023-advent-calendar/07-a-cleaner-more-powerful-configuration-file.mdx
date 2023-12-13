@@ -1,0 +1,175 @@
+---
+title: "Front-Commerce 2 vs 3: a cleaner, more powerful configuration file"
+description:
+  As developers, we're no strangers to the crucial role configuration files play
+  in our applications. In this blog post, we will explore the differences
+  between configuration between Front-Commerce 2.x and 3.x.
+authors: [gaetan]
+date: 2023-12-07T08:00
+hide_table_of_contents: true
+image: ./assets/07.png
+---
+
+As developers, we're no strangers to the crucial role configuration files play
+in our applications. They serve as the backbone, defining the behavior and
+structure of our systems. In this article, we'll dive into the transformative
+journey of configuration files in Front-Commerce, making a big leap from v2 to
+v3.
+
+<!-- truncate -->
+
+:::info Advent Calendar series
+
+This article is part of
+[our Advent Calendar series](./01-introducing-the-front-commerce-advent-calendar-series.mdx).
+We're publishing a new article every day until December 24th. **Stay tuned!**
+
+:::
+
+## Front-Commerce 2.x: Navigating the Configuration Maze
+
+In Front-Commerce 2.x, configuring your application was not really as intuitive
+as it was the result of several iterations over time. While the configuration
+file played a central role, certain aspects raised concerns:
+
+- **Unclear naming conventions**: The usage of names like webModules, modules,
+  and serverModules in the configuration file introduced ambiguity, making it
+  less intuitive for developers to discern their purposes.
+- **Distributed configuration files**: Configuration settings were spread across
+  various files in `src/config`, leading to a decentralized structure. This
+  distribution added complexity, making it harder to manage and maintain a
+  holistic view of the application's configuration.
+- **Dynamic configuration needs**: Different modules necessitated separate
+  configurations, extending beyond the main configuration files. This diversity
+  in configuration areas, such as Content Security Policies (CSP) or having to
+  install separated npm packages with specific versions, added an additional
+  layer of intricacy for developers to navigate.
+- **Overrides challenges**: Some "Extension components", such as
+  `getAdditionalDataComponent` for Payment and Shipping methods, were designed
+  specifically for to be overridden when installing modules.
+
+Here's a snippet of how configuration file (**`front-commerce.js`**) looked like
+in 2.x:
+
+```jsx
+module.exports = {
+  name: "Front Commerce DEV",
+  url: "http://www.front-commerce.test",
+  modules: [
+    "./modules/datasource-elasticsearch",
+    "./theme-chocolatine",
+    "./modules/front-commerce-b2b",
+  ],
+  serverModules: [
+    { name: "FrontCommerce", path: "server/modules/front-commerce" },
+    {
+      name: "Elasticsearch",
+      path: "datasource-elasticsearch/server/modules/magento2-elasticsearch",
+    },
+    { name: "Magento2", path: "server/modules/magento2" },
+    { name: "Magento2GraphQL", path: "server/modules/magento2-graphql" },
+    { name: "Magento2Commerce", path: "server/modules/magento2-commerce" },
+    { name: "Magento2B2B", path: "front-commerce-b2b/server/modules/magento2" },
+  ],
+  webModules: [
+    { name: "FrontCommerce", path: "./src/web" },
+    { name: "Theme Chocolatine", path: "./theme-chocolatine/web" },
+    { name: "FrontCommerce B2B", path: "./modules/front-commerce-b2b/web" },
+  ],
+};
+```
+
+While it served its purpose, these challenges paved the way for a more
+streamlined and user-friendly approach in subsequent versions.
+
+## Front-Commerce 3.x: An unified, simplified configuration file
+
+Fast forward to v3, and we've completely refactored how a Front-Commerce app
+configuration was defined. The configuration is now made through a single file,
+`front-commerce.config.js`, which includes all the necessary information for
+running a Front-Commerce app. Let's break down the key enhancements.
+
+```tsx
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+import adobeB2B from "@front-commerce/adobe-b2b";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+import appCSPProvider from "./app/config/cspProvider";
+
+export default defineConfig({
+  extensions: [themeChocolatine(), magento2(storesConfig), adobeB2B()],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [appCSPProvider()],
+  },
+  v2_compat: {
+    useApolloClientQueries: true,
+    useFormsy: true,
+  },
+  pwa: {
+    appName: "Front-Commerce",
+    shortName: "Front-Commerce",
+    description: "My e-commerce application",
+    themeColor: "#fbb03b",
+    icon: "assets/icon.png",
+    maskableIcon: "assets/icon.png",
+  },
+});
+```
+
+### Single Source of Truth
+
+In contrast to v2, the v3 configuration file is now the single endpoint for all
+things application-related. All extensions are registered through this file like
+before, but it now also features the various configuration previously found in
+`src/config/*.js` files, such as stores and caching configuration. This makes
+using the configuration details much more reliable in the app.
+
+### Typing with TypeScript
+
+Leveling up the developer experience, the v3 configuration file is now fully
+typed using TypeScript. Autocomplete and type checking bring a greater level of
+clarity and confidence when writing your app’s configuration, while also giving
+a quick sneak peek of each extension features and customizations.
+
+### Extension API
+
+As said above, v2’s “modules” have evolved into "extensions" in v3. Their
+registration is now a eased through a simplified extension API
+(`defineExtension()` and `defineRemixExtension()`) which streamlines the process
+and makes your application more modular and extensible. Each extension can
+directly define their own needs so that their usage is simplified in
+`front-commerce.config.js`
+
+This subject however deserves a whole article to be written about it
+— \***\*stay tuned\*\*** 👀.
+
+### Themes
+
+Theme overrides, once defined via `webModules`, are now an integral part of the
+configuration. Registering them becomes as straightforward as any other
+extension, streamlining the overall architecture, and further reducing the main
+configuration file responsibilities.
+
+### No more use of `src/config/*.js`
+
+V3 eliminates the need for separate configuration files (`src/config/*.js`) for
+stores and caching. Previously, those files were imported and used by components
+all over the codebase. Now, those are directly included in
+`front-commerce.config.js`, promoting a cleaner and more organized setup. This
+configuration is accessible through a shared “config” that is available in all
+key location in the code.
+
+## Embracing the change
+
+The transition from V2 to V3 marks a paradigm shift in how we approach
+configuration. With a consolidated and type-safe configuration file, we are
+confident developers can embrace a more efficient and enjoyable development
+experience. In upcoming version, further specific extension points will be added
+to complete our “configuration arsenal”, and make it even better than before.
+
+Please let us now what you think about this, and stay tuned for the
+Front-Commerce Advent Calendar’s next article!
