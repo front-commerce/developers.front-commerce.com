@@ -117,3 +117,29 @@ Example:
   "translations": "./extensions/acme/translations"
 }
 ```
+
+### `unstable_lifecycleHooks`
+
+:::caution
+
+This feature is unstable and may change in the future.
+
+:::
+
+_Optional_
+
+Specifies the lifecycle hooks that should be executed by the application. These
+hooks allow you to register custom logic at specific points of the application
+lifecycle.
+
+Example:
+
+```js
+{
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      // Do something with the services
+    };
+  }
+}
+```
