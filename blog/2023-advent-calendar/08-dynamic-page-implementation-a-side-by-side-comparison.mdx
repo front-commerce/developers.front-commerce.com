@@ -1,0 +1,224 @@
+---
+title: "Dynamic page implementation: a side-by-side comparison"
+description:
+  Discover the differences in dynamic page implementation between Front-Commerce
+  2.x and 3.x. Explore the transition from file-based routing and Enhancers in
+  2.x to Remix routes and loader functions in 3.x.
+authors: [pierre]
+date: 2023-12-08T08:00
+hide_table_of_contents: true
+image: ./assets/08.png
+---
+
+In today's article, we'll compare how dynamic page implementation differs
+between Front-Commerce 2.x and Front-Commerce 3.x.
+
+A dynamic page is generated on the fly when a user requests it, rather than
+being statically generated at build time. This is particularly useful for pages
+that rely on external data, such as product pages, category pages, or search
+pages. For this article, we are going to use an FAQ Article detail as an
+example.
+
+This article aims to shed light on one of the most significant changes we've
+made in Front-Commerce 3.x, making it easier for you to understand.
+
+<!-- truncate -->
+
+:::info Advent Calendar series
+
+This article is part of
+[our Advent Calendar series](./01-introducing-the-front-commerce-advent-calendar-series.mdx).
+We're publishing a new article every day until December 24th. **Stay tuned!**
+
+:::
+
+## 2.x: file-based routing, Enhancers and Page components
+
+In Front-Commerce 2.x, dynamic pages were implemented using core components from
+Front-Commerce.
+
+This included **file-based routing**, which was implemented by Front-Commerce
+itself on top of React Router. This allowed developers to map the rendered
+component to a specific URL by creating a file in the `web/theme/routes/`.
+
+```jsx title="web/theme/routes/faq/[slug].js"
+// The route file was almost empty and only used to declare the Page component
+import FaqDetails from "theme/pages/FaqDetails";
+
+export default FaqDetails;
+```
+
+The **Page component** was responsible for fetching data from the GraphQL API
+and rendering the page once all the required data was available.
+
+```jsx title="web/theme/pages/FaqDetails.js"
+import React from "react";
+import Link from "theme/components/atoms/Typography/Link";
+import EnhanceFaqDetails from "./EnhanceFaqDetails";
+import { H1 } from "theme/components/atoms/Typography/Heading";
+import VoteWidget from "theme/modules/Faq/VoteWidget";
+import Wysiwyg from "theme/modules/WysiwygV2";
+
+const FaqDetails = (props) => {
+  const slug = props.match.params.slug;
+
+  return (
+    <div className="container">
+      <div>
+        <Link to="/faq">⬅️ Back to list</Link>
+        <br />
+        Slug: {slug}
+      </div>
+      {props.loading && <p>Loading…</p>}
+      {props.faqEntry && (
+        <div>
+          <H1>{props.faqEntry.question}</H1>
+          <Wysiwyg content={props.faqEntry.answer} />
+
+          <VoteWidget faqEntry={props.faqEntry} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default EnhanceFaqDetails(FaqDetails);
+```
+
+Pages delegated the fetching of data to **Enhancers**
+(<abbr title="Higher-Order Components">HOCs</abbr>), which were responsible for
+retrieving data from the GraphQL API and handling rendering states before
+feeding it to the Page component.
+
+```jsx title="web/theme/pages/EnhanceFaqDetails.js"
+// The Enhancer was responsible for fetching data and handling rendering states
+import graphqlWithPreload from "web/core/apollo/graphqlWithPreload";
+import compose from "recompose/compose";
+import FaqDetailsQuery from "./FaqDetailsQuery.gql";
+import withEntityNotFound from "theme/modules/PageError/NotFound/withEntityNotFound";
+
+export default compose(
+  graphqlWithPreload(FaqDetailsQuery, {
+    options: (props) => ({
+      variables: {
+        slug: props.match.params.slug,
+      },
+    }),
+    preloadOptions: (args) => ({
+      variables: {
+        slug: args.match.params.slug,
+      },
+    }),
+    props: ({ data }) => ({
+      loading: data.loading,
+      error: !data.loading && data.error,
+      faqEntry: !data.loading && data.faqGetBySlug,
+    }),
+  }),
+  // It could also be combined with other Enhancers
+  // such as Loadable for a full page loading state
+  // Loadable((props) => !props.loading, LoadingComponent),
+  withEntityNotFound({
+    isFound: (props) => props.loading || props.faqEntry,
+  })
+);
+```
+
+Enhancers HOCs had several responsibilities and could combine different HOCs
+from Front-Commerce to achieve the desired result.
+
+For instance, they could combine `graphqlWithPreload` for fetching data with
+preloading, `withEntityNotFound` and `Loadable` for handling different rendering
+states. User restricted pages could leverage `checkAuth` for checking user
+authentication and redirecting to the login page if necessary.
+
+## Plain Remix routes in 3.x!
+
+In Front-Commerce 3.x, dynamic pages are implemented using a different approach:
+we've replaced our custom file-based routing with
+[Remix routes](https://remix.run/docs/en/main/discussion/routes).
+
+Remix routes now have more responsibilities than 2.x routes. They export a
+`loader` function that is responsible for fetching data from the GraphQL API and
+passing it to the Page component (main export of the route).
+
+Route loaders can also be used to handle errors (with the `ErrorBoundary`
+export), redirections (with the `redirect` response) and many other checks.
+**Routes code is usually simpler to reason about than Enhancers**, with less
+indirections.
+
+Here is an example of a route that fetches a question from the GraphQL API and
+renders it using a `<FaqDetail />` Page component (that is a plain React
+component). As you can see, all the logic belongs to the route!
+
+```tsx title="app/routes/_main.faq.$slug.tsx"
+// The route is now a .tsx file, which allows us to use TypeScript and JSX syntax.
+
+import { json } from "@front-commerce/remix/node";
+import { useLoaderData } from "@front-commerce/remix/react";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import FaqDetail from "theme/pages/FaqDetail";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { FaqDetailDocument } from "~/graphql/graphql";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+// The route exports a `loader` function that is responsible
+// for fetching data and throwing errors, ensuring that
+// the main component is only rendered in the "happy path".
+export const loader = async ({ context, params }: LoaderFunctionArgs) => {
+  const { slug } = params;
+
+  // The `loader` uses the `FrontCommerceApp` class to access the Front-Commerce
+  // core from Remix. In this example, we use it to fetch data from the GraphQL
+  // unified API (similar to the one you're used to).
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const response = await app.graphql.query(FaqDetailDocument, { slug });
+  if (!response.faqEntry) {
+    throw new Response("Question not found", { status: 404 });
+  }
+
+  return json({
+    question: response.faqEntry,
+  });
+};
+
+// The main component is a plain React component that receives
+// the data from the loader, using Remix fetching primitives (`useLoaderData`)
+// both on the server and on the client.
+export default () => {
+  const { question } = useLoaderData<typeof loader>();
+
+  return <FaqDetail question={question} />;
+};
+
+// The route also exports an ErrorBoundary component that is responsible
+// for displaying errors. It can be used to display a custom error page.
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return <div>FAQ : question not found</div>;
+  }
+};
+```
+
+## Conclusion
+
+We hope this article helped you understand how dynamic pages are implemented in
+Front-Commerce 2.x and 3.x.
+
+Here is a table comparing the different concepts between 2.x and 3.x:
+
+| Concept         | Front-Commerce 2.x           | Front-Commerce 3.x                         |
+| --------------- | ---------------------------- | ------------------------------------------ |
+| Page components | Plain React components (JSX) | Plain React components (JSX/TSX)           |
+| Routes          | Custom file-based routing    | Remix routes                               |
+| Data fetching   | Enhancers HOCs with Apollo   | `loader` functions with `FrontCommerceApp` |
+| Error Handling  | Enhancers HOCs               | `ErrorBoundary` component                  |
+
+We've made several changes to make it easier for you to build your projects. You
+can now use Remix routes in a natural way, while still leveraging the power of
+Front-Commerce with a cleaner separation of concerns.
+
+Join us tomorrow for the next article in our
+[Advent Calendar series!](./01-introducing-the-front-commerce-advent-calendar-series.mdx)
