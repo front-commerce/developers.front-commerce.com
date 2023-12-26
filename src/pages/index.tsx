@@ -9,7 +9,7 @@ export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`✨ Front-Commerce · Craft delightful e-commerce experiences using modern web technologies`}
+      title={`✨ Front-Commerce · A blazing fast & ready to use Headless PWA Frontend solution`}
       description={siteConfig.tagline}
     >
       <Hero />

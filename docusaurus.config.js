@@ -20,8 +20,7 @@ const LAST_VERSION_URL = LAST_VERSION === "current" ? "3.x" : LAST_VERSION;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Front-Commerce Developers",
-  tagline:
-    "Stay one step ahead and consistently deliver the brand experience your customers expect",
+  tagline: "A blazing fast & ready to use Headless PWA Frontend solution",
   url: "https://developers.front-commerce.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
