@@ -31,12 +31,6 @@ const PopularPages = () => {
       href: "/changelog",
     },
     {
-      title: "Migration Guides",
-      description: "Migrations guides that cover popular setups",
-      icon: BookmarkSquareIcon,
-      href: `/docs/${LAST_VERSION}/appendices/migration-guides`,
-    },
-    {
       title: "Support",
       description: "Read our latest help articles or contact support",
       icon: RssIcon,

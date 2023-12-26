@@ -15,6 +15,7 @@ const REPOSITORY_URL =
 const noIndex = process.env.CONTEXT !== "production";
 
 const LAST_VERSION = "current";
+const LAST_VERSION_URL = LAST_VERSION === "current" ? "3.x" : LAST_VERSION;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -42,7 +43,7 @@ const config = {
 
   customFields: {
     INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || "xh1u2003",
-    LAST_VERSION: LAST_VERSION === "current" ? "3.x" : LAST_VERSION,
+    LAST_VERSION: LAST_VERSION_URL,
   },
 
   presets: [
@@ -122,16 +123,16 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Introduction",
-                to: `/docs/${LAST_VERSION}/welcome`,
+                label: "3.x",
+                to: `/docs/3.x/welcome`,
               },
               {
-                label: "Essentials",
-                to: `/docs/${LAST_VERSION}/category/essentials`,
+                label: "2.x",
+                to: `/docs/2.x/welcome`,
               },
               {
-                label: "Concepts",
-                to: `/docs/${LAST_VERSION}/category/concepts`,
+                label: "Migrating from v2",
+                to: `/docs/3.x/category/migrating-from-v2`,
               },
             ],
           },

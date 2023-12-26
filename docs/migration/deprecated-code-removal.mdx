@@ -76,15 +76,15 @@ The `WysiwygV2` implementation has been renamed to `Wysiwyg` in
 [this merge request](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2339).
 To ensure that you are using the correct version of the component, before
 running the
-[automated migration process](/docs/remixed/migration/automated-migration) step,
-you should search for any imports in your codebase which is still targeting
+[automated migration process](/docs/3.x/migration/automated-migration) step, you
+should search for any imports in your codebase which is still targeting
 `Wysiwyg` (V1) implementation: `theme/modules/Wysiwyg`, and follow
 [the documentation](/docs/2.x/advanced/theme/wysiwyg/#wysiwygv2--usage) to
 update the usages to `WysiwygV2`.
 
 After running the
-[automated migration process](/docs/remixed/migration/automated-migration) step,
-all related imports will be automatically updated, for example:
+[automated migration process](/docs/3.x/migration/automated-migration) step, all
+related imports will be automatically updated, for example:
 
 ```diff
 js:
@@ -206,10 +206,9 @@ project.
 
 ## Features
 
-Some code has also been removed while not explicitly deprecated in `2.x`. Most of
-the time it was because the feature was not used or made obsolete with the
+Some code has also been removed while not explicitly deprecated in `2.x`. Most
+of the time it was because the feature was not used or made obsolete with the
 release of `3.x`.
 
-Please read the
-[features removal page](/docs/remixed/migration/features-removal) for more
-information.
+Please read the [features removal page](/docs/3.x/migration/features-removal)
+for more information.
