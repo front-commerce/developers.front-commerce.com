@@ -14,7 +14,7 @@ const REPOSITORY_URL =
 // see: https://docs.netlify.com/configure-builds/environment-variables/#build-metadata
 const noIndex = process.env.CONTEXT !== "production";
 
-const LAST_VERSION = "2.x";
+const LAST_VERSION = "current";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -42,7 +42,7 @@ const config = {
 
   customFields: {
     INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || "xh1u2003",
-    LAST_VERSION,
+    LAST_VERSION: LAST_VERSION === "current" ? "3.x" : LAST_VERSION,
   },
 
   presets: [
@@ -58,14 +58,13 @@ const config = {
           lastVersion: LAST_VERSION,
           versions: {
             current: {
-              label: "Remixed 🚧",
-              path: "remixed",
-              noIndex: true, // TODO dont index until we are ready to launch
-              banner: "unreleased",
+              label: "3.x",
+              path: "3.x",
             },
             "2.x": {
               label: "2.x",
               path: "2.x",
+              banner: "none",
             },
           },
         },
