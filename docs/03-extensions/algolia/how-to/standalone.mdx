@@ -9,9 +9,8 @@ sidebar_position: 3
 
 ## Front-Commerce
 
-[After installing the Algolia
-package](/docs/remixed/extensions/algolia/#installation), you need to enable the
-corresponding extension. For that, you need to tweak your
+[After installing the Algolia package](/docs/3.x/extensions/algolia/#installation),
+you need to enable the corresponding extension. For that, you need to tweak your
 `front-commerce.config.ts` file like:
 
 ```typescript title="front-commerce.config.ts"
@@ -50,9 +49,8 @@ FRONT_COMMERCE_ALGOLIA_INDEX_NAME_PREFIX=myproject_
 <a name="algolia-standalone-config"></a>
 
 To further configure the Algolia module for instance to define facets, you have
-[to create a configuration provider to override](/docs/remixed/guides/configuration)
+[to create a configuration provider to override](/docs/3.x/guides/configuration)
 [the `algoliaConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/871107f4f1c8c4acc88b555efa54f1d264227bf5/modules/datasource-algolia/server/config/algoliaConfigProvider.js).
-
 
 ## Indices requirements
 
@@ -135,12 +133,11 @@ For CMS page indices:
 ## Further customizations
 
 In the `standalone` _flavor_, the Algolia extension relies on default
-configuration settings. To customize it, you need [to inject a specific
-configurations](/docs/remixed/guides/configuration). For that, you can create a
-dedicated extension that registers a configuration provider.
+configuration settings. To customize it, you need
+[to inject a specific configurations](/docs/3.x/guides/configuration). For that,
+you can create a dedicated extension that registers a configuration provider.
 
-[The example extension
-`custom-algolia-search`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/extensions/custom-algolia-search)
+[The example extension `custom-algolia-search`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/extensions/custom-algolia-search)
 shows how the index prefix can be manipulated, in that example the current shop
 locale is added to it.
 
