@@ -1,0 +1,108 @@
+---
+title: Loading data from unified GraphQL schema
+description:
+  Explore how to retrieve dynamic data from your application's unified GraphQL
+  schema in a Front-Commerce route using Remix. This guide delves into the
+  practical aspects of querying and managing data through GraphQL, demonstrating
+  the setup, execution, and optimization of data requests. Understand the
+  synergistic relationship between Front-Commerce and Remix, with a focus on
+  leveraging GraphQL for efficient data handling and page rendering.
+sidebar_position: 4
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+Before diving into the code, ensure you have the following prerequisites in
+place:
+
+- A Front-Commerce project configured and ready to use
+- Basic knowledge of [Remix routes](/docs/3.x/get-started/your-first-route)
+- [FAQ GraphQL Module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/c317ab057ae0927e294a5287eb8e0be73ca7e1fb/skeleton/extensions/faq-demo/graphql)
+  installed and configured if you want to execute code samples without any
+  changes
+
+## Loading Data
+
+In your app directory, create a new route file (e.g.,
+`app/routes/_main.faq.$slug.tsx`) and add the following code:
+
+```tsx title="app/routes/_main.faq.$slug.tsx"
+import { json } from "@front-commerce/remix/node";
+import { useLoaderData } from "@front-commerce/remix/react";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import FaqDetail from "theme/pages/FaqDetail";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { FaqEntryQueryDocument } from "~/graphql/graphql";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+// The route exports a `loader` function that is responsible
+// for fetching data and throwing errors, ensuring that
+// the main component is only rendered in the "happy path".
+export const loader = async ({ context, params }: LoaderFunctionArgs) => {
+  const { slug } = params;
+
+  // The `loader` uses the `FrontCommerceApp` class to access the Front-Commerce
+  // core from Remix. In this example, we use it to fetch data from the GraphQL
+  // unified API (similar to the one you're used to).
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const response = await app.graphql.query(FaqEntryQueryDocument, {
+    input: { slug },
+  });
+  if (!response.faqEntry) {
+    throw new Response("Question not found", { status: 404 });
+  }
+
+  return json({
+    faqEntry: response.faqEntry,
+  });
+};
+
+// The main component is a plain React component that receives
+// the data from the loader, using Remix fetching primitives (`useLoaderData`)
+// both on the server and on the client.
+export default function Component() {
+  const { faqEntry } = useLoaderData<typeof loader>();
+
+  return <FaqEntry entry={faqEntry} />;
+}
+
+// The route also exports an ErrorBoundary component that is responsible
+// for displaying errors. It can be used to display a custom error page.
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return <div>FAQ : question not found</div>;
+  }
+};
+```
+
+This is an example of a route that fetches a question from the GraphQL API and
+renders it using a `<FaqDetail />` Page component (that is a plain React
+component). As you can see, all the logic belongs to the route!
+
+## Reference
+
+As we can see here retrieving dynamic data from Front-Commerce unified GraphQL
+schema can be done in a natural way from any route. But this only scratches the
+surface of what you can do with Front-Commerce and Remix.
+
+- [`loader`](https://remix.run/docs/en/main/route/loader) - _Each route can
+  define a "loader" function that provides data to the route when rendering._
+- [`action`](https://remix.run/docs/en/main/route/action) - _A route `action` is
+  a server only function to handle data mutations and other actions. If a
+  non-GET request is made to your route (`DELETE`, `PATCH`, `POST`, or `PUT`)
+  then the action is called before the loaders.._
+- [`Component`](https://remix.run/docs/en/main/route/component) - _The default
+  export of a route module defines the component that will render when the route
+  matches._
+- [`ErrorBoundary`](https://remix.run/docs/en/main/route/error-boundary) - _A
+  Remix ErrorBoundary component works just like normal React
+  [error boundaries](https://reactjs.org/docs/error-boundaries.html), but with a
+  few extra capabilities._
+- [`FrontCommerceApp`](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app) -
+  _The FrontCommerceApp class is the main entry point to the Front-Commerce
+  core. It provides access to the Front-Commerce core and to the GraphQL
+  client._
