@@ -111,7 +111,14 @@ index bdb7e77a..4ece0e63 100644
 +    loadContext: AppLoadContext,
      messages: Record<string, string>
  ) {
-     return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    const { pipe, abort } = renderToPipeableStream(
+      await prepareV2ServerRenderedApp(
+        <FrontCommerceServer
++         context={loadContext.frontCommerce}
+          remixContext={remixContext}
+          messages={messages}
+        >
 @@ -52,12 +55,12 @@ function handleBotRequest(
 
                      responseHeaders.set('Content-Type', 'text/html')
@@ -138,7 +145,14 @@ index bdb7e77a..4ece0e63 100644
 +    loadContext: AppLoadContext,
      messages: Record<string, string>
  ) {
-     return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    const { pipe, abort } = renderToPipeableStream(
+      await prepareV2ServerRenderedApp(
+        <FrontCommerceServer
++         context={loadContext.frontCommerce}
+          remixContext={remixContext}
+          messages={messages}
+        >
 @@ -97,12 +101,12 @@ function handleBrowserRequest(
 
                      responseHeaders.set('Content-Type', 'text/html')
