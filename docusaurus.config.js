@@ -14,13 +14,13 @@ const REPOSITORY_URL =
 // see: https://docs.netlify.com/configure-builds/environment-variables/#build-metadata
 const noIndex = process.env.CONTEXT !== "production";
 
-const LAST_VERSION = "2.x";
+const LAST_VERSION = "current";
+const LAST_VERSION_URL = LAST_VERSION === "current" ? "3.x" : LAST_VERSION;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Front-Commerce Developers",
-  tagline:
-    "Stay one step ahead and consistently deliver the brand experience your customers expect",
+  tagline: "A blazing fast & ready to use Headless PWA Frontend solution",
   url: "https://developers.front-commerce.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
@@ -42,7 +42,7 @@ const config = {
 
   customFields: {
     INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || "xh1u2003",
-    LAST_VERSION,
+    LAST_VERSION: LAST_VERSION_URL,
   },
 
   presets: [
@@ -58,14 +58,13 @@ const config = {
           lastVersion: LAST_VERSION,
           versions: {
             current: {
-              label: "Remixed 🚧",
-              path: "remixed",
-              noIndex: true, // TODO dont index until we are ready to launch
-              banner: "unreleased",
+              label: "3.x",
+              path: "3.x",
             },
             "2.x": {
               label: "2.x",
               path: "2.x",
+              banner: "none",
             },
           },
         },
@@ -123,16 +122,16 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Introduction",
-                to: `/docs/${LAST_VERSION}/welcome`,
+                label: "3.x",
+                to: `/docs/3.x/welcome`,
               },
               {
-                label: "Essentials",
-                to: `/docs/${LAST_VERSION}/category/essentials`,
+                label: "2.x",
+                to: `/docs/2.x/welcome`,
               },
               {
-                label: "Concepts",
-                to: `/docs/${LAST_VERSION}/category/concepts`,
+                label: "Migrating from v2",
+                to: `/docs/3.x/category/migrating-from-v2`,
               },
             ],
           },

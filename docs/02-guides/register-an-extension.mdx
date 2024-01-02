@@ -14,10 +14,10 @@ importing the extension definitions (or functions returning an extension
 definition) and adding them the `extensions` list.
 
 For instance, in a project configured to be connected to a Magento2 instance and
-with the theme chocolatine, [the Magento2
-extension](/docs/remixed/guides/register-an-extension) and [the Theme
-Chocolatine extension](/docs/remixed/extensions/magento2/) are registered in
-`front-commerce.config.ts`:
+with the theme chocolatine,
+[the Magento2 extension](/docs/3.x/guides/register-an-extension) and
+[the Theme Chocolatine extension](/docs/3.x/extensions/magento2/) are registered
+in `front-commerce.config.ts`:
 
 ```typescript title="front-commerce.config.ts"
 import { defineConfig } from "@front-commerce/core/config";
@@ -39,7 +39,6 @@ export default defineConfig({
 
 In that project, if you want to add an extension, you could add the following
 changes to `front-commerce.config.ts`:
-
 
 ```typescript title="front-commerce.config.ts"
 import { defineConfig } from "@front-commerce/core/config";

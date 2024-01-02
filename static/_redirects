@@ -14,6 +14,7 @@
 /docs/:version/*/:category/overview.html					      /docs/:version/category/:category	                      302
 
 # Since we introduced documentation versioning, unversioned documentation should redirect to version 2.x
+/docs/remixed/*                                         /docs/3.x/:splat                                        302
 /docs/2.x/*                                             /docs/2.x/:splat                                        200!
-/docs/remixed/*                                         /docs/remixed/:splat                                    200!
+/docs/3.x/*                                             /docs/3.x/:splat                                        200!
 /docs/*                                                 /docs/2.x/:splat                                        302

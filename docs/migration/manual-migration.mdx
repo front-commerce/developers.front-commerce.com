@@ -22,7 +22,7 @@ If you use SEO components or have overriden Seo components, you need to:
 
 - Remove import and usage of the component from your page
 - Use the [meta](https://remix.run/docs/en/main/route/meta-v2) function with our
-  [generateMetas helper](/docs/remixed/api-reference/front-commerce-remix/generate-metas)
+  [generateMetas helper](/docs/3.x/api-reference/front-commerce-remix/generate-metas)
   to inject your custom metadatas in your Route Module.
 
 ### Refactor pages to Remix routes
@@ -319,7 +319,8 @@ $min: breakpoint-min("sm");
 }
 ```
 
-For cases where you were using the `media-breakpoint-up`, you can use a media query with `min-width` too. For example:
+For cases where you were using the `media-breakpoint-up`, you can use a media
+query with `min-width` too. For example:
 
 **Before:**
 
@@ -619,7 +620,7 @@ Other optional variables updated:
 The `makeImageProxyRouter` function has been removed in favor of the new
 `createResizedImageResponse` function. You can read more about the
 implementation details in the
-[`createResizedImageResponse` documentation](/docs/remixed/api-reference/front-commerce-core/create-resized-image-response).
+[`createResizedImageResponse` documentation](/docs/3.x/api-reference/front-commerce-core/create-resized-image-response).
 
 All images which are located under `public/images/resized/*` should now be moved
 to `public/images/*`. This will allow for the
@@ -664,8 +665,7 @@ will now need to move it the
 
 ## Client side log handler removal
 
-[The client side log mechanism has been removed from Front-Commerce
-3.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2594).
+[The client side log mechanism has been removed from Front-Commerce 3.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2594).
 For future version, we plan to bring back this feature. In the meantime, if you
 are using this feature or you have overridden a component using this feature,
 you need to remove it. In version 2.x, the API was imported from
