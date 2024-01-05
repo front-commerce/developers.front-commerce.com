@@ -1,0 +1,83 @@
+---
+title: "Adyen"
+description:
+  "The Adyen extension allows customer to pay using Adyen payment methods."
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+To use this extension, you need an Adyen account to its dashboard. You will also
+need to create API credentials to retrieve the corresponding API keys.
+
+Depending on how the extension is configured (it's _flavor_), you might also
+need to install the Adyen Magento module.
+
+## Installation
+
+First, you need to install the `@front-commerce/adyen` package:
+
+```bash title="Command to install @front-commerce/adyen"
+$ pnpm install @front-commerce/adyen
+```
+
+Then to enable the extension, you need to add the Adyen extension definition to
+your `front-commerce.config.ts`. When doing that, you need to pass the _flavor_
+in which you want to run the extension, the _flavor_ must be one of the
+following values:
+
+- `magento2`: in this _flavor_, the extension is configured to work with indices
+  created by the Magento2 Adyen module. See
+  [the corresponding How-to](/docs/3.x/extensions/adyen/how-to/magento2) for
+  more details.
+- `front-commerce-magento1` or `front-commerce-magento2`: in this _flavor_, the
+  extension is configured to work as Front-Commerce payments. See
+  [the corresponding How-to](/docs/3.x/extensions/adyen/how-to/front-commerce)
+  for more details.
+
+:::caution
+
+The Adyen extension must be registered after the  
+Theme-Chocolatine extension in the `extensions` array.
+
+:::
+
+For instance, in a Magento 2 based project where the Adyen Magento 2 module is
+installed on Magento side, the `front-commerce.config.ts` file would be
+something like:
+
+```typescript title="front-commerce.config.ts for a Magento2 based project"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+// highlight-next-line
+import adyen from "@front-commerce/adyen";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+// highlight-start
+// depending on your setup, it can also be "front-commerce-magento1" or "front-commerce-magento2"
+// see corresponding how-tos
+const adyenFlavor = "magento2";
+// highlight-end
+
+export default defineConfig({
+  extensions: [
+    magento2(storesConfig),
+    themeChocolatine(),
+    // highlight-next-line
+    adyen(adyenFlavor), // ⚠️ must be after themeChocolatine()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+## Next steps
+
+- [Use Adyen with the Magento2 plugin](/docs/3.x/extensions/adyen/how-to/magento2)
+- [Use Adyen as a Front-Commerce payment](/docs/3.x/extensions/adyen/how-to/front-commerce)
