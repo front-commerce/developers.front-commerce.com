@@ -1,0 +1,252 @@
+---
+title: "Release: 3.2 & 2.28"
+authors: pierre
+date: 2024-01-08T10:00
+hide_table_of_contents: true
+---
+
+## New packages, a Magic Button revamp, Attraqt recommendations and cloud improvements!
+
+Happy New Year, everyone! We hope you had a great holiday season and are ready
+to start the new year with a bang.
+
+We are excited to introduce a range of new features and enhancements to
+Front-Commerce's core. While we are still prioritizing core fixes and
+stabilization, **we have also been able to ship some significant features to
+Front-Commerce Remixed**: all Magento 1 modules, Adyen Payment, and Akamai Image
+Manager are now available as standalone packages under the `@front-commerce/***`
+namespace.
+
+We have also **revamped the technical foundations of the Magic Button** and
+introduced a new concept called **server services** in Front-Commerce 3.2.
+
+The `2.x` branch also received some love with the introduction of **Attraqt
+personalized recommendations** and a few bug fixes. **Be sure to upgrade to
+Front-Commerce 2.28!** As time progresses, we anticipate more projects
+transitioning to `3.x`, and the number of new features released for both major
+versions will gradually decrease.
+
+Let's dive in and explore what's new in Front-Commerce, and for Front-Commerce
+Cloud customers.
+
+<!-- truncate -->
+
+## Improvements to Front-Commerce Remixed
+
+The following features and enhancements are available in Front-Commerce 3.2
+only. They're direct improvements to Front-Commerce 3.x, and new features for
+projects using our Remix version.
+
+### New extensions for Front-Commerce Remixed
+
+With a stable foundation in place, we're now able to focus on Remixing the
+remaining core Front-Commerce extensions.
+
+This release includes the following features:
+
+- all Magento1 modules are now available in the `@front-commerce/magento1`
+  package. Follow the
+  [Magento1 extension's documentation](/docs/3.x/extensions/magento1/) to learn
+  how to use it.
+- Adyen payment integration is also available in the `@front-commerce/adyen`
+  package
+- Akamai Image Manager integration is available in the
+  `@front-commerce/akamai-image-manager` package
+
+### Contribution mode and Magic Button
+
+[Six months ago, we introduced the Magic Button](/changelog/front-commerce-2.25#empowering-content-contribution-with-the-magic-button).
+A feature that improves the contribution experience and makes content editing
+more efficient.
+
+With Front-Commerce 3.x, we've revamped the technical foundations of the Magic
+Button to embrace Web standards and improve how it works. This new version is
+now available in Front-Commerce 3.2.
+
+It means that all supported extensions (Magento2, Contentful…) now have full
+feature-parity with Front-Commerce 2.x when it comes to identifying storefront
+content, previewing unpublished content, auto-refresh etc.
+
+### Server Services (unstable API)
+
+On a technical level, we've also introduced a new concept: **Server Services**.
+
+**Why?** Until now, several Front-Commerce core features provided a way to
+register some custom logic using loaders. Examples:
+
+- `loaders.Sitemap.registerNodesFetcher`
+- `loaders.Page.registerUrlMatcher`
+- `loaders.ContentMetadataExtractorRegistry.register`
+
+It forced developers to manually create loaders when wanting to use these
+features outside of a GraphQL context, such as in an express middleware.
+
+**What?** Server Services is our proposal for relocating such responsibilities
+outside of "loaders" so that GraphQL loaders remain responsible only for
+fetching data from remote sources.
+
+**How?** We've introduced a lifecycle hook API that allows developers to
+register custom logic into core Services. Core Services are injected more
+globally, and can be used in GraphQL (context enhancers, loaders, resolvers) but
+also in the application's routes as they're part of the `FrontCommerceApp`
+object.
+
+You can read
+[the current API design in our documentation](/docs/3.x/api-reference/front-commerce-core/defineExtension#unstable_lifecyclehooks).
+We'd love to hear your feedbacks on this, **please let us know how you feel
+about this!**
+
+### Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Performance improvements</h3></summary>
+```
+
+- Layout and root route no longer revalidates by default, to prevent useless
+  extra HTTP requests
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- A feature flag has been added to check whether the `ordersFilters` feature is
+  supported by the backend in use.
+- We added
+  [a front-commerce CLI `find-unused-style-variables` script](/docs/3.x/api-reference/front-commerce-remix/#find-unused-style-variables)
+  to check for unused SCSS variables and CSS custom properties
+- **DX:** `DEBUG=front-commerce:config` output is now less verbose
+- **DX:** a new `/__front-commerce/debug` route now displays useful context
+  information (user, request, configuration…) in development mode
+- **UI:** the search input is now automatically focused when opening the search
+  toolbar
+- **UI:** all inputs now have `ref` and TypeScript types
+- **UI:** the `<Image />` component is now more resilient to empty `src`
+- **Magento:** it is now possible to filter order using a "OR" logic between
+  filters (see the
+  [Migration guide](/docs/3.x/upgrade/migration-guides/3.1-3.2#order-filters))
+- **Magento:** user objects now have a `loggedIn` attribute to check whether the
+  user is logged in or not more easily across the application
+- **Algolia:** the extension now supports optional words in search queries.
+  Usage examples: `searchQuery.addOptionalWords("some optional words")` or
+  `searchQuery.addOptionalWords(["word", "word1 word2"])`
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+- **cookie:** we fixed the Cookie `SameSite` setting to allow remote injection
+  and SSO support
+- **UI:** the shipping method selection now works as expected when several ones
+  are available
+- **UI:** the status in the orders table filter allowing can now be updated
+  after it has been set once
+- **UI:** regions are now only fetched when a country needs a region
+- **core:** re-exported routes from core modules don't crash under some
+  circumstances due to namespace exports (leading to `undefined` data in
+  `useLoaderData()`)
+- **cache:** prevent cart cache issues due to uncommitted session in Cart routes
+
+```mdx-code-block
+</details>
+```
+
+## New features available for every project
+
+The following features and enhancements are available in both Front-Commerce 3.2
+and 2.28. Update to the version relevant to your project to take advantage of
+these features.
+
+### Attraqt: personalized recommendations
+
+When it comes to e-commerce, personalization is key. It's a proven way to
+increase conversion rates and average order value. That's why we're excited to
+announce that Front-Commerce now supports Attraqt personalization.
+
+You can now use Attraqt to display personalized product recommendations on your
+Front-Commerce storefront. No matter how you use Attraqt on the front-end
+(contact your Attraqt representative to find the best way for your use case), as
+soon as you have the user profile ID, you can use it to display
+[personalized recommendations](https://attraqt.gitbook.io/developer-documentation/xo-recommendations/using-the-recommendations-api#personalised-recommendation).
+
+The Attraqt recommendations loader
+[now accepts an optional `profileId` parameter](/docs/2.x/magento2/search-engine#attraqt-recommendations-usage-example)
+that can be used to display personalized recommendations.
+
+### Bug Fixes
+
+- **adyen:** when using the Magento2 module, the `amount` (and `countryCode`)
+  are now properly passed to Apple Pay
+- **twicpics:** the aspect ratio is now properly computed whenever using the
+  `twicpics` image adapter
+- **ui**: the `<ProductListSlider />` component is now more resilient to
+  incorrect data passed, and can display an empty component instead of crashing
+
+## Front-Commerce Cloud got an upgrade
+
+We've upgraded our Front-Commerce Cloud infrastructure during the end of the
+year. Without entering into too much technical detail, **you should expect
+better performance and better stability for your Front-Commerce Cloud
+projects.** You may already have noticed it!
+
+This upgrade contains several improvements **consolidating our experience with
+Front-Commerce Cloud projects over the years**. These changes have been rolled
+out progressively during the last weeks, without noticeable downtime for your
+projects.
+
+We rolled out improvements to how Front-Commerce projects are deployed and
+managed:
+
+- we are now able to handle unexpected huge traffic spikes more efficiently with
+  a specific "operation" mode that can be enabled within minutes
+- [we now support the Stale-While-Revalidate HTTP cache strategy](https://web.dev/articles/stale-while-revalidate?hl=fr),
+  for instant page loads
+- we've improved the way staging and production environments are handled, to
+  reduce the risk of side effects while maintaining a high level of similarity
+  between environments
+- we also introduced a future-proof DNS configuration for every project, to ease
+  any future transitions
+
+These changes also enable other improvements you'll see very soon. For example,
+you'll be autonomous when it comes to flushing the HTTP cache of your project,
+for a specific URL a directory or the whole project. This will be useful to
+quickly flush the cache after a content update.
+
+<hr />
+
+<BackportList
+  currentVersion={["3.2.0", "2.28.0"]}
+  previousVersions={[
+    "3.1.2",
+    "3.0.2",
+    "2.27.1",
+    "2.26.5",
+    "2.25.7",
+    "2.24.8",
+    "2.23.9",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+Upgrade Front-Commerce (Migration guides):
+[3.2.0](/docs/3.x/upgrade/migration-guides/3.1-3.2) or
+[2.28.0](/docs/2.x/appendices/migration-guides#2270---2280)<br /> Read the full
+changelog (Customers only):
+[3.2.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.2.0)
+or
+[2.28.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.28.0)
+
+</ChangelogFooter>
