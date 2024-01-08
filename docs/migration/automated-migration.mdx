@@ -1,13 +1,85 @@
 ---
 sidebar_position: 2
 title: Automated Migration
-description: The migration CLI automatically migrates your v2 app.
+description:
+  Discover the new migrate CLI in Front-Commerce v3, designed to simplify and
+  automate the migration process. Effortlessly upgrade your v2 application to
+  v3, streamlining your development workflow.
 ---
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+## Guide
 
-add codemod instructions here
+After following the
+[Migration Overview](/docs/3.x/migration/migration-overview), you can run the
+migrate command for the following codemods:
+
+- `js-to-jsx`: Converts react files from js to jsx
+- `3.0.0`: Migrate your project from v2.x to v3.0.0
+- `3.0.0-scss.1`: Migrate your projects scss from v2.x to v3.0.0
+- `3.0.0-scss.2`: Migrate your projects scss from v2.x to v3.0.0
+
+:::tip
+
+After `3.0.0` your should run any successive versioned codemods for example:
+
+- `3.1.0`: Migrate your project from v3.0.0 to v3.1.0
+
+We will aim at introducing codemods between new versions to mitigate any
+breaking changes, so when you update your project, also ensure that you follow
+the the
+[Automated Migration](/docs/3.x/upgrade/migration-guides/3.0-3.1#automated-migration)
+posted in the Migration guides
+
+:::
+
+## Example
+
+```shell
+$ pnpm run front-commerce migrate --transform 3.0.0
+```
+
+## Notes
+
+#### Manual Migration
+
+There are some processes which can not be automatically migrated, in these cases
+the codemods will add a `TODO (Codemod generated)` comment with a description of
+the manual migration process above the code that needs to be manually migrated.
+We invite you to search through your codebase for these comments and follow the
+instructions.
+
+#### SCSS Migration
+
+As we move forward to a pure CSS approach, we have provided a codemod to help
+you migrate your SCSS to pure CSS. As an example we have replaced SCSS functions
+with CSS function, for example.
+
+```scss
+button {
+  // remove-next-line
+  width: math.div(100%, 2);
+  // add-next-line
+  width: calc(100% / 2);
+}
+```
+
+The same applies for SCSS variables, for example
+
+```scss
+button {
+  // remove-next-line
+  width: $button-width;
+  // add-next-line
+  width: var(--button-width);
+}
+```
+
+:::warning
+
+After running the codemod, you will need to check your SCSS files to ensure **no
+regression** has been introduced! We invite you to read the
+[SCSS Migration Manual Migration Guide](/docs/3.x/migration/manual-migration#sass-migration)
 
 :::
