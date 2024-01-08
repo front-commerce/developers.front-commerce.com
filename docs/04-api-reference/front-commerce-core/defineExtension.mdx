@@ -116,3 +116,40 @@ Example:
   "translations": "./extensions/acme/translations"
 }
 ```
+
+### `unstable_lifecycleHooks`
+
+:::caution
+
+This feature is unstable and may change in the future.
+
+:::
+
+_Optional_
+
+Specifies the lifecycle hooks that should be executed by the application. These
+hooks allow you to register custom logic at specific points of the application
+lifecycle.
+
+Example:
+
+```js
+{
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      // Do something with the services
+    };
+  }
+}
+```
+
+#### `onServerServicesInit`
+
+Called when the server services are initialized with the following params:
+
+- [`Services`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/8373880e76c6d58449eeef623927d7e1d3458897/packages/core/services/Services.ts#L5-8) -
+  Generally used to register new services
+- [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) - The
+  request object
+- [`ResolvedConfig`](/docs/3.x/guides/configuration) - The resolved
+  configuration object

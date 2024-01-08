@@ -1,0 +1,31 @@
+---
+sidebar_position: 3
+title: Auto Refresh
+description:
+  With this feature, your data is consistently updated every few seconds,
+  providing real-time updates for contributors.
+---
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="3.2" />
+
+## How to activate Auto-refresh
+
+To activate the **Auto-refresh** feature, click on the Magic Button and select
+the Auto-refresh mode.
+
+<div style={{ width: 600, maxWidth: "100%" }}>
+  <BrowserWindow noPadding>
+    <img
+      src={require("./assets/enable-auto-refresh.gif").default}
+      width="100%"
+      height="100%"
+      style={{ objectFit: "contain", marginBottom: -10 }}
+    />
+  </BrowserWindow>
+</div>
+
+When enabled, the page is continuously updated and then contributors see their
+changes as soon as possible.

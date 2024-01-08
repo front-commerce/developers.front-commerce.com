@@ -1,0 +1,155 @@
+---
+sidebar_position: 1
+title: Contribution Mode
+description:
+  Contribution Mode is the core of the Magic Button tool. When Contribution Mode
+  is enabled for a user, your storefront displays a set of tools created for
+  content creators.
+---
+
+import SinceVersion from "@site/src/components/SinceVersion";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<SinceVersion tag="3.2" />
+
+<p>{frontMatter.description}</p>
+
+## API Reference
+
+The ContributionMode instance is exposed in the `user` context, see
+[app.user.contributionMode](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app?tab=ContributionMode#appuser)
+for more information.
+
+## How to activate Contribution Mode
+
+The **Magic Button** is only visible when the **Contribution Mode** is active.
+
+The default activation for **Contribution Mode** is defined by the
+[`FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bbaa7188cdd69e3fdca39859fc696d65019707b4/packages/core/contribution-mode/ContributionMode.ts#L23)
+environment variable
+
+:::warning
+
+This should only be used for development purposes.
+
+:::
+
+The `ContributionMode` state should be updated using the `setContributionMode`
+function.
+
+```ts
+user.contributionMode.setContributionMode({
+  enabled: true,
+  previewMode: true, // optional and will only change if contribution mode is enabled
+  xRayMode: true, // optional and will only change if contribution mode is enabled
+});
+```
+
+Here are some examples of how to activate the **Contribution Mode**.
+
+```mdx-code-block
+<Tabs>
+<TabItem value="From a Remix Action">
+```
+
+An action can be used, for example to activate from a user interface.
+
+```ts title="app/routes/enable-contribution-mode.ts"
+export const action = ({ context, request }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const contributionMode = app.user.contributionMode;
+
+  if (!contributionMode) {
+    throw new Response("Not Found", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+
+  const formData = await request.formData();
+  context.user.contributionMode.setContributionMode({
+    enabled: true,
+    previewMode: formData.get("previewMode") === "on",
+    xRayMode: formData.get("xRayMode") === "on",
+  });
+
+  return json({
+    contributionMode: contributionMode.current(),
+  });
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="From a Remix Loader">
+```
+
+This is also possible via remix loaders, for example a custom preview route.
+
+```ts title="app/routes/preview.ts"
+export const loader = ({ context, request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+
+  if (url.searchParams.get("token") !== "MySuperSecretToken") {
+    throw new Response("Invalid token", { status: 401 });
+  }
+
+  app.user.contributionMode.setContributionMode({
+    enabled: true,
+    previewMode: true,
+  });
+
+  return redirect("/");
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="From GraphQL">
+```
+
+This is also possible via GraphQL, for example a custom mutation or from a
+GraphQL loader.
+
+```js
+export default {
+  namespace:"MyModule"
+  dependencies:["Front-Commerce/Contribution-Mode"]
+  resolvers:{
+    Mutation:{
+      enableContributionMode: async (root, args, context) => {
+        context.user.contributionMode.setContributionMode({enabled: true})
+        return true
+      }
+    }
+  }
+}
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+## Check if Contribution Mode is active
+
+You can check if the **Contribution Mode** is active by using the `enabled`
+field in the `ContributionMode` instance.
+
+```ts
+if (user.contributionMode.enabled) {
+  // Contribution Mode is active
+}
+```
+
+alternatively you can get the full state of contribution mode using the
+`current` method
+
+```ts
+const contributionMode = user.contributionMode.current();
+
+// contributionMode.enabled - true if contribution mode is active
+// contributionMode.previewMode - true if contribution mode is active and preview mode is enabled
+// contributionMode.xRayMode - true if contribution mode is active and xRay mode is enabled
+```

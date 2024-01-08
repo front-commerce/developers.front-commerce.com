@@ -1,0 +1,79 @@
+---
+sidebar_position: 2
+title: Preview Mode
+description:
+  Get a sneak peek of your content's appearance and make necessary changes for
+  an optimal user experience.
+---
+
+import BrowserWindow from "@site/src/components/BrowserWindow";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<SinceVersion tag="3.2" />
+
+**Preview Mode** is an integral feature of Magic Button, specifically designed
+to enable content creators to preview their drafts from systems supporting this
+feature before publishing changes.
+
+## How to activate Preview Mode
+
+### Using the Magic Button
+
+Activate the **Preview Mode** directly from the Editorial Toolbox. Click on the
+Magic Button and select the Preview Mode option.
+
+<div style={{ width: 600, maxWidth: "100%" }}>
+  <BrowserWindow noPadding>
+    <img
+      src={require("./assets/enable-preview.gif").default}
+      width="100%"
+      height="100%"
+      style={{ objectFit: "contain", marginBottom: -10 }}
+    />
+  </BrowserWindow>
+</div>
+
+### Programmatically
+
+Alternatively, **Preview Mode** can be activated programmatically by leveraging
+the
+[`ContributionMode`](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app?tab=ContributionMode#appuser).
+instance exposed by the `user.contributionMode` context.
+
+### `setPreviewMode`
+
+The `setPreviewMode` method is typically used for safe activation of Preview
+Mode. This means that if Contribution Mode is not enabled, Preview Mode will not
+be activated.
+
+```ts title="app/routes/preview.ts"
+export const loader = ({ context, request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+
+  if (url.searchParams.get("token") !== "MySuperSecretToken") {
+    throw new Response("Invalid token", { status: 401 });
+  }
+
+  app.user.contributionMode.setContributionMode({
+    enabled: true,
+    previewMode: true,
+  });
+
+  return redirect("/");
+};
+```
+
+### Check if Preview Mode is enabled
+
+```ts title="app/routes/preview.ts"
+export const loader = ({ context, request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+
+  if (url.searchParams.get("token") !== "MySuperSecretToken") {
+    // highlight-next-line
+    return json({ enabled: app.user.contributionMode.previewMode });
+  }
+
+  // [..]
+};
+```
