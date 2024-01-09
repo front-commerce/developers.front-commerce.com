@@ -12,7 +12,74 @@ sidebar_position: 1
 - `<Input />`
 - `<Textarea />`
 - `<Checkbox />`
+
+TODO
+
 - `<Select />`
 - `<Radio />`
+- `withFormHandlers`
 
 :::info
+
+Theme Chocolatine provides essential components to fit you form needs. Among
+those, this documentation will present the main ones.
+
+# `<Form>`
+
+The main form component. It replace the standard HTML `<form>` completely, and
+is enhanced with more practical features.
+
+| Prop name       | Type                              | Description                                                       |
+| --------------- | --------------------------------- | ----------------------------------------------------------------- |
+| `setRef`        | `(node: HTMLFormElement) => void` | Used to retrieve a `React.ref` of the Form component              |
+| `onChange`      | `(data: any) => void`             | Method that is called whenever an input of the form is changed    |
+| `onSubmit`      | `(data: any) => void`             | Method that is called whenever a submit is made on the form       |
+| `onValidSubmit` | `(data: any) => void`             | Method that is called whenever a valid submit is made on the form |
+| `children`      | `React.Children`                  | The `Form`'s content                                              |
+
+# Inputs
+
+## `<Input>`
+
+`Input` is used as a base for most of the form's components. It can also be used
+directly by providing a approriate `type`. The following props can be passed
+alongside all standard `<input>` props:
+
+| Prop name        | Type                                                                                         | Required | Description                                                                                                                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`           | `string`                                                                                     | Yes      | The name of the input                                                                                                                                                                            |
+| `id`             | `string`                                                                                     | Yes      | The id of the input element                                                                                                                                                                      |
+| `value`          | `any`                                                                                        | No       | The input's value                                                                                                                                                                                |
+| `onChange`       | `(data: any) => void`                                                                        | No       | Method called when the input's value changes                                                                                                                                                     |
+| `appearance`     | `"default"` `"invisible"` `"vertical"` `"start"`                                             | No       | How the input should be displayed                                                                                                                                                                |
+| `type`           | `"text"` `"email"` `"tel"` `"checkbox"` `"radio"` `"hidden"` `"password"` `"number"` `"url"` | Yes      | The type of input                                                                                                                                                                                |
+| `placeholder`    | `string`                                                                                     | No       | The input's placeholder                                                                                                                                                                          |
+| `inputSize`      | `"default"` `"short"` `"medium"`                                                             | No       | The input's size                                                                                                                                                                                 |
+| `baseInputProps` | `any`                                                                                        | No       | Props to pass to the input's [`BaseInput`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/atoms/Form/Input/BaseInput.jsx) |
+| `suggestions`    | `React.Children`                                                                             | No       | Suggestion to displayer around the input                                                                                                                                                         |
+
+## `<Textarea>`
+
+The following props can be passed alongside all standard `<textarea>` props:
+
+| Prop name     | Type                                             | Required | Description                                                                    |
+| ------------- | ------------------------------------------------ | -------- | ------------------------------------------------------------------------------ |
+| `name`        | `string`                                         | Yes      | The name of the input                                                          |
+| `id`          | `string`                                         | Yes      | The id of the input element                                                    |
+| `value`       | `any`                                            | No       | The input's value                                                              |
+| `onChange`    | `(data: any) => void`                            | No       | Method called when the input's value changes                                   |
+| `appearance`  | `"default"` `"invisible"` `"vertical"` `"start"` | No       | How the input should be displayed                                              |
+| `placeholder` | `string`                                         | No       | The input's placeholder                                                        |
+| `toArray`     | `() => string[]`                                 | No       | If provided, the input's value will be converted to an array using this method |
+
+## `<Checkbox>`
+
+| Prop name        | Type                                             | Required | Description                                                   |
+| ---------------- | ------------------------------------------------ | -------- | ------------------------------------------------------------- |
+| `name`           | `string`                                         | Yes      | The name of the input                                         |
+| `id`             | `string`                                         | Yes      | The id of the input element                                   |
+| `checked`        | `boolean`                                        | No       | Whether the checkbox is checked or not                        |
+| `appearance`     | `"default"` `"invisible"` `"vertical"` `"start"` | No       | How the input should be displayed                             |
+| `onChange`       | `(data: any) => void`                            | No       | Method called when the input's value changes                  |
+| `valueIfChecked` | `() => any`                                      | No       | Method that returns the value of the checkbox if it's checked |
+| `label`          | `React.Node`                                     | No       | The checkbox's label                                          |
