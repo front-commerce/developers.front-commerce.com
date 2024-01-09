@@ -1,0 +1,191 @@
+---
+title: Use as a Front-Commerce payment
+description:
+  "This guides explains how to configure the Adyen extension to use it with
+  Front-Commerce payment methods."
+sidebar_position: 3
+---
+
+<p>{frontMatter.description}</p>
+
+## Front-Commerce configuration
+
+[After installing the Adyen package](/docs/3.x/extensions/adyen/#installation),
+you need to enable the corresponding extension. For that, you need to tweak your
+`front-commerce.config.ts` file like:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2"; // or magento1
+// highlight-next-line
+import adyen from "@front-commerce/adyen";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+// highlight-next-line
+const adyenFlavor = "front-commerce-magento2"; // or "front-commerce-magento1"
+
+export default defineConfig({
+  extensions: [
+    magento2(storesConfig),
+    themeChocolatine(),
+    // highlight-next-line
+    adyen(adyenFlavor), // ⚠️ need to be after themeChocolatine()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+## Add the required environment variables
+
+In the .env, you need to define the following environment variables:
+
+```shell title=".env"
+FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT=ExampleMerchant
+FRONT_COMMERCE_ADYEN_CLIENT_KEY=live_32charactersstring
+# the Adyen client key is prefixed with live_ or test_
+FRONT_COMMERCE_ADYEN_API_KEY=a_very_very_very_long_key
+FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX=1797a841fbb37ca7-AdyenDemo-
+FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME=a_username
+FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD=a_password
+FRONT_COMMERCE_ADYEN_HMAC_KEY=the_hmac_key
+FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY=the_previous_hmac_key
+FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true
+```
+
+See our
+[extension reference](/docs/3.x/extensions/adyen/reference/environment-variables)
+for more information about these variables.
+
+## Register your Adyen payment components
+
+:::note
+
+This is a temporary way to setup payment components. We are aware that it is
+tedious. It will definitely change in the future, when Front-Commerce will
+support new extension points for Payments.
+
+:::
+
+1. Override the file that lets you register additional payments forms in
+   Front-Commerce
+
+   ```shell
+   mkdir -p app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/@front-commerce/theme-chocolatine/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+2. Register Adyen
+
+   ```diff title="app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js"
+   +import AdyenCheckout from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/AdyenCheckout";
+
+   const ComponentMap = {};
+
+   const getAdditionalDataComponent = (method) => {
+   +  if (method.code.startsWith("adyen_")) {
+   +    return AdyenCheckout;
+   +  }
+     return ComponentMap[method.code];
+   };
+   ```
+
+3. Override the file that lets you register additional payments actions in
+   Front-Commerce
+
+   ```shell
+   mkdir -p app/theme/modules/Checkout/PlaceOrder
+   cp -u node_modules/@front-commerce/theme-chocolatine/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js app/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js
+   ```
+
+4. Register the Adyen action
+
+   ```diff title="app/theme/modules/Checkout/PlaceOrder/getAdditionalActionComponent.js"
+   import None from "theme/modules/Checkout/PlaceOrder/AdditionalAction/None";
+   +import Adyen from "theme/modules/Checkout/PlaceOrder/AdditionalAction/Adyen";
+
+   const ComponentMap = {};
+
+   const getAdditionalActionComponent = (paymentCode, paymentAdditionalData) => {
+   +  if (paymentCode.startsWith("adyen")) {
+   +    return Adyen;
+   +  }
+     return ComponentMap?.[paymentCode] ?? None;
+   };
+   ```
+
+## Register custom styles (optional)
+
+Developers can
+[customize Adyen drop-in UI styles using CSS](https://docs.adyen.com/checkout/drop-in-web/customization).
+
+You can add an optional stylesheet from Front-Commerce in your application to
+customize styles. The provided stylesheet reuses existing styles from the theme
+as much as possible for a good integration by default. You can override it if
+needed to adapt the UI as wanted.
+
+Add the following line to your your main `.scss` file to load these styles:
+
+```scss
+@import "theme/modules/Adyen/dropinCustomizations";
+```
+
+## Add webhook
+
+In your Adyen Customer Area under `Developers > Webhooks` click on the
+`+ Webkook` button on the right top corner then click on `Add` for the
+`Standard Notification` type. Fill the fields as follows:
+
+- Transport:
+  - URL: the full url of your site followed by
+    `/webhooks/payment/notification/adyen` e.g.
+    `https://www.example.com/webhooks/payment/notification/adyen`
+  - Method: JSON
+- Authentication:
+  - User Name: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME` environment
+    variable defined above
+  - Password: the `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD` environment
+    variable defined above
+- Additional Settings
+  - HMAC Key (HEX Encoded): click generate and copy it to
+    `FRONT_COMMERCE_ADYEN_HMAC_KEY` environment variable defined above
+
+## Enable Adyen's Stored Payment Methods (optional)
+
+You can opt for Adyen to store your customers' credit card information and allow
+a faster checkout experience by adding
+`FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS=true` in your `.env` file.
+
+If you are using the default Front-Commerce Adyen component, your customer
+should now be able to save their credit card information during checkout by
+checking the "Save for my next payment" checkbox.
+
+## Enable Paypal payments
+
+To enable PayPal payments, you need to
+[add PayPal payment method](https://docs.adyen.com/payment-methods/paypal/web-drop-in)
+in your Adyen account.
+
+## Enable Google Pay payments
+
+To enable Google Pay payments, you need to
+[add Google Pay payment method](https://docs.adyen.com/payment-methods/google-pay/web-drop-in)
+in your Adyen account.
+
+## Test it
+
+To make sure Adyen APIs are properly used, you can restart Front-Commerce with
+the `DEBUG` environment variable containing `front-commerce:payment:adyen` so
+that it displays various information on the requests:
+
+```bash title="Run Front-Commerce with Adyen's debug flag"
+DEBUG=front-commerce:payment:adyen pnpm run dev
+```
+
+After restarting Front-Commerce, you should be able to see the payment methods
+you have configured in your Adyen account at the "Payment" step of the checkout.
