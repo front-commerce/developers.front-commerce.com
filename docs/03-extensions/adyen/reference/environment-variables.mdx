@@ -1,0 +1,66 @@
+---
+title: "Environment variables"
+description:
+  "This reference lists environment variables used by the Adyen extension"
+sidebar_position: 1
+---
+
+<p>{frontMatter.description}</p>
+
+## Debug
+
+This extension will output some debug information when Front-Commerce is ran
+with the `DEBUG` environment variable containing `front-commerce:payment:adyen`.
+
+## Required environment variables
+
+### When using the Magento2 Adyen module
+
+- `FRONT_COMMERCE_ADYEN_CLIENT_KEY`: The environment variable which contains
+  [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication)
+  for the domains of your Front-Commerce stores. You can find it in your Adyen
+  Customer Area under Developers > API Credential >
+  \[your_prefered_credential\] > Client Key > Client Key
+- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS`: (optional) (more on
+  [Adyen's Stored Payment Methods](/docs/2.x/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional)).
+  If you want to enable Adyen's Stored Payment Methods (Tokenization).
+- `FRONT_COMMERCE_ADYEN_MAGENTO_MODULE_VERSION`: The version of the Magento2
+  Adyen module you use. You can find it in your magento backend, under
+  `Stores > Configuration > Sales > Payment Methods > Adyen Payments > Documentation and Support`.
+
+### When using Adyen as Front-Commerce payment
+
+- `FRONT_COMMERCE_ADYEN_MERCHANT_ACCOUNT`: The merchant account name. You can
+  find it in your Adyen Customer Area in the top left corner next to your
+  company name
+- `FRONT_COMMERCE_ADYEN_CLIENT_KEY`: The environment variable which contains
+  [your Adyen client key](https://docs.adyen.com/development-resources/client-side-authentication)
+  for the domains of your Front-Commerce stores. You can find it in your Adyen
+  Customer Area under Developers > API Credential >
+  \[your_prefered_credential\] > Client Key > Client Key
+- `FRONT_COMMERCE_ADYEN_API_KEY`: The API key. You can find it in your Adyen
+  Customer Area under Developers > API Credential >
+  \[your_prefered_credential\] > API Key > API Key
+- `FRONT_COMMERCE_ADYEN_LIVE_URL_PREFIX`: only needed in production environment.
+  Should be configured to contain
+  [the Adyen live URL prefix](https://docs.adyen.com/development-resources/live-endpoints#live-url-prefix)
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_USERNAME`: (more on
+  [webhooks below](/docs/2.x/advanced/payments/adyen#add-webhook)) you create
+  it. You then have to copy it to the webhook section in your Adyen Customer
+  Area under Developers > Webhooks > \[your_prefered_webhook\] >
+  Authentication > User Name
+- `FRONT_COMMERCE_ADYEN_NOTIFICATION_PASSWORD`: (more on
+  [webhooks below](/docs/2.x/advanced/payments/adyen#add-webhook)) you create
+  it. You then have to copy it to the webhook section in your Adyen Customer
+  Area under Developers > Webhooks > \[your_prefered_webhook\] >
+  Authentication > Password
+- `FRONT_COMMERCE_ADYEN_HMAC_KEY`: (more on
+  [webhooks below](/docs/2.x/advanced/payments/adyen#add-webhook)) create it
+  from the webhook section in your Adyen Customer Area under Developers >
+  Webhooks > \[your_prefered_webhook\] > Additional Settings > HMAC key
+- `FRONT_COMMERCE_ADYEN_PREVIOUS_HMAC_KEY`: (more on
+  [webhooks below](/docs/2.x/advanced/payments/adyen#add-webhook)) when you
+  regenerate your HMAC key configure this to be the old one
+- `FRONT_COMMERCE_ADYEN_STORE_PAYMENT_DETAILS`: (optional) (more on
+  [Adyen's Stored Payment Methods](/docs/2.x/advanced/payments/adyen#enable-adyens-stored-payment-methods-optional)).
+  If you want to enable Adyen's Stored Payment Methods (Tokenization).
