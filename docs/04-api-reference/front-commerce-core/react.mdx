@@ -203,7 +203,10 @@ function AcmePage() {
 
 ## `usePublicConfig`
 
-Returns the public config of the Front-Commerce instance.
+Returns the public configuration of the Front-Commerce instance within a React
+component. This hook is designed to be used inside React components where you
+need to access the global configuration. It ensures the component re-renders
+when the configuration changes.
 
 ```tsx
 import { usePublicConfig } from "@front-commerce/core/react";
@@ -211,6 +214,7 @@ import { usePublicConfig } from "@front-commerce/core/react";
 function PasswordHint() {
   const publicConfig = usePublicConfig();
 
+  // Hide password hint button based on the public configuration
   if (publicConfig?.publicConfig?.password?.disablePasswordHint) {
     return null;
   }
@@ -219,21 +223,40 @@ function PasswordHint() {
 }
 ```
 
+:::note
+
+Prefer using `usePublicConfig` in React components to automatically handle
+updates to the configuration. It's the recommended approach to maintain
+reactiveness and consistency within your component tree.
+
+:::
+
 ## `getPublicConfig`
 
-The same as `usePublicConfig` it returns the public config of the Front-Commerce
-instance, this can be used outside of a react scope.
+Similar to `usePublicConfig`, this function returns the public configuration of
+the Front-Commerce instance. However, it's designed for use outside of React
+components, such as in utility functions or server-side logic where React's hook
+system is not available.
 
 ```tsx
 import { getPublicConfig } from "@front-commerce/core/react";
 
 const publicConfig = getPublicConfig();
 
-function PasswordHint() {
-  if (publicConfig?.publicConfig?.password?.disablePasswordHint) {
-    return null;
+function validatePasswordStrength(password) {
+  if (publicConfig?.publicConfig?.password?.strongPasswordRequired) {
+    // Perform strong password validation
+  } else {
+    // Perform basic password validation
   }
-
-  return <button>👁️</button>;
 }
 ```
+
+:::note
+
+Use `getPublicConfig` as a last resort or in scenarios where React's context is
+not applicable. It's ideal for server-side rendering, utility functions, or any
+non-React part of your application. This method will not trigger re-renders in
+React components.
+
+:::
