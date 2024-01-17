@@ -160,3 +160,33 @@ export const action = ({ context }: ActionFunctionArgs) => {
   // your action logic here
 };
 ```
+
+### `app.config`
+
+Exposes the configurations from the ConfigProviders, see
+[Inject Configurations](/docs/3.x/guides/configuration) for more information.
+
+```ts
+import { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+export const loader = ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  const currentShopId = app.config.currentShopId;
+  // highlight-end
+
+  // your loader logic here
+};
+
+export const action = ({ context }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  const currentShopId = app.config.currentShopId;
+  // highlight-end
+
+  // your action logic here
+};
+```

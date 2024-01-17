@@ -17,6 +17,23 @@ const noIndex = process.env.CONTEXT !== "production";
 const LAST_VERSION = "current";
 const LAST_VERSION_URL = LAST_VERSION === "current" ? "3.x" : LAST_VERSION;
 
+// Used to reverse the Migration Guide items so that the latest version is on top.
+function reverseSidebarItems(items) {
+  const result = items.map((item) => {
+    if (item.type === "category") {
+      if (item.label === "Upgrade") {
+        return { ...item, items: reverseSidebarItems(item.items) };
+      }
+      if (item.label === "Migration guides") {
+        return { ...item, items: item.items.reverse() };
+      }
+    }
+    return item;
+  });
+
+  return result;
+}
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Front-Commerce Developers",
@@ -66,6 +83,13 @@ const config = {
               path: "2.x",
               banner: "none",
             },
+          },
+          async sidebarItemsGenerator({
+            defaultSidebarItemsGenerator,
+            ...args
+          }) {
+            const sidebarItems = await defaultSidebarItemsGenerator(args);
+            return reverseSidebarItems(sidebarItems);
           },
         },
         blog: {
