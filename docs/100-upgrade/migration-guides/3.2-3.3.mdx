@@ -1,0 +1,122 @@
+---
+title: 3.2 -> 3.3
+sidebar_position: 98 # decrease for each release
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.2
+  to 3.3.
+---
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/\*@3.3.0"
+```
+
+## Code changes
+
+### Remix entrypoints
+
+In this release, we added new features that required to hook into your Remix
+application entrypoints created with the initial skeleton. You must update this
+file in your application as detailed below or copy the one from the latest
+skeleton.
+
+<details>
+  <summary><code>entry.server.ts</code> file</summary>
+
+```diff
+diff --git a/skeleton/app/entry.server.tsx b/skeleton/app/entry.server.tsx
+index 297a34fa2..8012fda4c 100644
+--- a/skeleton/app/entry.server.tsx
++++ b/skeleton/app/entry.server.tsx
+@@ -89,10 +89,10 @@ function handleBotRequest(
+             headers: responseHeaders,
+             status: responseStatusCode,
+           });
+-          transformBotResponse(response, loadContext.frontCommerce);
+-          resolve(response);
+-
+-          pipe(body);
++          transformBotResponse(response, loadContext.frontCommerce).then(() => {
++            resolve(response);
++            pipe(body);
++          });
+         },
+         onShellError(error: unknown) {
+           reject(error);
+@@ -143,10 +143,12 @@ function handleBrowserRequest(
+             headers: responseHeaders,
+             status: responseStatusCode,
+           });
+-          transformBrowserResponse(response, loadContext.frontCommerce);
+-          resolve(response);
+-
+-          pipe(body);
++          transformBrowserResponse(response, loadContext.frontCommerce).then(
++            () => {
++              resolve(response);
++              pipe(body);
++            }
++          );
+         },
+         onShellError(error: unknown) {
+           reject(error);
+@@ -162,10 +164,10 @@ function handleBrowserRequest(
+   });
+ }
+
+-export function handleDataRequest(
++export async function handleDataRequest(
+   response: Response,
+   { context }: DataFunctionArgs
+ ) {
+-  transformDataResponse(response, context.frontCommerce);
++  await transformDataResponse(response, context.frontCommerce);
+   return response;
+ }
+```
+
+</details>
+
+### Automatic session cookie headers
+
+In this release, we added a feature that will automatically set the `Set-Cookie`
+header for the session cookie when the user session needs to be commited.
+
+<details>
+
+<summary>
+  <code>app/routes/my-route.ts</code> file
+</summary>
+
+```diff title="app/routes/my-route.ts"
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { json } from "@front-commerce/remix/node";
+import { MyQuery } from "~/graphql/graphql";
+
+const loader = async ({ context, request }) => {
+    const app = new FrontCommerceApp(context.frontCommerce);
+
+    const data = app.query(MyQuery);
+-    return json(data, {
+-        headers: {
+-            "Set-Cookie": await app.user.session.commit(),
+-        },
+-    });
++    return json(data);
+}
+```
+
+</details>
+
+:::caution
+
+Due to how the requests are handled by the current version of Remix, this will
+only work when creating response with `json()` without passing a second
+parameter.
+
+:::
