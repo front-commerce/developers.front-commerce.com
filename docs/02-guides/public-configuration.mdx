@@ -1,0 +1,143 @@
+---
+title: Extend and read public configurations
+description:
+  The public configuration is a set of configuration options that are available
+  to any user of the application, they are accessible both from the client and
+  the server.
+sidebar_position: 5
+---
+
+# Public Configuration
+
+<p>{frontMatter.description}</p>
+
+## Extending the public configuration
+
+To extend the public configuration please ensure you have read the
+[Inject configurations](/docs/3.x/guides/configuration) section.
+
+The public configuration can be extended by
+[injecting a config provider](/docs/3.x/guides/configuration) which exposes a
+`public` object in the schema, for example:
+
+```ts title="./my-extensions/acme-extension/configProvider.ts"
+export default {
+  name: "acme-config",
+  schema: () => ({
+    // it's import to extend the `public` object
+    public: {
+      acmeValue: {
+        doc: "The public api key for ACME",
+        format: String,
+        default: undefined,
+        env: "FRONT_COMMERCE_WEB_ACME_PUBLIC_KEY",
+      },
+    },
+  }),
+};
+```
+
+You can then add this to your
+[extension definition](/docs/3.x/api-reference/front-commerce-core/defineExtension):
+
+```ts title="./my-extensions/acme-extension/index.ts"
+import configProvider from "./configProvider";
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  // add-start
+  configuration: {
+    providers: [configProvider],
+  },
+  // add-end
+});
+```
+
+## Reading the custom public configuration
+
+You should now be able to access the value from the client or server as any
+other public configuration value.
+
+### From the Client
+
+To access the public configuration from the client you can use the
+[`usePublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#usepublicconfig)
+hook, or the
+[`getPublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#getpublicconfig)
+function.
+
+- The
+  [`usePublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#usepublicconfig)
+  hook is mainly used to access the public configuration from a React component.
+- The
+  [`getPublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#getpublicconfig)
+  function is used to access the public configuration from a non-React
+  component.
+
+:::tip advanced
+
+We additionally attached the public configuration to the
+`window.__FRONT_COMMERCE__.publicConfig` object.
+
+:::
+
+```tsx title="./my-extensions/acme-extension/theme/components/MyComponent.tsx"
+import { usePublicConfig } from "@front-commerce/core";
+
+const MyComponent = () => {
+  const { acmeValue } = usePublicConfig();
+
+  return <div>ACME value: {acmeValue}</div>;
+};
+```
+
+### From the Server
+
+You can access the public configuration from the server using the config from
+your
+[FrontCommerceApp](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app#appconfig)
+
+```ts title="./app/routes/my-route.ts"
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+export const loader = ({ context }: LoaderFunctionArgs) => {
+  // highlight-start
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const acmeValue = app.config.public.acmeValue;
+  // highlight-end
+
+  // do something
+};
+
+export const action = ({ context }: ActionFunctionArgs) => {
+  // highlight-start
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const acmeValue = app.config.public.acmeValue;
+  // highlight-end
+
+  // do something
+};
+```
+
+### From GraphQL resolvers
+
+You can access the public configuration from your GraphQL resolvers:
+
+```ts title="./app/graphql/resolvers/my-resolver.ts"
+import type { FrontCommerceContext } from "@front-commerce/core";
+import type { MyResolverArgs } from "../types";
+
+export default {
+  Query: {
+    myResolver: async (parent, args, context, info) => {
+      // highlight-next-line
+      const acmeValue = context.config.public.acmeValue;
+
+      // do something
+    },
+  },
+};
+```

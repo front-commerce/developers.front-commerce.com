@@ -1,14 +1,412 @@
 ---
 title: Inject configurations
 description:
-  This guide explains how to inject some configurations in Front-Commerce
+  Configuration is a part of software development that can quickly become messy.
+  Validation, detection, performance… there is a lot to take care of. In this
+  guide, we will see how Front-Commerce configuration works and how to create
+  new configurations or override existing ones.
 sidebar_position: 5
 ---
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+## What is a configuration provider?
 
-see https://developers.front-commerce.com/docs/2.x/advanced/server/configurations
+The goal is to give access to a configuration object that contains all the
+configuration of the store. This configuration object can contain any kind of
+configuration. It can be flags about a feature activation, some credentials to
+connect to a remote service, etc.
+
+However, not all applications will need every single configuration. For
+instance, a shop that chose to use [Algolia](https://www.algolia.com/) won't
+have the same configurations than a shop that chose
+[Elasticsearch](https://www.elastic.co/) for product search. The goal of the
+configuration providers is to define the configurations needed for the specific
+modules you use in your application.
+
+On server start, the configuration providers will then be combined to create the
+global configuration object. This configuration object will then be available on
+each server request.
+
+This can be illustrated by starting your Front-Commerce server in development
+mode. If your server is running on `http://localhost:3000` and you open the URL
+[`/__front-commerce/debug`](http://localhost:3000/__front-commerce/debug), you
+will have a dump of the configuration for this specific request under the
+section `config`.
+
+```json
+{
+  "allShops": {
+    "store:default": {
+      "id": "default",
+      "url": "http://localhost:3000",
+      "locale": "en-GB",
+      "magentoStoreCode": "default",
+      "currency": "EUR"
+    }
+  },
+  "currentShopId": "default",
+  "cache": {
+    "defaultMaxBatchSize": 100,
+    "strategies": [
+      {
+        "implementation": "Redis",
+        "supports": "*",
+        "disabledFor": [],
+        "config": {
+          "host": "localhost"
+        }
+      }
+    ]
+  },
+  "contentSecurityPolicy": {
+    "__dangerouslyDisable": false,
+    "directives": {
+      "scriptSrc": [],
+      "frameSrc": [],
+      "styleSrc": [],
+      "imgSrc": [],
+      "fontSrc": [],
+      "connectSrc": [],
+      "frameAncestors": [],
+      "baseUri": []
+    },
+    "reportOnly": {
+      "scriptSrc": false,
+      "frameSrc": false,
+      "styleSrc": false,
+      "imgSrc": false,
+      "fontSrc": false,
+      "frameAncestors": false,
+      "connectSrc": false
+    }
+  },
+  "cors": {
+    "origin": {
+      "referal-0": "http://magento23.test"
+    }
+  },
+  "device": {
+    "memoizationMaxAge": 60000,
+    "type": "pc",
+    "viewportWidthInPx": 1400
+  },
+  "public": {
+    "analytics": {
+      "disableDevWarning": false
+    },
+    "deprecations": {
+      "ignore": "",
+      "trace": ""
+    },
+    "compatEnv": {
+      "FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE": "true"
+    },
+    "password": {
+      "disableHint": false
+    }
+  },
+  "magento": {
+    "endpoint": "http://magento23.test",
+    "version": "2",
+    "proxiedPaths": []
+  }
+}
+```
+
+:::warning
+
+Don't activate this on a public instance as it can expose sensitive data.
+
+This will be activated if the `FRONT_COMMERCE_ENV` is not set to `production`.
+If you need to debug the values in a production environment rather use the
+`DEBUG=front-commerce:config` environment variable.
+
+:::
+
+## Configuration provider definition
+
+In practice, a configuration provider is an object with five properties: a
+`name`, a `schema`, static `values` (available independently from the request),
+a `slowValuesOnEachRequest` function to resolve values depending on the request
+and a `fetchRemoteConfiguration` function to fetch values remotely.
+
+```js
+const serviceConfigurationProvider = {
+  name,
+  schema,
+  values,
+  slowValuesOnEachRequest,
+  fetchRemoteConfiguration,
+};
+```
+
+See the sections below to understand what each key stands for.
+
+export function Label({ children }) {
+  return (
+    <span className="opacity-60 align-super text-xs">
+      <i>{children}</i>
+    </span>
+  );
+}
+
+### `name` <Label>(mandatory)</Label>
+
+The identifier of the configuration provider. This is needed for configuration
+providers' registration. See
+[Inject a configuration provider](#inject-a-configuration-provider) for more
+details.
+
+```js
+const name = "serviceProvider";
+```
+
+### `schema` <Label>(optional)</Label>
+
+It's a function returning an object representing the definition of the fields
+that will appear in the global configuration object if the configuration
+provider is registered. It can define things like field formats, default values
+or environment variables.
+
+The schema definition is based on
+[convict](https://github.com/mozilla/node-convict), a library developed by
+Mozilla to validate configurations. For a single field, the schema will have
+these keys:
+
+- `doc` (string): A description of the field and pointers to learn how to get
+  its value if it requires a manual operation
+- `format` (string, array or function): The formatter used for this field's
+  value. See
+  [how validation works in convict](https://github.com/mozilla/node-convict#validation).
+- `default` (any): A default value. If you don't have a default value, you still
+  have to set one by using the `null`. If there is no default value, it won't be
+  considered as a field definition.
+- `env` (string, optional): The name of the environment variable that should be
+  used as the value. If none is given, the configuration won't be configurable
+  by environment. Please keep in mind that environment variables should still
+  match
+  [Front-Commerce's naming convention](/docs/2.x/reference/environment-variables#add-your-own-environment-variables).
+
+Thus, if we want to define a configuration named `serviceKey` available in
+`req.config.serviceKey` that would take its value from the environment variable
+`FRONT_COMMERCE_SERVICE_KEY`, we would use this schema definition:
+
+```js
+const schema = () => ({
+  serviceKey: {
+    doc: "The key to get access to our remote service",
+    format: String,
+    default: null,
+    env: "FRONT_COMMERCE_SERVICE_KEY",
+  },
+});
+```
+
+A configuration provider's schema is not limited to a single field though. You
+can set multiple configuration keys but also nest deeper objects. For instance,
+if we want to group a `key` and a `secret` into a single `service` key, we would
+write the following schema:
+
+```js
+const schema = () => ({
+  service: {
+    key: {
+      doc: "The key to get access to our remote service",
+      format: String,
+      default: null,
+      env: "FRONT_COMMERCE_SERVICE_KEY",
+    },
+    secret: {
+      doc: "The secret to get access to our remote service",
+      format: String,
+      default: null,
+      env: "FRONT_COMMERCE_SERVICE_SECRET",
+    },
+  },
+});
+```
+
+You could then access the values with `req.config.service.key` or
+`req.config.service.secret`.
+
+Please note that if another configuration provider's schema also defined a
+`service` key, it would merge the definitions and in your final
+`req.config.service` you would have both the keys from the other configuration
+provider's schema and from the above schema.
+
+### `values` <Label>(optional)</Label>
+
+Most of the time `default` values in the schema is sufficient. However, in some
+cases you may need to fetch some values from an API, a dynamic file, etc. This
+is what `values` is for.
+
+It is an optional promise that should return the missing values in your schema.
+It will override default values and env values from the schema with the new
+values. However only keys from the `values` result will take precedence, the
+default values and env values will be kept for other keys. For instance, if we
+implemented the following `values` promise, the `secret` would still be
+`process.env.FRONT_COMMERCE_SERVICE_SECRET` from the above schema.
+
+```js
+const values = fetch("https://api.example.com/my-service-key")
+  .then((response) => response.json())
+  .then((key) => ({
+    service: {
+      key: key,
+    },
+  }));
+```
+
+Please note that this promise is launched only once on server bootstrap. If the
+configuration changes over time on your API, the `req.config.service.key` value
+will still be the same.
+
+If it needs to change over time, please use `slowValuesOnEachRequest` or
+`fetchRemoteConfiguration` instead.
+
+### `slowValuesOnEachRequest` <Label>(optional)</Label>
+
+:::note
+
+`slowValuesOnEachRequest` is a low level API in Front-Commerce. You shouldn't be
+need it in most cases.
+
+:::
+
+`slowValuesOnEachRequest` is a function that extracts configuration values from
+the current request. For instance, depending on the URL, the configuration
+`currentShopId` will get a different id and thus display different information.
+
+```js
+const slowValuesOnEachRequest = (req) => {
+  const url = req.originalUrl;
+  const shopId = getShopIdFromUrl(url);
+  return {
+    currentShopId: shopId,
+  };
+};
+```
+
+:::caution
+
+This part is named `slowValuesOnEachRequest` because we want to stress the fact
+that it can have a huge impact on your website performance. Avoid its usage as
+much as you can and try to use `values` instead. If this is the only way to
+setup your configuration make sure to memoize its result to limit the
+performance impact as much as possible.
+
+```js
+import memoize from "lodash/memoize";
+
+const getShopIdFromHostname = memoize((hostname) => {
+  /* The definition of the `currentShopId` variable should live here */
+  return {
+    currentShopId: currentShopId,
+  };
+});
+
+const slowValuesOnEachRequest = (req) => {
+  const hostname = req.hostname;
+  return getShopIdFromHostname(req.hostname);
+};
+```
+
+:::
+
+### `fetchRemoteConfiguration` <Label>(optional)</Label>
+
+:::note
+
+`fetchRemoteConfiguration` is a low level API in Front-Commerce. You shouldn't
+need it in most cases.
+
+:::
+
+`fetchRemoteConfiguration` is a function that is called at a later stage in
+Front-Commerce request handling cycle to receive a fully initialized `request`
+object, so that, for instance,
+[you can instantiate a loader to retrieve some configuration from Magento](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f57ccabae32ebe6243fc213485078cb1f98f8a30#9e3c152a167c50222b152728db1b5946d409ba89_0_29).
+
+:::caution
+
+Like `slowValuesOnEachRequest`, `fetchRemoteConfiguration` can have a huge
+impact on the performances. If you really need to implement it, please make sure
+to memoize its result to limit the performance impact as much as possible.
+
+:::
+
+## Inject a configuration provider
+
+Assuming that we have defined the following configuration provider:
+
+```ts title="./config-providers/acmeConfigProvider.ts"
+export default {
+  name: "acme-config",
+  schema: () => ({
+    service: {
+      key: {
+        doc: "The key to get access to our remote service",
+        format: String,
+        default: null,
+        env: "FRONT_COMMERCE_SERVICE_KEY",
+      },
+      secret: {
+        doc: "The secret to get access to our remote service",
+        format: String,
+        default: null,
+        env: "FRONT_COMMERCE_SERVICE_SECRET",
+      },
+    },
+  }),
+};
+```
+
+### From your application configuration
+
+You can add the configuration to your
+[`front-commerce.config.ts`](/docs/3.x/api-reference/front-commerce-core/config)
+file.
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+// add-next-line
+import acmeConfigProvider from "./config-providers/acmeConfigProvider";
+
+export default defineConfig({
+  extensions: [themeChocolatine()],
+  // add-start
+  configuration: {
+    providers: [acmeConfigProvider],
+  },
+  // add-end
+});
+```
+
+### From an extension
+
+Alternatively, you can add a configuration provider from an extension in the
+[extensions definition](/docs/3.x/api-reference/front-commerce-core/defineExtension).
+
+```ts title="./acme-extension.ts"
+import { defineExtension } from "@front-commerce/core";
+// add-next-line
+import acmeConfigProvider from "./config-providers/acmeConfigProvider";
+
+export default defineExtension({
+  name: "acme-extension",
+  // add-start
+  configuration: {
+    providers: [acmeConfigProvider],
+  },
+  // add-end
+});
+```
+
+:::info
+
+You can learn more about extensions in the
+[Register an extensions](/docs/3.x/guides/register-an-extension) guide.
 
 :::
