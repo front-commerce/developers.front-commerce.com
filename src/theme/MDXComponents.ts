@@ -9,6 +9,7 @@ import BrowserWindow from "@site/src/components/BrowserWindow";
 import Calendly from "@site/src/components/Calendly";
 import Description from "@site/src/components/Description";
 import BackportList from "@site/src/components/BackportList";
+import ReleaseSchedule from "@site/src/components/ReleaseSchedule";
 
 export default {
   ...MDXComponents,
@@ -20,4 +21,5 @@ export default {
   Calendly,
   Description,
   BackportList,
+  ReleaseSchedule,
 };
