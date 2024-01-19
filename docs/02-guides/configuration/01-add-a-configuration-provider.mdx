@@ -1,11 +1,8 @@
 ---
-title: Inject configurations
+title: Adding a configuration provider
 description:
-  Configuration is a part of software development that can quickly become messy.
-  Validation, detection, performance… there is a lot to take care of. In this
-  guide, we will see how Front-Commerce configuration works and how to create
-  new configurations or override existing ones.
-sidebar_position: 5
+  Discover how configuration providers customize your app's settings, ensuring
+  efficient and tailored functionality for every server request.
 ---
 
 <p>{frontMatter.description}</p>
@@ -43,9 +40,23 @@ section `config`.
       "locale": "en-GB",
       "magentoStoreCode": "default",
       "currency": "EUR"
+    },
+    "store:fr": {
+      "id": "fr",
+      "url": "http://fr.localhost:3000",
+      "locale": "fr-FR",
+      "magentoStoreCode": "fr",
+      "currency": "EUR"
     }
   },
   "currentShopId": "default",
+  "shop": {
+    "id": "default",
+    "url": "http://localhost:3000",
+    "locale": "en-GB",
+    "magentoStoreCode": "default",
+    "currency": "EUR"
+  },
   "cache": {
     "defaultMaxBatchSize": 100,
     "strategies": [
@@ -104,6 +115,12 @@ section `config`.
     },
     "password": {
       "disableHint": false
+    }
+    "shop":{
+      "id": "default",
+      "url": "http://localhost:3000",
+      "locale": "en-GB",
+      "currency": "EUR"
     }
   },
   "magento": {
