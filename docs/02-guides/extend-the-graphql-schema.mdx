@@ -28,7 +28,7 @@ create an extension. An extension can be created by adding a new folder under
 `extensions` and by creating a `index.ts` file (the extension definition) with
 the following content:
 
-```typescript title="extensions/click-counter/index.ts"
+```typescript title="example-extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
 
 export default function clickCounter() {
@@ -53,9 +53,9 @@ to the extension containing a schema and some resolvers.
 ### Add an empty GraphQL module
 
 For that, you can create the GraphQL module definition in the file
-`extensions/click-counter/graphql/index.ts` with the following content:
+`example-extensions/click-counter/graphql/index.ts` with the following content:
 
-```typescript title="extensions/click-counter/graphql/index.ts"
+```typescript title="example-extensions/click-counter/graphql/index.ts"
 export default {
   namespace: "ClickCounter",
 };
@@ -67,7 +67,7 @@ and that does nothing for now.
 Then, the extension needs to declare that it provides a GraphQL module by
 modifying the extension's index.ts:
 
-```typescript title="Changes to extensions/click-counter/index.ts"
+```typescript title="Changes to example-extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
 
 export default function clickCounter() {
@@ -78,7 +78,7 @@ export default function clickCounter() {
     },
     // highlight-start
     graphql: {
-      unstable_module: "./extensions/click-counter/graphql",
+      unstable_module: "./example-extensions/click-counter/graphql",
     },
     // highlight-end
   });
@@ -123,7 +123,7 @@ For that file to be taken into account, the extension needs to declare that it
 provides one or several schema file by modifying the
 `extension/click-counter/index.ts`:
 
-```typescript title="Changes to extensions/click-counter/index.ts"
+```typescript title="Changes to example-extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
 
 export default function clickCounter() {
@@ -134,8 +134,8 @@ export default function clickCounter() {
     },
     graphql: {
       // highlight-next-line
-      schema: ["./extensions/click-counter/graphql/schema.gql"],
-      unstable_module: "./extensions/click-counter/graphql",
+      schema: ["./example-extensions/click-counter/graphql/schema.gql"],
+      unstable_module: "./example-extensions/click-counter/graphql",
     },
   });
 }
@@ -144,7 +144,7 @@ export default function clickCounter() {
 :::tip
 
 The `schema` can also be a be a globby pattern, for instance
-`./extensions/click-counter/graphql/*.gql`.
+`./example-extensions/click-counter/graphql/*.gql`.
 
 :::
 
@@ -204,7 +204,7 @@ To learn more about resolvers and their internals, we recommend reading
 
 First, let's update the module definition as follow:
 
-```typescript title="Changes to extensions/click-counter/graphql/index.ts"
+```typescript title="Changes to example-extensions/click-counter/graphql/index.ts"
 // highlight-next-line
 import resolvers from "./resolvers";
 
@@ -217,7 +217,7 @@ export default {
 
 And then create the `resolvers.ts` file with a resolver map as below:
 
-```typescript title="extensions/click-counter/graphql/resolvers.ts"
+```typescript title="example-extensions/click-counter/graphql/resolvers.ts"
 export default {
   Product: {
     clickCounter: (product) => {
@@ -250,7 +250,7 @@ playground.
 As stated above, a resolver function can also return a Promise and thus handle
 asynchronous result. A more real life resolver map would like look like:
 
-```typescript title="extensions/click-counter/graphql/resolvers.ts"
+```typescript title="example-extensions/click-counter/graphql/resolvers.ts"
 export default {
   Product: {
     clickCounter: (product) => {
