@@ -41,9 +41,3 @@ extension points.
   > [passport-apple](https://www.npmjs.com/package/passport-apple) and following
   > [Front-Commerce documentation](/docs/2.x/advanced/features/external-logins/)
 
-## Help our community grow
-
-Because we are not yet world renowned, please help us by inviting all your friends to join our community here and on Slack.
-
-[Share this link to our private Slack - you never know, we might accept your request](https://front-commerce.slack.com/join/shared_invite/)
-
