@@ -40,3 +40,7 @@ extension points.
   > Implement the external login with Apple in your Front-Commerce project using
   > [passport-apple](https://www.npmjs.com/package/passport-apple) and following
   > [Front-Commerce documentation](/docs/2.x/advanced/features/external-logins/)
+
+## Test
+
+This is a _test_ **bold** and a [link](https://google.com)
