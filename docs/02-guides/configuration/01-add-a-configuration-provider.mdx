@@ -131,13 +131,15 @@ section `config`.
 }
 ```
 
-:::warning
+:::tip
 
-Don't activate this on a public instance as it can expose sensitive data.
+When the `FRONT_COMMERCE_ENV` environment is not set to `production`, for
+example in a staging environment, the configuration will still be available in
+the `__front-commerce/debug` page, but the page will be secured with a token
+configurable with the `FRONT_COMMERCE_DEBUG_TOKEN` environment variable.
 
-This will be activated if the `FRONT_COMMERCE_ENV` is not set to `production`.
-If you need to debug the values in a production environment rather use the
-`DEBUG=front-commerce:config` environment variable.
+Then you can access the endpoint with the token in the URL:
+`/__front-commerce/debug?token=your-token`.
 
 :::
 
