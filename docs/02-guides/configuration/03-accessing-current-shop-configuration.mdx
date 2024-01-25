@@ -1,0 +1,141 @@
+---
+title: Accessing current shop configuration
+description:
+  Explore how to access the shop's current configuration to adapt your
+  application to the current context. It is exposed in the configuration `shop`
+  keys.
+---
+
+## From the Client <small>(_Public_)</small>
+
+The current shop configuration can be accessed from the client using the
+[public configuration](/docs/3.x/guides/configuration/public-configuration).
+
+:::note
+
+The public shop configuration (`config.public.shop`) is a subset of the private
+shop configuration (`config.shop`).
+
+This will only contain information that can be exposed to the client.
+
+:::
+
+```mdx-code-block
+<Tabs>
+<TabItem value="React Hook">
+```
+
+To learn more see
+[`usePublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#usepublicconfig)
+documentation.
+
+```ts
+import { usePublicConfig } from "@front-commerce/core/react";
+
+const MyComponent = () => {
+  const { shop } = usePublicConfig();
+
+  return (
+    <div>
+      <h1>{shop.id}</h1>
+      <p>{shop.locale}</p>
+    </div>
+  );
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Utility Function">
+```
+
+To learn more see
+[`getPublicConfig`](/docs/3.x/api-reference/front-commerce-core/react#getpublicconfig)
+documentation.
+
+```ts
+import { getPublicConfig } from "@front-commerce/core/react";
+
+const myFunction = () => {
+  const publicConfig = getPublicConfig();
+
+  return {
+    id: publicConfig.shop.id,
+    locale: publicConfig.shop.locale,
+  };
+};
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+## From the Server <small>(_Private_)</small>
+
+The current shop configuration can be accessed from the client using the
+[app configuration](/docs/3.x/guides/configuration/add-a-configuration-provider).
+
+:::note
+
+The private shop configuration (`config.shop`) is a superset of the public shop
+configuration (`config.public.shop`).
+
+This can contain additional information that should not be exposed to the
+client.
+
+:::
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Remix Loader">
+```
+
+```ts
+import type { LoaderFunctionArgs } from "@remix-run/node";
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Remix Action">
+```
+
+```ts
+import type { ActionFunctionArgs } from "@remix-run/node";
+
+export const action = async ({ context }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="GraphQL Resolver">
+```
+
+```ts
+export default {
+  Query: {
+    myQuery: async (parent, args, context, info) => {
+      // add-next-line
+      const currentShopConfig = context.config.shop;
+      // ...
+    },
+  },
+};
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```

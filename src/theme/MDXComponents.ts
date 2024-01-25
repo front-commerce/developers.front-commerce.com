@@ -10,6 +10,8 @@ import Calendly from "@site/src/components/Calendly";
 import Description from "@site/src/components/Description";
 import BackportList from "@site/src/components/BackportList";
 import ReleaseSchedule from "@site/src/components/ReleaseSchedule";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 export default {
   ...MDXComponents,
@@ -22,4 +24,6 @@ export default {
   Description,
   BackportList,
   ReleaseSchedule,
+  Tabs,
+  TabItem,
 };
