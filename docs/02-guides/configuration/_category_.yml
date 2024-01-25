@@ -1,0 +1,9 @@
+label: Configuration
+position: 91
+link:
+  type: generated-index
+  description:
+    Configuration is a part of software development that can quickly become messy.
+    Validation, detection, performance… there is a lot to take care of. In this
+    guide, we will see how Front-Commerce configuration works and how to create
+    new configurations or override existing ones.

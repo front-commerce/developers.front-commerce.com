@@ -92,12 +92,28 @@ index 297a34fa2..8012fda4c 100644
 
 ```diff
 diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
-index a28dcf87e..9030e925f 100644
+index a28dcf87e..68e788d96 100644
 --- a/skeleton/app/root.tsx
 +++ b/skeleton/app/root.tsx
-@@ -37,14 +37,7 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
+@@ -21,30 +21,15 @@ import {
+ import { usePageProgress } from "theme/components/helpers/usePageProgress";
+ import "theme/main.css";
+ import config from "~/config/website";
+-import { AppQueryDocument } from "~/graphql/graphql";
+ import { LiveReload, useSWEffect } from "@remix-pwa/sw";
+ import manifest from "~/manifest";
+
+ export const loader = async ({ context }: LoaderFunctionArgs) => {
+   const app = new FrontCommerceApp(context.frontCommerce);
+
+-  const response = await app.graphql.query(AppQueryDocument);
+-
+-  if (!response.shop) {
+-    throw new Response("", { status: 500, statusText: "Shop not found" });
+-  }
+-
    return json({
-     shop: response.shop,
+-    shop: response.shop,
      device: app.config.device,
 -    process: {
 -      env: {
@@ -199,7 +215,44 @@ const example = {
 We highly suggest that you move any of your custom values to a new config
 provider which extends the `public` schema.
 
-See [Public configurations documentation](/docs/3.x/guides/public-configuration)
+See
+[Public configurations documentation](/docs/3.x/guides/configuration/public-configuration)
 for more details.
 
 :::
+
+### Deprecate `getCurrentShopConfig` usage
+
+In this version we have deprecated the usages of `getCurrentShopConfig` in favor
+`config.shop`, the function has been moved to
+`@front-commerce/compat/shop/getShopConfig` for compatibility reasons, but we
+suggest you to use `config.shop` instead.
+
+```ts
+// from a loader
+export const loader = async ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+
+// from an action
+export const action = async ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+
+// from a graphql resolver
+export default {
+  Query: {
+    myQuery: async (parent, args, context, info) => {
+      // add-next-line
+      const currentShopConfig = context.config.shop;
+      // ...
+    },
+  },
+};
+```
