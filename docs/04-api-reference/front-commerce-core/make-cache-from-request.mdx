@@ -1,0 +1,64 @@
+---
+title: "makeCacheFromRequest"
+sidebar_position: 5
+description: "The makeCacheFromRequest allows to cache response for a request."
+---
+
+<p>{frontMatter.description}</p>
+
+## Usage
+
+```js
+makeCacheFromRequest(request, cacheImplementation);
+```
+
+Arguments:
+
+- `request`: The request to cache
+- `cacheImplementation`: The cache implementation to use (see
+  [Cache implementation](#cache-implementation) for more details about caching)
+
+This method will returns you an object to manipulate cache for your request
+
+## Return
+
+### `makeDataLoader`
+
+Make a data loader that will cache request response data
+
+_Example_
+
+```ts
+import makeCacheFromRequest, {
+  getAllImplementations,
+} from "@front-commerce/core/cache";
+import { makeUserClientFromRequest } from "../factories";
+
+const fetchAcmeConfiguration = (request) => {
+  const axiosInstance = makeUserClientFromRequest(request);
+  const cache = makeCacheFromRequest(request, getAllImplementations());
+  const AcmeConfiguration = AcmeConfigurationLoader(cache.makeDataLoader)(
+    axiosInstance
+  );
+  // Rest of your code...
+};
+```
+
+### `invalidate`
+
+Invalidates the cache.
+
+_Example_
+
+```ts
+import makeCacheFromRequest, {
+  getAllImplementations,
+} from "@front-commerce/core/cache";
+
+const getAcmeConfiguration = async (request) => {
+  const cache = makeCacheFromRequest(request, getAllImplementation());
+  const body = await request.json();
+  cache.invalidate(body);
+  // Rest of your code....
+};
+```
