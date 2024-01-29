@@ -61,3 +61,69 @@ FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET=xxxxxxxxx
 ```
+
+## Feature Flags
+
+<details>
+<summary>The Magento 1 extension supports the following feature flags: <strong>Click to expand.</strong></summary>
+
+- `Cart` (default: `true`) - Enable the cart feature
+- `Catalog` (default: `true`) - Enable the catalog feature
+- `Checkout` (default: `true`) - Enable the checkout feature
+- `Cms` (default: `true`) - Enable the CMS feature
+- `CmsSearch` (default: `true`) - Enable the CMS search feature
+- `Configuration` (default: `true`) - Enable the Configuration feature
+- `Contact` (default: `true`) - Enable the contact feature
+- `Customer` (default: `true`) - Enable the customer feature
+- `DownloadableProduct` (default: `true`) - Enable the downloadable product
+  feature
+- `InStockAlert` (default: `true`) - Enable the in stock alert feature
+- `Invoice` (default: `true`) - Enable the invoice feature
+- `MagentoAdmin` (default: `true`) - Enable the Magento admin feature
+- `Order` (default: `true`) - Enable the order feature
+- `Refund` (default: `true`) - Enable the refund feature
+- `Reviews` (default: `true`) - Enable the reviews feature
+- `Store` (default: `true`) - Enable the store feature
+- `Wishlist` (default: `true`) - Enable the wishlist feature
+- `Wysiwyg` (default: `true`) - Enable the WYSIWYG feature
+
+</details>
+
+All these features are active by default. To disable a feature you should return
+a falsy value for the feature flag in your extension options:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento1 from "@front-commerce/magento1";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    magento1({
+      storesConfig
+      // add-start
+      features: {
+        Contact: false, // Contact feature will be disabled
+        Refund: false, // Refund feature will be disabled
+        Reviews: false, // Reviews feature will be disabled
+        // all other features will be enabled by default
+      },
+      // add-end
+    }),
+    themeChocolatine(),
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+:::tip
+
+If a feature is not defined in the feature flags, it will be enabled by default.
+
+:::
