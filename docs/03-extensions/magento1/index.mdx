@@ -31,7 +31,7 @@ import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
-  extensions: [magento1(storesConfig), themeChocolatine()],
+  extensions: [magento1({ storesConfig }), themeChocolatine()],
   stores: storesConfig,
   cache: cacheConfig,
   configuration: {

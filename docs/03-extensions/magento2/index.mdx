@@ -37,7 +37,7 @@ import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
-  extensions: [magento2(storesConfig), themeChocolatine()],
+  extensions: [magento2({ storesConfig }), themeChocolatine()],
   stores: storesConfig,
   cache: cacheConfig,
   configuration: {
@@ -55,4 +55,3 @@ FRONT_COMMERCE_MAGENTO2_CONSUMER_SECRET=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN=xxxxxxxxx
 FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN_SECRET=xxxxxxxxx
 ```
-
