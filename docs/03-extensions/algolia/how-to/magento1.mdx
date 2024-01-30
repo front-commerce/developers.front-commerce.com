@@ -58,7 +58,7 @@ export default defineConfig({
   extensions: [
     // highlight-next-line
     algolia("magento1"), // ⚠️ need to be before magento1()
-    magento1(storesConfig),
+    magento1({ storesConfig }),
     themeChocolatine(),
   ],
   stores: storesConfig,

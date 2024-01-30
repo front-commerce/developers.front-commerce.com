@@ -50,7 +50,7 @@ export default defineConfig({
   extensions: [
     // highlight-next-line
     algolia("magento2"), // ⚠️ need to be before magento2()
-    magento2(storesConfig),
+    magento2({ storesConfig }),
     themeChocolatine(),
   ],
   stores: storesConfig,

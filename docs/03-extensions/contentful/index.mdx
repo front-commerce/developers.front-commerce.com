@@ -69,7 +69,7 @@ import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
   extensions: [
-    magento2(storesConfig),
+    magento2({ storesConfig }),
     themeChocolatine(),
     // add-next-line
     contentful(),

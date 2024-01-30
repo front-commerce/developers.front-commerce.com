@@ -28,7 +28,7 @@ const adyenFlavor = "front-commerce-magento2"; // or "front-commerce-magento1"
 
 export default defineConfig({
   extensions: [
-    magento2(storesConfig),
+    magento2({ storesConfig }),
     themeChocolatine(),
     // highlight-next-line
     adyen(adyenFlavor), // ⚠️ need to be after themeChocolatine()

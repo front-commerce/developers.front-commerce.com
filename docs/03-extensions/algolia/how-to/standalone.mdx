@@ -26,7 +26,7 @@ export default defineConfig({
   extensions: [
     // highlight-next-line
     algolia("standalone"), // ⚠️ need to be before magento2() or magento1()
-    magento2(storesConfig), // or magento1()
+    magento2({ storesConfig }), // or magento1()
     themeChocolatine(),
   ],
   stores: storesConfig,
