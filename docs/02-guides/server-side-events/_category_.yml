@@ -1,0 +1,7 @@
+label: Server-Side Events
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains goal-oriented documentation that provides step-by-step
+    instructions to set-up server-side events.
