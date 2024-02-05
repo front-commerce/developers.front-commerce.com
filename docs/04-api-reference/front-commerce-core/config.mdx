@@ -22,7 +22,7 @@ import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
-  extensions: [magento2(storesConfig), themeChocolatine()],
+  extensions: [magento2({ storesConfig }), themeChocolatine()],
   stores: storesConfig,
   cache: cacheConfig,
   configuration: {
@@ -44,21 +44,6 @@ This is an internal API, we recommend you to use the
 [`Front-Commerce context`](#) to retrieve configuration information
 
 :::
-
-## `getCurrentShopConfig`
-
-Get the current shop configuration.
-
-_Example_
-
-```ts
-import { getCurrentShopConfig } from "@front-commerce/core/config";
-
-const getAcmeConfig(config) {
-  return getCurrentShopConfig(config);
-}
-
-```
 
 ## UserConfig
 

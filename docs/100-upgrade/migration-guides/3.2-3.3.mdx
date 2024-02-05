@@ -1,0 +1,201 @@
+---
+title: 3.2 -> 3.3
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.2
+  to 3.3.
+---
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/\*@3.3.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.3.0
+```
+
+Search for `TODO Codemod` comments in your codebase. They could be added to for
+the following manual updates:
+
+- removing `Set-Cookie` headers defined in routes, they are now automatically
+  set by Front-Commerce when needed (for a user session commit). See
+  [Automatic session cookie headers](#automatic-session-cookie-headers) for
+  details.
+- simplifying the `entry.server.tsx` file after automatic removal of
+  transformers
+
+## Code changes
+
+### Remix entrypoints
+
+In this release, we improved features that required to hook into your Remix
+application files created with the initial skeleton.<br /> You must update these
+files in your application, as detailed below **or copy the ones from the latest
+skeleton**.
+
+<details>
+  <summary><code>root.tsx</code> file</summary>
+
+```diff
+diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
+index a28dcf87e..68e788d96 100644
+--- a/skeleton/app/root.tsx
++++ b/skeleton/app/root.tsx
+@@ -21,30 +21,15 @@ import {
+ import { usePageProgress } from "theme/components/helpers/usePageProgress";
+ import "theme/main.css";
+ import config from "~/config/website";
+-import { AppQueryDocument } from "~/graphql/graphql";
+ import { LiveReload, useSWEffect } from "@remix-pwa/sw";
+ import manifest from "~/manifest";
+
+ export const loader = async ({ context }: LoaderFunctionArgs) => {
+   const app = new FrontCommerceApp(context.frontCommerce);
+
+-  const response = await app.graphql.query(AppQueryDocument);
+-
+-  if (!response.shop) {
+-    throw new Response("", { status: 500, statusText: "Shop not found" });
+-  }
+-
+   return json({
+-    shop: response.shop,
+     device: app.config.device,
+-    process: {
+-      env: {
+-        NODE_ENV: process.env.NODE_ENV,
+-        SERVER: false,
+-        FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE:
+-          process.env.FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE,
+-      },
+-    },
++    publicConfig: app.config.public,
+   });
+ };
+```
+
+</details>
+
+### Automatic session cookie headers
+
+In this release, we added a feature that will automatically set the `Set-Cookie`
+header for the session cookie when the user session needs to be commited.
+
+```diff title="app/routes/my-route.ts"
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { json } from "@front-commerce/remix/node";
+import { MyQuery } from "~/graphql/graphql";
+
+const loader = async ({ context, request }) => {
+    const app = new FrontCommerceApp(context.frontCommerce);
+
+    const data = app.query(MyQuery);
+-    return json(data, {
+-        headers: {
+-            // TODO Codemod FC-3.3: please, remove the `Set-Cookie` header manually. Session is now automatically commited by FC.
+-            "Set-Cookie": await app.user.session.commit(),
+-        },
+-    });
++    return json(data);
+}
+```
+
+### Deprecate `process.env.FRONT_COMMERCE_WEB_*` usage
+
+**Breaking:** In this release, we updated the way we handle public
+configuration.
+
+To cope with these changes, you will need to ensure that you replace any of
+these usages with the new `publicConfig` values. We introduced a `3.3.0` codemod
+to automatically update your codebase, follow the
+[Automated Migration](#automated-migration) to run the codemod.
+
+Before:
+
+```js
+const {
+  FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE,
+  FRONT_COMMERCE_WEB_DEV_DISABLE_PASSWORD_HINT,
+} = process.env;
+
+const example = {
+  analyticsWarningDisable: FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE,
+  disablePasswordHint: FRONT_COMMERCE_WEB_DEV_DISABLE_PASSWORD_HINT,
+  myCustomValue: process.env.FRONT_COMMERCE_WEB_MY_CUSTOM_VALUE,
+};
+```
+
+After:
+
+```js
+import { getPublicConfig } from "@front-commerce/core/react";
+
+// After running your application for the first time,
+// you should have all typed values in the public config
+const publicConfig = getPublicConfig();
+
+const example = {
+  analyticsWarningDisable: publicConfig?.analytics?.disableDevWarning ?? false,
+  disablePasswordHint: publicConfig?.password?.disablePasswordHint ?? false,
+  myCustomValue: getPublicConfig("FRONT_COMMERCE_WEB_MY_CUSTOM_VALUE"), // This will warn with a deprecation message
+};
+```
+
+:::caution
+
+We highly suggest that you move any of your custom values to a new config
+provider which extends the `public` schema.
+
+See
+[Public configurations documentation](/docs/3.x/guides/configuration/public-configuration)
+for more details.
+
+:::
+
+### Deprecate `getCurrentShopConfig` usage
+
+In this version we have deprecated the usages of `getCurrentShopConfig` in favor
+`config.shop`, the function has been moved to
+`@front-commerce/compat/shop/getShopConfig` for compatibility reasons, but we
+suggest you to use `config.shop` instead.
+
+```ts
+// from a loader
+export const loader = async ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+
+// from an action
+export const action = async ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // add-next-line
+  const currentShopConfig = app.config.shop;
+  // ...
+};
+
+// from a graphql resolver
+export default {
+  Query: {
+    myQuery: async (parent, args, context, info) => {
+      // add-next-line
+      const currentShopConfig = context.config.shop;
+      // ...
+    },
+  },
+};
+```

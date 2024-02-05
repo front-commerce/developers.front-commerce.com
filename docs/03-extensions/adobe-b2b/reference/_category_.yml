@@ -1,0 +1,7 @@
+label: "Reference"
+position: 2
+collapsible: true
+# TODO: multiple sidebars? https://docusaurus.io/docs/sidebar/multiple-sidebars#sidebar-association
+# link:
+#   type: doc
+#   id: axios-instances

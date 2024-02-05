@@ -28,7 +28,7 @@ import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
   // highlight-next-line
-  extensions: [magento2(storesConfig), themeChocolatine()],
+  extensions: [magento2({ storesConfig }), themeChocolatine()],
   stores: storesConfig,
   cache: cacheConfig,
   configuration: {
@@ -51,7 +51,11 @@ import cacheConfig from "./app/config/caching";
 
 export default defineConfig({
   // highlight-next-line
-  extensions: [magento2(storesConfig), themeChocolatine(), aCustomExtension()],
+  extensions: [
+    magento2({ storesConfig }),
+    themeChocolatine(),
+    aCustomExtension(),
+  ],
   stores: storesConfig,
   cache: cacheConfig,
   configuration: {

@@ -1,19 +1,11 @@
 ---
-sidebar_position: 3
-title: Configurations
+title: Adding a configuration provider
 description:
-  Configuration is a part of software development that can quickly become messy.
-  Validation, detection, performance… there is a lot to take care of. In this
-  guide, we will see how Front-Commerce configuration works and how to create
-  new configurations or override existing ones.
+  Discover how configuration providers customize your app's settings, ensuring
+  efficient and tailored functionality for every server request.
 ---
 
 <p>{frontMatter.description}</p>
-
-import ContactLink from "@site/src/components/ContactLink";
-
-In this guide we will see how they work and how to create new configurations or
-override existing ones.
 
 ## What is a configuration provider?
 
@@ -33,35 +25,38 @@ On server start, the configuration providers will then be combined to create the
 global configuration object. This configuration object will then be available on
 each server request.
 
-This can be illustrated by starting your Front-Commerce server with the
-environment variable `DEBUG=front-commerce:config`. If your server is running on
-`http://localhost:4000` and you open the URL
-[`/__front-commerce/debug`](http://localhost:4000/__front-commerce/debug), you
+This can be illustrated by starting your Front-Commerce server in development
+mode. If your server is running on `http://localhost:3000` and you open the URL
+[`/__front-commerce/debug`](http://localhost:3000/__front-commerce/debug), you
 will have a dump of the configuration for this specific request under the
-section `req.config`.
-
-:::note
-
-The section is called `req.config` in reference to the `req` object that
-contains the current user request. Whenever you need to have access to the
-configuration object, please look for a `req` object will have the key `config`.
-For instance, in GraphQL modules,
-[the `req` object is available in the `contextEnhancer`](/docs/2.x/reference/graphql-module-definition#contextenhancer-optional).
-
-:::
+section `config`.
 
 ```json
 {
   "allShops": {
     "store:default": {
       "id": "default",
-      "url": "http://localhost:4000",
+      "url": "http://localhost:3000",
       "locale": "en-GB",
       "magentoStoreCode": "default",
+      "currency": "EUR"
+    },
+    "store:fr": {
+      "id": "fr",
+      "url": "http://fr.localhost:3000",
+      "locale": "fr-FR",
+      "magentoStoreCode": "fr",
       "currency": "EUR"
     }
   },
   "currentShopId": "default",
+  "shop": {
+    "id": "default",
+    "url": "http://localhost:3000",
+    "locale": "en-GB",
+    "magentoStoreCode": "default",
+    "currency": "EUR"
+  },
   "cache": {
     "defaultMaxBatchSize": 100,
     "strategies": [
@@ -75,6 +70,59 @@ For instance, in GraphQL modules,
       }
     ]
   },
+  "contentSecurityPolicy": {
+    "__dangerouslyDisable": false,
+    "directives": {
+      "scriptSrc": [],
+      "frameSrc": [],
+      "styleSrc": [],
+      "imgSrc": [],
+      "fontSrc": [],
+      "connectSrc": [],
+      "frameAncestors": [],
+      "baseUri": []
+    },
+    "reportOnly": {
+      "scriptSrc": false,
+      "frameSrc": false,
+      "styleSrc": false,
+      "imgSrc": false,
+      "fontSrc": false,
+      "frameAncestors": false,
+      "connectSrc": false
+    }
+  },
+  "cors": {
+    "origin": {
+      "referal-0": "http://magento23.test"
+    }
+  },
+  "device": {
+    "memoizationMaxAge": 60000,
+    "type": "pc",
+    "viewportWidthInPx": 1400
+  },
+  "public": {
+    "analytics": {
+      "disableDevWarning": false
+    },
+    "deprecations": {
+      "ignore": "",
+      "trace": ""
+    },
+    "compatEnv": {
+      "FRONT_COMMERCE_WEB_DEV_ANALYTICS_WARNING_DISABLE": "true"
+    },
+    "password": {
+      "disableHint": false
+    }
+    "shop":{
+      "id": "default",
+      "url": "http://localhost:3000",
+      "locale": "en-GB",
+      "currency": "EUR"
+    }
+  },
   "magento": {
     "endpoint": "http://magento23.test",
     "version": "2",
@@ -83,18 +131,24 @@ For instance, in GraphQL modules,
 }
 ```
 
-:::warning
+:::tip
 
-Don't activate this on a public instance as it can expose sensitive data
+When the `FRONT_COMMERCE_ENV` environment is not set to `production`, for
+example in a staging environment, the configuration will still be available in
+the `__front-commerce/debug` page, but the page will be secured with a token
+configurable with the `FRONT_COMMERCE_DEBUG_TOKEN` environment variable.
+
+Then you can access the endpoint with the token in the URL:
+`/__front-commerce/debug?token=your-token`.
 
 :::
 
 ## Configuration provider definition
 
-In practice, a configuration provider is an object with five properties: a name,
-a schema, static values (available independently from the request), a function
-to resolve values depending on the request and a function to fetch values
-remotely.
+In practice, a configuration provider is an object with five properties: a
+`name`, a `schema`, static `values` (available independently from the request),
+a `slowValuesOnEachRequest` function to resolve values depending on the request
+and a `fetchRemoteConfiguration` function to fetch values remotely.
 
 ```js
 const serviceConfigurationProvider = {
@@ -108,18 +162,26 @@ const serviceConfigurationProvider = {
 
 See the sections below to understand what each key stands for.
 
-### Name (key `name`, mandatory)
+export function Label({ children }) {
+  return (
+    <span className="opacity-60 align-super text-xs">
+      <i>{children}</i>
+    </span>
+  );
+}
+
+### `name` <Label>(mandatory)</Label>
 
 The identifier of the configuration provider. This is needed for configuration
 providers' registration. See
-[Register a configuration provider](#register-a-configuration-provider) for more
+[Inject a configuration provider](#inject-a-configuration-provider) for more
 details.
 
 ```js
 const name = "serviceProvider";
 ```
 
-### Schema (key `schema`, optional)
+### `schema` <Label>(optional)</Label>
 
 It's a function returning an object representing the definition of the fields
 that will appear in the global configuration object if the configuration
@@ -192,7 +254,7 @@ Please note that if another configuration provider's schema also defined a
 `req.config.service` you would have both the keys from the other configuration
 provider's schema and from the above schema.
 
-### Static values (key `values`, optional)
+### `values` <Label>(optional)</Label>
 
 Most of the time `default` values in the schema is sufficient. However, in some
 cases you may need to fetch some values from an API, a dynamic file, etc. This
@@ -222,12 +284,12 @@ will still be the same.
 If it needs to change over time, please use `slowValuesOnEachRequest` or
 `fetchRemoteConfiguration` instead.
 
-### Values depending on the request (key `slowValuesOnEachRequest`, optional)
+### `slowValuesOnEachRequest` <Label>(optional)</Label>
 
 :::note
 
-`slowValuesOnEachRequest` is a low level API in Front-Commerce. You shouldn't
-needing it in most cases.
+`slowValuesOnEachRequest` is a low level API in Front-Commerce. You shouldn't be
+need it in most cases.
 
 :::
 
@@ -271,12 +333,12 @@ const slowValuesOnEachRequest = (req) => {
 
 :::
 
-### Remotely fetched values (key `fetchRemoteConfiguration`, optional)
+### `fetchRemoteConfiguration` <Label>(optional)</Label>
 
 :::note
 
 `fetchRemoteConfiguration` is a low level API in Front-Commerce. You shouldn't
-be needing it in most cases.
+need it in most cases.
 
 :::
 
@@ -293,113 +355,77 @@ to memoize its result to limit the performance impact as much as possible.
 
 :::
 
-## Register a configuration provider
+## Inject a configuration provider
 
-Once you have defined a configuration provider, you will need to tell your
-application when it should be fused with the rest of the configurations. To do
-so, there is a `configService`, available at `server/core/config/configService`
-that lets you register new configuration providers.
+Assuming that we have defined the following configuration provider:
 
-```js
-import configService from "server/core/config/configService";
-
-configService.append(serviceConfigurationProvider);
-```
-
-But where should you add this code? It should live in the file where you are
-using the configuration. For instance, if I need the service's key and secret in
-a `contextEnhancer` of a GraphQL module, I'd add it at the top level of the file
-containing my `contextEnhancer`.
-
-```diff
-import ServiceLoader from "./loaders";
-+import serviceConfigurationProvider from "./serviceConfigurationProvider";
-+import configService from "server/core/config/configService";
-+
-+configService.append(serviceConfigurationProvider);
-
+```ts title="./config-providers/acmeConfigProvider.ts"
 export default {
-  name: "Service",
-  typeDefs,
-  resolvers,
-  contextEnhancer: ({ req }) => {
-    return {
--      Service: ServiceLoader({
--        key: "key",
--        secret: "secret"
--      })
-+      Service: ServiceLoader(req.config.service)
-    };
-  }
-};
-```
-
-It is also common to register a configuration provider from
-[an express middleware](/docs/2.x/advanced/server/add-http-endpoint#add-a-global-server-middleware)
-for cases where the corresponding configuration is used in several places in the
-application.
-
-### Override an existing configuration
-
-If your configuration provider relies on another one, you should use the
-following method
-`configService.insertAfter(otherConfigurationProviderName, serviceConfigurationProvider)`.
-
-Please note that your configuration provider does not need to be complete to
-work. It can for instance rely on an existing schema and only define `values` to
-override the default values. This can be useful if you want to override
-configuration already defined in Front-Commerce and fetch them with another
-method. In this case, your configuration provider would look like this:
-
-```js
-import configService from "server/core/config/configService";
-
-const serviceOverrideProvider = {
-  name: "serviceOverride",
-  values: Promise.resolve({
+  name: "acme-config",
+  schema: () => ({
     service: {
-      key: "new value",
+      key: {
+        doc: "The key to get access to our remote service",
+        format: String,
+        default: null,
+        env: "FRONT_COMMERCE_SERVICE_KEY",
+      },
+      secret: {
+        doc: "The secret to get access to our remote service",
+        format: String,
+        default: null,
+        env: "FRONT_COMMERCE_SERVICE_SECRET",
+      },
     },
   }),
 };
-
-configService.insertAfter("serviceProvider", serviceOverrideProvider);
 ```
 
-### Overriding express configuration provider
+### From your application configuration
 
-If you want to override the configuration of express, you will need to add the
-new configuration in a middleware definition file `module.config.js`.
+You can add the configuration to your
+[`front-commerce.config.ts`](/docs/3.x/api-reference/front-commerce-core/config)
+file.
 
-For example, if you want to increase the maximum size for `POST` payloads:
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+// add-next-line
+import acmeConfigProvider from "./config-providers/acmeConfigProvider";
 
-```js title="my-module/server/module.config.js"
-import configService from "server/core/config/configService";
-
-const expressServiceProvider = {
-  name: "expressOverride",
-  values: {
-    express: {
-      jsonParserConfig: {
-        limit: "10mb",
-      },
-      graphQLBodyParserConfig: {
-        limit: "10mb",
-      },
-    },
+export default defineConfig({
+  extensions: [themeChocolatine()],
+  // add-start
+  configuration: {
+    providers: [acmeConfigProvider],
   },
-};
-
-configService.append(expressServiceProvider);
-
-export default {};
+  // add-end
+});
 ```
 
-## Core configuration providers
+### From an extension
 
-Our goal is to use these configuration providers for any configuration that
-could exist in Front-Commerce. However, this is still a work in progress and
-there are still some configurations that are not associated with a schema yet.
-Most configurations are still based on files in the
-[`config` folder of your project's module](/docs/2.x/reference/configurations).
-If you have specific needs, please <ContactLink />.
+Alternatively, you can add a configuration provider from an extension in the
+[extensions definition](/docs/3.x/api-reference/front-commerce-core/defineExtension).
+
+```ts title="./acme-extension.ts"
+import { defineExtension } from "@front-commerce/core";
+// add-next-line
+import acmeConfigProvider from "./config-providers/acmeConfigProvider";
+
+export default defineExtension({
+  name: "acme-extension",
+  // add-start
+  configuration: {
+    providers: [acmeConfigProvider],
+  },
+  // add-end
+});
+```
+
+:::info
+
+You can learn more about extensions in the
+[Register an extensions](/docs/3.x/guides/register-an-extension) guide.
+
+:::
