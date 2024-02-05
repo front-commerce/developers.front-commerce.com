@@ -1,0 +1,237 @@
+---
+title: "Release: 3.3"
+authors: pierre
+date: 2024-02-01T17:00
+hide_table_of_contents: true
+---
+
+## Introducing Event-Driven Architectural Components, Extensions Features, Public Configurations, and Automatic session commit
+
+We are pleased to announce the release of Front-Commerce 3.3, which lays the
+technical foundations for exciting features to come in the future. While the
+full set of features will be unveiled in 3.4, this release is packed with new
+architectural components that enable you to develop event-based features in your
+applications today.
+
+In addition to the usual bug fixes, we have enhanced the core to improve your
+overall experience and prevent common mistakes detected from projects already
+using Front-Commerce Remixed. Finally, we have introduced several smaller but
+convenient features listed in the "Other changes" section below.
+
+Let's dive in and explore what's new in this Front-Commerce release.
+
+<!-- truncate -->
+
+## Infrastructure for Event-Driven use cases
+
+We are pleased to introduce dedicated architectural components tailored for
+event-driven use cases.
+
+Front-Commerce can now dispatch **server-side events for business-critical
+actions**, such as order placement, and you can register specific integrations
+to react to these events. This enables you to build event-driven workflows, such
+as **sending a notification when an order is placed**, or any other custom
+action you can think of.
+
+This opens the door to a wide range of use cases, including some that we have
+already identified and are working on. **We are excited to see what you will
+create with these new capabilities!**
+
+Here's a high-level overview of how these new features fit into an existing
+Front-Commerce application:
+![Front-Commerce Server-side events](./assets/3.3-sse.png)
+
+Technically, the key components of this release include:
+
+- A `ServerEventBus` service for dispatching server-side events from your
+  Front-Commerce application
+- A Redis Stream event handler implementation allowing to centralize and process
+  server-side events in a unified, scalable and reliable way
+- A new `front-commerce worker` CLI command to run dedicated event workers
+  processing server-side events with registered integrations
+- An Integration API allowing to register runtime integrations to react to
+  server-side events and notify external systems
+- This release includes a single default integration allowing to notify remote
+  webhooks _(stay tuned for more integrations in future releases 🚀)_
+
+We have implemented a first use case to demonstrate the potential of these new
+features. We have introduced an `OrderPlaced` event dispatched whenever an order
+is placed.
+
+**Front-Commerce Cloud projects can use this right away!** We already have all
+the required infrastructure in place to support this feature out of the box in
+your project. Please contact us if you want to enable this feature for your
+project.
+
+To delve deeper into these updates, we encourage you to explore
+[our dedicated documentation about Server-Side Events](/docs/3.x/concepts/server-side-events).<br />
+If you have specific use cases that could benefit from these enhancements, we
+would love to receive your feeback as we continue to refine and expand our
+offerings.
+
+## Feature flags in extensions
+
+We have added new options to the extensions for our supported eCommerce
+platforms. When registering the extension, you can now select the features you
+want to use.
+
+A common use case would be to replace Magento CMS with Contentful, or run an
+Adobe B2B store without Negotiable quotes. In Front-Commerce 3.3, **you can now
+register these extensions with deactivated features, which will remove any
+related GraphQL schema, configurations, or Remix routes.**
+
+Please read more about it in each extension's installation documentation:
+
+- [Magento1](/docs/3.x/extensions/magento1/#feature-flags)
+- [Magento2](/docs/3.x/extensions/magento2/#feature-flags)
+- [Adobe B2B](/docs/3.x/extensions/adobe-b2b/#feature-flags)
+
+As always, please let us know if you identify any use cases in other extensions
+that could benefit from this feature.
+
+## Public configurations
+
+Public configurations are configurations that are exposed to the client. They
+are used in client-side code to configure the application or load remote
+resources.
+
+Bid farewell to the specific environment variables prefixed with
+`FRONT_COMMERCE_WEB_`. Public configurations are now using the unified
+configuration you already know. All configurations available under the
+`config.public` namespace are exposed to the client. One direct benefit of this
+change is that **you can update these configurations without having to rebuild
+your application.**
+
+You can define public configurations using configuration providers, just as you
+are used to doing for server-side configurations. To use them in your
+client-side code, we introduced a new `usePublicConfig()` hook and a
+`getPublicConfig()` function (when you're not in a React component).
+
+We took this as an opportunity to simplify our existing codebase by exposing
+`shop` information link any other public configuration.
+
+We updated our theme to replace the deprecated `withShop` with the new
+`withPublicConfig` HOC. **We have also exposed all `FRONT_COMMERCE_WEB_xxx`
+environment variables in the `config.compatEnv` to facilitate a progressive
+migration** and introduced a codemod to help you migrate your codebase so you'll
+be able to use the new public configurations without any manual work! 🎉
+
+## Automatic session commit
+
+Until now, Front-Commerce was following Remix's best practices for session
+management.
+[As per Remix's recommendation](https://remix.run/docs/en/2.6.0/utils/sessions),
+developers had to manually commit the session and define the `Set-Cookie` header
+in their routes responses.
+
+Based on our experience from supporting customers working on Front-Commerce 3.x,
+we noticed that this manual process was error-prone and was often forgotten.
+This could lead to unexpected behaviors and bugs in the application.
+
+**We are pleased to announce that Front-Commerce now automatically commits the
+session to the server when needed.** This means that you no longer need to
+manually commit the user session in your routes. The `Set-Cookie` header will be
+automatically added to the response whenever the user session is modified.
+
+We've simplified our codebase and have implemented a codemod to help you adapt
+yours by removing redundant `Set-Cookie` headers from your routes too. We hope
+this change will make your development experience smoother and make your
+applications more reliable!
+
+## Other changes
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Performance improvements</h3></summary>
+```
+
+- **Theme:** implemented optimistic UI updates for coupon codes to improve
+  perceived performance during interactions
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **Server:** we added a new `/__front-commerce/health` endpoint, serving as a
+  healthcheck. It can be used in cloud environments to ensure the application
+  readiness.
+- **Server:** we introduced a new endpoint `/__front-commerce/metrics` for
+  metrics tracking. This endpoint integrates with Prometheus to provide valuable
+  insights into the application's performance and usage metrics.
+- **Magento2:** the inject role endpoint now supports body based token for
+  `no-cors` context
+- **Theme:** the search results page is now available on its dedicated route
+- **Theme:** an error is now thrown if a payment method isn't registered in
+  payment flow, to ensure explicit configuration and avoid silent failures
+- **Compat:** the FormV2 compat directory structure now mimics the directory
+  structure of an usual theme
+- **DX:** a new `front-commerce migrate` CLI script now allows to run codemods
+  on a project in a more streamlined way
+- **DX:** the `__front-commerce/debug` route now requires a security token in
+  the URL for staging websites to prevent exposing sensitive staging details on
+  publicly accessible environments
+- **DX:** we relocated our skeleton `/extensions` into `/example-extensions` so
+  that it's more obvious that they can be removed when starting a new project
+- **DX**: we refactored global "atoms" stylesheets and merged them into a
+  singular one `_design-token.scss`, imported by `main.scss`
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+_These bug fixes were also backported to `2.x` when relevant._
+
+- **Theme:** the cart and minicart states are now properly updated across the UI
+  after cross-comoponent interactions
+- **Theme:** deleting an item from the cart now only triggers the required
+  revalidations
+- **Theme:** fixed registration when subscribing to the `newsletter`
+- **Theme:** fixed an issue that caused an automatic submission of the choose
+  payment form when selecting a payment method or accepting the GSC
+- **Adobe B2B:** RequisitionList loaders now always update the cart cache after
+  modifying it
+- **DX:** Sass CLI now works as expected when the app path contains spaces
+
+```mdx-code-block
+</details>
+```
+
+<hr />
+
+<BackportList
+  currentVersion={["3.3.0"]}
+  previousVersions={[
+    "3.2.3",
+    "3.1.3",
+    "3.0.3",
+    "2.28.1",
+    "2.27.3",
+    "2.26.8",
+    "2.25.10",
+    "2.24.11",
+    "2.23.12",
+    "2.22.14",
+    "2.21.13",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+Upgrade Front-Commerce (Migration guides):
+[3.3.0](/docs/3.x/upgrade/migration-guides/3.2-3.3)<br /> Read the full
+changelog (Customers only):
+[3.3.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.3.0).
+
+</ChangelogFooter>
