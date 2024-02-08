@@ -89,14 +89,15 @@ a falsy value for the feature flag in your extension options:
 import { defineConfig } from "@front-commerce/core/config";
 import themeChocolatine from "@front-commerce/theme-chocolatine";
 import magento2 from "@front-commerce/magento2";
+import adobeB2B from "@front-commerce/adobe-b2b";
 import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
 
 
 export default defineConfig({
   extensions: [
-    magento2({
-      storesConfig
+    magento2({ storesConfig }),
+    adobeB2B({
       // add-start
       features: {
         Company: false, // Company feature will be disabled
