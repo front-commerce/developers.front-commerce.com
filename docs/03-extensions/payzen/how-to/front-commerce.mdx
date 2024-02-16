@@ -1,0 +1,71 @@
+---
+title: Use as a Front-Commerce payment
+description:
+  "This guides explains how to configure the Payzen extension to use it with
+  Front-Commerce payment methods."
+sidebar_position: 3
+---
+
+<p>{frontMatter.description}</p>
+
+## Front-Commerce configuration
+
+[After installing the Payzen package](/docs/3.x/extensions/payzen/#installation),
+you need to enable the corresponding extension. For that, you need to tweak your
+`front-commerce.config.ts` file like:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2"; // or magento1
+// highlight-next-line
+import payzen from "@front-commerce/payzen";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    magento2({ storesConfig }),
+    themeChocolatine(),
+    // highlight-next-line
+    payzen(), // ⚠️ need to be after themeChocolatine()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+## Register your Payzen payment components
+
+:::note
+
+This is a temporary way to setup payment components. We are aware that it is
+tedious. It will definitely change in the future, when Front-Commerce will
+support new extension points for Payments.
+
+:::
+
+1. Override the file that lets you register additional payments forms in
+   Front-Commerce
+
+   ```shell
+   mkdir -p app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/@front-commerce/theme-chocolatine/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+2. Register Payzen
+
+   ```diff title="app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js"
+   +import PayzenEmbeddedForm from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/PayzenEmbeddedForm";
+
+   const ComponentMap = {
+    +payzen_embedded: PayzenEmbeddedForm
+   };
+
+   ```
+
+
+After restarting Front-Commerce, you should be able to see a new payment method called "credit card" in your checkout step.
