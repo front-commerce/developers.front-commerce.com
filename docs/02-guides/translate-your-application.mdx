@@ -196,12 +196,12 @@ $ pnpm run front-commerce translate <my-extension>/**/*.{js,jsx,ts,tsx} --locale
 And then in your extension definition file you should add the `translations`
 option:
 
-```ts title="<my-extension>/index.ts"
+```ts title="extensions/acme-extension/index.ts"
 import { defineExtension } from "@front-commerce/core";
 
 export default defineExtension({
   // ...
-  translations: `${__dirname}/translations`, // path to your translations
+  translations: `extensions/acme-extension/translations`, // path to your translations
 });
 ```
 
