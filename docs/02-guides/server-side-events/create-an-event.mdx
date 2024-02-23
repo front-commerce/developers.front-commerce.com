@@ -3,7 +3,7 @@ title: Create an event
 description:
   In this guide, we will cover the creation of an emitter and how to implement
   them in your pages, we will create an Emitter that Emit an event when a
-  customer reach a page called FAQ.
+  customer votes on an FAQ question.
 sidebar_position: 1
 ---
 
@@ -15,18 +15,19 @@ The events are dispatched through the use of an event emitter. The role of the
 event emitter is to push events to the server event pipeline to be processed by
 the server.
 
-Emitter are implemented in Domain Event class that define an event related to a
-specific event for your app.
-
 ## Prerequisites
 
 Before diving into the code, ensure you have the following prerequisites in
 place:
 
 - A Front-Commerce project configured and ready to use
-- [FAQ GraphQL Module](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/example-extensions/faq-demo/graphql)
-  installed and configured if you want to execute code samples without any
-  changes
+
+:::info
+
+The outcome of this guide is already available in the
+[FAQ example extension](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/example-extensions/faq-demo).
+
+:::
 
 ## Create a Domain event class
 
@@ -35,13 +36,12 @@ Let's create a file in our project, called `QuestionVotedEvent.ts`:
 ```tsx title="app/server-events/events/QuestionVotedEvent.ts"
 import { ServerEvent } from "@front-commerce/core/events";
 
-// We define a static event Name for our event
 const QuestionVotedEventName = "QuestionVotedEvent";
 
-// Definition of the payload
+// This is the payload data that we want to gather for the event
 type QuestionVotedEventPayload = {
   questionSlug: string;
-  upVote: boolean;
+  upvote: boolean;
 };
 
 // We define an event class that extends the ServerEvent class
@@ -51,15 +51,12 @@ export default class QuestionVotedEvent extends ServerEvent<QuestionVotedEventPa
 
   // We define the constructor for our event
   // It will call the super constructor (constructor of ServerEvent)
-  // to dispatch event to the server event pipeline
-  constructor(questionSlug: string, upVote: boolean, shopId: string) {
+  // See https://developers.front-commerce.com/docs/3.x/api-reference/front-commerce-core/ServerEvent#arguments
+  constructor(questionSlug: string, upvote: boolean, shopId: string) {
     super(
       QuestionVotedEventName,
       new Date(),
-      // This are data that we want to gather
-      // The question
-      // If the question has been upvoted or downvoted
-      { questionSlug, upVote },
+      { questionSlug, upvote },
       // This are the event metadata, they are relative to the event
       // but don't contain event data, here we collect the shopId
       // to determine on which shop the question has been voted
@@ -69,14 +66,20 @@ export default class QuestionVotedEvent extends ServerEvent<QuestionVotedEventPa
 }
 ```
 
-That's it!
+:::info
+
+You can check the
+[ServerEvent Reference](/docs/3.x/api-reference/front-commerce-core/ServerEvent)
+out to learn more about the usage of ServerEvent class.
+
+:::
 
 ## Use the Event
 
 Now that we've created a Domain event class, let's use it in a route action:
 
 ```tsx title="app/routes/_main.faq.$slug.tsx"
-...
+//...
 export const action = async ({
   context,
   params,
@@ -84,23 +87,11 @@ export const action = async ({
 }: ActionFunctionArgs) => {
   const { slug } = params;
 
-  const formData = await request.formData();
-  // The `action` uses the `FrontCommerceApp` class to access the Front-Commerce
-  // core from Remix. In this example, we use it to mutate data in the GraphQL
-  // unified API (similar to the one you're used to).
   const app = new FrontCommerceApp(context.frontCommerce);
-  const response = await app.graphql.mutate(VoteIsFaqUsefulDocument, {
-    input: {
-      slug,
-      isFaqUseful: formData.get("isFaqUseful") === "true",
-    },
-  });
+  // ... Here should be the "voting" mechanism (probably a mutation)
 
-  // highlight-start
   // We call the `ServerEventBus` to dispatch an event.
-  // In this example, we use it to dispatch a `QuestionVotedEvent` event.
-  // We will instanciate a `QuestionVotedEvent` class with the data we want to
-  // collect for this event.
+  // In this example, we use it to dispatch a `QuestionVotedEvent` event created above.
   app.services.ServerEventBus.publish(
     new QuestionVotedEvent(
       String(slug),
@@ -108,17 +99,10 @@ export const action = async ({
       app.config.currentShopId
     )
   );
-  // highlight-end
 
-  if (!response.voteIsFaqUseful) {
-    throw new Response("Question not found", { status: 404 });
-  }
-
-  return json({
-    success: response.voteIsFaqUseful?.success ?? false,
-  });
+  // ... The rest of the action, return, etc.
 };
-...
+//...
 ```
 
 ## Test our emitter
@@ -138,7 +122,9 @@ The worker will boot:
 2024-02-23 14:55:24 [info]:     Worker started
 ```
 
-And now let's head to the faq question page and vote.
+And now let's head to the faq question page:
+[http://localhost:4000/faq/probleme-colis](http://localhost:4000/faq/probleme-colis)
+and vote.
 
 You will see new output to the worker:
 
@@ -146,5 +132,4 @@ You will see new output to the worker:
 [ConsoleIntegration]: (1708696560088-0) {"event_type":"QuestionVotedEvent","created_at":"2024-02-23T13:56:00.080Z","payload":"{\"questionSlug\":\"probleme-colis\",\"upVote\":true}","metadata":"{\"shopId\":\"default\"}"}
 ```
 
-And that's it! You now know how to create your own event emitter and send
-server-side events.
+And that's it! You now know how to create and emit your own server events.
