@@ -1,0 +1,27 @@
+---
+title: 3.3 -> 3.4
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.3
+  to 3.4
+---
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/\*@3.4.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.4.0
+```
