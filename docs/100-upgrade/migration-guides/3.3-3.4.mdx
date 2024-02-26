@@ -26,6 +26,46 @@ comments).
 pnpm run front-commerce migrate --transform 3.4.0
 ```
 
+## Vite Migration
+
+In Front-Commerce v3.4, we have migrated to remix using `vite`, please read
+their blog post to find out more about the changes:
+[Remix Vite is Now Stable](https://remix.run/blog/remix-vite-stable).
+
+This introduces some breaking changes which require manual intervention, all
+those changes will be listed below.
+
+:::important
+
+Please ensure you follow the remix
+[migration guide](https://remix.run/docs/en/main/future/vite#setup-vite), and
+use the
+[skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/ccb874da24fb973db7ebae126e5195a04ecceb95/skeleton)
+as reference.
+
+:::
+
+### `package.json`
+
+We have deprecated the internal `build` and `dev` cli commands in favor of the
+normal commands used in `remix`.
+
+```diff file="./package.json"
+{
+  "sideEffects": false,
+  "scripts": {
+-   "build": "front-commerce build",
+-   "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",
+-   "dev:debug": "front-commerce dev --manual -c \"pnpm run dev:server --inspect\"",
+-   "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
+-   "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
++   "dev": "NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
++   "build": "NODE_OPTIONS='--import tsx/esm' remix vite:build",
++   "start": "cross-env NODE_ENV=production NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
+  }
+}
+```
+
 ## Code changes
 
 ### Requisition list related theme changes
