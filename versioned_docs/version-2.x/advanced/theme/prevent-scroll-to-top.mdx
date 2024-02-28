@@ -1,0 +1,42 @@
+---
+sidebar_position: 12
+hide_table_of_contents: false
+title: Auto scroll to top
+description:
+  This guide will explain how to prevent the page from scrolling to the top.
+---
+
+<p>{frontMatter.description}</p>
+
+By default Front-Commerce will scroll page to top when user navigate between
+pages. This behavior is enabled with the `ScrollToTopOnUpdate` component.
+
+It is used in the default router component in
+`web/theme/modules/Router/Router.js`.
+
+If you want to disable this behavior, you can remove the `ScrollToTopOnUpdate`
+component used in router:
+
+```diff title="web/theme/modules/Router/Router.js"
+import React, { Fragment } from "react";
+import { Route } from "react-router";
+-import ScrollTopOnUpdate from "./ScrollTopOnUpdate";
+import RefreshStateManager from "./RefreshStateManager";
+import EnhanceRouter from "./EnhanceRouter";
+
+const AppRouter = ({ children }) => (
+  <Fragment>
+-    {<Route
+-      render={({ location }) => <ScrollTopOnUpdate location={location} />}
+-    />}
+    <Route
+      render={({ location, history }) => (
+        <RefreshStateManager location={location} history={history} />
+      )}
+    />
+    {children}
+  </Fragment>
+);
+
+export default EnhanceRouter(AppRouter);
+```
