@@ -1,9 +1,9 @@
 ---
 title: Create an event
 description:
-  In this guide, we will cover the creation of an emitter and how to implement
-  them in your pages, we will create an Emitter that Emit an event when a
-  customer votes on an FAQ question.
+  In this guide, we will cover the creation of server event and how to implement
+  them in your pages, we will create a new domain event that will be emitted
+  when a customer votes on an FAQ question.
 sidebar_position: 1
 ---
 
@@ -45,21 +45,18 @@ type QuestionVotedEventPayload = {
 };
 
 // We define an event class that extends the ServerEvent class
-// This class will handle data to be pushed to the server event pipeline
+// This class will contain data to be pushed to the server event pipeline
 export default class QuestionVotedEvent extends ServerEvent<QuestionVotedEventPayload> {
   static event_type = QuestionVotedEventName;
 
-  // We define the constructor for our event
-  // It will call the super constructor (constructor of ServerEvent)
   // See https://developers.front-commerce.com/docs/3.x/api-reference/front-commerce-core/ServerEvent#arguments
   constructor(questionSlug: string, upvote: boolean, shopId: string) {
     super(
       QuestionVotedEventName,
       new Date(),
       { questionSlug, upvote },
-      // This are the event metadata, they are relative to the event
-      // but don't contain event data, here we collect the shopId
-      // to determine on which shop the question has been voted
+      // This are the event metadata, you can use it to set infos about the event
+      // which are not part of the event payload
       { shopId }
     );
   }
@@ -69,14 +66,14 @@ export default class QuestionVotedEvent extends ServerEvent<QuestionVotedEventPa
 :::info
 
 You can check the
-[ServerEvent Reference](/docs/3.x/api-reference/front-commerce-core/ServerEvent)
+[`ServerEvent` API Reference](/docs/3.x/api-reference/front-commerce-core/ServerEvent)
 out to learn more about the usage of ServerEvent class.
 
 :::
 
 ## Use the Event
 
-Now that we've created a Domain event class, let's use it in a route action:
+Now that we've created a Domain event class, let's use it in a route's `action`:
 
 ```tsx title="app/routes/_main.faq.$slug.tsx"
 //...
