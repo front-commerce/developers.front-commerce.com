@@ -199,3 +199,24 @@ export default {
   },
 };
 ```
+
+### Theme chocolatine styles refactor
+
+In this release, we refactored how the design tokens are included in the style
+sheets. They are now included through the
+[`_design-tokens.scss`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/_design-tokens.scss)
+file. <br /> If you have overwritten the
+[`theme/main.scss` ](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/main.scss#L3)
+then you should either apply the changes as detailed below or
+[copy the file from the latest skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/main.scss).
+
+- `theme/components/_components.scss` has been completely removed
+- `theme/main.scss` design tokens importation
+  ```scss title="theme/main.scss"
+  @import "theme/normalize";
+  @import "theme/variables";
+  // remove-next-line
+  @import "theme/components/components";
+  // add-next-line
+  @import "theme/design-tokens";
+  ```
