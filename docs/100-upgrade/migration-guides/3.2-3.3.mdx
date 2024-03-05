@@ -49,10 +49,10 @@ skeleton**.
   <summary><code>root.tsx</code> file</summary>
 
 ```diff
-diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
+diff --git a/app/root.tsx b/app/root.tsx
 index a28dcf87e..68e788d96 100644
---- a/skeleton/app/root.tsx
-+++ b/skeleton/app/root.tsx
+--- a/app/root.tsx
++++ b/app/root.tsx
 @@ -21,30 +21,15 @@ import {
  import { usePageProgress } from "theme/components/helpers/usePageProgress";
  import "theme/main.css";
@@ -101,10 +101,10 @@ index a28dcf87e..68e788d96 100644
   <summary><code>entry.client.tsx</code> file</summary>
 
 ```diff
-diff --git a/skeleton/app/entry.client.tsx b/skeleton/app/entry.client.tsx
+diff --git a/app/entry.client.tsx b/app/entry.client.tsx
 index e1530e9f8..dcb9118c1 100644
---- a/skeleton/app/entry.client.tsx
-+++ b/skeleton/app/entry.client.tsx
+--- a/app/entry.client.tsx
++++ b/app/entry.client.tsx
 @@ -21,7 +21,9 @@ const StrictModeOrNoop = appManifest.v2_compat?.useApolloClientQueries
    : StrictMode;
 
@@ -124,10 +124,10 @@ index e1530e9f8..dcb9118c1 100644
   <summary><code>entry.server.tsx</code> file</summary>
 
 ```diff
-diff --git a/skeleton/app/entry.server.tsx b/skeleton/app/entry.server.tsx
+diff --git a/app/entry.server.tsx b/app/entry.server.tsx
 index ffd0db3d2..b39a41f34 100644
---- a/skeleton/app/entry.server.tsx
-+++ b/skeleton/app/entry.server.tsx
+--- a/app/entry.server.tsx
++++ b/app/entry.server.tsx
 @@ -32,7 +32,8 @@ export default async function handleRequest(
    remixContext: EntryContext,
    loadContext: AppLoadContext
