@@ -49,10 +49,10 @@ skeleton**.
   <summary><code>root.tsx</code> file</summary>
 
 ```diff
-diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
+diff --git a/app/root.tsx b/app/root.tsx
 index a28dcf87e..68e788d96 100644
---- a/skeleton/app/root.tsx
-+++ b/skeleton/app/root.tsx
+--- a/app/root.tsx
++++ b/app/root.tsx
 @@ -21,30 +21,15 @@ import {
  import { usePageProgress } from "theme/components/helpers/usePageProgress";
  import "theme/main.css";
@@ -84,9 +84,89 @@ index a28dcf87e..68e788d96 100644
 +    publicConfig: app.config.public,
    });
  };
+@@ -62,7 +62,7 @@ export const meta: MetaFunction = (args) => {
+     { title: config.defaultTitle },
+     { name: "robots", content: "Index,Follow" },
+     { name: "description", content: config.defaultDescription },
+-    { name: "baseUrl", content: args.data?.shop?.url },
++    { name: "baseUrl", content: args.data?.publicConfig?.shop?.url },
+     ...manifest?.pwa.metas,
+   ];
+   if (config.themeColor) {
 ```
 
 </details>
+
+<details>
+  <summary><code>entry.client.tsx</code> file</summary>
+
+```diff
+diff --git a/app/entry.client.tsx b/app/entry.client.tsx
+index e1530e9f8..dcb9118c1 100644
+--- a/app/entry.client.tsx
++++ b/app/entry.client.tsx
+@@ -21,7 +21,9 @@ const StrictModeOrNoop = appManifest.v2_compat?.useApolloClientQueries
+   : StrictMode;
+
+ const hydrate = async () => {
+-  const shop = __remixContext.state.loaderData?.root.shop;
++  const rootLoaderData = __remixContext.state.loaderData?.root;
++  const shop = rootLoaderData?.publicConfig?.shop;
++
+   const messages = await fetch(`/translations/${shop?.locale}`).then(
+     (res) => res.json() || {}
+   );
+```
+
+</details>
+
+<details>
+  <summary><code>entry.server.tsx</code> file</summary>
+
+```diff
+diff --git a/app/entry.server.tsx b/app/entry.server.tsx
+index ffd0db3d2..b39a41f34 100644
+--- a/app/entry.server.tsx
++++ b/app/entry.server.tsx
+@@ -32,7 +32,8 @@ export default async function handleRequest(
+   remixContext: EntryContext,
+   loadContext: AppLoadContext
+ ) {
+-  const shop = remixContext.staticHandlerContext.loaderData.root.shop;
++  const rootLoaderData = __remixContext.state.loaderData?.root;
++  const shop = rootLoaderData?.publicConfig?.shop;
+   const messages = await loadTranslationMessages(shop.locale);
+
+   return isbot(request.headers.get("user-agent"))
+```
+
+</details>
+
+### Front-Commerce `post-install` script
+
+In this release, we
+[added a `post-install` script](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.3.x/packages/remix/cli/front-commerce-postinstall/index.ts)
+in order to patch an issue with the current version of `@remix-run/dev` we are
+using. To cope with this, please ensure you applied have the following change in
+your
+[`package.json`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.3.x/skeleton/package.json?ref_type=heads#L17):
+
+```diff
+// ...
+  "scripts": {
+    "build": "front-commerce build",
+    "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",
+    "dev:debug": "front-commerce dev --manual -c \"pnpm run dev:server --inspect\"",
+    "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
+    "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
+    "translate": "front-commerce translate ./app/**/*.{js,jsx,ts,tsx} --locale en",
+    "front-commerce": "front-commerce",
+-   "typecheck": "tsc"
++   "typecheck": "tsc",
++   "postinstall": "front-commerce postinstall"
+  },
+// ...
+```
 
 ### Automatic session cookie headers
 
