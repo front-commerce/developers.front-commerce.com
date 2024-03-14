@@ -66,6 +66,113 @@ normal commands used in `remix`.
 }
 ```
 
+### Removal of `Meta Modules`
+
+In this version we have removed support for
+[`Meta Modules`](https://developers.front-commerce.com/docs/2.x/advanced/graphql/meta-modules#how-to-define-a-metamodule)
+from the final GraphQL module definition API. Front-Commerce extensions shared
+the same responsibility, and should be used instead. This will be handled by the
+automated migration script.
+
+:::important
+
+If the automated migration script detects any `mixed` modules, it will add the
+following comment:
+
+```
+// TODO Codemod: meta-modules were removed in favor of extensions
+```
+
+:::
+
+Please ensure you update the mixed module manually by following this example
+
+```ts title="/extensions/acme-extension/module/index.ts"
+// Example of Mixed Module
+import ModuleA from "./moduleA";
+import ModuleB from "./moduleB";
+
+export default {
+  namespace:"Acme/Example",
+  // highlight-start
+  modules: [ModuleA, ModuleB] // this represents a meta module
+  // highlight-end
+  dependencies: [],
+  typeDefs: "",
+  ...
+}
+```
+
+First move all the `GraphQL` module logic to a new file. (in our example
+`moduleCore.ts`)
+
+```ts title="/extensions/acme-extension/module/moduleCore.ts"
+import {createGraphqlModule} from "@front-commerce/graphql";
+
+export default createGraphqlModule({
+  namespace:"Acme/Example",
+  typeDefs: /* GraphQL */"",
+  ...
+})
+```
+
+Then convert the `meta` module to a collection of `GraphqlModules`
+
+```ts title="/extensions/acme-extension/module/index.ts"
+// add-next-line
+import ModuleCore from "./moduleCore";
+import ModuleA from "./moduleA";
+import ModuleB from "./moduleB";
+
+export default [
+  // add-next-line
+  ModuleCore,
+  ModuleA,
+  ModuleB,
+];
+```
+
+You can then add this directly to your extension definition
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+// add-next-line
+import modules from "./modules"
+
+export default defineExtension({
+  namespace: "Acme",
+  graphql:{
+    // add-next-line
+    modules: [modules]
+  },
+  ...
+});
+```
+
+:::note
+
+If you included the `typeDefs` in your graphql module, then you don't need to
+pass it to the
+[schema](/docs/3.x/api-reference/front-commerce-core/defineExtension#schema)
+field
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+import modules from "./modules"
+
+export default defineExtension({
+  namespace: "Acme",
+  graphql:{
+    modules: [modules]
+    // remove-next-line
+    schema: ["./extensions/acme-extension/**/schema.gql"]
+  },
+  ...
+});
+```
+
+:::
+
 ## Code changes
 
 ### Requisition list related theme changes
