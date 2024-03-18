@@ -66,6 +66,32 @@ normal commands used in `remix`.
 }
 ```
 
+### Add required `meta` to extension definitions
+
+Each extension definition now requires the
+[`ImportMeta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta)
+for the extension in the
+[`meta`](/docs/3.x/api-reference/front-commerce-core/defineExtension#meta)
+property.
+
+:::info
+
+This will be automatically be added by the migration script.
+
+:::
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  namespace: "Acme",
+  // add-next-line
+  meta: import.meta,
+  ...
+});
+
+```
+
 ### Removal of `Meta Modules`
 
 In this version we have removed support for
