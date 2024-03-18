@@ -173,6 +173,34 @@ export default defineExtension({
 
 :::
 
+### Refactor of `routes`
+
+In this version we updated how `routes` parameter from `defineRemixExtension` is
+resolved. When using folder based routing, you should pass `import.meta.url` to
+the `routes` in your extension definition:
+
+```js
+{
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  routes: import.meta.url,
+}
+```
+
+:::info
+
+`root.tsx` files in your extensions aren't needed anymore, and can now be
+removed.<br /> For more information, see
+[`defineRemixExtension`'s API reference](/docs/3.x/api-reference/front-commerce-remix/defineRemixExtension#routes)
+
+:::
+
+Additionally, we removed the `UNSTABLE_routes` API. If you were previously
+extending a layout or route file using `UNSTABLE_routes`, you will have to
+remove its usage and instead copy the original file entirely and apply your
+override on it.<br /> For more information about this change, see the
+[Extend a route layout guide](/docs/3.x/guides/extend-route-layout).
+
 ## Code changes
 
 ### Requisition list related theme changes

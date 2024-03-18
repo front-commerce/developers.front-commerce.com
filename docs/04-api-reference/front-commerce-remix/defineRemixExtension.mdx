@@ -40,7 +40,7 @@ defineRemixExtension({
   name: "acme",
   theme: "./extensions/acme/theme",
   // highlight-next-line
-  routes: "extensions/acme",
+  routes: import.meta.url,
 });
 ```
 
@@ -75,25 +75,9 @@ convention is the same as using the `routes` directory in a Remix application.
 {
   name: "acme",
   theme: "./extensions/acme/theme",
-  routes: "extensions/acme",
+  routes: import.meta.url,
 }
 ```
-
-:::caution
-
-The `flatRoutes` from Remix requires a placeholder `root.tsx` file at the same
-level as the `routes` directory.
-
-```
-extensions
-└─ acme
-   ├─ root.tsx
-   └─ routes
-      ├─ acme.tsx
-      └─ index.tsx
-```
-
-:::
 
 #### Config based routes:
 
