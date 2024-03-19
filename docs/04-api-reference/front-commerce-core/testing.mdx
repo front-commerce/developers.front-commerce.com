@@ -1,0 +1,58 @@
+---
+title: "Testing"
+sidebar_position: 9
+description:
+  "Testing is an important part of the development process. It helps to ensure that
+the code is working as expected and that it is not breaking any existing
+functionality. In this section, we will cover all the tools and utilities that
+we provide for testing."
+---
+
+<p>{frontMatter.description}</p>
+
+<SinceVersion tag="3.4" />
+
+## [`createFrontCommerceProviderStub`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1fd2e45608e30f7fef65a7bb7a75a70efd0c6ea7/packages/core/react/FrontCommerceProviderStub.tsx)
+
+This function is used to create a stub for the
+[`FrontCommerceProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1fd2e45608e30f7fef65a7bb7a75a70efd0c6ea7/packages/core/react/components.tsx#L29-69)
+component. It is useful for testing components that depend on the
+`FrontCommerceProvider` component.
+
+### Props (optional)
+
+| Prop                        | Description              | Type                     | Link                                                                                                                                                                      |
+| --------------------------- | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `device`                    | Device type              | `Device`                 | [Link](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1fd2e45608e30f7fef65a7bb7a75a70efd0c6ea7/packages/core/react/MediaQuery.tsx#L8-12)            |
+| `messages`                  | Translations messages    | `Record<string, string>` | -                                                                                                                                                                         |
+| `isContributionModeEnabled` | Contribution mode status | `boolean`                | -                                                                                                                                                                         |
+| `publicConfig`              | Public config            | `PublicConfig`           | [Link](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1fd2e45608e30f7fef65a7bb7a75a70efd0c6ea7/packages/core/config/publicConfigProvider.ts#L28-90) |
+
+### Example
+
+```tsx
+import { createFrontCommerceProviderStub } from "@front-commerce/core/testing";
+
+const FrontCommerceProviderStub = createFrontCommerceProviderStub(/* props */);
+```
+
+## [`makeDataLoaderStub `](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1fd2e45608e30f7fef65a7bb7a75a70efd0c6ea7/packages/core/cache/strategies/memoize.js)
+
+The usage is exactly the same as the original
+[`makeDataLoader`](/docs/2.x/advanced/graphql/dataloaders-and-cache-invalidation#makedataloader-usage)
+api.
+
+### Example
+
+```tsx
+import { makeDataLoaderStub } from "@front-commerce/core/testing";
+import CategoryLoader from "./CategoryLoader";
+
+const createSUT = (mockServer) => {
+  const axiosInstance = axios.create({
+    baseURL: `${mockServer.url}/api/rest`,
+    timeout: 50000,
+  });
+  return CategoryLoader(makeDataLoaderStub)(axiosInstance);
+};
+```

@@ -38,6 +38,7 @@ import { defineRemixExtension } from "@front-commerce/remix";
 
 defineRemixExtension({
   name: "acme",
+  meta: import.meta,
   theme: "./extensions/acme/theme",
   // highlight-next-line
   routes: import.meta.url,

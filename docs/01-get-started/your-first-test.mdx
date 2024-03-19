@@ -1,0 +1,149 @@
+---
+title: Your first test 🧪
+description:
+  In Front-Commerce v3.4, we introduced a new way to test your application using
+  `vitest`. This guide will help you to create your first test to ensure your
+  application is working as expected.
+sidebar_position: 5
+---
+
+<p>{frontMatter.description}</p>
+
+<SinceVersion tag="3.4" />
+
+# Resources
+
+- [Vitest](https://vitest.dev/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
+- [@front-commerce/core/testing](/docs/3.x/api-reference/front-commerce-core/testing#createfrontcommerceproviderstub)
+- [@remix-run/testing](https://remix.run/docs/en/main/other-api/testing)
+
+:::important
+
+Tests defined in your custom extensions will only be tested if the extension has
+been added to the `front-commerce.config.ts`
+
+We match tests to the following patterns:
+
+- `**/*.{test,spec}.?(c|m)[jt]s?(x)` - file based testing
+- `**/__tests__/*.?(c|m)[jt]s?(x)` - folder based testing
+
+:::
+
+# Testing a Component
+
+To test a component you can implement a test file with the following structure:
+
+```tsx title="app/theme/components/MyComponent.test.tsx"
+const MyComponent = () => {
+  const intl = useIntl();
+  return <Button>{intl.formatMessage("my-button.label")}</Button>;
+};
+
+describe("MyComponent", () => {
+  it("should render the Hello World text", () => {
+    render(<MyComponent />);
+    expect(screen.getByText("Hello World")).toBeInTheDocument();
+  });
+});
+```
+
+You will notice at this stage the test will fail because the `useIntl` is
+missing the context for the `IntlProvider`. To fix this, you can use the
+[`FrontCommerceProviderStub`](/docs/3.x/api-reference/front-commerce-core/testing#createfrontcommerceproviderstub)
+to provide the context to the component.
+
+```tsx title="app/theme/components/MyComponent.test.tsx"
+import { createFrontCommerceProviderStub } from "@front-commerce/core/testing";
+import { render, screen } from "@testing-library/react";
+
+const FrontCommerceProviderStub = createFrontCommerceProviderStub({
+  messages: {
+    "my-button.label": "Hello World",
+  },
+});
+
+const MyComponent = () => {
+  const intl = useIntl();
+  return <Button>{intl.formatMessage("my-button.label")}</Button>;
+};
+
+describe("MyComponent", () => {
+  it("should render the Hello World text", () => {
+    render(
+      <FrontCommerceProviderStub>
+        <MyComponent />
+      </FrontCommerceProviderStub>
+    );
+    expect(screen.getByText("Hello World")).toBeInTheDocument();
+  });
+});
+```
+
+# Testing a Route
+
+To test a route you can implement a test file with the following structure:
+
+:::caution
+
+Do not place the test file in the `app/routes` directory. As this will be
+detected as a nested route by Remix.
+
+:::
+
+```tsx title="app/__tests__/routes/hello-world.test.tsx"
+import { json } from "@front-commerce/remix/node";
+import { createRemixStub } from "@remix-run/testing";
+import { render, screen, waitFor } from "@testing-library/react";
+import { createFrontCommerceProviderStub } from "@front-commerce/core/testing";
+
+import HelloWorldRoute from "../../routes/hello-world";
+
+const FrontCommerceProviderStub = createFrontCommerceProviderStub();
+
+describe("hello-world route", () => {
+  it("should render the component with fetched data", async () => {
+    // Define your mock data based on the expected GraphQL response structure
+    const mockData = {
+      shop: {
+        url: "https://example.com",
+      },
+      me: {
+        firstname: "John",
+      },
+      navigationMenu: [
+        { id: "1", name: "Category 1", path: "/category-1" },
+        { id: "2", name: "Category 2", path: "/category-2" },
+        { id: "3", name: "Category 3", path: "/category-3" },
+      ],
+      title: "Hello World",
+    };
+
+    const RemixStub = createRemixStub([
+      {
+        path: "/",
+        Component: () => (
+          <FrontCommerceProviderStub>
+            <HelloWorldRoute />
+          </FrontCommerceProviderStub>
+        ),
+        loader: () => {
+          return json(mockData);
+        },
+      },
+    ]);
+
+    render(<RemixStub />);
+
+    // Note that the rendering is asynchronous, so we need to wait for the component to be rendered
+    await waitFor(() => {
+      expect(screen.getByText(`Hi John 👋`)).toBeInTheDocument();
+      expect(
+        screen.getByText(`Welcome to https://example.com`)
+      ).toBeInTheDocument();
+      // Verify one of the navigation menu items is rendered
+      expect(screen.getByText("Category 1")).toBeInTheDocument();
+    });
+  });
+});
+```

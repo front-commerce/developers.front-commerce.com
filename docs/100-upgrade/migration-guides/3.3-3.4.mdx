@@ -66,6 +66,73 @@ normal commands used in `remix`.
 }
 ```
 
+### Add required `meta` to extension definitions
+
+Each extension definition now requires the
+[`ImportMeta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta)
+for the extension in the
+[`meta`](/docs/3.x/api-reference/front-commerce-core/defineExtension#meta)
+property.
+
+:::info
+
+This will be automatically be added by the migration script.
+
+:::
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  namespace: "Acme",
+  // add-next-line
+  meta: import.meta,
+  ...
+});
+
+```
+
+### Add `vitest` to your project
+
+We have introduced vitest in the skeleton, to benefit from the new testing you
+need to add the following to your project
+
+- Add
+  [`vitest.config.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/vite.config.ts?ref_type=heads)
+  configuration file
+- Add
+  [`vitest.setup.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/vitest.setup.ts?ref_type=heads)
+  setup file
+- Add `"vitest/globals"` to your `tsconfig.json` and `tsconfig.template.json`
+  ```json file="./tsconfig.json"
+  {
+    "compilerOptions": {
+      // add-next-line
+      "types": ["vitest/globals"],
+      ...
+    }
+  }
+  ```
+- Add the test commands to your `package.json`
+  ```json file="./package.json"
+  {
+    "scripts": {
+       // add-start
+       "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
+       "test:watch": "NODE_OPTIONS='--import tsx/esm' vitest"
+       // add-end
+    ...
+    }
+  }
+  ```
+- Install the test packages
+  ```shell
+  pnpm add vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8
+  ```
+
+You should now be ready to
+[write your first test 🧪](/docs/3.x/get-started/your-first-test).
+
 ### Removal of `Meta Modules`
 
 In this version we have removed support for
