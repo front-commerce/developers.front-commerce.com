@@ -1,0 +1,32 @@
+---
+title: Customize data sent to Stripe
+description: "This guide explains how to Customize data sent to Stripe"
+sidebar_position: 1
+---
+
+<p>{frontMatter.description}</p>
+
+:::caution WIP
+
+<span>
+  This advanced pattern must be documented with further details. While we are
+  working on it, please <ContactLink /> if you need further assistance.
+</span>
+
+See the tests for an example (while a detailed documentation is being written):
+
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fc-2160-stripe-payment-extension-for-magento2/packages/stripe/modules/__tests__/loader.spec.js#L101
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/fc-2160-stripe-payment-extension-for-magento2/packages/stripe/modules/__tests__/loader.spec.js#L254
+
+:::
+
+The Stripe payment module is extensible. It leverages Front-Commerce's
+[data transform](/docs/3.x/api-reference/front-commerce-core/makeCustomizableData)
+pattern to allow developers to customize payloads sent to Stripe for Customer
+and Cart content.
+
+Both the `Customer` and `PaymentIntent` Stripe objects can be customized at
+application level. It allows to add additional metadata depending on your own
+logic. For this, you can use the `registerCustomerDataTransform` and
+`registerPaymentIntentDataTransform` methods of the Stripe loader to add your
+custom transformers.
