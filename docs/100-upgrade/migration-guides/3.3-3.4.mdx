@@ -458,6 +458,14 @@ index 5883fae10..e0449a188 100644
  import FormTitle from "theme/components/molecules/Form/FormTitle";
  import useProductBySkuLoader from "theme/hooks/useProductBySkuLoader";
  import Stack from "theme/components/atoms/Layout/Stack";
+@@ -59,6 +59,7 @@ const AddToRequisitionList = ({
+   }, [requisitionLists, intl]);
+
+   const onAddToARequisitionList = (requisitionListId) => {
++    setIsRequisitionListMenuOpen(false);
+     if (!addingToRequisitionList) {
+       addToRequisitionList(requisitionListId);
+     }
 @@ -74,21 +74,22 @@ const ProductConfigurationModalContent = ({
        selectedConfigurableOptions
      );
@@ -483,7 +491,7 @@ index 5883fae10..e0449a188 100644
 +      const form = input.form;
 +      const data = new FormData(form);
 +      for (const pair of data.entries()) {
-+        if (pair[0].indexOf("custom:") !== 0) {
++        if (pair[0].indexOf("custom:") !== 0 && pair[1]) {
 +          setOption(pair[0], pair[1]);
 +        }
 +      }
