@@ -268,6 +268,107 @@ remove its usage and instead copy the original file entirely and apply your
 override on it.<br /> For more information about this change, see the
 [Extend a route layout guide](/docs/3.x/guides/extend-route-layout).
 
+## From `graphql.unstable_module` to `graphql.module`
+
+In Front-Commerce v3.4 we've created a brand new GraphQL module API. The
+migration has been automated in the automated migration script, here's a guide
+to help understand the migration to the new API:
+
+### Runtime
+
+Runtime is now the core of GraphQL modules, you can check the
+[createGraphQLRuntime](/docs/3.x/api-reference/front-commerce-core/graphql#creategraphqlruntime)
+documentation to learn more about this. The migration is pretty straightforward:
+
+Before:
+
+```ts title="AcmeModule/module/index.js"
+import resolvers from "./resolvers";
+import AcmeLoader from "./loader";
+
+export default {
+  namespace: "AcmeModule",
+  dependencies: ["Front-Commerce/Core"],
+  resolvers,
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    return {
+      Acme: AcmeLoader(axiosInstance),
+    };
+  },
+};
+```
+
+After:
+
+```ts title="AcmeModule/module/index.ts"
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+export default createGraphQLModule({
+  namespace: "AcmeModule",
+  dependencies: ["Front-Commerce/Core"],
+  loadRuntime: () => import("./runtime"),
+  typeDefs: /* GraphQL */ `
+    extend type Mutation {
+      getAcme: String
+    }
+  `,
+});
+```
+
+```ts title="AcmeModule/module/runtime.ts"
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+import { makeUserClientFromRequest } from "@front-commerce/magento2/axios";
+
+import resolvers from "./resolvers";
+export default createGraphQLRuntime({
+  resolvers: {
+    Mutation: {
+      getAcme: () => "Acme",
+    }
+  }
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    return {
+      Acme: AcmeLoader(axiosInstance);
+    }
+  }
+})
+```
+
+### Extension definition
+
+Now that you've converted your legacy module to new GraphQLModule, you can
+register your module in your extension like this:
+
+```ts title="AcmeModule/index.ts"
+import {
+  defineExtension
+} from "@front-commerce/core";
+import AcmeModule from "./module";
+
+export default defineExtension({
+  name: "Acme",
+  graphql: {
+    // remove-next-line
+    unstable_module: ["./AcmeModule/module"]
+    // add-next-line
+    modules: [AcmeModule]
+  }
+})
+```
+
+### Inlining `typeDefs`
+
+Prior to Front-Commerce v3.4, you had to write typeDefs in a dedicated file then
+import it into your module.
+
+Now typedefs have to be inlined into your GraphQL module, to do so, please see
+the
+[createGraphQLModule example](/docs/3.x/api-reference/front-commerce-core/graphql#example)
+
 ## Code changes
 
 ### Requisition list related theme changes
