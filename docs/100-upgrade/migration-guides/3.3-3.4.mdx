@@ -541,3 +541,110 @@ index 19f85b84e..954bbb896 100644
 ```
 
 </details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx</code> file</summary>
+
+```diff
+index 35e3fa61b..f1933f1a3 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx
+@@ -1,5 +1,6 @@
+ import { useCallback, useState } from "react";
+ import RequisitionListCreateModal from "theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal";
++import { AddToRequisitionListQueryDocument } from "~/graphql/graphql";
+
+ /**
+  * @callback AddToRequisitionListFunction
+@@ -55,6 +56,7 @@ const withAddMultipleItemsToNewRequisitionListMutation =
+         onSuccess={({ id }) =>
+           addToRequisitionList(id, addToRequisitionListItems)
+         }
++        readQuery={AddToRequisitionListQueryDocument}
+       />
+     );
+
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx</code> file</summary>
+
+```diff
+index 2e7d94b3c..b6addced8 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx
+@@ -3,7 +3,7 @@ import RequisitionListCreateModal from "theme/modules/RequisitionList/Requisitio
+ import { useState } from "react";
+ import PrimaryButton from "theme/components/atoms/Button/PrimaryButton";
+
+-const RequisitionListAdd = ({ readQuery }) => {
++const RequisitionListAdd = () => {
+   const [isOpenModal, setOpenModal] = useState(false);
+
+   return (
+@@ -13,7 +13,6 @@ const RequisitionListAdd = ({ readQuery }) => {
+         onRequestClose={() => {
+           setOpenModal(false);
+         }}
+-        readQuery={readQuery}
+       />
+       <PrimaryButton onClick={() => setOpenModal(true)}>
+         <FormattedMessage
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx</code> file</summary>
+
+```diff
+index e2e1fe8eb..8b0c686d4 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx
+@@ -9,11 +9,17 @@ import FormActions from "theme/components/molecules/Form/FormActions";
+ import SubmitButton from "theme/components/atoms/Button/SubmitButton";
+ import { ErrorAlert } from "theme/components/molecules/Alert";
+ import { CreateRequisitionListMutationDocument } from "~/graphql/graphql";
++import requisitionListSorter from "theme/modules/RequisitionList/requisitionListSorter";
+ import { useMutation } from "react-apollo";
+ import { useRevalidator } from "@remix-run/react";
+ import RequisitionListModalForm from "theme/modules/RequisitionList/RequisitionListModal/RequisitionListModalForm";
+
+-const RequisitionListCreateModal = ({ isOpen, onRequestClose, onSuccess }) => {
++const RequisitionListCreateModal = ({
++  isOpen,
++  onRequestClose,
++  onSuccess,
++  readQuery,
++}) => {
+   let [errorMessage, setErrorMessage] = useState(null);
+   const revalidator = useRevalidator();
+
+@@ -29,6 +35,22 @@ const RequisitionListCreateModal = ({ isOpen, onRequestClose, onSuccess }) => {
+         }
+
+         revalidator.revalidate();
++        if (readQuery) {
++          const storedData = store.readQuery({
++            query: readQuery,
++          });
++          store.writeQuery({
++            query: readQuery,
++            data: {
++              me: {
++                ...storedData.me,
++                requisitionLists: storedData.me.requisitionLists
++                  .concat([data.requisitionList])
++                  .sort(requisitionListSorter),
++              },
++            },
++          });
++        }
+         setErrorMessage(null);
+         onSuccess?.(data.requisitionList);
+         onRequestClose();
+```
+
+</details>
