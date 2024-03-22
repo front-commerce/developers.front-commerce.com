@@ -1,0 +1,21 @@
+---
+title: Disable automatic capture
+description:
+  "This guide explains how to disable Automatic capture of Stripe payments"
+sidebar_position: 3
+---
+
+<p>{frontMatter.description}</p>
+
+Optionally the environment variable `FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE` can
+be set to `true` to configure the Stripe module so that the payment is not
+automatically captured. You can opt-in to this behavior, by adding the variable
+to your `.env`:
+
+```diff title=".env"
+# Stripe payment
+# API Keys from https://dashboard.stripe.com/account/apikeys
+FRONT_COMMERCE_WEB_STRIPE_PUBLISHABLE_KEY=pk_xxxxxx
+FRONT_COMMERCE_STRIPE_SECRET_KEY=sk_xxxxxx
++FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE=true
+```

@@ -1,0 +1,81 @@
+---
+title: "Stripe"
+description:
+  "This extension allows the usage of Stripe in your Front-Commerce application."
+---
+
+<SinceVersion tag="3.5" />
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/stripe
+```
+
+## Front-Commerce configuration
+
+[After installing the Stripe package](/docs/3.x/extensions/stripe/#installation),
+you need to enable the corresponding extension. For that, you need to tweak your
+`front-commerce.config.ts` file like this:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+// highlight-next-line
+import stripe from "@front-commerce/stripe";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    themeChocolatine(),
+    magento2({ storesConfig }),
+    // highlight-next-line
+    stripe(), // ⚠️ needs to be after themeChocolatine()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+## Register your Stripe payment components
+
+:::note
+
+The current method for configuring payment components is an interim solution. We
+recognize that it may be cumbersome for users. Please be assured that this
+process will undergo significant improvements in the future, as Front-Commerce
+evolves to include more versatile extension points for Payment systems.
+
+:::
+
+1. Override the file that lets you register additional payments methods in
+   Front-Commerce
+
+   ```shell
+   mkdir -p app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/@front-commerce/theme-chocolatine/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+2. Register Stripe
+
+   ```diff title="app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js"
+   +import StripeCheckout from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout";
+
+   const ComponentMap = {
+   +  stripe: StripeCheckout,
+   };
+
+   ...
+   ```
+
+After restarting Front-Commerce, you should be able to see a new payment method
+called "credit card" in your checkout step.
