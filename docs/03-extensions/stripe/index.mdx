@@ -18,9 +18,17 @@ $ pnpm install @front-commerce/stripe
 
 ## Front-Commerce configuration
 
-[After installing the Stripe package](/docs/3.x/extensions/stripe/#installation),
-you need to enable the corresponding extension. For that, you need to tweak your
-`front-commerce.config.ts` file like this:
+To enable the extension, you need to add the Stripe extension definition to your
+`front-commerce.config.ts`. When doing that, you need to pass the _flavor_ in
+which you want to run the extension, the _flavor_ must be one of the following
+values:
+
+- `magento1`
+- `magento2`
+- `adobe-b2b`
+
+For instance, in a Adobe B2B based project, the `front-commerce.config.ts` file
+would be something like:
 
 ```typescript title="front-commerce.config.ts"
 import { defineConfig } from "@front-commerce/core/config";
@@ -35,8 +43,9 @@ export default defineConfig({
   extensions: [
     themeChocolatine(),
     magento2({ storesConfig }),
+    adobeb2b(),
     // highlight-next-line
-    stripe(), // ⚠️ needs to be after themeChocolatine()
+    stripe("adobe-b2b"), // ⚠️ needs to be after themeChocolatine()
   ],
   stores: storesConfig,
   cache: cacheConfig,
