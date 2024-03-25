@@ -1,0 +1,25 @@
+---
+title: "SEO"
+description: "This page contains the API reference for the SEO features."
+---
+
+<SinceVersion tag="3.4" />
+
+<p>{frontMatter.description}</p>
+
+## API Reference
+
+### `/sitemap.xml` route
+
+A remix route that generates a sitemap for your site. The sitemap is generated
+based on the static pages in your site, and the dynamic pages that are generated
+by your [`handle`](/docs/3.x/guides/customize-the-generated-sitemap) exports for
+each page.
+
+### `/robots.txt` route
+
+A remix route that generates a `robots.txt` file for your site. If your
+`FRONT_COMMERCE_ENV` is set to `production`, the `robots.txt` file will allow
+all search engines to crawl your site. If your `FRONT_COMMERCE_ENV` is set to
+`development`, the `robots.txt` file will disallow all search engines from
+crawling your site.
