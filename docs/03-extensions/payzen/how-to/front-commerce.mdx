@@ -69,3 +69,22 @@ support new extension points for Payments.
 
 After restarting Front-Commerce, you should be able to see a new payment method
 called "credit card" in your checkout step.
+
+## Specific configuration for Magento1
+
+When using PayZen with Magento1 it requires the `directOrder` payment flow.
+
+You'll need to override the `theme/pages/Checkout/checkoutFlowOf.js` from
+`@front-commerce/theme-chocolatine` package to update code like this:
+
+```diff title="theme/pages/Checkout/checkoutFlowOf.js"
+
+const checkoutFlowOf = (method) => {
+  ...
+
+-  if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "payzen_embedded") return "directOrder";
+
+  ...
+};
+```
