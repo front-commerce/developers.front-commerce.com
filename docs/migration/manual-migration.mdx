@@ -795,7 +795,33 @@ Device information are still available in the configuration. Access it using
 `config.device`. Please contact us if you have a use case we don't support
 anymore.
 
-## Sitemap URL change
+## Sitemap Changes
+
+Please refer to the the
+[Customize the Sitemap](/docs/3.x/guides/customize-the-sitemap) documentation
+for more details on how to implement dynamic sitemaps in v3.
+
+### Sitemap URL change
 
 In v3, the sitemap URL has been changed from `/sitemaps/sitemap.xml` to
 `/sitemap.xml`.
+
+### SitemapLoader
+
+- The `registerNodesFetcher` method will no longer work in v3, instead you
+  should
+  [register a fetchers](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  via the
+  [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
+- The `overrideNodesFetcher` method will no longer work in v3, instead you
+  should
+  [override a fetcher](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  via the
+  [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
+
+### GraphQL Schema
+
+- The `Sitemapable` GraphQL interface has been deprecated for removal. It can be
+  removed from your project.
+- The `SitemapImage` GraphQL type has been deprecated for removal. It can be
+  removed from your project.
