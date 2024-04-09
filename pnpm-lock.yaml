@@ -66,8 +66,8 @@ dependencies:
     specifier: 0.0.1-alpha.4
     version: 0.0.1-alpha.4(infima@0.2.0-alpha.42)(react-dom@18.2.0)(react@18.2.0)
   react-player:
-    specifier: 2.11.0
-    version: 2.11.0(react@18.2.0)
+    specifier: 2.16.0
+    version: 2.16.0(react@18.2.0)
   react-slick:
     specifier: 0.29.0
     version: 0.29.0(react-dom@18.2.0)(react@18.2.0)
@@ -7579,8 +7579,8 @@ packages:
       webpack: 5.78.0
     dev: false
 
-  /react-player@2.11.0(react@18.2.0):
-    resolution: {integrity: sha512-fIrwpuXOBXdEg1FiyV9isKevZOaaIsAAtZy5fcjkQK9Nhmk1I2NXzY/hkPos8V0zb/ZX416LFy8gv7l/1k3a5w==}
+  /react-player@2.16.0(react@18.2.0):
+    resolution: {integrity: sha512-mAIPHfioD7yxO0GNYVFD1303QFtI3lyyQZLY229UEAp/a10cSW+hPcakg0Keq8uWJxT2OiT/4Gt+Lc9bD6bJmQ==}
     peerDependencies:
       react: '>=16.6.0'
     dependencies:
