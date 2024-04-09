@@ -268,6 +268,30 @@ remove its usage and instead copy the original file entirely and apply your
 override on it.<br /> For more information about this change, see the
 [Extend a route layout guide](/docs/3.x/guides/extend-route-layout).
 
+## Replacement of `remix-pwa` in favor of `vite-pwa`
+
+In this version we have moved PWA concerns to standard building tools. It
+implied the replacement of `remix-pwa` with `vite-pwa`. You will need to remove
+the packages and their usage from your project:
+
+```shell
+pnpm remove remix-pwa @remix-pwa/dev @remix-pwa/worker-runtime @remix-pwa/cache @remix-pwa/strategy @remix-pwa/sw
+```
+
+In order to find the uses of those package in your project, you can use this
+command:
+
+```shell
+grep "remix-pwa" src/ -r
+```
+
+You will also need to add additional packages used in the service worker to your
+project:
+
+```shell
+pnpm add workbox-window workbox-routing
+```
+
 ## From `graphql.unstable_module` to `graphql.module`
 
 In Front-Commerce v3.4 we've created a brand new GraphQL module API. The
