@@ -107,10 +107,10 @@ normal commands used in `remix`.
 -   "dev:debug": "front-commerce dev --manual -c \"pnpm run dev:server --inspect\"",
 -   "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
 -   "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
-+   "dev": "NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
-+   "dev:debug": "NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
++   "dev": "node --import tsx/esm ./server.mjs",
++   "dev:debug": "node --inspect --import tsx/esm ./server.mjs",
 +   "build": "NODE_OPTIONS='--import tsx/esm' remix vite:build",
-+   "start": "cross-env NODE_ENV=production NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
++   "start": "cross-env NODE_ENV=production node --import tsx/esm ./server.mjs",
   }
 }
 ```
