@@ -21,6 +21,8 @@ the JavaScript ecosystem. To learn more about it, see:
 - [What is ESM](https://dev.to/iggredible/what-the-heck-are-cjs-amd-umd-and-esm-ikm)
 - [NodeJS docmentation](https://nodejs.org/api/esm.html)
 
+### Updates in your codebase
+
 To cope with this transition, you should check that your code does not use
 `module.exports = ` or `module.exports.someNamedExport =` syntax, and replace it
 with `export default` or `export {}` otherwise.
@@ -35,6 +37,28 @@ grep "module.exports" src/ -r
 ```
 
 :::
+
+### Updates in your dependencies
+
+You may also have issues with some of your project dependencies that are not
+ESM-compatible.
+
+First of all, we recommend that you check if the dependencies you are using have
+a newer version that is ESM-compatible. If so, you can update them to the latest
+version. If it is not the case, we encourage you to reconsider their usage in
+your project, and remove them if possible or replace them with an ESM-compatible
+alternative. It also is a sign of a library that is not actively maintained. You
+can also contribute to the library by opening an issue or a pull request to make
+it ESM-compatible, of course!
+
+As a last resort, you can adapt your Vite configuration (`vite.config.ts`) to
+handle those cases by tweaking the optimization settings. See the
+[Vite documentation](https://vitejs.dev/) for more information. More
+particularly these pages:
+
+- https://vitejs.dev/guide/dep-pre-bundling.html
+- https://vitejs.dev/guide/ssr.html#ssr-externals
+- https://vitejs.dev/guide/troubleshooting.html
 
 ## Components
 

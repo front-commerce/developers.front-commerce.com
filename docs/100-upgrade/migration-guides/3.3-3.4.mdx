@@ -7,12 +7,41 @@ description:
 
 <p>{frontMatter.description}</p>
 
+:::tip
+
+This release includes important improvements and structural changes. Please
+follow this guide thoroughly to avoid any issues. If you have any questions or
+need help, please reach out to our support team.
+
+:::
+
 ## Update dependencies
 
-Update all your `@front-commerce/*` dependencies to this version:
+In order to update your project to Front-Commerce 3.4, you need to:
+
+- add `vite`, `sharp` and `workbox` to your project
+- update all your `@remix-run/*` dependencies to 2.8.1+
+- update all your `@front-commerce/*` dependencies to this version
+- remove `remix-pwa` and its related packages
+
+Here are the commands to run:
 
 ```shell
-pnpm update "@front-commerce/\*@3.4.0"
+pnpm remove remix-pwa @remix-pwa/dev @remix-pwa/worker-runtime @remix-pwa/cache @remix-pwa/strategy @remix-pwa/sw
+pnpm add -D vite
+pnpm add sharp workbox-window workbox-routing
+pnpm update "@remix-run/*@2.8.1"
+
+# And finally update all your Front-Commerce dependencies
+pnpm update "@front-commerce/*@3.4.0"
+```
+
+While you're at it, we recommend to add `vitest` related packages as well
+(further details below, in
+[Add `vitest` to your project](#add-vitest-to-your-project)):
+
+```shell
+pnpm add -D vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
 ```
 
 ## Automated Migration
@@ -37,7 +66,7 @@ those changes will be listed below.
 
 :::important
 
-Please ensure you follow the remix
+For more details about the changes in a Remix application, you can follow Remix
 [migration guide](https://remix.run/docs/en/main/future/vite#setup-vite), and
 use the
 [skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/ccb874da24fb973db7ebae126e5195a04ecceb95/skeleton)
@@ -45,7 +74,25 @@ as reference.
 
 :::
 
-### `package.json`
+### Create a `vite.config.ts` configuration file
+
+It replaces the `remix.config.js` configuration file, and is now the central hub
+for the Vite configuration (for local dev and build).
+
+Here is a recommended minimal configuration for Front-Commerce:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { vitePlugin as frontCommerce } from "@front-commerce/remix/vite";
+
+export default defineConfig((env) => {
+  return {
+    plugins: [frontCommerce({ env })],
+  };
+});
+```
+
+### Update `package.json` commands
 
 We have deprecated the internal `build` and `dev` cli commands in favor of the
 normal commands used in `remix`.
@@ -53,6 +100,7 @@ normal commands used in `remix`.
 ```diff file="./package.json"
 {
   "sideEffects": false,
++ "type": "module",
   "scripts": {
 -   "build": "front-commerce build",
 -   "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",
@@ -60,6 +108,7 @@ normal commands used in `remix`.
 -   "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
 -   "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
 +   "dev": "NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
++   "dev:debug": "NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
 +   "build": "NODE_OPTIONS='--import tsx/esm' remix vite:build",
 +   "start": "cross-env NODE_ENV=production NODE_OPTIONS='--import tsx/esm' node ./server.mjs",
   }
@@ -118,8 +167,7 @@ need to add the following to your project
   {
     "scripts": {
        // add-start
-       "test": "NODE_OPTIONS='--import tsx/esm' vitest run",
-       "test:watch": "NODE_OPTIONS='--import tsx/esm' vitest"
+       "test": "NODE_OPTIONS='--import tsx/esm' vitest"
        // add-end
     ...
     }
@@ -127,7 +175,7 @@ need to add the following to your project
   ```
 - Install the test packages
   ```shell
-  pnpm add vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8
+  pnpm add vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
   ```
 
 You should now be ready to
@@ -268,6 +316,17 @@ remove its usage and instead copy the original file entirely and apply your
 override on it.<br /> For more information about this change, see the
 [Extend a route layout guide](/docs/3.x/guides/extend-route-layout).
 
+### Transitioning to ESM
+
+With Front-Commerce v3.4, we have finalized the transition
+to <abbr title="ECMAScript Modules">ESM</abbr> for all our codebase and
+dependencies.
+
+It also means that you may face some issues with configuration files or older
+dependencies that are not ESM compatible. Please head to our
+[Transitioning to ESM guide](/docs/3.x/migration/manual-migration#transitioning-to-esm)
+to learn more.
+
 ## Replacement of `remix-pwa` in favor of `vite-pwa`
 
 In this version we have moved PWA concerns to standard building tools. It
@@ -386,11 +445,11 @@ export default defineExtension({
 
 ### Inlining `typeDefs`
 
-Prior to Front-Commerce v3.4, you had to write typeDefs in a dedicated file then
-import it into your module.
+Prior to Front-Commerce v3.4, you had to write type definitions in a dedicated
+file (usually named `schema.gql`) then import it into your module.
 
-Now typedefs have to be inlined into your GraphQL module, to do so, please see
-the
+Now type definitions must be inlined into your GraphQL module definition (via
+the `typeDefs` attribute), to do so, please see the
 [createGraphQLModule example](/docs/3.x/api-reference/front-commerce-core/graphql#example)
 
 ## Code changes
