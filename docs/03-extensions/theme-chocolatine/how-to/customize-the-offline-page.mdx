@@ -1,0 +1,21 @@
+---
+title: "Customize the offline page"
+description: "This guide explains how to customize the offline page."
+sidebar_position: 3
+---
+
+<p>{frontMatter.description}</p>
+
+The offline page is accessible when you disable your network while navigating in
+your shop. You can preview it at `/__front-commerce/offline`. You can then edit
+the `theme/pages/Offline` component to make sure that this page suits your
+brand.
+
+1. Override the Offline page component:
+
+```shell
+mkdir -p app/theme/pages/Offline
+cp -u node_modules/@front-commerce/theme-chocolatine/pages/Offline/Offline.tsx app/theme/pages/Offline/Offline.tsx
+```
+
+2. Customize the page with your brand's identity.
