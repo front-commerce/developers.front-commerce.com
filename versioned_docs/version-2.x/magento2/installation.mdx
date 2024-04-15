@@ -10,16 +10,19 @@ description:
 
 ## Module compatibility
 
-The Magento2 module is compatible with Magento2 Open Source,
-Commerce and B2B (see supported versions [in our release notes](/docs/2.x/appendices/release-notes#latest-version)). To use respectively Commerce or B2B specific features, you
-need to install and setup [the Front-Commerce's Magento2 Commerce
-module](/docs/2.x/magento2/commerce#magento2-commerce-module-installation)
-or [the Front-Commerce's Magento2 B2B
-module](/docs/2.x/magento2/b2b#requirements).
+The Magento2 module is compatible with Magento2 Open Source, Commerce and B2B
+(see supported versions
+[in our release notes](/docs/2.x/appendices/release-notes#latest-version)). To
+use respectively Commerce or B2B specific features, you need to install and
+setup
+[the Front-Commerce's Magento2 Commerce module](/docs/2.x/magento2/commerce#magento2-commerce-module-installation)
+or
+[the Front-Commerce's Magento2 B2B module](/docs/2.x/magento2/b2b#requirements).
 
 :::note
 
-Magento 2.4.3 requires [an Adobe official patch](https://experienceleague.adobe.com/docs/commerce-knowledge-base/kb/troubleshooting/known-issues-patches-attached/web-api-resources-limit.html).
+Magento 2.4.3 requires
+[an Adobe official patch](https://experienceleague.adobe.com/docs/commerce-knowledge-base/kb/troubleshooting/known-issues-patches-attached/web-api-resources-limit.html).
 
 :::
 
@@ -68,9 +71,12 @@ This can be done by running the following commands:
 ### Create the API integration
 
 An API integration must be created for Front-Commerce. To do so in the
-administration panel, go to `System > Extensions > Integrations` create and an integration. In the API section, make sure to set _Resource Access_ to _All_.
+administration panel, go to `System > Extensions > Integrations` create and an
+integration. In the API section, make sure to set _Resource Access_ to _All_.
 
-After doing that, configure the tokens in Front-Commerce’s environment variables with the values generated for the integration:
+After doing that, configure the tokens in Front-Commerce’s environment variables
+with the values generated for the integration:
+
 - `FRONT_COMMERCE_MAGENTO_CONSUMER_KEY`
 - `FRONT_COMMERCE_MAGENTO_CONSUMER_SECRET`
 - `FRONT_COMMERCE_MAGENTO_ACCESS_TOKEN`
@@ -88,10 +94,24 @@ In the administration panel, go to `System > Custom Variables` and set the value
 of the `fc_cache_api_token` variable with a secret value. This value must match
 the content of the `FRONT_COMMERCE_CACHE_API_TOKEN` environment variable.
 
+### Update session lifetime
+
+:::tip
+
+Only for Magento >= 2.4.4
+
+:::
+
+In the administration panel, go to `System > Stores > Configuration` then in the
+sidebar, select `SERVICES > Magento Web API`.
+
+Then find the `JWT Authentication` section and fill the
+`Customer JWT Expires In` field with the value you want (in minutes).
+
 ## Ensure it works
 
 To check that the API is properly configured, you can try to request:
 
-* `http://magento.url/rest/V1/store/storeViews`
-* `http://magento.url/rest/V1/frontcommerce/urls/match?urls[]=<url>` where `<url>`
-is one of the URL key of your products
+- `http://magento.url/rest/V1/store/storeViews`
+- `http://magento.url/rest/V1/frontcommerce/urls/match?urls[]=<url>` where
+  `<url>` is one of the URL key of your products
