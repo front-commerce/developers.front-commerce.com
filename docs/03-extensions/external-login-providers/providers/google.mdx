@@ -1,0 +1,58 @@
+---
+title: "Google"
+description: "Allow customers to use your website with their Google account."
+---
+
+<p>{frontMatter.description}</p>
+
+## Google setup
+
+The `GoogleProvider` needs the `clientId` and the `clientSecret` to work. You
+can get these from your "OAuth2.0 Client" of your app on the
+[google developer console](https://console.developers.google.com/apis/credentials).
+Note that you need to create one if you have not already.
+
+### Configuring Redirect URIs
+
+You need to configure the allowed redirect URIs under your "OAuth2.0 Client" of
+your app on the
+[Google developer console](https://console.developers.google.com/apis/credentials).
+Note that the `Authorized redirect URIs` should contain all your stores URLs
+followed by `/external-login/google/callback`.
+
+For example if you have two stores `https://example.com/en` and
+`https://example.com/fr`, you need to put
+`https://example.com/en/external-login/google/callback` and
+`https://example.com/fr/external-login/google/callback` in the
+`Valid OAuth Redirect URIs` field.
+
+:::tip
+
+When testing in localhost, you must register your localhost url as a redirect
+URI : `http://localhost:4000/external-login/google/callback`
+
+:::
+
+## Front-Commerce setup
+
+### `front-commerce.config.ts`
+
+```ts
+...
+import externalLoginProviders from "@front-commerce/external-login-providers";
+...
+
+export default defineConfig({
+  extensions: [
+    ...
+    externalLoginProviders(["google"])
+  ]
+})
+```
+
+### Environment variables
+
+| Name                                        | Description              |
+| ------------------------------------------- | ------------------------ |
+| `FRONT_COMMERCE_LOGIN_GOOGLE_CLIENT_ID`     | Google App Client ID     |
+| `FRONT_COMMERCE_LOGIN_GOOGLE_CLIENT_SECRET` | Google App Client Secret |
