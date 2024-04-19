@@ -92,15 +92,25 @@ export default defineConfig((env) => {
 });
 ```
 
-### Update `package.json` commands
+### Update `package.json`
+
+#### Add `"type": "module"`
+
+```diff file="./package.json"
+{
+  "sideEffects": false,
++ "type": "module",
+  // ...
+}
+```
+
+#### Update commands
 
 We have deprecated the internal `build` and `dev` cli commands in favor of the
 normal commands used in `remix`.
 
 ```diff file="./package.json"
 {
-  "sideEffects": false,
-+ "type": "module",
   "scripts": {
 -   "build": "front-commerce build",
 -   "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",

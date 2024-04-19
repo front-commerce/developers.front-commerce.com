@@ -15,13 +15,15 @@ parts, or debug issues in the migration CLI output.
 
 Starting 3.0, in a effort to modernize the codebase, we transitioned to ESM.
 This migration allows a better alignment with browsers standards, an improved
-static analysis, enhenced language features and overall a better consistency in
+static analysis, enhanced language features and overall a better consistency in
 the JavaScript ecosystem. To learn more about it, see:
 
 - [What is ESM](https://dev.to/iggredible/what-the-heck-are-cjs-amd-umd-and-esm-ikm)
-- [NodeJS docmentation](https://nodejs.org/api/esm.html)
+- [NodeJS documentation](https://nodejs.org/api/esm.html)
 
 ### Updates in your codebase
+
+#### Updating exports
 
 To cope with this transition, you should check that your code does not use
 `module.exports = ` or `module.exports.someNamedExport =` syntax, and replace it
@@ -37,6 +39,23 @@ grep "module.exports" src/ -r
 ```
 
 :::
+
+#### Uses of `__dirname`
+
+`__dirname` isn't available anymore in ESM. To cope with this change, you will
+need to replace its usage. For example:
+
+```ts
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+```
+
+For more information about alternatives to `__dirname`, see:
+
+- https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/.
+- https://dev.to/brcontainer/alternative-for-dirname-in-node-when-using-ecmascript-modules-5gni
 
 ### Updates in your dependencies
 
