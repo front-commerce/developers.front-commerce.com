@@ -134,6 +134,14 @@ redirects user to the HTTPS version of a page in this case. Use the
   `FRONT_COMMERCE_GRAPHQL_PERSISTED_QUERIES_DISABLE=true` to disable the GraphQL
   server persisted queries feature (upon restart). Don't forget to turn it on
   again afterwards: **it is recommended for production use cases!**
+- `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_MS`: the duration of the customers' session
+  in milliseconds (default:
+  [one day](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.x/src/server/express/config.js#L25))
+- `FRONT_COMMERCE_ENABLE_ROLLING_SESSIONS`: If `"true"`, enable
+  [express session rolling](https://github.com/expressjs/session?tab=readme-ov-file#rolling).
+  This options extends duration of the customers' session cookies (using the
+  value from `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_MS`) when they interact with the
+  website
 
 ### Sitemap
 
