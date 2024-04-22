@@ -462,6 +462,62 @@ Now type definitions must be inlined into your GraphQL module definition (via
 the `typeDefs` attribute), to do so, please see the
 [createGraphQLModule example](/docs/3.x/api-reference/front-commerce-core/graphql#example)
 
+## Storybook
+
+In this release, we added [Storybook](https://storybook.js.org/) to the skeleton
+as an example. To add it in your existing application, follow the instructions
+below. For more information, see the
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/77e02ee5d4c5f31a92db23167b398695e125ca4c).
+
+### Add Storybook to your project
+
+First, install Storybook dependencies and main addons in your project's dev
+dependencies:
+
+```bash
+pnpm i -D "@chromatic-com/storybook" "@storybook/addon-essentials" "@storybook/addon-interactions" "@storybook/addon-links" "@storybook/addon-onboarding" "@storybook/blocks" "@storybook/builder-vite" "@storybook/react" "@storybook/react-vite" "@storybook/test" "eslint-plugin-storybook" "storybook" "storybook-react-intl"
+```
+
+### Add the Storybook script to your project's `package.json`
+
+Here are some examples of scripts allowing you to run and build your Storybook
+styleguide. We recommend using the same build options if you're deploying on
+Front-Commerce Cloud:
+
+```diff file="package.json"
+   "scripts": {
+     // ...
++    "styleguide": "NODE_OPTIONS='--import tsx/esm' storybook dev -p 6006",
++    "build:styleguide": "NODE_OPTIONS='--import tsx/esm --inspect' storybook build --output-dir=./build/styleguide --config-dir=./.storybook --debug"
+   }
+```
+
+### Update your `.eslintrc.cjs` file
+
+This recommended plugin allows to provide useful checks for your Storybook
+stories:
+
+```diff file=".eslintrc.cjs"
+ // ...
+ module.exports = {
+   extends: [
+     "@remix-run/eslint-config",
+     "@remix-run/eslint-config/node",
++    "plugin:storybook/recommended",
+   ],
+   // ...
+```
+
+### Update your `.gitignore` file
+
+The following log files are useful for troubleshooting your Storybook setup but
+must not be versioned:
+
+```diff file=".gitignore"
+ // ...
++ *storybook.log
+```
+
 ## Code changes
 
 ### Requisition list related theme changes
