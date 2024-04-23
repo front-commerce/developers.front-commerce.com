@@ -1,0 +1,6 @@
+label: Providers
+collapsible: true
+link:
+  type: generated-index
+  description: Here's a list of our officially maintained providers, if you've wrote your own one and want it to be listed here, please reach our support!
+  slug: '/extensions/external-login-providers/providers'

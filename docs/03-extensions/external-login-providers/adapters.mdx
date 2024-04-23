@@ -1,0 +1,55 @@
+---
+title: "Adapters"
+description:
+  "Adapters allow you to link external services users to your e-commerce
+  customer account."
+---
+
+<p>{frontMatter.description}</p>
+
+:::danger
+
+At the time of writing, we only support this feature for Magento2. Magento1
+support will come soon.
+
+:::
+
+## What is an Adapter?
+
+An Adapter is a function that will link external services users to your
+e-commerce account.
+
+They are defined in the supported e-commerce connector packages.
+
+They receive a user with the following properties:
+
+| Name        | Description           | Type   |
+| ----------- | --------------------- | ------ |
+| `email`     | The user's email      | string |
+| `firstname` | The user's first name | string |
+| `lastname`  | The user's last name  | string |
+
+## Register a custom adapter
+
+:::danger
+
+This is an advanced use-case, we recommend you to reach our customer support to
+know your needs before proceeding.
+
+:::
+
+```ts title="my-module/index.ts"
+import LoginAdapter from "./loginAdapter"
+
+
+export default defineExtension({
+  name: "my-module"
+  ...
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      services.ExternalLogin.registerAdapter(new LoginAdapter());
+    }
+  }
+})
+
+```

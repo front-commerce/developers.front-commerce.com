@@ -1,0 +1,79 @@
+---
+title: "Create your own provider"
+description: "In this guide we will cover the creation of custom providers."
+---
+
+<p>{frontMatter.description}</p>
+
+## Introduction
+
+Let's say you want to create a connector to your company SSO.
+
+## Create a provider
+
+In your `extension` folder create a new Class that will proceed connection
+trough your SSO
+
+```ts title="extensions/my-extension/server/SsoProvider.ts"
+import type {
+  Profile,
+  ExternalLoginProvider,
+} from "@front-commerce/core/external-login";
+
+class SSOCompanyProvider implements ExternalLoginProvider {
+  name = "sso-company";
+
+  loginRoute(callbackUrl: string): string {
+    return `https://sso.mycompany.com/login/oauth2?callback=${callbackUrl}`;
+  }
+
+  async parseProfileFromProviderCallback(
+    request: Request
+  ): Promise<Profile | undefined> {
+    try {
+      const requestJson = await request.json();
+      return {
+        email: requestJson.profile.email,
+        firstname: requestJson.profile.firstname,
+        lastname: requestJson.profile.lastname,
+      };
+    } catch (e) {
+      return undefined;
+    }
+  }
+}
+```
+
+## Register your provider
+
+Then you need to register your brand-new provider into the external service
+thanks to the `onServerServicesInit` hook
+
+```ts title="extensions/my-extension/index.ts"
+...
+import SSOCompanyProvider from "./server/SsoProvider";
+
+return defineExtension({
+  ...
+  unstable_lifecycleHooks: {
+    onServerServicesInit(services, _, _) {
+      services.ExternalLogin.registerProvider(new SSOCompanyProvider());
+    }
+  }
+})
+
+```
+
+Your provider is now registered, you can test it by running your server and
+going to
+[`http://localhost:4000/external-login/sso-company`](http://localhost:4000/external-login/sso-company)
+
+## Implement link in your UI
+
+You can now, in your Login form, add a link to your new external login provider,
+the link of your provider will be the one used before:
+`/external-login/provider-name`.
+
+You can check the and/or use the
+[SocialLogin](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5d74aabac6f3fc6f8b25d479939fe543c62dd84b/packages/external-login-providers/theme/components/atoms/SignInButton/SignInButton.jsx)
+component to get you started.
