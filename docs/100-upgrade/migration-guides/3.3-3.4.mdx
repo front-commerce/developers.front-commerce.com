@@ -898,3 +898,123 @@ index e2e1fe8eb..8b0c686d4 100644
 ```
 
 </details>
+
+### Remix entrypoints
+
+In this release, we improved features that required to hook into your Remix
+application files created with the initial skeleton. You must update these files
+in your application, as detailed below **or copy the ones from the latest
+skeleton.**
+
+<details>
+  <summary><code>app/root.tsx</code> file</summary>
+
+Most of these changes are applied via the automated migration script, but you
+need to manually add the `ErrorPage` to the `ErrorBoundary` component.
+
+```diff
+diff --git a/app/root.tsx b/app/root.tsx
+index d55c47369..0c65e479a 100644
+--- a/app/root.tsx
++++ b/app/root.tsx
+@@ -2,7 +2,6 @@ import { CompatScripts } from "@front-commerce/compat/CompatProvider";
+ import { FrontCommerceApp } from "@front-commerce/remix";
+ import { generateMetas, json } from "@front-commerce/remix/node";
+ import { FrontCommerceScripts } from "@front-commerce/remix/react";
+-import { cssBundleHref } from "@remix-run/css-bundle";
+ import type {
+   LinksFunction,
+   LoaderFunctionArgs,
+@@ -19,27 +18,23 @@ import {
+   useRouteError,
+ } from "@remix-run/react";
+ import { usePageProgress } from "theme/components/helpers/usePageProgress";
+-import "theme/main.css";
++import "theme/main.scss";
+ import config from "~/config/website";
+-import { LiveReload, useSWEffect } from "@remix-pwa/sw";
+-import manifest from "~/manifest";
++import { pwaAssetsHead } from "virtual:pwa-assets/head";
++import ErrorPage from "theme/pages/Error";
+
+ export const loader = async ({ context }: LoaderFunctionArgs) => {
+   const app = new FrontCommerceApp(context.frontCommerce);
+
+-  return json({
+-    device: app.config.device,
+-    publicConfig: app.config.public,
+-  });
++  return json(app.rootLoaderContext);
+ };
+
+ export const shouldRevalidate = () => false;
+
+ export const links: LinksFunction = () => {
+-  return [
+-    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+-    ...manifest?.pwa.links,
+-  ];
++  return [{ rel: "manifest", href: "/manifest.webmanifest" }].concat(
++    pwaAssetsHead.links
++  );
+ };
+
+ export const meta: MetaFunction = (args) => {
+@@ -48,18 +43,13 @@ export const meta: MetaFunction = (args) => {
+     { name: "robots", content: "Index,Follow" },
+     { name: "description", content: config.defaultDescription },
+     { name: "baseUrl", content: args.data?.publicConfig?.shop?.url },
+-    ...manifest?.pwa.metas,
++    { name: "theme-color", content: pwaAssetsHead.themeColor?.content },
+   ];
+-  if (config.themeColor) {
+-    metatags.push({ name: "theme-color", content: config.themeColor });
+-  }
+   const metas = generateMetas(() => metatags);
+   return metas(args);
+ };
+
+ export default function App() {
+-  useSWEffect();
+-
+   const navigation = useNavigation();
+   usePageProgress(navigation.state !== "idle");
+
+@@ -75,7 +65,6 @@ export default function App() {
+         <Outlet />
+         <ScrollRestoration />
+         <Scripts />
+-        <LiveReload />
+         <FrontCommerceScripts />
+         <CompatScripts />
+       </body>
+@@ -87,15 +76,7 @@ export function ErrorBoundary() {
+   const error = useRouteError();
+
+   if (isRouteErrorResponse(error)) {
+-    return (
+-      <div>
+-        <h1>
+-          {error.status} {error.statusText}
+-        </h1>
+-        <p>{error.data}</p>
+-        <p>TODO FC-FC-1654: to customize</p>
+-      </div>
+-    );
++    return <ErrorPage error={error} />;
+   } else if (error instanceof Error) {
+     // TODO FC-xxx: only render this in dev
+     return (
+@@ -104,7 +85,7 @@ export function ErrorBoundary() {
+         <p>{error.message}</p>
+         <p>The stack trace is:</p>
+         <pre>{error.stack}</pre>
+-        <p>TODO FC-FC-1654: to customize</p>
++        <p>TODO FC-1654: to customize</p>
+       </div>
+     );
+   } else {
+
+```
+
+</details>
