@@ -26,22 +26,16 @@ with three custom routes to show the interactions with the maintenance mode.
 
 ## Testing and customizing the maintenance page
 
-The maintenance page is an HTML file served directly by the express server in
-case the site is in maintenance mode. You can customize the maintenance page by
-editing the `public/__front_commerce/maintenance.html` file in your
-Front-Commerce project.
-
-:::info
-
-Note that the user experience on the maitnenance page will evolve in the
-following version of Front-Commerce, for example be able to use base and custom
-components from the theme.
-
-:::
+The maintenance page can be changed by overriding the
+`theme/pages/Error/Maintenance.tsx` file.
 
 In order to facilitate the edition of this page, you can display it in
 development mode by
 [activating the maintenance mode](/docs/3.x/guides/maintenance-mode#entering-and-exiting-the-maintenance-mode).
+
+Alternatively you can navigate to the
+[`__front-commerce/maintenance`](http://localhost:4000/__front-commerce/maintenance)
+route in your application.
 
 ## Controlling Access During Maintenance
 
