@@ -462,6 +462,14 @@ Now type definitions must be inlined into your GraphQL module definition (via
 the `typeDefs` attribute), to do so, please see the
 [createGraphQLModule example](/docs/3.x/api-reference/front-commerce-core/graphql#example)
 
+## Flash values in sessions
+
+We've added two new methods to our sessions adapter related to flash values. If
+you've wrote your own session adapter, you need to implement these two new
+methods. Please check
+[this commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/a19b7cc93b389fc30f0ba08929a4822902e51e8b)
+for more details.
+
 ## Storybook
 
 In this release, we added [Storybook](https://storybook.js.org/) to the skeleton

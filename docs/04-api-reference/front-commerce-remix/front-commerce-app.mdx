@@ -56,6 +56,8 @@ for more details.
 interface SessionAdapter {
   getSessionData(): Record<string, any>; // used to retrieve the session data
   commit(): Promise<void>; // used to commit the session cookie
+  setFlashValue<T = any>(key: string, value: T): void; // used to set a flash value
+  getFlashValue<T = any>(key: string): T | undefined; // used to get a flash value
 }
 ```
 
