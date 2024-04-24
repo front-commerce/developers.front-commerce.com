@@ -121,3 +121,22 @@ useApolloClientQueries, this flag determines whether the SSR should await for
 these queries resolution to render the application or not. Enabling this flag
 will ensure 2.x compatibility regarding SSR, but increases the Time To First
 Byte of the application.
+
+#### `rateLimiter`
+
+When defined the rate limiter service will be enabled.
+
+```ts
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  // ...other configuration options
+  rateLimiter: {
+    redis: {
+      host: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_HOST,
+      port: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_PORT || 6379,
+      db: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_DB || 2,
+    },
+  },
+});
+```

@@ -366,3 +366,25 @@ Arguments:
 | `amount`     | `number`  | The price's amount.        |
 | `currency`   | `string`  | The price's currency       |
 | `includeTax` | `boolean` | Does the price include tax |
+
+## `limitRateByGraphQLResolver`
+
+Wraps a resolver with the rate limiting service.
+
+```ts
+import { limitRateByGraphQLResolver } from "@front-commerce/core/graphql";
+
+export default {
+  Query: {
+    helloWorld: limitRateByGraphQLResolver(options, resolver),
+  },
+};
+```
+
+Arguments:
+
+| Argument           | Type                                                                  | Description                       |
+| ------------------ | --------------------------------------------------------------------- | --------------------------------- |
+| `options.max`      | `number`                                                              | The max request for duration      |
+| `options.duration` | [`StringValue`](https://github.com/vercel/ms#examples)                | The duration of the rate limiting |
+| `resolver`         | [`FieldResolver`](https://the-guild.dev/graphql/tools/docs/resolvers) | The resolver function             |
