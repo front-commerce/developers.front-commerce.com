@@ -1026,3 +1026,50 @@ index d55c47369..0c65e479a 100644
 ```
 
 </details>
+
+<details>
+  <summary><code>entry.worker.ts</code> file</summary>
+
+To learn more about this, see the
+[commit that introduced the change](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3342),
+or our guide on
+[how to customize the offline page](/docs/3.x/extensions/theme-chocolatine/how-to/customize-the-offline-page).
+
+```diff
+diff --git a/app/entry.worker.ts b/app/entry.worker.ts
+index b4189b162..e188ed201 100644
+--- a/app/entry.worker.ts
++++ b/app/entry.worker.ts
+@@ -1,27 +1,3 @@
+-/// <reference lib="WebWorker" />
+-import type { WorkerDataFunctionArgs } from "@remix-pwa/sw";
+-import { synchronizeStorefrontContentFromResponse } from "theme/modules/StorefrontContent/serviceWorker";
++import { setupPwa } from "@front-commerce/remix/service-worker";
+
+-export type {};
+-declare let self: ServiceWorkerGlobalScope;
+-
+-self.addEventListener("install", (event: ExtendableEvent) => {
+-  event.waitUntil(self.skipWaiting());
+-});
+-
+-self.addEventListener("activate", (event: ExtendableEvent) => {
+-  event.waitUntil(self.clients.claim());
+-});
+-
+-export const defaultFetchHandler = async ({
+-  request,
+-}: WorkerDataFunctionArgs) => {
+-  // we MUST return the fetch response promise directly so that streams are supported
+-  const responsePromise = fetch(request);
+-
+-  responsePromise.then((response) => {
+-    synchronizeStorefrontContentFromResponse(response, self.clients);
+-  });
+-
+-  return responsePromise;
+-};
++setupPwa();
+```
+
+</details>

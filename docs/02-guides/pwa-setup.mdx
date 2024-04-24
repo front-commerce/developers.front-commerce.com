@@ -44,9 +44,12 @@ export default defineConfig({
     appName: "ACME Store",
     shortName: "ACME Store",
     themeColor: "#fbb03b",
-    icon: "public/pwa-icon.png",
-    maskableIcon: "public/pwa-masked-icon",
-    cacheTTLInMs: 7 * 24 * 60 * 60 * 1000,
+    icon: "public/favicon.svg", // we suggest using a svg which can be resized without losing quality
+    maskableIcon: "public/maskable.svg", // we suggest using a svg which can be resized without losing quality
+    offline: {
+      pageFallback: "__front-commerce/offline",
+      imageFallback: "images/Logo.svg", // image url (relative to public folder)
+    },
   },
   // highlight-end
 });
@@ -54,14 +57,14 @@ export default defineConfig({
 
 Here is a list of the available options:
 
-| Option         | Type     | Description                                                                                                          |
-| -------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
-| `appName`      | `string` | The name of your PWA                                                                                                 |
-| `shortName`    | `string` | The short name of your PWA, it will be displayed on the home screen of your customer                                 |
-| `themeColor`   | `string` | The theme color of your PWA, it will define theme for your App, we recommend you to use your website primary color   |
-| `icon`         | `string` | The icon of your PWA, it will be displayed on the home screen of your end user device, it must be at least 512x512   |
-| `maskableIcon` | `string` | The maskable icon of your PWA, it will be displayed on the home screen of your customer, it must be at lease 512x512 |
-| `cacheTTLInMs` | `number` | The time to live of your PWA Cache in milliseconds, the default value is of 7 days                                   |
+| Option         | Type                                                                                                                       | Description                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `appName`      | `string`                                                                                                                   | The name of your PWA                                                                                                 |
+| `shortName`    | `string`                                                                                                                   | The short name of your PWA, it will be displayed on the home screen of your customer                                 |
+| `themeColor`   | `string`                                                                                                                   | The theme color of your PWA, it will define theme for your App, we recommend you to use your website primary color   |
+| `icon`         | `string`                                                                                                                   | The icon of your PWA, it will be displayed on the home screen of your end user device, it must be at least 512x512   |
+| `maskableIcon` | `string`                                                                                                                   | The maskable icon of your PWA, it will be displayed on the home screen of your customer, it must be at lease 512x512 |
+| `offline`      | [`OfflineFallbackOptions`](https://developer.chrome.com/docs/workbox/modules/workbox-recipes/#type-OfflineFallbackOptions) | The offline configuration of your PWA                                                                                |
 
 ### Icons setup
 
