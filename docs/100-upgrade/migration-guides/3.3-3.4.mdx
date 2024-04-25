@@ -29,7 +29,7 @@ Here are the commands to run:
 ```shell
 pnpm remove remix-pwa @remix-pwa/dev @remix-pwa/worker-runtime @remix-pwa/cache @remix-pwa/strategy @remix-pwa/sw
 pnpm add -D vite
-pnpm add sharp workbox-window workbox-routing workbox-recipes workbox-strategies
+pnpm add sharp workbox-window
 pnpm update "@remix-run/*@2.8.1"
 
 # And finally update all your Front-Commerce dependencies
@@ -41,7 +41,7 @@ While you're at it, we recommend to add `vitest` related packages as well
 [Add `vitest` to your project](#add-vitest-to-your-project)):
 
 ```shell
-pnpm add -D vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
+pnpm add -D vitest @vitest/coverage-istanbul @testing-library/react @testing-library/jest-dom @remix-run/testing jsdom
 ```
 
 ## Automated Migration
@@ -151,6 +151,58 @@ export default defineExtension({
 
 ```
 
+### Update your `tsconfig.template.json`
+
+First you can delete your `tsconfig.json` file.
+
+```bash
+$ rm -rf tsconfig.json
+```
+
+Then you should apply the following changes to your `tsconfig.template.json`
+file
+
+```diff
+diff --git a/tsconfig.template.json b/tsconfig.template.json
+index 850611384..12a544096 100644
+--- a/tsconfig.template.json
++++ b/tsconfig.template.json
+@@ -1,17 +1,29 @@
+ {
+-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
++  "include": [
++    "env.d.ts",
++    "**/*.ts",
++    "**/*.tsx",
++    "server.mjs",
++    "./node_modules/@front-commerce/**/*.ts",
++    "./node_modules/@front-commerce/**/*.tsx",
++    "./node_modules/@front-commerce/**/*.js",
++    "./node_modules/@front-commerce/**/*.jsx"
++  ],
+   "compilerOptions": {
+-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
++    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+     "isolatedModules": true,
+     "esModuleInterop": true,
+     "jsx": "react-jsx",
+-    "moduleResolution": "node",
++    "module": "ESNext",
++    "moduleResolution": "Bundler",
+     "resolveJsonModule": true,
+-    "target": "ES2019",
++    "target": "ES2022",
+     "strict": true,
+     "allowJs": true,
++    "skipLibCheck": true,
+     "forceConsistentCasingInFileNames": true,
+-    "baseUrl": ".",
++    "baseUrl": "./",
+     "noEmit": true
+   },
+   "compileOnSave": false
+```
+
 ### Add `vitest` to your project
 
 We have introduced vitest in the skeleton, to benefit from the new testing you
@@ -185,7 +237,7 @@ need to add the following to your project
   ```
 - Install the test packages
   ```shell
-  pnpm add vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
+  pnpm add vitest @vitest/coverage-istanbul @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
   ```
 
 You should now be ready to
