@@ -15,21 +15,21 @@ StoreConfigLoader(axios, storeCode);
 
 Arguments:
 
-| Name        | Type    | Description                  |
-| :---------- | :------ | :--------------------------- |
-| `axios`     | Axios   | Axios instance               |
-| `storeCode` | String  | Store code                   |
+| Name        | Type   | Description    |
+| :---------- | :----- | :------------- |
+| `axios`     | Axios  | Axios instance |
+| `storeCode` | String | Store code     |
 
 Example
 
 ```js
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { StoreConfigLoader } from "@front-commerce/magento1/config";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const adminAxiosInstance = makeAdminClientFromRequest(req);
     const storeConfig = StoreConfigLoader(adminAxiosInstance, "default");
   },
-};
+});
 ```

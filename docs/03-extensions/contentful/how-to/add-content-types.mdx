@@ -92,13 +92,6 @@ export default Homepage;
 With the ContentfulLoader, you can implement a **`contextEnhancer`** in your
 module to retrieve homepage data from Contentful.
 
-:::note
-
-Ideally, you would execute this in your loaders. However, for the clarity of
-this guide, we're using the contextEnhancer.
-
-:::
-
 Should you require a list of content items rather than a singular item, the
 [`loadAllContentMatching`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/contentful/graphql/core/ContentfulLoader.js#L82-128)
 loader method is at your service. It accepts parameters similar to
@@ -110,31 +103,49 @@ with added pagination arguments:
 - `order` - Ordering criteria, accepted as a string or string[]. For more, see
   [Contentful GraphQL API](https://www.contentful.com/developers/docs/references/graphql/#/reference/collection-order).
 
-```js title="./my-extension/cms/index.js"
-import Homepage from "./contentType/Homepage";
+First, create the `GraphqlModule` file:
 
-export default {
+```ts title="./my-extension/cms/graphql.ts"
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+export default createGraphQLModule({
   namespace: "Acme/MyModule",
   dependencies: ["Contentful"],
-  contextEnhancer: ({ req, loaders }) => {
-    const homepage = new Homepage();
+  loadRuntime: () => import("./runtime"),
+});
+```
 
-    return {
-      Query: {
-        loadHomepages: async () => {
-          const allPagesResponse =
-            await loaders.Contentful.loadAllContentMatching(
-              homepage,
-              undefined,
-              0,
-              5
-            );
-          return allPagesResponse.items.map(homepage.dataFormatter);
-        },
+Then we will create the `GraphqlRuntime` file:
+
+```ts title="./my-extension/cms/runtime.ts"
+import Homepage from "./contentType/Homepage";
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Query: {
+      loadHomepages: async (
+        parent,
+        args,
+        { loaders: { ContentfulHomePage, Contentful } }
+      ) => {
+        const response = await Contentful.loadAllContentMatching(
+          ContentfulHomePage,
+          undefined,
+          0,
+          5
+        );
+        return response.items.map(HomePage.dataFormatter);
       },
+    },
+  },
+
+  contextEnhancer: ({ req, loaders }) => {
+    return {
+      ContentfulHomePage: new Homepage(),
     };
   },
-};
+});
 ```
 
 ## Creating an Independent `ContentType`
