@@ -1,0 +1,7 @@
+label: Extend the Vite Configuration
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains goal-oriented documentation that provides step-by-step
+    instructions to extend the Vite configuration with popular extensions.
