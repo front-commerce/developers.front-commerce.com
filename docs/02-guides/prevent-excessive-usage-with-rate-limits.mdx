@@ -1,0 +1,195 @@
+---
+title: Prevent excessive usage with rate limits
+description:
+  This guide explores the implementation of rate limiting techniques to
+  safeguard your applications from excessive use.
+---
+
+<p>{frontMatter.description}</p>
+
+## Rate Limiter Service
+
+The Rate Limiter service provides a robust solution for managing and preventing
+excessive usage by imposing limits on the number of requests that users can make
+within a specified period. This service utilizes Redis for storage and supports
+integration into both HTTP contexts and GraphQL operations.
+
+### Features
+
+- **Redis-backed Storage**: Utilizes Redis to efficiently track request counts
+  and support high concurrency.
+- **Flexible Rate Limits**: Configure max requests and duration per rate limit
+  namespace.
+- **HTTP and GraphQL Support**: Easily integrate rate limiting into Remix
+  actions/loaders and GraphQL resolvers.
+- **Automated Response Handling**: Automatically sends HTTP 429 Too Many
+  Requests responses when a limit is exceeded.
+
+### Service Configuration
+
+The rate limiter requires a Redis configuration to function. Upon instantiation,
+it subscribes to a Redis instance and sets up namespaces for different rate
+limits.
+
+To configure the service, you can add the following to your
+`front-commerce.config.ts`:
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  // ...other configuration options
+  rateLimiter: {
+    // feel free to extract this configuration in a separate file to ease maintenance
+    redis: {
+      host: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_HOST,
+      port: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_PORT || 6379,
+      db: process.env.FRONT_COMMERCE_CLOUD_REDIS_SESSIONS_DB || 2,
+    },
+  },
+});
+```
+
+:::tip
+
+We've suggested a configuration which shares the same Redis DB than sessions.
+While it's not required, we think it makes sense because both share the same
+kind of responsibilities.
+
+:::
+
+## Implementing Rate Limits
+
+The service provides two main methods for limiting rates:
+
+- `limitHTTPResource(namespace, requestId, options)`: Limits rates for HTTP
+  requests by namespace and request ID.
+- `limitGraphQLResource(fieldPath, requestId, options)`: Limits rates for
+  GraphQL queries based on the resolver field path.
+
+There is also an additional exported method in the `graphql` exports:
+
+- `limitRateByGraphQLResolver(options, resolver)`: Wraps a GraphQL resolver with
+  rate limiting.
+
+### Remix Loader
+
+In the Remix framework, the rate limiter can be employed within a loader to
+control request frequency based on URL path and user IP.
+
+```ts
+import { FrontCommerceApp } from "@front-commerce/remix";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+
+export const loader = async ({ context, request }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  await app.services.RateLimiter.limitHTTPResource(
+    new URL(request.url).pathname,
+    app.user.clientIp,
+    {
+      max: 5,
+      duration: "1m",
+    }
+  );
+
+  // Perform loader-specific logic here
+};
+```
+
+### Remix Action
+
+Similarly, for actions in Remix, the rate limiter ensures that excessive
+requests are controlled at the action level, again based on URL path and user
+IP.
+
+```ts
+import { FrontCommerceApp } from "@front-commerce/remix";
+import type { ActionFunctionArgs } from "@remix-run/node";
+
+export const action = async ({ context, request }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  await app.services.RateLimiter.limitHTTPResource(
+    new URL(request.url).pathname,
+    app.user.clientIp,
+    {
+      max: 5,
+      duration: "1m",
+    }
+  );
+
+  // Perform action-specific logic here
+};
+```
+
+### GraphQL Resolver
+
+For GraphQL resolvers, the rate limiter can be directly applied to individual
+queries or mutations to manage resource consumption effectively.
+
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Query: {
+      helloWorld: async (parent, args, { user, services }) => {
+        await services.RateLimiter.limitGraphQLResource(
+          "Query:helloWorld",
+          user.clientIp,
+          {
+            max: 5,
+            duration: "1m",
+          }
+        );
+
+        // Perform resolver logic here
+      },
+    },
+  },
+});
+```
+
+Or you can use the `limitRateByGraphQLResolver` method to wrap the resolver with
+a rate limit:
+
+```ts
+import {
+  createGraphQLRuntime,
+  limitRateByGraphQLResolver,
+} from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Query: {
+      helloWorld: limitRateByGraphQLResolver(
+        {
+          max: 5,
+          duration: "1m",
+        },
+        async (parent, args, context, info) => {
+          // Perform resolver logic here
+        }
+      ),
+    },
+  },
+});
+```
+
+:::info
+
+This method will automatically apply a namespace based on the resolver path, for
+example `Query:helloWorld`.
+
+:::
+
+## Additional Tips
+
+- **Handling Overlimits**: The service automatically handles cases where the
+  limit is exceeded by sending a `429` status code, but this can be customized
+  further if different handling is required.
+- **Monitoring and Logs**: Integration with `winston` for logging allows
+  tracking down issues and misuse effectively.
+- **Custom namespace and requestId**: The `namespace` and `requestId` parameters
+  can be customized to suit your application's requirements.

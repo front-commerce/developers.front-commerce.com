@@ -1,0 +1,56 @@
+---
+title: "Facebook"
+description: "Allow customers to use your website with their Facebook account."
+---
+
+<p>{frontMatter.description}</p>
+
+## Facebook setup
+
+The `FacebookProvider` needs the `clientId` and the `clientSecret` to work. You
+can get these from your app on the
+[Facebook developer console](https://developers.facebook.com/apps/).
+
+### Configuring Redirect URIs
+
+You need to configure the allowed redirect URIs on your
+[Facebook developer console](https://developers.facebook.com/apps/). Note that
+the `Valid OAuth Redirect URIs` should contain all your stores URLs followed by
+`/external-login/facebook/callback`.
+
+For example if you have two stores `https://example.com/en` and
+`https://example.com/fr`, you need to put
+`https://example.com/en/external-login/facebook/callback` and
+`https://example.com/fr/external-login/facebook/callback` in the
+`Valid OAuth Redirect URIs` field.
+
+:::tip
+
+When testing in localhost, you must register your localhost url as a redirect
+URI : `http://localhost:4000/external-login/facebook/callback`
+
+:::
+
+## Front-Commerce setup
+
+### `front-commerce.config.ts`
+
+```ts
+...
+import externalLoginProviders from "@front-commerce/external-login-providers";
+...
+
+export default defineConfig({
+  extensions: [
+    ...
+    externalLoginProviders(["facebook"])
+  ]
+})
+```
+
+### Environment variables
+
+| Name                                          | Description                |
+| --------------------------------------------- | -------------------------- |
+| `FRONT_COMMERCE_LOGIN_FACEBOOK_CLIENT_ID`     | Facebook App Client ID     |
+| `FRONT_COMMERCE_LOGIN_FACEBOOK_CLIENT_SECRET` | Facebook App Client Secret |

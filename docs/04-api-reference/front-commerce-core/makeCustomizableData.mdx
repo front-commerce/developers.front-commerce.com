@@ -1,0 +1,120 @@
+---
+title: "makeCustomizableData"
+description:
+  "The `makeCustomizableData` function allows you to execute a series of
+  transformations on an objet."
+---
+
+<p>{frontMatter.description}</p>
+
+## `makeCustomizableData` function
+
+### Params
+
+| Name                | Type    | Description                                         |
+| ------------------- | ------- | --------------------------------------------------- |
+| `initialTransforms` | `any[]` | Array of [transform functions](#transform-function) |
+
+### Return
+
+It returns a new object with the `registerTransform` and `makeData` functions:
+
+| Type                                      | Description                                       |
+| ----------------------------------------- | ------------------------------------------------- |
+| [`registerTransform`](#registertransform) | A method to allow to register new transformations |
+| [`makeData`](#makedata)                   | Apply all transformations to a variable           |
+
+#### Example
+
+```ts
+import { makeCustomizableData } from "@front-commerce/core/graphql";
+
+const transformer = (data) => {
+  // Do your transformation
+  return data;
+};
+
+const customData = makeCustomizableData([transformer]);
+```
+
+### `registerTransform`
+
+Add a [transform function](#transform-function)
+
+#### Params
+
+| Name        | Type       | Description            |
+| ----------- | ---------- | ---------------------- |
+| `transform` | `function` | The transform function |
+
+#### Return
+
+Nothing
+
+#### Example
+
+```ts
+import { makeCustomizableData } from "@front-commerce/core/graphql";
+
+const customData = makeCustomizableData();
+
+const transformer = (data) => {
+  // Do your transformation
+  return data;
+};
+
+customData.registerTransform(transformer);
+```
+
+### `makeData`
+
+Apply all transformations to a variable
+
+#### Params
+
+| Name   | Type  | Description           |
+| ------ | ----- | --------------------- |
+| `data` | `any` | The data to transform |
+
+#### Return
+
+| Type  | Description          |
+| ----- | -------------------- |
+| `any` | The transformed data |
+
+#### Example
+
+```ts
+import { makeCustomizableData } from "@front-commerce/core/graphql";
+
+const data = {
+  id: 1,
+  name: "My product",
+  price: 100,
+};
+const customData = makeCustomizableData();
+const customizedData = customData.makeData(data);
+```
+
+## `transform` function
+
+### Params
+
+| Name   | Type  | Description           |
+| ------ | ----- | --------------------- |
+| `data` | `any` | The data to transform |
+
+### Return
+
+| Type  | Description          |
+| ----- | -------------------- |
+| `any` | The transformed data |
+
+### Example
+
+```ts
+function myTransformer(data) {
+  // Do your transformation
+  return data;
+}
+```

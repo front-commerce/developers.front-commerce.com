@@ -1,0 +1,21 @@
+---
+title: "Environment variables"
+description:
+  "This reference lists environment variables used by the Stripe extension."
+---
+
+<p>{frontMatter.description}</p>
+
+:::info
+
+Your API keys can be found on your
+[Stripe Dashboard](https://dashboard.stripe.com/account/apikeys)
+
+:::
+
+| Name                                    | Description                                                                                                                                                                                                        | Default value |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| FRONT_COMMERCE_STRIPE_SECRET_KEY        | **Required** Your Stripe Secret key                                                                                                                                                                                |               |
+| FRONT_COMMERCE_STRIPE_PUBLISHABLE_KEY   | **Required** Your Stripe Secret key                                                                                                                                                                                |               |
+| FRONT_COMMERCE_STRIPE_MAX_NETWORK_RETRY | The maximum number of network tries should be made to the Stripe network before the call is considered a failure. See [Stripe Documentation](https://github.com/stripe/stripe-node#network-retries) for more infos | `3`           |
+| FRONT_COMMERCE_STRIPE_DISABLE_CAPTURE   | Advanced feature to disable Stripe payment capture see [this guide](/docs/3.x/extensions/stripe/how-to/disable-automatic-capture) to learn more                                                                    | `false`       |

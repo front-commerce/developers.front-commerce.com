@@ -1,0 +1,166 @@
+---
+title: "PayPal"
+description:
+  "This extension allows the usage of PayPal as an embedded payment method in
+  your Front-Commerce application."
+---
+
+<SinceVersion tag="3.5" />
+
+<p>{frontMatter.description}</p>
+
+## Front-Commerce Payments
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/paypal
+```
+
+## Front-Commerce configuration
+
+To enable the extension, you need to add the PayPal extension definition to your
+`front-commerce.config.ts`. When doing that, you need to pass the _flavor_ in
+which you want to run the extension, the _flavor_ must be one of the following
+values:
+
+- `magento1`
+- `magento2`
+
+For instance, in a magento2 based project, the `front-commerce.config.ts` file
+would be something like:
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import magento2 from "@front-commerce/magento2";
+// highlight-next-line
+import paypal from "@front-commerce/paypal";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    themeChocolatine(),
+    magento2({ storesConfig }),
+    // highlight-next-line
+    paypal("magento2"), // ⚠️ needs to be after themeChocolatine()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+### Environment variables
+
+This extension requires environment variable to work properly. Please refer to
+the
+[Environment variables reference](/docs/3.x/extensions/paypal/reference/environment-variables)
+for more information.
+
+### Register your PayPal payment components
+
+:::note
+
+The current method for configuring payment components is an interim solution. We
+recognize that it may be cumbersome for users. Please be assured that this
+process will undergo significant improvements in the future, as Front-Commerce
+evolves to include more versatile extension points for Payment systems.
+
+:::
+
+1. Override the file that lets you register additional payments methods in
+   Front-Commerce
+
+   ```shell
+   mkdir -p app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/
+   cp -u node_modules/@front-commerce/theme-chocolatine/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js
+   ```
+
+2. Register PaypalButton
+
+   ```diff title="app/theme/modules/Checkout/Payment/AdditionalPaymentInformation/getAdditionalDataComponent.js"
+   +import PaypalButton from "theme/modules/Checkout/Payment/AdditionalPaymentInformation/PaypalButton";
+
+   const ComponentMap = {
+   +  paypal_button: PaypalButton,
+   };
+
+   ...
+   ```
+
+After restarting Front-Commerce, you should be able to see a new payment method
+called "credit card" in your checkout step.
+
+### Advanced: customize data sent to Paypal
+
+:::caution WIP
+
+<span>
+  This advanced pattern must be documented with further details. While we are
+  working on it, please <ContactLink /> if you need further assistance.
+</span>
+
+:::
+
+The Paypal payment module is extensible. It leverages Front-Commerce's "data
+transform" pattern to allow developers to customize payloads sent to Paypal for
+Payer data and Payer units.
+
+Both the payer data and payer units objects can be customized at application
+level. It allows to add additional metadata depending on your own logic. For
+this, you can use the `registerPayerDataTransform` and
+`registerPurchaseUnitsDataTransform` methods of the Paypal loader to add your
+custom transformers.
+
+See the tests for an example (while a detailed documentation is being written):
+
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6ab1d00ad4d83c139180eb7ebda61a1ce390e7b3/packages/paypal/modules/common/__pacts__/loaders.js#L248
+- https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6ab1d00ad4d83c139180eb7ebda61a1ce390e7b3/packages/paypal/modules/common/__pacts__/loaders.js#L302
+
+## Magento2 module
+
+:::caution WIP
+
+This integration is aimed at being transparent for administrators and
+developers. That is why we haven't duplicated documentation from
+[existing Magento resources](https://docs.magento.com/user-guide/configuration/sales/paypal-express-checkout.html)
+. Take a look at
+[this blog to find the credentials required by Magento](https://store.magenest.com/blog/paypal/#2_Get_API_Credentials)
+. Please <ContactLink /> if you need further assistance.
+
+:::
+
+Front-Commerce Magento2 module contains
+[headless payment adapters](/docs/2.x/magento2/headless-payments) for the
+**Paypal Express** payment method.
+
+The Paypal module must be configured in a normal way, as for a non-headless
+Magento store.
+
+## Magento1 (OpenMage LTS) module
+
+:::caution WIP
+
+<span>
+  This integration is aimed at being transparent for administrators and
+  developers. That is why we haven't duplicated documentation from existing
+  Magento resources. Please <ContactLink /> if you need further assistance.
+</span>
+
+:::
+
+Front-Commerce Magento1 module contains
+[headless payment adapters](/docs/2.x/magento1/headless-payments) for the
+**Paypal Standard** payment method.
+
+The Paypal module must be configured in a normal way, as for a non-headless
+Magento store.
+
+To enable **Paypal Standard** (instead of **Paypal Express**), you may have to
+update your database manually. See
+[Disable paypal express when enabling paypal standard in Magento 1.9.1](https://magento.stackexchange.com/a/75971)
+for details.

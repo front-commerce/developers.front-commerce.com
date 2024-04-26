@@ -1,0 +1,205 @@
+---
+title: "Dependency Injection"
+description:
+  This guide walks through the process of utilizing Dependency Injection (DI)
+  within your Front-Commerce application. DI is a pattern that allows classes to
+  receive dependencies from external sources rather than constructing them
+  internally, facilitating more modular, testable, and flexible code.
+---
+
+<p>{frontMatter.description}</p>
+
+## Implementation
+
+### Creating the Dependency
+
+To create a dependency, define a function that initializes and returns the
+dependency. For instance, `createAcmeDI` might create a client using the
+`@acme/lib` library configured with specific settings.
+
+```ts title="./extensions/acme/di.ts"
+import type { ComputedConfig } from "@front-commerce/core/config";
+import createClient from "@acme/lib";
+
+export const createAcmeDI = (config: ComputedConfig["acme"]) => {
+  return {
+    client: createClient(config.api.url, config.api.token),
+  };
+};
+```
+
+### Registering Dependencies
+
+Dependencies should be registered within the extension definition, typically
+inside the `onServerServicesInit` lifecycle hook. This is where you can define
+what services or objects should be available for injection throughout your
+application.
+
+Example of registering an `acme` dependency:
+
+```ts title="./extensions/acme/index.ts"
+export default defineRemixExtension({
+  name: "acme-extension",
+  meta: import.meta,
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      services.DI.register("acme", createAcmeDI(config.acme));
+    },
+  },
+});
+```
+
+### Extending the type declarations
+
+For TypeScript support, you'll need to extend the `DependencyInjection`
+interface from `@front-commerce/types` to include your custom dependencies. This
+declaration can be placed in a `dependency-injection.d.ts` file within your
+extension's types directory.
+
+Ensure you have the `@front-commerce/types` package installed in your project,
+as it provides the necessary types for DI.
+
+```ts title="./extensions/acme/types/dependency-injection.d.ts"
+import type { createAcmeDI } from "../di";
+
+declare module "@front-commerce/types" {
+  export interface DependencyInjection {
+    acme: ReturnType<typeof createAcmeDI>;
+  }
+}
+```
+
+Make sure this types declaration file is included in your `tsconfig.json` file
+under the `include` or include sections to ensure TypeScript is aware of these
+custom types.
+
+```json title="tsconfig.json"
+{
+  // remove-next-line
+  "include": ["types/**/*"]
+  // add-next-line
+  "include": ["extensions/**/types/**/*", "types/**/*"]
+}
+```
+
+:::tip
+
+The `DependencyInjection` interface can be extended multiple times across your
+extensions. This allows you to define dependencies in separate files and keep
+your codebase organized.
+
+:::
+
+## Usage
+
+### Remix
+
+To use your dependency within a Remix loader or action, you can access it via
+the `services` instance in the
+[`FrontCommerceApp`](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app)
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Remix Loader">
+```
+
+```ts
+import { json } from "@front-commerce/remix/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  const { client } = app.services.DI.acme;
+  const data = await client.fetchData();
+  // highlight-end
+
+  return json({ data });
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Remix Action">
+```
+
+```ts
+import { json } from "@front-commerce/remix/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
+
+export const action = async ({ context }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  const { client } = app.services.DI.acme;
+  const data = await client.fetchData();
+  // highlight-end
+
+  return json({ data });
+};
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
+### GraphQL Module
+
+To use your dependency within a GraphQL module, you can access it via the
+`services` in the `context` object.
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Resolver">
+```
+
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+import createFooContextEnhancer from "./createFooContextEnhancer";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Query: {
+      getAcme: (_, __, { services }) => {
+        // highlight-start
+        const { client } = services.DI.acme;
+        return client.fetchData();
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Context Enhancer">
+```
+
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+import createFooContextEnhancer from "./createFooContextEnhancer";
+import AcmeLoader from "./AcmeLoader";
+
+export default createGraphQLRuntime({
+  contextEnhancer: ({ services }) => {
+    // highlight-start
+    const { client } = services.DI.acme;
+    return client.fetchData();
+    // highlight-end
+
+    const Acme = new AcmeLoader(client);
+
+    return {
+      Acme,
+    };
+  },
+});
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```

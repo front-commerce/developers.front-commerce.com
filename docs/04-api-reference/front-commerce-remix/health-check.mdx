@@ -1,0 +1,38 @@
+---
+title: "Health check"
+description:
+  "The /__front-commerce/health URL can be used in cloud environments to ensure
+  that the application can serve traffic."
+---
+
+<p>{frontMatter.description}</p>
+
+You can try it locally at
+[http://localhost:4000/\_\_front-commerce/health](http://localhost:4000/__front-commerce/health).
+
+## API Reference
+
+### `/__front-commerce/health`
+
+An endpoint that will return a success or failure HTTP code based on the
+correctness of the application. Use it to monitor the application readiness.
+
+- `HTTP 200` (success): the application and the unified GraphQL schema are
+  correctly configured, and the application has started
+- `HTTP 503` (failure): the application isn't yet ready to serve traffic
+
+### Query parameter: `successHTTPCode`
+
+The optional `successHTTPCode` query parameter allows to customize the HTTP code
+returned upon success.
+
+Example:
+[http://localhost:4000/\_\_front-commerce/health?successHTTPCode=418](http://localhost:4000/__front-commerce/health?successHTTPCode=418)
+
+### Query parameter: `failureHTTPCode`
+
+The optional `failureHTTPCode` query parameter allows to customize the HTTP code
+returned upon success.
+
+Example:
+[http://localhost:4000/\_\_front-commerce/health?failureHTTPCode=502](http://localhost:4000/__front-commerce/health?failureHTTPCode=502)

@@ -1,0 +1,55 @@
+---
+title: Use and customize the maintenance page
+description:
+  Learn how to use and customize the maintenance page in your Front-Commerce
+  application.
+---
+
+<SinceVersion tag="3.4" />
+
+<p>{frontMatter.description}</p>
+
+## Entering and exiting the maintenance mode
+
+The maintenance mode is activated by setting the
+`FRONT_COMMERCE_MAINTENANCE_MODE_FORCE_ENABLED` environment variable to `true`
+in your Front-Commerce project. Once that is done, any request done in your
+application will show the maintenance page instead.
+
+:::tip
+
+The skeleton provides an
+[maintenance mode demo example extension](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/example-extensions/maintenance-mode-demo?ref_type=heads)
+with three custom routes to show the interactions with the maintenance mode.
+
+:::
+
+## Testing and customizing the maintenance page
+
+The maintenance page can be changed by overriding the
+`theme/pages/Error/Maintenance.tsx` file.
+
+In order to facilitate the edition of this page, you can display it in
+development mode by
+[activating the maintenance mode](/docs/3.x/guides/maintenance-mode#entering-and-exiting-the-maintenance-mode).
+
+Alternatively you can navigate to the
+[`__front-commerce/maintenance`](http://localhost:4000/__front-commerce/maintenance)
+route in your application.
+
+## Controlling Access During Maintenance
+
+To bypass the maintenance mode for certain IP addresses you can configure the
+`FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS` environment variable. Please
+note that you can have multiple IPs separated by a comma like:
+
+```shell title=".env"
+FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS=127.0.0.1,83.65.12.111,2ce8:c427::7156:ad8e
+```
+
+:::caution
+
+Please configure **both v4 and v6** IP as much as possible. You can retrieve
+your own IP addresses with https://www.whatismyip.com/
+
+:::

@@ -1,0 +1,152 @@
+---
+title: Customize the sitemap
+description:
+  Learn how to customize the sitemap for both static and dynamic pages in your
+  Front-Commerce application.
+---
+
+<SinceVersion tag="3.4" />
+
+## Introduction
+
+This guide provides step-by-step instructions on how to customize the sitemap
+for your Front-Commerce application. Customizing your sitemap can help improve
+SEO by ensuring search engines can easily crawl and index your site's content.
+
+## Static Pages Customization
+
+### `getSitemapEntries` Function
+
+To customize the sitemap for static pages, use the `getSitemapEntries` function
+in the SEO handle. This function allows you to add custom URLs, set the last
+modification date, change frequency, and priority for each URL.
+
+#### Example:
+
+```tsx title="./extensions/acme/routes/blog.tsx"
+import { createSeoHandle } from "@front-commerce/remix/seo";
+
+export const handle = createSeoHandle({
+  getSitemapEntries: ({ request, app }) => [
+    {
+      url: "/blog",
+      lastmod: new Date(),
+      changefreq: "daily",
+      priority: 0.5,
+      images: ["/blog-image.jpg"],
+    },
+  ],
+});
+```
+
+:::caution
+
+Ensure server-only logic in `getSitemapEntries` is implemented using
+[`vite-env-only`](https://remix.run/docs/en/main/discussion/server-vs-client#vite-env-only)
+to prevent leaking into client-side code.
+
+:::
+
+## Dynamic Pages Customization
+
+Dynamic pages can also be customized using `getSitemapEntries` or a custom
+`sitemapFetcher`.
+
+### `getSitemapEntries` Function
+
+```tsx title="./extensions/acme/routes/todo.$id.tsx"
+import { createSeoHandle } from "@front-commerce/remix/seo";
+import { serverOnly$ } from "vite-env-only";
+
+export const handle = createSeoHandle({
+  getSitemapEntries: serverOnly(async ({ request, app }) => {
+    const posts = await fetch(
+      "https://jsonplaceholder.typicode.com/posts"
+    ).then((res) => res.json());
+
+    return posts.map((post) => ({
+      url: `/todo/${post.id}`,
+    }));
+  }),
+});
+```
+
+### `sitemapFetcher` Option
+
+Refer to
+[Registering Sitemap Fetcher](#creating-and-registering-a-custom-fetcher) for
+custom fetcher registration.
+
+```tsx title="./extensions/acme/routes/todo.$slug.tsx"
+import { createSeoHandle } from "@front-commerce/remix/seo";
+
+export const handle = createSeoHandle({
+  sitemapFetcher: "todoSitemapFetcher",
+});
+```
+
+## Creating and Registering a Custom Fetcher
+
+Create a custom sitemap fetcher and register it in your extension definition.
+
+#### Creating a Fetcher
+
+[🔗 documentation](/docs/3.x/api-reference/front-commerce-core/createSitemapFetcher)
+
+```ts title="./extensions/acme/sitemap/todo.ts"
+import { createSitemapFetcher } from "@front-commerce/core";
+
+export default createSitemapFetcher(async () => {
+  const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then(
+    (res) => res.json()
+  );
+
+  return posts.map((post) => ({
+    url: `/todo/${post.id}`,
+  }));
+});
+```
+
+#### Registering a Fetcher
+
+```ts title="./extensions/acme/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "acme-extension",
+  meta: import.meta,
+  routes: import.meta.url,
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      services.DI.register("acme", createAcmeDI(config.acme));
+
+      // highlight-start
+      services.Sitemap.registerFetcher(
+        "todoSitemapFetcher",
+        () => import("./sitemap/todo.ts")
+      );
+      // highlight-end
+    },
+  },
+});
+```
+
+:::tip
+
+Override existing fetchers using `services.Sitemap.overrideFetcher`. We are
+still working on an API to extend existing fetchers.
+
+:::
+
+## Opting Out of Sitemap Generation
+
+Static pages are automatically included in the sitemap. To exclude a page from
+the sitemap, return `null` or an empty array from `getSitemapEntries`.
+
+```ts title="./extension/acme/routes/todo.tsx"
+import { createSeoHandle } from "@front-commerce/remix/seo";
+
+export const handle = createSeoHandle({
+  getSitemapEntries: () => null,
+});
+```

@@ -81,6 +81,7 @@ from `@remix-run` which allows for better type safety:
 - [`useActionData`](https://remix.run/docs/en/main/hooks/use-action-data)
 - [`useFetcher`](https://remix.run/docs/en/main/start/v2#usefetcher)
 - [`useApiFetcher`](#useapifetcher)
+- [`useApiFetcherPromise`](#useapifetcherpromise)
 - [`useRouteLoaderData`](https://remix.run/docs/en/main/hooks/use-route-loader-data)
 
 These methods are used the same as the ones from `@remix-run` with the exception
@@ -232,46 +233,41 @@ between the components. This also works when using the
 [useRevalidator](https://remix.run/docs/en/main/hooks/use-revalidator#userevalidator)
 hook.
 
+### `useApiFetcherPromise`
+
+Just like `useApiFetcher`, `useApiFetcherPromise` allows you to retrieve
+optimised data from `/api` endpoints. The only difference is that it returns a
+promise instead of the actual data. Use it when you need to process the data in
+a more "synchronous" way, without depending on fetcher states.
+
+Here is an example of how to use `useApiFetcherPromise`:
+
+```tsx title="/app/routes/my-route.tsx"
+import type { loader } from "./api.cart";
+// add-next-line
+import { useApiFetcherPromise } from "@front-commerce/remix/react";
+
+export default function MyRoute() {
+  // add-next-line
+  const doSomething = useApiFetcherPromise<typeof loader>("/api/do-something");
+
+  return (
+    <div>
+      <button
+        onClick={() =>
+          doSomething().then((result) =>
+            console.log("Something has been done!", result)
+          )
+        }
+      >
+        Do something !
+      </button>
+    </div>
+  );
+}
+```
+
 ## CLI
-
-### `dev`
-
-Starts the application in development mode (hot-code reloading, error reporting,
-etc.)
-
-Usage
-
-```bash
-$ front-commerce dev
-```
-
-Options
-
-    --help, -h      Displays this message
-    --port, -p      Port to run the server on
-    --verbose, -v   Verbose logging for debugging purposes
-
-Unstable Options
-
-    --command, -c   Command used to run your app server
-    --manual, -m    Command used to run your app server
-    --no-restart    Do not restart the app server when rebuilds occur.
-
-### `build`
-
-Compiles the application for production deployment
-
-Usage
-
-```bash
-$ front-commerce build
-```
-
-Options
-
-    --help, -h          Displays this message
-    --sourcemaps, -s    Generate source maps
-    --verbose, -v       Verbose logging for debugging purposes
 
 ### `translate`
 

@@ -1,6 +1,5 @@
 ---
 title: "defineExtension"
-sidebar_position: 4
 description:
   "defineExtension allow you to extend the features of Front-Commerce."
 ---
@@ -34,6 +33,7 @@ Example:
 ```js
 defineExtension({
   name: "acme",
+  meta: import.meta,
   theme: "./extensions/acme/theme",
 });
 ```
@@ -53,6 +53,44 @@ Example:
   "name": "acme"
 }
 ```
+
+### `meta`
+
+<SinceVersion tag="3.4" />
+
+**Required** `string` <br />Specifies the
+[ImportMeta](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta)
+information of the extension.
+
+Example:
+
+```json
+{
+  "meta": import.meta
+}
+```
+
+:::important
+
+The `import.meta` should be from the root of your extension. If you defined your
+extension under a sub-directory, then you should re-export it from the root
+instead.
+
+```graphql
+📁 hello-v3/
+│   ├── 📁 app/
+│   ├── 📄 front-commerce.config.ts
+│   ├── 📁 extensions/
+│   │   ├── 📁 acme-extension/
+│   │   │   ├── 📄 index.ts  # this is where the import.meta should be located
+│   │   │   ├── 📁 extension-def/
+│   │   │   │   └── 📄 index.ts
+│   │   │   ├── 📁 graphql/
+│   │   │   └── 📁 routes/
+└──  package.json
+```
+
+:::
 
 ### `configuration`
 

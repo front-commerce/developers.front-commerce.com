@@ -5,6 +5,8 @@ description:
   to 3.2.
 ---
 
+import SinceVersion from "@site/src/components/SinceVersion";
+
 <p>{frontMatter.description}</p>
 
 ## Update dependencies
@@ -323,3 +325,269 @@ AND
 (order.comment contains "Bar"
   OR order.comment contains "456")
 ```
+
+### Requisition list related theme changes
+
+<SinceVersion tag="3.2.7" />
+
+In this release, we fixed some issues related to the requisition lists in the
+theme.<br />If your project is using the requisition lists feature, you will
+need to update those files as detailed below, or copy the ones from the latest
+skeleton:
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx b/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
+index 3d7bcfc99..6c039d270 100644
+--- a/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
+@@ -2,6 +2,7 @@ import { useMemo } from "react";
+ import PropTypes from "prop-types";
+ import AddToRequisitionList from "theme/modules/RequisitionList/AddToRequisitionList";
+ import { resolveSelectedOptions } from "theme/pages/Product/useSelectedProductWithConfigurableOptions";
++import { resolveSelectedBundleOptions } from "theme/pages/Product/useSelectedProductWithBundleOptions";
+ import {
+   productPropTypes,
+   selectedConfigurableOptionsPropTypes,
+@@ -11,7 +12,7 @@ import {
+ const AddCartToRequisitionList = ({ id = "cart", cart, size }) => {
+   const cartItems = cart.items;
+   const items = useMemo(() => {
+-    return cartItems.map(({ product, options, qty }) => {
++    return cartItems.map(({ product, options, bundleOptions, qty }) => {
+       const productOptions = product.options?.map((option) => ({
+         id: option.attribute.id,
+         label: option.attribute.label,
+@@ -23,6 +24,10 @@ const AddCartToRequisitionList = ({ id = "cart", cart, size }) => {
+           product.options,
+           options
+         ),
++        selectedBundleOptions: resolveSelectedBundleOptions(
++          product.bundleOptions,
++          bundleOptions
++        ),
+         quantity: qty,
+       };
+     });
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx b/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
+index 0e5cc0958..d73bde2aa 100644
+--- a/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
+@@ -34,6 +34,10 @@ const AddProductToRequisitionList = ({
+       showOptionsModalIfNotFullyConfigured={
+         showOptionsModalIfNotFullyConfigured
+       }
++      redirectOnAddToRequisitionList={
++        // URL to the bundle product
++        product.bundleOptions?.length ? `/product/${product.sku}` : null
++      }
+     />
+   );
+ };
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx b/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
+index 13efd3b41..a79e5b025 100644
+--- a/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
+@@ -5,6 +5,7 @@ import Icon from "theme/components/atoms/Icon";
+ import SelectMenu from "theme/components/molecules/SelectMenu";
+ import messages from "theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionListMessages";
+ import { useIntl } from "react-intl";
++import { useNavigate } from "@remix-run/react";
+
+ /** @type {import('./EnhanceAddToRequisitionList').BaseComponent} */
+ const AddToRequisitionList = ({
+@@ -22,11 +23,24 @@ const AddToRequisitionList = ({
+   addToRequisitionListError,
+   newRequisitionListModal,
+   showOptionsModalIfNotFullyConfigured,
++  redirectOnAddToRequisitionList,
+   productConfigurationModal,
+ }) => {
+   const intl = useIntl();
+   const [isRequisitionListMenuOpen, setIsRequisitionListMenuOpen] =
+     useState(false);
++  const navigate = useNavigate();
++
++  const shouldRedirect =
++    showOptionsModalIfNotFullyConfigured &&
++    isRequisitionListMenuOpen &&
++    redirectOnAddToRequisitionList;
++
++  useEffect(() => {
++    if (shouldRedirect) {
++      navigate(redirectOnAddToRequisitionList);
++    }
++  }, [shouldRedirect]);
+
+   const selectItems = useMemo(() => {
+     if (!requisitionLists) {
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
+index ff92ad7e1..e0ca0580e 100644
+--- a/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
++++ b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
+@@ -75,20 +75,29 @@ const withAddMultipleItemsToRequisitionListMutation =
+               }) => ({
+                 sku: product.sku,
+                 quantity,
+-                selectedConfigurableOptions: Object.entries(
+-                  selectedConfigurableOptions
+-                ).map(([option_id, option_value]) => ({
+-                  option_id,
+-                  option_value,
+-                })),
+-                selectedBundleOptions: Object.entries(
+-                  selectedBundleOptions
+-                ).map(([option_id, { quantity, values }]) => {
+-                  return {
+-                    option_id,
+-                    option_values: values.map((value) => ({ quantity, value })),
+-                  };
+-                }),
++                selectedConfigurableOptions:
++                  Object.keys(selectedConfigurableOptions || {}).length > 0
++                    ? Object.entries(selectedConfigurableOptions).map(
++                        ([option_id, option_value]) => ({
++                          option_id,
++                          option_value,
++                        })
++                      )
++                    : undefined,
++                selectedBundleOptions:
++                  Object.keys(selectedBundleOptions || {}).length > 0
++                    ? Object.entries(selectedBundleOptions).map(
++                        ([option_id, { quantity, values }]) => {
++                          return {
++                            option_id,
++                            option_values: values.map((value) => ({
++                              quantity,
++                              value,
++                            })),
++                          };
++                        }
++                      )
++                    : undefined,
+               })
+             ),
+           },
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx b/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
+index 5883fae10..e0449a188 100644
+--- a/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
++++ b/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
+@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
+ import useSelectedProductWithConfigurableOptions from "theme/pages/Product/useSelectedProductWithConfigurableOptions";
+ import ConfigurableOptions from "theme/modules/Cart/CartItem/CartItemOptionsUpdater/ConfigurableOptions";
+ import { H2 } from "theme/components/atoms/Typography/Heading";
+-import Form from "theme/compat/components/atoms/Form/Form";
++import { Form } from "@remix-run/react";
+ import FormTitle from "theme/components/molecules/Form/FormTitle";
+ import useProductBySkuLoader from "theme/hooks/useProductBySkuLoader";
+ import Stack from "theme/components/atoms/Layout/Stack";
+@@ -74,21 +74,22 @@ const ProductConfigurationModalContent = ({
+       selectedConfigurableOptions
+     );
+
+-  const formRef = useRef();
+   const [showNotAllOptionsSelected, setShowNotAllOptionsSelected] =
+     useState(false);
+
+-  const onChangeOptions = useCallback(() => {
+-    const model = formRef.current.getModel();
+-    Object.keys(model)
+-      .filter(
+-        (key) =>
+-          key.indexOf("custom:") !== 0 && typeof model[key] !== "undefined"
+-      )
+-      .forEach((optionId) =>
+-        setOption(optionId, model[optionId].value || model[optionId])
+-      );
+-  }, [setOption]);
++  const onChangeOptions = useCallback(
++    (e) => {
++      const input = e.target;
++      const form = input.form;
++      const data = new FormData(form);
++      for (const pair of data.entries()) {
++        if (pair[0].indexOf("custom:") !== 0) {
++          setOption(pair[0], pair[1]);
++        }
++      }
++    },
++    [setOption]
++  );
+
+   const allOptionsSet = useMemo(
+     () => selectedProduct && areAllOptionsSet(selectedProduct, selectedOptions),
+@@ -119,8 +120,7 @@ const ProductConfigurationModalContent = ({
+
+   return (
+     <Form
+-      setRef={(form) => (formRef.current = form)}
+-      onValidSubmit={() => onConfiurationsSelected(selectedOptions)}
++      onSubmit={() => onConfiurationsSelected(selectedOptions)}
+       onChange={onChangeOptions}
+     >
+       <Stack>
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql</code> file</summary>
+
+```diff
+diff --git a/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql b/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
+index 19f85b84e..954bbb896 100644
+--- a/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
++++ b/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
+@@ -17,6 +17,14 @@ fragment CartItemCustomOption on Product {
+       id
+     }
+   }
++  bundleOptions {
++    id
++    label
++    values {
++      label
++      value
++    }
++  }
+   custom_options {
+     option_id
+     title
+```
+
+</details>

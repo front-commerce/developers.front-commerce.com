@@ -1,0 +1,1075 @@
+---
+title: 3.3 -> 3.4
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.3
+  to 3.4
+---
+
+<p>{frontMatter.description}</p>
+
+:::tip
+
+This release includes important improvements and structural changes. Please
+follow this guide thoroughly to avoid any issues. If you have any questions or
+need help, please reach out to our support team.
+
+:::
+
+## Update dependencies
+
+In order to update your project to Front-Commerce 3.4, you need to:
+
+- add `vite`, `sharp` and `workbox` to your project
+- update all your `@remix-run/*` dependencies to 2.8.1+
+- update all your `@front-commerce/*` dependencies to this version
+- remove `remix-pwa` and its related packages
+
+Here are the commands to run:
+
+```shell
+pnpm remove remix-pwa @remix-pwa/dev @remix-pwa/worker-runtime @remix-pwa/cache @remix-pwa/strategy @remix-pwa/sw
+pnpm add -D vite
+pnpm add sharp workbox-window workbox-routing workbox-recipes workbox-strategies
+pnpm update "@remix-run/*@2.8.1"
+
+# And finally update all your Front-Commerce dependencies
+pnpm update "@front-commerce/*@3.4.0"
+```
+
+While you're at it, we recommend to add `vitest` related packages as well
+(further details below, in
+[Add `vitest` to your project](#add-vitest-to-your-project)):
+
+```shell
+pnpm add -D vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.4.0
+```
+
+## Vite Migration
+
+In Front-Commerce v3.4, we have migrated to remix using `vite`, please read
+their blog post to find out more about the changes:
+[Remix Vite is Now Stable](https://remix.run/blog/remix-vite-stable).
+
+This introduces some breaking changes which require manual intervention, all
+those changes will be listed below.
+
+:::important
+
+For more details about the changes in a Remix application, you can follow Remix
+[migration guide](https://remix.run/docs/en/main/future/vite#setup-vite), and
+use the
+[skeleton](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/ccb874da24fb973db7ebae126e5195a04ecceb95/skeleton)
+as reference.
+
+:::
+
+### Create a `vite.config.ts` configuration file
+
+It replaces the `remix.config.js` configuration file, and is now the central hub
+for the Vite configuration (for local dev and build).
+
+Here is a recommended minimal configuration for Front-Commerce:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { vitePlugin as frontCommerce } from "@front-commerce/remix/vite";
+
+export default defineConfig((env) => {
+  return {
+    plugins: [frontCommerce({ env })],
+  };
+});
+```
+
+### Update `package.json`
+
+#### Add `"type": "module"`
+
+```diff file="./package.json"
+{
+  "sideEffects": false,
++ "type": "module",
+  // ...
+}
+```
+
+#### Update commands
+
+We have deprecated the internal `build` and `dev` cli commands in favor of the
+normal commands used in `remix`.
+
+```diff file="./package.json"
+{
+  "scripts": {
+-   "build": "front-commerce build",
+-   "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",
+-   "dev:debug": "front-commerce dev --manual -c \"pnpm run dev:server --inspect\"",
+-   "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
+-   "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
++   "dev": "node --import tsx/esm ./server.mjs",
++   "dev:debug": "node --inspect --import tsx/esm ./server.mjs",
++   "build": "NODE_OPTIONS='--import tsx/esm' remix vite:build",
++   "start": "cross-env NODE_ENV=production node --import tsx/esm ./server.mjs",
+  }
+}
+```
+
+### Add required `meta` to extension definitions
+
+Each extension definition now requires the
+[`ImportMeta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta)
+for the extension in the
+[`meta`](/docs/3.x/api-reference/front-commerce-core/defineExtension#meta)
+property.
+
+:::info
+
+This will be automatically be added by the migration script.
+
+:::
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  namespace: "Acme",
+  // add-next-line
+  meta: import.meta,
+  ...
+});
+
+```
+
+### Add `vitest` to your project
+
+We have introduced vitest in the skeleton, to benefit from the new testing you
+need to add the following to your project
+
+- Add
+  [`vitest.config.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/vitest.config.ts?ref_type=heads)
+  configuration file
+- Add
+  [`vitest.setup.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/vitest.setup.ts?ref_type=heads)
+  setup file
+- Add `"vitest/globals"` to your `tsconfig.json` and `tsconfig.template.json`
+  ```json file="./tsconfig.json"
+  {
+    "compilerOptions": {
+      // add-next-line
+      "types": ["vitest/globals"],
+      ...
+    }
+  }
+  ```
+- Add the test commands to your `package.json`
+  ```json file="./package.json"
+  {
+    "scripts": {
+       // add-start
+       "test": "NODE_OPTIONS='--import tsx/esm' vitest"
+       // add-end
+    ...
+    }
+  }
+  ```
+- Install the test packages
+  ```shell
+  pnpm add vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @remix-run/testing @vitest/coverage-v8 jsdom
+  ```
+
+You should now be ready to
+[write your first test 🧪](/docs/3.x/get-started/your-first-test).
+
+### Removal of `Meta Modules`
+
+In this version we have removed support for
+[`Meta Modules`](https://developers.front-commerce.com/docs/2.x/advanced/graphql/meta-modules#how-to-define-a-metamodule)
+from the final GraphQL module definition API. Front-Commerce extensions shared
+the same responsibility, and should be used instead. This will be handled by the
+automated migration script.
+
+:::important
+
+If the automated migration script detects any `mixed` modules, it will add the
+following comment:
+
+```
+// TODO Codemod: meta-modules were removed in favor of extensions
+```
+
+:::
+
+Please ensure you update the mixed module manually by following this example
+
+```ts title="/extensions/acme-extension/module/index.ts"
+// Example of Mixed Module
+import ModuleA from "./moduleA";
+import ModuleB from "./moduleB";
+
+export default {
+  namespace:"Acme/Example",
+  // highlight-start
+  modules: [ModuleA, ModuleB] // this represents a meta module
+  // highlight-end
+  dependencies: [],
+  typeDefs: "",
+  ...
+}
+```
+
+First move all the `GraphQL` module logic to a new file. (in our example
+`moduleCore.ts`)
+
+```ts title="/extensions/acme-extension/module/moduleCore.ts"
+import {createGraphqlModule} from "@front-commerce/graphql";
+
+export default createGraphqlModule({
+  namespace:"Acme/Example",
+  typeDefs: /* GraphQL */"",
+  ...
+})
+```
+
+Then convert the `meta` module to a collection of `GraphqlModules`
+
+```ts title="/extensions/acme-extension/module/index.ts"
+// add-next-line
+import ModuleCore from "./moduleCore";
+import ModuleA from "./moduleA";
+import ModuleB from "./moduleB";
+
+export default [
+  // add-next-line
+  ModuleCore,
+  ModuleA,
+  ModuleB,
+];
+```
+
+You can then add this directly to your extension definition
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+// add-next-line
+import modules from "./modules"
+
+export default defineExtension({
+  namespace: "Acme",
+  graphql:{
+    // add-next-line
+    modules: [modules]
+  },
+  ...
+});
+```
+
+:::note
+
+If you included the `typeDefs` in your graphql module, then you don't need to
+pass it to the
+[schema](/docs/3.x/api-reference/front-commerce-core/defineExtension#schema)
+field
+
+```ts title="/extensions/acme-extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+import modules from "./modules"
+
+export default defineExtension({
+  namespace: "Acme",
+  graphql:{
+    modules: [modules]
+    // remove-next-line
+    schema: ["./extensions/acme-extension/**/schema.gql"]
+  },
+  ...
+});
+```
+
+:::
+
+### Refactor of `routes`
+
+In this version we updated how `routes` parameter from `defineRemixExtension` is
+resolved. When using folder based routing, you should pass `import.meta.url` to
+the `routes` in your extension definition:
+
+```js
+{
+  name: "acme",
+  theme: "./extensions/acme/theme",
+  routes: import.meta.url,
+}
+```
+
+:::info
+
+`root.tsx` files in your extensions aren't needed anymore, and can now be
+removed.<br /> For more information, see
+[`defineRemixExtension`'s API reference](/docs/3.x/api-reference/front-commerce-remix/defineRemixExtension#routes)
+
+:::
+
+Additionally, we removed the `UNSTABLE_routes` API. If you were previously
+extending a layout or route file using `UNSTABLE_routes`, you will have to
+remove its usage and instead copy the original file entirely and apply your
+override on it.<br /> For more information about this change, see the
+[Extend a route layout guide](/docs/3.x/guides/extend-route-layout).
+
+### Transitioning to ESM
+
+With Front-Commerce v3.4, we have finalized the transition
+to <abbr title="ECMAScript Modules">ESM</abbr> for all our codebase and
+dependencies.
+
+It also means that you may face some issues with configuration files or older
+dependencies that are not ESM compatible. Please head to our
+[Transitioning to ESM guide](/docs/3.x/migration/manual-migration#transitioning-to-esm)
+to learn more.
+
+## Replacement of `remix-pwa` in favor of `vite-pwa`
+
+In this version we have moved PWA concerns to standard building tools. It
+implied the replacement of `remix-pwa` with `vite-pwa`. You will need to remove
+the packages and their usage from your project:
+
+```shell
+pnpm remove remix-pwa @remix-pwa/dev @remix-pwa/worker-runtime @remix-pwa/cache @remix-pwa/strategy @remix-pwa/sw
+```
+
+In order to find the uses of those package in your project, you can use this
+command:
+
+```shell
+grep "remix-pwa" src/ -r
+```
+
+You will also need to add additional packages used in the service worker to your
+project:
+
+```shell
+pnpm add workbox-window workbox-routing
+```
+
+## From `graphql.unstable_module` to `graphql.module`
+
+In Front-Commerce v3.4 we've created a brand new GraphQL module API. The
+migration has been automated in the automated migration script, here's a guide
+to help understand the migration to the new API:
+
+### Runtime
+
+Runtime is now the core of GraphQL modules, you can check the
+[createGraphQLRuntime](/docs/3.x/api-reference/front-commerce-core/graphql#creategraphqlruntime)
+documentation to learn more about this. The migration is pretty straightforward:
+
+Before:
+
+```ts title="AcmeModule/module/index.js"
+import resolvers from "./resolvers";
+import AcmeLoader from "./loader";
+
+export default {
+  namespace: "AcmeModule",
+  dependencies: ["Front-Commerce/Core"],
+  resolvers,
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    return {
+      Acme: AcmeLoader(axiosInstance),
+    };
+  },
+};
+```
+
+After:
+
+```ts title="AcmeModule/module/index.ts"
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+export default createGraphQLModule({
+  namespace: "AcmeModule",
+  dependencies: ["Front-Commerce/Core"],
+  loadRuntime: () => import("./runtime"),
+  typeDefs: /* GraphQL */ `
+    extend type Mutation {
+      getAcme: String
+    }
+  `,
+});
+```
+
+```ts title="AcmeModule/module/runtime.ts"
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+import { makeUserClientFromRequest } from "@front-commerce/magento2/axios";
+
+import resolvers from "./resolvers";
+export default createGraphQLRuntime({
+  resolvers: {
+    Mutation: {
+      getAcme: () => "Acme",
+    }
+  }
+  contextEnhancer: ({ req }) => {
+    const axiosInstance = makeUserClientFromRequest(req);
+
+    return {
+      Acme: AcmeLoader(axiosInstance);
+    }
+  }
+})
+```
+
+### Extension definition
+
+Now that you've converted your legacy module to new GraphQLModule, you can
+register your module in your extension like this:
+
+```ts title="AcmeModule/index.ts"
+import {
+  defineExtension
+} from "@front-commerce/core";
+import AcmeModule from "./module";
+
+export default defineExtension({
+  name: "Acme",
+  graphql: {
+    // remove-next-line
+    unstable_module: ["./AcmeModule/module"]
+    // add-next-line
+    modules: [AcmeModule]
+  }
+})
+```
+
+### Inlining `typeDefs`
+
+Prior to Front-Commerce v3.4, you had to write type definitions in a dedicated
+file (usually named `schema.gql`) then import it into your module.
+
+Now type definitions must be inlined into your GraphQL module definition (via
+the `typeDefs` attribute), to do so, please see the
+[createGraphQLModule example](/docs/3.x/api-reference/front-commerce-core/graphql#example)
+
+## Flash values in sessions
+
+We've added two new methods to our sessions adapter related to flash values. If
+you've wrote your own session adapter, you need to implement these two new
+methods. Please check
+[this commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/a19b7cc93b389fc30f0ba08929a4822902e51e8b)
+for more details.
+
+## Storybook
+
+In this release, we added [Storybook](https://storybook.js.org/) to the skeleton
+as an example. To add it in your existing application, follow the instructions
+below. For more information, see the
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/77e02ee5d4c5f31a92db23167b398695e125ca4c).
+
+### Add Storybook to your project
+
+First, install Storybook dependencies and main addons in your project's dev
+dependencies:
+
+```bash
+pnpm i -D "@chromatic-com/storybook" "@storybook/addon-essentials" "@storybook/addon-interactions" "@storybook/addon-links" "@storybook/addon-onboarding" "@storybook/blocks" "@storybook/builder-vite" "@storybook/react" "@storybook/react-vite" "@storybook/test" "eslint-plugin-storybook" "storybook" "storybook-react-intl"
+```
+
+### Add the Storybook script to your project's `package.json`
+
+Here are some examples of scripts allowing you to run and build your Storybook
+styleguide. We recommend using the same build options if you're deploying on
+Front-Commerce Cloud:
+
+```diff file="package.json"
+   "scripts": {
+     // ...
++    "styleguide": "NODE_OPTIONS='--import tsx/esm' storybook dev -p 6006",
++    "buildstyleguide": "NODE_OPTIONS='--import tsx/esm --inspect' storybook build --output-dir=./build/styleguide --config-dir=./.storybook --debug"
+   }
+```
+
+### Update your `.eslintrc.cjs` file
+
+This recommended plugin allows to provide useful checks for your Storybook
+stories:
+
+```diff file=".eslintrc.cjs"
+ // ...
+ module.exports = {
+   extends: [
+     "@remix-run/eslint-config",
+     "@remix-run/eslint-config/node",
++    "plugin:storybook/recommended",
+   ],
+   // ...
+```
+
+### Update your `.gitignore` file
+
+The following log files are useful for troubleshooting your Storybook setup but
+must not be versioned:
+
+```diff file=".gitignore"
+ // ...
++ *storybook.log
+```
+
+## Code changes
+
+### Requisition list related theme changes
+
+In this release, we fixed some issues related to the requisition lists in the
+theme.<br />If your project is using the requisition lists feature, you will
+need to update those files as detailed below, or copy the ones from the latest
+skeleton:
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx b/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
+index 3d7bcfc99..6c039d270 100644
+--- a/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddCartToRequisitionList/AddCartToRequisitionList.jsx
+@@ -2,6 +2,7 @@ import { useMemo } from "react";
+ import PropTypes from "prop-types";
+ import AddToRequisitionList from "theme/modules/RequisitionList/AddToRequisitionList";
+ import { resolveSelectedOptions } from "theme/pages/Product/useSelectedProductWithConfigurableOptions";
++import { resolveSelectedBundleOptions } from "theme/pages/Product/useSelectedProductWithBundleOptions";
+ import {
+   productPropTypes,
+   selectedConfigurableOptionsPropTypes,
+@@ -11,7 +12,7 @@ import {
+ const AddCartToRequisitionList = ({ id = "cart", cart, size }) => {
+   const cartItems = cart.items;
+   const items = useMemo(() => {
+-    return cartItems.map(({ product, options, qty }) => {
++    return cartItems.map(({ product, options, bundleOptions, qty }) => {
+       const productOptions = product.options?.map((option) => ({
+         id: option.attribute.id,
+         label: option.attribute.label,
+@@ -23,6 +24,10 @@ const AddCartToRequisitionList = ({ id = "cart", cart, size }) => {
+           product.options,
+           options
+         ),
++        selectedBundleOptions: resolveSelectedBundleOptions(
++          product.bundleOptions,
++          bundleOptions
++        ),
+         quantity: qty,
+       };
+     });
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx b/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
+index 0e5cc0958..d73bde2aa 100644
+--- a/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddProductToRequisitionList/AddProductToRequisitionList.jsx
+@@ -34,6 +34,10 @@ const AddProductToRequisitionList = ({
+       showOptionsModalIfNotFullyConfigured={
+         showOptionsModalIfNotFullyConfigured
+       }
++      redirectOnAddToRequisitionList={
++        // URL to the bundle product
++        product.bundleOptions?.length ? `/product/${product.sku}` : null
++      }
+     />
+   );
+ };
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx b/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
+index 13efd3b41..a79e5b025 100644
+--- a/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
++++ b/theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionList.jsx
+@@ -5,6 +5,7 @@ import Icon from "theme/components/atoms/Icon";
+ import SelectMenu from "theme/components/molecules/SelectMenu";
+ import messages from "theme/modules/RequisitionList/AddToRequisitionList/AddToRequisitionListMessages";
+ import { useIntl } from "react-intl";
++import { useNavigate } from "@remix-run/react";
+
+ /** @type {import('./EnhanceAddToRequisitionList').BaseComponent} */
+ const AddToRequisitionList = ({
+@@ -22,11 +23,24 @@ const AddToRequisitionList = ({
+   addToRequisitionListError,
+   newRequisitionListModal,
+   showOptionsModalIfNotFullyConfigured,
++  redirectOnAddToRequisitionList,
+   productConfigurationModal,
+ }) => {
+   const intl = useIntl();
+   const [isRequisitionListMenuOpen, setIsRequisitionListMenuOpen] =
+     useState(false);
++  const navigate = useNavigate();
++
++  const shouldRedirect =
++    showOptionsModalIfNotFullyConfigured &&
++    isRequisitionListMenuOpen &&
++    redirectOnAddToRequisitionList;
++
++  useEffect(() => {
++    if (shouldRedirect) {
++      navigate(redirectOnAddToRequisitionList);
++    }
++  }, [shouldRedirect]);
+
+   const selectItems = useMemo(() => {
+     if (!requisitionLists) {
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
+index ff92ad7e1..e0ca0580e 100644
+--- a/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
++++ b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToRequisitionListMutation.jsx
+@@ -75,20 +75,29 @@ const withAddMultipleItemsToRequisitionListMutation =
+               }) => ({
+                 sku: product.sku,
+                 quantity,
+-                selectedConfigurableOptions: Object.entries(
+-                  selectedConfigurableOptions
+-                ).map(([option_id, option_value]) => ({
+-                  option_id,
+-                  option_value,
+-                })),
+-                selectedBundleOptions: Object.entries(
+-                  selectedBundleOptions
+-                ).map(([option_id, { quantity, values }]) => {
+-                  return {
+-                    option_id,
+-                    option_values: values.map((value) => ({ quantity, value })),
+-                  };
+-                }),
++                selectedConfigurableOptions:
++                  Object.keys(selectedConfigurableOptions || {}).length > 0
++                    ? Object.entries(selectedConfigurableOptions).map(
++                        ([option_id, option_value]) => ({
++                          option_id,
++                          option_value,
++                        })
++                      )
++                    : undefined,
++                selectedBundleOptions:
++                  Object.keys(selectedBundleOptions || {}).length > 0
++                    ? Object.entries(selectedBundleOptions).map(
++                        ([option_id, { quantity, values }]) => {
++                          return {
++                            option_id,
++                            option_values: values.map((value) => ({
++                              quantity,
++                              value,
++                            })),
++                          };
++                        }
++                      )
++                    : undefined,
+               })
+             ),
+           },
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx</code> file</summary>
+
+```diff
+diff --git a/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx b/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
+index 5883fae10..e0449a188 100644
+--- a/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
++++ b/theme/modules/RequisitionList/ProductConfigurationModal/ProductConfigurationModalContent.jsx
+@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
+ import useSelectedProductWithConfigurableOptions from "theme/pages/Product/useSelectedProductWithConfigurableOptions";
+ import ConfigurableOptions from "theme/modules/Cart/CartItem/CartItemOptionsUpdater/ConfigurableOptions";
+ import { H2 } from "theme/components/atoms/Typography/Heading";
+-import Form from "theme/compat/components/atoms/Form/Form";
++import { Form } from "@remix-run/react";
+ import FormTitle from "theme/components/molecules/Form/FormTitle";
+ import useProductBySkuLoader from "theme/hooks/useProductBySkuLoader";
+ import Stack from "theme/components/atoms/Layout/Stack";
+@@ -59,6 +59,7 @@ const AddToRequisitionList = ({
+   }, [requisitionLists, intl]);
+
+   const onAddToARequisitionList = (requisitionListId) => {
++    setIsRequisitionListMenuOpen(false);
+     if (!addingToRequisitionList) {
+       addToRequisitionList(requisitionListId);
+     }
+@@ -74,21 +74,22 @@ const ProductConfigurationModalContent = ({
+       selectedConfigurableOptions
+     );
+
+-  const formRef = useRef();
+   const [showNotAllOptionsSelected, setShowNotAllOptionsSelected] =
+     useState(false);
+
+-  const onChangeOptions = useCallback(() => {
+-    const model = formRef.current.getModel();
+-    Object.keys(model)
+-      .filter(
+-        (key) =>
+-          key.indexOf("custom:") !== 0 && typeof model[key] !== "undefined"
+-      )
+-      .forEach((optionId) =>
+-        setOption(optionId, model[optionId].value || model[optionId])
+-      );
+-  }, [setOption]);
++  const onChangeOptions = useCallback(
++    (e) => {
++      const input = e.target;
++      const form = input.form;
++      const data = new FormData(form);
++      for (const pair of data.entries()) {
++        if (pair[0].indexOf("custom:") !== 0 && pair[1]) {
++          setOption(pair[0], pair[1]);
++        }
++      }
++    },
++    [setOption]
++  );
+
+   const allOptionsSet = useMemo(
+     () => selectedProduct && areAllOptionsSet(selectedProduct, selectedOptions),
+@@ -119,8 +120,7 @@ const ProductConfigurationModalContent = ({
+
+   return (
+     <Form
+-      setRef={(form) => (formRef.current = form)}
+-      onValidSubmit={() => onConfiurationsSelected(selectedOptions)}
++      onSubmit={() => onConfiurationsSelected(selectedOptions)}
+       onChange={onChangeOptions}
+     >
+       <Stack>
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql</code> file</summary>
+
+```diff
+diff --git a/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql b/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
+index 19f85b84e..954bbb896 100644
+--- a/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
++++ b/theme/modules/Cart/CartItem/CartItemOptionsUpdater/CartItemOptionsUpdaterFragment.gql
+@@ -17,6 +17,14 @@ fragment CartItemCustomOption on Product {
+       id
+     }
+   }
++  bundleOptions {
++    id
++    label
++    values {
++      label
++      value
++    }
++  }
+   custom_options {
+     option_id
+     title
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx</code> file</summary>
+
+```diff
+index 35e3fa61b..f1933f1a3 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/AddToRequisitionList/withAddMultipleItemsToNewRequisitionListMutation.jsx
+@@ -1,5 +1,6 @@
+ import { useCallback, useState } from "react";
+ import RequisitionListCreateModal from "theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal";
++import { AddToRequisitionListQueryDocument } from "~/graphql/graphql";
+
+ /**
+  * @callback AddToRequisitionListFunction
+@@ -55,6 +56,7 @@ const withAddMultipleItemsToNewRequisitionListMutation =
+         onSuccess={({ id }) =>
+           addToRequisitionList(id, addToRequisitionListItems)
+         }
++        readQuery={AddToRequisitionListQueryDocument}
+       />
+     );
+
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx</code> file</summary>
+
+```diff
+index 2e7d94b3c..b6addced8 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListAdd/RequisitionListAdd.jsx
+@@ -3,7 +3,7 @@ import RequisitionListCreateModal from "theme/modules/RequisitionList/Requisitio
+ import { useState } from "react";
+ import PrimaryButton from "theme/components/atoms/Button/PrimaryButton";
+
+-const RequisitionListAdd = ({ readQuery }) => {
++const RequisitionListAdd = () => {
+   const [isOpenModal, setOpenModal] = useState(false);
+
+   return (
+@@ -13,7 +13,6 @@ const RequisitionListAdd = ({ readQuery }) => {
+         onRequestClose={() => {
+           setOpenModal(false);
+         }}
+-        readQuery={readQuery}
+       />
+       <PrimaryButton onClick={() => setOpenModal(true)}>
+         <FormattedMessage
+```
+
+</details>
+
+<details>
+  <summary><code>theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx</code> file</summary>
+
+```diff
+index e2e1fe8eb..8b0c686d4 100644
+--- a/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx
++++ b/packages/adobe-b2b/theme/modules/RequisitionList/RequisitionListModal/RequisitionListCreateModal/RequisitionListCreateModal.jsx
+@@ -9,11 +9,17 @@ import FormActions from "theme/components/molecules/Form/FormActions";
+ import SubmitButton from "theme/components/atoms/Button/SubmitButton";
+ import { ErrorAlert } from "theme/components/molecules/Alert";
+ import { CreateRequisitionListMutationDocument } from "~/graphql/graphql";
++import requisitionListSorter from "theme/modules/RequisitionList/requisitionListSorter";
+ import { useMutation } from "react-apollo";
+ import { useRevalidator } from "@remix-run/react";
+ import RequisitionListModalForm from "theme/modules/RequisitionList/RequisitionListModal/RequisitionListModalForm";
+
+-const RequisitionListCreateModal = ({ isOpen, onRequestClose, onSuccess }) => {
++const RequisitionListCreateModal = ({
++  isOpen,
++  onRequestClose,
++  onSuccess,
++  readQuery,
++}) => {
+   let [errorMessage, setErrorMessage] = useState(null);
+   const revalidator = useRevalidator();
+
+@@ -29,6 +35,22 @@ const RequisitionListCreateModal = ({ isOpen, onRequestClose, onSuccess }) => {
+         }
+
+         revalidator.revalidate();
++        if (readQuery) {
++          const storedData = store.readQuery({
++            query: readQuery,
++          });
++          store.writeQuery({
++            query: readQuery,
++            data: {
++              me: {
++                ...storedData.me,
++                requisitionLists: storedData.me.requisitionLists
++                  .concat([data.requisitionList])
++                  .sort(requisitionListSorter),
++              },
++            },
++          });
++        }
+         setErrorMessage(null);
+         onSuccess?.(data.requisitionList);
+         onRequestClose();
+```
+
+</details>
+
+### Remix entrypoints
+
+In this release, we improved features that required to hook into your Remix
+application files created with the initial skeleton. You must update these files
+in your application, as detailed below **or copy the ones from the latest
+skeleton.**
+
+<details>
+  <summary><code>app/root.tsx</code> file</summary>
+
+Most of these changes are applied via the automated migration script, but you
+need to manually add the `ErrorPage` to the `ErrorBoundary` component.
+
+```diff
+diff --git a/app/root.tsx b/app/root.tsx
+index d55c47369..0c65e479a 100644
+--- a/app/root.tsx
++++ b/app/root.tsx
+@@ -2,7 +2,6 @@ import { CompatScripts } from "@front-commerce/compat/CompatProvider";
+ import { FrontCommerceApp } from "@front-commerce/remix";
+ import { generateMetas, json } from "@front-commerce/remix/node";
+ import { FrontCommerceScripts } from "@front-commerce/remix/react";
+-import { cssBundleHref } from "@remix-run/css-bundle";
+ import type {
+   LinksFunction,
+   LoaderFunctionArgs,
+@@ -19,27 +18,23 @@ import {
+   useRouteError,
+ } from "@remix-run/react";
+ import { usePageProgress } from "theme/components/helpers/usePageProgress";
+-import "theme/main.css";
++import "theme/main.scss";
+ import config from "~/config/website";
+-import { LiveReload, useSWEffect } from "@remix-pwa/sw";
+-import manifest from "~/manifest";
++import { pwaAssetsHead } from "virtual:pwa-assets/head";
++import ErrorPage from "theme/pages/Error";
+
+ export const loader = async ({ context }: LoaderFunctionArgs) => {
+   const app = new FrontCommerceApp(context.frontCommerce);
+
+-  return json({
+-    device: app.config.device,
+-    publicConfig: app.config.public,
+-  });
++  return json(app.rootLoaderContext);
+ };
+
+ export const shouldRevalidate = () => false;
+
+ export const links: LinksFunction = () => {
+-  return [
+-    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+-    ...manifest?.pwa.links,
+-  ];
++  return [{ rel: "manifest", href: "/manifest.webmanifest" }].concat(
++    pwaAssetsHead.links
++  );
+ };
+
+ export const meta: MetaFunction = (args) => {
+@@ -48,18 +43,13 @@ export const meta: MetaFunction = (args) => {
+     { name: "robots", content: "Index,Follow" },
+     { name: "description", content: config.defaultDescription },
+     { name: "baseUrl", content: args.data?.publicConfig?.shop?.url },
+-    ...manifest?.pwa.metas,
++    { name: "theme-color", content: pwaAssetsHead.themeColor?.content },
+   ];
+-  if (config.themeColor) {
+-    metatags.push({ name: "theme-color", content: config.themeColor });
+-  }
+   const metas = generateMetas(() => metatags);
+   return metas(args);
+ };
+
+ export default function App() {
+-  useSWEffect();
+-
+   const navigation = useNavigation();
+   usePageProgress(navigation.state !== "idle");
+
+@@ -75,7 +65,6 @@ export default function App() {
+         <Outlet />
+         <ScrollRestoration />
+         <Scripts />
+-        <LiveReload />
+         <FrontCommerceScripts />
+         <CompatScripts />
+       </body>
+@@ -87,15 +76,7 @@ export function ErrorBoundary() {
+   const error = useRouteError();
+
+   if (isRouteErrorResponse(error)) {
+-    return (
+-      <div>
+-        <h1>
+-          {error.status} {error.statusText}
+-        </h1>
+-        <p>{error.data}</p>
+-        <p>TODO FC-FC-1654: to customize</p>
+-      </div>
+-    );
++    return <ErrorPage error={error} />;
+   } else if (error instanceof Error) {
+     // TODO FC-xxx: only render this in dev
+     return (
+@@ -104,7 +85,7 @@ export function ErrorBoundary() {
+         <p>{error.message}</p>
+         <p>The stack trace is:</p>
+         <pre>{error.stack}</pre>
+-        <p>TODO FC-FC-1654: to customize</p>
++        <p>TODO FC-1654: to customize</p>
+       </div>
+     );
+   } else {
+
+```
+
+</details>
+
+<details>
+  <summary><code>entry.worker.ts</code> file</summary>
+
+To learn more about this, see the
+[commit that introduced the change](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3342),
+or our guide on
+[how to customize the offline page](/docs/3.x/extensions/theme-chocolatine/how-to/customize-the-offline-page).
+
+```diff
+diff --git a/app/entry.worker.ts b/app/entry.worker.ts
+index b4189b162..e188ed201 100644
+--- a/app/entry.worker.ts
++++ b/app/entry.worker.ts
+@@ -1,27 +1,3 @@
+-/// <reference lib="WebWorker" />
+-import type { WorkerDataFunctionArgs } from "@remix-pwa/sw";
+-import { synchronizeStorefrontContentFromResponse } from "theme/modules/StorefrontContent/serviceWorker";
++import { setupPwa } from "@front-commerce/remix/service-worker";
+
+-export type {};
+-declare let self: ServiceWorkerGlobalScope;
+-
+-self.addEventListener("install", (event: ExtendableEvent) => {
+-  event.waitUntil(self.skipWaiting());
+-});
+-
+-self.addEventListener("activate", (event: ExtendableEvent) => {
+-  event.waitUntil(self.clients.claim());
+-});
+-
+-export const defaultFetchHandler = async ({
+-  request,
+-}: WorkerDataFunctionArgs) => {
+-  // we MUST return the fetch response promise directly so that streams are supported
+-  const responsePromise = fetch(request);
+-
+-  responsePromise.then((response) => {
+-    synchronizeStorefrontContentFromResponse(response, self.clients);
+-  });
+-
+-  return responsePromise;
+-};
++setupPwa();
+```
+
+</details>

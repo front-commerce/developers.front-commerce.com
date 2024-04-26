@@ -1,0 +1,50 @@
+---
+title: "createSitemapFetcher"
+description:
+  A higher-order function designed for the creation of a sitemap fetcher.
+---
+
+<p>{frontMatter.description}</p>
+
+## Usage
+
+```ts
+import {
+  createSitemapFetcher,
+  type SitemapFetcherContext,
+} from "@front-commerce/core";
+
+const fetcher = (context: SitemapFetcherContext) => {
+  // logic to fetch sitemap entries
+};
+
+export default createSitemapFetcher(fetcher);
+```
+
+## Parameters
+
+### `SitemapFetcher`
+
+The `fetcher` parameter is a function that conforms to the `SitemapFetcher`
+type. It must accept a single argument of type `SitemapFetcherContext` and
+return either a `Promise` that resolves to an array of `SitemapEntry` items or
+an array of `SitemapEntry` items directly.
+
+### `SitemapFetcherContext`
+
+The context provided to the fetcher function contains the following properties:
+
+| Property       | Type                                                                                                                                                                          | Description                                                                                                                                          |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `request`      | [`Request`](https://remix.run/docs/en/main/route/loader#request)                                                                                                              | The [Fetch Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) instance. You can read the MDN docs to see all of its properties.      |
+| `app`          | `FrontCommerceApp`                                                                                                                                                            | The [FrontCommerceApp](/docs/3.x/api-reference/front-commerce-remix/front-commerce-app) instance                                                     |
+| `unsafe_cache` | [`makeCacheFromRequest`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a98d46f0082620a719fc62a065aae87e854093be/packages/core/cache/index.js#L185-209) | An experimental API that provides cache functionality, returned by the `makeCacheFromRequest` function. This API is subject to change in the future. |
+
+:::warning
+
+The `unsafe_cache` property is marked as experimental and may change in future
+versions. Developers should use it with caution.
+
+We are still working on the cache invalidation for common strategies.
+
+:::

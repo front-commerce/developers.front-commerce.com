@@ -1,0 +1,43 @@
+---
+title: "External Login Providers"
+description:
+  "This extension allow users to sign-in and sign-up to your website using
+  external providers like Google or Facebook."
+---
+
+<p>{frontMatter.description}</p>
+
+## Compatibility
+
+Check the [adapters](/docs/3.x/extensions/external-login-providers/adapters)
+page to check compatibility for your e-commerce connector.
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/external-login-providers@latest
+```
+
+## Usage
+
+Update your `front-commerce.config.ts` to add those lines:
+
+```ts
+...
+import externalLoginProviders from "@front-commerce/external-login-providers";
+...
+
+export default defineConfig({
+  extensions: [
+    ...
+    externalLoginProviders(["google"])
+  ]
+})
+```
+
+Then you can register
+[one of our supported providers](/docs/3.x/extensions/external-login-providers/providers)
+or
+[write your own providers](/docs/3.x/extensions/external-login-providers/how-to/create-your-own-provider).

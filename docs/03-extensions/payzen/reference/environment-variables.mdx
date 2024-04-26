@@ -1,0 +1,22 @@
+---
+title: "Environment variables"
+description:
+  "This reference lists environment variables used by the Payzen extension"
+---
+
+<p>{frontMatter.description}</p>
+
+## Required environment variables
+
+### When using Payzen as Front-Commerce payment
+
+:::info
+
+All these infos can be found in the [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html).
+
+:::
+
+- `FRONT_COMMERCE_PAYZEN_PUBLIC_KEY`: Your PayZen public key (API Rest Keys > Keys for Javascript client and Mobile SDK > Public test/production key).
+- `FRONT_COMMERCE_PAYZEN_PRIVATE_KEY`: Your PayZen private key (API Rest Keys > API Rest Keys > Test/Production Password).
+- `FRONT_COMMERCE_PAYZEN_SHA256`: Your PayZen sha256 hash signature (API Rest Keys > API Rest check kr-hash field > HMAC-SHA-256 test/production)
+- `FRONT_COMMERCE_PAYZEN_PRODUCT`: The Payzen Flavor you're using (`payzen` or `lyra_collect`).
