@@ -1,0 +1,123 @@
+---
+title: Tailwind
+description:
+  This guide explains how to setup Tailwind in your Front-Commerce application
+  thanks to Vite.
+---
+
+<p>{frontMatter.description}</p>
+
+:::tip
+
+You can check the
+[`example-extension/tailwind`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/example-extensions/tailwind)
+example to see how tailwind can be implemented.
+
+:::
+
+## Install Tailwind
+
+```sh
+pnpm add -D tailwindcss
+```
+
+## Generate Tailwind configuration
+
+```sh
+pnpm dlx tailwindcss init -p --ts
+```
+
+## Update your tailwind config
+
+Update your `tailwind.config.ts` to include files from `app/theme`:
+
+```diff
+import type { Config } from 'tailwindcss'
+
+export default {
+- content: []
++ content: ["./app/**/*.{ts,tsx,js,jsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+} satisfies Config
+```
+
+If you have components in some of your extensions, you need to add the related
+extension paths to the `content` directive.
+
+## Setup PostCSS
+
+Add the `tailwindcss` directive to the `postcss.config.js` file:
+
+```diff
+export default {
+  plugins: {
+    autoprefixer: {},
++    tailwindcss: {},
+  },
+};
+```
+
+## Inject Tailwind stylesheet
+
+Create a `tailwind.css` file in the `app` folder with the following content:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Then, import this file in your `root.tsx` like so:
+
+```diff
+...
++ import "./tailwind.css";
+...
+```
+
+You can now start your project and tailwind will be used for all your styles.
+
+# Usage
+
+You can test it by loading this module into your app by inject it in your
+`front-commerce.config.ts` file:
+
+```diff
+...
++import tailwind from "./example-extensions/tailwind";
+
+export default defineConfig({
+  extensions: [
+    themeChocolatine(),
++    tailwind()
+  ],
+...
+```
+
+And update the `tailwind.config.js` with this:
+
+```diff
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./app/theme/**/*.{ts,tsx,js,jsx}",
++    "./example-extensions/tailwind/theme/**/*.{ts,tsx,js,jsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Now you can head to
+[`http://localhost:4000/tailwind`](http://localhost:4000/tailwind) and check
+that Tailwind is working.
+
+## References
+
+- https://tailwindui.com/documentation
+- https://tailwindcss.com/docs/guides/remix
