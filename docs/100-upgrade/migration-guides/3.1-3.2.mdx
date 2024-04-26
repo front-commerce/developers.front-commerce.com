@@ -189,10 +189,10 @@ index bdb7e77a..4ece0e63 100644
   <summary><code>root.tsx</code> file</summary>
 
 ```diff
-diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
+diff --git a/app/root.tsx b/app/root.tsx
 index 71936d5a1..a28dcf87e 100644
---- a/skeleton/app/root.tsx
-+++ b/skeleton/app/root.tsx
+--- a/app/root.tsx
++++ b/app/root.tsx
 @@ -1,7 +1,7 @@
  import { CompatScripts } from "@front-commerce/compat/CompatProvider";
  import { FrontCommerceApp } from "@front-commerce/remix";
@@ -227,6 +227,32 @@ index 71936d5a1..a28dcf87e 100644
 ```
 
 </details>
+
+### Front-Commerce `post-install` script
+
+In this release, we
+[added a `post-install` script](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.3.x/packages/remix/cli/front-commerce-postinstall/index.ts)
+in order to patch an issue with the current version of `@remix-run/dev` we are
+using. To cope with this, please ensure you applied have the following change in
+your
+[`package.json`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.3.x/skeleton/package.json?ref_type=heads#L17):
+
+```diff
+// ...
+  "scripts": {
+    "build": "front-commerce build",
+    "dev": "front-commerce dev --manual -c \"pnpm run dev:server\"",
+    "dev:debug": "front-commerce dev --manual -c \"pnpm run dev:server --inspect\"",
+    "dev:server": "tsx watch --ignore ./build/version.txt --ignore ./build/index.js --clear-screen=false -r tsconfig-paths/register server.ts",
+    "start": "cross-env NODE_ENV=production tsx -r tsconfig-paths/register ./server.ts",
+    "translate": "front-commerce translate ./app/**/*.{js,jsx,ts,tsx} --locale en",
+    "front-commerce": "front-commerce",
+-   "typecheck": "tsc"
++   "typecheck": "tsc",
++   "postinstall": "front-commerce postinstall"
+  },
+// ...
+```
 
 ### Order filters
 
