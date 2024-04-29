@@ -1,0 +1,51 @@
+---
+title: Troubleshooting
+description:
+  This page contains the most common errors you may encounter, along with
+  information that will help to solve them quickly.
+---
+
+<p>{frontMatter.description}</p>
+
+## CSS can disappear in development
+
+<SinceVersion tag="3.4" />
+
+This is a known React issue that is fixed in their
+[canary release channel](https://react.dev/blog/2023/05/03/react-canaries). If
+you understand the risks involved, you can pin your app to a specific
+[React version](https://www.npmjs.com/package/react?activetab=versions) and then
+use
+[package overrides](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#overrides)
+to ensure this is the only version of React used throughout your project. For
+example:
+
+```json title=package.json
+{
+  "dependencies": {
+    "react": "18.3.0-canary-...",
+    "react-dom": "18.3.0-canary-..."
+  },
+  "overrides": {
+    "react": "18.3.0-canary-...",
+    "react-dom": "18.3.0-canary-..."
+  }
+}
+```
+
+:::info
+
+For reference, this is how Next.js treats React versioning internally on your
+behalf, so this approach is more widely used than you might expect, even though
+it's not something Remix provides as a default.
+
+:::
+
+Again, it's worth stressing that this issue with styles that were injected by
+Vite only happens in development. **Production builds won't have this issue**
+
+**Resources:**
+
+- [Remix Docs](https://remix.run/docs/en/main/guides/css-files#bundled-css-can-disappear-in-development)
+- [Remix + Vite Issues](https://github.com/remix-run/remix/issues/4822#issuecomment-1672040945)
+- [React Fix](facebook/react#24430)
