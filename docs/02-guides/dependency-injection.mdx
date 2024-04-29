@@ -52,12 +52,17 @@ export default defineRemixExtension({
 ### Extending the type declarations
 
 For TypeScript support, you'll need to extend the `DependencyInjection`
-interface from `@front-commerce/types` to include your custom dependencies. This
-declaration can be placed in a `dependency-injection.d.ts` file within your
-extension's types directory.
+interface from `@front-commerce/types` to include your custom dependencies.
 
-Ensure you have the `@front-commerce/types` package installed in your project,
-as it provides the necessary types for DI.
+First ensure you have the `@front-commerce/types` package installed in your
+project, as it provides the necessary types for DI.
+
+```bash
+pnpm add -D @front-commerce/types
+```
+
+Then the declaration can be placed in a `dependency-injection.d.ts` file within
+your extension's types directory.
 
 ```ts title="./extensions/acme/types/dependency-injection.d.ts"
 import type { createAcmeDI } from "../di";
