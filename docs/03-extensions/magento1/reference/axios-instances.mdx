@@ -1,15 +1,16 @@
 ---
 title: "Axios instances"
-description: "This reference explains how to create `axios` instances to interact with Magento's API."
+description:
+  "This reference explains how to create `axios` instances to interact with
+  Magento's API."
 ---
 
 <p>{frontMatter.description}</p>
 
-
 ## `makeAdminClientFromRequest`
 
-The `makeAdminClientFromRequest` function creates an `axios` instance that can be
-used to interact with Magento's API as an Admin.
+The `makeAdminClientFromRequest` function creates an `axios` instance that can
+be used to interact with Magento's API as an Admin.
 
 ```js
 makeAdminClientFromRequest(request);
@@ -23,22 +24,23 @@ Arguments:
 
 Example:
 
-```js
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeAdminClientFromRequest } from "@front-commerce/magento1/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const adminAxiosInstance = makeAdminClientFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```
 
 ## `makeAuthServiceFromRequest`
 
-The `makeAuthServiceFromRequest` function creates a service that expose related session information.
+The `makeAuthServiceFromRequest` function creates a service that expose related
+session information.
 
 ```js
 makeAuthServiceFromRequest(request);
@@ -52,19 +54,18 @@ Arguments:
 
 Example:
 
-```js
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeAuthServiceFromRequest } from "@front-commerce/magento1/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const authService = makeAuthServiceFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```
-
 
 ## `makeUserClientFromRequest`
 
@@ -83,17 +84,17 @@ Arguments:
 
 Example:
 
-```js
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeUserClientFromRequest } from "@front-commerce/magento1/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const axiosInstance = makeUserClientFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```
 
 ## `makeCartUrlBuilderFromRequest`
@@ -114,21 +115,22 @@ Arguments:
 Example:
 
 ```js
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeCartUrlBuilderFromRequest } from "@front-commerce/magento1/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const cartUrlBuilder = makeCartUrlBuilderFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```
 
 ## `makeFilterParams`
 
-The `makeFilterParams` function creates a filter for Magento API request to filter on properties.
+The `makeFilterParams` function creates a filter for Magento API request to
+filter on properties.
 
 ```js
 makeFilterParams(filters, initialFilters);
@@ -146,12 +148,15 @@ Example:
 ```js
 import { makeFilterParams } from "@front-commerce/magento1/axios";
 
-const params = makeFilterParams([{ code: "is_filterable", value: "1" }], { initialParams: { limit: 0 } });
+const params = makeFilterParams([{ code: "is_filterable", value: "1" }], {
+  initialParams: { limit: 0 },
+});
 ```
 
 ## `makeSkuFilters`
 
-The `makeSkuFilters` function creates a filter for Magento API request to filter on SKU.
+The `makeSkuFilters` function creates a filter for Magento API request to filter
+on SKU.
 
 ```js
 makeSkuFilters(skus);
@@ -159,10 +164,10 @@ makeSkuFilters(skus);
 
 Arguments:
 
-| Name      | Type     | Description                    |
-| :-------- | :------- | :----------------------------- |
-| `skus`    | string[] | Array of SKU                   |
-| `code`    | string   | Filter code (default to `sku`) |
+| Name   | Type     | Description                    |
+| :----- | :------- | :----------------------------- |
+| `skus` | string[] | Array of SKU                   |
+| `code` | string   | Filter code (default to `sku`) |
 
 Example:
 

@@ -176,12 +176,56 @@ You need to register your defined `StorefrontContentType` via the Contentful
 loader. This is typically done in a loader, or a context enhancer for simpler
 use cases.
 
-```js
-export default {
+First ensure you have a `GraphQLModule` definition:
+
+```ts
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+export default createGraphQLModule({
   namespace: "Example/Contentful/Homepage",
   dependencies: ["Front-Commerce/Contentful/Core"],
-  typeDefs,
-  resolvers,
+  loadRuntime: () => import("./runtime"),
+  typeDefs: /** GraphQL */ `
+    type AcmeCmsPage @storefrontContent(extractorIdentifier: "AcmeCmsPage") {
+      title: String
+      seo: Seo
+    }
+
+    type AcmeHomePage @storefrontContent(extractorIdentifier: "AcmeHomePage") {
+      title: String
+      blocks: [AcmeHomePageBlock]
+      seo: Seo
+    }
+
+    type AcmeSeo {
+      title: String
+      description: String
+    }
+
+    union AcmeHomePageBlock = BlockTitleText | BlockTextImage
+
+    type BlockTitleText @storefrontContent(extractorIdentifier: "BlockTitleText") {
+      title: String
+      subtitle: String
+      align: String
+    }
+
+    type BlockTextImage @storefrontContent(extractorIdentifier: "BlockTextImage") {
+      title: String
+      picture: String
+      picturePosition: String
+    }   
+  `,
+});
+```
+
+Then you can add your `GraphqlRuntime` definition to register your
+`StorefrontContentType`:
+
+```js
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
   contextEnhancer: ({ loaders }) => {
     const sharedBlocks = {
       TitleText: new BlockTitleText(),
@@ -204,7 +248,7 @@ export default {
       Homepage,
     };
   },
-};
+});
 ```
 
 :::info IMPORTANT

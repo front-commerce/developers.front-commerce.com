@@ -31,16 +31,16 @@ Arguments:
 Example:
 
 ```js
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeUserClientFromRequest } from "@front-commerce/magento2/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const axiosInstance = makeUserClientFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```
 
 ## `makeCartUrlBuilderFromRequest`
@@ -61,14 +61,14 @@ Arguments:
 Example:
 
 ```js
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
 import { makeCartUrlBuilderFromRequest } from "@front-commerce/magento2/axios";
 
-export default {
-  namespace: "Acme/Feature",
+export default createGraphQLRuntime({
   contextEnhancer: ({ req }) => {
     const cartUrlBuilder = makeCartUrlBuilderFromRequest(req);
 
     // rest of logic
   },
-};
+});
 ```

@@ -33,9 +33,7 @@ import { defineExtension } from "@front-commerce/core";
 export default function clickCounter() {
   return defineExtension({
     name: "click-counter",
-    configuration: {
-      providers: [],
-    },
+    meta: import.meta,
   });
 }
 ```
@@ -55,9 +53,11 @@ For that, you can create the GraphQL module definition in the file
 `example-extensions/click-counter/graphql/index.ts` with the following content:
 
 ```typescript title="example-extensions/click-counter/graphql/index.ts"
-export default {
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+export default createGraphQLModule({
   namespace: "ClickCounter",
-};
+});
 ```
 
 This is a minimal GraphQL module definition which namespace is `ClickCounter`
@@ -68,6 +68,7 @@ modifying the extension's index.ts:
 
 ```typescript title="Changes to example-extensions/click-counter/index.ts"
 import { defineExtension } from "@front-commerce/core";
+import clickCounter from "./example-extensions/click-counter/graphql";
 
 export default function clickCounter() {
   return defineExtension({
@@ -77,7 +78,7 @@ export default function clickCounter() {
     },
     // highlight-start
     graphql: {
-      unstable_module: "./example-extensions/click-counter/graphql",
+      modules: [clickCounter],
     },
     // highlight-end
   });
@@ -98,16 +99,26 @@ We would like to:
 1. add a `clickCounter` field to the existing `Product` type
 2. add an `incrementProductCounter` mutation
 
-For that, you can create the file `extension/click-counter/graphql/schema.gql`:
+For that, you can add the type definitions as a `typeDefs` value in your GraphQL
+module definition.
 
-```graphql title="extension/click-counter/graphql/schema.gql"
-extend type Product {
-  clickCounter: Int
-}
+```ts title="example-extensions/click-counter/graphql/index.ts"
+import { createGraphQLModule } from "@front-commerce/core/graphql";
 
-extend type Mutation {
-  incrementProductCounter(sku: String!, incrementValue: Int): MutationSuccess!
-}
+export default createGraphQLModule({
+  namespace: "ClickCounter",
+  // add-start
+  typeDefs: /** GraphQL */ `
+    extend type Product {
+      clickCounter: Int
+    }
+
+    extend type Mutation {
+      incrementProductCounter(sku: String!, incrementValue: Int): MutationSuccess!
+    }
+  `,
+  // add-end
+});
 ```
 
 :::info
@@ -118,38 +129,9 @@ Front-Commerce’s core.
 
 :::
 
-For that file to be taken into account, the extension needs to declare that it
-provides one or several schema file by modifying the
-`extension/click-counter/index.ts`:
-
-```typescript title="Changes to example-extensions/click-counter/index.ts"
-import { defineExtension } from "@front-commerce/core";
-
-export default function clickCounter() {
-  return defineExtension({
-    name: "click-counter",
-    configuration: {
-      providers: [],
-    },
-    graphql: {
-      // highlight-next-line
-      schema: ["./example-extensions/click-counter/graphql/schema.gql"],
-      unstable_module: "./example-extensions/click-counter/graphql",
-    },
-  });
-}
-```
-
-:::tip
-
-The `schema` can also be a be a globby pattern, for instance
-`./example-extensions/click-counter/graphql/*.gql`.
-
-:::
-
-At this point, after restarting Front-Commerce, you should be able to see in the
-GraphQL playground `http://localhost:4000/graphql` that the type `Product` has a
-`clickCounter` field and that a mutation `incrementProductCounter` exists.
+At this point, you should be able to see in the GraphQL playground
+`http://localhost:4000/graphql` that the type `Product` has a `clickCounter`
+field and that a mutation `incrementProductCounter` exists.
 
 You can try to execute the query below in your GraphQL playground
 `http://localhost:4000/graphql`:
@@ -180,13 +162,13 @@ any data. So you should see the following response:
 
 ### Implement the logic
 
-The latest step is to implement the logic to retrieve the `Product.clickCounter`
-value and behind the `incrementProductCounter` mutation. For that, you have to
-add resolvers for the field and the mutation. This is where most of the _real
-work_ is done, for instance by fetching remote data sources or transforming
-data.
+The latest step is to implement the logic, which we will refer to as the
+`GraphqlRuntime`, to retrieve the `Product.clickCounter` value and behind the
+`incrementProductCounter` mutation. For that, you have to add resolvers for the
+field and the mutation. This is where most of the _real work_ is done, for
+instance by fetching remote data sources or transforming data.
 
-Resolvers are exposed using the `resolvers` key of the GraphQL module
+Resolvers are exposed using the `resolvers` key of the GraphQL runtime
 definition. It should be a
 [**Resolver map**](https://www.graphql-tools.com/docs/resolvers): an object
 where each key is a GraphQL type name, and values are mapping between field
@@ -201,43 +183,47 @@ To learn more about resolvers and their internals, we recommend reading
 
 :::
 
-First, let's update the module definition as follow:
+First, let's update the module definition to register the runtime API:
 
 ```typescript title="Changes to example-extensions/click-counter/graphql/index.ts"
-// highlight-next-line
-import resolvers from "./resolvers";
+import { createGraphQLModule } from "@front-commerce/core/graphql";
 
-export default {
+export default createGraphQLModule({
   namespace: "ClickCounter",
-  // highlight-next-line
-  resolvers,
-};
+  // add-next-line
+  loadRuntime: () => import("./runtime"), // as this only executes in during runtime, it needs to be an import statement.
+});
 ```
 
-And then create the `resolvers.ts` file with a resolver map as below:
+And then let's create the GraphqlRuntime so that we can add the `resolvers` map
+as below:
 
-```typescript title="example-extensions/click-counter/graphql/resolvers.ts"
-export default {
-  Product: {
-    clickCounter: (product) => {
-      console.log(`click count retrieval for product ${product.sku}`);
-      // your own retrieval logic here
-      return 1;
+```typescript title="example-extensions/click-counter/graphql/runtime.ts"
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Product: {
+      clickCounter: (product) => {
+        console.log(`click count retrieval for product ${product.sku}`);
+        // your own retrieval logic here
+        return 1;
+      },
+    },
+
+    Mutation: {
+      incrementProductCounter: (_root, params) => {
+        const { sku, incrementValue } = params;
+        console.log(`incrementing counter for product "${sku}"`);
+        console.log(`counter + ${incrementValue ?? 1}`);
+        // your own increment logic here
+        return {
+          success: true,
+        };
+      },
     },
   },
-
-  Mutation: {
-    incrementProductCounter: (_root, params) => {
-      const { sku, incrementValue } = params;
-      console.log(`incrementing counter for product "${sku}"`);
-      console.log(`counter + ${incrementValue ?? 1}`);
-      // your own increment logic here
-      return {
-        success: true,
-      };
-    },
-  },
-};
+});
 ```
 
 It brings a very basic implementation for both the `Product.clickCounter` field
@@ -249,30 +235,36 @@ playground.
 As stated above, a resolver function can also return a Promise and thus handle
 asynchronous result. A more real life resolver map would like look like:
 
-```typescript title="example-extensions/click-counter/graphql/resolvers.ts"
-export default {
-  Product: {
-    clickCounter: (product) => {
-      const clickCountPromise = fetchClickCountForSku(product.sku);
-      return clickCountPromise;
+```typescript title="example-extensions/click-counter/graphql/runtime.ts"
+export default createGraphQLRuntime({
+  resolvers: {
+    Product: {
+      clickCounter: (product) => {
+        // add-start
+        const clickCountPromise = fetchClickCountForSku(product.sku);
+        return clickCountPromise;
+        // add-end
+      },
     },
-  },
 
-  Mutation: {
-    incrementProductCounter: async (_root, params) => {
-      const { sku, incrementValue } = params;
-      try {
-        await incrementProductCount(sku, incrementValue);
-        return {
-          success: true,
+    Mutation: {
+      incrementProductCounter: (_root, params) => {
+        // add-start
+        const { sku, incrementValue } = params;
+        try {
+          await incrementProductCount(sku, incrementValue);
+          return {
+            success: true,
+          };
+        } catch (error) {
+          return {
+            success: false,
+            errorMessage: error.message,
+          };
         }
-      } catch (error)
-        return {
-          success: false,
-          errorMessage: error.message,
-        };
-      };
+        // add-end
+      },
     },
   },
-};
+});
 ```
