@@ -1,0 +1,97 @@
+---
+title: Markdown and MDX
+description:
+  This guide explains how to setup Markdown and MDX in your Front-Commerce
+  application thanks to Vite.
+---
+
+<p>{frontMatter.description}</p>
+
+:::tip
+
+You can check the
+[`example-extension/mdx-blog`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/main/skeleton/example-extensions/mdx-blog)
+example to see how MDX can be implemented.
+
+:::
+
+## Setup
+
+### Install MDX bundler for vite
+
+```sh
+pnpm add @mdx-js/rollup @mdx-js/react
+```
+
+### Update `vite.config.ts`
+
+**Please note that `mdx` plugin must be declared before the `frontCommerce`
+plugin** to ensure that MDX files have already been transformed to standard
+React components before going through the Front-Commerce–Remix–React toolchain.
+
+```diff
+import { defineConfig } from "vite";
+import { vitePlugin as frontCommerce } from "@front-commerce/remix/vite";
++import mdx from "@mdx-js/rollup";
+
+export default defineConfig((env) => {
+  return {
+    plugins: [
++     mdx({ providerImportSource: "@mdx-js/react" }),
+      frontCommerce({ env })
+    ],
+  };
+});
+```
+
+## Adding custom components
+
+To specify which component to render for a specific tag, you can use the
+`MDXProvider`, please check out
+[demo example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/example-extensions/mdx-blog/routes/_main.blog.tsx#L8)
+to see how to use it.
+
+## Demo
+
+You can load this demo extension to check if your setup is working by adding
+these lines to your `front-commerce.config.ts` file:
+
+```diff
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+import rateLimiterConfig from "./app/config/rateLimiter";
+import appCSPProvider from "./app/config/cspProvider";
+import serverEventsConfig from "./app/config/serverEvents";
+import pwaConfig from "./app/config/pwa";
++import mdxBlog from "./example-extensions/mdx-blog";
+
+export default defineConfig({
+  extensions: [
+    themeChocolatine(),
++   mdxBlog()
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  rateLimiter: rateLimiterConfig,
+  serverEvents: serverEventsConfig,
+  configuration: {
+    providers: [appCSPProvider()],
+  },
+  v2_compat: {
+    useApolloClientQueries: true,
+    useFormsy: true,
+  },
+  pwa: pwaConfig,
+});
+
+```
+
+Then run your Front-Commerce app and go to
+[http://localhost:4000/blog](http://localhost:4000/blog)
+
+## References
+
+- https://mdxjs.com/docs/
+- https://mdxjs.com/packages/rollup/
