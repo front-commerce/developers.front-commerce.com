@@ -23,6 +23,26 @@ npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.
 
 :::
 
+## `2.29.0` -> `2.30.0`
+
+### Fixed add to wishlist after new registration
+
+In this version we fixed the add to wishlist state updates after the first
+registration. Previously it would not display a product in the wishlist until a
+full page reload is initiated.
+
+To accommodate this fix, we had to add changes to the following files;
+
+- [src/web/theme/modules/Wishlist/AddProductToWishlist/withIsProductInWishlist.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3399/diffs#fc726e322f9602537264acadd3e6b052763e73e5)
+- [src/web/theme/modules/Wishlist/AddProductToWishlist/withProductWishlistMutations.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3399/diffs#9c0961f0b27e34868027c7e97f7c5ed14f4a2695)
+
+If you have overridden these files please ensure to update them with the
+changes.
+
+## `2.28.0` -> `2.29.0`
+
+No manual migration steps are required for this release.
+
 ## `2.27.0` -> `2.28.0`
 
 No manual migration steps are required for this release.
