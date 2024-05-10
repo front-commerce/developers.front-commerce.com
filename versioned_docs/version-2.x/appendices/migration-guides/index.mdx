@@ -39,6 +39,20 @@ To accommodate this fix, we had to add changes to the following files;
 If you have overridden these files please ensure to update them with the
 changes.
 
+### Reworked QuickOrder component
+
+In this version, we've introduced a new feature that enables you to bulk import
+products from a CSV file and directly add them to your cart.
+
+To develop this new feature, we've had to update the following files;
+
+- [`src/web/theme/modules/ProductPicker/ProductPicker.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#ca297fed67eb602d111f743cf4a14b155f050366)
+- [`src/web/theme/modules/AddToCart/AddToCartModal/AddToCartModalQuery.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#ca297fed67eb602d111f743cf4a14b155f050366)
+- `src/web/theme/modules/QuickOrder/QuickOrder.js`
+  - https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#a72de350cd94321d5b8db2bb90e500f068bb09c5
+  - https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8171a6fde0aac903f3d4852466df072840ca3015#a72de350cd94321d5b8db2bb90e500f068bb09c5
+- [`src/web/theme/modules/QuickOrder/_QuickOrder.scss`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#d4bc8c41e8db6221324f0641850453e54363bced)
+
 ## `2.28.0` -> `2.29.0`
 
 No manual migration steps are required for this release.
