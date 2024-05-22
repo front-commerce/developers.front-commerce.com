@@ -1,0 +1,113 @@
+---
+title: 3.4 -> 3.5
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.4
+  to 3.5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.5.0"
+```
+
+## Configuration updates
+
+In this new release, we've introduced some changes on how some configurations
+are set.
+
+### Cache
+
+We've introduced a new cache configuration in the `config` object resolved from
+`FrontCommerceApp`.
+
+These are now defined with a config provider; it allows you to change the
+behaviour of the configuration computing.
+
+| Config path                     | Env Variable                                |
+| ------------------------------- | ------------------------------------------- |
+| `config.cache.apiToken`         | `FRONT_COMMERCE_CACHE_API_TOKEN`            |
+| `config.cache.ignoreCacheRegex` | `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` |
+
+### Magento 1/2
+
+We have updated the way we use the Magento 1/2 configuration. It's now possible
+to access Magento OAuth configuration with:
+
+<Tabs>
+<TabItem value="Magento 2">
+
+| Config path                              | Env Variable                                  |
+| ---------------------------------------- | --------------------------------------------- |
+| `config.magento.oauth.accesToken`        | `FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN`        |
+| `config.magento.oauth.accessTokenSecret` | `FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN_SECRET` |
+| `config.magento.oauth.consumerKey`       | `FRONT_COMMERCE_MAGENTO2_CONSUMER_KEY`        |
+| `config.magento.oauth.consumerSecret`    | `FRONT_COMMERCE_MAGENTO2_CONSUMER_SECRET`     |
+
+</TabItem>
+<TabItem value="Magento 1">
+
+| Config path                              | Env Variable                                  |
+| ---------------------------------------- | --------------------------------------------- |
+| `config.magento.oauth.accesToken`        | `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN`        |
+| `config.magento.oauth.accessTokenSecret` | `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET` |
+| `config.magento.oauth.consumerKey`       | `FRONT_COMMERCE_MAGENTO1_CONSUMER_KEY`        |
+| `config.magento.oauth.consumerSecret`    | `FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET`     |
+
+</TabItem>
+</Tabs>
+
+### Image Resizer
+
+Display of dev error message is now handled with a configProvider:
+
+| Config path                           | Env Variable                             |
+| ------------------------------------- | ---------------------------------------- |
+| `config.resizedImage.disableDevError` | `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE` |
+
+## Deprecation of env vars
+
+These env vars support have been removed from the core code in favor of
+configurations:
+
+- `FRONT_COMMERCE_MAINTENANCE_MODE_FORCE_ENABLED`
+- `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS`
+- `FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE`
+
+To configure these, you now should use new configuration in
+`front-commerce.config.ts`:
+
+```ts
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  maintenance: {
+    force: process.env.FRONT_COMMERCE_MAINTENANCE_MODE_FORCE_ENABLED === "true",
+    authorizedIps:
+      process.env.FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS?.split?.(
+        ","
+      ) ?? [],
+  },
+  contributionMode: {
+    force: process.env.FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE === "true",
+  },
+});
+```
+
+## `createResizedImageResponse`
+
+The `createResizedImageResponse` function now requires an additional parameter
+called `options`. At the time of writing this documentation, the `options`
+parameter only contains one entry to enable or disable error messages in dev
+mode.
+
+You can check the signature of this new parameter in the
+[`resizedImageConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/core/config/resizedImageConfigProvider.ts)
+method.
