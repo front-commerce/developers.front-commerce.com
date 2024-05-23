@@ -1,0 +1,6 @@
+label: Integrations
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains integrations of compatible services with Server Side events.

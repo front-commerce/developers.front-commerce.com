@@ -96,6 +96,11 @@ Object that define app configuration
 
 ### `serverEvents`
 
+This configuration allow you to use server events in your Front-Commerce
+application, please follow the
+[Server Events Documentation](/docs/3.x/concepts/server-side-events) to learn
+more about this.
+
 Configuration for server events:
 
 ```ts title="app/config/serverEvents.ts"
@@ -108,7 +113,7 @@ export default {
 };
 ```
 
-```ts
+```ts title="front-commerce.config.ts"
 import { defineConfig } from "@front-commerce/core/config";
 import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
