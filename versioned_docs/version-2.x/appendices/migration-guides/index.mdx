@@ -53,6 +53,54 @@ To develop this new feature, we've had to update the following files;
   - https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8171a6fde0aac903f3d4852466df072840ca3015#a72de350cd94321d5b8db2bb90e500f068bb09c5
 - [`src/web/theme/modules/QuickOrder/_QuickOrder.scss`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#d4bc8c41e8db6221324f0641850453e54363bced)
 
+### Stripe integration now uses IPNs on Magento2 / Magento2 B2B
+
+In this version we've updated Stripe payment module to use IPNs. To cope with
+this change, you will need to ensure that:
+
+- Stripe is configured to use an `asyncOrder` checkout flow
+
+```diff title="src/web/theme/pages/Checkout/checkoutFlowOf.js"
+diff --git a/src/web/theme/pages/Checkout/checkoutFlowOf.js b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+index f7bd3222f..b843608da 100644
+--- a/src/web/theme/pages/Checkout/checkoutFlowOf.js
++++ b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+@@ -11,6 +11,7 @@ const checkoutFlowOf = (method) => {
+   if (method.startsWith("hipay_")) return "directOrderWithAdditionalAction";
+
+   if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "stripe") return "asyncOrder";
+
+   return "directOrder";
+ };
+```
+
+- In `StripeCheckout` component, `cartId` is added to the `paymentData` object
+  in the checkout state:
+
+```diff title="src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js"
+diff --git a/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js b/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
+index 5539c0c87..976f89594 100644
+--- a/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
++++ b/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
+@@ -41,6 +41,7 @@ const withData = compose(
+         loading: data.loading,
+         clientSecret:
+           !data.loading && data.cart?.stripe?.paymentIntent?.clientSecret,
++        cartId: !data.loading && data.cart?.id,
+       }),
+     })
+   ),
+@@ -101,6 +102,7 @@ const StripeCheckoutComponent = (props) => {
+     } else if (paymentIntent.status === "requires_capture") {
+       const paymentData = {
+         paymentIntentId: paymentIntent.id,
++        cartId: props.cartId,
+       };
+       setState({
+         loading: false,
+```
+
 ## `2.28.0` -> `2.29.0`
 
 No manual migration steps are required for this release.

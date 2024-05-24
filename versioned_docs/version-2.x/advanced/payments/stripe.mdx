@@ -33,7 +33,18 @@ With API keys found
 # API Keys from https://dashboard.stripe.com/account/apikeys
 FRONT_COMMERCE_WEB_STRIPE_PUBLISHABLE_KEY=pk_xxxxxx
 FRONT_COMMERCE_STRIPE_SECRET_KEY=sk_xxxxxx
+
+# Only for Magento2 / Magento2 B2B integrations
+FRONT_COMMERCE_STRIPE_ENDPOINT_SECRET=whsec_xxxxxx
 ```
+
+:::info
+
+In order to retrieve the endpoint secret, you will need to create a webhook in
+your Stripe dashboard. See the
+[related Stripe documentation](https://docs.stripe.com/webhooks?lang=node#add-a-webhook-endpoint).
+
+:::
 
 ### Register the Stripe payment module
 
@@ -55,10 +66,12 @@ In your Front-Commerce application:
 
 <SinceVersion tag="2.25" />
 
-The Stripe payment module supports the [Negotiable Quote](/docs/2.x/magento2/b2b#negotiable-quotes) checkout and allows customers to pay a negotiated quote with Stripe.
+The Stripe payment module supports the
+[Negotiable Quote](/docs/2.x/magento2/b2b#negotiable-quotes) checkout and allows
+customers to pay a negotiated quote with Stripe.
 
-To enable this feature, you must have the Magento2 B2B module enabled and register an additional `serverModule`:
-
+To enable this feature, you must have the Magento2 B2B module enabled and
+register an additional `serverModule`:
 
 ```diff title=".front-commerce.js"
    modules: [],
@@ -70,7 +83,6 @@ To enable this feature, you must have the Magento2 B2B module enabled and regist
 +    { name: "StripeM2B2B", path: "server/modules/payment-stripe/magento2-b2b" },
    ]
 ```
-
 
 #### Magento1 (OpenMage LTS)
 
@@ -104,15 +116,49 @@ To enable this feature, you must have the Magento2 B2B module enabled and regist
    };
    ```
 
+### Extra steps for Magento2 / Magento2 B2B
+
+Magento2 and Magento2 B2B stripe integration uses IPN to check for the payment
+status. You will need to set up a webhook in your Stripe dashboard to send
+notification to Front-Commerce. In order to do so, please follow the
+[related Stripe documentation](https://docs.stripe.com/webhooks?lang=node#add-a-webhook-endpoint).
+
+The required event types to work with Front-Commerce are:
+
+- `charge.succeeded`
+- `charge.failed`
+- `payment_intent.canceled`
+
+The configured URL for the webhook should be:
+`https://www.your-domain.com/webhooks/payment/notification/stripe`
+
+You will also need to update the `checkoutFlowOf` so that Stripe payment method
+uses an async order flow:
+
+```diff title="src/web/theme/pages/Checkout/checkoutFlowOf.js"
+diff --git a/src/web/theme/pages/Checkout/checkoutFlowOf.js b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+index f7bd3222f..b843608da 100644
+--- a/src/web/theme/pages/Checkout/checkoutFlowOf.js
++++ b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+@@ -11,6 +11,7 @@ const checkoutFlowOf = (method) => {
+   if (method.startsWith("hipay_")) return "directOrderWithAdditionalAction";
+
+   if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "stripe") return "asyncOrder";
+
+   return "directOrder";
+ };
+```
+
 ### Optional: enable Apple Pay and/or Google Pay
 
 <SinceVersion tag="2.24" />
 
 If enabled in your Stripe account, Apple Pay and Google Pay payment methods are
-supported and can be used in your Front-Commerce store. Please refer to [the
-Google Pay with Stripe](https://stripe.com/docs/google-pay) and [the Apple Pay
-with Stripe](https://stripe.com/docs/apple-pay) documentation to learn how to
-configure those payment methods.
+supported and can be used in your Front-Commerce store. Please refer to
+[the Google Pay with Stripe](https://stripe.com/docs/google-pay) and
+[the Apple Pay with Stripe](https://stripe.com/docs/apple-pay) documentation to
+learn how to configure those payment methods.
 
 :::tip
 
@@ -188,10 +234,10 @@ See the tests for an example (while a detailed documentation is being written):
 <SinceVersion tag="2.27" />
 
 Optionally the environment variable `FRONT_COMMERCE_STRIPE_MAX_NETWORK_RETRY`
-can be set to an integer [to configure the Stripe client `maxNetworkRetries`
-option](https://github.com/stripe/stripe-node#network-retries). In versions
-where this variable is supported, `maxNetworkRetries` is configured to `3` by
-default.
+can be set to an integer
+[to configure the Stripe client `maxNetworkRetries` option](https://github.com/stripe/stripe-node#network-retries).
+In versions where this variable is supported, `maxNetworkRetries` is configured
+to `3` by default.
 
 :::note
 
