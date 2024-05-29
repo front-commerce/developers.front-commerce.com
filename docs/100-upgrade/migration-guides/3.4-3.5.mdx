@@ -18,6 +18,17 @@ Update all your `@front-commerce/*` dependencies to this version:
 pnpm update "@front-commerce/*@3.5.0"
 ```
 
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.5.0
+```
+
 ## Configuration updates
 
 In this new release, we've introduced some changes on how some configurations
@@ -111,3 +122,119 @@ mode.
 You can check the signature of this new parameter in the
 [`resizedImageConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/core/config/resizedImageConfigProvider.ts)
 method.
+
+## Deprecation of `createSeoHandle`
+
+We have deprecated the `createSeoHandle` in favor of the `createHandle` which
+combines different handle export features.
+
+```ts
+// remove-next-line
+import { createSeoHandle } from "@front-commerce/remix/seo";
+// add-next-line
+import { createHandle } from "@front-commerce/remix/handle";
+
+// remove-next-line
+export const handle = createSeoHandle(...);
+// add-next-line
+export const handle = createHandle(...);
+```
+
+## Replace `useLoaderData` with `useDynamicRouteLoaderData`
+
+If you have overwritten any of these routes
+
+- `app/routes/product.$id.tsx`
+- `app/routes/category.$id.tsx`
+- `app/routes/cms.$id.tsx`
+
+You must
+[replace the `useLoaderData` hook with the `useDynamicRouteLoaderData`](../../guides/dynamic-routing#replace-useloaderdata-with-usedynamicrouteloaderdata)
+
+## Code changes
+
+### Remix entrypoints
+
+In this release, we improved features that required to hook into your Remix
+application files created with the initial skeleton. You must update these files
+in your application, as detailed below **or copy the ones from the latest
+skeleton.**
+
+<details>
+  <summary><code>app/root.tsx</code> file</summary>
+
+```diff
+diff --git a/app/root.tsx b/app/root.tsx
+index 0c65e479a..0a4c2411d 100644
+--- a/app/root.tsx
++++ b/app/root.tsx
+@@ -49,10 +49,7 @@ export const meta: MetaFunction = (args) => {
+   return metas(args);
+ };
+
+-export default function App() {
+-  const navigation = useNavigation();
+-  usePageProgress(navigation.state !== "idle");
+-
++export function Layout({ children }: { children: React.ReactNode }) {
+   return (
+     <html lang="en">
+       <head>
+@@ -62,7 +59,8 @@ export default function App() {
+         <Links />
+       </head>
+       <body>
+-        <Outlet />
++        {/* children will be the root Component, ErrorBoundary, or HydrateFallback */}
++        {children}
+         <ScrollRestoration />
+         <Scripts />
+         <FrontCommerceScripts />
+@@ -71,6 +69,12 @@ export default function App() {
+     </html>
+   );
+ }
++export default function App() {
++  const navigation = useNavigation();
++  usePageProgress(navigation.state !== "idle");
++
++  return <Outlet />;
++}
+
+ export function ErrorBoundary() {
+   const error = useRouteError();
+
+```
+
+</details>
+
+<details>
+  <summary><code>app/entry.client.tsx</code> file</summary>
+
+```diff
+diff --git a/app/entry.client.tsx b/app/entry.client.tsx
+index 341faa525..c70cdd2d7 100644
+--- a/app/entry.client.tsx
++++ b/app/entry.client.tsx
+@@ -6,7 +6,10 @@
+ import { RemixBrowser } from "@remix-run/react";
+ import { StrictMode, startTransition } from "react";
+ import { hydrateRoot } from "react-dom/client";
+-import { FrontCommerceBrowser } from "@front-commerce/remix/react";
++import {
++  FrontCommerceBrowser,
++  prepareHydration,
++} from "@front-commerce/remix/react";
+ import { CompatProviderBrowser } from "@front-commerce/compat/CompatProvider";
+ import manifest from "virtual:front-commerce/manifest";
+
+@@ -29,5 +32,5 @@ const hydrate = async () => {
+ };
+
+ startTransition(() => {
+-  hydrate();
++  prepareHydration(hydrate);
+ });
+```
+
+</details>
