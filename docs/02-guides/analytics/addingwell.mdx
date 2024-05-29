@@ -1,0 +1,178 @@
+---
+title: Addingwell
+description:
+  Learn how to integrate Addingwell Server-Side Google Analytics proxy.
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+Before configuring Addingwell in Front-Commerce, ensure that you have:
+
+- created an [AddingWell account](https://www.addingwell.com/)
+- setup your own server, as documented in the
+  [Addingwell Get Started](https://docs.addingwell.com/b/2CA8BCF1-E67D-46DF-A2BE-F93017D8FD7A/Getting-started-with-Addingwell)
+  official guide
+
+## With GTM
+
+This guide will show you how to integrate Addingwell with Google Tag Manager.
+This way, the Analytics tag will be implemented with Google Tag Manager but the
+traffic will head to your custom server.
+
+### Setup GTM
+
+You must follow the
+[Addingwell Send data documentation (Option 1)](https://docs.addingwell.com/b/C45DD221-2773-4DE0-B588-39B60785291A/Send-the-data-to-your-tagging-server).
+
+### Setup GTM Analytics plugin in Front-Commerce
+
+Install the Google Tag Manager analytics plugin
+
+```shell
+pnpm add @analytics/google-tag-manager
+```
+
+Then edit your analytics configuration from the `app/config/analytics.js` to add
+the Google Tag Manager plugin:
+
+```js title="app/config/analytics.js"
+export default {
+  analytics: {
+    // highlight-next-line
+    enable: true,
+    debug: process.env.NODE_ENV !== "production",
+    defaultSettings: {},
+    plugins: [
+      // highlight-start
+      {
+        name: "google-tag-manager",
+        needConsent: false,
+        enabledByDefault: true,
+        settings: (authorization) => {
+          return {
+            containerId: "GTM-XXXXXXXX", // This should be the GTM container ID of the Container that will inject Google Tag not the server container ID
+          };
+        },
+        script: () => import("@analytics/google-tag-manager"),
+      },
+      // highlight-end
+    ],
+  },
+};
+```
+
+### Setup CSP
+
+Then you'll need to update your CSP to allow your Front-Commerce application to
+communicate with external services. Let's say that your analytics domain is
+`metrics.my-commerce.net`
+
+```js title="app/config/cspProvider.ts"
+const appCSPProvider = () => {
+  return {
+    name: "cspConfiguration",
+    values: {
+      contentSecurityPolicy: {
+        __dangerouslyDisable: false,
+        directives: {
+          // highlight-next-line
+          scriptSrc: ["metrics.my-commerce.net", "www.googletagmanager.com"], // We need to add Google Tag Manager to allow GTM to inject GA4 tag into our pages
+          frameSrc: [],
+          styleSrc: [],
+          imgSrc: [],
+          fontSrc: [],
+          // highlight-next-line
+          connectSrc: ["metrics.my-commerce.net"],
+          baseUri: [],
+        },
+      },
+    },
+  };
+};
+export default appCSPProvider;
+```
+
+## With GA4
+
+### Setup your server container
+
+You first need to follow the Addingwell
+[gtag.js configuration guide (option 3)](https://docs.addingwell.com/b/C45DD221-2773-4DE0-B588-39B60785291A/Send-the-data-to-your-tagging-server).
+
+Please note your custom tagging domain we will need this for the next step (in
+the guide, we will consider that the domain is `metrics.my-commerce.net`).
+
+### Setup GA4 plugin in Front-Commerce
+
+Install the GA4 plugin with the following command:
+
+```shell
+npm install @analytics/google-analytics
+```
+
+Then edit your analytics configuration from the `app/config/analytics.js` to add
+the Google Tag Manager plugin:
+
+```js title="app/config/analytics.js"
+export default {
+  analytics: {
+    // highlight-next-line
+    enable: true,
+    debug: process.env.NODE_ENV !== "production",
+    defaultSettings: {},
+    plugins: [
+      // highlight-start
+      {
+        name: "google-analytics",
+        needConsent: false,
+        enabledByDefault: true,
+        settings: (authorization) => {
+          return {
+            customScriptSrc:
+              "https://metrics.my-commerce.net/gtag/js?id=G-XXXXXXXX",
+            measurementIds: ["G-XXXXXXXX"], // You can find this measurement ID in your Google Analytics account: Administration > Data Stream
+            gtagConfig: {
+              transport_url: "https://metrics.my-commerce.net",
+              first_party_collection: true,
+            },
+          };
+        },
+        script: () => import("@analytics/google-tag-manager"),
+      },
+      // highlight-end
+    ],
+  },
+};
+```
+
+### Setup CSP
+
+Then you'll need to update your CSP to allow your Front-Commerce application to
+communicate with you addingwell server.
+
+```js title="app/config/cspProvider.ts"
+const appCSPProvider = () => {
+  return {
+    name: "cspConfiguration",
+    values: {
+      contentSecurityPolicy: {
+        __dangerouslyDisable: false,
+        directives: {
+          // highlight-next-line
+          scriptSrc: ["metrics.my-commerce.net"],
+          frameSrc: [],
+          styleSrc: [],
+          imgSrc: [],
+          fontSrc: [],
+          // highlight-next-line
+          connectSrc: ["metrics.my-commerce.net"],
+          baseUri: [],
+        },
+      },
+    },
+  };
+};
+export default appCSPProvider;
+```

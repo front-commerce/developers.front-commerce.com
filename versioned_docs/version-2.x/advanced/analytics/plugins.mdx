@@ -377,3 +377,76 @@ Feel free to browse
 contribute to them if you have any ideas! 💡
 
 :::
+
+### Addingwell
+
+#### Prerequisites
+
+Before configuring Addingwell in Front-Commerce, ensure that you have:
+
+- created an [AddingWell account](https://www.addingwell.com/)
+- setup your own server, as documented in the
+  [Addingwell Get Started](https://docs.addingwell.com/b/2CA8BCF1-E67D-46DF-A2BE-F93017D8FD7A/Getting-started-with-Addingwell)
+  official guide
+
+#### With GTM
+
+This guide will show you how to integrate Addingwell with Google Tag Manager.
+This way, the Analytics tag will be implemented with Google Tag Manager but the
+traffic will head to your custom server.
+
+Follow the
+[Google Tag Manager](/docs/2.x/advanced/analytics/plugins#google-tag-manager)
+installation procedure documented above.
+
+To use it with Addingwell you need to more steps :
+
+- Use the GTM Web container ID instead of the Analytics container ID
+- Update your CSP to add your custom domains for `script` and `connect`
+
+```js title="src/config/website.js"
+module.exports = {
+  //....
+  contentSecurityPolicy: {
+    directives: {
+      // highlight-next-line
+      scriptSrc: ["metrics.my-commerce.net"],
+      //...
+      // highlight-next-line
+      connectSrc: ["metrics.my-commerce.net"],
+      //...
+    },
+  },
+  //....
+};
+```
+
+#### With GA4
+
+Follow the
+[Google Analytics 4](/docs/2.x/advanced/analytics/plugins#google-analytics-4)
+installation procedure documented above.
+
+Then you need to add additionnal configuration:
+
+```js title="src/config/analytics.js"
+{
+  name: "google-analytics",
+  needConsent: true,
+  settings: (authorization) => {
+    return {
+      // highlight-next-line
+      customScriptSrc: "https://metrics.my-commerce.net/gtag/js?id=G-abc123",
+      measurementIds: ['G-abc123'],
+      gtagConfig:{
+          anonymize_ip: !authorization
+          // highlight-start
+          transport_url: "https://metrics.my-commerce.net",
+          first_party_collection: true,
+          // highlight-end
+      }
+    };
+  },
+  script: () => import("@analytics/google-tag-manager"),
+},
+```
