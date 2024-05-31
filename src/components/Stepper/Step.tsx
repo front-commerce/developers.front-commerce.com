@@ -7,7 +7,7 @@ export type StepProps = PropsWithChildren<{
 
 export default function Step(props: StepProps) {
   return (
-    <li key={props.step} className="relative">
+    <div key={props.step} className="relative">
       {props.isLastStep ? null : (
         <div
           className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-zinc-100 dark:bg-zinc-800"
@@ -25,6 +25,6 @@ export default function Step(props: StepProps) {
         </span>
         <div className="ml-4 flex min-w-0 flex-col mt-1">{props.children}</div>
       </div>
-    </li>
+    </div>
   );
 }

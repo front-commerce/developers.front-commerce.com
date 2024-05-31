@@ -1,0 +1,58 @@
+---
+title: Google Analytics 4
+description: Learn how to configure Google Analytics 4 with Front-Commerce.
+tags:
+  - client-side tracking
+  - analytics
+  - analytics plugin
+  - google
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+Before configuring Google Analytics 4 in Front-Commerce, ensure that you have:
+
+- A GA4 measurement ID.
+
+## Resources
+
+- [GA4 Documentation](https://developers.google.com/analytics/devguides/collection/ga4)
+- [Plugin Documentation](https://getanalytics.io/plugins/google-analytics)
+
+## Installation
+
+```shell
+pnpm add @analytics/google-analytics
+```
+
+## Configuration
+
+```ts title="app/config/analytics.ts"
+import { type AnalyticsConfig } from "@front-commerce/core/react";
+
+export default {
+  analytics: {
+    enable: true,
+    debug: process.env.NODE_ENV !== "production",
+    plugins: [
+      // highlight-start
+      {
+        name: "google-analytics",
+        needConsent: true,
+        settings: (authorization) => {
+          return {
+            measurementIds: ["G-XXXXXXXXXX"],
+            gtagConfig: {
+              anonymize_ip: !authorization,
+            },
+          };
+        },
+        script: () => import("@analytics/google-analytics"),
+      },
+      // highlight-end
+    ],
+  } satisfies AnalyticsConfig,
+};
+```
