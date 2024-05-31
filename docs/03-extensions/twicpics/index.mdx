@@ -1,0 +1,59 @@
+---
+title: "TwicPics"
+description:
+  "This extension allow you to use Twicpics in your Front-Commerce store."
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+- [TwicPics account](https://account.twicpics.com/signin)
+
+## Installation
+
+Install the `@front-commerce/twicpics` package:
+
+```bash
+pnpm add @front-commerce/twicpics
+```
+
+## Usage
+
+Add the TwicPics extension to your `front-commerce.config.ts`:
+
+```ts title="front-commerce.config.ts"
+//...
+import twicpics from "@front-commerce/twicpics";
+
+export default defineConfig({
+  extensions: [
+    // ...
+    twicpics(),
+  ],
+  //...
+});
+```
+
+## Configuration
+
+In order to use TwicPics, you need to extend your `app/config/images.js` config.
+
+- `domain` (required): the Cloud Name of your TwicPics environment (see
+  [reference](https://www.twicpics.com/docs/getting-started/fundamentals#domains-and-paths))
+- `paths`: paths which should be proxied to TwicPics. (see
+  [reference](https://www.twicpics.com/docs/getting-started/fundamentals#domains-and-paths))
+
+```js title="app/config/images.js"
+const config = {
+  twicpics: {
+    domain: "https://<domain>.twic.pics",
+    paths: [
+      {
+        source: "/media", // the source to match, (eg `/media` would match `/media/image.jpg`, or `https://my-domain.com/media` would match `https://my-domain.com/media/image.jpg`)
+        path: "/my-media", // the path configured in TwicPics as a path for the source.
+      },
+    ],
+  },
+};
+```
