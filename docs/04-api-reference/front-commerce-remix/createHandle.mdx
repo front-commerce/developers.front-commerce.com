@@ -1,0 +1,47 @@
+---
+title: "createHandle"
+description:
+  "The `createHandle` is a collection of handle export features that allows you
+  to change the behavior of your route."
+---
+
+<SinceVersion tag="3.5" />
+
+:::info
+
+The `createHandle` is used for the Remix Route
+[handle export](https://remix.run/docs/en/main/route/handle)
+
+:::
+
+Arguments:
+
+| Name                | Type                                                                                  | Description                                                  |
+| :------------------ | :------------------------------------------------------------------------------------ | :----------------------------------------------------------- |
+| `dynamicRoute`      | [`DynamicRouteHandle`](../../guides/dynamic-routing#add-handle-export-to-remix-route) | The dynamic route configuration                              |
+| `getSitemapEntries` | [`function`](../../guides/customize-the-sitemap#getsitemapentries-function-1)         | Allows to retrieve sitemap entries from a remix route        |
+| `sitemapFetcher`    | [`string`](../../guides/customize-the-sitemap#sitemapfetcher-option)                  | Allows to retrieve sitemap entries from a registered fetcher |
+
+Example:
+
+```js
+import { createHandle } from "@front-commerce/remix/handle";
+
+export const handle = createHandle({
+  dynamicRoute: {
+    type: "product", // required
+    priority: 1, // optional
+  },
+  sitemapFetcher: "product",
+  getSitemapEntries: async () => {
+    return [
+      {
+        loc: "/acme-product.html",
+        lastmod: new Date().toISOString(),
+        changefreq: "daily",
+        priority: 1,
+      },
+    ];
+  },
+});
+```
