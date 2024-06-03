@@ -1,0 +1,97 @@
+---
+title: Google Analytics
+description:
+  Implement server-side events with Google Analytics Measurement Protocol.
+---
+
+<p>{frontMatter.description}</p>
+
+## Introduction
+
+Google Analytics provides a JS SDK to push events to their servers. To do
+server-to-server communication, you need to use Google Analytics Measurement
+Protocol.
+
+## Prerequisites
+
+To use Google Analytics Measurement Protocol, you need to get your API Secret
+and your measurement ID.
+
+- Measurement ID
+- Measurement Protocol API Secret
+
+:::info
+
+Please follow the
+[Google Analytics Measurement Protocol Documentation](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag#payload_query_parameters)
+to learn how to get them.
+
+:::
+
+## Setup Front-Commerce
+
+Update your `app/config/serverEvents.ts` file:
+
+```ts title="app/config/serverEvents.ts"
+import {
+  ConsoleIntegration,
+  AnalyticsIntegration,
+} from "@front-commerce/core/server-events/integrations";
+// higlihjt-next-line
+import analytics from "@front-commerce/core/analytics";
+
+export default {
+  //...
+  integrations: [
+    // ...
+    // highlight-start
+    new AnalyticsIntegration("front-commerce", [
+      analytics.GA4MeasurementProtocol(
+        "G-XXXXXXXX", // Your Analytics Measurement ID
+        "XXXXXXXXXXXXXXXXXXXXXX" // Your Analytics Measurement Protocol Secret
+      ),
+    ]),
+    // highlight-end
+  ],
+};
+```
+
+Then in analytics configuration, enable server tracking in analytics
+configuration:
+
+```ts title="app/config/analytics.ts"
+//...
+export default {
+  analytics: {
+    enable: true,
+    debug: process.env.NODE_ENV !== "production",
+    // highlight-start
+    serverTracking: {
+      enabled: true,
+    },
+    // highlight-end
+    //..
+  } satisfies AnalyticsConfig,
+};
+```
+
+And that's it! Now every event will be submitted to Google Analytics by your
+server!
+
+## Compatible events
+
+| Front-Commerce event        | Google Analytics event                                                                                                                  |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `Products Searched`         | [search](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#search)                             |
+| `Product List Viewed`       | [view_item_list](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#view_item_list)             |
+| `Product Clicked`           | [select_content](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#select_content)             |
+| `Product Viewed`            | [view_item](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#view_item)                       |
+| `Product Added`             | [add_to_cart](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#add_to_cart)           |
+| `Product Removed`           | [remove_from_cart](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#remove_from_cart) |
+| `Cart Viewed`               | [view_cart](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_cart)               |
+| `Checkout Started`          | [begin_checkout](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#begin_checkout)     |
+| `Payment Info Entered`      | [add_payment_info](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#add_payment_info) |
+| `Order Completed`           | [purchase](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#purchase)                 |
+| `User Logged in`            | [login](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#login)                       |
+| `User Created`              | [sign_up](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#sign_up)                   |
+| `Product Added to Wishlist` | [add_to_wishlist](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#add_to_wishlist)   |
