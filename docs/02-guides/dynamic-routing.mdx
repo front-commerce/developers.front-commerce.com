@@ -220,28 +220,28 @@ We would ideally want this to first try to run `B` and `D` then `A` and finally
 `matcherOptions` object.
 
 ```ts title="extension/index.ts"
-services.DynamicRoutes.registerUrlMatcher("A", () => new UrlMatcher(), {
+services.DynamicRoutes.registerUrlMatcher("A", () => new UrlMatcherA(), {
   // highlight-start
   batchOrder: 1,
   priority: 1,
   // highlight-end
 });
 
-services.DynamicRoutes.registerUrlMatcher("B", () => new UrlMatcher(), {
+services.DynamicRoutes.registerUrlMatcher("B", () => new UrlMatcherB(), {
   // highlight-start
   batchOrder: 0,
   priority: 2,
   // highlight-end
 });
 
-services.DynamicRoutes.registerUrlMatcher("C", () => new UrlMatcher(), {
+services.DynamicRoutes.registerUrlMatcher("C", () => new UrlMatcherC(), {
   // highlight-start
   batchOrder: 2, // only run if no other batches have matched
   priority: 1,
   // highlight-end
 });
 
-services.DynamicRoutes.registerUrlMatcher("D", () => new UrlMatcher(), {
+services.DynamicRoutes.registerUrlMatcher("D", () => new UrlMatcherD(), {
   // highlight-start
   batchOrder: 0,
   priority: 1,
