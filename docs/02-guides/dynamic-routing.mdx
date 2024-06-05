@@ -59,6 +59,12 @@ const hardcodedRoutes = [
     path: "/acme-product.html",
     identifier: "sku-6",
   },
+  {
+    type: "product"
+    path: "/baz-product.html",
+    redirectTo: "/acme-product.html",
+    redirectType: 301
+  },
 ];
 
 class UrlMatcher implements DynamicRouteUrlMatcher {
@@ -193,6 +199,69 @@ requirements.
 </Step>
 
 </Steps>
+
+## Batching and Prioritizing URL Matchers
+
+When multiple URL matchers are registered without any `matcherOptions`, it will
+default the batchOrder and priority to 0. This means that the order in which the
+URL matchers are registered will determine the order in which they are executed.
+
+Let's say we have the following list of URL Matchers:
+
+```bash
+A → fast API (cached)
+B → no API (static)
+C → slow API (not cached)
+D → no API (static)
+```
+
+We would ideally want this to first try to run `B` and `D` then `A` and finally
+`C`. To achieve this we can set the `batchOrder` and `priority` fields in the
+`matcherOptions` object.
+
+```ts title="extension/index.ts"
+services.DynamicRoutes.registerUrlMatcher("A", () => new UrlMatcherA(), {
+  // highlight-start
+  batchOrder: 1,
+  priority: 1,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("B", () => new UrlMatcherB(), {
+  // highlight-start
+  batchOrder: 0,
+  priority: 2,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("C", () => new UrlMatcherC(), {
+  // highlight-start
+  batchOrder: 2, // only run if no other batches have matched
+  priority: 1,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("D", () => new UrlMatcherD(), {
+  // highlight-start
+  batchOrder: 0,
+  priority: 1,
+  // highlight-end
+});
+```
+
+This would result in the following order of execution:
+
+```bash
+# batch 0
+D → no API (static)
+B → no API (static)
+
+  # batch 1
+  A → fast API (cached)
+
+     # batch 2 (only run if no other batches have matched)
+     C → slow API (not cached)
+```
 
 ## Extending the type declarations
 

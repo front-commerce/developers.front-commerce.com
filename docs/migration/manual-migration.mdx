@@ -915,3 +915,34 @@ The page loader has been deprecated in favor of the DynamicRoutes service.
 
 - `registerUrlMatcher` → see
   [Register a `DynamicRouteUrlMatcher`](../guides/dynamic-routing#register-a-dynamicrouteurlmatcher)
+
+The `Routable` types in the schema will eventually be deprecated, as
+`UrlMatchers` no longer use `GraphQL` as they are decoupled into a service.
+
+This also means that the `route` query will be deprecated, if you still require
+this functionality you can implement it using the `DynamicRoutes` service:
+
+```ts
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  resolvers: {
+    Query: {
+      route: async (_, { url }, { services, loaders }) => {
+        const route = await services.DynamicRoutes.matchUrl(url);
+        if (!route) {
+          return null;
+        }
+
+        if (route.type === "category") {
+          return loaders.Category.load(route.params.id);
+        } else if (route.type === "product") {
+          return loaders.Product.load(route.params.id);
+        }
+
+        //...
+      },
+    },
+  },
+});
+```
