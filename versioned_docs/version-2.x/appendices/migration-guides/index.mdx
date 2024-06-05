@@ -101,6 +101,81 @@ index 5539c0c87..976f89594 100644
          loading: false,
 ```
 
+### Fixed multiple triggers of "Order Completed" analytics event
+
+In this version we've fixed the issue where the "Order Completed" event would be
+triggered multiple times by refreshing the `/checkout/success` page (see
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/a5391ed51fdaa03d55e2dada638a6d0777697712)).
+
+To benefit from this fix, you will need to ensure that the following changes
+have been applied to your project, in the case you overrode those files:
+
+```diff title="theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js"
+diff --git a/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js b/src/web/theme/modules/Checkout/
+withCheckoutTracking/withCheckoutSuccessTracking.js
+index 1f1cc1cd1..8fe9f3d61 100644
+--- a/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js
++++ b/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js
+@@ -6,6 +6,10 @@ import trackEvent from "theme/modules/Analytics/trackEvent";
+ import CheckoutSuccessTrackingQuery from "./CheckoutSuccessTrackingQuery.gql";
+
+ const trackCartOrdered = (order) => {
++  const shouldTrack = localStorage.getItem("trackOrderCompleted");
++  if (!shouldTrack) {
++    return;
++  }
+   try {
+     const formatItemForAnalytics = ({ sku, name, row_total, qty_ordered }) => ({
+       sku,
+@@ -25,6 +29,7 @@ const trackCartOrdered = (order) => {
+       discount: order.totals.discount.value.amount,
+       products: order.items.map(formatItemForAnalytics),
+     });
++    localStorage.removeItem("trackOrderCompleted");
+   } catch (e) {
+     console.error(
+       "Failed to send successfull order to tracking. Does it have a valid format?"
+```
+
+```diff title="theme/pages/Checkout/stepsDefinition.js"
+diff --git a/src/web/theme/pages/Checkout/stepsDefinition.js b/src/web/theme/pages/Checkout/stepsDefinition.js
+index d54db0f25..6d40d9ac4 100644
+--- a/src/web/theme/pages/Checkout/stepsDefinition.js
++++ b/src/web/theme/pages/Checkout/stepsDefinition.js
+@@ -170,17 +170,20 @@ const steps = [
+     isDisplayable: (checkoutState) => !!checkoutState.paymentMethod,
+   },
+   {
+-    renderStep: (props) => (
+-      <Redirect
+-        to={{
+-          pathname: "/checkout/success",
+-          state: {
+-            ...props.checkoutState.placedOrderData,
+-            checkoutState: props.checkoutState,
+-          },
+-        }}
+-      />
+-    ),
++    renderStep: (props) => {
++      localStorage.setItem("trackOrderCompleted", "true");
++      return (
++        <Redirect
++          to={{
++            pathname: "/checkout/success",
++            state: {
++              ...props.checkoutState.placedOrderData,
++              checkoutState: props.checkoutState,
++            },
++          }}
++        />
++      );
++    },
+     isValid: (checkoutState) => false,
+     isRelevant: () => true,
+     isDisplayable: (checkoutState) => checkoutState.isPlaced,
+```
+
 ## `2.28.0` -> `2.29.0`
 
 No manual migration steps are required for this release.
