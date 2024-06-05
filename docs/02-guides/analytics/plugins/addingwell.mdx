@@ -34,16 +34,16 @@ Install the Google Tag Manager analytics plugin
 pnpm add @analytics/google-tag-manager
 ```
 
-Then edit your analytics configuration from the `app/config/analytics.js` to add
+Then edit your analytics configuration from the `app/config/analytics.ts` to add
 the Google Tag Manager plugin:
 
-```js title="app/config/analytics.js"
+```ts title="app/config/analytics.ts"
+import { type AnalyticsConfig } from "@front-commerce/core/react";
+
 export default {
   analytics: {
-    // highlight-next-line
     enable: true,
     debug: process.env.NODE_ENV !== "production",
-    defaultSettings: {},
     plugins: [
       // highlight-start
       {
@@ -59,7 +59,7 @@ export default {
       },
       // highlight-end
     ],
-  },
+  } satisfies AnalyticsConfig,
 };
 ```
 

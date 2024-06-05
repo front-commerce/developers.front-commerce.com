@@ -10,7 +10,7 @@ export default function Steps(props: { children: StepElement[] }) {
 
   return (
     <nav aria-label="Progress">
-      <ol role="list" className="list-none ml-0 pl-0">
+      <div role="list" className="list-none ml-0 pl-0">
         {children.map((child, index) => {
           if (child.props.mdxType !== "Step") {
             throw new Error(
@@ -25,7 +25,7 @@ export default function Steps(props: { children: StepElement[] }) {
               })
             : child;
         })}
-      </ol>
+      </div>
     </nav>
   );
 }
