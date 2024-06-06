@@ -3,6 +3,7 @@
 /blog/:year/:month/:day/:slug                           /changelog/:slug                                        301
 /docs/advanced/features/advanced-external-logins        /docs/2.x/advanced/features/external-logins/advanced    301
 /docs/advanced/theme/wysiwyg-legacy                     /docs/2.x/advanced/theme/wysiwyg/legacy                 301
+/docs/3.x/extensions/contentful/reference               /docs/3.x/extensions/contentful/reference/api           301
 
 # Redirects (temporary)
 /docs                                                   /docs/2.x/welcome	                                      302

@@ -135,7 +135,7 @@ index ffd0db3d2..b39a41f34 100644
    loadContext: AppLoadContext
  ) {
 -  const shop = remixContext.staticHandlerContext.loaderData.root.shop;
-+  const rootLoaderData = __remixContext.state.loaderData?.root;
++  const rootLoaderData = remixContext.state.loaderData?.root;
 +  const shop = rootLoaderData?.publicConfig?.shop;
    const messages = await loadTranslationMessages(shop.locale);
 

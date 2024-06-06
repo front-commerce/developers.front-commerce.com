@@ -95,7 +95,9 @@ redirect:
 Here's an example of how you might register a `urlMatcher`:
 
 ```js
-export default {
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
     [..],
     contextEnhancer: ({loaders}) => {
         loaders.Contentful.routes.registerUrlMatcher("Page", (id, metadata) => {
@@ -113,7 +115,7 @@ export default {
             return `/blog/${blogpost.fields.slug}`;
         });
     }
-}
+})
 ```
 
 This allows you to control the behavior of your application's preview mode on a

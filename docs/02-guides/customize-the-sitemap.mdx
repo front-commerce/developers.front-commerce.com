@@ -59,7 +59,7 @@ import { createHandle } from "@front-commerce/remix/handle";
 import { serverOnly$ } from "vite-env-only";
 
 export const handle = createHandle({
-  getSitemapEntries: serverOnly(async ({ request, app }) => {
+  getSitemapEntries: serverOnly$(async ({ request, app }) => {
     const posts = await fetch(
       "https://jsonplaceholder.typicode.com/posts"
     ).then((res) => res.json());
@@ -85,13 +85,100 @@ export const handle = createHandle({
 });
 ```
 
-## Creating and Registering a Custom Fetcher
+## Creating and Registering Custom Fetchers
 
-Create a custom sitemap fetcher and register it in your extension definition.
+Before creating new fetchers let's dive into the `SitemapService` service to get
+a better understanding of how it works.
 
-#### Creating a Fetcher
+The `SitemapService` is composed of two main parts:
+
+- **Composite**: A list of fetchers that are executed in parallel to generate
+  the sitemap.
+- **FetcherLeaf**: A function that returns an array of sitemap entries.
+
+Here is a diagram to help you visualize the Sitemap Service:
+
+![visualize-sitemap-service](assets/sitemap-service.svg)
+
+As you can see, each service is able to register it's own fetchers for a
+composition, this will help with customisation later on in the guide.
+
+### Register a composition
+
+Compositions are generally registered by the extensions which are responsible
+for adding the `handle` in the routes.
+
+In theme chocolatine, we have already have a few compositions (`products`,
+`category`, `cms`).
+
+You can register your own composition in your
+[extension definition](/docs/3.x/api-reference/front-commerce-core/defineExtension):
+
+```ts title="./extensions/acme/index.ts"
+import { createSitemapFetcher } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "acme",
+  meta: import.meta,
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      // highlight-next-line
+      services.Sitemap.registerComposition("acmeComposition");
+    },
+  },
+});
+```
+
+### Registering a Fetcher
+
+First we will learn how to register a fetcher, the next section will cover how
+to create a fetcher.
+
+Registering a fetcher is similar to registering a composition, you can do it in
+your
+[extension definition](/docs/3.x/api-reference/front-commerce-core/defineExtension).
+
+:::tip
+
+If you register a fetcher to a non-existent composition, the composition will be
+added automatically.
+
+:::
+
+```ts title="./extensions/acme/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "acme",
+  meta: import.meta,
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      // highlight-start
+      services.Sitemap.registerFetcher("todoComposition"
+        "AcmeTodo",
+        () => import("./sitemap/todo.ts")
+      );
+      // highlight-end
+
+      // We can also register other fetchers for the `todoComposition`, for example:
+      // services.Sitemap.registerFetcher("todoComposition"
+      //  "ContentfulTodo",
+      //  () => import("./sitemap/contentful/todo.ts")
+      // );
+    },
+  },
+});
+```
+
+### Creating a Fetcher
 
 [🔗 documentation](/docs/3.x/api-reference/front-commerce-core/createSitemapFetcher)
+
+The fetcher is runtime logic, which will be resolved when a request to the
+`sitemap.xml` page is made.
+
+Here is an example of a fetcher that fetches a list of todos from a remote API,
+and generates the sitemap entry for each todo.
 
 ```ts title="./extensions/acme/sitemap/todo.ts"
 import { createSitemapFetcher } from "@front-commerce/core";
@@ -102,43 +189,91 @@ export default createSitemapFetcher(async () => {
   );
 
   return posts.map((post) => ({
-    url: `/todo/${post.id}`,
+    route: `/todo/${post.id}`,
+    changefreq: "monthly",
+    lastmod: new Date(post.updatedAt),
+    priority: 0.5,
+    images: [post.image],
+    data: post, // we add the full post data which allows for custom filter logic
   }));
 });
 ```
 
-#### Registering a Fetcher
+### Filtering sitemap entries from a fetcher
+
+To filter specific entries from a fetcher, you can register a filter in your
+extension definition.
+
+Filters are applied directly to the `FetcherLeaf`, so this allows different
+filters based on different `FetcherLeaf`'s in the same composition.
 
 ```ts title="./extensions/acme/index.ts"
 import { defineExtension } from "@front-commerce/core";
 
 export default defineExtension({
-  name: "acme-extension",
+  name: "acme",
   meta: import.meta,
-  routes: import.meta.url,
   unstable_lifecycleHooks: {
     onServerServicesInit: async (services, request, config) => {
-      services.DI.register("acme", createAcmeDI(config.acme));
-
-      // highlight-start
-      services.Sitemap.registerFetcher(
-        "todoSitemapFetcher",
-        () => import("./sitemap/todo.ts")
+      // We can add the data types through the generic <{ status: boolean }> typing
+      services.Sitemap.registerFetcherFilter<{ status: boolean }>(
+        "AcmeTodo",
+        // The entries returned are only those of the `AcmeTodo` fetcher leaf.
+        async (entries) => {
+          return entries.filter((entry) => entry.data?.status === "published");
+        }
       );
-      // highlight-end
     },
   },
 });
 ```
 
-:::tip
+### Extending the type declarations
 
-Override existing fetchers using `services.Sitemap.overrideFetcher`. We are
-still working on an API to extend existing fetchers.
+For TypeScript support, you'll need to extend the `SitemapCompositionList` and
+`SitemapFetcherList` interfaces from `@front-commerce/types` to include your
+custom composites and fetchers.
+
+First ensure you have the `@front-commerce/types` package installed in your
+project, as it provides the necessary types for the `SitemapService`.
+
+```bash
+pnpm add -D @front-commerce/types
+```
+
+Then you can create a new types declaration file in your extension:
+
+```ts title="./extensions/acme/types/sitemap.d.ts"
+declare module "@front-commerce/types" {
+  export interface SitemapCompositionList {
+    todoComposition: "todoComposition";
+  }
+  export interface SitemapFetcherList {
+    AcmeTodo: "AcmeTodo";
+  }
+}
+```
+
+These types will be merged with the existing types, so you can do this multiple
+times across multiple extensions.
+
+:::important important
+
+The declaration file needs to be included in your `tsconfig.json` before
+typescript can pick it up.
+
+```json title="tsconfig.json"
+{
+  // remove-next-line
+  "include": ["types/**/*"]
+  // add-next-line
+  "include": ["extensions/**/types/**/*", "types/**/*"]
+}
+```
 
 :::
 
-## Opting Out of Sitemap Generation
+## Opting Out of Sitemap Generation for static pages
 
 Static pages are automatically included in the sitemap. To exclude a page from
 the sitemap, return `null` or an empty array from `getSitemapEntries`.
