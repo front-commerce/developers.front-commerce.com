@@ -44,6 +44,14 @@ changes.
 In this version, we've introduced a new feature that enables you to bulk import
 products from a CSV file and directly add them to your cart.
 
+:::info The quick order page is active by default
+
+The Quick order page is active by default at `/quick-order`. If you want to
+opt-out of this feature, you will have to remove the route
+[using the `front-commerce-prepare.js::onCreateRoute` callback](/docs/2.x/reference/front-commerce-prepare#oncreateroute).
+
+:::
+
 To develop this new feature, we've had to update the following files;
 
 - [`src/web/theme/modules/ProductPicker/ProductPicker.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#ca297fed67eb602d111f743cf4a14b155f050366)
