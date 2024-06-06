@@ -186,17 +186,18 @@ export default {
 
 <SinceVersion tag="2.30" />
 
-The `onServerInit` hook is a server module extension point introduced in
-Front-Commerce 2.30. It allows you to extend the Express HTTP server or perform
-additional tasks during server initialization.
+The `onServerInit` hook is allows you to extend the Express HTTP server or
+perform additional tasks during server initialization.
 
-To use the `onServerInit` hook, follow these steps:
+To use the `onServerInit` hook, follow the steps detailed below.
 
-1. Create a new server module or open an existing one.
-2. In the `module.config.js` file of your server module, define the
-   `onServerInit` function. This function will be called when the server is
-   initialized and will receive an instance of the current server object as a
-   parameter.
+First, create a new
+[server module](/docs/2.x/advanced/server/add-http-endpoint#what-is-a-module) or
+edit an existing `module.config.js` file.
+
+In this file, define the `onServerInit` function. This function will be called
+when the server is initialized and will receive an instance of the current
+server object as a parameter.
 
 ```js title="my-module/server/module.config.js"
 export default {
@@ -207,14 +208,17 @@ export default {
 };
 ```
 
-3. Save the changes to your `module.config.js` file.
+Finally, restart your server. You should now see a _"Server is initialized"_
+console log once your server has started.
+
+You're now ready to extend your server with any custom logic you need.
 
 :::tip
 
 We have created a working example of a server module that uses the
 `onServerInit` hook to add a WebSocket server to the Express server. You can
 find the example in the
-[Front-Commerce examples repository](https://github.com/front-commerce/examples).
+[Front-Commerce examples repository](https://github.com/front-commerce/examples/tree/main/websocket-server).
 
 You can browse it's code and run it locally to see how the `onServerInit` hook
 works.
