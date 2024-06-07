@@ -1,0 +1,7 @@
+label: How-to
+collapsible: true
+link:
+  type: generated-index
+  description:
+    This section contains goal-oriented documentation that provides step-by-step
+    instructions to create custom code for Server-Side events.

@@ -1,0 +1,72 @@
+---
+title: "React"
+description:
+  "This documentation will cover all React dedicated APIs provided for usage in
+  React."
+---
+
+<p>{frontMatter.description}</p>
+
+To help you creating the best front-end with React, we've created convenient
+React hooks and components that you can reuse in your application.
+
+## `useTrackPage`
+
+Track an event on page load
+
+Parameters:
+
+| Name              | Type                       | Description                        |
+| ----------------- | -------------------------- | ---------------------------------- |
+| `title`           | `string`                   | The page to track                  |
+| `customTrackPage` | [`(title:string) => void`] | Custom method instead of trackPage |
+
+Example:
+
+```tsx
+import { useTrackPage } from "@front-commerce/remix/react";
+
+function AcmePage() {
+  useTrackPage("Acme Page");
+
+  return <div>Acme Page</div>;
+}
+```
+
+## `useTrackOnMount`
+
+Track an event on component mount
+
+Options:
+
+| Name                | Type         | Description                                                     |
+| ------------------- | ------------ | --------------------------------------------------------------- |
+| `event`             | `string`     | The event to track                                              |
+| `hasResolved`       | [`boolean`]  | If the event has already been resolved                          |
+| `createProperties`  | [`function`] | A function that returns the properties to track                 |
+| `shouldMountEvent`  | [`function`] | A function that returns if the event should be tracked on mount |
+| `shouldUpdateEvent` | [`function`] | A function that returns if the event should be updated          |
+| `trackEvent`        | [`function`] | A function that tracks the event                                |
+
+Example:
+
+```tsx
+import { useTrackOnMount } from "@front-commerce/remix/react";
+
+function AcmePage() {
+  useTrackOnMount({
+    event: "My Event",
+    hasResolved: true,
+    shouldUpdateEvent: () => false,
+    shouldMountEvent: () => true,
+    shouldUpdateEvent: () => true,
+    createProperties: () => {
+      return {
+        myProperty: "myValue",
+      };
+    },
+  });
+
+  return <div>Acme Page</div>;
+}
+```

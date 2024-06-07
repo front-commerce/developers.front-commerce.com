@@ -1,0 +1,149 @@
+---
+sidebar_position: 2
+title: Tracking API
+description:
+  How to use the tracking api to track events in different lifecycles of your
+  application.
+---
+
+The Tracking API is exposed once the analytics library is initialized with
+configuration.
+
+## `trackEvent`
+
+An event is something that happens in your application. For instance, it can
+happens when a user clicks on a button, opens a dropdown, etc. It usually
+conveys meaning to your marketing team to better understand what drives your
+users.
+
+Most of the e-commerce related events are already implemented within
+Front-Commerce. But each website will have different behaviors, and it can be
+interesting to add your own events to see how your customers uses your
+application.
+
+To do so, you will need to call the method `trackEvent` from
+`@front-commerce/core/react`.
+
+For instance, let's say that you are building a grocery store and that you have
+created Recipe pages that display a list of ingredients needed for the current
+recipe. Below this list, you have created a button that adds all the ingredients
+to the cart of the user, and you want to know if this button is useful and if
+users click on it.
+
+To add your tracking, you would need to call the `trackEvent` method when the
+user clicks on the Button. Thus, your new component would look like this:
+
+```js
+import React from "react";
+import Button from "theme/components/atoms/Button";
+// highlight-next-line
+import { trackEvent } from "@front-commerce/core/react";
+
+const AddIngredientsToCart = ({ addToCart, ingredients }) => {
+  return (
+    <Button
+      onClick={() => {
+        // highlight-start
+        trackEvent("Added ingredients to cart", {
+          ingredients: ingredients,
+        });
+        // highlight-end
+        addToCart();
+      }}
+    >
+      Add ingredients
+    </Button>
+  );
+};
+
+export default AddIngredientsToCart;
+```
+
+This `trackEvent` method is actually a shortcut that lets you call the
+`analytics.track` method from the
+[`analytics`](https://getanalytics.io/api/#analyticstrack) module. It uses the
+exact same API.
+
+:::note
+
+Please refer to the
+[trackPage](/docs/3.x/api-reference/front-commerce-core/react#trackevent)
+documentation.
+
+:::
+
+## `useTrackOnMount`
+
+If you don't have an actual callback to put the `trackEvent` (like `onClick`),
+you can use the `useTrackOnMount` hook that will let you call the `trackEvent`
+using
+[React lifecycle](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
+
+For instance, in Front-Commerce's core, we are using `useTrackOnMount` to track
+when a user sees their cart.
+
+```jsx
+import { useTrackOnMount } from "@front-commerce/remix/react";
+
+const Component = (props) => {
+  useTrackOnMount({
+    event: "Cart Viewed",
+    hasResolved: cart,
+    shouldUpdateEvent: shouldUpdate,
+    createProperties: () => {
+      const totalInclTax = cart?.totals?.totalInclTax?.value;
+      return {
+        cart_id: currentCartId,
+        value: totalInclTax?.amount,
+        currency: totalInclTax?.currency,
+        products: cart?.items
+          ? cart?.items.map((item, index) => ({
+              sku: item.sku,
+              name: item.name,
+              quantity: item.qty,
+              price: item.priceInfo.price.priceInclTax.value.amount,
+              position: index + 1,
+            }))
+          : [],
+      };
+    },
+  });
+
+  return <div>My component</div>;
+};
+```
+
+:::note
+
+Please refer to the
+[useTrackOnMount](/docs/3.x/api-reference/front-commerce-remix/react#usetrackonmount)
+documentation.
+
+:::
+
+## `useTrackPage`
+
+In tracking scripts, there is often a distinction between the `page` and the
+`event` even though a `page` event is only a subset of the `events`. To make
+this distinction clear, we provide an enhancer in the same spirit of
+`useTrackOnMount` hook but for page events: `useTrackPage`.
+
+Example:
+
+```tsx
+import { useTrackPage } from "@front-commerce/remix/react";
+
+function AcmePage() {
+  useTrackPage("Acme Page");
+
+  return <div>Acme Page</div>;
+}
+```
+
+:::note
+
+Please refer to the
+[useTrackPage](/docs/3.x/api-reference/front-commerce-remix/react#usetrackpage)
+documentation.
+
+:::

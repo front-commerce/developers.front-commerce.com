@@ -122,3 +122,8 @@ kbd {
 code {
   vertical-align: baseline;
 }
+
+table {
+  display: table;
+  width: 100%;
+}

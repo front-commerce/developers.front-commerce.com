@@ -24,9 +24,9 @@ modification date, change frequency, and priority for each URL.
 #### Example:
 
 ```tsx title="./extensions/acme/routes/blog.tsx"
-import { createSeoHandle } from "@front-commerce/remix/seo";
+import { createHandle } from "@front-commerce/remix/handle";
 
-export const handle = createSeoHandle({
+export const handle = createHandle({
   getSitemapEntries: ({ request, app }) => [
     {
       url: "/blog",
@@ -55,10 +55,10 @@ Dynamic pages can also be customized using `getSitemapEntries` or a custom
 ### `getSitemapEntries` Function
 
 ```tsx title="./extensions/acme/routes/todo.$id.tsx"
-import { createSeoHandle } from "@front-commerce/remix/seo";
+import { createHandle } from "@front-commerce/remix/handle";
 import { serverOnly$ } from "vite-env-only";
 
-export const handle = createSeoHandle({
+export const handle = createHandle({
   getSitemapEntries: serverOnly$(async ({ request, app }) => {
     const posts = await fetch(
       "https://jsonplaceholder.typicode.com/posts"
@@ -78,10 +78,10 @@ Refer to
 custom fetcher registration.
 
 ```tsx title="./extensions/acme/routes/todo.$slug.tsx"
-import { createSeoHandle } from "@front-commerce/remix/seo";
+import { createHandle } from "@front-commerce/remix/handle";
 
-export const handle = createSeoHandle({
-  sitemapFetcher: "todoComposition",
+export const handle = createHandle({
+  sitemapFetcher: "todoSitemapFetcher",
 });
 ```
 
@@ -279,9 +279,9 @@ Static pages are automatically included in the sitemap. To exclude a page from
 the sitemap, return `null` or an empty array from `getSitemapEntries`.
 
 ```ts title="./extension/acme/routes/todo.tsx"
-import { createSeoHandle } from "@front-commerce/remix/seo";
+import { createHandle } from "@front-commerce/remix/handle";
 
-export const handle = createSeoHandle({
+export const handle = createHandle({
   getSitemapEntries: () => null,
 });
 ```

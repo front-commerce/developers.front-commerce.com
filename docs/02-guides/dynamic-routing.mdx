@@ -1,0 +1,389 @@
+---
+title: Dynamic Routing
+description:
+  This guide explains how you can create dynamic routes for url rewrites in
+  Front-Commerce.
+tags:
+  - routes
+  - dynamic routes
+  - url rewrites
+---
+
+<SinceVersion tag="3.5" />
+
+<p>{frontMatter.description}</p>
+
+## What is dynamic routing?
+
+Dynamic routes are generated based on the data available in your application,
+allowing for more meaningful and SEO-friendly URLs. For example, instead of a
+generic URL such as `/product/sku-6`, you can have a more descriptive URL like
+`/acme-product.html`.
+
+Consider a Remix route for your products defined as `routes/product.$id.tsx`. By
+leveraging dynamic routes, you can replace generic product URLs with
+SEO-friendly alternatives.
+
+#### Generic Route Example
+
+- URL: `/product/sku-6`
+
+#### SEO-Friendly Route Example
+
+- URL: `/acme-product.html`
+
+By implementing dynamic routes, you enhance the readability and search engine
+optimization (SEO) of your URLs, which can improve your site's visibility and
+user experience.
+
+## How to create dynamic routes?
+
+<Steps>
+<Step>
+
+### Create a `DynamicRouteUrlMatcher`
+
+First, define a class that implements the `DynamicRouteUrlMatcher` interface to
+match URLs to your application's routes.
+
+```ts title="extension/UrlMatcher.ts"
+import type {
+  DynamicRouteUrlMatcher,
+  MatchedDynamicRouteUrl,
+} from "@front-commerce/core";
+
+// Define hardcoded routes for demonstration purposes
+const hardcodedRoutes = [
+  {
+    type: "product"
+    path: "/acme-product.html",
+    identifier: "sku-6",
+  },
+  {
+    type: "product"
+    path: "/baz-product.html",
+    redirectTo: "/acme-product.html",
+    redirectType: 301
+  },
+];
+
+class UrlMatcher implements DynamicRouteUrlMatcher {
+  matchUrl(path: string): MatchedDynamicRouteUrl | undefined {
+    // Find a matching route in the hardcoded list, ideally this will be from a remote resource
+    const match = hardcodedRoutes.find((route) => route.path === path);
+    if (!match) {
+      return undefined;
+    }
+    return {
+      path: match.path,
+      identifier: match.identifier,
+      params: {
+        id: match.identifier, // The product ID to pass to the route
+      },
+    };
+  }
+}
+```
+
+This class checks if a provided URL matches any of the predefined paths and
+returns the corresponding route details.
+
+</Step>
+<Step>
+
+### Register a `DynamicRouteUrlMatcher`
+
+Next, integrate the UrlMatcher into your application by registering it with the
+DynamicRoutes registry.
+
+```ts title="extension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+import UrlMatcher from "./UrlMatcher";
+
+export default defineExtension({
+  name: "acme-extension",
+  meta: import.meta,
+  // highlight-start
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, request, config) => {
+      services.DynamicRoutes.registerUrlMatcher(
+        "AcmeUrlMatcher",
+        () => new UrlMatcher()
+      );
+    },
+  },
+  // highlight-end
+});
+```
+
+This configuration ensures that your UrlMatcher is included in the server's
+initialization process, making it active for incoming requests.
+
+</Step>
+
+<Step>
+
+### Add `handle` export to Remix route
+
+Update your Remix route to use the dynamic route identifier by adding it to the
+`handle` export.
+
+```tsx title="routes/product.$id.tsx"
+import { createHandle } from "@front-commerce/remix/handle";
+
+export const handle = createHandle({
+  dynamicRoute: {
+    type: "product", // to match the type of your url matcher
+    priority: 1, // higher priority routes are matched first
+  },
+});
+```
+
+If you have multiple pages that use the same `type` for their dynamic routes,
+you can use the `priority` field to determine the order in which they are
+matched. Higher priority routes are matched first. for example the following
+`routes/acme-product.$id.tsx` will be matched before `routes/product.$id.tsx`:
+
+```tsx title="routes/acme-product.$id.tsx"
+import { createHandle } from "@front-commerce/remix/handle";
+
+export const handle = createHandle({
+  dynamicRoute: {
+    type: "product",
+    priority: 2,
+  },
+});
+```
+
+</Step>
+
+<Step>
+
+### Replace `useLoaderData` with `useDynamicRouteLoaderData`
+
+Finally, replace the `useLoaderData` hook with the `useDynamicRouteLoaderData`
+which provides the dynamic route data.
+
+```tsx title="routes/product.$id.tsx"
+// remove-next-line
+import { useLoaderData } from "@front-commerce/remix/react";
+// add-next-line
+import { useDynamicRouteLoaderData } from "@front-commerce/remix/react";
+import { createHandle } from "@front-commerce/remix/handle";
+
+export const loader = () => {...}
+
+export const handle = createHandle(...);
+
+export default function Product() {
+  // remove-next-line
+  const data = useLoaderData<typeof loader>();
+  // add-next-line
+  const data = useDynamicRouteLoaderData<typeof loader>();
+
+  return <div>Product: {data.product.name}</div>;
+}
+```
+
+</Step>
+
+<Step>
+
+### Visiting the Dynamic Route
+
+When you navigate to `/acme-product.html`, the system uses your `UrlMatcher` to
+resolve the URL to the product page corresponding to `sku-6`. This approach
+allows you to manage URLs dynamically based on your application's data
+requirements.
+
+</Step>
+
+</Steps>
+
+## Batching and Prioritizing URL Matchers
+
+When multiple URL matchers are registered without any `matcherOptions`, it will
+default the batchOrder and priority to 0. This means that the order in which the
+URL matchers are registered will determine the order in which they are executed.
+
+Let's say we have the following list of URL Matchers:
+
+```bash
+A → fast API (cached)
+B → no API (static)
+C → slow API (not cached)
+D → no API (static)
+```
+
+We would ideally want this to first try to run `B` and `D` then `A` and finally
+`C`. To achieve this we can set the `batchOrder` and `priority` fields in the
+`matcherOptions` object.
+
+```ts title="extension/index.ts"
+services.DynamicRoutes.registerUrlMatcher("A", () => new UrlMatcherA(), {
+  // highlight-start
+  batchOrder: 1,
+  priority: 1,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("B", () => new UrlMatcherB(), {
+  // highlight-start
+  batchOrder: 0,
+  priority: 2,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("C", () => new UrlMatcherC(), {
+  // highlight-start
+  batchOrder: 2, // only run if no other batches have matched
+  priority: 1,
+  // highlight-end
+});
+
+services.DynamicRoutes.registerUrlMatcher("D", () => new UrlMatcherD(), {
+  // highlight-start
+  batchOrder: 0,
+  priority: 1,
+  // highlight-end
+});
+```
+
+This would result in the following order of execution:
+
+```bash
+# batch 0
+D → no API (static)
+B → no API (static)
+
+  # batch 1
+  A → fast API (cached)
+
+     # batch 2 (only run if no other batches have matched)
+     C → slow API (not cached)
+```
+
+## Extending the type declarations
+
+For TypeScript support of the `type` field in your handle export, you can extend
+the `DynamicRoutesCompositionList` interface from the `@front-commerce/types`
+package to include your custom types.
+
+<Steps>
+
+<Step>
+
+<span className="mt-1" />
+
+#### Install the `@front-commerce/types` package
+
+Ensure you have the `@front-commerce/types` package installed in your project,
+as it provides the necessary types for the `DynamicRoutes`.
+
+```bash
+$ pnpm add @front-commerce/types
+```
+
+</Step>
+
+<Step>
+
+<span className="mt-1" />
+
+#### Create declaration file
+
+This declaration can be placed in a `dynamic-routes.d.ts` file within your
+extension's types directory.
+
+```ts title="extension/types/dynamic-routes.d.ts"
+declare module "@front-commerce/types" {
+  export interface DynamicRoutesCompositionList {
+    contentful: "contentful"; // example of another type
+  }
+}
+```
+
+Existing types can be found in the
+[theme-chocolatine package](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3c31a7d63ba6fa4726bcf4997188d38be7254248/packages/theme-chocolatine/types/dynamic-routes.d.ts#L1-7).
+
+:::note
+
+TypeScript will merge all the found module declarations, so you can add your own
+without redefining the whole module.
+
+:::
+
+</Step>
+
+<Step>
+
+<span className="mt-1" />
+
+#### Ensure your declaration is included in the tsconfig.json
+
+This declaration can be placed in a `dynamic-routes.d.ts` file within your
+extension's types directory.
+
+```json title="tsconfig.json"
+{
+  "include": [
+    "./**/*.jsx",
+    "./**/*.js",
+    "./**/*.ts",
+    "./**/*.tsx",
+    // add-next-line
+    "./extensions/**/types/*.d.ts"
+  ]
+}
+```
+
+</Step>
+
+<Step>
+
+<span className="mt-1" />
+
+#### Verify your handle export
+
+```tsx title="routes/contentful.$id.tsx"
+import { createHandle } from "@front-commerce/remix/handle";
+
+export const handle = createHandle({
+  dynamicRoute: {
+    type: "contentful", // this should now autocomplete in your IDE.
+  },
+});
+```
+
+</Step>
+
+</Steps>
+
+## Known Limitations
+
+### Matching Catch-All Routes (Splat Routes)
+
+In Remix, you can create a catch-all route that matches any path, for example:
+
+| URL      | Matched Route      |
+| -------- | ------------------ |
+| `/foo/a` | `routes/foo.$.tsx` |
+| `/bar/a` | `routes/bar.$.tsx` |
+
+However, it's not possible to create a URL Matcher for catch-all routes because
+the URL will still be matched by Remix. Attempting to match `/example` to
+`routes/foo.$.tsx` using a URL matcher will result in the following error:
+
+```
+Error: Route "routes/foo.$" does not match URL "/example"
+```
+
+### Dynamic Route Catch-All Placeholder
+
+To implement <abbr title="Client Side Rendering">CSR</abbr> for dynamic routes,
+the application requires specific internal logic in the
+[`routes/_main.$.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/integration/fc-1646-dynamic-routes/packages/theme-chocolatine/routes/_main.$.tsx?ref_type=heads)
+file.
+
+If you have overwritten this route, you will need to manually apply and maintain
+this logic to ensure proper functionality.

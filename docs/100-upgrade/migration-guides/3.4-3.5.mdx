@@ -1,0 +1,248 @@
+---
+title: 3.4 -> 3.5
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.4
+  to 3.5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.5.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.5.0
+```
+
+## Quick order page feature
+
+The quick order page is active by default at `/quick-order`.<br /> We recommend
+you to test this feature and adapt it to your needs if necessary.
+
+If you want to opt-out of this feature, you will have to remove the route from
+the application, via the `vite.config.ts::frontCommerce` plugin's options.
+
+## Configuration updates
+
+In this new release, we've introduced some changes on how some configurations
+are set.
+
+### Cache
+
+We've introduced a new cache configuration in the `config` object resolved from
+`FrontCommerceApp`.
+
+These are now defined with a config provider; it allows you to change the
+behaviour of the configuration computing.
+
+| Config path                     | Env Variable                                |
+| ------------------------------- | ------------------------------------------- |
+| `config.cache.apiToken`         | `FRONT_COMMERCE_CACHE_API_TOKEN`            |
+| `config.cache.ignoreCacheRegex` | `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` |
+
+### Magento 1/2
+
+We have updated the way we use the Magento 1/2 configuration. It's now possible
+to access Magento OAuth configuration with:
+
+<Tabs>
+<TabItem value="Magento 2">
+
+| Config path                              | Env Variable                                  |
+| ---------------------------------------- | --------------------------------------------- |
+| `config.magento.oauth.accesToken`        | `FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN`        |
+| `config.magento.oauth.accessTokenSecret` | `FRONT_COMMERCE_MAGENTO2_ACCESS_TOKEN_SECRET` |
+| `config.magento.oauth.consumerKey`       | `FRONT_COMMERCE_MAGENTO2_CONSUMER_KEY`        |
+| `config.magento.oauth.consumerSecret`    | `FRONT_COMMERCE_MAGENTO2_CONSUMER_SECRET`     |
+
+</TabItem>
+<TabItem value="Magento 1">
+
+| Config path                              | Env Variable                                  |
+| ---------------------------------------- | --------------------------------------------- |
+| `config.magento.oauth.accesToken`        | `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN`        |
+| `config.magento.oauth.accessTokenSecret` | `FRONT_COMMERCE_MAGENTO1_ACCESS_TOKEN_SECRET` |
+| `config.magento.oauth.consumerKey`       | `FRONT_COMMERCE_MAGENTO1_CONSUMER_KEY`        |
+| `config.magento.oauth.consumerSecret`    | `FRONT_COMMERCE_MAGENTO1_CONSUMER_SECRET`     |
+
+</TabItem>
+</Tabs>
+
+### Image Resizer
+
+Display of dev error message is now handled with a configProvider:
+
+| Config path                           | Env Variable                             |
+| ------------------------------------- | ---------------------------------------- |
+| `config.resizedImage.disableDevError` | `FRONT_COMMERCE_DEV_IMAGE_ERROR_DISABLE` |
+
+## Deprecation of env vars
+
+These env vars support have been removed from the core code in favor of
+configurations:
+
+- `FRONT_COMMERCE_MAINTENANCE_MODE_FORCE_ENABLED`
+- `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS`
+- `FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE`
+
+To configure these, you now should use new configuration in
+`front-commerce.config.ts`:
+
+```ts
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  maintenance: {
+    force: process.env.FRONT_COMMERCE_MAINTENANCE_MODE_FORCE_ENABLED === "true",
+    authorizedIps:
+      process.env.FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZED_IPS?.split?.(
+        ","
+      ) ?? [],
+  },
+  contributionMode: {
+    force: process.env.FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE === "true",
+  },
+});
+```
+
+## `createResizedImageResponse`
+
+The `createResizedImageResponse` function now requires an additional parameter
+called `options`. At the time of writing this documentation, the `options`
+parameter only contains one entry to enable or disable error messages in dev
+mode.
+
+You can check the signature of this new parameter in the
+[`resizedImageConfigProvider`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/core/config/resizedImageConfigProvider.ts)
+method.
+
+## Deprecation of `createSeoHandle`
+
+We have deprecated the `createSeoHandle` in favor of the `createHandle` which
+combines different handle export features.
+
+```ts
+// remove-next-line
+import { createSeoHandle } from "@front-commerce/remix/seo";
+// add-next-line
+import { createHandle } from "@front-commerce/remix/handle";
+
+// remove-next-line
+export const handle = createSeoHandle(...);
+// add-next-line
+export const handle = createHandle(...);
+```
+
+## Replace `useLoaderData` with `useDynamicRouteLoaderData`
+
+If you have overwritten any of these routes
+
+- `app/routes/product.$id.tsx`
+- `app/routes/category.$id.tsx`
+- `app/routes/cms.$id.tsx`
+
+You must
+[replace the `useLoaderData` hook with the `useDynamicRouteLoaderData`](../../guides/dynamic-routing#replace-useloaderdata-with-usedynamicrouteloaderdata)
+
+## Code changes
+
+### Remix entrypoints
+
+In this release, we improved features that required to hook into your Remix
+application files created with the initial skeleton. You must update these files
+in your application, as detailed below **or copy the ones from the latest
+skeleton.**
+
+<details>
+  <summary><code>app/root.tsx</code> file</summary>
+
+```diff
+diff --git a/app/root.tsx b/app/root.tsx
+index 0c65e479a..0a4c2411d 100644
+--- a/app/root.tsx
++++ b/app/root.tsx
+@@ -49,10 +49,7 @@ export const meta: MetaFunction = (args) => {
+   return metas(args);
+ };
+
+-export default function App() {
+-  const navigation = useNavigation();
+-  usePageProgress(navigation.state !== "idle");
+-
++export function Layout({ children }: { children: React.ReactNode }) {
+   return (
+     <html lang="en">
+       <head>
+@@ -62,7 +59,8 @@ export default function App() {
+         <Links />
+       </head>
+       <body>
+-        <Outlet />
++        {/* children will be the root Component, ErrorBoundary, or HydrateFallback */}
++        {children}
+         <ScrollRestoration />
+         <Scripts />
+         <FrontCommerceScripts />
+@@ -71,6 +69,12 @@ export default function App() {
+     </html>
+   );
+ }
++export default function App() {
++  const navigation = useNavigation();
++  usePageProgress(navigation.state !== "idle");
++
++  return <Outlet />;
++}
+
+ export function ErrorBoundary() {
+   const error = useRouteError();
+
+```
+
+</details>
+
+<details>
+  <summary><code>app/entry.client.tsx</code> file</summary>
+
+```diff
+diff --git a/app/entry.client.tsx b/app/entry.client.tsx
+index 341faa525..c70cdd2d7 100644
+--- a/app/entry.client.tsx
++++ b/app/entry.client.tsx
+@@ -6,7 +6,10 @@
+ import { RemixBrowser } from "@remix-run/react";
+ import { StrictMode, startTransition } from "react";
+ import { hydrateRoot } from "react-dom/client";
+-import { FrontCommerceBrowser } from "@front-commerce/remix/react";
++import {
++  FrontCommerceBrowser,
++  prepareHydration,
++} from "@front-commerce/remix/react";
+ import { CompatProviderBrowser } from "@front-commerce/compat/CompatProvider";
+ import manifest from "virtual:front-commerce/manifest";
+
+@@ -29,5 +32,5 @@ const hydrate = async () => {
+ };
+
+ startTransition(() => {
+-  hydrate();
++  prepareHydration(hydrate);
+ });
+```
+
+</details>

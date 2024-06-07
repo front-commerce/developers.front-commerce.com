@@ -1,0 +1,222 @@
+---
+sidebar_position: 3
+title: Custom Plugins
+description:
+  The analytics library is designed to work with any third party analytics tools
+  via plugins, in this guide we will explore how to write and use custom
+  plugins.
+---
+
+import AnalyticsFigure from "./assets/analytics.svg";
+import Figure from "@site/src/components/Figure";
+import ContactLink from "@site/src/components/ContactLink";
+import { useState } from "react";
+import SinceVersion from "@site/src/components/SinceVersion";
+
+<p>{frontMatter.description}</p>
+
+Plugins are a powerful abstraction that let you:
+
+- add a new analytics provider (like Google analytics or Meta pixel)
+- hook into an existing analytics provider plugin
+- or add any kind of logic to react to visitor actions
+
+Plugins can be broken down into 2 types:
+
+- **Provider plugins** - connecting to third party analytic services
+- **Custom plugins** - additional features, data manipulation, & any other side
+  effects.
+
+Both have the same signature, and are registered in the same way, here we will
+explore how they are implemented within a Front-Commerce app.
+
+:::info
+
+You can look at the analytics library documentation to learn more about the
+plugin types.
+
+- [Plugins](https://getanalytics.io/plugins)
+- [Writing Plugins](https://getanalytics.io/plugins/writing-plugins/)
+
+:::
+
+<Steps>
+
+<Step>
+
+## Writing a new plugin
+
+:::tip
+
+You can also
+[request and contribute plugins](https://getanalytics.io/plugins/request/)
+within the analytics library ❤️ Open Source
+
+:::
+
+Let's say for this example we want to create a new provider plugin for a third
+party analytics tool `acme`. We will name this plugin `acme`.
+
+Provider plugins typically have the following structure:
+
+1. Load in the third party analytics script via `initialize`
+2. Implement `track` or `page` events to send data into a third party analytics
+   tool
+
+   _There is also another event `identify` which is not currently implemented in
+   Front-commerce_
+
+3. Have a loaded function to let analytics know when its safe to send the third
+   party data.
+
+Here is an example of the `acme` plugin:
+
+```ts title="analytics/plugins/acme.ts"
+import type { AnalyticsPlugin } from "@front-commerce/core/react";
+
+// `settings` is the value defined in the plugin config in `config/analytics.ts`
+export default function acmePluginExample(settings): AnalyticsPlugin {
+  // return object for analytics to use
+  return {
+    /* All plugins require a name */
+    name: "acme",
+    /* Everything else below this is optional depending on your plugin requirements */
+    config: {
+      whatEver: settings.whatEver,
+      elseYouNeed: settings.elseYouNeed,
+    },
+    initialize: ({ config }) => {
+      // load provider script to page
+    },
+    page: ({ payload }) => {
+      // call provider specific page tracking
+    },
+    track: ({ payload }) => {
+      // call provider specific event tracking
+    },
+    identify: ({ payload }) => {
+      // call provider specific user identify method
+    },
+    loaded: () => {
+      // return boolean so analytics knows when it can send data to third party
+      return !!window.myPluginLoaded;
+    },
+  };
+}
+```
+
+</Step>
+<Step>
+
+## Tracking `CommerceEvents`
+
+:::info
+
+In `v2` this was done by extending the
+[`EcommercePlugin`](/docs/2.x/advanced/analytics/plugins#extending-with-ecommerceplugin)
+which can still be used, but has a less comprehensive API.
+
+We handle this internally for
+[known plugins](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/784684ce56cca69ca5c2e42d5d421a8c0b4bb9c3/src/web/core/analytics/plugins/e-commerce/e-commerce.js#L6-11)
+like the [`google-analytics`](https://getanalytics.io/plugins/google-analytics/)
+plugin.
+
+:::
+
+If you want to track
+[`CommerceEvents`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3f6ed5af24b17a9c95f1dd024238bb2892e5075b/packages/core/analytics/plugins/commerce-events.ts)
+in your custom plugin, you can do so by using the `commercePayload` object in
+the `track` method access to the Front-Commerce fully typed tagging plan for the
+`CommerceEvents`.
+
+```tsx title="analytics/plugins/acme.ts"
+import type { AnalyticsPlugin } from "@front-commerce/core/react";
+
+export default function acmePluginExample(settings): AnalyticsPlugin {
+  return {
+    name: "acme",
+    ...
+    track: ({ payload, commercePayload }) => {
+      if(!commercePayload){
+        return // track normal events or not
+      }
+
+      // highlight-start
+      // track commerce events
+      const { event, ...rest } = commercePayload;
+      switch (event) {
+        case "Product Viewed":
+          // track product viewed event
+          break;
+        case "Product Added":
+          // track product added event
+          break;
+        case "Product Removed":
+          // track product removed event
+          break;
+        case "Cart Viewed":
+          // track cart viewed event
+          break;
+        case "Order Completed":
+          // track order completed event
+          break;
+        default:
+          // track other events
+          break;
+      }
+      // highlight-end
+    },
+  };
+}
+```
+
+</Step>
+<Step>
+
+## Using Plugins
+
+In Front-Commerce the plugins are dynamically required via the `script` property
+in your `app/config/analytics.ts` configuration, this allow us to only import
+and load scripts based on authorisation (cookies), which in turn reduces the
+page loading for your end users.
+
+Let's add our `acme` plugin to our `app/config/analytics.ts` file.
+
+```ts title="app/config/analytics.ts"
+import { type AnalyticsConfig } from "@front-commerce/core/react";
+
+export default {
+  analytics: {
+    enable: true,
+    debug: process.env.NODE_ENV !== "production",
+    plugins: [
+      // highlight-start
+      {
+        // remember to add the `acme` to your cookieServices config or disable the needConsent
+        name: "acme",
+        needConsent: true,
+        // all these settings will be passed to your plugin script
+        settings: {
+          whatEver: "foo",
+          elseYouNeed: "bar",
+        }
+        // add a dynamic import to load the plugin script
+        script: () => import("./analytics/plugins/acme.ts"),
+      },
+      // highlight-end
+    ],
+  } satisfies AnalyticsConfig,
+};
+```
+
+:::info REMINDER
+
+Just like any other plugin, don't forget to setup the
+[`cookiesServices.js`](/docs/3.x/guides/analytics/getting-started#the-gdpr-consent)
+file accordingly, in order to load the newly created integration only when the
+user has given their consent.
+
+:::
+
+</Step>
+</Steps>

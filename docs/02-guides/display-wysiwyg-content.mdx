@@ -1,0 +1,373 @@
+---
+title: Display WYSIWYG content
+description:
+  Let your users write their content without needing any HTML or React knowledge
+  while still being able to deliver a qualitative UI (performant, responsive,
+  accessible…) to customers.
+---
+
+<SinceVersion tag="3.4" />
+
+<p>{frontMatter.description}</p>
+
+<abbr title="What You See Is What You Get">WYSIWYG</abbr> allows your back office
+users write their content without needing any HTML or React knowledge. This is the
+case in most CMS tools nowadays. The output though is usually HTML which does not
+necessarily match the React components you've built in your Front-Commerce application.
+
+This is why we've built a `theme/modules/Wysiwyg` component in Front-Commerce.  
+In this guide you will learn how to use it and how to customize the displayed
+components.
+
+## `<Wysiwyg />` usage
+
+Here is an example of using this component:
+
+```tsx
+import React from "react";
+import Wysiwyg from "theme/modules/Wysiwyg";
+
+export default function BlogContent(props) {
+  return <Wysiwyg content={props.cms.contentWysiwyg} />;
+}
+```
+
+The `contentWysiwyg` property originates from a GraphQL field `Wysiwyg`.  
+To see the required fields, see the `WysiwygFragment` fragment reference
+available at  
+[`theme/modules/Wysiwyg/WysiwygFragment.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.4.0/packages/theme-chocolatine/theme/modules/Wysiwyg/WysiwygFragment.gql),  
+and using in `CmsPageFragment` available at  
+[`theme/pages/CmsPage/CmsPageFragment.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.4.0/packages/theme-chocolatine/theme/pages/CmsPage/CmsPageFragment.gql).
+
+## WYSIWYG customization
+
+**Prerequisite:** Please note that the following sections use advanced
+techniques in Front-Commerce. You especially need to be familiar with the
+[GraphQL extension mechanisms](./extend-the-graphql-schema.mdx) before being
+able to fully apprehend what is explained. If some areas are still unclear,
+please feel free to reach out!
+
+### Create a new WYSIWYG Type
+
+Each service is likely to have their own set of rules and constraints when it
+comes to WYSIWYG. For instance, in Magento you have shortcodes that are defined
+by using the `{% raw %}{{ }}{% endraw %}` syntax. In WordPress, you will have
+`[]` instead. Despite this syntax difference you will have also some
+functionality difference. For instance, Magento allows you to display a link to
+a product while WordPress have media galleries. This means that each service
+will have its own set of transformations for WYSIWYG data.
+
+We are solving this by creating a new WYSIWYG Type for each service. In the
+previous section, we've mentioned the type `MagentoWysiwyg`. It uses the exact
+same mechanisms as the one we will describe below.
+
+If you want to customize `MagentoWysiwyg` instead, please refer to
+[WYSIWYG Plateform section](./customize-wysiwyg-platform.mdx#magentowysiwyg).
+
+#### Register your widget type at the GraphQL level
+
+1.  Add `Front-Commerce/Wysiwyg` as a dependency of your GraphQL module (for
+    instance at `extensions/acme-extension/modules/wysiwyg/`), and define a new
+    GraphQL type that should implement the `Wysiwyg` interface:
+
+    ```ts title="extensions/acme-extension/modules/wysiwyg/index.ts"
+    import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+    export default createGraphQLModule({
+      namespace: "ACME/Wysiwyg",
+      dependencies: ["Front-Commerce/Wysiwyg"],
+      loadRuntime: () => import("./runtime"),
+      typeDefs: /* GraphQL */ `
+        type CustomWysiwyg implements Wysiwyg {
+          raw: String
+          childNodes: JSON
+          data: [WysiwygNodeData]
+        }
+      `,
+    });
+    ```
+
+1.  Register this new type as a WYSIWYG type in your GraphQL module's runtime:
+
+    ```ts title="extensions/acme-extension/modules/wysiwyg/runtime.ts"
+    import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+    export default createGraphQLRuntime({
+      contextEnhancer: ({ loaders }) => {
+        loaders.Wysiwyg.registerWysiwygType(
+          // the name of the GraphQL type you have just created
+          "CustomWysiwyg",
+          // The list of shortcodes that are parsed and replaced in your wysiwyg content
+          [
+            {
+              // regex to identify the shortcode within your HTML code
+              regex: /\{\{media url="(.*?)"\}\}/gi,
+              // How to replace the given shortcode
+              replacement: (match, url) => `/media/${url}`,
+            },
+          ]
+        );
+      };
+    });
+    ```
+
+#### Map this new type to a specific React component that will apply the needed transformations before displaying the content
+
+1.  Duplicate the
+    [`DefaultWysiwyg.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.4.0/packages/theme-chocolatine/theme/modules/Wysiwyg/DefaultWysiwyg.js)
+    component to `theme/modules/Wysiwyg/CustomWysiwyg`.
+1.  Override `theme/modules/Wysiwyg/appWysiwygComponents.js` and map your new
+    `CustomWysiwyg` typename (the one used in your GraphQL schema) to
+    `theme/modules/Wysiwyg/CustomWysiwyg` (the file that tells React how to
+    display the content)
+
+    ```ts title="theme/modules/Wysiwyg/appWysiwygComponents.js"
+    import CustomWysiwyg from "theme/modules/Wysiwyg/CustomWysiwyg";
+
+    export default {
+      CustomWysiwyg,
+    };
+    ```
+
+That's it, you have a new `CustomWysiwyg` type. However, the components rendered
+are still simple HTML tags. If you want to add interactivity, you will need to
+refer to the `theme/modules/Wysiwyg/CustomWysiwyg` you have created.
+
+In this file you will notice that there is a `defaultComponentsMap` constant.
+This object is used to reference how to render each html tag in your WYSIWYG
+component. We call these **transforms**: they transform an html tag into a React
+component. This is what will allow you to finely tune how your WYSIWYG is
+displayed and add interactivity to your content.
+
+For instance, if you want your `h2` tags to have some additional classes, you
+could use the following `defaultComponentsMap` instead:
+
+```ts
+const defaultComponentsMap = {
+  h2: (props) => <h2 {...props} className="wysiwyg-h2" />,
+};
+```
+
+The props available represent the HTML attributes coming from your WYSIWYG
+content. The only difference compared to traditional HTML is that `class` is
+renamed to `className` to better support React patterns and the `props.children`
+is an already constructed React element.
+
+:::note
+
+If the component is complex, please think about code splitting them to avoid too
+large bundles on pages that don't need them. If you want to learn more about
+code splitting pattern, you can check
+[this article](https://web.dev/articles/code-splitting-suspense) or
+[React's documentation](https://react.dev/reference/react/lazy#suspense-for-code-splitting)
+
+:::
+
+### Fetching data to render WYSIWYG components
+
+You can now transform HTML tags into React components. However, in some cases
+the data provided in the raw HTML you've received from your remote service won't
+be enough to display your component. For instance, you may have a
+`<product-name sku="VSK12" />` that is supposed to display the product's name.
+But all you have in the attributes is the SKU. This can be done by associating a
+`WysiwygNodeData` with your HTML node.
+
+Indeed, when you've created your GraphQL `CustomWysiwyg` type, you have
+declared: `childNodes` (`JSON`) and `data` (`[WysiwygNodeData]`). By default,
+`data` will always be empty. But you can tell the WYSIWYG loader to fetch data  
+for some specific `childNodes` (_each representing an HTML tag_). This means  
+that for `product-name`, you will associate a new `data` element that will
+contain the whole product data needed to display the component. To do so, you
+need to follow these steps:
+
+#### Add the product data to your GraphQL schema
+
+1.  Make sure that your dependencies are up to date in your GraphQL module, and
+    define a new `WysiwygProductNameData` type that implements `WysiwygNodeData`
+    and expose all the data you need to display your component
+
+    ```ts title="extensions/acme-extension/modules/wysiwyg/index.ts"
+    import { createGraphQLModule } from "@front-commerce/core/graphql";
+
+    export default createGraphQLModule({
+      namespace: "ACME/Cms",
+      loadRuntime: () => import("./runtime"),
+      // highlight-start
+      dependencies: [
+        "Front-Commerce/Wysiwyg", // ensure that Wysiwyg related features are available
+        "Magento2/Catalog/Product", // ensure that you can fetch a product in your Wysiwyg data
+      ],
+      typeDefs: /* GraphQL */ `
+        type WysiwygProductNameData implements WysiwygNodeData {
+          dataId: ID
+          product: Product
+        }
+      `,
+      // highlight-end
+    });
+    ```
+
+1.  Setup the resolvers to tell GraphQL how to fetch the `product` field in your
+    new `WysiwygProductNameData` type
+    ```ts title="extensions/acme-extension/modules/wysiwyg/resolvers.js"
+    export default {
+      WysiwygProductNameData: {
+        product: ({ node }, _, { loaders }) => {
+          const productSkuAttribute = node.attrs.find(
+            ({ name }) => name === "sku"
+          );
+          if (!productSkuAttribute) {
+            return null;
+          }
+          return loaders.Product.load(productSkuAttribute.value);
+        },
+      },
+    };
+    ```
+1.  Register the HTML tag and associate it with the GraphQL type
+
+    ```ts title="extensions/acme-extension/modules/wysiwyg/runtime.ts"
+    import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+    import resolvers from "./resolvers";
+
+    export default createGraphQLRuntime({
+      resolvers: resolvers,
+      contextEnhancer: ({ loaders }) => {
+        loaders.Wysiwyg.registerNodeType(
+          "product-name", // the tag name in your HTML
+          "WysiwygProductNameData" // The associated GraphQL type name
+        );
+      };
+    });
+    ```
+
+#### Fetch the data to make it available in your custom Product Name component
+
+1. Override the `WysiwygFragment.gql` to fetch the new `WysiwygProductNameData`
+
+   ```graphql title="theme/modules/Wysiwyg/WysiwygFragment.gql"
+   #import "theme/modules/Wysiwyg/MagentoWysiwyg/MagentoWysiwygFragment.gql"
+
+   fragment WysiwygFragment on Wysiwyg {
+     childNodes
+     data {
+       dataId
+       // highlight-start
+       ... on WysiwygProductNameData {
+         product {
+           sku
+           name
+         }
+       }
+       // highlight-end
+     }
+     ... on MagentoWysiwyg {
+       ...MagentoWysiwygFragment
+     }
+   }
+   ```
+
+   Feel free to split this in a Fragment dedicated to your `CustomWysiwyg` just
+   like it is done in the core for `MagentoWysiwyg`.
+
+2. Reference the `product-name` tag in your componentMap and use the new `data`
+   prop available in the mapped component.
+
+   ```ts title="extensions/acme-extension/theme/modules/wysiwyg/DefaultWysiwyg.js"
+   const defaultComponentsMap = {
+     "product-name": (props) => <span>{props.data.product.name}</span>,
+   };
+   ```
+
+   :::note Important
+
+   Please keep in mind that for simplicity's sake, the product name component is
+   not code split, but if it grows in complexity, please make sure to code split
+   it using [`lazy()`](https://react.dev/reference/react/lazy#lazy) and
+   [`<Suspense>`](https://react.dev/reference/react/Suspense) to avoid too large
+   bundles. See
+   [React's documentation](https://react.dev/reference/react/lazy#suspense-for-code-splitting)
+   for more information.
+
+   :::
+
+### Nested Wysiwyg components
+
+In some cases, you will need to render a WYSIWYG component inside another
+WYSIWYG component. For instance, this can be the case if you implement a Product
+Preview feature in your WYSIWYG and want to display the description of the
+product. It is likely to have formatted text that can be defined directly in the
+administration panel.
+
+Please be advised that we won't support infinite nested WYSIWYG component since
+it represents a huge performance risk for both you and your users. The goal
+would be instead to use only simplified WYSIWYG for nested data. In our Product
+Preview case, this means that instead of rendering a `MagentoWysiwyg` you would
+only render a `DefaultWysiwyg` that won't fetch additional data but only
+transform the basic HTML.
+
+If you need more information about implementing this, please <ContactLink />.
+
+### Dynamic styles
+
+You may want to render inline styles dynamically when displaying WYSIWYG
+components. It can be required if content managers customizes how a given
+element is displayed for instance (e.g: alignment, border color etc…).
+
+Each `<Wysiwyg>` component is wrapped into a unique id. The Front-Commerce
+WYSIWYG mechanism provides a `<Style>` component that allows you to render
+styles that could be restricted to the current WYSIWYG context only (and prevent
+side effects on other parts of the page)
+
+Here is how you could use it from a WYSIWYG component:
+
+```tsx
+import React from "react";
+// highlight-next-line
+import Style from "theme/modules/Wysiwyg/Style";
+
+const MyComponent = ({ children, data }) => {
+  const { id, align, content } = data;
+  return (
+    <>
+      // highlight-start
+      <Style rootSelector="#html-body">
+        {`#html-body [data-my-component-id=${id}] .my-component__content {
+            text-align: "${align}";
+          }`}
+      </Style>
+      // highlight-end
+      <div class="my-component" data-my-component-id={id}>
+        <p class="my-component__introduction">Lorem ipsum…</p>
+        <p class="my-component__content">{content}</p>
+      </div>
+    </>
+  );
+};
+
+export default MyComponent;
+```
+
+It will generate an inline `<style>` HTML tag with the following content
+(`#html-body` being replaced with the automatically generated WYSIWYG element
+id):
+
+```html
+<style>
+  #wysiwyg-styles-xxxxxxxx-yyyy
+    [data-my-component-id="42"]
+    .my-component__content {
+    text-align: "center";
+  }
+</style>
+```
+
+That's it! 🎉 Everything explained previously is the core behavior of the
+WYSIWYG implemented in Front-Commerce. It is _very_ flexible as it was
+implemented over a lot of iterations and feedbacks from our integrators.
+However, with this flexibility comes a bit of a complexity. Please keep in mind
+that you don't need to fully understand all of it to get started. However, if
+you've understood most of it, you will be able to dive into our code and
+understand how we have implemented platform specific WYSIWYG components. You
+could even use those components as an inspiration to develop your own specific
+behaviors.

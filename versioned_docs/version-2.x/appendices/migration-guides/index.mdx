@@ -23,6 +23,175 @@ npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.
 
 :::
 
+## `2.29.0` -> `2.30.0`
+
+### Fixed add to wishlist after new registration
+
+In this version we fixed the add to wishlist state updates after the first
+registration. Previously it would not display a product in the wishlist until a
+full page reload is initiated.
+
+To accommodate this fix, we had to add changes to the following files;
+
+- [src/web/theme/modules/Wishlist/AddProductToWishlist/withIsProductInWishlist.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3399/diffs#fc726e322f9602537264acadd3e6b052763e73e5)
+- [src/web/theme/modules/Wishlist/AddProductToWishlist/withProductWishlistMutations.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3399/diffs#9c0961f0b27e34868027c7e97f7c5ed14f4a2695)
+
+If you have overridden these files please ensure to update them with the
+changes.
+
+### Reworked QuickOrder component
+
+In this version, we've introduced a new feature that enables you to bulk import
+products from a CSV file and directly add them to your cart.
+
+:::info The quick order page is active by default
+
+The Quick order page is active by default at `/quick-order`. If you want to
+opt-out of this feature, you will have to remove the route
+[using the `front-commerce-prepare.js::onCreateRoute` callback](/docs/2.x/reference/front-commerce-prepare#oncreateroute).
+
+:::
+
+To develop this new feature, we've had to update the following files;
+
+- [`src/web/theme/modules/ProductPicker/ProductPicker.js`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#ca297fed67eb602d111f743cf4a14b155f050366)
+- [`src/web/theme/modules/AddToCart/AddToCartModal/AddToCartModalQuery.gql`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#ca297fed67eb602d111f743cf4a14b155f050366)
+- `src/web/theme/modules/QuickOrder/QuickOrder.js`
+  - https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#a72de350cd94321d5b8db2bb90e500f068bb09c5
+  - https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/8171a6fde0aac903f3d4852466df072840ca3015#a72de350cd94321d5b8db2bb90e500f068bb09c5
+- [`src/web/theme/modules/QuickOrder/_QuickOrder.scss`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/f2efb127286d4f17a5fb6d48d23fb32c0418e9be#d4bc8c41e8db6221324f0641850453e54363bced)
+
+### Stripe integration now uses IPNs on Magento2 / Magento2 B2B
+
+In this version we've updated Stripe payment module to use IPNs. To cope with
+this change, you will need to ensure that:
+
+- Stripe is configured to use an `asyncOrder` checkout flow
+
+```diff title="src/web/theme/pages/Checkout/checkoutFlowOf.js"
+diff --git a/src/web/theme/pages/Checkout/checkoutFlowOf.js b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+index f7bd3222f..b843608da 100644
+--- a/src/web/theme/pages/Checkout/checkoutFlowOf.js
++++ b/src/web/theme/pages/Checkout/checkoutFlowOf.js
+@@ -11,6 +11,7 @@ const checkoutFlowOf = (method) => {
+   if (method.startsWith("hipay_")) return "directOrderWithAdditionalAction";
+
+   if (method === "payzen_embedded") return "asyncOrder";
++  if (method === "stripe") return "asyncOrder";
+
+   return "directOrder";
+ };
+```
+
+- In `StripeCheckout` component, `cartId` is added to the `paymentData` object
+  in the checkout state:
+
+```diff title="src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js"
+diff --git a/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js b/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
+index 5539c0c87..976f89594 100644
+--- a/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
++++ b/src/web/theme/modules/Checkout/Payment/AdditionalPaymentInformation/StripeCheckout/StripeCheckout.js
+@@ -41,6 +41,7 @@ const withData = compose(
+         loading: data.loading,
+         clientSecret:
+           !data.loading && data.cart?.stripe?.paymentIntent?.clientSecret,
++        cartId: !data.loading && data.cart?.id,
+       }),
+     })
+   ),
+@@ -101,6 +102,7 @@ const StripeCheckoutComponent = (props) => {
+     } else if (paymentIntent.status === "requires_capture") {
+       const paymentData = {
+         paymentIntentId: paymentIntent.id,
++        cartId: props.cartId,
+       };
+       setState({
+         loading: false,
+```
+
+### Fixed multiple triggers of "Order Completed" analytics event
+
+In this version we've fixed the issue where the "Order Completed" event would be
+triggered multiple times by refreshing the `/checkout/success` page (see
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/a5391ed51fdaa03d55e2dada638a6d0777697712)).
+
+To benefit from this fix, you will need to ensure that the following changes
+have been applied to your project, in the case you overrode those files:
+
+```diff title="theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js"
+diff --git a/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js b/src/web/theme/modules/Checkout/
+withCheckoutTracking/withCheckoutSuccessTracking.js
+index 1f1cc1cd1..8fe9f3d61 100644
+--- a/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js
++++ b/src/web/theme/modules/Checkout/withCheckoutTracking/withCheckoutSuccessTracking.js
+@@ -6,6 +6,10 @@ import trackEvent from "theme/modules/Analytics/trackEvent";
+ import CheckoutSuccessTrackingQuery from "./CheckoutSuccessTrackingQuery.gql";
+
+ const trackCartOrdered = (order) => {
++  const shouldTrack = localStorage.getItem("trackOrderCompleted");
++  if (!shouldTrack) {
++    return;
++  }
+   try {
+     const formatItemForAnalytics = ({ sku, name, row_total, qty_ordered }) => ({
+       sku,
+@@ -25,6 +29,7 @@ const trackCartOrdered = (order) => {
+       discount: order.totals.discount.value.amount,
+       products: order.items.map(formatItemForAnalytics),
+     });
++    localStorage.removeItem("trackOrderCompleted");
+   } catch (e) {
+     console.error(
+       "Failed to send successfull order to tracking. Does it have a valid format?"
+```
+
+```diff title="theme/pages/Checkout/stepsDefinition.js"
+diff --git a/src/web/theme/pages/Checkout/stepsDefinition.js b/src/web/theme/pages/Checkout/stepsDefinition.js
+index d54db0f25..6d40d9ac4 100644
+--- a/src/web/theme/pages/Checkout/stepsDefinition.js
++++ b/src/web/theme/pages/Checkout/stepsDefinition.js
+@@ -170,17 +170,20 @@ const steps = [
+     isDisplayable: (checkoutState) => !!checkoutState.paymentMethod,
+   },
+   {
+-    renderStep: (props) => (
+-      <Redirect
+-        to={{
+-          pathname: "/checkout/success",
+-          state: {
+-            ...props.checkoutState.placedOrderData,
+-            checkoutState: props.checkoutState,
+-          },
+-        }}
+-      />
+-    ),
++    renderStep: (props) => {
++      localStorage.setItem("trackOrderCompleted", "true");
++      return (
++        <Redirect
++          to={{
++            pathname: "/checkout/success",
++            state: {
++              ...props.checkoutState.placedOrderData,
++              checkoutState: props.checkoutState,
++            },
++          }}
++        />
++      );
++    },
+     isValid: (checkoutState) => false,
+     isRelevant: () => true,
+     isDisplayable: (checkoutState) => checkoutState.isPlaced,
+```
+
+### New features in `2.30.0`
+
+- [a new `onServerInit` hook to extend the Express server](/docs/2.x/advanced/server/add-http-endpoint#extend-the-http-server-with-onserverinit)
+
+## `2.28.0` -> `2.29.0`
+
+No manual migration steps are required for this release.
+
 ## `2.27.0` -> `2.28.0`
 
 No manual migration steps are required for this release.

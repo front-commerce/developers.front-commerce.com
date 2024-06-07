@@ -94,7 +94,44 @@ export default defineConfig({
 
 Object that define app configuration
 
-#### `providers`
+### `serverEvents`
+
+This configuration allow you to use server events in your Front-Commerce
+application, please follow the
+[Server Events Documentation](/docs/3.x/concepts/server-side-events) to learn
+more about this.
+
+Configuration for server events:
+
+```ts title="app/config/serverEvents.ts"
+export default {
+  redis: {
+    host: "127.0.0.1", // Host of the Redis server for subscription
+    port: 6379, // Port of the Redis server for subscription
+  },
+  integrations: [], // Integrations that should be loaded for server event
+};
+```
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+import serverEvents from "./app/config/serverEvents";
+
+export default defineConfig({
+  extensions: [],
+  stores: storesConfig,
+  cache: cacheConfig,
+  // highlight-next-line
+  serverEvents: serverEvents,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+### `providers`
 
 List of configuration providers to register in the application.
 
