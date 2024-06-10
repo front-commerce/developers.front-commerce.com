@@ -9,17 +9,99 @@ description: "This page contains the API reference for the SEO features."
 
 ## API Reference
 
-### `/sitemap.xml` route
+### `generateSitemap`
 
-A remix route that generates a sitemap for your site. The sitemap is generated
-based on the static pages in your site, and the dynamic pages that are generated
-by your [`handle`](/docs/3.x/guides/customize-the-sitemap) exports for each
-page.
+A function that generates a `Response` containing the `sitemap.xml` file for
+your site.
 
-### `/robots.txt` route
+#### Route
 
-A remix route that generates a `robots.txt` file for your site. If your
-`FRONT_COMMERCE_ENV` is set to `production`, the `robots.txt` file will allow
-all search engines to crawl your site. If your `FRONT_COMMERCE_ENV` is set to
-`development`, the `robots.txt` file will disallow all search engines from
-crawling your site.
+The sitemap entries are served by default at the
+[`/sitemap.xml`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6c1f58a374d818206feafa084b90ac13547604d5/packages/remix/routes/sitemap%5B.xml%5D.ts)
+route.
+
+The entries are generated based on:
+
+- Static pages defined in your `app/routes` or Remix config.
+- Dynamic pages which have implemented a
+  [`sitemap handle`](/docs/3.x/guides/customize-the-sitemap) export.
+
+#### Params
+
+| Name       | Type                                                                                                                                                                 | Description                                               |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| loaderArgs | [`LoaderFunctionArgs`](https://remix.run/docs/en/main/route/loader#loader)                                                                                           | The loader arguments passed to the loader function.       |
+| options    | [`SEOOptions`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3d980387b7fa7aa8687ca74e4b9a3ebd41de4190/packages/remix/seo/types/index.ts#L1-4) | An object containing the options to generate the sitemap. |
+
+#### Example
+
+```tsx title="app/routes/sitemap[.xml].ts"
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+// highlight-next-line
+import { generateSitemap } from "@front-commerce/remix/seo";
+
+export async function loader(loaderArgs: LoaderFunctionArgs) {
+  const app = new FrontCommerceApp(loaderArgs.context.frontCommerce);
+  // highlight-start
+  return generateSitemap(loaderArgs, {
+    siteUrl: app.config.shop.url,
+    headers: new Headers({
+      "X-Example": "Acme",
+    }),
+  });
+  // highlight-end
+}
+```
+
+### `generateRobotsTxt`
+
+A function that generates a `Response` containing the `robots.txt` file for your
+site.
+
+#### Route
+
+The robots file is served by default at the
+[`/robots.txt`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/ca72101e2db280acf38750e94681a2ebd2cdad61/packages/remix/routes/robots%5B.txt%5D.ts)
+route.
+
+The `robots.txt` will only allow crawling when the `FRONT_COMMERCE_ENV` is set
+to `production`
+
+#### Params
+
+| Name     | Type                                                                                                                                                                     | Description                                                       |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| policies | [`RobotsPolicy`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3d980387b7fa7aa8687ca74e4b9a3ebd41de4190/packages/remix/seo/types/index.ts#L6-9)   | The entries to be included in the `robots.txt` file               |
+| config   | [`RobotsConfig`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3d980387b7fa7aa8687ca74e4b9a3ebd41de4190/packages/remix/seo/types/index.ts#L11-15) | An object containing the configuration for your `robots.txt` file |
+
+#### Example
+
+```tsx title="app/routes/robots[.txt].ts"
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+// highlight-next-line
+import { generateRobotsTxt } from "@front-commerce/remix/seo";
+
+export function loader({ context }: LoaderFunctionArgs) {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  return generateRobotsTxt(
+    [
+      {
+        type: "disallow",
+        value: new URL("/example", app.config.shop.url).toString(),
+      },
+    ],
+    {
+      appendOnDefaultPolicies: true, // ensures that the default policies are included (default: true)
+      allowCrawling: app.env === "production",
+      headers: new Headers({
+        "X-Example": "Acme",
+      }),
+    }
+  );
+  // highlight-end
+}
+```
