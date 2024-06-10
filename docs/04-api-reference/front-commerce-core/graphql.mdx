@@ -13,13 +13,14 @@ Create a GraphQL module.
 
 ### Parameters
 
-| Name               | Type       | Description                                                        |
-| ------------------ | ---------- | ------------------------------------------------------------------ |
-| `namespace`        | `string`   | The namespace of the GraphQL module                                |
-| `dependencies`     | `string[]` | The dependencies of the GraphQL module                             |
-| `loadRuntime`      | `function` | The import that will load [GraphQL runtime](#creategraphqlruntime) |
-| `typeDefs`         | `string`   | The GraphQL custom type definitions                                |
-| `schemaDirectives` | `object`   | The GraphQL custom directives                                      |
+| Name               | Type                                                                                       | Description                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `namespace`        | `string`                                                                                   | The namespace of the GraphQL module                                                    |
+| `dependencies`     | `string[]`                                                                                 | The dependencies of the GraphQL module                                                 |
+| `loadRuntime`      | `function`                                                                                 | The import that will load [GraphQL runtime](#creategraphqlruntime)                     |
+| `typeDefs`         | `string`                                                                                   | The GraphQL custom type definitions                                                    |
+| `schemaDirectives` | `object`                                                                                   | The GraphQL custom directives                                                          |
+| `scalars`          | [`ScalarMap`](https://the-guild.dev/graphql/codegen/plugins/typescript/typescript#scalars) | Extends or overrides the built-in scalars and custom GraphQL scalars to a custom type. |
 
 ### Example
 
@@ -33,7 +34,7 @@ export default createGraphQLModule({
   loadRuntime: () => import("./runtime"),
   typeDefs: /* GraphQL */ `
     extend type Query {
-      getFoo: Foo
+      getFoo(input: AcmeScalar!): Foo
     }
     type Foo {
       id: ID!
@@ -42,6 +43,9 @@ export default createGraphQLModule({
   `,
   schemaDirectives: {
     fooDirective,
+  },
+  scalars: {
+    AcmeScalar: "string | number",
   },
 });
 ```
