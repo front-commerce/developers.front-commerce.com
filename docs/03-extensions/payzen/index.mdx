@@ -1,16 +1,26 @@
 ---
 title: "Payzen"
-description:
-  "The Payzen extension allows customer to pay using Payzen."
+description: "The Payzen extension allows customer to pay using Payzen."
 ---
 
 <p>{frontMatter.description}</p>
 
-The implementation use [PayZen embedded form / Javascript with REST API](https://payzen.io/fr-FR/rest/V4.0/javascript/) to create payments.
+The implementation use
+[PayZen embedded form / Javascript with REST API](https://payzen.io/fr-FR/rest/V4.0/javascript/)
+to create payments.
 
 :::danger
 
-This extension is only compatible with Magento1/OpenMage, we are working on Magento2 compatibility before 3.4.0.
+This extension is only compatible with Magento1/OpenMage, we are working on
+Magento2 compatibility for 3.6.0.
+
+:::
+
+:::info
+
+If you intend to use Payzen as a Magento 2 Payment with native Magento module,
+you can skip this guide and directly go to the
+[Use as Magento2 Payment](/docs/3.x/extensions/payzen/how-to/magento2) guide.
 
 :::
 
@@ -37,7 +47,9 @@ Get your access keys by following the
 [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html).
 Update your `.env` with the following values:
 
-Follow the [environment variable reference](/docs/3.x/extensions/payzen/reference/environment-variables) to learn how to set them.
+Follow the
+[environment variable reference](/docs/3.x/extensions/payzen/reference/environment-variables)
+to learn how to set them.
 
 ```shell title=".env"
 FRONT_COMMERCE_PAYZEN_PUBLIC_KEY=58039770:testpublickey_xxxxxxx
