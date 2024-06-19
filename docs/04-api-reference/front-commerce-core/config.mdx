@@ -177,3 +177,33 @@ export default defineConfig({
   },
 });
 ```
+
+### `maintenance`
+
+This configuration allows you to customise various aspects of the
+[MaintenanceMode](/docs/3.x/category/maintenance-mode) service:
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [],
+  stores: storesConfig,
+  cache: cacheConfig,
+  // highlight-start
+  maintenance: {
+    // All the options are optional
+    force: false, // Force the application to be in maintenance mode
+    authorizedIps: [], // List of authorized IPs that can access the application while in maintenance mode
+    memoizedInMS: 3600000, // Duration in milliseconds for the maintenance mode check to be memoized instead of being read from Redis (defaults to 5 seconds)
+    healthChecks: {
+      disabled: false, // Force disable health checks
+      schedule: "*/5 * * * * *", // Cron schedule to run health checks (defaults to every 5 seconds)
+      leaderCheckInterval: 10000, // Interval in which multi-instance leader checks are performed for health checks (defaults to 10 seconds)
+    },
+  },
+  // highlight-end
+});
+```

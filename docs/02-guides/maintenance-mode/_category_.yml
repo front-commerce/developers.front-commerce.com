@@ -1,0 +1,7 @@
+label: Maintenance Mode
+collapsible: true
+link:
+  type: generated-index
+  description:
+    Learn how to set your store in maintenance mode and display a maintenance
+    page or use health checks to set maintenance mode automatically.
