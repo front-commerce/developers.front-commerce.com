@@ -120,3 +120,28 @@ export default defineConfig({
 If a feature is not defined in the feature flags, it will be enabled by default.
 
 :::
+
+## Disable Health Checks
+
+By default, Front-Commerce enables
+[Health Checks](/docs/3.x/guides/maintenance-mode/automatic-detection-with-service-health-checks)
+to monitor the availability of the Magento1 backend. These checks run on the
+`FRONT_COMMERCE_MAGENTO2_ENDPOINT` URL. If you want to disable these health
+checks, you can pass the `disabled` option to your extension configuration.
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import magento2 from "@front-commerce/magento2";
+
+export default defineConfig({
+  extensions: [
+    magento2({
+      // highlight-start
+      healthChecks: {
+        disabled: true,
+      },
+      // highlight-end
+    }),
+  ],
+});
+```
