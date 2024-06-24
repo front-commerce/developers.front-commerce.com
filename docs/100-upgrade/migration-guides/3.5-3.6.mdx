@@ -44,3 +44,41 @@ If you have patched to core to allow for custom scalars, you can now safely
 remove the patch.
 
 :::
+
+## `Cache-Control` headers
+
+In this version, we introduced a way to add `Cache-Control` headers to responses
+using a new `CacheControl` service available through `FrontCommerceApp`.
+
+With this new feature, we also added its usage to a few existing routes:
+
+- `_main._index.ts`
+- `_main.category.$id.tsx`
+- `_main.product.$id.tsx`
+- `robots[.txt].ts`
+- `sitemap[.xml].ts`
+
+To enable `Cache-Control` headers on those routes (if you already overrode
+them), you will need to add the usage of this new service in these routes'
+loaders like so:
+
+```ts title="_main._index.tsx
+export const loader: LoaderFunction = ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // highlight-start
+  app.services.CacheControl.setCacheable({
+    sMaxAge: 60,
+    staleWhileRevalidate: 21600,
+  });
+  // highlight-end
+
+  return {};
+};
+```
+
+:::info
+
+For more information about this change, see
+[the related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/d714452292d5db90870d2f5ac6c4ff870dd826ff).
+
+:::
