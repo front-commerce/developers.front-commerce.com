@@ -82,3 +82,44 @@ For more information about this change, see
 [the related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/d714452292d5db90870d2f5ac6c4ff870dd826ff).
 
 :::
+
+## Server timings
+
+In this version we introduced a new `ServerTimings` service that is used to
+generate and append
+[`Server-Timing`](https://linear.app/front-commerce/issue/FC-1725/server-timing-headers)
+headers to reponses.
+
+This contains a change to `app/entry.server.tsx`, which you will have to update
+to properly benefit from this new feature:
+
+```diff title="app/entry.server.tsx"
+diff --git a/skeleton/app/entry.server.tsx b/skeleton/app/entry.server.tsx
+index 7783303fd..a8f621d20 100644
+--- a/skeleton/app/entry.server.tsx
++++ b/skeleton/app/entry.server.tsx
+@@ -99,6 +99,7 @@ function handleBrowserRequest(
+   remixContext: EntryContext,
+   loadContext: AppLoadContext
+ ) {
++  loadContext.frontCommerce.services.ServerTimings.start("SSR");
+   return new Promise(async (resolve, reject) => {
+     const { pipe, abort } = renderToPipeableStream(
+       await prepareV2ServerRenderedApp(
+@@ -121,6 +122,7 @@ function handleBrowserRequest(
+
+           responseHeaders.set("Content-Type", "text/html");
+
++          loadContext.frontCommerce.services.ServerTimings.end("SSR");
+           resolve(
+             new Response(body, {
+               headers: responseHeaders,
+@@ -131,6 +133,7 @@ function handleBrowserRequest(
+           pipe(body);
+         },
+         onShellError(error: unknown) {
++          loadContext.frontCommerce.services.ServerTimings.end("SSR");
+           reject(error);
+         },
+         onError(error: unknown) {
+```
