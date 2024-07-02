@@ -10,6 +10,14 @@ sidebar_position: 3
 
 ## Front-Commerce configuration
 
+:::tip
+
+Please be sure to configure your store's URL properly in the `app/config/stores.js` file.
+
+Misconfiguration of the store's URL can lead to issues with the Adyen payment methods.
+
+:::
+
 [After installing the Adyen package](/docs/3.x/extensions/adyen/#installation),
 you need to enable the corresponding extension. For that, you need to tweak your
 `front-commerce.config.ts` file like:
