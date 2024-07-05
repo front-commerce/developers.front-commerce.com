@@ -123,3 +123,23 @@ index 7783303fd..a8f621d20 100644
          },
          onError(error: unknown) {
 ```
+## Payzen Module
+
+In this version, we introduced Payzen compatibility for Magento 2. You now need to pass a parameter to the Payzen extension in your `.front-commerce.config.ts` file:
+
+```ts title=".front-commerce.config.ts"
+// ...
+import payzen from "@front-commerce/payzen";
+
+export default defineConfig({
+  // ...
+  extensions: [
+    // ...
+    // For Magento 1 usage
+    payzen("front-commerce-magento1")
+    // For Magento 2 usage
+    payzen("front-commerce-magento2")
+    // ...
+  ]
+  // ...
+});
