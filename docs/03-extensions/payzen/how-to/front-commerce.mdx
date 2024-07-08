@@ -27,8 +27,12 @@ export default defineConfig({
   extensions: [
     magento2({ storesConfig }),
     themeChocolatine(),
-    // highlight-next-line
-    payzen(), // ⚠️ need to be after themeChocolatine()
+    // highlight-start
+    // For Magento 1 usage
+    payzen("front-commerce-magento1"), // ⚠️ need to be after themeChocolatine()
+    // For Magento 2 usage
+    payzen("front-commerce-magento2"), // ⚠️ need to be after themeChocolatine()
+    // highlight-end
   ],
   stores: storesConfig,
   cache: cacheConfig,
