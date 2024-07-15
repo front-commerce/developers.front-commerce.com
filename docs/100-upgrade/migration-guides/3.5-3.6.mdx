@@ -29,6 +29,16 @@ comments).
 pnpm run front-commerce migrate --transform 3.6.0
 ```
 
+Changes introduced with this automated migration script:
+
+- Adds `pazyen` flavor to extension options
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/add-payzen-flavor.spec.ts?ref_type=heads))
+- Replace usage of `limitRateByClientIp` with `limitRateByGraphQLResolver`
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/replace-graphql-rate-limiter.ts?ref_type=heads))
+- Rename mutation types with new conventions
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/coherent-mutation-naming.spec.ts?ref_type=heads),
+  [adr](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/docs/adr/0013-coherent-schema-naming.md?ref_type=heads))
+
 ## Custom Scalar support in GraphQL schema
 
 In this release, we've introduced a new way to define custom scalars in your
@@ -94,10 +104,10 @@ This contains a change to `app/entry.server.tsx`, which you will have to update
 to properly benefit from this new feature:
 
 ```diff title="app/entry.server.tsx"
-diff --git a/skeleton/app/entry.server.tsx b/skeleton/app/entry.server.tsx
+diff --git a/app/entry.server.tsx b/app/entry.server.tsx
 index 7783303fd..a8f621d20 100644
---- a/skeleton/app/entry.server.tsx
-+++ b/skeleton/app/entry.server.tsx
+--- a/app/entry.server.tsx
++++ b/app/entry.server.tsx
 @@ -99,6 +99,7 @@ function handleBrowserRequest(
    remixContext: EntryContext,
    loadContext: AppLoadContext
@@ -123,9 +133,18 @@ index 7783303fd..a8f621d20 100644
          },
          onError(error: unknown) {
 ```
+
 ## Payzen Module
 
-In this version, we introduced Payzen compatibility for Magento 2. You now need to pass a parameter to the Payzen extension in your `.front-commerce.config.ts` file:
+In this version, we introduced Payzen compatibility for Magento 2.
+
+:::info
+
+If a flavor has not yet been added, then this will default to
+`front-commerce-magento1` after running the
+[automated migration](/docs/3.x/upgrade/migration-guides/3.5-3.6#automated-migration)
+
+:::
 
 ```ts title=".front-commerce.config.ts"
 // ...
@@ -143,3 +162,4 @@ export default defineConfig({
   ]
   // ...
 });
+```
