@@ -101,7 +101,7 @@ To enable `Cache-Control` headers on those routes (if you already overrode
 them), you will need to add the usage of this new service in these routes'
 loaders like so:
 
-```ts title="_main._index.tsx
+```ts title="_main._index.tsx"
 export const loader: LoaderFunction = ({ context }) => {
   const app = new FrontCommerceApp(context.frontCommerce);
   // highlight-start
@@ -126,7 +126,7 @@ For more information about this change, see
 
 In this version we introduced a new `ServerTimings` service that is used to
 generate and append
-[`Server-Timing`](https://linear.app/front-commerce/issue/FC-1725/server-timing-headers)
+[`Server-Timing`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing)
 headers to reponses.
 
 This contains a change to `app/entry.server.tsx`, which you will have to update
@@ -162,6 +162,10 @@ index 7783303fd..a8f621d20 100644
          },
          onError(error: unknown) {
 ```
+
+Learn how to use this new feature for your own code in the
+[Add your own server timings](/docs/3.x/guides/adding-your-own-server-timings)
+guide.
 
 ## Payzen Module
 
