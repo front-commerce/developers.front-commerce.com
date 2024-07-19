@@ -331,3 +331,16 @@ Options
     --help, -h      Displays this message
     --dry, -d       Run the migration without changing any file
     --verbose       Show more information about the migration
+
+### `worker`
+
+Runs the [`Server Side Events`](/docs/3.x/category/server-side-events) worker
+instance.
+
+This should be added as a script in the `package.json`
+
+```json title="package.json"
+"scripts": {
+  "worker": "front-commerce worker"
+}
+```

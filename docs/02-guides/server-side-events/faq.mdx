@@ -1,7 +1,6 @@
 ---
 title: FAQ
-description:
-  Small questions, quick answers about Server events
+description: Small questions, quick answers about Server events
 sidebar_position: 3
 ---
 
@@ -11,30 +10,47 @@ sidebar_position: 3
 
 :::info
 
-Currently, Front-Commerce only implement the OrderPlaced events, but more events will be added in the future.
+Currently, Front-Commerce only implement the OrderPlaced events, but more events
+will be added in the future.
 
 :::
 
-| Event | Description |
-| --- | --- |
+| Event         | Description                                      |
+| ------------- | ------------------------------------------------ |
 | `OrderPlaced` | This event is triggered when an order is placed. |
 
 ## How can I test Server events in local environment?
 
-To test server events in a local environment, you need a Redis server, and you must configure the IP address in your .env file:
+To test server events in a local environment, you need a Redis server, and you
+must configure redis host and port in your `front-commerce.config.ts` file:
 
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  extensions: [themeChocolatine()],
+  serverEvents: {
+    integrations: [],
+    // highlight-start
+    redis: {
+      host: "127.0.0.1",
+      port: 6379,
+    },
+    // highlight-end
+  },
+});
 ```
-FRONT_COMMERCE_SERVER_EVENT_REDIS_HOST=127.0.0.1
-# The following entry is to be defined only if you don't use default Redis port
-FRONT_COMMERCE_SERVER_EVENT_REDIS_PORT=6379
-```
 
-hen you need to start the worker by running the following command from your project : `pnpm run worker`
+Then you need to start the worker by running the following command from your
+project : `pnpm run worker`
 
-If you would like to obtain additional information and enable debug mode, you can do one of the following:
+If you would like to obtain additional information and enable debug mode, you
+can do one of the following:
 
-- Run the command with the DEBUG flag : `DEBUG=front-commerce:server-events:cli pnpm run worker`
-- Add the debug flag to your `.env` file : `DEBUG=front-commerce:server-events:cli`
+- Run the command with the DEBUG flag :
+  `DEBUG=front-commerce:server-events:cli pnpm run worker`
+- Add the debug flag to your `.env` file :
+  `DEBUG=front-commerce:server-events:cli`
 
 ## What data is published for a Server Event?
 
