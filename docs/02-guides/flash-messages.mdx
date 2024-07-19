@@ -1,0 +1,97 @@
+---
+title: Flash messages
+description:
+  Learn how to push and display flash messages in your Front-Commerce
+  application.
+---
+
+<SinceVersion tag="3.6" />
+
+<p>{frontMatter.description}</p>
+
+## When to use flash messages?
+
+Flash messages are used to display informations to the user. These messages are
+meant to be displayed once and are stored in the session. When consumed, they
+are removed from the session.
+
+## Flash message data type
+
+Flash messages are represented by an object the following properties:
+
+| Property  | Type   | Description                                                                                                                      |
+| --------- | ------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | string | The type of the flash message. It can be one of the types declared in the [flash messages component](#flash-messages-component). |
+| `message` | string | The message to display.                                                                                                          |
+| `data`    | object | An object that can be used to pass additional data to the endering component.                                                    |
+
+## Flash messages component
+
+The default theme provides a default implementation for flash messages depending
+on the `type` property of the flash message object.
+
+It can be customized by overriding the
+[`theme/modules/FlashMessages/getFlashMessageComponent.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/9cc7010e5d3c3ade454cdeaad90f28c769916695/packages/theme-chocolatine/theme/modules/FlashMessages/getFlashMessageComponent.jsx)
+file.
+
+## Adding flash messages
+
+Flash messages can be added in your code from the user session object. Here's an
+example on how to do it in a route loader via the `FrontCommerceApp` instance:
+
+```typescript
+import { FrontCommerceApp } from "@front-commerce/remix";
+
+export const action = async ({ context }: ActionFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  app.user.session.addFlashMessage({
+    type: "success",
+    message: "Payment succeeded",
+  })
+  //...
+});
+
+```
+
+## Consume flash messages
+
+Flash messages can be consumed in your code from the user session too. They
+usually are returned like any other data in a route loader:
+
+```tsx
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { json } from "@front-commerce/remix/node";
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const flashMessages = app.user.session.getFlashMessages();
+  return json({ flashMessages });
+});
+
+```
+
+## Flash message component
+
+In the default theme, we provide a ready-to-use flash message component. It can
+be used to display flash messages. Here is an usage example:
+
+```typescript
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { json } from "@front-commerce/remix/node";
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  const flashMessages = app.user.session.getFlashMessages();
+  return json({ flashMessages });
+});
+
+export default PaymentPage() {
+  const { flashMessages } = useLoaderData<typeof loader>();
+  return (
+    <div>
+      <FlashMessages flashMessages={flashMessages} />
+    </div>
+  );
+}
+
+```

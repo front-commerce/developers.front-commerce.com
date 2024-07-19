@@ -47,6 +47,10 @@ For now, the `click-counter` extension does not provide any feature. To extend
 the GraphQL schema and implement our own logic, we need to add a GraphQL module
 to the extension containing a schema and some resolvers.
 
+<Steps>
+
+<Step>
+
 ### Add an empty GraphQL module
 
 For that, you can create the GraphQL module definition in the file
@@ -89,7 +93,10 @@ At this point, your Front-Commerce project is configured with an extension
 called `click-counter`, this extension provides a GraphQL module which namespace
 is `Clickcounter`. The extension is now ready to bring changes to your Graph.
 
-### Extend the Graph
+</Step>
+<Step>
+
+### Extend the GraphQL Schema
 
 Front-Commerce lets you describe your schema using the expressive
 [GraphQL Schema Definition Language (SDL)](https://graphql.org/learn/schema/#type-language).
@@ -160,7 +167,10 @@ any data. So you should see the following response:
 }
 ```
 
-### Implement the logic
+</Step>
+<Step>
+
+### Define Resolvers and Runtime Logic
 
 The latest step is to implement the logic, which we will refer to as the
 `GraphqlRuntime`, to retrieve the `Product.clickCounter` value and behind the
@@ -266,5 +276,33 @@ export default createGraphQLRuntime({
       },
     },
   },
+});
+```
+
+</Step>
+</Steps>
+
+## Adding custom `scalars` to the schema
+
+<SinceVersion tag="3.6.x" />
+
+To add
+[custom scalars](https://the-guild.dev/graphql/codegen/plugins/typescript/typescript#scalars)
+to your schema, you can define them in your GraphQL module as shown below.
+
+```ts
+import { createGraphQLModule } from "@front-commerce/core/graphql";
+export default createGraphQLModule({
+  namespace: "example-module",
+  typeDefs: /** GraphQL */ `
+   Query {
+      acmeEntry(identifier: AcmeScalar!): String!
+   }
+  `,
+  // highlight-start
+  scalars: {
+    AcmeScalar: "string | number",
+  },
+  // highlight-end
 });
 ```

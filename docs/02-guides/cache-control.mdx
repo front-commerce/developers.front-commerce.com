@@ -1,0 +1,70 @@
+---
+title: Cache-Control headers
+description:
+  This guide explains how you can add Cache-Control headers in your routes in
+  Front-Commerce.
+tags:
+  - routes
+  - cache
+---
+
+<SinceVersion tag="3.6" />
+
+`Cache-Control` headers are implemented to improve user experience by
+instructing browsers to store parts of the webpage in their internal cache. By
+default, Front-Commerce already applies `Cache-Control` headers to several
+important routes:
+
+- Products pages
+- Categories pages
+- Home page
+- `/robots.txt`
+- `/sitemaps.xml`
+
+## How to use Cache-Control headers in Front-Commerce
+
+In Front-Commerce, adding `Cache-Control` headers to route is done by leveraging
+the
+[`CacheControl`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/core/services/implementations/CacheControl.ts?ref_type=heads)
+service, available from `FrontCommerceApp`.
+
+:::note
+
+To learn more about available services in Front-Commerce, see our
+[documentation](/docs/3.x/api-reference/front-commerce-core/services)
+
+:::
+
+In this example, we'll add `Cache-Control` headers on a "Acme" route.
+
+```ts title="app/routes/_main.acme.ts"
+import Acme from "theme/pages/Acme";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@front-commerce/remix/node";
+import { FrontCommerceApp } from "@front-commerce/remix";
+import { AcmeDocument } from "~/graphql/graphql";
+
+export const loader: LoaderFunction = ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+
+  // highlight-start
+  app.services.CacheControl.setCacheable({
+    sMaxAge: 60,
+    staleWhileRevalidate: 21600,
+  });
+  // highlight-end
+
+  const response = await app.graphql.query(AcmeDocument);
+
+  return json({ acme: response.acme });
+};
+
+export default function Index() {
+  return <Acme />;
+}
+```
+
+This snippet will inform the browser that the data resulting from requesting
+this route can be safely cached for 60 seconds, and that the cached version can
+still be served for 6 hours while the data is being fetched again in the
+background.
