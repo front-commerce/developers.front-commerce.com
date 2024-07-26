@@ -1,0 +1,40 @@
+---
+title: "Axios instances"
+description:
+  "This reference explains how to access `axios` instances to interact with
+  Gezy's API."
+---
+
+<p>{frontMatter.description}</p>
+
+## Overview
+
+The Front-Commerce's Gezy extension exposes preconfigured HTTP client instances
+for interacting with Gezy's API. These instances are exposed via the
+[Dependency Injection](/docs/3.x/guides/dependency-injection) system, under the
+`gezy` HTTP namespace.
+
+You can access them via `services.DI.get("gezy").http.*` in your code.
+
+## `publicRestAPI`
+
+The `publicRestAPI` instance is an `axios` instance that can be used to interact
+with Gezy's API as a customer.<br /> It will sign requests depending on the
+current user's session.
+
+Example:
+
+```ts title="path/to/graphql/module/runtime.ts"
+import { createGraphQLRuntime } from "@front-commerce/core/graphql";
+
+export default createGraphQLRuntime({
+  contextEnhancer: ({ services, makeDataLoader }) => {
+    // add-next-line
+    const gezyClient = services.DI.get("gezy").http.publicRestAPI;
+
+    return {
+      MyFeature: new MyFeatureLoader(gezyClient, makeDataLoader),
+    };
+  },
+});
+```
