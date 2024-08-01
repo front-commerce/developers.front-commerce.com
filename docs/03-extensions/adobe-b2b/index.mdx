@@ -93,7 +93,6 @@ import adobeB2B from "@front-commerce/adobe-b2b";
 import storesConfig from "./app/config/stores";
 import cacheConfig from "./app/config/caching";
 
-
 export default defineConfig({
   extensions: [
     magento2({ storesConfig }),
@@ -139,3 +138,49 @@ documents will no longer be available if this feature is disabled
   [example override](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/modules/ProductView/Synthesis/AddProductToCart.jsx)
 
 :::
+
+## Known issues
+
+### Bundle products can't be used in requisition lists
+
+Due to an issue (documented below) with Adobe B2B GraphQL layer, we don't
+recommend to use Requistion List with bundle items with the default Adobe B2B
+codebase. Please contact your Adobe support team if you plan to use this
+feature.
+
+```mdx-code-block
+<details>
+  <summary className="flex justify-between">Reproduction details and technical insights</summary>
+  <div>
+```
+
+The issue can be reproduced by not selecting the first value for the first
+option of the bundle. It's related to Magento GraphQL layer, because:
+
+- it can be reproduced when reading a requisition list whose item was added from
+  the Magento frontend
+
+- when a requisition list is broken, the standard Magento frontend displays the
+  correct value
+
+When the first choice is selected for the first option, the requisition list can
+be read but has inconsistent data: the "non-first" option having a "non-first"
+choice will be resolved as the previous option. E.g: "Sprite Foam Yoga Brick" is
+returned instead of "Sprite Yoga Strap 10 foot"):
+
+![Wrong option returned (frontend)](./assets/requisition-list-item-wrong-option-front.png)
+
+![Wrong option returned (GraphQL)](./assets/requisition-list-item-wrong-option-graphql.png)
+
+It seems to be due to some kind of mismatch between and index and its value for
+selected options id in the Magento resolver, as the call made natively from
+Magento is the same as the one made from Front-Commerce:
+
+![The same call is made from Front-Commerce and from Magento](./assets/requisition-list-same-call.png)
+
+![Related resolver on Magento's code](./assets/requisition-list-magento-code.png)
+
+```mdx-code-block
+  </div>
+</details>
+```
