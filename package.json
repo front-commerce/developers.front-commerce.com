@@ -29,7 +29,7 @@
     "@giscus/react": "^2.2.8",
     "@heroicons/react": "2.0.13",
     "@mdx-js/react": "1.6.22",
-    "autoprefixer": "10.4.13",
+    "autoprefixer": "10.4.20",
     "clsx": "1.2.1",
     "dotenv": "16.0.3",
     "infima": "0.2.0-alpha.42",
