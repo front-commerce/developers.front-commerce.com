@@ -10,6 +10,19 @@ import TabItem from "@theme/TabItem";
 
 <p>{frontMatter.description}</p>
 
+## Use the latest `pnpm` version
+
+We now support `pnpm` version 9 and above. In the past, we may have recommended
+to stick to `pnpm` version 8. This is no longer the case.
+
+Please make sure to update your `pnpm` version to the latest one.
+
+```shell
+$ pnpm add -g pnpm
+$ pnpm -v
+9.7.0 # or higher
+```
+
 ## Update dependencies
 
 Update all your `@front-commerce/*` dependencies to this version:
@@ -28,7 +41,7 @@ for more details.
 To update your project, you can do the following:
 
 ```shell
-pnpm update react@18.3.0-canary-2023-05-11 react-dom@18.3.0-canary-2023-05-11
+pnpm update react@18.3.0-canary-c3048aab4-20240326 react-dom@18.3.0-canary-c3048aab4-20240326
 ```
 
 We also suggest adding resolutions to your package.json to ensure the same
@@ -37,8 +50,8 @@ version of React is used in your project:
 ```json title="package.json"
 {
   "resolutions": {
-    "react": "18.3.0-canary-2023-05-11",
-    "react-dom": "18.3.0-canary-2023-05-11"
+    "react": "18.3.0-canary-c3048aab4-20240326",
+    "react-dom": "18.3.0-canary-c3048aab4-20240326"
   }
 }
 ```
