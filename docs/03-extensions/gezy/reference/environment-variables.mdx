@@ -14,7 +14,8 @@ sidebar_position: 1
 | `FRONT_COMMERCE_GEZY_ENDPOINT`                        | **Required** The URL of your Gezy instance, **without** trailing slash          |
 | `FRONT_COMMERCE_GEZY_TECHNICAL_ACCOUNT_LOGIN`         | **Required** The technical account login (usually starting with `edi`)          |
 | `FRONT_COMMERCE_GEZY_TECHNICAL_ACCOUNT_PASSWORD_HASH` | **Required** The technical account password hash (usually starting with `$2y$`) |
-| `FRONT_COMMERCE_GEZY_TIMEOUT_IN_MS`                   | The timeout in milliseconds for Gezy requests.                                  |
+| `FRONT_COMMERCE_GEZY_TIMEOUT_IN_MS`                   | The timeout in milliseconds for Gezy requests (defaults to 30 seconds)          |
+| `FRONT_COMMERCE_GEZY_IMAGE_PROXY_TIMEOUT_IN_MS`       | The timeout in milliseconds for image proxy requests (defaults to 5 seconds)    |
 
 ## Sample `.env` file
 
