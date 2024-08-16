@@ -45,8 +45,8 @@ dependencies:
     specifier: 16.0.3
     version: 16.0.3
   infima:
-    specifier: 0.2.0-alpha.42
-    version: 0.2.0-alpha.42
+    specifier: 0.2.0-alpha.44
+    version: 0.2.0-alpha.44
   postcss:
     specifier: 8.4.31
     version: 8.4.31
@@ -64,7 +64,7 @@ dependencies:
     version: 1.3.7(react@18.2.0)
   react-infima:
     specifier: 0.0.1-alpha.4
-    version: 0.0.1-alpha.4(infima@0.2.0-alpha.42)(react-dom@18.2.0)(react@18.2.0)
+    version: 0.0.1-alpha.4(infima@0.2.0-alpha.44)(react-dom@18.2.0)(react@18.2.0)
   react-player:
     specifier: 2.11.0
     version: 2.11.0(react@18.2.0)
@@ -5688,13 +5688,13 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /infima@0.2.0-alpha.42:
-    resolution: {integrity: sha512-ift8OXNbQQwtbIt6z16KnSWP7uJ/SysSMFI4F87MNRTicypfl4Pv3E2OGVv6N3nSZFJvA8imYulCBS64iyHYww==}
+  /infima@0.2.0-alpha.43:
+    resolution: {integrity: sha512-2uw57LvUqW0rK/SWYnd/2rRfxNA5DDNOh33jxF7fy46VWoNhGxiUQyVZHbBMjQ33mQem0cjdDVwgWVAmlRfgyQ==}
     engines: {node: '>=12'}
     dev: false
 
-  /infima@0.2.0-alpha.43:
-    resolution: {integrity: sha512-2uw57LvUqW0rK/SWYnd/2rRfxNA5DDNOh33jxF7fy46VWoNhGxiUQyVZHbBMjQ33mQem0cjdDVwgWVAmlRfgyQ==}
+  /infima@0.2.0-alpha.44:
+    resolution: {integrity: sha512-tuRkUSO/lB3rEhLJk25atwAjgLuzq070+pOW8XcvpHky/YbENnRRdPd85IBkyeTgttmOy5ah+yHYsK1HhUd4lQ==}
     engines: {node: '>=12'}
     dev: false
 
@@ -7534,7 +7534,7 @@ packages:
       - react
     dev: false
 
-  /react-infima@0.0.1-alpha.4(infima@0.2.0-alpha.42)(react-dom@18.2.0)(react@18.2.0):
+  /react-infima@0.0.1-alpha.4(infima@0.2.0-alpha.44)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-4RpQeiHxiocPXO3tdd54wCbZx747OvBvbB1PVdE6Pu3bA2tvFyOJl+93b0lZRxM2qjN8Z/pssmD7JzcuXmCQ4w==}
     peerDependencies:
       infima: '>=0.2.0-alpha.37'
@@ -7542,7 +7542,7 @@ packages:
       react-dom: '>=17.0.0'
     dependencies:
       classnames: 2.3.2
-      infima: 0.2.0-alpha.42
+      infima: 0.2.0-alpha.44
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
