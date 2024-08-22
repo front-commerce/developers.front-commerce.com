@@ -145,3 +145,20 @@ export default defineConfig({
   ],
 });
 ```
+
+## Known issues
+
+### Magento 2.4.6: Grouped product options aren't visible
+
+_See related issue: https://github.com/magento/magento2/issues/37774_
+
+On Magento 2.4.6, Front-Commerce may display a Grouped product with a price of
+0€ without any options.
+
+In this version, if products that are part of a grouped product are set to "Not
+Visible Individually", they won't be returned by Magento when retrieving the
+grouped product along with its options. Instead, the returned option will be an
+array of items with `product: null`.
+
+This issue isn't present in Magento 2.4.5, and as been fixed in Magento
+2.4.7-p1.
