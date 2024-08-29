@@ -1,0 +1,161 @@
+---
+title: "Release: 3.7 & 2.32"
+authors: pierre
+date: 2024-08-29T19:00
+hide_table_of_contents: true
+---
+
+## Gezy foundations and bug fixes
+
+Today we are releasing Front-Commerce 3.7 and 2.32. These releases are smaller
+than usual, as our team has been enjoying a well-deserved summer break since our
+latest releases 6 weeks ago!
+
+The main highlight of the 3.7 release is the start of the integration with
+**Gezy, which is the next e-commerce platform Front-Commerce will support.**
+
+We also worked on fixing bugs and slightly improving existing features on all
+our supported versions, based on the feedback we received from customers and
+partners through our support channels.
+
+<!-- truncate -->
+
+## Gezy Integration Started
+
+During the last weeks, we started working on a new integration with Gezy, the
+e-commerce platform built at Lundi Matin. We have been working on the
+foundational components of this integration, and will continue to increase
+feature coverage in the upcoming releases.
+
+For experienced Front-Commerce developers, this will allow you to build custom
+storefronts with all the tools you already know and love, while leveraging the
+features of Gezy's backend:
+
+[![Gezy features](./assets/3.7/gezy-features.png)](./assets/3.7/gezy-features.png)
+
+We will provide more information about this integration in the upcoming
+releases. In the meantime, feel free to <ContactLink>reach out to
+us</ContactLink> if you want to learn about Gezy or have any questions related
+to possible projects.
+
+## A patch version awaits you!
+
+It's always a good idea to keep your Front-Commerce project up to date and
+benefit from these improvements.
+
+We encourage you to read the details of the changes below, and upgrade your
+projects to the latest patch version for your current minor version. Even
+better, consider upgrading to the latest minor version to benefit from all the
+improvements we have made since your latest upgrade!
+
+:::info
+
+We improved our **Release Schedule** documentation pages, to help you get a
+better view of the upcoming releases and the current support status of each
+version. You can find them in the
+[**3.x release schedule**](/docs/3.x/upgrade/release-notes#release-schedule) and
+[**2.x release schedule**](/docs/2.x/appendices/release-notes#release-schedule)
+pages.
+
+:::
+
+We improved existing features and fixed bugs in these releases. Bugfixes were
+ported to all supported versions when applicable.
+
+- **Magento1**:
+
+  - guests can now follow their orders progress in projects using Magento1
+  - developers can now reuse Magento1 custom cart data in custom resolvers
+
+- **Magento2 payments**:
+
+  - we fixed an issue causing the `newCart.coupon` field to _randomly_ fail with
+    `Request failed with status code 404` errors for payments using the async
+    workflow. See
+    [front-commerce/front-commerce!3610](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3610)
+    for details.
+
+- **Adyen**:
+
+  - we fixed an issue causing Adyen payment to fail when using pre-registered
+    cards in 3.x.
+
+- **Accessibility**
+
+  - the `SelectMenu` component is now visible when used in a modal
+  - we improved the accessibility of the `PriceFilter` and `OptionPicker`
+    components
+  - we adjusted the styles of the `ProductReviewsSynthesis` and `ProductItem` to
+    improve the spacing of links
+  - we pinned `react-paginate` to version 8.1.3 to avoid impacting Lighthouse
+    scores. See
+    [the related issue in the project](https://github.com/AdeleD/react-paginate/issues/459#issuecomment-1559808606).
+
+- **Remix**:
+
+  - we removed the `remix-redis-session` dependency and inlined its code in
+    Front-Commerce so we can better control the session management.
+  - redis session keys now have an expiry date, to prevent ever-growing session
+    storage.
+  - we re-introduced an environment variable
+    `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_SECONDS` to configure the redis session
+    duration. In 2.x it was named `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_MS`.
+  - we pinned the 3.x `rollup` dependency version, to avoid an issue with the
+    latest version (4.19.1) which would cause the skeleton not to build
+    properly. The error was
+    `[vite-plugin-pwa:build] Cannot read properties of null (reading 'getLiteralValueAtPath')`.
+
+- **Akamai Image Manager**:
+
+  - it is now possible to install the Akamai Image Manager extension in 3.x,
+    without the error
+    `Cannot find package '/path/to/project/node_modules/@front-commerce/akamai-image-manager/package.json' imported from /path/to/project/front-commerce.config.ts`
+
+- **Quick order**:
+
+  - it is now possible to submit partial quick order items
+  - when an error occurs while adding a product to the cart, the error message
+    is now displayed next to the related product
+
+- **DX**:
+  - in 3.x's development mode, projects using the `contentful` package no longer
+    crash due to Vite optimisations (the error was
+    `[vite] Error when evaluating SSR module virtual:front-commerce/config: failed to import "contentful"`)
+  - we fixed an issue causing axios debug calls to not be properly logged in 3.x
+- **Codemods:**
+  - we fixed a critical regression from 3.6.0 causing codemods to crash in
+    projects not importing the `payzen` package
+  - 2.x imports of `web/core/analytics` are now correctly updated by codemods
+
+<hr />
+
+<BackportList
+  currentVersion={["3.7.0", "2.32.0"]}
+  previousVersions={[
+    "3.6.2",
+    "3.5.6",
+    "3.4.8",
+    "3.3.7",
+    "3.2.10",
+    "3.1.9",
+    "3.0.8",
+    "2.31.1",
+    "2.30.2",
+    "2.29.4",
+    "2.28.6",
+    "2.27.8",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+Upgrade Front-Commerce (Migration guides):
+[3.7.0](/docs/3.x/upgrade/migration-guides/3.6-3.7),
+[2.32.0](/docs/2.x/appendices/migration-guides/#2310---2320)<br /> Read the full
+changelog (Customers only):
+[3.7.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.7.0),
+[2.32.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.32.0).
+
+</ChangelogFooter>
