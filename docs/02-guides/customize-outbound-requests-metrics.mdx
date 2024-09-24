@@ -1,0 +1,57 @@
+---
+title: Customize Outbound Requests Metrics
+description: How to customize the outbound requests metrics.
+---
+
+To customize outbound requests metrics in your Front-Commerce application, you
+can use the `MetricsService` provided by the core services. This guide will walk
+you through the steps to set up and use the `MetricsService` to track and
+observe metrics for outbound requests.
+
+## Register `MetricsUrlConverter` in your extension
+
+This converter will define how to extract metrics names from requests.
+
+Let's say we have the following outbound request and we want to track them
+separately in our metrics:
+
+- `https://api.example.com/magento`
+- `https://api.example.com/contentful`
+
+We can achieve this by registering a `MetricsUrlConverter` in our extension,
+
+- The first parameter is a regex that will be used to match the request host, or
+  a function that returns a boolean.
+- The second parameter is a function that will be used to extract the metrics
+  name from the request.
+
+```typescript title="src/extensions/acme-extension/index.ts"
+import { MetricsUrlConverter } from "@front-commerce/core/services";
+
+export default function acmeExtension() {
+  const basePath = "extensions/acme-extension";
+  return defineRemixExtension({
+    meta: import.meta,
+    name: "acme-extension",
+    unstable_lifecycleHooks: {
+      onServerServicesInit: async (services) => {
+        // outbound requests "Example API: Magento (https://api.example.com/magento/product/1)"
+        services.MetricsService.registerMetricsUrlConverter(
+          new MetricsUrlConverter(
+            /.*api\.example\.com\/magento/,
+            (req) => `Example API: Magento (${req.host})`
+          )
+        );
+
+        // outbound requests "Example API: Contentful (https://api.example.com/contentful/rest)"
+        services.MetricsService.registerMetricsUrlConverter(
+          new MetricsUrlConverter(
+            (req) => req.path.startsWith("/contentful"),
+            (req) => `Example API: Contentful (${req.host})`
+          )
+        );
+      },
+    },
+  });
+}
+```
