@@ -1,0 +1,43 @@
+---
+title: 3.7 -> 3.8
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.7
+  to 3.8
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.8.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.8.0
+```
+
+## 🆕 Category SEO Metadata Generation Function
+
+A new
+[`generateCategorySeoMetas`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/173deec49216145c45a703c6f3353fc7dc631d26/packages/theme-chocolatine/theme/modules/Category/CategorySeo/generateCategorySeoMetas.ts)
+function has been added to the `theme/modules/Category/CategorySeo` directory.
+This function extracts the logic previously used in the
+[`routes/_main.category.$id.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/173deec49216145c45a703c6f3353fc7dc631d26/packages/theme-chocolatine/routes/_main.category.$id.tsx#L119)
+route.
+
+If you have overridden the `routes/_main.category.$id.tsx` route in your
+project, we recommend updating it to utilize this new function for improved
+consistency and maintainability.
