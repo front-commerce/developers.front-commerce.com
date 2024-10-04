@@ -41,3 +41,13 @@ route.
 If you have overridden the `routes/_main.category.$id.tsx` route in your
 project, we recommend updating it to utilize this new function for improved
 consistency and maintainability.
+
+## `/media` routes have been updated in Magento1 and Magento2 packages
+
+In this release, we fixed the `/media` routes so that they honors the
+`FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` configuration.
+
+To cope with this update, you should ensure that your codebase contains the
+changes from the fix if your project overrode `/media` routes. See the related
+commit:
+[b445161a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/b445161ac1880293c9e1e8c6af8a85139c0410b3).
