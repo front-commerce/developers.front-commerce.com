@@ -29,7 +29,9 @@ comments).
 pnpm run front-commerce migrate --transform 3.8.0
 ```
 
-## 🆕 Category SEO Metadata Generation Function
+## Manual Migration
+
+### Category SEO Metadata Generation Function
 
 A new
 [`generateCategorySeoMetas`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/173deec49216145c45a703c6f3353fc7dc631d26/packages/theme-chocolatine/theme/modules/Category/CategorySeo/generateCategorySeoMetas.ts)
@@ -42,7 +44,7 @@ If you have overridden the `routes/_main.category.$id.tsx` route in your
 project, we recommend updating it to utilize this new function for improved
 consistency and maintainability.
 
-## `/media` routes have been updated in Magento1 and Magento2 packages
+### `/media` routes have been updated in Magento1 and Magento2 packages
 
 In this release, we fixed the `/media` routes so that they honors the
 `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` configuration.
@@ -52,7 +54,7 @@ changes from the fix if your project overrode `/media` routes. See the related
 commit:
 [b445161a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/b445161ac1880293c9e1e8c6af8a85139c0410b3).
 
-## Update PWA manifest link
+### Update PWA manifest link
 
 In this release, we have fixed an issue with PWA link when the manifest is
 behind a Basic auth, to fix this in your project, you must apply the following
@@ -75,3 +77,177 @@ export const links: LinksFunction = () => {
 
 You can also check this commit :
 [35d3bb2f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/35d3bb2f24679b1fdeb19b936aa488adfd74a630)
+
+### `@front-commerce/remix` no longer depends on `@opentelemetry/instrumentation`
+
+In previous patch releases, we added `@opentelemetry/instrumentation` as a peer
+dependency of the `@front-commerce/remix` package to resolve an issue with how
+`vite` bundles the <abbr title="Open Telemetry">OTel</abbr> package in
+production. Since then, we have completely refactored how the metrics middleware
+integrates with the server.
+
+As a result of this refactoring, the `@opentelemetry/instrumentation` package is
+no longer necessary. If you have installed this package in your project, you can
+safely remove it starting from Front-Commerce 3.8.
+
+To remove the package, run the following command:
+
+```shell
+pnpm remove @opentelemetry/instrumentation
+```
+
+### `server.mjs` entrypoint changes
+
+This guide outlines important changes to the `server.mjs` file in Front-Commerce
+3.8. These updates improve server initialization and add metrics collection
+capabilities.
+
+:::important
+
+These changes are only relevant if you are not using the provided
+[`startExpressServer`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/1b0c93c4f466702385920d1a8c64598aa2f1dac3/skeleton/server.mjs#L1-3)
+function to start your express server.
+
+For a complete overview of all changes, please refer to the
+[full diff](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/3662/diffs#2e6ff4d9df0935b4e8736bbd873272e30953c637).
+
+:::
+
+#### `onServerInit` Hook (Required)
+
+##### Purpose
+
+The `onServerInit` hook now receives the `GlobalServices` instance, allowing to
+initiate the global services earlier in the server lifecycle.
+
+##### Implementation
+
+```js title="server.mjs"
+// remove-next-line
+const { frontCommerceConfig } = await getFrontCommerceConfigModule();
+// add-start
+const { frontCommerceConfig, services } = await getFrontCommerceConfigModule();
+frontCommerceConfig.lifecycleHooks.onServerInit(services.global);
+// add-end
+
+// ... (rest of the code remains the same)
+
+if (viteDevServer) {
+  viteDevServer.watcher.on("change", async (file) => {
+    // ... (rest of the code remains the same)
+
+    // remove-next-line
+    const { frontCommerceConfig: updatedFrontCommerceConfig } =
+      await getFrontCommerceConfigModule();
+    // add-start
+    const {
+      frontCommerceConfig: updatedFrontCommerceConfig,
+      services: updatedServices,
+    } = await getFrontCommerceConfigModule();
+
+    frontCommerceConfig.lifecycleHooks.onServerInit(updatedServices.global);
+    // add-end
+
+    const updatedBuild = await getBuildFunction();
+
+    reloadRequestHandler({
+      frontCommerceConfig: updatedFrontCommerceConfig,
+      services: updatedServices,
+      build: updatedBuild,
+    });
+  });
+}
+```
+
+#### Metrics Middleware (Optional)
+
+##### Purpose
+
+Collect performance metrics for your application using the new metrics
+middleware.
+
+##### Implementation
+
+```js title="server.mjs"
+// add-start
+import {
+  installInstrumentation,
+  getInstrumentationMeticsKey,
+  createMetricsMiddleware,
+} from "@front-commerce/remix/server/express/instrumentation";
+// add-end
+
+// ensure that this is done after all `imports` and before any code execution.
+// add-next-line
+const instrumentation = await installInstrumentation();
+installGlobals();
+
+const { frontCommerceConfig, services } = await getFrontCommerceConfigModule();
+frontCommerceConfig.lifecycleHooks.onServerInit(services.global);
+
+// add-start
+const metricsKey = getInstrumentationMeticsKey(frontCommerceConfig);
+if (metricsKey) {
+  instrumentation.start(services.global.MetricsService);
+}
+// add-end
+
+// ... (rest of the code remains the same)
+
+if (viteDevServer) {
+  viteDevServer.watcher.on("change", async (file) => {
+    // ... (rest of the code remains the same)
+
+    const {
+      frontCommerceConfig: updatedFrontCommerceConfig,
+      services: updatedServices,
+    } = await getFrontCommerceConfigModule();
+
+    frontCommerceConfig.lifecycleHooks.onServerInit(updatedServices.global);
+
+    // add-start
+    const updatedMetricsKey = getInstrumentationMeticsKey(
+      updatedFrontCommerceConfig
+    );
+    if (updatedMetricsKey) {
+      instrumentation.start(updatedServices.global.MetricsService);
+    } else if (instrumentation.enabled) {
+      instrumentation.stop();
+    }
+    // add-end
+
+    const updatedBuild = await getBuildFunction();
+
+    reloadRequestHandler({
+      frontCommerceConfig: updatedFrontCommerceConfig,
+      services: updatedServices,
+      build: updatedBuild,
+    });
+  });
+}
+
+// ... (rest of the code remains the same)
+
+export const startExpressServer = () => {
+  // ... (rest of the code remains the same)
+
+  app.use(express.static("build/client", { maxAge: "1h" }));
+
+  app.use(morgan("tiny"));
+
+  // add-start
+  const metricsKey = getInstrumentationMeticsKey(frontCommerceConfig);
+  if (metricsKey) {
+    app.use(
+      createMetricsMiddleware({
+        cloudMetricsKey: metricsKey,
+      })
+    );
+  }
+  // add-end
+
+  // ... (rest of the code remains the same)
+
+  return app;
+};
+```
