@@ -51,3 +51,27 @@ To cope with this update, you should ensure that your codebase contains the
 changes from the fix if your project overrode `/media` routes. See the related
 commit:
 [b445161a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/b445161ac1880293c9e1e8c6af8a85139c0410b3).
+
+## Update PWA manifest link
+
+In this release, we have fixed an issue with PWA link when the manifest is
+behind a Basic auth, to fix this in your project, you must apply the following
+change:
+
+```diff title="app/root.tsx"
+export const links: LinksFunction = () => {
+-  return [{ rel: "manifest", href: "/manifest.webmanifest" }].concat(
+-    pwaAssetsHead.links
+-  );
++  return [
++    {
++      rel: "manifest",
++      href: "/manifest.webmanifest",
++      crossOrigin: "use-credentials",
++    },
++  ].concat(pwaAssetsHead.links);
+};
+```
+
+You can also check this commit :
+[35d3bb2f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/35d3bb2f24679b1fdeb19b936aa488adfd74a630)
