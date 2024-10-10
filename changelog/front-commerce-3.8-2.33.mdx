@@ -1,0 +1,248 @@
+---
+title: "Release: 3.8 & 2.33"
+authors: pierre
+date: 2024-10-10T10:10
+hide_table_of_contents: true
+---
+
+## Gezy major features and customer-driven improvements
+
+As more projects go live with Front-Commerce 3.x or upgrade to the latest
+versions, we've received valuable feedback from our customers. **Front-Commerce
+3.8 incorporates core improvements and features to support projects with diverse
+and specific requirements.**
+
+This release marks a major milestone for our Gezy integration, introducing core
+e-commerce functionalities. We're excited to announce that **you can now
+confidently start a project with Front-Commerce and Gezy**, as we've implemented
+essential features and are now focusing on advanced capabilities!
+
+As always, this release includes bug fixes that enhance the overall stability,
+DX and performance of the platform.
+
+<!-- truncate -->
+
+## Gezy: key features implemented
+
+Building on the foundations laid in version 3.7, we've successfully implemented
+core e-commerce functionalities for the Gezy platform. **This release provides
+all the essential features for guide a visitor from browsing your catalog to
+becoming a customer with their first completed order!**
+
+We took this opportunity to enrich our GraphQL core schema with additional data
+for core entities and improved our default theme to support these new features.
+
+Our team is now focusing on advanced capabilities, including:
+
+- Professional account management
+- Sophisticated payment and shipping methods
+- Custom pricing logic
+
+Curious about how Gezy can benefit your projects? We invite you to explore its
+potential.
+
+<ContactLink>Reach out to us</ContactLink> to schedule a personalized demo and get
+answers to your questions. Let's discuss how Gezy and Front-Commerce can power your
+next e-commerce initiative!
+
+## Contribution Mode : enhanced Support for complex pages
+
+As e-commerce websites grow more sophisticated, there's an increasing demand for
+complex, content-rich pages. Some of our customers found technical issues with
+the Contribution mode when browsing pages with numerous components from
+different sources.
+
+We've addressed this challenge in our latest release by enhancing the technical
+foundation of Contribution mode. **This update allows for the creation and
+display of significantly more complex pages, supporting a possibly unlimited
+number of components simultaneously.**
+
+While this update doesn't introduce new features visible to end-users, it
+significantly improves the protocol used by Front-Commerce to enrich the UI with
+information about the data to assist contributors in their work.
+
+:::info Technical details
+
+Previously, we relied on HTTP response headers to provide metadata about
+displayed blocks, which had inherent limitations.
+
+Our new implementation uses a dedicated query to the backend to retrieve this
+metadata. This approach circumvents the previous constraints, ensuring that your
+complex pages load correctly, even when accessed through CDNs or proxies that
+might have imposed limitations on header sizes.
+
+:::
+
+## OpenTelemetry instrumentation
+
+Another important improvement landed in this release. We have updated the
+OpenTelemetry instrumentation to provide clearer insights into your
+application's external requests. This instrumentation allows you to monitor your
+system's interactions with external services to detect performance issues or
+bottlenecks.
+
+While this was already possible with Front-Commerce 2.x, we have improved the
+way the instrumentation is set up to allow you to customize the way requests are
+grouped and monitored.
+
+It opens up the possibility to:
+
+- **Customizable request grouping:** You now have the flexibility to group and
+  categorize requests according to your specific monitoring needs.
+- **Human-Readable service names:** Replace cryptic hostnames with intuitive,
+  descriptive names for outbound requests. For example:
+  - "CMS" instead of acme.content-service.com
+  - "PIM" for product.example.com
+  - "E-Commerce" to represent my-gezy-instance.lundimatin.biz!
+- **Differentiated API Manager requests:** Easily distinguish between requests
+  made to a single API Manager. For instance, separate
+  `api-manager.mycompany.com/catalog` from `api-manager.mycompany.com/content`.
+
+Read more about it in the
+[Customize Outbound Requests Metrics guide](/docs/3.x/guides/customize-outbound-requests-metrics).
+
+## Other changes
+
+We additionally worked on changes and bug fixes across different areas of the
+product. You'll find a summary of these changes below.
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Features</h3></summary>
+```
+
+- **Magento1:**
+  - we now support guest newsletter confirmation for Magento1
+- **Theme:**
+  - the <abbr title="Product Detail Page">PDP</abbr> now displays more details
+    about the products (brand, weight, dimensions…) for platforms exposing these
+    information
+  - we also added support for additional SEO metadata for both products and
+    categories. Their pages now defines the following tags when the data is
+    available:
+    - `<meta name="robots" content="">`,
+    - `<meta name="product:availability" content="">`,
+    - `<meta name="product:retailer_item_id" content="">`
+  - we implemented cleaner `ErrorBoundary` components to handle different route
+    errors, read more about it in the [docs](/docs/3.x/guides/error-boundary)
+  - we added error handling to the API fetcher and integrated error management
+    within the `MiniCart` and `PaypalButton` components. `useCart` hook and
+    `withCart` HOC now also expose error information.
+- **DX:**
+  - we introduced a `devErrorOverlay` leveraging Vite's error overlay to provide
+    a better experience for detecting errors when working on the project,
+    notably during hydration
+  - we now export the `ResolverContext` type from `@front-commerce/core` so it
+    can be used in graphql modules resolvers, as well as fakes to be used in
+    tests.
+- **Core:**
+  - we now expose `@front-commerce/remix/vite/vmod.mjs` as a public API to allow
+    reuse in custom servers
+  - we now expose a `isLoggedIn` property in the `UserJourney` to have a
+    platform agnostic way to check if the user is logged in.
+
+```mdx-code-block
+</details>
+```
+
+```mdx-code-block
+<details>
+  <summary><h3 className="mb-0">Bug Fixes</h3></summary>
+```
+
+_These bug fixes were also backported to `2.x` when relevant._
+
+- **Cache:**
+  - we fixed a regression preventing custom strategies from being registered
+    since 3.4
+  - we fixed fatal errors during cache invalidation for projects using the
+    `PerMagentoCustomerGroup` cache strategy
+- **Magento2:**
+
+  - we fixed an issue in guest checkout paid using paypal, payzen or stripe. We
+    now use the platform agnostic `currentBillingAddress` field, instead of
+    `billing_address` in payment modules, to ensure that the correct address is
+    used for the payment.
+
+- **Routes:**
+  - we fixed an issue where app folder route overrides would have a full path
+    when a layout route exists in an extension, and ensured that routes defined
+    in `/app/routes` can also use layouts from extension or config based routes.
+  - we now properly detect when the user is logged in to redirect them to the
+    `/login` route when accessing the `/register` route
+- **Theme:**
+
+  - we fixed an issue where PWA manifest couldn't be accessed when the app is
+    behind a Basic Auth
+  - we fixed several issues with the `Slider` component to prevent rendering
+    bugs and inconsistencies when going back through the slides
+  - we fixed a hydration issue when using the Wysiwyg due to `Date.now` and
+    `Math.random` being different on SSR and CSR. We now use
+    [`useId`](https://react.dev/reference/react/useId) from react to ensure a
+    stable id between server and client.
+  - the `renderChildNodes` are now memoized to prevent unnecessary re-renders
+    and potential infinite loops. This change ensures that when
+    `renderChildNodes` is used outside of a memoized context, it doesn't create
+    new component types on each render, improving performance and stability.
+  - image preload link now uses `fetchPriority` instead of `fetchpriority` to
+    follow
+    [React 18's requirements](https://github.com/facebook/react/pull/25927)
+
+- **GraphQL:**
+  - we introduced a new custom GraphQL Date scalar to allow developers to use a
+    Date object or a String as a date in GraphQL queries
+  - we now handle errors in GraphQL module runtimes more gracefully. Previously
+    if the loading of a GraphQL module runtime failed, the server would crash.
+    Now it will log the error and continue in development mode, while it will
+    crash in production.
+- **Magento:**
+
+  - `/media` routes now honors the `FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX`
+    configuration
+  - we fixed the WYSIWYG parsing logic to ship valid HTML code from invalid
+    Magento's HTML. It now converts widget shortcodes wrapped in `<p>` tags to
+    `<div>` tags. Magento automatically wraps widgets in `<p>` tags which
+    results in invalid HTML in the WYSIWYG editor, which caused hydration errors
+    in React >= 17.
+
+- **TwicPics**
+  - we fixed an issue to prevent TwicPics images from being transformed with
+    incorrect proportions
+  - we also fixed an issue where TwicPics images could be blurry
+
+```mdx-code-block
+</details>
+```
+
+<hr />
+
+<BackportList
+  currentVersion={["3.8.0", "2.33.0"]}
+  previousVersions={[
+    "3.7.2",
+    "3.6.2",
+    "3.5.6",
+    "3.4.8",
+    "3.3.7",
+    "3.2.10",
+    "3.1.9",
+    "2.31.1",
+    "2.30.2",
+    "2.29.4",
+    "2.28.6",
+    "2.27.8",
+  ]}
+/>
+
+<hr />
+
+<ChangelogFooter>
+
+Upgrade Front-Commerce (Migration guides):
+[3.8.0](/docs/3.x/upgrade/migration-guides/3.7-3.8),
+[2.33.0](/docs/2.x/appendices/migration-guides/#2320---2330)<br /> Read the full
+changelog (Customers only):
+[3.8.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.8.0),
+[2.33.0](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/2.33.0).
+
+</ChangelogFooter>
