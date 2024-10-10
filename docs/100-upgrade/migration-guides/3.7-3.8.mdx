@@ -1,0 +1,77 @@
+---
+title: 3.7 -> 3.8
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.7
+  to 3.8
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.8.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.8.0
+```
+
+## 🆕 Category SEO Metadata Generation Function
+
+A new
+[`generateCategorySeoMetas`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/173deec49216145c45a703c6f3353fc7dc631d26/packages/theme-chocolatine/theme/modules/Category/CategorySeo/generateCategorySeoMetas.ts)
+function has been added to the `theme/modules/Category/CategorySeo` directory.
+This function extracts the logic previously used in the
+[`routes/_main.category.$id.tsx`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/173deec49216145c45a703c6f3353fc7dc631d26/packages/theme-chocolatine/routes/_main.category.$id.tsx#L119)
+route.
+
+If you have overridden the `routes/_main.category.$id.tsx` route in your
+project, we recommend updating it to utilize this new function for improved
+consistency and maintainability.
+
+## `/media` routes have been updated in Magento1 and Magento2 packages
+
+In this release, we fixed the `/media` routes so that they honors the
+`FRONT_COMMERCE_BACKEND_IGNORE_CACHE_REGEX` configuration.
+
+To cope with this update, you should ensure that your codebase contains the
+changes from the fix if your project overrode `/media` routes. See the related
+commit:
+[b445161a](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/b445161ac1880293c9e1e8c6af8a85139c0410b3).
+
+## Update PWA manifest link
+
+In this release, we have fixed an issue with PWA link when the manifest is
+behind a Basic auth, to fix this in your project, you must apply the following
+change:
+
+```diff title="app/root.tsx"
+export const links: LinksFunction = () => {
+-  return [{ rel: "manifest", href: "/manifest.webmanifest" }].concat(
+-    pwaAssetsHead.links
+-  );
++  return [
++    {
++      rel: "manifest",
++      href: "/manifest.webmanifest",
++      crossOrigin: "use-credentials",
++    },
++  ].concat(pwaAssetsHead.links);
+};
+```
+
+You can also check this commit :
+[35d3bb2f](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/35d3bb2f24679b1fdeb19b936aa488adfd74a630)
