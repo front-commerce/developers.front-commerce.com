@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "predev": "pnpm run genfromcode",
     "dev": "pnpm run start",
     "start": "pnpm run docusaurus start",
+    "genfromcode": "node ./genfromcode.mjs",
     "build": "pnpm run docusaurus build",
     "swizzle": "pnpm run docusaurus swizzle",
     "deploy": "pnpm run docusaurus deploy",
