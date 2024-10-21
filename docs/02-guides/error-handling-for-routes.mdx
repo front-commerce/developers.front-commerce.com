@@ -135,6 +135,45 @@ You can override these by adding your own components to the
 [`theme/pages/Error/appErrorPages.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5f23e92ac2008298dad36b72ae0066433d0311ae/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts)
 object.
 
+## Customizing Meta Tags
+
+<SinceVersion tag="3.9" />
+
+Front-Commerce allows you to customize the meta tags for your error pages by
+overriding the `generateAppRouteErrorMeta.ts`
+
+### Adding Custom Meta Tags
+
+1. Create a new meta tag generator:
+   [`theme/pages/Error/meta/generateAppRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6aee7c3f7e39cabf25ed1067378dfcdaf4f2a6d0/packages/theme-chocolatine/theme/pages/Error/meta/generateAppRouteErrorMeta.ts).
+2. Add your custom meta tags:
+
+   ```typescript title="theme/pages/Error/appErrorPages.ts"
+   import type { ErrorMetaFunction } from "theme/pages/Error/meta";
+   import { notFoundPageMessages } from "theme/modules/PageError/NotFound/messages";
+
+   export const generateAppRouteErrorMeta: ErrorMetaFunction = (intl) => ({
+     404: {
+       title: intl.formatMessage(notFoundPageMessages.seoTitle),
+       description: intl.formatMessage(notFoundPageMessages.content),
+     },
+   });
+   ```
+
+### Default Meta Tags
+
+Front-Commerce provides default meta tags for common status codes: (see
+exhaustive list in
+[`theme/pages/Error/meta/generateCoreRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/pages/Error/meta/generateCoreRouteErrorMeta.ts))
+
+- 429: Rate Limit Exceeded
+- 503: Maintenance
+- 404: Not Found
+
+You can override these by adding your own meta tags to the
+[`theme/pages/Error/meta/generateAppRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6aee7c3f7e39cabf25ed1067378dfcdaf4f2a6d0/packages/theme-chocolatine/theme/pages/Error/meta/generateAppRouteErrorMeta.ts)
+export.
+
 ## Best Practices
 
 1. **Granular Error Handling**: Use route-specific error boundaries for handling
