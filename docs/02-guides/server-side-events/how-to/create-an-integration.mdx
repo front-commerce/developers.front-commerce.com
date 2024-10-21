@@ -1,20 +1,26 @@
 ---
 title: Create an integration
 description:
-  This guide explains how to create integration to dispatch events to external services.
+  This guide explains how to create integration to dispatch events to external
+  services.
 ---
 
 import BrowserWindow from "@site/src/components/BrowserWindow";
 
 <p>{frontMatter.description}</p>
 
-We will create a new integration to dispatch events to [Webhook.cool](https://webhook.cool/).
+We will create a new integration to dispatch events to
+[Webhook.cool](https://webhook.cool/).
 
 ## Create an integration file
 
-First you need to create a file for the integration. For this example, we will name our integration `Coolwebhook` and will create a new file in `app/server-events/integrations/CoolWebhookIntegration.ts`.
+First you need to create a file for the integration. For this example, we will
+name our integration `Coolwebhook` and will create a new file in
+`app/server-events/integrations/CoolWebhookIntegration.ts`.
 
-Integrations classes must implement the `Integration` interface from `@front-commerce/core/server-events/integrations`. Copy this code in the newly created file:
+Integrations classes must implement the `Integration` interface from
+`@front-commerce/core/server-events/integrations`. Copy this code in the newly
+created file:
 
 ```ts title="app/server-evets/integrations/CoolWebhookIntegration.ts"
 import type { Integration } from "@front-commerce/core/server-events/integrations";
@@ -30,22 +36,28 @@ export default class CoolWehbookIntegration implements Integration {
 
   handle(messageId: string, payload: any) {
     console.log(messageId);
-    console.log(payload)
+    console.log(payload);
   }
 }
 ```
 
 In this class, we have two entities :
-- `compatibleEvents`: this indicates which events the integration will handle, it can be `*` to handle all events or an array of string that contains [compatible events](/docs/3.x/guides/server-side-events/faq#what-event-is-implemented-in-front-commerce).
+
+- `compatibleEvents`: this indicates which events the integration will handle,
+  it can be `*` to handle all events or an array of string that contains
+  [compatible events](/docs/3.x/guides/server-side-events/faq#what-events-are-implemented-in-front-commerce).
 - `handle`: this is the method that will be called when an event is received.
 
-For your integrations, only `compatibleEvents` and `handle` are required, the `webhookId` and the constructor is an example of custom method and properties that you can implement into your integrations.
+For your integrations, only `compatibleEvents` and `handle` are required, the
+`webhookId` and the constructor is an example of custom method and properties
+that you can implement into your integrations.
 
 ## Write specific code for your integration
 
 Now we need to implement to logic which sends the event to external service
 
-Since Webhook.cool is a minimalist services, we can use a single `fetch` call to send the event :
+Since Webhook.cool is a minimalist services, we can use a single `fetch` call to
+send the event :
 
 ```ts title="app/server-evets/integrations/CoolWebhookIntegration.ts"
 import type { Integration } from "@front-commerce/core/server-events/integrations";
@@ -72,9 +84,12 @@ export default class CoolWehbookIntegration implements Integration {
 
 :::info
 
-Here, we are posting the raw event details to the webhook, but feel free to manipulate it's data freely to adapt it to your specific integration.
+Here, we are posting the raw event details to the webhook, but feel free to
+manipulate it's data freely to adapt it to your specific integration.
 
-You can find the data format for the payload object in the [FAQ](/docs/3.x/guides/server-side-events/faq#what-are-the-data-returned-by-the-server-events) section.
+You can find the data format for the payload object in the
+[FAQ](/docs/3.x/guides/server-side-events/faq#what-data-is-published-for-a-server-event)
+section.
 
 :::
 
@@ -82,7 +97,8 @@ You can find the data format for the payload object in the [FAQ](/docs/3.x/guide
 
 Now that our integration is created, we have to register it in Front-Commerce.
 
-To do this in a newly created app, you can register your new integration in the `app/config/serverEvents.ts` configuration file:
+To do this in a newly created app, you can register your new integration in the
+`app/config/serverEvents.ts` configuration file:
 
 ```ts title="app/config/serverEvents.ts"
 import { ConsoleIntegration } from "@front-commerce/core/server-events/integrations";
@@ -112,7 +128,8 @@ export default {
 
 :::info
 
-You need to replace `old-kitchen-32` with your Webhook ID, you can find it on the [Webhook.cool](https://webhook.cool/) page
+You need to replace `old-kitchen-32` with your Webhook ID, you can find it on
+the [Webhook.cool](https://webhook.cool/) page
 
 ![Webhook cool code](assets/webhook_cool_code.gif)
 
@@ -122,18 +139,21 @@ You need to replace `old-kitchen-32` with your Webhook ID, you can find it on th
 
 We are now ready to test your integration !
 
-Please be sure to read the [run local Server Event Worker guide](/docs/3.x/guides/server-side-events/faq#how-can-i-test-server-events-in-local-environment) before testing your integration.
+Please be sure to read the
+[run local Server Event Worker guide](/docs/3.x/guides/server-side-events/faq#how-can-i-test-server-events-in-local-environment)
+before testing your integration.
 
-Then let's try to send an event by going to the server event test page [http://localhost:4000/__front-commerce/test/events](http://localhost:4000/__front-commerce/test/events) and check out the [Webhook.cool](https://webhook.cool/) page.
+Then let's try to send an event by going to the server event test page
+[http://localhost:4000/\_\_front-commerce/test/events](http://localhost:4000/__front-commerce/test/events)
+and check out the [Webhook.cool](https://webhook.cool/) page.
 
 <div style={{ width: "100%", maxWidth: "100%" }}>
-   <BrowserWindow noPadding>
-     <img
-       src={require("./assets/webhook_cool_result.png").src}
-       width="100%"
-       height="100%"
-       style={{ objectFit: "contain", marginBottom: -10 }}
-     />
-   </BrowserWindow>
- </div>
-
+  <BrowserWindow noPadding>
+    <img
+      src={require("./assets/webhook_cool_result.png").src}
+      width="100%"
+      height="100%"
+      style={{ objectFit: "contain", marginBottom: -10 }}
+    />
+  </BrowserWindow>
+</div>
