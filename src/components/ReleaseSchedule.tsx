@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import schedule from "../../schedule.json";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
@@ -120,11 +120,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}) => {
+}: PaginationProps) => {
   const maxVisiblePages = 10; // Maximum number of visible page buttons
 
   // Calculate the range of pages to display

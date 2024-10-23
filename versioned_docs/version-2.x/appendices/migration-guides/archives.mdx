@@ -796,7 +796,7 @@ a `contextEnhancer`:
 :::info Important
 
 **We recommend that you first follow the
-[`2.2.x` -> `2.3.0` migration guide](#2-2-x-gt-2-3-0).** This release was mostly
+[`2.2.x` -> `2.3.0` migration guide](#22x---230).** This release was mostly
 focused on a new optional base theme, and there are not many upgrade
 instructions.
 
@@ -1041,7 +1041,7 @@ to learn more about it.
 You may be interested in customizing new configurations added in this version:
 
 - `analytics.integrations.enabledByDefault` in
-  [config/analytics.js](/docs/2.x/advanced/analytics/legacy#Add-an-integration)
+  [config/analytics.js](/docs/2.x/advanced/analytics/legacy#add-an-integration)
   (useful for Google analytics with `anonymizeIp` for instance)
 - `search.attributeFacetMinimumDocumentCount` and
   `search.categoryFacetMinimumDocumentCount` in
@@ -1165,7 +1165,7 @@ configurations are made available through the API.
 If that's not possible, for Magento2 you can manually expose configurations from
 the version `2.0.0` of the module. If you can't upgrade to `2.2.0` then add the
 configuration below
-([as documented in "Using Magento Configuration"](/docs/2.x/magento2/using-magento-configuration#fetch-configurations-from-frontcommerce-storeconfigs-magento-endpoint)):
+([as documented in "Using Magento Configuration"](/docs/2.x/magento2/using-magento-configuration#fetch-configurations-in-your-front-commerce-application)):
 
 ```xml
 <item name="general/region/state_required" xsi:type="string">general/region/state_required</item>
@@ -1501,7 +1501,7 @@ been renamed and subtle low-level behavior changes were introduced (required
 errors by default in errors etc…).
 
 **If you were using
-[Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/2.x/appendices/migration-guides#abstract-formsy)
+[Front-Commerce's wrappers introduced in 2.0.0-rc.0](/docs/2.x/appendices/migration-guides/archives#abstract-formsy)
 you might not encounter any issues**. Otherwise, we recommend to refactor your
 code to use them!
 
@@ -1560,7 +1560,7 @@ in case you relied on some low-level APIs.
   `magento1` and `magento2` modules (file `magento(1|2)/store/loaders`). They
   were unused in the core. If your application used them, please refactor it to
   use the loader from Front-Commerce's core. See
-  [our documentation about Sitemap](/docs/2.x/advanced/production-ready/sitemap#Add-dynamic-pages)
+  [our documentation about Sitemap](/docs/2.x/advanced/production-ready/sitemap#add-dynamic-pages)
   to learn about the feature.
 - The `ProductStockLoader` no longer takes the `FeatureFlag` loader as
   parameter. Please remove this parameter if you were instantiating it manually.
@@ -1666,7 +1666,7 @@ If you've created custom Elasticsearch related features (sort orders, facets,
 pagination, loaders etc…) you may see them pop _a lot_!
 
 We encourage you to read every deprecation warnings and
-[enable traces with the `TRACE_DEPRECATION=*` environment variable](/docs/2.x/reference/environment-variables#Deprecation-warnings)
+[enable traces with the `TRACE_DEPRECATION=*` environment variable](/docs/2.x/reference/environment-variables#deprecation-warnings)
 to find where your code has to be updated. It usually will be a matter of
 removing or adding parameters to a few function calls. Here are commits with
 similar changes
@@ -2098,7 +2098,7 @@ for more details.
 The caching layer has been improved to enable a wide-range of possibilities.
 
 You will have to update your
-[`caching.js` configuration file](/docs/2.x/reference/configurations#config-caching-js)
+[`caching.js` configuration file](/docs/2.x/reference/configurations#configcachingjs)
 to the new configuration format. Front-Commerce will display a warning if you
 use the previous format but is backward-compatible.
 

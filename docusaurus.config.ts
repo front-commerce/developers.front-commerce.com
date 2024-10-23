@@ -1,11 +1,11 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+import "dotenv/config";
 
-require("dotenv").config();
+import { themes } from "prism-react-renderer";
+import type * as Preset from "@docusaurus/preset-classic";
+import type { Config } from "@docusaurus/types";
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 const REPOSITORY_URL =
   "https://github.com/front-commerce/developers.front-commerce.com";
 
@@ -34,8 +34,7 @@ function reverseSidebarItems(items) {
   return result;
 }
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+export default {
   title: "Front-Commerce Developers",
   tagline: "A blazing fast & ready to use Headless PWA Frontend solution",
   url: "https://developers.front-commerce.com",
@@ -65,11 +64,9 @@ const config = {
   presets: [
     [
       "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: ({ locale, docPath, versionDocsDirPath, permalink }) => {
+          editUrl: ({ docPath, versionDocsDirPath }) => {
             return `${REPOSITORY_URL}/tree/main/${versionDocsDirPath}/${docPath}`;
           },
           lastVersion: LAST_VERSION,
@@ -94,7 +91,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
-          editUrl: ({ locale, blogDirPath, blogPath, permalink }) => {
+          editUrl: ({ blogDirPath, blogPath }) => {
             return `${REPOSITORY_URL}/tree/main/${blogDirPath}/${blogPath}`;
           },
           feedOptions: {
@@ -104,129 +101,141 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-      }),
+      } satisfies Preset.Options,
     ],
   ],
 
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        logo: {
-          alt: "Front-Commerce",
-          src: "img/logo-full-black.svg",
-          srcDark: "img/logo-full-white.svg",
+  themeConfig: {
+    navbar: {
+      logo: {
+        alt: "Front-Commerce",
+        src: "img/logo-full-black.svg",
+        srcDark: "img/logo-full-white.svg",
+      },
+      items: [
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          dropdownActiveClassDisabled: true,
         },
-        items: [
-          {
-            type: "docsVersionDropdown",
-            position: "right",
-            dropdownActiveClassDisabled: true,
-          },
-          {
-            type: "doc",
-            docId: "welcome",
-            position: "right",
-            label: "Docs",
-          },
-          { to: "/community", label: "Community", position: "right" },
-          { to: "/blog", label: "Blog", position: "right" },
-          { to: "/changelog", label: "Changelog", position: "right" },
-          {
-            href: "https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team",
-            label: "Support",
-            position: "right",
-          },
-        ],
-      },
-      footer: {
-        style: "dark",
-        links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "3.x",
-                to: `/docs/3.x/welcome`,
-              },
-              {
-                label: "2.x",
-                to: `/docs/2.x/welcome`,
-              },
-              {
-                label: "Migrating from v2",
-                to: `/docs/3.x/category/migrating-from-v2`,
-              },
-            ],
-          },
-          {
-            title: "Community",
-            items: [
-              {
-                label: "Slack",
-                href: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/Front_Commerce",
-              },
-              {
-                label: "Contact",
-                href: "https://www.front-commerce.com/en/contact-us/",
-              },
-            ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "Changelog",
-                to: "/changelog",
-              },
-              {
-                label: "GitHub",
-                href: "https://github.com/front-commerce",
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Front-Commerce`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-        magicComments: [
-          // Remember to extend the default highlight class name as well!
-          {
-            className: "theme-code-block-highlighted-line",
-            line: "highlight-next-line",
-            block: { start: "highlight-start", end: "highlight-end" },
-          },
-          {
-            className: "code-block-error-line",
-            line: "error-next-line",
-            block: { start: "error-start", end: "error-end" },
-          },
-          {
-            className: "code-block-removed-line",
-            line: "remove-next-line",
-            block: { start: "remove-start", end: "remove-end" },
-          },
-          {
-            className: "code-block-added-line",
-            line: "add-next-line",
-            block: { start: "add-start", end: "add-end" },
-          },
-        ],
-      },
+        {
+          type: "doc",
+          docId: "welcome",
+          position: "right",
+          label: "Docs",
+        },
+        { to: "/community", label: "Community", position: "right" },
+        { to: "/blog", label: "Blog", position: "right" },
+        { to: "/changelog", label: "Changelog", position: "right" },
+        {
+          href: "https://help.front-commerce.com/en/articles/5910607-when-how-can-i-reach-the-front-commerce-support-team",
+          label: "Support",
+          position: "right",
+        },
+      ],
+    },
+    footer: {
+      style: "dark",
+      links: [
+        {
+          title: "Docs",
+          items: [
+            {
+              label: "3.x",
+              to: `/docs/3.x/welcome`,
+            },
+            {
+              label: "2.x",
+              to: `/docs/2.x/welcome`,
+            },
+            {
+              label: "Migrating from v2",
+              to: `/docs/3.x/category/migrating-from-v2`,
+            },
+          ],
+        },
+        {
+          title: "Community",
+          items: [
+            {
+              label: "Slack",
+              href: "https://join.slack.com/t/front-commerce/shared_invite/enQtMzI2OTEyMDYzOTkxLWEzODg2NjM5MmVhNGUwODE0OTI4MWMwYTcxZWZkNzE1YjU4MzRlZmQ0YWY5NDNkZWM0ZGMzMGQ4NDc4OTgxMTU",
+            },
+            {
+              label: "Twitter",
+              href: "https://twitter.com/Front_Commerce",
+            },
+            {
+              label: "Contact",
+              href: "https://www.front-commerce.com/en/contact-us/",
+            },
+          ],
+        },
+        {
+          title: "More",
+          items: [
+            {
+              label: "Changelog",
+              to: "/changelog",
+            },
+            {
+              label: "GitHub",
+              href: "https://github.com/front-commerce",
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Front-Commerce`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+      additionalLanguages: [
+        "bash",
+        "diff",
+        "json",
+        "css",
+        "graphql",
+        "git",
+        "sass",
+        "scss",
+        "typescript",
+        "yaml",
+        "javascript",
+        "css-extras",
+      ],
+      magicComments: [
+        // Remember to extend the default highlight class name as well!
+        {
+          className: "theme-code-block-highlighted-line",
+          line: "highlight-next-line",
+          block: { start: "highlight-start", end: "highlight-end" },
+        },
+        {
+          className: "code-block-error-line",
+          line: "error-next-line",
+          block: { start: "error-start", end: "error-end" },
+        },
+        {
+          className: "code-block-removed-line",
+          line: "remove-next-line",
+          block: { start: "remove-start", end: "remove-end" },
+        },
+        {
+          className: "code-block-added-line",
+          line: "add-next-line",
+          block: { start: "add-start", end: "add-end" },
+        },
+      ],
+    },
 
-      algolia: {
-        appId: "5GW5VSP0PU",
-        apiKey: "79a6baff7cbdd96f9db8aeb1828c63a3",
-        indexName: "front-commerce",
-        contextualSearch: true,
-      },
-    }),
+    algolia: {
+      appId: "5GW5VSP0PU",
+      apiKey: "79a6baff7cbdd96f9db8aeb1828c63a3",
+      indexName: "front-commerce",
+      contextualSearch: true,
+    },
+  } satisfies Preset.ThemeConfig,
   plugins: [
     async function tailwindPlugin(context, options) {
       return {
@@ -288,6 +297,4 @@ const config = {
   stylesheets: [
     "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css",
   ],
-};
-
-module.exports = config;
+} satisfies Config;

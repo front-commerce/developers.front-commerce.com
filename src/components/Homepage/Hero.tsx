@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Button } from "react-infima";
 import Link from "@docusaurus/Link";
 import Slider from "react-slick";

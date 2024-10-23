@@ -17,7 +17,8 @@ platforms:
 
 - [Native Magento feature](#native-search) (using its GraphQL API)
 - [ElasticSearch - direct access](#elasticsearch) (using ElasticSuite)
-- [Algolia](#algolia)
+- [Algolia connected to Magento](#algolia-connected-to-magento)
+- [Algolia standalone](#algolia-not-connected-to-magento)
 - [Attraqt](#attraqt)
 - [Attraqt Recommendations](#attraqt-recommendations)
 
@@ -310,7 +311,7 @@ npx front-commerce-algolia-check
 The application ID and the admin API can be found in your Algolia account. The
 index name prefix is a prefix of the indices that Front-Commerce will use. The
 value on the command line should be the same as the one used
-[to configure the Algolia module](#algolia-standalone-env).
+[to configure the Algolia module](#algolia-not-connected-to-magento).
 
 By default, Front-Commerce is able to search for products, categories and CMS
 pages, the corresponding indices need to follow some requirements.
@@ -347,7 +348,7 @@ For product indices:
 
 `category_ids` is the only required facets. Depending on your project, you can
 configure others facets in the index. For those facets to be taken into,
-[you also have to configure the Algolia module](#algolia-standalone-config).
+[you also have to configure the Algolia module](#algolia-not-connected-to-magento).
 
 :::
 

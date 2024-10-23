@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SinceVersionProps {
   tag: string;
   platform?: string;

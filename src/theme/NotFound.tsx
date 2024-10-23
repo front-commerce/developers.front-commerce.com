@@ -3,12 +3,7 @@ import Translate, { translate } from "@docusaurus/Translate";
 import { PageMetadata } from "@docusaurus/theme-common";
 import Layout from "@theme/Layout";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import {
-  BookmarkSquareIcon,
-  BookOpenIcon,
-  RssIcon,
-  Bars4Icon,
-} from "@heroicons/react/24/outline";
+import { BookOpenIcon, RssIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 

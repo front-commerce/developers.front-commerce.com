@@ -1,5 +1,5 @@
 import { useColorMode } from "@docusaurus/theme-common";
-import { useBlogPost } from "@docusaurus/theme-common/internal";
+import { useBlogPost } from "@docusaurus/plugin-content-blog/client";
 import Giscus from "@giscus/react";
 import ReadMoreLink from "@theme/BlogPostItem/Footer/ReadMoreLink";
 import EditThisPage from "@theme/EditThisPage";

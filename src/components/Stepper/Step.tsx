@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export type StepProps = PropsWithChildren<{
   step: number;

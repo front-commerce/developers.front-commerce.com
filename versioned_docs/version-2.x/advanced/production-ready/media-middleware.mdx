@@ -112,8 +112,8 @@ http://localhost:4000/media/path/to/my/image.jpg?format=small&bg=e7e7e7&cover=tr
 
 - `format`: must be one of the keys available in your `presets` configuration or
   `original` to request the image without any transformation
-- `bg` (optional): must have one of the values in the array `bgColors` of
-  your preset. If you don't set it, it will be the `defaultBgColor`
+- `bg` (optional): must have one of the values in the array `bgColors` of your
+  preset. If you don't set it, it will be the `defaultBgColor`
 - `cover` (optional): crops the image so that both dimensions are covered,
   making parts of the image hidden if necessary. If this option is not set, the
   image will fit in the dimensions without hiding any of its content. The space
@@ -253,8 +253,8 @@ is as follow:
 
 ![Alt](./assets/sizes-graph.png "Sizes Graph")
 
-And let's further assume that the image sizes available are [68, 136, 272, 544].
-Notice from the above:
+And let's further assume that the image sizes available are [68, 136, 272,
+544]. Notice from the above:
 
 1. For the viewport width of 1320 the size of the image becomes larger than 272
    (the 272 sized image is not enough in this case). This means for viewport
@@ -411,7 +411,7 @@ your catalog and put them in cache. It launches a warmup of your image caches
 that you could use before a deployment or with a cron every night.
 
 Documentation about this script is available in the
-[`scripts/imageWarmUp.js` reference page](/docs/2.x/reference/scripts#imagewarmup-js).
+[`scripts/imageWarmUp.js` reference page](/docs/2.x/reference/scripts#imagewarmupjs).
 
 ## Ignore caching through a regular expression
 

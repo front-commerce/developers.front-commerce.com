@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "react-infima";
 import Link from "@docusaurus/Link";
 import HubspotForm from "react-hubspot-form";

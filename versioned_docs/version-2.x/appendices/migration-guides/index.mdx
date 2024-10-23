@@ -349,8 +349,8 @@ It also affects the sort by "Popular" on Front-Commerce themes.
 
 :::
 
-<ContactLink>Please let us know</ContactLink> if you encounter any issues regarding
-this new behavior.
+<ContactLink>Please let us know</ContactLink> if you encounter any issues
+regarding this new behavior.
 
 ### Use facet labels as values
 
@@ -581,9 +581,9 @@ your website.
   <a href="https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/merge_requests/2120">
     removed the chunks preloading feature
   </a>
-  as it led to blocking network requests that could reduce the <abbr title="Largest Contentful Paint">
-    LCP
-  </abbr> / <abbr title="First Contentful Paint">FCP</abbr>
+  as it led to blocking network requests that could reduce the{" "}
+  <abbr title="Largest Contentful Paint">LCP</abbr> /{" "}
+  <abbr title="First Contentful Paint">FCP</abbr>
 </>
 
 of your app. From our analysis it improves the performance of the application
@@ -1838,9 +1838,9 @@ const isCompanyUser = (user) => {
 :::note
 
 When a Prismic document has been registered using the
-[`registerRoutableType`](/docs/2.x/prismic/routable-types#registerroutabletype-options)
+[`registerRoutableType`](/docs/2.x/prismic/routable-types#registerroutabletypeoptions)
 method or the
-[`registerPrismicRoute`](/docs/2.x/prismic/routable-types#registerprismicroute-options)
+[`registerPrismicRoute`](/docs/2.x/prismic/routable-types#registerprismicrouteoptions)
 method, A `url` property is exposed in the
 [Content type object](https://gitlab.blackswift.cloud/front-commerce/front-commerce-prismic/-/blob/2.14.x/prismic/server/modules/prismic/core/loaders/Content.js).
 This property contains the resolved url of the document.
@@ -2043,7 +2043,7 @@ const keyToComponent = {
 
 These new features may be relevant for your existing application:
 
-- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/2.x/magento2/search-engine#algolia)
+- [Search for products, categories and pages with Algolia in Magento2 based project](/docs/2.x/magento2/search-engine#algolia-connected-to-magento)
 - [Search for categories and pages with Algolia in Magento1 based project](/docs/2.x/magento1/search-engine#algolia)
 - [Prismic Preview](/docs/2.x/prismic/preview)
 - [HiPay payment method](/docs/2.x/advanced/payments/hipay)
@@ -2854,7 +2854,7 @@ In a nutshell, the Front-Commerce module
 that has been renamed from `mondialrelay` to `magento1-mondialrelay`. So, if you
 are upgrading a Magento1 based project using the MondialRelay module, you have
 to update your `.front-commerce.js` as documented in
-[the MondialRelay guide page](/docs/2.x/advanced/shipping/mondial-relay#integrate-with-magento1).
+[the MondialRelay guide page](/docs/2.x/advanced/shipping/mondial-relay#integrate-with-magento1-openmagelts).
 In addition, if you have custom code importing files from
 `modules/shipping-mondialrelay-magento1`, you will also have to update those
 imports to match the new file layout.
@@ -2867,10 +2867,10 @@ are needed to upgrade your project if you are using this payment platform:
 
 1. the Magento2 Adyen Front-Commerce module has been moved. As a result, you
    have to
-   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/2.x/advanced/payments/adyen#register-the-adyen-for-magento2-payment-module-in-front-commerce).
+   [update your `.front-commerce.js` as documented in the Adyen integration page](/docs/2.x/advanced/payments/adyen#register-the-adyen-payment-module-in-front-commerce).
 1. the `FRONT_COMMERCE_ADYEN_CLIENT_KEY` environment variable is now required so
    you have
-   [to configure the environment so that it is defined](/docs/2.x/advanced/payments/adyen#add-the-adyen-client-key-in-the-environment)
+   [to configure the environment so that it is defined](/docs/2.x/advanced/payments/adyen#add-the-required-environment-variables-1)
 1. we have made some changes and fixes to
    [the Adyen related frontend components](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/2.10.0/modules/payment-adyen/web/theme/modules/Adyen).
    If you have overridden some of those, you have to backport the changes.

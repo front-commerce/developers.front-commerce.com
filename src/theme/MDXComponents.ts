@@ -1,4 +1,3 @@
-import React from "react";
 import MDXComponents from "@theme-original/MDXComponents";
 
 import ContactLink from "@site/src/components/ContactLink";
@@ -12,6 +11,8 @@ import BackportList from "@site/src/components/BackportList";
 import ReleaseSchedule from "@site/src/components/ReleaseSchedule";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+
+import TOCInline from "@theme/TOCInline";
 
 import Step from "@site/src/components/Stepper/Step";
 import Steps from "@site/src/components/Stepper/Steps";
@@ -31,4 +32,5 @@ export default {
   TabItem,
   Step,
   Steps,
+  TOCInline,
 };

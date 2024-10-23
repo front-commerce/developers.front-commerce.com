@@ -93,21 +93,19 @@ class MyCustomTypeExtractor extends ContentMetadataExtractor {
       // of the X-Ray user interface.
       "aCustomSource",
       `https://a-remote-service.example.com/edit/${source.id}`
-    )
+    );
   }
 }
 
 export default {
   namespace: "MyModule",
-  dependencies: [
-    "Front-Commerce/Contribution-Mode",
-  ],
+  dependencies: ["Front-Commerce/Contribution-Mode"],
   typeDefs,
   contextEnhancer: ({ loaders }) => {
     loaders.ContentMetadataExtractorRegistry.register(
       new MyCustomTypeExtractor()
     );
-  }
+  },
 };
 ```
 
