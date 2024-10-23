@@ -109,8 +109,8 @@ export default {
     navbar: {
       logo: {
         alt: "Front-Commerce",
-        src: "img/logo-full-black.svg",
-        srcDark: "img/logo-full-white.svg",
+        src: "img/logo-full-alt-black.svg",
+        srcDark: "img/logo-full-alt-white.svg",
       },
       items: [
         {
@@ -135,7 +135,6 @@ export default {
       ],
     },
     footer: {
-      style: "dark",
       links: [
         {
           title: "Docs",
