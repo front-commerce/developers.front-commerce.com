@@ -1,4 +1,3 @@
-import React from "react";
 import { IntercomProvider } from "react-use-intercom";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 

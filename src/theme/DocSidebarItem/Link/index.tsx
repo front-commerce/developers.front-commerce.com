@@ -1,4 +1,3 @@
-import React from "react";
 import type { Props } from "@theme/DocSidebarItem/Link";
 import Link from "@theme-original/DocSidebarItem/Link";
 

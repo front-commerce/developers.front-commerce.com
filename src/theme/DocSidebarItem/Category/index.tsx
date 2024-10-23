@@ -1,4 +1,3 @@
-import React from "react";
 import type { Props } from "@theme/DocSidebarItem/Category";
 import Category from "@theme-original/DocSidebarItem/Category";
 

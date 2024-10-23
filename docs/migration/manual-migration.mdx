@@ -560,14 +560,12 @@ report any invalid expressions. Here is a list of common pattern to fix:
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
   // remove-start
-  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(
-      --boxSizeMargin
-    ) * 2 0;
+  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4
+    var(--boxSizeMargin) * 2 0;
   // remove-end
   // add-start
-  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(
-      var(--boxSizeMargin) * 2
-    ) 0;
+  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4)
+    calc(var(--boxSizeMargin) * 2) 0;
   // add-end
 
   // remove-next-line
@@ -901,12 +899,12 @@ In v3, the sitemap URL has been changed from `/sitemaps/sitemap.xml` to
 
 - The `registerNodesFetcher` method will no longer work in v3, instead you
   should
-  [register a fetchers](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  [register a fetchers](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-custom-fetchers)
   via the
   [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
 - The `overrideNodesFetcher` method will no longer work in v3, instead you
   should
-  [override a fetcher](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  [override a fetcher](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-custom-fetchers)
   via the
   [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
 
