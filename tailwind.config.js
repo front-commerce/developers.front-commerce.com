@@ -20,6 +20,11 @@ module.exports = {
         },
         // TODO - find the docosaurus css variable used in body backgrounds
         darkGray: "#1b1b1d",
+
+        background: {
+          main: "var(--ifm-background-color)",
+          card: "var(--ifm-card-background-color)",
+        },
       },
     },
   },

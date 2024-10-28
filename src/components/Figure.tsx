@@ -1,15 +1,10 @@
-import React from "react";
-
 export type FigureProps = {
   children: React.ReactNode;
   /** Represents a caption or legend describing the rest of the contents of its parent */
   caption?: string;
 };
 
-export default function Figure({
-  children,
-  caption,
-}) {
+export default function Figure({ children, caption }) {
   return (
     <figure className="text-center py-6">
       {children}
