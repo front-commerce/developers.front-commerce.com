@@ -44,15 +44,14 @@ const fetchRemoteImage = async (imagePath: string) => {
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const imagePath = params["*"] as string;
-
-  const ONE_WEEK = 7 * 24 * 60 * 60; // the default cache duration is set to one year
+  const ONE_WEEK = 7 * 24 * 60 * 60;
 
   // highlight-start
   return createResizedImageResponse(
     request,
     () => fetchRemoteImage(imagePath),
     {
-      cacheDuration: ONE_WEEK,
+      cacheDuration: ONE_WEEK, // by default, cache duration is one year. This overrides it.
     }
   );
   // highlight-end
