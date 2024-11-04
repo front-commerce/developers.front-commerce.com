@@ -74,7 +74,7 @@ export default defineExtension({
       // highlight-start
       services.MaintenanceMode.addHealthCheckService("acme", async () => {
         const response = await fetch("https://acme.com/api/health-check");
-        return response.status !== 200;
+        return response.status === 200;
       });
       // highlight-end
     },

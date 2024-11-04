@@ -19,7 +19,7 @@
     "lint": "prettier --check ."
   },
   "dependencies": {
-    "@algolia/client-search": "5.10.2",
+    "@algolia/client-search": "5.12.0",
     "@docusaurus/core": "3.5.2",
     "@docusaurus/plugin-client-redirects": "3.5.2",
     "@docusaurus/plugin-content-blog": "3.5.2",
@@ -33,7 +33,7 @@
     "clsx": "2.1.1",
     "dotenv": "16.4.5",
     "infima": "0.2.0-alpha.45",
-    "lucide-react": "^0.453.0",
+    "lucide-react": "^0.454.0",
     "postcss": "8.4.47",
     "prism-react-renderer": "2.4.0",
     "react": "18.3.1",
