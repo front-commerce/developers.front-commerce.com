@@ -1,0 +1,52 @@
+---
+title: "Features"
+description:
+  "This reference lists all the extension features available for the remix
+  package api."
+---
+
+<SinceVersion tag="3.9" />
+
+To learn more about extension features, you can read the
+[Extension Features](/docs/3.x/api-reference/front-commerce-core/extension-features)
+reference docs.
+
+## `root-error-meta`
+
+Generates the title and description meta tags for a
+[route error response](https://reactrouter.com/en/6.27.0/utils/is-route-error-response).
+
+### `config.messages`
+
+A function that returns an inner function with intl as a parameter that returns
+a PromiseLike of an object containing the messages for different route errors.
+
+#### Example
+
+```ts title="./example-extension/index.ts"
+export default defineExtension({
+  // ...
+  unstable_lifecycleHooks: {
+    onFeaturesInit: (hooks) => {
+      hooks.registerFeature("root-error-meta", {
+        config: {
+          messages: () => {
+            return (intl: IntlShape) => {
+              "404": {
+                // with intl translations
+                title: intl.formatMessage({ id: "404.title" }),
+                description: intl.formatMessage({ id: "404.description" }),
+              },
+              "500": {
+                // without intl translations
+                title: "Some error occurred",
+                description: "Please try again later",
+              },
+            };
+          },
+        },
+      });
+    },
+  },
+});
+```
