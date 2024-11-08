@@ -20,12 +20,12 @@
   },
   "dependencies": {
     "@algolia/client-search": "5.13.0",
-    "@docusaurus/core": "3.6.0",
-    "@docusaurus/plugin-client-redirects": "3.6.0",
-    "@docusaurus/plugin-content-blog": "3.6.0",
-    "@docusaurus/plugin-google-gtag": "3.6.0",
-    "@docusaurus/plugin-ideal-image": "3.6.0",
-    "@docusaurus/preset-classic": "3.6.0",
+    "@docusaurus/core": "3.6.1",
+    "@docusaurus/plugin-client-redirects": "3.6.1",
+    "@docusaurus/plugin-content-blog": "3.6.1",
+    "@docusaurus/plugin-google-gtag": "3.6.1",
+    "@docusaurus/plugin-ideal-image": "3.6.1",
+    "@docusaurus/preset-classic": "3.6.1",
     "@giscus/react": "^3.0.0",
     "@heroicons/react": "2.1.5",
     "@mdx-js/react": "3.1.0",
@@ -48,7 +48,7 @@
     "use-breakpoint": "^4.0.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.6.0",
+    "@docusaurus/module-type-aliases": "3.6.1",
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",
     "@tsconfig/docusaurus": "2.0.3",
