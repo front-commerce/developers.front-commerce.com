@@ -33,7 +33,7 @@
     "clsx": "2.1.1",
     "dotenv": "16.4.5",
     "infima": "0.2.0-alpha.45",
-    "lucide-react": "^0.454.0",
+    "lucide-react": "^0.456.0",
     "postcss": "8.4.47",
     "prism-react-renderer": "2.4.0",
     "react": "18.3.1",
