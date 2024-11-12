@@ -1,0 +1,122 @@
+---
+title: Entering and exiting the maintenance mode
+description: Learn how to put your store in maintenance mode and how to exit it.
+sidebar_position: 1
+---
+
+<SinceVersion tag="3.6" />
+
+# Maintenance Mode
+
+You may want to put one or more of your stores in maintenance mode while you do
+some maintenance work/deployment tasks on your store(s).
+
+Front-Commerce comes with an API that allows you to put/remove a store in
+maintenance mode. To enable the maintenance mode API you need to set the
+`FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable.
+
+```shell title=".env"
+FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN=a-secret-token
+```
+
+Once you have setup the `FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN`
+environment variable the maintenance mode API will be available after restarting
+the server
+
+## The Maintenance Mode API
+
+<Steps>
+
+<Step>
+
+### Activating the maintenance mode
+
+To activate the maintenance mode on a store which URL is `https://example.com/`
+use the following HTTP request:
+
+```shell
+curl --location --request POST 'https://example.com/api/maintenance-mode' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "token": "a-secret-token"
+}'
+```
+
+The `token` value must match the secret defined in your application's
+`FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN` environment variable.
+
+It is also possible to set a duration (in milliseconds) after which the
+maintenance mode will be automatically reset:
+
+```shell
+curl --location --request POST 'https://example.com/api/maintenance-mode' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "token": "a-secret-token",
+    "duration": 3600000
+}'
+```
+
+Use this if you have a rough idea of how much time the maintenance task would
+take or to prevent a user or automated process to forget to deactivate the
+maintenance mode.
+
+</Step>
+<Step>
+
+### Deactivating the maintenance mode
+
+To deactivate the maintenance mode use the following HTTP request:
+
+```shell
+curl --location --request DELETE 'https://example.com/api/maintenance-mode' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "token": "a-secret-token"
+}'
+```
+
+</Step>
+<Step>
+
+### To check the maintenance mode
+
+To check the maintenance mode use the following HTTP request:
+
+```shell
+curl --location --request GET 'https://example.com/api/maintenance-mode'
+```
+
+</Step>
+</Steps>
+
+## Bypassing the maintenance mode
+
+To bypass the maintenance mode for certain IP addresses you can configure the
+`maintenance.authorizedIps` in your `front-commerce.config.ts` file.
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core";
+
+export default defineConfig({
+  maintenance: {
+    authorizedIps: ["127.0.0.1", "83.65.12.111", "2ce8:c427::7156:ad8e"],
+  },
+});
+```
+
+:::caution
+
+Please configure **both v4 and v6** IP as much as possible.
+
+To retrieve your IP address you can use https://www.whatismyip.com/ or via the
+curl command:
+
+```shell
+$ curl ifconfig.me -6
+# 2ce8:c427::7156:ad8e
+$ curl ifconfig.me -4
+# 83.65.12.111
+```
+
+:::

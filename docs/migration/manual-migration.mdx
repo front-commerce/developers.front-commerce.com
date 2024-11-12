@@ -560,14 +560,12 @@ report any invalid expressions. Here is a list of common pattern to fix:
 ```scss title="theme/components/atoms/Example/Example.scss"
 .example {
   // remove-start
-  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4 var(
-      --boxSizeMargin
-    ) * 2 0;
+  padding: var(--boxSizeMargin) * 2 var(--boxSizeMargin) * 4
+    var(--boxSizeMargin) * 2 0;
   // remove-end
   // add-start
-  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4) calc(
-      var(--boxSizeMargin) * 2
-    ) 0;
+  padding: calc(var(--boxSizeMargin) * 2) calc(var(--boxSizeMargin) * 4)
+    calc(var(--boxSizeMargin) * 2) 0;
   // add-end
 
   // remove-next-line
@@ -663,6 +661,14 @@ removed completely.
 | `FRONT_COMMERCE_FACEBOOK_CLIENT_SECRET` | `FRONT_COMMERCE_LOGIN_FACEBOOK_CLIENT_SECRET` |
 | `FRONT_COMMERCE_GOOGLE_CLIENT_ID`       | `FRONT_COMMERCE_LOGIN_GOOGLE_CLIENT_ID`       |
 | `FRONT_COMMERCE_GOOGLE_CLIENT_SECRET`   | `FRONT_COMMERCE_LOGIN_GOOGLE_CLIENT_SECRET`   |
+| `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_MS`   | `FRONT_COMMERCE_COOKIE_MAX_AGE_IN_SECONDS`    |
+
+:::caution
+
+`FRONT_COMMERCE_COOKIE_MAX_AGE_IN_SECONDS` is now a duration in seconds and not
+in milliseconds as it was in v2.
+
+:::
 
 ### Magento
 
@@ -893,12 +899,12 @@ In v3, the sitemap URL has been changed from `/sitemaps/sitemap.xml` to
 
 - The `registerNodesFetcher` method will no longer work in v3, instead you
   should
-  [register a fetchers](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  [register a fetchers](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-custom-fetchers)
   via the
   [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
 - The `overrideNodesFetcher` method will no longer work in v3, instead you
   should
-  [override a fetcher](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-a-custom-fetcher)
+  [override a fetcher](/docs/3.x/guides/customize-the-sitemap#creating-and-registering-custom-fetchers)
   via the
   [sitemap service](/docs/3.x/api-reference/front-commerce-core/services#server-services)
 
@@ -946,3 +952,19 @@ export default createGraphQLRuntime({
   },
 });
 ```
+
+## Error Pages Migration
+
+<SinceVersion tag="3.8" />
+
+In v2 static error pages was defined in
+[`PageError`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/254a2aa06ae519d550d437253a81def63c385f5d/theme-chocolatine/web/theme/modules/PageError/PageError.js)
+and
+[`NotFound`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/254a2aa06ae519d550d437253a81def63c385f5d/theme-chocolatine/web/theme/modules/PageError/NotFound/NotFound.js)
+components
+
+In v3, we have added a more robust way of routing errors via the the
+[`appErrorPages.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts?ref_type=heads)
+config file. Please follow our
+[Customize Error Pages](/docs/3.x/guides/error-handling-for-routes#customizing-error-pages)
+guide to see how you can implement custom error pages.

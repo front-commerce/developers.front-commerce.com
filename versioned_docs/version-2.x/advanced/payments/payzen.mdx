@@ -18,9 +18,12 @@ application.
 - [Front-Commerce Payment](#front-commerce-payment)
   - [Lyra Collect support](#lyra-collect-support)
   - [Configure your environment](#configure-your-environment)
+    - [Define environment variables](#define-environment-variables)
+    - [Configure notifications in your account](#configure-notifications-in-your-account)
+    - [Ensure Lyra's IP addresses are allowed](#ensure-lyras-ip-addresses-are-allowed)
   - [Register the PayZen payment module](#register-the-payzen-payment-module)
     - [Magento2](#magento2)
-    - [Magento1 (OpenMage LTS)](#magento1-openmage-lts)
+    - [Magento1 (OpenMage LTS)](#magento1-openmagelts)
   - [Register your PayZen payment component](#register-your-payzen-payment-component)
   - [Update your CSPs](#update-your-csps)
   - [Advanced: customize data sent to PayZen](#advanced-customize-data-sent-to-payzen)
@@ -56,6 +59,8 @@ only differences are:
 
 ### Configure your environment
 
+#### Define environment variables
+
 Get your access keys by following the
 [Payzen documentation](https://payzen.io/fr-FR/rest/V4.0/api/get_my_keys.html).
 Update your `.env` with the following values:
@@ -67,11 +72,24 @@ FRONT_COMMERCE_PAYZEN_SHA256=xxxxxxxxx
 #FRONT_COMMERCE_PAYZEN_PRODUCT=payzen # use lyra_collect to switch to Lyra Collect's API URLs
 ```
 
+#### Configure notifications in your account
+
 You must also configure notifications in Payzen or Lyra "expert mode" to ensure
 **only one notification is sent** upon payment, to prevent multiple orders being
 created for a single payment:
 
 ![PayZen notification rules configuration with only one notification enabled for "URL de notification à la fin du paiement"](assets/payzen-notifications-configuration.png)
+
+#### Ensure Lyra's IP addresses are allowed
+
+If your server has a firewall, or your staging environment is protected by a
+HTTP basic authentication, you must allow Lyra's IP addresses to access your
+server. This is necessary for the payment confirmation to be sent to your
+server.
+
+The list of IP addresses can be found in the
+[PayZen documentation](https://payzen.io/payzen/fr-FR/form-payment/quick-start-guide/tla1427193445290.pdf).
+As of 2024-10-15, the IP range to allow is: `194.50.38.0/24`
 
 ### Register the PayZen payment module
 
@@ -205,6 +223,13 @@ more aware of Front-Commerce.
 :::
 
 ## Magento2 module
+
+:::danger PHP Module Compatibility
+
+At the time of writing, we support the Payzen module up to version 2.5. Support
+for next version will be available in the future.
+
+:::
 
 :::caution WIP
 

@@ -1,0 +1,71 @@
+---
+title: "Gezy"
+description:
+  "This extension contains the connector to use Front-Commerce with a headless
+  Gezy backend."
+tags:
+  - connector
+  - gezy
+  - headless backend
+---
+
+<p>{frontMatter.description}</p>
+
+## Prerequisites
+
+You need to have a [Gezy](https://www.lundimatin.co.uk/product/e-commerce)
+backend running, with a e-commerce API user created.
+
+## Installation
+
+First ensure you have installed the package:
+
+```bash
+$ pnpm install @front-commerce/gezy@latest
+```
+
+## Setup Gezy Extension
+
+Update your `front-commerce.config.ts` to include the extension :
+
+```typescript title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+import themeChocolatine from "@front-commerce/theme-chocolatine";
+// add-next-line
+import gezy from "@front-commerce/gezy";
+import storesConfig from "./app/config/stores";
+import cacheConfig from "./app/config/caching";
+
+export default defineConfig({
+  extensions: [
+    // add-next-line
+    gezy(),
+    themeChocolatine(),
+  ],
+  stores: storesConfig,
+  cache: cacheConfig,
+  configuration: {
+    providers: [],
+  },
+});
+```
+
+Add the following variables to your `.env` file, to configure your project with
+the technical information provided by the Gezy team:
+
+```shell title=".env"
+FRONT_COMMERCE_GEZY_ENDPOINT=https://YOUR_GEZY_INSTANCE.lundimatin.biz
+FRONT_COMMERCE_GEZY_TECHNICAL_ACCOUNT_LOGIN=edi123456
+FRONT_COMMERCE_GEZY_TECHNICAL_ACCOUNT_PASSWORD_HASH='$2a$10$YalJINpbjkZqYVbaMsPBeOZSIXuRMEKULvCCgkcxAGlzru3Daq8nq'
+```
+
+:::tip
+
+You can find the technical account credentials in your Gezy administration area,
+at the following URL:
+`/interface_admin/#/page.php/Admin/Standard/Webservices/Index`.
+
+_Example:
+https://YOUR_GEZY_INSTANCE.lundimatin.biz/interface_admin/#/page.php/Admin/Standard/Webservices/Index_
+
+:::

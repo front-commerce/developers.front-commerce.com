@@ -9,7 +9,7 @@ sidebar_position: 1
 
 ## Latest version
 
-**Front-Commerce [`3.5.0`](#350-2024-06-06)**
+**Front-Commerce [`3.8.0`](#380-2024-10-10)**
 
 Compatible with:
 
@@ -18,7 +18,40 @@ Compatible with:
 - **Magento1**: CE 1.7+, EE 1.12+,
   [OpenMage LTS](https://www.openmage.org/supported-versions.html) 19.4+
 
+## Semantic Versioning
+
+We aim at releasing often and follow [Semantic Versioning](https://semver.org)
+to clearly communicate our advancements to developers. We document each
+migration process (changelog, release notes and documentation updates) and add
+deprecation warnings while keeping backwards compatibility to keep upgrades as
+seamless as possible.
+
+**TL;DR:** (from the [Semantic Versioning](https://semver.org) documentation)
+
+> Given a version number MAJOR.MINOR.PATCH, increment the:
+>
+> 1. MAJOR version when you make incompatible API changes,
+> 2. MINOR version when you add functionality in a backwards compatible manner,
+>    and
+> 3. PATCH version when you make backwards compatible bug fixes.
+>
+> Additional labels for pre-release can (and in our case will) be added to the
+> MAJOR.MINOR.PATCH format.
+
+Each supported version will receive bug fixes and security updates, leading to
+regular patch releases.
+
 ## Release Schedule
+
+We release a minor version of Front-Commerce **every 6 weeks** with new
+features, tech improvements, bug fixes…
+
+In order to follow the pace of our users, we may release intermediate
+pre-releases (`-beta.x`) between 2 minor releases, to allow early-adopters to
+integrate the features as soon as possible and to give us feedback.
+
+The table below shows the exact dates of the upcoming releases and our Long Term
+Support (LTS) policy.
 
 <details>
 <summary>There are three phases that a Front-Commerce release can be in: <code>Current</code>, <code>End of Support (EOS)</code>, and <code>End of Life (EOL)</code></summary>
@@ -35,6 +68,35 @@ Compatible with:
 </details>
 
 <ReleaseSchedule version={3} />
+
+## 3.8.0 (2024-10-10)
+
+This release marks a major milestone for our Gezy integration, introducing core
+e-commerce functionalities.
+
+- [Announcement](/changelog/front-commerce-3.8-2.33)
+- [Migration guide](/docs/3.x/upgrade/migration-guides/3.7-3.8)
+- [Changelog](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.8.0)
+
+## 3.7.0 (2024-08-29)
+
+This release introduces te foundations for the Gezy integration and several bug
+fixes to improve the overall stability of the platform.
+
+- [Announcement](/changelog/front-commerce-3.7-2.32)
+- [Migration guide](/docs/3.x/upgrade/migration-guides/3.6-3.7)
+- [Changelog](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.7.0)
+
+## 3.6.0 (2024-07-18)
+
+This release introduces a revamped Maintenance Mode, convenients API to define
+`Cache-Control` and `Server-Timing` headers to improve performance and
+monitoring. It also includes several bug fixes to improve developer experience
+and the overall stability of the platform.
+
+- [Announcement](/changelog/front-commerce-3.6-2.31)
+- [Migration guide](/docs/3.x/upgrade/migration-guides/3.5-3.6)
+- [Changelog](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/releases/3.6.0)
 
 ## 3.5.0 (2024-06-06)
 

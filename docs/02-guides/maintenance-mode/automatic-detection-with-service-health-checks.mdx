@@ -1,0 +1,161 @@
+---
+title: Automatic detection with service Health Checks
+description:
+  Learn how to implement health checks to place your site in maintenance mode as
+  soon as a remote services is unavailable.
+sidebar_position: 2
+---
+
+<SinceVersion tag="3.6" />
+
+# Health Checks
+
+Health checks allow you to monitor the availability of your services and
+automatically put your store in maintenance mode if a service is down. This
+ensures that your users are not affected by a service outage.
+
+With health checks, you can define a set of services that you want to monitor
+and provide a function to check the health of each service. Front-Commerce will
+periodically run these health check functions and if a service is down, it will
+automatically put the store in maintenance mode. Once the service is back up,
+the Front-Commerce will automatically remove the store from maintenance mode.
+
+Additionally, you can configure the scheduling of the health checks using a Cron
+pattern. This allows you to control how often the health checks are run and how
+quickly your store is put in maintenance mode if a service is down.
+
+:::info
+
+When Maintenance Mode has been activated manually via
+[the maintenance mode API](./entering-and-exiting-maintenance-mode#the-maintenance-mode-api),
+the health checks will not remove the store from maintenance mode even after a
+service has recovered. To remove the store from maintenance mode, you must
+[manually deactivate](./entering-and-exiting-maintenance-mode#deactivating-the-maintenance-mode)
+it.
+
+:::
+
+:::tip demo
+
+For a more detailed example of how to use this feature, you can refer to the
+[Maintenance Mode Demo Extension](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/tree/master/skeleton/example-extensions/maintenance-mode-demo).
+This extension defines a health check that checks a hypothetical "acme" service,
+and allows to mutate the status in a custom `/maintenance` route.
+
+:::
+
+## The Health Check API
+
+<Steps>
+<Step>
+
+### Adding a Health Check service
+
+To add a health check, you need to define a function that checks the health of
+your service and returns:
+
+- `true`: when the service is `up`
+- `false`: when the service is `down`
+- `thrown Error`: assumes the service is `down`
+
+This function is then passed to `addHealthCheckService` in the `onServerInit`
+hook in your extension definition.
+
+Here is an example:
+
+```ts title="extensions/health-check.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "health-check",
+  meta: import.meta,
+  unstable_lifecycleHooks: {
+    onServerInit: async (services, request, config) => {
+      // highlight-start
+      services.MaintenanceMode.addHealthCheckService("acme", async () => {
+        const response = await fetch("https://acme.com/api/health-check");
+        return response.status === 200;
+      });
+      // highlight-end
+    },
+  },
+});
+```
+
+</Step>
+<Step>
+
+### Configuring the global Cron interval
+
+The health checks are run at a fixed interval determined by a
+[Cron pattern](https://en.wikipedia.org/wiki/Cron).
+
+By default, the interval is `*/10 * * * * *`, which means "every 10 seconds".
+
+To configure a different interval, you can provide a pattern in your
+`front-commerce.config.ts` file. For example, if you want to check the health of
+your services every 30 seconds, you can do it like this:
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core";
+
+export default defineConfig({
+  maintenance: {
+    healthChecks: {
+      schedule: "*/30 * * * * *",
+    },
+  },
+});
+```
+
+:::important
+
+The Cron interval applies to all the services being monitored. Each service
+defined in `services.MaintenanceMode.addHealthCheckService` will use the same
+interval.
+
+:::
+
+</Step>
+<Step>
+
+### Manually disable all Health Checks
+
+If you're experiencing issues with your health checks, for instance, if a change
+in the health check URLs requires a manual intervention, you might want to
+manually disable health checks to avoid your application automatically switching
+to maintenance mode. This can be done by calling the
+`/api/maintenance-mode/health` endpoint via a curl request using the same
+[`FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN`](./entering-and-exiting-maintenance-mode)
+which you have configured to enable the maintenance mode feature:
+
+```shell
+curl --location \
+      --request DELETE http://localhost:4000/api/maintenance-mode/health \
+      --header "Content-Type: application/json" \
+      --data-raw '{
+          "token": "a-secret-token"
+      }'
+```
+
+</Step>
+<Step>
+
+### Manual enable all Health Checks
+
+Once you have resolved any issues and you want to restart the health checks, you
+can run the following curl request to enable all health checks, using the same
+[`FRONT_COMMERCE_MAINTENANCE_MODE_AUTHORIZATION_TOKEN`](./entering-and-exiting-maintenance-mode)
+which you have configured to enable the maintenance mode feature:
+
+```shell
+curl --location \
+      --request POST http://localhost:4000/api/maintenance-mode/health \
+      --header "Content-Type: application/json" \
+      --data-raw '{
+          "token": "a-secret-token"
+      }'
+```
+
+</Step>
+</Steps>

@@ -1,0 +1,193 @@
+---
+title: Error Handling for routes
+description:
+  Learn how to effectively manage errors at various levels of your
+  Front-Commerce application using ErrorBoundary components.
+---
+
+# Comprehensive Error Handling
+
+Front-Commerce provides a robust error handling system that allows you to
+gracefully manage errors at different levels of your application. This guide
+will walk you through the process of implementing error boundaries and
+customizing error pages to enhance your application's resilience and user
+experience.
+
+## Understanding Error Boundaries
+
+Error boundaries in Front-Commerce are based on Remix's error handling
+mechanism. They allow you to catch JavaScript errors anywhere in their child
+component tree, log those errors, and display a fallback UI instead of the
+component tree that crashed.
+
+Front-Commerce offers three main types of error boundaries:
+
+1. Root Error Boundary
+2. Layout Error Boundary
+3. Route-specific Error Boundary
+
+## Root Error Boundary
+
+The Root Error Boundary is the top-level error handler for your entire
+application. It's typically defined in your `app/root.tsx` file.
+
+To implement the Root Error Boundary:
+
+1. Import the `RootErrorBoundary` component from Front-Commerce's theme:
+
+   ```tsx
+   import { RootErrorBoundary } from "theme/pages/Error";
+   ```
+
+2. Add the ErrorBoundary export to your `root.tsx`:
+
+   ```tsx
+   export const ErrorBoundary = RootErrorBoundary;
+   ```
+
+This will catch any unhandled errors in your application and display a generic
+error page.
+
+:::note
+
+The `RootErrorBoundary` is wrapped in the `SimpleLayout` component.
+
+:::
+
+## Layout Error Boundary
+
+For routes that use a custom layout, you can implement a Layout Error Boundary.
+This allows you to maintain your layout structure even when an error occurs.
+
+Here is an example of how we use the LayoutErrorBoundary for the `_main.tsx`
+layout:
+
+1. Import the `LayoutErrorBoundary` component:
+
+   ```tsx title="app/routes/_main.tsx"
+   import { LayoutErrorBoundary } from "theme/pages/Error";
+   ```
+
+2. Use it within your layout component's ErrorBoundary:
+
+   ```tsx title="app/routes/_main.tsx"
+   export function ErrorBoundary() {
+     // If this loader fails, it will be caught by the RootErrorBoundary
+     const data = useRouteLoaderData<typeof loader>("routes/_main");
+     const { headerNavigationMenu = [], footerNavigationMenu = [] } =
+       data || {};
+
+     return (
+       <Layout
+         headerNavigationMenu={headerNavigationMenu}
+         footerNavigationMenu={footerNavigationMenu}
+       >
+         <LayoutErrorBoundary />
+       </Layout>
+     );
+   }
+   ```
+
+This approach ensures that your layout remains intact while displaying the error
+message.
+
+:::note
+
+The `LayoutErrorBoundary` is not wrapped in any layout as this is meant to be
+used inside a route which is already wrapped in a layout.
+
+:::
+
+## Customizing Error Pages
+
+Front-Commerce allows you to customize error pages for specific HTTP status
+codes. This is done through the `RouteResponseError` component and the
+[`appErrorPages`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5f23e92ac2008298dad36b72ae0066433d0311ae/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts)
+object.
+
+### Adding Custom Error Pages
+
+1. Create a new component for your custom error page, e.g.,
+   `CustomNotFound.tsx`.
+2. Add your custom error page to the `appErrorPages` object in
+   [`theme/pages/Error/appErrorPages.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5f23e92ac2008298dad36b72ae0066433d0311ae/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts):
+
+   ```typescript title="theme/pages/Error/appErrorPages.ts"
+   import CustomNotFound from "./CustomNotFound";
+
+   export const appErrorPages = {
+     404: CustomNotFound,
+   } satisfies AppErrorPages;
+   ```
+
+3. The `RouteResponseError` component will now use your custom component for 404
+   errors.
+
+### Default Error Pages
+
+Front-Commerce provides default error pages for common status codes:
+
+- [429: Rate Limit Exceeded](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2886bd9de6413411f89c7267252a95f45a55dd94/packages/theme-chocolatine/theme/pages/Error/RateLimit/RateLimit.tsx)
+- [503: Maintenance](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/83fe19855d18ed1a21693cb31c401e61f4ce8c79/packages/theme-chocolatine/theme/pages/Error/Maintenance/Maintenance.tsx)
+- [404: Not Found](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/67393729953ea2dabbd8ac8dae14e7e82fbdbcb5/packages/theme-chocolatine/theme/modules/PageError/NotFound/NotFound.jsx)
+
+You can override these by adding your own components to the
+[`theme/pages/Error/appErrorPages.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5f23e92ac2008298dad36b72ae0066433d0311ae/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts)
+object.
+
+## Customizing Meta Tags
+
+<SinceVersion tag="3.9" />
+
+Front-Commerce allows you to customize the meta tags for your error pages by
+overriding the `generateAppRouteErrorMeta.ts`
+
+### Adding Custom Meta Tags
+
+1. Create a new meta tag generator:
+   [`theme/pages/Error/meta/generateAppRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6aee7c3f7e39cabf25ed1067378dfcdaf4f2a6d0/packages/theme-chocolatine/theme/pages/Error/meta/generateAppRouteErrorMeta.ts).
+2. Add your custom meta tags:
+
+   ```typescript title="theme/pages/Error/appErrorPages.ts"
+   import type { ErrorMetaFunction } from "theme/pages/Error/meta";
+   import { notFoundPageMessages } from "theme/modules/PageError/NotFound/messages";
+
+   export const generateAppRouteErrorMeta: ErrorMetaFunction = (intl) => ({
+     404: {
+       title: intl.formatMessage(notFoundPageMessages.seoTitle),
+       description: intl.formatMessage(notFoundPageMessages.content),
+     },
+   });
+   ```
+
+### Default Meta Tags
+
+Front-Commerce provides default meta tags for common status codes: (see
+exhaustive list in
+[`theme/pages/Error/meta/generateCoreRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/pages/Error/meta/generateCoreRouteErrorMeta.ts))
+
+- 429: Rate Limit Exceeded
+- 503: Maintenance
+- 404: Not Found
+
+You can override these by adding your own meta tags to the
+[`theme/pages/Error/meta/generateAppRouteErrorMeta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/6aee7c3f7e39cabf25ed1067378dfcdaf4f2a6d0/packages/theme-chocolatine/theme/pages/Error/meta/generateAppRouteErrorMeta.ts)
+export.
+
+## Best Practices
+
+1. **Granular Error Handling**: Use route-specific error boundaries for handling
+   errors that are unique to certain parts of your application.
+2. **Informative Error Messages**: Provide clear and helpful error messages to
+   guide users on what went wrong and what they can do next.
+3. **Logging**: Implement proper error logging to help with debugging and
+   monitoring application health.
+4. **Graceful Degradation**: Design your error pages to maintain as much
+   functionality as possible, allowing users to navigate away from the error or
+   retry their action.
+5. **Consistency**: Maintain a consistent look and feel in your error pages to
+   align with your application's overall design.
+
+By following these guidelines and utilizing Front-Commerce's error handling
+components, you can create a robust and user-friendly error management system
+for your e-commerce application.

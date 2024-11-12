@@ -174,19 +174,31 @@ Example:
 ```js
 {
   unstable_lifecycleHooks: {
-    onServerServicesInit: async (services, request, config) => {
-      // Do something with the services
+    onServerInit: async (globalServices) => {
+      // Do something when the server is initialized
+    };
+    onServerServicesInit: async (serverServices, request, config) => {
+      // Do something when the request is initialized
     };
   }
 }
 ```
 
+#### `onServerInit`
+
+<SinceVersion tag="3.6" />
+
+Called when the server is initialized with the following params:
+
+- [`Global Services`](./services#global-services) - Generally used to register
+  new services
+
 #### `onServerServicesInit`
 
-Called when the server services are initialized with the following params:
+Called on each request with the following params:
 
-- [`Services`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/e1fb570123effe731a0facc8ac4c94ce84d2f592/packages/core/services/Services.ts) -
-  Generally used to register new services
+- [`Server Services`](./services#server-services) - Generally used to register
+  new services
 - [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) - The
   request object
 - [`ResolvedConfig`](/docs/3.x/guides/configuration/add-a-configuration-provider) -

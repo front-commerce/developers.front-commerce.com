@@ -12,12 +12,6 @@ export default function Steps(props: { children: StepElement[] }) {
     <nav aria-label="Progress">
       <div role="list" className="list-none ml-0 pl-0">
         {children.map((child, index) => {
-          if (child.props.mdxType !== "Step") {
-            throw new Error(
-              `Steps component only accepts Step components as children. Found ${child.props.mdxType} instead.`
-            );
-          }
-
           return React.isValidElement(child)
             ? cloneElement(child, {
                 step: index + 1,

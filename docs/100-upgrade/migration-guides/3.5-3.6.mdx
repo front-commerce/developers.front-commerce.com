@@ -10,6 +10,29 @@ import TabItem from "@theme/TabItem";
 
 <p>{frontMatter.description}</p>
 
+## Use the latest `pnpm` version
+
+We now support `pnpm` version 9 and above. In the past, we may have recommended
+to stick to `pnpm` version 8. This is no longer the case.
+
+Please make sure to update your `pnpm` version to the latest one.
+
+```shell
+$ pnpm add -g pnpm
+$ pnpm -v
+9.7.0 # or higher
+```
+
+:::tip Front-Commerce Cloud projects
+
+When deploying this new version, please contact our support team if you
+encounter any issues with the `pnpm` version.
+
+Our team will be able to update the `pnpm` version used for your cloud
+environment.
+
+:::
+
 ## Update dependencies
 
 Update all your `@front-commerce/*` dependencies to this version:
@@ -17,6 +40,35 @@ Update all your `@front-commerce/*` dependencies to this version:
 ```shell
 pnpm update "@front-commerce/*@3.6.0"
 ```
+
+:::info REACT 18 CANARY
+
+We have pinned the `react` and `react-dom` version to `18.3.0-canary`, this
+resolves an issue with hydration during HMR changes. See
+[issue](https://github.com/remix-run/remix/issues/4822#issuecomment-2130006831)
+for more details.
+
+To update your project, you can do the following:
+
+```shell
+pnpm update react@18.3.0-canary-c3048aab4-20240326 react-dom@18.3.0-canary-c3048aab4-20240326
+```
+
+We also suggest adding resolutions to your package.json to ensure the same
+version of React is used in your project:
+
+```json title="package.json"
+{
+  "resolutions": {
+    "react": "18.3.0-canary-c3048aab4-20240326",
+    "react-dom": "18.3.0-canary-c3048aab4-20240326"
+  }
+}
+```
+
+We suspect that this fix will only be released in React 19.
+
+:::
 
 ## Automated Migration
 
@@ -28,6 +80,16 @@ comments).
 ```shell
 pnpm run front-commerce migrate --transform 3.6.0
 ```
+
+Changes introduced with this automated migration script:
+
+- Adds `pazyen` flavor to extension options
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/add-payzen-flavor.spec.ts?ref_type=heads))
+- Replace usage of `limitRateByClientIp` with `limitRateByGraphQLResolver`
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/replace-graphql-rate-limiter.ts?ref_type=heads))
+- Rename mutation types with new conventions
+  ([example](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/codemod/src/transforms/3.6.0/motions/__tests__/coherent-mutation-naming.spec.ts?ref_type=heads),
+  [ADR](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/docs/adr/0013-coherent-schema-naming.md?ref_type=heads))
 
 ## Custom Scalar support in GraphQL schema
 
@@ -44,3 +106,128 @@ If you have patched to core to allow for custom scalars, you can now safely
 remove the patch.
 
 :::
+
+## `Cache-Control` headers
+
+In this version, we introduced a way to add `Cache-Control` headers to responses
+using a new `CacheControl` service available through `FrontCommerceApp`.
+
+With this new feature, we also added its usage to a few existing routes:
+
+- `_main._index.ts`
+- `_main.category.$id.tsx`
+- `_main.product.$id.tsx`
+- `robots[.txt].ts`
+- `sitemap[.xml].ts`
+
+To enable `Cache-Control` headers on those routes (if you already overrode
+them), you will need to add the usage of this new service in these routes'
+loaders like so:
+
+```ts title="_main._index.tsx"
+export const loader: LoaderFunction = ({ context }) => {
+  const app = new FrontCommerceApp(context.frontCommerce);
+  // highlight-start
+  app.services.CacheControl.setCacheable({
+    sMaxAge: 60,
+    staleWhileRevalidate: 21600,
+  });
+  // highlight-end
+
+  return {};
+};
+```
+
+:::info
+
+For more information about this change, see
+[the related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/d714452292d5db90870d2f5ac6c4ff870dd826ff).
+
+:::
+
+## Server timings
+
+In this version we introduced a new `ServerTimings` service that is used to
+generate and append
+[`Server-Timing`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing)
+headers to reponses.
+
+This contains a change to `app/entry.server.tsx`, which you will have to update
+to properly benefit from this new feature:
+
+```diff title="app/entry.server.tsx"
+diff --git a/app/entry.server.tsx b/app/entry.server.tsx
+index 7783303fd..a8f621d20 100644
+--- a/app/entry.server.tsx
++++ b/app/entry.server.tsx
+@@ -99,6 +99,7 @@ function handleBrowserRequest(
+   remixContext: EntryContext,
+   loadContext: AppLoadContext
+ ) {
++  loadContext.frontCommerce.services.ServerTimings.start("SSR");
+   return new Promise(async (resolve, reject) => {
+     const { pipe, abort } = renderToPipeableStream(
+       await prepareV2ServerRenderedApp(
+@@ -121,6 +122,7 @@ function handleBrowserRequest(
+
+           responseHeaders.set("Content-Type", "text/html");
+
++          loadContext.frontCommerce.services.ServerTimings.end("SSR");
+           resolve(
+             new Response(body, {
+               headers: responseHeaders,
+@@ -131,6 +133,7 @@ function handleBrowserRequest(
+           pipe(body);
+         },
+         onShellError(error: unknown) {
++          loadContext.frontCommerce.services.ServerTimings.end("SSR");
+           reject(error);
+         },
+         onError(error: unknown) {
+```
+
+Learn how to use this new feature for your own code in the
+[Add your own server timings](/docs/3.x/guides/adding-your-own-server-timings)
+guide.
+
+## Payzen Module
+
+In this version, we introduced Payzen compatibility for Magento 2.
+
+:::info
+
+If a flavor has not yet been added, then this will default to
+`front-commerce-magento1` after running the
+[automated migration](/docs/3.x/upgrade/migration-guides/3.5-3.6#automated-migration)
+
+:::
+
+```ts title=".front-commerce.config.ts"
+// ...
+import payzen from "@front-commerce/payzen";
+
+export default defineConfig({
+  // ...
+  extensions: [
+    // ...
+    // For Magento 1 usage
+    payzen("front-commerce-magento1")
+    // For Magento 2 usage
+    payzen("front-commerce-magento2")
+    // ...
+  ]
+  // ...
+});
+```
+
+## Flash messages
+
+We have implemented a new flash message system that allows you to display
+messages after certain actions.
+
+The legacy system have been replaced, and some tweaks may be needed to existing
+code.
+
+Please refer to
+[this commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/07c1e7782841d61f85a891962d2f878a630a1423)
+for more details.

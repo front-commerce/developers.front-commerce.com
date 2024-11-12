@@ -1,0 +1,101 @@
+---
+title: Use as a Magento2 payment
+description:
+  "This guides explains how to configure Payzen payment with Magento 2 module."
+sidebar_position: 4
+---
+
+<p>{frontMatter.description}</p>
+
+:::caution Information
+
+This integration is aimed at being transparent for administrators and
+developers. That is why we haven't duplicated documentation from existing
+Magento resources. Please <ContactLink /> if you need further assistance.
+
+:::
+
+Front-Commerce Magento2 module contains headless payment adapters for the
+[**PayZen Standard** method](https://github.com/lyra/plugin-magento) (Lyra's
+official Magento module).
+
+The PayZen module must be configured in a normal way, as for a non-headless
+Magento store.
+
+## Pre-requisite
+
+:::danger
+
+For the time being, we only support PayZen accounts using a SHA1 signature. If
+your account uses a SHA-256 signature, please contact support to learn about the
+modifications required in the Front-Commerce Module to make it compatible.
+
+:::
+
+- [Payzen Account](https://www.payzen.eu/)
+- [Payzen Module installed in Magento 2](#installation)
+
+## Installation
+
+:::danger PHP Module Compatibility
+
+At the time of writing, we support the Payzen module up to version 2.5. Support
+for next version will be available in the future.
+
+:::
+
+### Install module
+
+Follow the
+[official guide to setup Payzen in Magento](https://payzen.io/en-EN/plugins/magento2/prerequisites.html)
+
+:::tip
+
+If you're using composer, we recommend you to use it to install the module by
+running the following command at the root of your Magento project:
+
+```shell
+composer config repositories.payzen git https://github.com/lyra/plugin-magento.git
+composer require lyranetwork/module-payzen:2.5.13
+```
+
+:::
+
+### Magento Patch
+
+:::danger
+
+This Patch update code in Magento dependency and may be overriten when updating
+your PHP dependencies.
+
+We know that this is a dirty hack and we're looking for a cleaner method to
+prevent having to use this patch.
+
+:::
+
+In order for the module to work properly you need to apply this patch to your
+Magento code:
+
+```diff
+diff --git a/vendor/magento/framework/Interception/Interceptor.php b/vendor/magento/framework/Interception/Interceptor.php
+index 07600c516818..3f100069b4e8 100644
+--- a/vendor/magento/framework/Interception/Interceptor.php
++++ b/vendor/magento/framework/Interception/Interceptor.php
+@@ -141,6 +141,11 @@ protected function ___callPlugins($method, array $arguments, array $pluginInfo)
+             if (isset($currentPluginInfo[DefinitionInterface::LISTENER_AFTER])) {
+                 // Call 'after' listeners
+                 foreach ($currentPluginInfo[DefinitionInterface::LISTENER_AFTER] as $code) {
++
++                    if ($code === "append_no_store_cache_header" && isset($arguments) && isset($arguments[0]) && get_class($arguments[0]) === 'Magento\Framework\App\Request\Http') {
++                        continue;
++                    }
++
+                     $pluginInstance = $pluginList->getPlugin($type, $code);
+                     $pluginMethod = 'after' . $capMethod;
+                     $result = $pluginInstance->$pluginMethod($subject, $result, ...array_values($arguments));
+
+```
+
+## Usage
+
+The payment method should be automatically displayed at the Checkout Setp.

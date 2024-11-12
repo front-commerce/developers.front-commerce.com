@@ -1,0 +1,91 @@
+---
+title: "Display prices with or without taxes"
+description:
+  This guide walks through the process of displaying prices with or without
+  taxes within your Front-Commerce application.
+---
+
+<SinceVersion tag="3.9" />
+
+## References
+
+- [Price Display](/docs/3.x/extensions/theme-chocolatine/reference/price-display)
+
+## Why?
+
+The default theme (Theme Chocolatine) supports an
+[app-wide configuration](/docs/3.x/guides/configuration/public-configuration)
+for how prices are displayed to users all around the application. Technically,
+this is achieved through the `<PriceVariant>` component usage. Depending on your
+project's context, you might want to display all prices:
+
+- without taxes (B2B contexts)
+- with taxes (B2C contexts)
+- or both This guide explains how to achieve this.
+
+We have included an
+[demo extension](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a06c7bcf9a1e759a366abee1b1e34eb7daf081fa/skeleton/example-extensions/price-variant-demo/index.ts)
+which is illustrated in the following sections.
+
+## How?
+
+### Define the custom configuration
+
+```ts
+import { defineExtension } from "@front-commerce/core";
+import type { PublicConfig } from "@front-commerce/core/react";
+
+type PriceDisplayConfig = PublicConfig["theme"]["priceDisplay"];
+
+const priceDisplayConfigProvider = {
+  name: "price-variant-demo:public",
+  values: {
+    public: {
+      theme: {
+        priceDisplay: {
+          variants: ["priceInclTax", "priceExclTax"],
+          appearance: "labeled",
+        } satisfies PriceDisplayConfig,
+      },
+    },
+  },
+};
+
+export default defineExtension({
+  name: "price-variant-config",
+  meta: import.meta,
+  configuration: {
+    providers: [priceDisplayConfigProvider],
+  },
+});
+```
+
+### Using the `PriceVariant` component
+
+The
+[`<PriceVariant>`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a06c7bcf9a1e759a366abee1b1e34eb7daf081fa/packages/theme-chocolatine/theme/components/molecules/PriceVariant/PriceVariant.tsx)
+component will automatically display the relevant price based on your
+configuration. It requires a `price` props which is an object with the following
+properties:
+
+- `priceInclTax`: the
+  [Money value](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a06c7bcf9a1e759a366abee1b1e34eb7daf081fa/packages/theme-chocolatine/theme/components/atoms/Typography/Money/Money.tsx#L11-14)
+  with taxes
+- `priceExclTax`: the
+  [Money value](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a06c7bcf9a1e759a366abee1b1e34eb7daf081fa/packages/theme-chocolatine/theme/components/atoms/Typography/Money/Money.tsx#L11-14)
+  without taxes
+
+```tsx
+import PriceVariant from "theme/components/molecules/PriceVariant";
+
+export default function Example() {
+  return (
+    <PriceVariant
+      price={{
+        priceInclTax: { amount: 100, currency: "EUR" },
+        priceExclTax: { amount: 80, currency: "EUR" },
+      }}
+    />
+  );
+}
+```

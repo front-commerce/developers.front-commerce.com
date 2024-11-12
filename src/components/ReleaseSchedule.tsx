@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import schedule from "../../schedule.json";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
@@ -6,6 +6,8 @@ import clsx from "clsx";
 interface ReleaseScheduleProps {
   version: ("2" | 2) | ("3" | 3);
 }
+
+const PAGE_SIZE = 12;
 
 const formatDate = (date: Date) => date.toISOString().slice(0, 10);
 const formatExpired = (dateString: string, type: "EOL" | "EOS") => {
@@ -31,6 +33,7 @@ export default function ReleaseSchedule(props: ReleaseScheduleProps) {
       eol.setFullYear(releaseDate.getFullYear() + 2);
       return {
         version,
+        releaseDate: releaseDate,
         release: formatDate(releaseDate),
         eos: formatDate(eos),
         eol: formatDate(eol),
@@ -38,10 +41,10 @@ export default function ReleaseSchedule(props: ReleaseScheduleProps) {
     });
   }, [props.version]);
 
-  const totalPages = Math.ceil(versionScheduleData.length / 8);
+  const totalPages = Math.ceil(versionScheduleData.length / PAGE_SIZE);
   const currentData = versionScheduleData.slice(
-    (currentPage - 1) * 8,
-    currentPage * 8
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
   );
 
   const onPageChange = (page: number) => {
@@ -54,7 +57,7 @@ export default function ReleaseSchedule(props: ReleaseScheduleProps) {
         <thead>
           <tr>
             <th>Version</th>
-            <th>Released</th>
+            <th>Release date</th>
             <th>
               End of Support (
               <small>
@@ -77,10 +80,20 @@ export default function ReleaseSchedule(props: ReleaseScheduleProps) {
               entry.release
             }`;
 
+            const isFuture = entry.releaseDate > new Date();
+            let rowClasses = ["text-center"];
+            if (isFuture) {
+              rowClasses.push("text-gray-400 dark:text-gray");
+            }
+
             return (
-              <tr key={index} className="text-center">
+              <tr key={index} className={rowClasses.join(" ")}>
                 <td>
-                  <a href={href}>{entry.version}</a>
+                  {isFuture ? (
+                    entry.version
+                  ) : (
+                    <a href={href}>{entry.version}</a>
+                  )}
                 </td>
                 <td>{entry.release}</td>
                 <td>{formatExpired(entry.eos, "EOS")}</td>
@@ -107,11 +120,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}) => {
+}: PaginationProps) => {
   const maxVisiblePages = 10; // Maximum number of visible page buttons
 
   // Calculate the range of pages to display

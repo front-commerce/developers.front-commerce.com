@@ -93,7 +93,7 @@ export default defineConfig({
     magento2({ storesConfig }),
     themeChocolatine(),
     // highlight-next-line
-    adyen(magento2), // ⚠️ must be after themeChocolatine()
+    adyen("magento2"), // ⚠️ must be after themeChocolatine()
   ],
   stores: storesConfig,
   cache: cacheConfig,
