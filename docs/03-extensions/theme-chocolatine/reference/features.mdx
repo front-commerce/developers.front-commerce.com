@@ -1,0 +1,37 @@
+---
+title: "Features"
+description:
+  "This reference lists all the extension features available for the
+  theme-chocolatine extension."
+---
+
+<SinceVersion tag="3.9" />
+
+To learn more about extension features, you can read the
+[Extension Features](/docs/3.x/api-reference/front-commerce-core/extension-features)
+reference docs.
+
+## `accountInformation`
+
+Extendable feature for the Account Information page.
+[`theme/pages/Account/Information`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a025ba1e1ba82a4a56609e58d537d03d74317df3/packages/theme-chocolatine/theme/pages/Account/Information/Information.jsx#L50-52)
+
+### `ui.componentsMap`
+
+- [`DeleteAccount`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a025ba1e1ba82a4a56609e58d537d03d74317df3/packages/theme-chocolatine/theme/modules/User/DeleteAccount/DeleteAccount.jsx):
+  The component to display the delete account component in the account
+  information page
+
+## `Facets`
+
+Extendable feature for the `LayerFacets` component. See
+[`theme/modules/Layer/LayerFacets/LayerFacets`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b296fa59c8001bd8f3099cd1351cf9735aaf3f8c/packages/theme-chocolatine/theme/modules/Layer/LayerFacets/LayerFacets.jsx#L45-50).
+This is used to easily customize the components used to render facets filters.
+
+### `ui.componentsMap`
+
+- [`TextSearchFacet`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b296fa59c8001bd8f3099cd1351cf9735aaf3f8c/packages/theme-chocolatine/theme/components/atoms/TextFacet/TextFacet.tsx)
+- [`RangeSearchFacet`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b296fa59c8001bd8f3099cd1351cf9735aaf3f8c/packages/theme-chocolatine/theme/components/atoms/RangeFacet/RangeFacet.tsx)
+- [`AttributeFacet`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b296fa59c8001bd8f3099cd1351cf9735aaf3f8c/packages/theme-chocolatine/theme/components/atoms/PickerFacet/PickerFacet.tsx)
+- `CategoryFacet`, defaulted to `null` as it this type of facet is not rendered
+  in `LayerFacet` by default

@@ -257,3 +257,24 @@ non-React part of your application. This method will not trigger re-renders in
 React components.
 
 :::
+
+## `useExtensionComponentMap`
+
+This hook is used to get the components map registered through an
+[extension feature](./extension-features#registerfeature).
+
+```tsx
+import { useExtensionComponentMap } from "@front-commerce/core/react";
+
+const AcmeModule = () => {
+  const AcmeFeature = useExtensionComponentMap("acme-feature");
+
+  return (
+    <div>
+      <AcmeFeature.AcmeHeader />
+      <AcmeFeature.AcmeToolbar />
+      <AcmeFeature.AcmeFooter />
+    </div>
+  );
+};
+```

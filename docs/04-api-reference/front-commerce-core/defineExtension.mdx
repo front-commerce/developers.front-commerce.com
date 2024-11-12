@@ -180,6 +180,9 @@ Example:
     onServerServicesInit: async (serverServices, request, config) => {
       // Do something when the request is initialized
     };
+    onFeaturesInit: async (hooks) => {
+      // Do something when the features are initialized
+    };
   }
 }
 ```
@@ -203,3 +206,10 @@ Called on each request with the following params:
   request object
 - [`ResolvedConfig`](/docs/3.x/guides/configuration/add-a-configuration-provider) -
   The resolved configuration object
+
+#### `onFeaturesInit`
+
+Called when the features are initialized with the following params:
+
+- [`FeatureHooks`](./extension-features#feature-hooks) - The features hooks
+  object

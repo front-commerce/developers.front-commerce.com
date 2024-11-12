@@ -1,0 +1,7 @@
+label: Extension Features
+link:
+  type: generated-index
+  description:
+    Extension features are features specific to an extension which are exposed
+    in the API which allows other extensions to extend, override, or add new
+    features to the extension.

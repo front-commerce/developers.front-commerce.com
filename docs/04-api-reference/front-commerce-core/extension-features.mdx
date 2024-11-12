@@ -1,0 +1,42 @@
+---
+title: "Extension Features"
+description:
+  "Extension Features allows you to create or extend custom features designed
+  for a specific extension."
+---
+
+<SinceVersion tag="3.9" />
+
+## Feature Hooks
+
+The feature hooks expose different hooks to extend features of an extension.
+
+### `registerFeature`
+
+A hook to register or extend a feature for an extension.
+
+#### Parameters
+
+- `name: string` - The name of the feature
+- `options:`[`ExtensionFeatures`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a025ba1e1ba82a4a56609e58d537d03d74317df3/packages/types/extension-features.d.ts) -
+  The options of the Feature
+
+#### Example
+
+```ts title="./example-extension/acme-extension/index.ts"
+export default defineExtension({
+  unstable_lifecycleHooks: {
+    onFeaturesInit: (hooks) => {
+      hooks.registerFeature("acme-feature", {
+        ui: {
+          componentsMap: {
+            Header: new URL("./components/AcmeHeader.tsx", import.meta.url),
+            Toolbar: new URL("./components/AcmeToolbar.tsx", import.meta.url),
+            Footer: new URL("./components/AcmeFooter.tsx", import.meta.url),
+          },
+        },
+      });
+    },
+  },
+});
+```

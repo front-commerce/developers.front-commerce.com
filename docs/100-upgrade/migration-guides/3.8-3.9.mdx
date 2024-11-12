@@ -67,3 +67,14 @@ index 7346671ea..1f0463927 100644
 ```
 
 </details>
+
+### Layer facets
+
+In this release, we reworked the `LayoutFacets.tsx` component to support
+rendering any types of dynamic facets returned by GraphQL. It leverages the new
+[`ExtensionComponentMap`](/docs/3.x/api-reference/front-commerce-core/react#useextensioncomponentmap).
+
+If you have overriden `theme/modules/Layer/LayerFacets/LayerFacets`, you will
+need to apply the changes from its latest version to also support this feature.
+See
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/fdfe1d60a46e5040b788c4a43e10483a342607ea).
