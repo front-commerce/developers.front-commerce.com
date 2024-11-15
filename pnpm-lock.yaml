@@ -88,7 +88,7 @@ importers:
         version: 3.4.14(ts-node@10.9.1(@types/node@22.9.0)(typescript@5.6.3))
       use-breakpoint:
         specifier: ^4.0.1
-        version: 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@docusaurus/module-type-aliases':
         specifier: 3.6.1
@@ -4938,8 +4938,8 @@ packages:
       file-loader:
         optional: true
 
-  use-breakpoint@4.0.1:
-    resolution: {integrity: sha512-Fa5Duxv3BY3bw8kmj/lmryTETXVUmBQeYJpBgPJ2yJRiIaGVG8rlMNKQE+JS2rywCZHWaggVUz+ytbr7sH/yyg==}
+  use-breakpoint@4.0.2:
+    resolution: {integrity: sha512-N2+4M0qWjq2IEKFNeNHQQALpGk1sONfFOyu9Ns1JOg5/ap/5Dh4pcPYKs3JnqKho/MApJhOTfJK/wYLNPsoBOw==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -11504,7 +11504,7 @@ snapshots:
     optionalDependencies:
       file-loader: 6.2.0(webpack@5.96.1)
 
-  use-breakpoint@4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  use-breakpoint@4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
