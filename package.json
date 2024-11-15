@@ -44,7 +44,7 @@
     "react-slick": "0.30.2",
     "react-twitter-embed": "4.0.4",
     "react-use-intercom": "5.4.1",
-    "tailwindcss": "3.4.14",
+    "tailwindcss": "3.4.15",
     "use-breakpoint": "^4.0.1"
   },
   "devDependencies": {
