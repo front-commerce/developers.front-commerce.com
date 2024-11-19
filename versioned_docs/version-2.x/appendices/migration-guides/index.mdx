@@ -23,6 +23,41 @@ npm install git+ssh://git@gitlab.blackswift.cloud/front-commerce/front-commerce.
 
 :::
 
+## `2.33.0` -> `2.34.0`
+
+### Google Consent V2 Support
+
+In this release, we've added support for
+[Google's Consent Mode v2](https://developers.google.com/tag-platform/security/guides/consent?hl=en&consentmode=advanced#upgrade-consent-v2)
+which provides more granular control over user consent preferences. This change
+affects applications using either the
+[Google Analytics 4](/docs/2.x/advanced/analytics/plugins#google-analytics-4) or
+[Google Tag Manager](/docs/2.x/advanced/analytics/plugins#google-tag-manager)
+plugins.
+
+To enable this feature, add the
+[`consentOptions`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2.x/src/config/cookiesServices.js#L11-36)
+to your service configuration in `cookiesServices.js`
+
+:::tip
+
+You can also take advantage of the `consentOptions` in your custom plugins by
+following the
+[Granular Consent Updates](/docs/2.x/advanced/analytics/getting-started#granular-consent-updates)
+guide.
+
+:::
+
+If you have overriden any of these files, please make sure you apply the changes
+to your overrides:
+
+- [theme/modules/Cookie/CookieLink/CookieLink.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookieLink/CookieLink.js)
+- [theme/modules/Cookie/CookieModal/CookieModal.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookieModal/CookieModal.js)
+- [theme/modules/Cookie/CookiePage/CookieGrid/CookieGrid.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookiePage/CookieGrid/CookieGrid.js)
+- [theme/modules/Cookie/CookiePage/CookieLine/CookieLine.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookiePage/CookieLine/CookieLine.js)
+- [theme/modules/Cookie/CookiePage/CookieLine/\_CookieLine.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookiePage/CookieLine/_CookieLine.scss)
+- [theme/modules/Cookie/CookiePage/CookiePage.js](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/cbf7cbd7908fe23f2a8dd6304bd3452eeb1cddd0/src/web/theme/modules/Cookie/CookiePage/CookiePage.js)
+
 ## `2.32.0` -> `2.33.0`
 
 No manual migration steps are required for this release.
