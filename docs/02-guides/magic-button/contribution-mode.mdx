@@ -24,9 +24,12 @@ for more information.
 
 The **Magic Button** is only visible when the **Contribution Mode** is active.
 
-The default activation for **Contribution Mode** is defined by the
-[`FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/bbaa7188cdd69e3fdca39859fc696d65019707b4/packages/core/contribution-mode/ContributionMode.ts#L23)
-environment variable
+One can force the contribution mode by using
+[Front-Commerce's `contributionMode.force` configuration](/docs/3.x/api-reference/front-commerce-core/config#contributionmode).
+In a default Front-Commerce application, this is achieved using the
+`FRONT_COMMERCE_CONTRIBUTION_MODE_FORCE` environment variable in the
+[`app/config/contributionMode.ts` configuration file](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/update-contribution-mode-demos/skeleton/app/config/contributionMode.ts),
+but you can implement your own logic.
 
 :::warning
 
