@@ -31,43 +31,6 @@ pnpm run front-commerce migrate --transform 3.9.0
 
 ## Manual Migration
 
-### Remix entrypoints
-
-In this release, we improved features that required to hook into your Remix
-application files created with the initial skeleton. You must update these files
-in your application, as detailed below **or copy the ones from the latest
-skeleton.**
-
-<details>
-  <summary><code>app/root.tsx</code> file</summary>
-
-```diff
-diff --git a/skeleton/app/root.tsx b/skeleton/app/root.tsx
-index 7346671ea..1f0463927 100644
---- a/skeleton/app/root.tsx
-+++ b/skeleton/app/root.tsx
-@@ -21,16 +21,11 @@ import config from "~/config/website";
- import { pwaAssetsHead } from "virtual:pwa-assets/head";
- import { RootErrorBoundary } from "theme/pages/Error";
- import { usePublicConfig } from "@front-commerce/core/react";
--import { generateRouteErrorMeta } from "theme/pages/Error/meta";
-
- export const loader = async ({ context }: LoaderFunctionArgs) => {
-   const app = new FrontCommerceApp(context.frontCommerce);
-
--  return json({
--    ...app.rootLoaderContext,
--    // TODO: see if we can do this directly in the frontCommerceContext.rootLoaderContext
--    routeErrorMeta: generateRouteErrorMeta(app.intl),
--  });
-+  return json(app.rootLoaderContext);
- };
-
- export const shouldRevalidate = () => false;
-```
-
-</details>
-
 ### Layer facets
 
 In this release, we reworked the `LayoutFacets.tsx` component to support
@@ -111,3 +74,38 @@ to your overrides:
 - [theme/modules/Cookie/CookiePage/CookieLine/CookieLine.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookieLine/CookieLine.tsx)
 - [theme/modules/Cookie/CookiePage/CookieLine/CookieLine.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookieLine/CookieLine.scss)
 - [theme/modules/Cookie/CookiePage/CookiePage.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookiePage.tsx)
+
+### Root Error Boundary
+
+:::info
+
+If you have already applied this update in
+[`3.8`](/docs/3.x/upgrade/migration-guides/3.7-3.8#root-error-boundary), you can
+skip this section. This was not documented in the previous release.
+
+:::
+
+We have introduced a new
+[`RootErrorBoundary`](/docs/3.x/guides/error-handling-for-routes#root-error-boundary)
+component to handle route errors in Remix. Please ensure that you update your
+projects `root.tsx` file to export this new component in the
+[`ErrorBoundary`](https://remix.run/docs/en/main/guides/errors#root-error-boundary)
+export.
+
+```ts title="app/root.tsx"
+// add-next-line
+import { RootErrorBoundary } from "theme/pages/Error";
+
+//...
+
+// remove-start
+export function ErrorBoundary() {
+  //...
+}
+// remove-end
+// add-next-line
+export const ErrorBoundary = RootErrorBoundary;
+```
+
+To learn more about route error customizations, please refer to the
+[`Error Handling for routes`](/docs/3.x/guides/error-handling-for-routes) guide.
