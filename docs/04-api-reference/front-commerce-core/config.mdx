@@ -207,3 +207,21 @@ export default defineConfig({
   // highlight-end
 });
 ```
+
+### `contributionMode`
+
+This configuration allows you to customize the configuration of Contribution
+Mode.
+
+```ts title="front-commerce.config.ts"
+import { defineConfig } from "@front-commerce/core/config";
+
+export default defineConfig({
+  // ...other configuration options
+  // highlight-start
+  contributionMode: {
+    force: true,
+  },
+  // highlight-end
+});
+```
