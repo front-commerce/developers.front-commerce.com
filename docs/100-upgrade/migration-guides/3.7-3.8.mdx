@@ -251,3 +251,30 @@ export const startExpressServer = () => {
   return app;
 };
 ```
+
+### Root Error Boundary
+
+In this release, we introduced a new
+[`RootErrorBoundary`](/docs/3.x/guides/error-handling-for-routes#root-error-boundary)
+component to handle route errors in Remix. Please ensure that you update your
+projects `root.tsx` file to export this new component in the
+[`ErrorBoundary`](https://remix.run/docs/en/main/guides/errors#root-error-boundary)
+export.
+
+```ts title="app/root.tsx"
+// add-next-line
+import { RootErrorBoundary } from "theme/pages/Error";
+
+//...
+
+// remove-start
+export function ErrorBoundary() {
+  //...
+}
+// remove-end
+// add-next-line
+export const ErrorBoundary = RootErrorBoundary;
+```
+
+To learn more about route error customizations, please refer to the
+[`Error Handling for routes`](/docs/3.x/guides/error-handling-for-routes) guide.
