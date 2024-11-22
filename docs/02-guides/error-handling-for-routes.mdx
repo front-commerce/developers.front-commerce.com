@@ -127,13 +127,66 @@ object.
 
 Front-Commerce provides default error pages for common status codes:
 
-- [429: Rate Limit Exceeded](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2886bd9de6413411f89c7267252a95f45a55dd94/packages/theme-chocolatine/theme/pages/Error/RateLimit/RateLimit.tsx)
-- [503: Maintenance](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/83fe19855d18ed1a21693cb31c401e61f4ce8c79/packages/theme-chocolatine/theme/pages/Error/Maintenance/Maintenance.tsx)
-- [404: Not Found](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/67393729953ea2dabbd8ac8dae14e7e82fbdbcb5/packages/theme-chocolatine/theme/modules/PageError/NotFound/NotFound.jsx)
+- [**429**: Rate Limit Exceeded](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2886bd9de6413411f89c7267252a95f45a55dd94/packages/theme-chocolatine/theme/pages/Error/RateLimit/RateLimit.tsx)
+- [**503**: Maintenance](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/83fe19855d18ed1a21693cb31c401e61f4ce8c79/packages/theme-chocolatine/theme/pages/Error/Maintenance/Maintenance.tsx)
+- [**404**: Not Found](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/67393729953ea2dabbd8ac8dae14e7e82fbdbcb5/packages/theme-chocolatine/theme/modules/PageError/NotFound/NotFound.jsx)
 
 You can override these by adding your own components to the
 [`theme/pages/Error/appErrorPages.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/5f23e92ac2008298dad36b72ae0066433d0311ae/packages/theme-chocolatine/theme/pages/Error/appErrorPages.ts)
 object.
+
+## Customizing Meta Tags
+
+<SinceVersion tag="3.9" />
+
+To extend the meta tags for your route error pages, you can register new meta
+tags in the
+[`root-error-meta`](/docs/3.x/api-reference/front-commerce-remix/features#root-error-meta)
+feature.
+
+### Adding Custom Meta Tags
+
+You can refer to the
+[example demo extension](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a025ba1e1ba82a4a56609e58d537d03d74317df3/skeleton/example-extensions/error-boundary-demo/index.ts)
+for implementation details.
+
+```ts title="example-extension/application-extension/index.ts"
+hooks.registerFeature("root-error-meta", {
+   // ...
+   unstable_lifecycleHooks: {
+      onFeaturesInit: (hooks) => {
+         hooks.registerFeature("root-error-meta", {
+            config: {
+               messages: () => {
+                  return (intl: IntlShape) => {
+                     "500": {
+                        // with intl translations
+                        title: intl.formatMessage({ id: "500.title" }),
+                        description: intl.formatMessage({ id: "500.description" }),
+                     },
+                     "418": {
+                        // without intl translations
+                        title: "Custom - Teapot",
+                        description: "I'm a teapot",
+                     },
+                  };
+               },
+            },
+         });
+      },
+   },
+});
+```
+
+### Default Meta Tags
+
+Front-Commerce provides default meta tags for common status codes: (_see
+exhaustive list in
+[`root-error-meta.ts`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/a025ba1e1ba82a4a56609e58d537d03d74317df3/packages/theme-chocolatine/features/root-error-meta.ts)_)
+
+- **429**: Rate Limit Exceeded
+- **503**: Maintenance
+- **404**: Not Found
 
 ## Best Practices
 

@@ -34,6 +34,21 @@ This means that once you have correctly configured events in your React
 Components, adding new tracking services is less risky: it has no impact on what
 is being tracked.
 
+# Analytics Overview
+
+Front-Commerce uses [`analytics`](https://getanalytics.io/) to track events
+across your React application. Events are dispatched to configured plugins,
+making it easier to add new tracking services without changing your tracking
+code.
+
+## Key Features
+
+- Track events with `trackEvent`
+- Track page views with `trackPage` and `useTrackPage`
+- Track component mounts with `useTrackOnMount`
+- GDPR-compliant consent management
+- Pluggable architecture for multiple analytics services
+
 ## Configure analytics
 
 :::info
@@ -125,6 +140,8 @@ If your plugins need consent of the user before running, you need to setup the
 trackings services are used within your application and will let the user chose
 which tracking service to allow.
 
+### Configuration
+
 ```js title="app/config/cookiesServices.js"
 export default {
   default_en: [
@@ -149,6 +166,33 @@ export default {
             "__utmt",
             "__utmz",
           ],
+          // Display a more granular consent control per service
+          consentOptions: [
+            {
+              name: "ad_storage",
+              title: "Ads Storage",
+              description:
+                "Enables storage of advertising-related data like conversion measurement and remarketing",
+            },
+            {
+              name: "ad_user_data",
+              title: "Ads User Data",
+              description:
+                "Allows collection and processing of user data for advertising purposes",
+            },
+            {
+              name: "ad_personalization",
+              title: "Ads Personalization",
+              description:
+                "Enables personalized advertising based on user behavior and interests",
+            },
+            {
+              name: "analytics_storage",
+              title: "Analytics Storage",
+              description:
+                "Enables storage of analytics data to measure site usage and performance",
+            },
+          ],
           description:
             "Google Analytics cookies, from Google, are meant to gather statistics about visits.",
           link: "https://support.google.com/analytics/answer/6004245",
@@ -159,16 +203,30 @@ export default {
 };
 ```
 
-The consent is stored in 2 separate cookies:
+The consent is stored in 3 separate cookies:
 
 1. `hasConsent` - If the user provided a consent answer (`authorized` or
    `denied`) for all services.
 2. `authorizations` - a JSON string of all consents given in the following
-   format `{ [service_name]: true | false, ... }`
+   format
+   ```ts
+     {
+       [service_name]: true | false,
+     }
+   ```
+3. `consentAuthorizations` - a JSON string of all consents given for a specific
+   service in the following format
+   ```ts
+   {
+     [service_name]: {
+       [consent_name]: true | false,
+     }
+   }
+   ```
 
 :::info Important
 
-The expiration for these two cookies' should be configured in
+The expiration for these three cookies' should be configured in
 [`app/config/website.js`](/docs/2.x/reference/configurations#configwebsitejs).
 
 ```js title="app/config/website.js"
@@ -184,3 +242,49 @@ export default {
 ```
 
 :::
+
+### Granular Consent Updates
+
+When using custom consent options defined in your `cookiesServices.js` file, you
+can implement granular consent updates by adding an `updateConsent` method to
+your analytics plugin. This method allows you to handle consent changes for
+specific tracking features.
+
+The `updateConsent` method is already included in the built-in
+`google-analytics` and `google-tag-manager` plugins, but you'll need to
+implement it yourself for custom plugins.
+
+Here's how to add consent updates to your plugin:
+
+```ts title="app/config/analytics.ts"
+import { type AnalyticsConfig } from "@front-commerce/core/react";
+
+export default {
+  analytics: {
+    // ...
+    plugins: [
+      // ...
+      {
+        name: "my-service",
+        // ...
+        script: () => () => {
+          return {
+            name: "my-service",
+            initialize: () => {...},
+            track: () => {...},
+            page: () => {...},
+            // highlight-start
+            methods: {
+              updateConsent: (consent: Record<string, boolean>) => {
+                // handle consent update for your service
+                // eg: {ad_storage:true, ad_user_data:false, ad_personalization:true, analytics_storage:true}
+              },
+            },
+            // highlight-end
+          };
+        }
+      },
+    ],
+  } satisfies AnalyticsConfig,
+};
+```

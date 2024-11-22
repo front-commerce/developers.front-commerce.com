@@ -1,0 +1,111 @@
+---
+title: 3.8 -> 3.9
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.8
+  to 3.9
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.9.0"
+```
+
+## Automated Migration
+
+We provide a codemod to automatically update your codebase to the latest version
+of Front-Commerce. This tool will update your code when possible and flag the
+places where you need to manually update your code (with `// TODO Codemod`
+comments).
+
+```shell
+pnpm run front-commerce migrate --transform 3.9.0
+```
+
+## Manual Migration
+
+### Layer facets
+
+In this release, we reworked the `LayoutFacets.tsx` component to support
+rendering any types of dynamic facets returned by GraphQL. It leverages the new
+[`ExtensionComponentMap`](/docs/3.x/api-reference/front-commerce-core/react#useextensioncomponentmap).
+
+If you have overriden `theme/modules/Layer/LayerFacets/LayerFacets`, you will
+need to apply the changes from its latest version to also support this feature.
+See
+[related commit](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/fdfe1d60a46e5040b788c4a43e10483a342607ea).
+
+### Google Consent V2 Support
+
+In this release, we've added support for
+[Google's Consent Mode v2](https://developers.google.com/tag-platform/security/guides/consent?hl=en&consentmode=advanced#upgrade-consent-v2)
+which provides more granular control over user consent preferences. This change
+affects applications using either the
+[Google Analytics 4](/docs/3.x/guides/analytics/plugins/google-analytics-4) or
+[Google Tag Manager](/docs/3.x/guides/analytics/plugins/google-tag-manager)
+plugins.
+
+To enable this feature, add the
+[`consentOptions`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/skeleton/app/config/cookiesServices.js?ref_type=heads#L21-46)
+to your service configuration in `cookiesServices.js`
+
+:::tip
+
+You can also take advantage of the `consentOptions` in your custom plugins by
+following the
+[Granular Consent Updates](/docs/3.x/guides/analytics/getting-started#granular-consent-updates)
+guide.
+
+:::
+
+If you have overriden any of these files, please make sure you apply the changes
+to your overrides:
+
+- [theme/modules/Cookie/CookieLink/CookieLink.jsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookieLink/CookieLink.jsx)
+- [theme/modules/Cookie/CookieModal/CookieModal.jsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookieModal/CookieModal.jsx)
+- [theme/modules/Cookie/CookiePage/CookieGrid/CookieGrid.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookieGrid/CookieGrid.tsx)
+- [theme/modules/Cookie/CookiePage/CookieLine/CookieLine.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookieLine/CookieLine.tsx)
+- [theme/modules/Cookie/CookiePage/CookieLine/CookieLine.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookieLine/CookieLine.scss)
+- [theme/modules/Cookie/CookiePage/CookiePage.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/c0be11c81601d0b3f4be4ed2fc11d6121552a8ef/packages/theme-chocolatine/theme/modules/Cookie/CookiePage/CookiePage.tsx)
+
+### Root Error Boundary
+
+:::info
+
+If you have already applied this update in
+[`3.8`](/docs/3.x/upgrade/migration-guides/3.7-3.8#root-error-boundary), you can
+skip this section. This was not documented in the previous release.
+
+:::
+
+We have introduced a new
+[`RootErrorBoundary`](/docs/3.x/guides/error-handling-for-routes#root-error-boundary)
+component to handle route errors in Remix. Please ensure that you update your
+projects `root.tsx` file to export this new component in the
+[`ErrorBoundary`](https://remix.run/docs/en/main/guides/errors#root-error-boundary)
+export.
+
+```ts title="app/root.tsx"
+// add-next-line
+import { RootErrorBoundary } from "theme/pages/Error";
+
+//...
+
+// remove-start
+export function ErrorBoundary() {
+  //...
+}
+// remove-end
+// add-next-line
+export const ErrorBoundary = RootErrorBoundary;
+```
+
+To learn more about route error customizations, please refer to the
+[`Error Handling for routes`](/docs/3.x/guides/error-handling-for-routes) guide.

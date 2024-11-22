@@ -1,0 +1,115 @@
+---
+title: Components Map
+description:
+  The components map is a way to extend the UI of an extension. It allows to
+  register new components that will be used in the extension UI.
+---
+
+<SinceVersion tag="3.9" />
+
+## What is the components map?
+
+<p>{frontMatter.description}</p>
+
+For instance, component map can be useful for:
+
+- implementing a user menu with links contributed from different extensions
+- displaying platform-specific components in the application features specific
+  to the platform
+- customizing how polymorphic GraphQL data are displayed in an application
+
+## How to register a component map?
+
+### Registering a new component map
+
+To register a new component map, you can use the
+[`registerFeature`](/docs/3.x/api-reference/front-commerce-core/extension-features#registerfeature)
+hook.
+
+```ts title="./example-extension/acme-extension/index.ts"
+export default defineExtension({
+  ...
+  unstable_lifecycleHooks: {
+    onFeaturesInit: (hooks) => {
+      // highlight-next-line
+      hooks.registerFeature("acme-feature", {
+        ui: {
+          componentsMap: {
+            // This should resolve to a valid file relative to the current import.meta.url
+            // highlight-next-line
+            Header: new URL("./components/AcmeHeader.tsx", import.meta.url),
+            Toolbar: new URL("./components/AcmeToolbar.tsx", import.meta.url),
+            Footer: new URL("./components/AcmeFooter.tsx", import.meta.url),
+          },
+        },
+      });
+    },
+  },
+});
+```
+
+### Override an existing component map
+
+Let's say our application needs to disable the previously registered `Toolbar`
+component which is by default registered in the `acme-extension`.
+
+We can achieve this by registering a new component map with the same name, but
+replacing the `Toolbar` with `null`
+
+```ts title="./example-extension/application-extension/index.ts"
+export default defineExtension({
+  ...
+  unstable_lifecycleHooks: {
+    onFeaturesInit: (hooks) => {
+      // this will extend the `acme-feature` from `acme-extension`
+      hooks.registerFeature("acme-feature", {
+        ui: {
+          // we only override the `Toolbar` component, the others will still resolve from `acme-extension`
+          // highlight-next-line
+          componentsMap: { Toolbar: null },
+        },
+      });
+    },
+  },
+});
+```
+
+:::tip
+
+When overriding an existing component map, the last registered extension will be
+the components used for the feature. All the components are merged together. Not
+including a component, will maintain the component registered before. To
+_unregister_ it, you must explicitly override it with `null`.
+
+So in the above example, the final components map will be resolved as:
+
+```ts
+{
+  Header: AcmeHeader,
+  Toolbar: () => null,
+  Footer: AcmeFooter,
+}
+```
+
+:::
+
+## How to use the components map?
+
+The components map is used through the
+[`useExtensionComponentMap`](/docs/3.x/api-reference/front-commerce-core/react#useextensioncomponentmap)
+hook.
+
+```tsx
+import { useExtensionComponentMap } from "@front-commerce/core/react";
+
+const App = () => {
+  const AcmeFeature = useExtensionComponentMap("acme-feature");
+
+  return (
+    <div>
+      <AcmeFeature.Header />
+      <AcmeFeature.Footer />
+    </div>
+  );
+};
+```

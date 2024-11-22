@@ -1,0 +1,131 @@
+---
+title: "Price Display"
+description: "This reference explains the main Price Display components."
+---
+
+<p>{frontMatter.description}</p>
+
+## References
+
+- [Display prices with or without taxes](/docs/3.x/guides/display-prices-with-or-without-taxes)
+
+## Available options
+
+The `theme:priceDisplay` public configuration has the following options:
+
+- `variants`: the list of price variants to display, available variants are
+  `priceInclTax` and `priceExclTax`.
+- `appearance`: the appearance of the price, available appearances are `labeled`
+  and `default`.
+  - `labeled`: this includes the label `incl. tax` or `excl. tax`
+  - `default`: this does not include any label
+
+## Examples
+
+### appearance: `labeled`
+
+<table>
+  <thead>
+    <tr>
+      <th align="center">Variant</th>
+      <th align="center">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <div className="-mb-[var(--ifm-paragraph-margin-bottom)]">
+          <code>priceInclTax</code> and <code>priceExclTax</code>
+        </div>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--labeled-incl-tax-excl-tax"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+    <tr style={{ backgroundColor: "var(--ifm-table-background)" }}>
+      <td align="center">
+        <code>priceInclTax</code>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--labeled-incl-tax"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <code>priceExclTax</code>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--labeled-excl-tax&viewMode=story"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### appearance: `default`
+
+<table>
+  <thead>
+    <tr>
+      <th align="center">Variant</th>
+      <th align="center">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <div className="-mb-[var(--ifm-paragraph-margin-bottom)]">
+          <code>priceInclTax</code> and <code>priceExclTax</code>
+        </div>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--default-incl-tax-excl-tax&viewMode=story"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+    <tr style={{ backgroundColor: "var(--ifm-table-background)" }}>
+      <td align="center">
+        <code>priceInclTax</code>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--default-incl-tax"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <code>priceExclTax</code>
+      </td>
+      <td align="center">
+        <div className="w-full h-[10px] flex justify-center items-center overflow-hidden">
+          <iframe
+            src="https://fc-3031-3-price-variant-componen.v3-gezy.eu1.front-commerce.dev/styleguide/iframe.html?globals=&args=&id=components-molecules-pricevariant--default-excl-tax"
+            className="w-full h-[50px] border-none"
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
