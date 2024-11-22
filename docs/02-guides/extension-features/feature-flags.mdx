@@ -1,0 +1,89 @@
+---
+title: Feature Flags
+description:
+  Feature flags are a way to enable or disable certain features in your
+  extension.
+---
+
+<SinceVersion tag="3.9" />
+
+## Overview
+
+<p>{frontMatter.description}</p>
+
+For instance feature flags can be useful for display or not a banner in your
+application.
+
+## Using feature flags
+
+### Declaring a feature flag
+
+To declare a feature flag, you must include a `featureFlags` property in your
+extension declaration.
+
+```ts title="extension/acme/index.ts"
+export default defineExtension({
+...
+  unstable_lifecycleHooks: {
+    onServerServicesInit: async (services, _request, config, user) => {
+      onFeaturesInit: (hooks) => {
+        hooks.registerFeature("order", {
+          flags: {
+            canOrderFooBar: true,
+          }
+        });
+      }
+    },
+  }
+...
+```
+
+This example will allow you to know if you can order a `FooBar` product.
+
+### Using a feature flag
+
+To use a feature flag, you must use the `useExtensionFeatureFlags` hook.
+
+The `useExtensionFeatureFlags` hook takes three arguments:
+
+- The extension name
+- The feature flag name
+- The default value
+
+```tsx title="extension/acme/pages/OrderFooBarPage.tsx"
+import { useExtensionFeatureFlags } from "@front-commerce/core/react";
+
+export function OrderFooBarPage() {
+  const canOrderFooBar = useExtensionFeatureFlags(
+    "order",
+    "canOrderFooBar",
+    false
+  );
+
+  return (
+    <div>
+      <h1>Order FooBar</h1>
+      {canOrderFooBar ? (
+        <button>Order FooBar</button>
+      ) : (
+        <p>You cannot order FooBar</p>
+      )}
+    </div>
+  )
+}
+```
+
+## Implemented Features and Flags
+
+### `newsletter` Feature
+
+| Flag name | Description                                     |
+| --------- | ----------------------------------------------- |
+| `enabled` | Is the newsletter related actions are available |
+
+### `accountInformation` Feature
+
+| Flag name       | Description                                                           |
+| --------------- | --------------------------------------------------------------------- |
+| `phoneRequired` | Should the phone number must be required in the user information form |
+| `canEditEmail`  | Can the user edit it's email address                                  |
