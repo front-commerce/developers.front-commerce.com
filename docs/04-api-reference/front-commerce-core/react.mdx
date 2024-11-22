@@ -284,3 +284,31 @@ const AcmeModule = () => {
   );
 };
 ```
+
+## `useExtensionFeatureFlags`
+
+This hook is used to get a feature flag registered through the through an
+[extension feature](./extension-features#registerfeature).
+
+```tsx
+import { useExtensionFeatureFlags } from "@front-commerce/core/react";
+
+export function OrderFooBarPage() {
+  const canOrderFooBar = useExtensionFeatureFlags(
+    "order",
+    "canOrderFooBar",
+    false
+  );
+
+  return (
+    <div>
+      <h1>Order FooBar</h1>
+      {canOrderFooBar ? (
+        <button>Order FooBar</button>
+      ) : (
+        <p>You cannot order FooBar</p>
+      )}
+    </div>
+  );
+}
+```

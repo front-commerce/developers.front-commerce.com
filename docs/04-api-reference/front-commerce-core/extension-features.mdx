@@ -28,6 +28,9 @@ export default defineExtension({
   unstable_lifecycleHooks: {
     onFeaturesInit: (hooks) => {
       hooks.registerFeature("acme-feature", {
+        flags: {
+          canFooBar: false,
+        },
         ui: {
           componentsMap: {
             Header: new URL("./components/AcmeHeader.tsx", import.meta.url),
