@@ -1,0 +1,151 @@
+---
+title: Display a map
+description:
+  Front-Commerce has a generic map component that modules can use to display
+  maps. This guide explains how to use the feature in your application.
+---
+
+<p>{frontMatter.description}</p>
+
+Since we are well aware that different shops come with different needs, we
+provide several implementations for Front-Commerce's generic Map component. Out
+of the box, Front-Commerce supports:
+
+- [Component Props](#component-props)
+  - [Map Component](#map-component)
+  - [Marker Component](#marker-component)
+- [Install a map extension](#install-a-map-extension)
+- [Display a map](#display-a-map)
+- [Override the map component](#override-the-map-component)
+
+The goal is to choose one to make sure that all maps across the website look the
+same.
+
+### Component Props
+
+We have homogenized the props of the map components to make sure that they are
+consistent across different components.
+
+#### Map Component
+
+| Property        | Description                              | Type                                                                                                                                                                                              |
+| --------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locations       | A list of locations used for the markers | [`LocationInputShape[]`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2174f8f1636a42ce558d842082e06716a0e3724c/src/web/theme/components/organisms/Map/location.js#L65-74) |
+| getMarker       | The marker node for locations            | `(location) => ReactNode`                                                                                                                                                                         |
+| zoom            | Default zoom level                       | `number`                                                                                                                                                                                          |
+| defaultBounds   | The default map bounds                   | [`CoordinatesShape[]`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2174f8f1636a42ce558d842082e06716a0e3724c/src/web/theme/components/organisms/Map/location.js#L59-62)   |
+| defaultCenter   | The default center for the map.          | [`CoordinatesShape` ](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2174f8f1636a42ce558d842082e06716a0e3724c/src/web/theme/components/organisms/Map/location.js#L59-62)    |
+| onBoundsChanged | Event handler for bound changes          | `(event) => void`                                                                                                                                                                                 |
+
+#### Marker Component
+
+| Property      | Description                            | Type                                                                                                                                                                                            |
+| ------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| location      | Location for the marker                | [`LocationInputShape`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2174f8f1636a42ce558d842082e06716a0e3724c/src/web/theme/components/organisms/Map/location.js#L65-74) |
+| icon          | Allows you to override the marker icon | [`object`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2174f8f1636a42ce558d842082e06716a0e3724c/src/web/theme/components/organisms/Map/index.js#L25-31)                |
+| isPopupOpened | Controlled method for marker popup     | `boolean`                                                                                                                                                                                       |
+| onClick       | Event handler on marker click          | `(event) => void`                                                                                                                                                                               |
+
+### Install a map extension
+
+Follow the installation instruction of the map extension you want to use:
+
+- [Open Street Map (OSM) with Leaflet](/docs/3.x/extensions/leaflet#installation)
+- [Google Maps](/docs/3.x/extensions/google-maps#installation)
+
+After this, you should be able to use the Map component. See
+[Map.stories.tsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/2df15404cb74d9e52440f9c02ea43cea521cdd3c/packages/leaflet/theme/Leaflet/Map.stories.tsx)
+for details.
+
+:::note
+
+_Please keep in mind, that the Map component should be used in an element with a
+fixed height._
+
+:::
+
+### Display a map
+
+Using
+[`useExtensionComponentMap`](/docs/3.x/api-reference/front-commerce-core/react#useextensioncomponentmap),
+you can retrieve the registered map components and use it in your application:
+
+```tsx title="theme/myMapComponent.tsx"
+import { useCallback } from "react";
+import { useExtensionComponentMap } from "@front-commerce/core/react";
+
+export default function MyMapComponent() {
+  const MapComponents = useExtensionComponentMap("maps");
+  const locations = [
+    {
+      lat: 48.8566,
+      lng: 2.3522,
+    },
+    {
+      lat: 48.8536,
+      lng: 2.3523,
+    },
+  ];
+
+  return (
+    <div style={{ height: "500px" }}>
+      <MapComponents.Map
+        locations={locations}
+        getMarker={useCallback((location) => {
+          const LocationMarkerComponent = location.getMarkerComponent();
+          return <MapComponents.Marker key={location.id} location={location} />;
+        }, [])}
+      />
+    </div>
+  );
+}
+```
+
+For more advanced usage, see the
+[Map component documentation](/docs/3.x/extensions/theme-chocolatine/reference/maps).
+
+### Override the map component
+
+If you wish to override the Map or Marker components, you can use the
+[`registerFeature`](/docs/3.x/api-reference/front-commerce-core/extension-features#registerfeature)
+hook to do so:
+
+```tsx title="extensions/myMapExtension/index.ts"
+import { defineExtension } from "@front-commerce/core";
+
+export default defineExtension({
+  name: "myMapExtension",
+  meta: import.meta,
+  unstable_lifecycleHooks: {
+    onFeaturesInit: (hooks) => {
+      hooks.registerFeature("maps", {
+        ui: {
+          componentsMap: {
+            Map: new Url("theme/myMapComponent.tsx", import.meta.url),
+            Map: new Url("theme/myMarkerComponent.tsx", import.meta.url),
+          },
+        },
+      });
+    },
+  },
+});
+```
+
+Note that your `myMapExtension` extension should be registered after the maps
+extension you are willing to override in your `front-commerce.config.ts` (e.g.
+`@front-commerce/leaflet`):
+
+```ts title="front-commerce.config.ts"
+//...
+import leaflet from "@front-commerce/leaflet";
+import myMapExtension from "./extensions/myMapExtension";
+
+export default defineConfig({
+  extensions: [
+    leaflet(),
+    // ...
+    myMapExtension(),
+  ],
+  //...
+});
+```

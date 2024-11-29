@@ -35,3 +35,24 @@ This is used to easily customize the components used to render facets filters.
 - [`AttributeFacet`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/b296fa59c8001bd8f3099cd1351cf9735aaf3f8c/packages/theme-chocolatine/theme/components/atoms/PickerFacet/PickerFacet.tsx)
 - `CategoryFacet`, defaulted to `null` as it this type of facet is not rendered
   in `LayerFacet` by default
+
+## `maps`
+
+Extendable feature for the `Map` and `Marker` components. See
+[`PostalAddressSelector`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/PostalAddressSelector/PostalAddressSelector.jsx#L34)
+
+### `ui.componentsMap`
+
+- [`Map`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/Map.jsx#10):
+- [`Marker`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/Map.jsx#31):
+
+## `shippingMethodAdditionalData`
+
+Extendable feature for the `AdditionalShippingInformation` component. See
+[`getAddtionalDataComponent`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js#L7-13).
+
+### `ui.componentsMap`
+
+The registered component name should be the same as the
+`shippingMethod.method_type` value provided in the schema's `ShippingMethod`
+object.

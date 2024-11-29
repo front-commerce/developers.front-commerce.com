@@ -1,0 +1,37 @@
+---
+title: "Leaflet"
+description:
+  "This extension allow you to use Leaflet to display maps in your
+  Front-Commerce store."
+---
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+Install the `@front-commerce/leaflet` package:
+
+```bash
+pnpm add @front-commerce/leaflet
+```
+
+Add the Leaflet extension to your `front-commerce.config.ts`:
+
+```ts title="front-commerce.config.ts"
+//...
+import leaflet from "@front-commerce/leaflet";
+
+export default defineConfig({
+  extensions: [
+    // ...
+    leaflet(),
+  ],
+  //...
+});
+```
+
+Leaflet map components should now be ready to be used in your application!
+
+## Next steps
+
+- [Display a map](/docs/3.x/guides/display-a-map)
