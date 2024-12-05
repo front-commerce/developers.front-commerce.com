@@ -1,0 +1,45 @@
+---
+title: "Google Maps"
+description:
+  "This extension allow you to use Google Maps to display maps in your
+  Front-Commerce store."
+---
+
+<p>{frontMatter.description}</p>
+
+## Installation
+
+Install the `@front-commerce/google-maps` package:
+
+```bash
+pnpm add @front-commerce/google-maps
+```
+
+Add the Google Maps extension to your `front-commerce.config.ts`:
+
+```ts title="front-commerce.config.ts"
+//...
+import googleMaps from "@front-commerce/google-maps";
+
+export default defineConfig({
+  extensions: [
+    // ...
+    googleMaps(),
+  ],
+  //...
+});
+```
+
+Provide a Google Maps API key in your `.env` file. To get your API key, please
+follow the
+[Google Maps documentation](https://developers.google.com/maps/documentation/javascript/get-api-key).
+
+```bash title=".env"
+FRONT_COMMERCE_GOOGLE_MAPS_API_KEY="YOUR_GOOGLE_MAPS_API_KEY"
+```
+
+Google Maps map components should now be ready to be used in your application!
+
+## Next steps
+
+- [Display a map](/docs/3.x/guides/display-a-map)

@@ -5,9 +5,32 @@ description: "This reference explains how to use the Map component."
 
 <p>{frontMatter.description}</p>
 
-:::info WIP
+The goal is to choose one to make sure that all maps across the website look the
+same.
 
-See
-https://developers.front-commerce.com/docs/2.x/advanced/features/display-a-map
+<SinceVersion tag="3.10" />
 
-:::
+## Component Props
+
+We have homogenized the props of the map components to make sure that they are
+consistent across different components.
+
+### Map Component
+
+| Property        | Description                              | Type                                                                                                                                                                    |
+| --------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locations       | A list of locations used for the markers | [`TLocation[]`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/location.ts#L73)    |
+| getMarker       | The marker node for locations            | `(location) => ReactNode`                                                                                                                                               |
+| zoom            | Default zoom level                       | `number`                                                                                                                                                                |
+| defaultBounds   | The default map bounds                   | [`TCoordinates[]`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/location.ts#L78) |
+| defaultCenter   | The default center for the map.          | [`TCoordinates` ](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/location.ts#L78)  |
+| onBoundsChanged | Event handler for bound changes          | `(event) => void`                                                                                                                                                       |
+
+### Marker Component
+
+| Property      | Description                            | Type                                                                                                                                                               |
+| ------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| location      | Location for the marker                | [`TLocation`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/location.ts#L73) |
+| icon          | Allows you to override the marker icon | [`object`](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/main/packages/theme-chocolatine/theme/components/organisms/Map/Map.jsx#L45-51)     |
+| isPopupOpened | Controlled method for marker popup     | `boolean`                                                                                                                                                          |
+| onClick       | Event handler on marker click          | `(event) => void`                                                                                                                                                  |

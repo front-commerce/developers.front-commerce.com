@@ -1,0 +1,42 @@
+---
+title: 3.9 -> 3.10
+description:
+  This page lists the highlights for upgrading a project from Front-Commerce 3.9
+  to 3.10
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<p>{frontMatter.description}</p>
+
+## Update dependencies
+
+Update all your `@front-commerce/*` dependencies to this version:
+
+```shell
+pnpm update "@front-commerce/*@3.10.0"
+```
+
+## Manual Migration
+
+### Shipping methods
+
+In this release, we reworked the way additional data component can be retrieved
+during the shipping method selection at checkout time.
+
+In v2, these component were registered by overriding the
+`theme/modules/Checkout/ShippingMethod/AdditionalShippingInformation/getAdditionalDataComponent.js`
+file.
+
+In v3, we're now leveraging on the
+[feature registration hook](/docs/3.x/api-reference/front-commerce-core/extension-features#registerfeature)
+so that any extension can register its own component without having to override
+theme files, which greatly enhance maintainability.
+
+Although this change is backward compatible, we recommend that you update your
+`getAdditionalDataComponent` file to take advantage of the latest way of using
+additional data components.
+
+For more informations, please refer to the
+[related change](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2de78fd7361cf92295582ac5a39beaee39b5a860?merge_request_iid=3855).
