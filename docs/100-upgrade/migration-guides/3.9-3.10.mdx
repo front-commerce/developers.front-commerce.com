@@ -40,3 +40,22 @@ additional data components.
 
 For more informations, please refer to the
 [related change](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/commit/2de78fd7361cf92295582ac5a39beaee39b5a860?merge_request_iid=3855).
+
+### Product Cross-Sells in `ProductAddedPopin`
+
+In this release, we've added product cross-sell recommendations to the
+`ProductAddedPopin` component that appears after adding items to cart. This
+enhancement allows you to display related products and increase cross-selling
+opportunities.
+
+The cross-sells are displayed in a slider format below the added product details
+in the popin modal.
+
+If you have overridden any of the following components in your project, you will
+need to update them with the latest version to benefit from this new feature:
+
+- [theme/modules/ProductAddedPopIn/ProductAddedPopIn.jsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.10.x/packages/theme-chocolatine/theme/modules/ProductAddedPopIn/ProductAddedPopIn.jsx#L28)
+- [theme/modules/ProductAddedPopIn/ProductAddedPopIn.scss](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.10.x/packages/theme-chocolatine/theme/modules/ProductAddedPopIn/ProductAddedPopIn.scss#L18-23)
+- [theme/modules/ProductAddedPopIn/ProductAddedPopInContent.jsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.10.x/packages/theme-chocolatine/theme/modules/ProductAddedPopIn/ProductAddedPopInContent.jsx#L15-17)
+- [theme/modules/ProductAddedPopIn/ProductAddedPopInFragment.gql](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.10.x/packages/theme-chocolatine/theme/modules/ProductAddedPopIn/ProductAddedPopInFragment.gql#L17-19)
+- [theme/modules/ProductList/ProductListSlider/withNumberOfProductsPerSlide.jsx](https://gitlab.blackswift.cloud/front-commerce/front-commerce/-/blob/3.10.x/packages/theme-chocolatine/theme/modules/ProductList/ProductListSlider/withNumberOfProductsPerSlide.jsx)
