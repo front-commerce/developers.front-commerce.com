@@ -1,0 +1,54 @@
+---
+title: Remix Development Tools
+description:
+  This guide explains how to setup Remix Development Tools in your
+  Front-Commerce application thanks to Vite.
+---
+
+<p>{frontMatter.description}</p>
+
+Since Front-Commerce is based on Remix, you can use any related Remix extension
+to enhance your development experience and your project.
+
+In this guide, we will guide you through the setup of
+[Remix Development Tools](https://remix-development-tools.fly.dev/).
+
+:::tip
+
+Remix Development Tools isn't affiliated with Front-Commerce. Since we use it to
+work on Front-Commerce, we decided to share it with you to enhance your
+experience too!
+
+:::
+
+## Quick start
+
+### Install the extension
+
+```sh
+pnpm add --save-dev remix-development-tools
+```
+
+### Add the extension to your `vite.config.ts`
+
+**Please note that `remixDevTools` plugin must be declared before the
+`frontCommerce` plugin**
+
+```diff
+import { defineConfig } from "vite";
+import { vitePlugin as frontCommerce } from "@front-commerce/remix/vite";
++import { remixDevTools } from "remix-development-tools";
+
+export default defineConfig((env) => {
+  return {
+    plugins: [
++     remixDevTools({
++        client: {
++          defaultOpen: false,
++        },
++      }),
+      frontCommerce({ env })
+    ],
+  };
+});
+```

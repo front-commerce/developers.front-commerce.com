@@ -20,13 +20,15 @@ pnpm update "@front-commerce/*@3.9.0"
 
 ## Automated Migration
 
-We provide a codemod to automatically update your codebase to the latest version
-of Front-Commerce. This tool will update your code when possible and flag the
-places where you need to manually update your code (with `// TODO Codemod`
-comments).
+In this version, there are no automated migrations. However, if you're upgrading
+from version 3.8.0, you must run the 3.8.1 codemod as part of your migration to
+3.9.x. This codemod will help ensure your codebase is compatible with version
+3.9.x.
+
+To run the codemod, execute the following command:
 
 ```shell
-pnpm run front-commerce migrate --transform 3.9.0
+pnpm run front-commerce migrate --transform 3.8.1
 ```
 
 ## Manual Migration
