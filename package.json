@@ -35,7 +35,7 @@
     "infima": "0.2.0-alpha.45",
     "lucide-react": "^0.468.0",
     "postcss": "8.4.49",
-    "prism-react-renderer": "2.4.0",
+    "prism-react-renderer": "2.4.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-infima": "0.0.1-alpha.4",
