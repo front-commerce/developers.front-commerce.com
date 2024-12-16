@@ -51,7 +51,7 @@
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",
     "@tsconfig/docusaurus": "2.0.3",
-    "@types/react": "18.3.16",
+    "@types/react": "18.3.17",
     "@types/react-slick": "0.23.13",
     "husky": "9.1.7",
     "prettier": "3.4.2",
